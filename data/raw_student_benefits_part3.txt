@@ -1,0 +1,150 @@
+Notion for Students	Notion	Productivity	Free Personal Pro (Plus) Plan.	Subscription	$48/yr	Students	Global	Edu Email	notion.so/students
+YNAB College Program	YNAB	Finance	1 Year Free subscription.	Subscription	$99	College Students	Global	Proof of Enrollment	ynab.com/college
+Todoist for Education	Doist	Productivity	50% Off Pro Plan.	Discount	$4/mo	Students	Global	StudentAppCentre	todoist.com/education
+Evernote Student	Evernote	Productivity	50% Off Personal Plan.	Discount	$70	Students	Global	UNiDAYS	evernote.com/students
+Microsoft 365 Personal	Microsoft	Productivity	$2.99/mo via Amazon Prime Student.	Discount	$7/mo	Students	US (Verified)	Prime Student	amazon.com
+Google Workspace for Edu	Google	Productivity	Free Institutional License.	License	Institutional	Students	Global	Institution	edu.google.com
+Coursera for Students	Coursera	Learning	Free Courses (Once/yr) or Aid.	Course	Variable	Students	Global	Edu Email	coursera.org
+edX Financial Aid	edX	Learning	90% Off Verified Certificates.	Discount	~$100	Low Income	Global	Application	edx.org/financial-aid
+LinkedIn Learning	LinkedIn	Learning	Free via University/Library.	Subscription	$300	Students	Global	Institution	learning.linkedin.com
+O'Reilly Learning	O'Reilly	Learning	Institutional Access.	Subscription	$500	Students	Global	Institution	oreilly.com
+Codecademy Student	Codecademy	Learning	Student Pro Plan (50% Off).	Discount	$150	Students	Global	SheerID	codecademy.com
+Udacity Scholarships	Udacity	Learning	Regional Scholarships (Cohort based).	Scholarship	$1000+	Students	Global	Application	udacity.com/scholarships
+Skillshare Student	Skillshare	Learning	50% Off Membership.	Discount	$80	Students	Global	Student Beans	skillshare.com
+Tableau for Students	Tableau	Data Science	Free 1-Year License.	License	$70/yr	Students	Global	SheerID	tableau.com
+Alteryx for Students	Alteryx	Data Science	Free Designer License.	License	Enterprise	Students	Global	Upload ID	alteryx.com
+SAS for Academics	SAS	Data Science	Free SAS OnDemand.	Subscription	Enterprise	Students	Global	Edu Email	sas.com
+Grammarly Student	Grammarly	Productivity	25% Off Pro.	Discount	$12/mo	Students	Global	UNiDAYS	grammarly.com
+QuillBot Student	QuillBot	Productivity	Up to 25% Off.	Discount	~$4/mo	Students	Global	UNiDAYS	quillbot.com
+Speechify Student	Speechify	Productivity	25% Off.	Discount	$100+	Students	Global	UNiDAYS	speechify.com
+Knowt	Knowt	Learning	1 Month Free + 15% Off.	Hybrid	~$5	Students	Global	UNiDAYS	knowt.com
+Mind Tools	Mind Tools	Productivity	25% Off Membership.	Discount	Variable	Students	Global	UNiDAYS	mindtools.com
+Dropbox Student	Dropbox	Productivity	30% Off Plus.	Discount	$10/mo	Students	Global	UNiDAYS	dropbox.com
+Setapp Education	MacPaw	Productivity	50% Off Mac App Bundle.	Discount	$5/mo	Students	Global	Edu Email	setapp.com
+CleanMyMac Student	MacPaw	Productivity	30% Off.	Discount	$30+	Students	Global	StudentAppCentre	macpaw.com
+Parallels Desktop	Alludo	Productivity	50% Off Student Edition.	Discount	$50+	Students	Global	StudentAppCentre	parallels.com
+Loom for Education	Loom	Productivity	Free Education Plan (Unlimited videos).	Subscription	$8/mo	K-12/Higher Ed	Global	Edu Email	loom.com/education
+Scrivener	Literature & Latte	Productivity	~20% Off Education License.	Discount	$50	Students	Global	Proof of Status	literatureandlatte.com
+Ulysses	Ulysses	Productivity	Discounted Subscription ($11/6mo).	Discount	$30/yr	Students	Global	In-app	ulysses.app
+Zoom for Education	Zoom	Productivity	Lift of 40min limit (K-12 only).	Free	N/A	K-12 Schools	Global	Domain Verify	zoom.us/education
+Slack for Education	Slack	Productivity	85% Off for Education.	Discount	Standard	Students (via Inst)	Global	Institution	slack.com
+Discord Student Hubs	Discord	Productivity	Student Hubs access.	Free	N/A	Students	Global	Edu Email	support.discord.com
+LastPass Student	GoTo	Productivity	6 Months Free Premium.	Subscription	$20	Students	Global	Edu Email	lastpass.com
+Bitwarden	Bitwarden	Productivity	Free Personal Plan (Unlimited).	Free	N/A	Everyone	Global	N/A	bitwarden.com
+Keeper Security	Keeper	Productivity	50% Off.	Discount	$17/yr	Students	Global	Student Beans	studentbeans.com
+NordPass Student	Nord Security	Productivity	Free Premium (Student).	Subscription	$30	Students	Global	Student Beans	nordpass.com
+RoboForm	Siber Systems	Productivity	Free for College Students.	Subscription	$24	Students	Global	Edu Email	roboform.com
+ExpressVPN	Kape	Security	Discounted Plan (12+4 mo free).	Discount	Premium	Students	Global	Student Beans	expressvpn.com
+Surfshark	Surfshark	Security	85% Off + 3 mo free.	Discount	$2/mo	Students	Global	Student Beans	surfshark.com
+CyberGhost	Kape	Security	79% Off.	Discount	$2/mo	Students	Global	Student Beans	cyberghostvpn.com
+PureVPN	PureVPN	Security	15% Extra Off.	Discount	$2/mo	Students	Global	Student Beans	purevpn.com
+Private Internet Access	Kape	Security	3 Years + 3 Mo Free.	Discount	$2/mo	Students	Global	Student Beans	privateinternetaccess.com
+Norton 360	Gen Digital	Security	~$20/yr (Student).	Discount	$50+	Students	Global	Student Beans	us.norton.com
+McAfee	McAfee	Security	Student Discount.	Discount	$30+	Students	Global	Student Beans	mcafee.com
+Malwarebytes	Malwarebytes	Security	4-Year Student Plan ($20).	Discount	$100+	Students	Global	Student Beans	malwarebytes.com
+ESET	ESET	Security	50% Off.	Discount	$25	Students	Global	ID.me	eset.com
+Bitdefender	Bitdefender	Security	Student Discount.	Discount	$20	Students	Global	Student Beans	bitdefender.com
+Dashlane Student	Dashlane	Security	Free Premium (1 year).	Subscription	$60	Students	Global	Edu Email	dashlane.com
+Kaspersky	Kaspersky	Security	Student Discount.	Discount	Variable	Students	Global	Student Beans	kaspersky.com
+Trend Micro	Trend Micro	Security	Student Discount.	Discount	Variable	Students	Global	Verification	trendmicro.com
+Sophos Home	Sophos	Security	Free Commercial Edition.	Free	N/A	Students	Global	Edu Email	home.sophos.com
+Proton Mail	Proton	Productivity	Free Encrypted Mail (1GB).	Free	N/A	Everyone	Global	N/A	proton.me
+Tutanota	Tuta	Productivity	Free Encrypted Mail (1GB).	Free	N/A	Everyone	Global	N/A	tuta.com
+Standard Notes	Standard Notes	Productivity	Free Encrypted Notes.	Free	N/A	Everyone	Global	N/A	standardnotes.com
+Joplin	Joplin	Productivity	Free Open Source Notes.	Free	N/A	Everyone	Global	N/A	joplinapp.org
+Obsidian	Obsidian	Productivity	Free Personal Use.	Free	N/A	Everyone	Global	N/A	obsidian.md
+Logseq	Logseq	Productivity	Free Open Source.	Free	N/A	Everyone	Global	N/A	logseq.com
+Roam Research	Roam	Productivity	Scholars Program ($500 off).	Discount	$165/yr	Students <22	Global	Application	roamresearch.com
+Heptabase	Heptabase	Productivity	50% Off.	Discount	$60/yr	Students	Global	Edu Email	heptabase.com
+Reflect	Reflect	Productivity	Free for Students.	Subscription	$120/yr	Students	Global	Edu Email	reflect.app
+Craft Docs	Craft	Productivity	Free Education Plan.	Subscription	$60/yr	Students	Global	Edu Email	craft.do
+Whimsical	Whimsical	Productivity	Free Tier (3000 items).	Free	N/A	Everyone	Global	N/A	whimsical.com
+Eraser	Eraser	Developer Tools	Free Tier (5 files).	Free	N/A	Everyone	Global	N/A	eraser.io
+Mermaid Chart	Mermaid	Developer Tools	Free Tier (5 diagrams).	Free	N/A	Everyone	Global	N/A	mermaidchart.com
+Pluralsight	Pluralsight	Learning	Free via Azure/VS Dev Essentials.	Course	$300	Students	Global	MS Dev Essentials	pluralsight.com
+Treehouse	Treehouse	Learning	Student Discounts (Case by case).	Discount	Variable	Students	Global	Application	teamtreehouse.com
+FutureLearn	FutureLearn	Learning	Unlimited for Students (Discount).	Discount	Variable	Students	Global	Student Beans	futurelearn.com
+Khan Academy	Khan Academy	Learning	Free World-class Education.	Free	N/A	Everyone	Global	N/A	khanacademy.org
+Wolfram U	Wolfram	Learning	Free Open Courses.	Course	N/A	Everyone	Global	N/A	wolfram.com
+Brilliant.org	Brilliant	Learning	Free for Educators/Classrooms.	Subscription	$150	K-12 Teachers/Students	Global	Teacher Application	brilliant.org
+Duolingo for Schools	Duolingo	Learning	Free Ad-Free Classroom.	Free	N/A	K-12 Students	Global	Teacher Invite	schools.duolingo.com
+Quizlet	Quizlet	Learning	Free Basic / Teacher Discounts.	Free	N/A	Everyone	Global	N/A	quizlet.com
+Kahoot!	Kahoot!	Learning	Free Basic / Edu Discounts.	Free	N/A	Everyone	Global	N/A	kahoot.com
+Chegg	Chegg	Learning	Textbook Rental Discounts.	Discount	Variable	Students	US	N/A	chegg.com
+Course Hero	Course Hero	Learning	Upload to Unlock (1:1 ratio).	Hybrid	Variable	Students	Global	N/A	coursehero.com
+Scribd	Scribd	Learning	Student Discount ($10/mo).	Discount	$10/mo	Students	Global	SheerID	scribd.com
+Perlego	Perlego	Learning	Student Discount (15%+).	Discount	$100/yr	Students	Global	Student Beans	perlego.com
+Blinkist	Blinkist	Learning	Student Discount.	Discount	$50	Students	Global	Student Beans	blinkist.com
+MasterClass	MasterClass	Learning	Buy One Get One (Seasonal).	Discount	$180	Everyone	Global	N/A	masterclass.com
+Simplilearn	Simplilearn	Learning	Student Ambassador Program.	Hybrid	Variable	Students	Global	Application	simplilearn.com
+Great Learning	Great Learning	Learning	Free Courses (Certificates free).	Course	N/A	Everyone	Global	N/A	mygreatlearning.com
+UpGrad	UpGrad	Learning	Scholarship Test.	Scholarship	Variable	Students	India/Global	Exam	upgrad.com
+Coding Ninjas	Coding Ninjas	Learning	CNSAT Scholarship.	Scholarship	Up to 100%	Students	India	Exam	codingninjas.com
+GeeksforGeeks	GeeksforGeeks	Learning	Student Chapter Benefits.	Hybrid	Variable	Students	India	Institution	geeksforgeeks.org
+LeetCode Student	LeetCode	Learning	Student Discount ($99/yr).	Discount	$60	Students (50+ group)	Global	School Email	leetcode.com
+HackerRank	HackerRank	Learning	Free Practice.	Free	N/A	Everyone	Global	N/A	hackerrank.com
+Kaggle	Google	Data Science	Free Kernels/Datasets.	Free	N/A	Everyone	Global	N/A	kaggle.com
+Google Colab	Google	Data Science	Free GPU Access (Usage limits).	Free	N/A	Everyone	Global	N/A	colab.research.google.com
+Binder	Project Jupyter	Data Science	Free Notebook Hosting.	Free	N/A	Everyone	Global	N/A	mybinder.org
+CoCalc	SageMath	Data Science	Free Tier (No internet).	Free	N/A	Everyone	Global	N/A	cocalc.com
+Overleaf Personal	Digital Science	Productivity	Free Plan (1 collaborator).	Free	N/A	Everyone	Global	N/A	overleaf.com
+Resoomer	Resoomer	Productivity	Free Summarizer.	Free	N/A	Everyone	Global	N/A	resoomer.com
+Smallpdf	Smallpdf	Productivity	Free Tier (2 tasks/day).	Free	N/A	Everyone	Global	N/A	smallpdf.com
+ILovePDF	ILovePDF	Productivity	Free Tier (File size limit).	Free	N/A	Everyone	Global	N/A	ilovepdf.com
+WeTransfer	WeTransfer	Productivity	Free Tier (2GB transfer).	Free	N/A	Everyone	Global	N/A	wetransfer.com
+Google Drive	Google	Cloud & Credits	15GB Free Storage.	Free	N/A	Everyone	Global	N/A	google.com/drive
+Dropbox Basic	Dropbox	Cloud & Credits	2GB Free Storage.	Free	N/A	Everyone	Global	N/A	dropbox.com
+OneDrive	Microsoft	Cloud & Credits	5GB Free Storage.	Free	N/A	Everyone	Global	N/A	microsoft.com
+Box	Box	Cloud & Credits	10GB Free Storage.	Free	N/A	Everyone	Global	N/A	box.com
+MEGA	MEGA	Cloud & Credits	20GB Free Storage.	Free	N/A	Everyone	Global	N/A	mega.io
+pCloud	pCloud	Cloud & Credits	10GB Free Storage.	Free	N/A	Everyone	Global	N/A	pcloud.com
+Proton Drive	Proton	Cloud & Credits	1GB Free Encrypted Storage.	Free	N/A	Everyone	Global	N/A	proton.me/drive
+Internxt	Internxt	Cloud & Credits	10GB Free Storage.	Free	N/A	Everyone	Global	N/A	internxt.com
+Icedrive	Icedrive	Cloud & Credits	10GB Free Storage.	Free	N/A	Everyone	Global	N/A	icedrive.net
+Sync.com	Sync	Cloud & Credits	5GB Free Storage.	Free	N/A	Everyone	Global	N/A	sync.com
+MediaFire	MediaFire	Cloud & Credits	10GB Free Storage (Ad supported).	Free	N/A	Everyone	Global	N/A	mediafire.com
+Linear	Linear	Productivity	Free Tier (250 issues).	Free	N/A	Everyone	Global	N/A	linear.app/pricing
+Asana	Asana	Productivity	Basic Plan (Free).	Free	N/A	Everyone	Global	N/A	asana.com/pricing
+ClickUp	ClickUp	Productivity	Free Forever.	Free	N/A	Everyone	Global	N/A	clickup.com/pricing
+Monday.com	Monday.com	Productivity	Free (2 seats).	Free	N/A	Everyone	Global	N/A	monday.com/pricing
+Zapier	Zapier	Productivity	Free Tier (100 tasks/mo).	Free	N/A	Everyone	Global	N/A	zapier.com/pricing
+Make	Make	Productivity	Free Tier (1000 ops/mo).	Free	N/A	Everyone	Global	N/A	make.com
+Miro	Miro	Productivity	Free (3 boards).	Free	N/A	Everyone	Global	N/A	miro.com/pricing
+Mural	Mural	Productivity	Free Tier.	Free	N/A	Everyone	Global	N/A	mural.co/pricing
+JotForm Education	JotForm	Productivity	50% Off Education.	Discount	Variable	Students/Edu	Global	Edu Email	jotform.com
+Tally Forms	Tally	Productivity	Free Tier (99% features).	Free	N/A	Everyone	Global	N/A	tally.so
+Airtable Student	Airtable	Productivity	Free Student Plan.	Subscription	$240/yr	Students	Global	Edu Email	airtable.com/education
+Coda Education	Coda	Productivity	Education Discount.	Discount	N/A	Students/Edu	Global	Application	coda.io/for/education
+SmartSheet Edu	SmartSheet	Productivity	Education Pricing.	Discount	N/A	Students/Edu	Global	Contact Sales	smartsheet.com
+TeamGantt	TeamGantt	Productivity	Free Student Project.	Free	N/A	Students	Global	N/A	teamgantt.com
+Basecamp Edu	Basecamp	Productivity	Free for Teachers/Students.	Subscription	$99/mo	K-12/Higher Ed	Global	Email Support	basecamp.com
+Harvest	Harvest	Productivity	Free 1 Seat 2 Projects.	Free	N/A	Everyone	Global	N/A	getharvest.com
+Toggl Track	Toggl	Productivity	Free Tier (5 users).	Free	N/A	Everyone	Global	N/A	toggl.com
+Clockify	Clockify	Productivity	Free Forever.	Free	N/A	Everyone	Global	N/A	clockify.me
+RescueTime	RescueTime	Productivity	50% Off Student.	Discount	$6/mo	Students	Global	N/A	rescuetime.com
+Freedom	Freedom	Productivity	30% Off Code.	Discount	$30/yr	Students	Global	Code	freedom.to
+Forest	Forest	Productivity	Low Cost App.	Paid	$2	Everyone	Global	App Store	forestapp.cc
+TickTick Education	TickTick	Productivity	25% Off Premium.	Discount	$28/yr	Students	Global	Proof of Status	ticktick.com
+7-Zip	7-Zip	Productivity	Free Open Source Archiver.	Free	N/A	Everyone	Global	N/A	7-zip.org
+VLC Media Player	VideoLAN	Productivity	Free Open Source Media Player.	Free	N/A	Everyone	Global	N/A	videolan.org
+HandBrake	HandBrake	Productivity	Free Open Source Video Transcoder.	Free	N/A	Everyone	Global	N/A	handbrake.fr
+LibreOffice	Document Foundation	Productivity	Free Open Source Office Suite.	Free	N/A	Everyone	Global	N/A	libreoffice.org
+OnlyOffice	Ascensio System	Productivity	Free Personal Office Suite.	Free	N/A	Everyone	Global	N/A	onlyoffice.com
+Zettlr	Zettlr	Productivity	Free Open Source Markdown Editor.	Free	N/A	Everyone	Global	N/A	zettlr.com
+Thunderbird	Mozilla	Productivity	Free Open Source Email Client.	Free	N/A	Everyone	Global	N/A	thunderbird.net
+Firefox	Mozilla	Productivity	Free Open Source Browser.	Free	N/A	Everyone	Global	N/A	mozilla.org
+Brave Browser	Brave	Productivity	Free Privacy Browser.	Free	N/A	Everyone	Global	N/A	brave.com
+Tor Browser	Tor Project	Productivity	Free Privacy/Anonymity Browser.	Free	N/A	Everyone	Global	N/A	torproject.org
+Signal	Signal	Productivity	Free Encrypted Messaging.	Free	N/A	Everyone	Global	N/A	signal.org
+Telegram	Telegram	Productivity	Free Messaging.	Free	N/A	Everyone	Global	N/A	telegram.org
+Element	Element	Productivity	Free Personal Matrix Client.	Free	N/A	Everyone	Global	N/A	element.io
+Mattermost	Mattermost	Productivity	Free Self-Hosted Collaboration.	Free	N/A	Everyone	Global	N/A	mattermost.com
+Rocket.Chat	Rocket.Chat	Productivity	Free Community Edition.	Free	N/A	Everyone	Global	N/A	rocket.chat
+Zulip	Zulip	Productivity	Free Cloud Standard.	Free	N/A	Everyone	Global	N/A	zulip.com
+Jitsi Meet	8x8	Productivity	Free Open Source Video Conf.	Free	N/A	Everyone	Global	N/A	jitsi.org
+BigBlueButton	BigBlueButton	Learning	Free Open Source Virtual Classroom.	Free	N/A	Educators	Global	N/A	bigbluebutton.org
+Moodle	Moodle	Learning	Free Open Source LMS.	Free	N/A	Educators	Global	N/A	moodle.org
+Canvas LMS	Instructure	Learning	Free for Teachers.	Free	N/A	Educators	Global	N/A	instructure.com
+Open edX	Axim	Learning	Free Open Source Platform.	Free	N/A	Educators	Global	N/A	open.edx.org
+Chamilo	Chamilo	Learning	Free Open Source LMS.	Free	N/A	Educators	Global	N/A	chamilo.org
+Sakai	Sakai	Learning	Free Open Source LMS.	Free	N/A	Educators	Global	N/A	sakailms.org

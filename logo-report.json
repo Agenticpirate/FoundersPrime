@@ -1,0 +1,17 @@
+{
+  "missing": [],
+  "broken": [
+    {
+      "id": "deal-1768918863877-y7z4ht7qy",
+      "title": "Blue Strawberry",
+      "provider": "Blue Strawberry",
+      "logoUrl": "https://bluestrawberry.com/favicon.ico"
+    },
+    {
+      "id": "worldfirst-signup-bonus",
+      "title": "WorldFirst — Up to $100 Sign-Up Bonus",
+      "provider": "WorldFirst",
+      "logoUrl": "https://www.worldfirst.com/wp-content/themes/worldfirst/assets/favicon-96x96.png"
+    }
+  ]
+}

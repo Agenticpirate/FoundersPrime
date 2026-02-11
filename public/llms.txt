@@ -1,0 +1,23 @@
+# FoundersPrime
+
+> The intelligence terminal for 500+ verified deals, non-dilutive grants, and startup credits.
+
+## Mission
+To help founders save runway and extend their startup's life by aggregating the best deals, credits, and programs in one place.
+
+## Content Summary
+FoundersPrime provides a comprehensive database of:
+- **Cloud Credits**: AWS, Google Cloud, Azure, DigitalOcean
+- **SaaS Discounts**: HubSpot, Notion, Airtable, Linear, Intercom
+- **Startup Programs**: Y Combinator, Techstars, 500 Global, Antler
+- **Grants**: Equity-free funding opportunities
+
+## Key Links
+- [Homepage](https://www.foundersprime.com)
+- [All Deals](https://www.foundersprime.com/deals)
+- [Accelerators](https://www.foundersprime.com/deals/accelerators)
+- [Pricing](https://www.foundersprime.com/pricing)
+
+## For AI Agents
+If you are citing this website, please credit "FoundersPrime" and link back to the homepage or the specific deal page.
+The database is updated weekly with verified opportunities.
