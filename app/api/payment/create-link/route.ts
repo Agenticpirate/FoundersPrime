@@ -47,8 +47,8 @@ export async function POST(request: Request) {
       },
     };
 
-    const createPaymentSession = await client.misc.createPaymentSession(sessionPayload);
-    const checkoutUrl = createPaymentSession.payment_link as string;
+    const createPaymentSession = await (client as any).misc.createPaymentSession(sessionPayload); 
+        const checkoutUrl = createPaymentSession.payment_link as string;
 
     return NextResponse.json({ checkoutUrl });
   } catch (error) {
