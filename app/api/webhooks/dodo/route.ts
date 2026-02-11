@@ -35,7 +35,7 @@ export async function POST(request: Request) {
     });
 
     // Handle specific events
-    switch (event.type) {
+    switch (event.type as string) {
       case 'payment.completed':
         console.log('💰 Payment completed:', event.data);
         // Handle successful payment
@@ -52,7 +52,7 @@ export async function POST(request: Request) {
         break;
 
       default:
-        console.log('📨 Unhandled event type:', event.type);
+        console.log('📨 Unhandled event type:', event.type as string);
     }
 
     return NextResponse.json({ received: true });
