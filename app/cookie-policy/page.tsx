@@ -1,0 +1,33 @@
+import { Metadata } from 'next'
+import CookieHeader from '@/components/cookie/CookieHeader'
+import CookieContent from '@/components/cookie/CookieContent'
+import CookieSidebar from '@/components/cookie/CookieSidebar'
+import Header from '@/components/Header'
+import Footer from '@/components/Footer'
+
+export const metadata: Metadata = {
+  title: 'Cookie Policy | FoundersPrime',
+  description: 'FoundersPrime cookie policy. What cookies we use, why, and how to control them.',
+}
+
+export default function CookiePolicyPage() {
+  return (
+    <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden bg-[#F4F3EF]">
+      <Header />
+      <main className="flex-1">
+        <div className="mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-8 py-10">
+          <CookieHeader />
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+            <div className="lg:col-span-3">
+              <CookieContent />
+            </div>
+            <div className="lg:col-span-1">
+              <CookieSidebar />
+            </div>
+          </div>
+        </div>
+      </main>
+      <Footer />
+    </div>
+  )
+}

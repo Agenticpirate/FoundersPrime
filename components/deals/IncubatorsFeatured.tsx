@@ -1,0 +1,111 @@
+import Link from 'next/link'
+
+export default function IncubatorsFeatured() {
+  const featuredIncubators = [
+    {
+      id: 'stanford-startx',
+      title: 'Stanford StartX',
+      gradient: 'from-red-600 to-red-800',
+      icon: 'school',
+      tags: [
+        { label: 'UNIVERSITY', color: 'bg-red-100 text-red-800 border-red-900' },
+        { label: 'PRESTIGIOUS', color: 'bg-yellow-100 text-yellow-800 border-yellow-900' }
+      ],
+      value: 'No equity taken',
+      validity: '12-month program',
+      href: '/deals/stanford-startx'
+    },
+    {
+      id: 'mit-sandbox',
+      title: 'MIT Sandbox',
+      gradient: 'from-gray-700 to-gray-900',
+      icon: 'science',
+      tags: [
+        { label: 'UNIVERSITY', color: 'bg-gray-100' }
+      ],
+      value: 'Up to $25K grant',
+      validity: 'Student focused',
+      href: '/deals/mit-sandbox'
+    },
+    {
+      id: 'berkeley-skydeck',
+      title: 'Berkeley SkyDeck',
+      gradient: 'from-blue-600 to-indigo-700',
+      icon: 'apartment',
+      tags: [
+        { label: 'UNIVERSITY', color: 'bg-blue-100 text-blue-800 border-blue-900' }
+      ],
+      value: '$100K investment',
+      validity: '6-month program',
+      href: '/deals/berkeley-skydeck'
+    },
+    {
+      id: 'cornell-tech',
+      title: 'Cornell Tech',
+      gradient: 'from-purple-600 to-purple-800',
+      icon: 'hub',
+      tags: [
+        { label: 'TECH FOCUS', color: 'bg-gray-100' }
+      ],
+      value: 'Workspace + mentors',
+      validity: '12-month program',
+      href: '/deals/cornell-tech'
+    }
+  ]
+
+  return (
+    <div className="mb-20">
+      <div className="flex items-center justify-between mb-8 border-b-3 border-black pb-4">
+        <h2 className="font-mono text-3xl font-bold text-black flex items-center gap-3">
+          <span className="material-symbols-outlined text-3xl">star</span>
+          Top University Incubators
+        </h2>
+        <span className="hidden md:inline-block font-mono text-sm font-bold bg-gray-200 px-3 py-1 rounded-sm border-2 border-black">
+          BEST RESOURCES
+        </span>
+      </div>
+      
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {featuredIncubators.map((incubator) => (
+          <div key={incubator.id} className="bg-white border-3 border-black shadow-[6px_6px_0px_0px_#1a1a1a] rounded-sm flex flex-col group hover:translate-y-[-4px] transition-transform">
+            <div className={`h-32 bg-gradient-to-br ${incubator.gradient} border-b-3 border-black relative overflow-hidden flex items-center justify-center p-6`}>
+              <span className="material-symbols-outlined text-6xl text-white opacity-25 absolute rotate-12 -right-4 -bottom-4">
+                {incubator.icon}
+              </span>
+              <h3 className="font-mono text-2xl font-bold text-white relative z-10 text-center drop-shadow-md">
+                {incubator.title}
+              </h3>
+            </div>
+            
+            <div className="p-5 flex-1 flex flex-col">
+              <div className="flex gap-2 mb-4 flex-wrap">
+                {incubator.tags.map((tag, index) => (
+                  <span key={index} className={`border-2 border-black px-2 py-1 font-mono text-xs font-bold uppercase tracking-wide rounded-sm ${tag.color}`}>
+                    {tag.label}
+                  </span>
+                ))}
+              </div>
+              
+              <div className="space-y-3 mb-6 flex-1">
+                <div className="flex items-start gap-2">
+                  <span className="material-symbols-outlined text-black text-lg">monetization_on</span>
+                  <span className="font-mono text-sm font-bold">{incubator.value}</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <span className="material-symbols-outlined text-black text-lg">schedule</span>
+                  <span className="font-mono text-sm text-gray-600">{incubator.validity}</span>
+                </div>
+              </div>
+              
+              <Link className="w-full" href={incubator.href}>
+                <button className="w-full py-2 text-sm flex items-center justify-center gap-2 bg-primary text-black border-3 border-black shadow-[4px_4px_0px_0px_#1a1a1a] font-mono font-bold rounded-sm hover:shadow-[2px_2px_0px_0px_#1a1a1a] hover:translate-x-[2px] hover:translate-y-[2px] transition-all group-hover:bg-black group-hover:text-white group-hover:border-black">
+                  View Program <span className="material-symbols-outlined text-sm">arrow_forward</span>
+                </button>
+              </Link>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}

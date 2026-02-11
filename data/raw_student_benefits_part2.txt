@@ -1,0 +1,81 @@
+Figma for Education	Figma	Design & Creative	Free Professional Plan (Unlimited files/projects).	Subscription	$144/yr	K-12, Higher Ed	Global	School Email / Doc	figma.com/education
+Canva for Education	Canva	Design & Creative	Free Premium Features (Pro) for K-12.	Subscription	$119/yr	K-12 (Student/Teacher)	Global	Teacher Invite	canva.com/education
+Adobe Creative Cloud	Adobe	Design & Creative	60%+ Discount on All Apps (Photoshop, etc.).	Discount	~$360/yr	Students 13+	Global	Edu Email / Doc	adobe.com/students
+Sketch for Education	Sketch	Design & Creative	Free License for Mac app.	License	$99/yr	Students	Global	Upload Proof	sketch.com/education
+Autodesk Education	Autodesk	Design & Creative	Free 1-Year Renewable (AutoCAD, Maya, Revit).	License	$1,000s	Students	Global	SheerID	autodesk.com/education
+Shapr3D	Shapr3D	Design & Creative	Free Educational License (3D CAD).	License	$299/yr	Students	Global	Edu Email / Doc	shapr3d.com/education
+Blender	Blender Fdn	Design & Creative	Free Open Source 3D Creation Suite.	Free	N/A	Everyone	Global	N/A	blender.org
+Perplexity Pro	Perplexity	AI Tools	1 Year Free via partnerships (e.g., Uber/PayPal).	Subscription	$200	Students	US/Global	Partner/Edu Email	perplexity.ai
+Cursor Pro	Cursor	AI Tools	1 Year Free for eligible students.	Subscription	$240	Students	Global	Edu Email	cursor.com/students
+GitHub Copilot	Microsoft	AI Tools	Free Access for verified students.	Free	$100/yr	Students	Global	GitHub Pack	education.github.com
+Mistral Le Chat	Mistral AI	AI Tools	50% Off Pro tier for students.	Discount	Variable	Students	Global	Edu Email	help.mistral.ai
+Warp AI	Warp	AI Tools	Free Tier (100 requests/mo).	Free	N/A	Everyone	Global	N/A	warp.dev/warp-ai
+OpenAI ChatGPT	OpenAI	AI Tools	Free Tier (GPT-4o limited access).	Free	N/A	Everyone	Global	N/A	chat.openai.com
+Claude	Anthropic	AI Tools	Free Tier (Claude 3.5 Sonnet limited).	Free	N/A	Everyone	Global	N/A	claude.ai
+Gemini	Google	AI Tools	Free Tier (Gemini Flash).	Free	N/A	Everyone	Global	N/A	gemini.google.com
+Microsoft Copilot	Microsoft	AI Tools	Free Tier (GPT-4 integrated).	Free	N/A	Everyone	Global	N/A	copilot.microsoft.com
+NotebookLM	Google	AI Tools	Free AI Research Assistant.	Free	N/A	Everyone	Global	N/A	notebooklm.google.com
+Wolfram Alpha Pro	Wolfram	AI Tools	Discounted Pro Plan ($5/mo).	Discount	$5/mo	Students	Global	Edu Email	wolframalpha.com
+Prezi	Prezi	Design & Creative	Edu Plus Plan ($3/mo).	Discount	$10/mo	Students	Global	Edu Email	prezi.com/pricing/edu
+Lucidchart	Lucid	Productivity	Free Educational Plan.	Subscription	$8/mo	K-12/Higher Ed	Global	Edu Email	lucidchart.com/education
+Unity Personal	Unity	Developer Tools	Free Personal Edition (Revenue cap <$100k).	Free	N/A	Everyone	Global	N/A	unity.com/download
+CryEngine	Crytek	Developer Tools	Free License (5% royalty after $5k).	Free	N/A	Everyone	Global	N/A	cryengine.com
+Godot	Godot Engine	Developer Tools	Free Open Source Game Engine.	Free	N/A	Everyone	Global	N/A	godotengine.org
+Maya Learning Ed	Autodesk	Design & Creative	Free Personal Learning Edition.	License	N/A	Everyone	Global	N/A	autodesk.com
+Houdini Apprentice	SideFX	Design & Creative	Free Learning Edition (Non-commercial).	License	N/A	Everyone	Global	N/A	sidefx.com
+Nuke Non-commercial	Foundry	Design & Creative	Free Personal Learning Edition.	License	N/A	Everyone	Global	N/A	foundry.com
+DaVinci Resolve	Blackmagic	Design & Creative	Free Standard Version.	Free	$295	Everyone	Global	N/A	blackmagicdesign.com
+Avid Pro Tools Intro	Avid	Design & Creative	Free Intro Version.	Free	N/A	Everyone	Global	N/A	avid.com
+Ableton Live Trial	Ableton	Design & Creative	90 Day Free Trial.	Trial	$100+	Everyone	Global	N/A	ableton.com
+FL Studio Trial	Image-Line	Design & Creative	Unlimited Free Trial (No save project).	Trial	$100+	Everyone	Global	N/A	image-line.com
+Logic Pro Trial	Apple	Design & Creative	90 Day Free Trial.	Trial	$200	Mac Users	Global	N/A	apple.com
+Final Cut Pro Trial	Apple	Design & Creative	90 Day Free Trial.	Trial	$300	Mac Users	Global	N/A	apple.com
+Cinema 4D Student	Maxon	Design & Creative	Low cost Student License (Admin fee).	Discount	~$3/mo	Students	Global	SheerID	maxon.net
+Axure RP	Axure	Design & Creative	Free Educational License.	License	$25/mo	Students	Global	Edu Email / Doc	axure.com/edu
+Balsamiq Cloud	Balsamiq	Design & Creative	Free Cloud Plan.	Subscription	$9/mo	Students	Global	Edu Email	balsamiq.com
+Framer	Framer	Design & Creative	Free Site Plan (Education).	Subscription	$15/mo	Students	Global	Code	framer.com/education
+Webflow Student	Webflow	Developer Tools	Free Student Plan (1 year).	Subscription	$12/mo	Students	Global	Edu Email	webflow.com/classroom
+Squarespace Student	Squarespace	Developer Tools	50% Off First Year.	Discount	~$70	Students	Global	Student Beans	squarespace.com
+Wix Student	Wix	Developer Tools	50% Off Premium.	Discount	~$60	Students	Global	Student Beans	wix.com/student
+WordPress.com	Automattic	Developer Tools	Free Website (Subdomain).	Free	N/A	Everyone	Global	N/A	wordpress.com
+Icons8	Icons8	Design & Creative	Free Design Assets subscription.	Subscription	$30/mo	Students	Global	GitHub Pack	education.github.com/pack
+IconScout	IconScout	Design & Creative	60 Premium downloads/mo.	Credits	$20/mo	Students	Global	GitHub Pack	education.github.com/pack
+Adobe Aero	Adobe	Design & Creative	Free Mobile AR App.	Free	N/A	Everyone	Global	N/A	adobe.com
+Lens Studio	Snap	Design & Creative	Free AR Creation Tool.	Free	N/A	Everyone	Global	N/A	ar.snap.com
+Spark AR	Meta	Design & Creative	Free AR Creation Tool.	Free	N/A	Everyone	Global	N/A	sparkar.facebook.com
+8th Wall	Niantic	Developer Tools	Education Plan (WebAR).	Discount	N/A	Students	Global	Application	8thwall.com
+Excalidraw	Excalidraw	Design & Creative	Free Open Source Whiteboard.	Free	N/A	Everyone	Global	N/A	excalidraw.com
+Excalidraw Plus	Excalidraw	Design & Creative	Free for Education (Class access).	Free	N/A	Educators	Global	Application	plus.excalidraw.com
+LottieFiles	LottieFiles	Design & Creative	Free Tier (Unlimited public).	Free	N/A	Everyone	Global	N/A	lottiefiles.com
+Rive	Rive	Design & Creative	Free Tier (3 files).	Free	N/A	Everyone	Global	N/A	rive.app/pricing
+Spline	Spline	Design & Creative	Free Tier (Public files).	Free	N/A	Everyone	Global	N/A	spline.design
+Vectary	Vectary	Design & Creative	Free Tier (10 projects).	Free	N/A	Everyone	Global	N/A	vectary.com
+Bezi	Bezi	Design & Creative	Free Tier (Unlimited public).	Free	N/A	Everyone	Global	N/A	bezi.com
+Shapes XR	Shapes	Design & Creative	Education License (Class use).	License	N/A	Students	Global	Institution	shapesxr.com
+Gravity Sketch	Gravity Sketch	Design & Creative	Free Individual Plan.	Free	N/A	Everyone	Global	N/A	gravitysketch.com
+Milanote	Milanote	Design & Creative	Education Plan (Discount/Free).	Discount	N/A	Students	Global	Application	milanote.com
+MockFlow	MockFlow	Design & Creative	Free Tier (1 project).	Free	N/A	Everyone	Global	N/A	mockflow.com
+Marvel App	Marvel	Design & Creative	Free Tier (1 project).	Free	N/A	Everyone	Global	N/A	marvelapp.com
+InVision	InVision	Design & Creative	Free Tier (Legacy).	Free	N/A	Everyone	Global	N/A	invisionapp.com
+Zeplin	Zeplin	Design & Creative	Free Tier (1 project).	Free	N/A	Everyone	Global	N/A	zeplin.io
+Abstract	Abstract	Design & Creative	Education Discount.	Discount	N/A	Students	Global	Application	abstract.com
+OBS Studio	OBS	Design & Creative	Free Open Source Streaming.	Free	N/A	Everyone	Global	N/A	obsproject.com
+Audacity	Muse Group	Design & Creative	Free Open Source Audio Editor.	Free	N/A	Everyone	Global	N/A	audacityteam.org
+GIMPGIMP	Design & Creative	Free Open Source Image Editor.	Free	N/A	Everyone	Global	N/A	gimp.org
+Inkscape	Inkscape	Design & Creative	Free Open Source Vector Editor.	Free	N/A	Everyone	Global	N/A	inkscape.org
+Krita	Krita	Design & Creative	Free Open Source Painting.	Free	N/A	Everyone	Global	N/A	krita.org
+Scribus	Scribus	Design & Creative	Free Open Source Publishing.	Free	N/A	Everyone	Global	N/A	scribus.net
+Darktable	Darktable	Design & Creative	Free Open Source Photo Workflow.	Free	N/A	Everyone	Global	N/A	darktable.org
+RawTherapee	RawTherapee	Design & Creative	Free Open Source RAW Converter.	Free	N/A	Everyone	Global	N/A	rawtherapee.com
+Shotcut	Meltytech	Design & Creative	Free Open Source Video Editor.	Free	N/A	Everyone	Global	N/A	shotcut.org
+OpenShot	OpenShot	Design & Creative	Free Open Source Video Editor.	Free	N/A	Everyone	Global	N/A	openshot.org
+Kdenlive	KDE	Design & Creative	Free Open Source Video Editor.	Free	N/A	Everyone	Global	N/A	kdenlive.org
+Natron	Natron	Design & Creative	Free Open Source Compositing.	Free	N/A	Everyone	Global	N/A	natrongithub.github.io
+Pencil2D	Pencil2D	Design & Creative	Free Open Source Animation.	Free	N/A	Everyone	Global	N/A	pencil2d.org
+Synfig Studio	Synfig	Design & Creative	Free Open Source 2D Animation.	Free	N/A	Everyone	Global	N/A	synfig.org
+OpenToonz	Dwango	Design & Creative	Free Open Source Animation.	Free	N/A	Everyone	Global	N/A	opentoonz.github.io
+Tiled	Thorbjørn	Design & Creative	Free/Donation Level Editor.	Free	N/A	Everyone	Global	N/A	mapeditor.org
+LMMS	LMMS	Design & Creative	Free Open Source DAW.	Free	N/A	Everyone	Global	N/A	lmms.io
+MuseScore	Muse Group	Design & Creative	Free Open Source Notation.	Free	N/A	Everyone	Global	N/A	musescore.org
+Ardour	Ardour	Design & Creative	Free/Donation DAW.	Free	N/A	Everyone	Global	N/A	ardour.org
+Mixxx	Mixxx	Design & Creative	Free Open Source DJ Software.	Free	N/A	Everyone	Global	N/A	mixxx.org

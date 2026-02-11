@@ -1,0 +1,194 @@
+StudentUniverse	StudentUniverse	Travel	Flight/Hotel Discounts.	Discount	Variable	Students	Global	Edu Email / Doc	studentuniverse.com
+Amtrak Student	Amtrak	Travel	15% Off (Regional).	Discount	Variable	Students	US	ID / Code	amtrak.com
+FlixBus Student	FlixBus	Travel	10-15% Off.	Discount	Variable	Students	Global	StudentBeans / ISIC	flixbus.com
+United Airlines	United	Travel	5% Off (Young Adult).	Discount	Variable	Ages 18-23	Global	MileagePlus	united.com
+Lufthansa Student	Lufthansa	Travel	Student Fares.	Discount	Variable	Students	Global	Verification	lufthansa.com
+Turkish Airlines	Turkish Airlines	Travel	Up to 20% Off.	Discount	Variable	Students	Global	Miles&Smiles	turkishairlines.com
+Emirates Student	Emirates	Travel	Up to 10% Off.	Discount	Variable	Students	Global	Code 'STUDENT'	emirates.com
+Qatar Airways	Qatar Airways	Travel	Student Club (Discounts).	Discount	10-20%	Students	Global	Student Club	qatarairways.com
+Singapore Airlines	Singapore Airlines	Travel	Student Privileges (10% + Bag).	Discount	Variable	Students	Global	KrisFlyer	singaporeair.com
+Air France Student	Air France	Travel	Student Fares.	Discount	Variable	Students	Global	Verification	airfrance.com
+Cathay Pacific	Cathay Pacific	Travel	Student Fares.	Discount	Variable	Students	Global	Verification	cathaypacific.com
+Etihad Student	Etihad	Travel	Student Offer (Up to 10%).	Discount	Variable	Students	Global	Verification	etihad.com
+SAS Youth	SAS	Travel	Youth Fares (Under 26).	Discount	Variable	Under 26	Global	ID	flysas.com
+Eurail Pass	Eurail	Travel	Youth Pass (25% Off).	Discount	Variable	Under 27	Europe	ID	eurail.com
+Interrail Pass	Interrail	Travel	Youth Pass (25% Off).	Discount	Variable	Under 27	Europe	ID	interrail.eu
+Greyhound	Greyhound	Travel	Student Advantage (10%).	Discount	10%	Students	US	Student Advantage	greyhound.com
+Megabus	Megabus	Travel	$3 Off (UNiDAYS).	Discount	$3	Students	US/UK	UNiDAYS	us.megabus.com
+TfL 18+ Oyster	TfL	Travel	30% Off Travelcards.	Discount	30%	Students	UK (London)	Institution	tfl.gov.uk
+16-25 Railcard	National Rail	Travel	1/3 Off Rail Fares.	Discount	33%	16-25 or Student	UK	ID	16-25railcard.co.uk
+Spotify Student	Spotify	Entertainment	$5.99/mo + Hulu + Showtime.	Bundle	$15/mo savings	Students	Global	SheerID	spotify.com/student
+YouTube Premium	Google	Entertainment	~$7/mo Student Plan.	Discount	$7/mo savings	Students	Global	SheerID	youtube.com
+Apple Music Student	Apple	Entertainment	$5.99/mo + Apple TV+.	Bundle	$15/mo savings	Students	Global	UNiDAYS	apple.com
+Amazon Music	Amazon	Entertainment	$5.99/mo Student.	Discount	$5/mo savings	Students	Global	Prime Student	amazon.com
+Hulu Student	Hulu	Entertainment	$1.99/mo (Ad supported).	Discount	$6/mo savings	Students	US	SheerID	hulu.com/student
+Peacock Student	NBCUniversal	Entertainment	$1.99/mo (12 months).	Discount	$4/mo savings	Students	US	SheerID	peacocktv.com
+Paramount+ Student	Paramount	Entertainment	25% Off Essential.	Discount	Variable	Students	US	SheerID	paramountplus.com
+HBO Max Student	Warner Bros	Entertainment	50% Off.	Discount	Variable	Students	US	UNiDAYS	max.com
+Tidal Student	Tidal	Entertainment	50% Off.	Discount	$5/mo savings	Students	Global	SheerID	tidal.com
+Deezer Student	Deezer	Entertainment	50% Off.	Discount	$5/mo savings	Students	Global	SheerID	deezer.com
+SoundCloud Go+	SoundCloud	Entertainment	50% Off.	Discount	$5/mo savings	Students	Global	SheerID	soundcloud.com
+Pandora Student	Pandora	Entertainment	$4.99/mo Premium.	Discount	$5/mo savings	Students	US	SheerID	pandora.com
+Headspace Student	Headspace	Health	$9.99/year.	Discount	$60/yr savings	Students	US/UK/CA	SheerID	headspace.com
+Calm Student	Calm	Health	Amazon Prime Deal ($9/yr).	Discount	Variable	Students	Global	Prime Student	calm.com
+Peloton App	Peloton	Health	$6.99/mo.	Discount	$6/mo savings	Students	US/UK	SheerID	onepeloton.com
+Strava Student	Strava	Health	50% Off Subscription.	Discount	Variable	Students	Global	SheerID	strava.com
+MEC Student	MEC	Miscellaneous	10% Off.	Discount	Variable	Students	Canada	SPC	mec.ca
+Bulk	Bulk	Health	45% Off.	Discount	Variable	Students	UK	Student Beans	bulk.com
+MyProtein	MyProtein	Health	35% Off.	Discount	Variable	Students	Global	UNiDAYS	myprotein.com
+HelloFresh Student	HelloFresh	Miscellaneous	Discounted Boxes.	Discount	Variable	Students	Global	UNiDAYS	hellofresh.com
+Uber Eats Student	Uber	Miscellaneous	£10 Off.	Discount	£10	Students	UK	UNiDAYS	ubereats.com
+DoorDash Student	DoorDash	Miscellaneous	DashPass Student ($4.99/mo).	Discount	$5/mo savings	Students	US	SheerID	doordash.com
+Grubhub Student	Grubhub	Miscellaneous	Free Plus (Amazon Prime).	Free	$10/mo savings	Students	US	Prime Student	grubhub.com
+Washington Post	WaPo	Miscellaneous	$1/mo Subscription.	Discount	$9/mo savings	Students	US	Amazon Prime	washingtonpost.com
+New York Times	NYT	Miscellaneous	$1/week Subscription.	Discount	Variable	Students	Global	Verification	nytimes.com
+Wall Street Journal	WSJ	Miscellaneous	$4/mo Subscription.	Discount	Variable	Students	Global	Verification	store.wsj.com
+The Economist	The Economist	Miscellaneous	50-75% Off.	Discount	Variable	Students	Global	Verification	economist.com
+Financial Times	FT	Miscellaneous	50% Off.	Discount	Variable	Students	Global	Verification	subs.ft.com
+Bloomberg	Bloomberg	Miscellaneous	$9.99/mo.	Discount	Variable	Students	Global	Verification	bloomberg.com
+Nike Student	Nike	Fashion	10% Off.	Discount	Variable	Students	US/UK/EU	SheerID/UNiDAYS	nike.com
+Adidas Student	Adidas	Fashion	15% Off + Free Shipping.	Discount	Variable	Students	US/UK/EU	UNiDAYS	adidas.com
+ASOS Student	ASOS	Fashion	10% Off.	Discount	Variable	Students	Global	UNiDAYS	asos.com
+H&M Student	H&M	Fashion	10-15% Off.	Discount	Variable	Students	Global	Student Beans	hm.com
+Levi's Student	Levi's	Fashion	15% Off.	Discount	Variable	Students	US/UK	UNiDAYS	levi.com
+Uniqlo Student	Uniqlo	Fashion	Student Discount (Regional).	Discount	Variable	Students	US/UK	UNiDAYS	uniqlo.com
+Gymshark Student	Gymshark	Fashion	10% Off.	Discount	Variable	Students	Global	Student Beans	gymshark.com
+New Balance Student	New Balance	Fashion	Student Discount.	Discount	Variable	Students	US/UK	UNiDAYS	newbalance.com
+Reebok Student	Reebok	Fashion	50% Off (varies).	Discount	Variable	Students	US	UNiDAYS	reebok.com
+Puma Student	Puma	Fashion	10% Off.	Discount	Variable	Students	Global	UNiDAYS	us.puma.com
+Converse Student	Converse	Fashion	10% Off.	Discount	Variable	Students	US/UK	SheerID	converse.com
+Dr. Martens	Dr. Martens	Fashion	15% Off.	Discount	Variable	Students	Global	UNiDAYS	drmartens.com
+UGG Student	UGG	Fashion	10% Off.	Discount	Variable	Students	US/UK	UNiDAYS	ugg.com
+Crocs Student	Crocs	Fashion	25% Off.	Discount	Variable	Students	US	Student Beans	crocs.com
+Ray-Ban Student	Ray-Ban	Fashion	15% Off.	Discount	Variable	Students	Global	UNiDAYS	ray-ban.com
+Oakley Student	Oakley	Fashion	15% Off.	Discount	Variable	Students	Global	UNiDAYS	oakley.com
+Chevening Scholarship	UK Gov	Scholarships	Masters in UK (Full Ride).	Scholarship	Full	Int'l Students	Global	chevening.org
+Fulbright Foreign Student	Fulbright	Scholarships	Grad Study in US (Full Ride).	Scholarship	Full	Int'l Students	Global	foreign.fulbrightonline.org
+Gates Cambridge	Gates Fdn	Scholarships	Postgrad at Cambridge (Full).	Scholarship	Full	Int'l Students	UK	gatescambridge.org
+MPOWER Global Citizen	MPOWER	Scholarships	Study in US/CA ($2k-$10k).	Scholarship	Variable	Int'l Students	US/Canada	mpowerfinancing.com
+Erasmus Mundus	EU	Scholarships	Joint Masters in Europe.	Scholarship	Full	Global Students	Europe	erasmus-plus.ec.europa.eu
+DAAD Study Scholarship	DAAD	Scholarships	Masters in Germany.	Scholarship	Monthly	Int'l Students	Germany	daad.de
+Rhodes Scholarship	Rhodes Trust	Scholarships	Postgrad at Oxford.	Scholarship	Full	Int'l Students	UK	rhodeshouse.ox.ac.uk
+Commonwealth Masters	CSC	Scholarships	Masters in UK for Commonwealth.	Scholarship	Full	Commonwealth	UK	cscuk.fcdo.gov.uk
+JWU Global Scholarship	Johnson & Wales	Scholarships	Full Tuition.	Scholarship	Full Tuition	Int'l Students	US	jwu.edu
+UMass Lowell Latin	UMass Lowell	Scholarships	Graduate Scholarship.	Scholarship	$20,000	Int'l Students	US	uml.edu
+UMass Lowell SE Asia	UMass Lowell	Scholarships	Graduate Scholarship.	Scholarship	$20,000	Int'l Students	US	uml.edu
+UConn Global Excellence	UConn	Scholarships	Merit Award.	Scholarship	Variable	Int'l Students	US	admissions.uconn.edu
+CMU METALS	CMU	Scholarships	Merit Scholarship.	Scholarship	Variable	Grad Students	US	metals.hcii.cmu.edu
+Wesleyan African	Wesleyan	Scholarships	Full Scholarship.	Scholarship	Full	African Students	US	wesleyan.edu
+Wesleyan Freeman	Wesleyan	Scholarships	Full Scholarship.	Scholarship	Full	Asian Students	US	wesleyan.edu
+Trailblazer Opportunity	Fulbright NL	Scholarships	Year in US.	Scholarship	Full	Dutch Students	US	fulbright.nl
+Roger Williams Int'l	Roger Williams	Scholarships	Merit Scholarship.	Scholarship	50% Tuition	Int'l Students	US	rwu.edu
+Aga Khan Foundation	AKF	Scholarships	Postgrad Study (50% Grant/Loan).	Hybrid	50% Grant/Loan	Dev Countries	Global	akdn.org
+Vidyasaarathi	NSDL	Scholarships	Corporate Scholarships.	Scholarship	Variable	Indian Students	India	vidyasaarathi.co.in
+PMSS	Govt of India	Scholarships	CAPF/Police Wards.	Scholarship	Monthly	Indian Students	India	scholarships.gov.in
+Thiel Fellowship	Thiel Fdn	Startup Programs	$100k Grant to build.	Grant	$100,000	Under 22	Global	thielfellowship.org
+Rice Business Plan	Rice	Competitions	Startup Competition.	Prize	$1M+	Graduate Students	Global	rbpc.rice.edu
+Microsoft Imagine Cup	Microsoft	Competitions	Global Tech Competition.	Prize	$100k+	Students	Global	imaginecup.microsoft.com
+Google Solution Challenge	Google	Competitions	GDSC Competition.	Prize	Mentorship	Students	Global	developers.google.com
+NASA Apps Challenge	NASA	Competitions	Space Apps Hackathon.	Prize	Global Rec	Everyone	Global	spaceappschallenge.org
+IBM Call for Code	IBM	Competitions	Global Challenge.	Prize	$200k	Everyone	Global	callforcode.org
+James Dyson Award	Dyson	Competitions	Design Award.	Prize	£30,000	Students	Global	jamesdysonaward.org
+776 Fellows	776	Grants	Climate Fellowship.	Grant	$100k	18-23 Years	Global	776.org
+Ashoka Fellows	Ashoka	Grants	Social Entrepreneurship.	Grant	Variable	Social Ent	Global	ashoka.org
+Aspen Tech Policy	Aspen Inst	Grants	Policy Hub.	Grant	Variable	Technologists	US	aspentechpolicyhub.org
+Bloomberg New Economy	Bloomberg	Grants	Solutions.	Grant	Variable	Everyone	Global	bloombergneweconomy.com
+Buckminster Fuller	BFI	Grants	Design Challenge.	Grant	$100k	Everyone	Global	bfi.org
+Y Combinator	YC	Startup Programs	Accelerator.	Investment	$500k	Founders	Global	ycombinator.com
+Techstars	Techstars	Startup Programs	Accelerator.	Investment	$120k	Founders	Global	techstars.com
+500 Global	500 Global	Startup Programs	Accelerator.	Investment	$150k	Founders	Global	500.co
+Antler	Antler	Startup Programs	Residency.	Investment	Pre-seed	Founders	Global	antler.co
+Entrepreneur First	EF	Startup Programs	Talent Investor.	Investment	Pre-seed	Founders	Global	joinef.com
+Berkeley SkyDeck	Berkeley	Startup Programs	Accelerator.	Investment	$200k	Founders	Global	skydeck.berkeley.edu
+StartX	Stanford	Startup Programs	Accelerator.	Program	Equity Free	Founders	Global	startx.com
+MassChallenge	MassChallenge	Startup Programs	Accelerator.	Program	Equity Free	Founders	Global	masschallenge.org
+Plug and Play	Plug and Play	Startup Programs	Accelerator.	Investment	Variable	Founders	Global	plugandplaytechcenter.com
+SOSV	SOSV	Startup Programs	Accelerator (Hard Tech).	Investment	Variable	Founders	Global	sosv.com
+HAX	SOSV	Startup Programs	Hardware Accelerator.	Investment	$250k	Founders	Global	hax.co
+IndieBio	SOSV	Startup Programs	Biotech Accelerator.	Investment	$525k	Founders	Global	indiebio.com
+Orbit Startups	SOSV	Startup Programs	Emerging Markets.	Investment	Variable	Founders	Global	orbitstartups.com
+d.lab	SOSV	Startup Programs	Blockchain.	Investment	Variable	Founders	Global	dlab.vc
+Seedstars	Seedstars	Startup Programs	Emerging Markets.	Investment	Variable	Founders	Global	seedstars.com
+Flat6Labs	Flat6Labs	Startup Programs	MENA Accelerator.	Investment	Variable	Founders	MENA	flat6labs.com
+Startupbootcamp	SBC	Startup Programs	Industry Accelerator.	Investment	Variable	Founders	Global	startupbootcamp.org
+Founders Factory	FF	Startup Programs	Venture Studio.	Investment	Variable	Founders	Global	foundersfactory.com
+Rockstart	Rockstart	Startup Programs	Accelerator.	Investment	Variable	Founders	Europe	rockstart.com
+Bethnal Green Ventures	BGV	Startup Programs	Tech for Good.	Investment	£30k	Founders	UK	bethnalgreenventures.com
+Zinc	Zinc	Startup Programs	Venture Builder.	Investment	Variable	Founders	UK	zinc.vc
+EIT Digital	EU	Startup Programs	Accelerator.	Investment	Variable	Founders	Europe	eitdigital.eu
+Station F	Station F	Startup Programs	Campus/Program.	Service	Variable	Founders	France	stationf.co
+Creative Destruction Lab	CDL	Startup Programs	Mentorship Program.	Program	Equity Free	Founders	Global	creativedestructionlab.com
+Next 36	NEXT Canada	Startup Programs	Founder Dev.	Program	Variable	Students	Canada	nextcanada.com
+Velocity	Waterloo	Startup Programs	Incubator.	Program	Equity Free	Students	Canada	velocityincubator.com
+DMZ	TMU	Startup Programs	Incubator.	Program	Equity Free	Founders	Canada	dmz.ryerson.ca
+1871	1871	Startup Programs	Incubator.	Program	Variable	Founders	US	1871.com
+Capital Factory	Capital Factory	Startup Programs	Accelerator.	Investment	Variable	Founders	US	capitalfactory.com
+Gener8tor	Gener8tor	Startup Programs	Accelerator.	Investment	$100k	Founders	US	gener8tor.com
+Alchemist	Alchemist	Startup Programs	B2B Accelerator.	Investment	Variable	Founders	US	alchemistaccelerator.com
+Forum Ventures	Forum	Startup Programs	B2B SaaS.	Investment	$100k	Founders	US	forumvc.com
+TinySeed	TinySeed	Startup Programs	Remote Accelerator.	Investment	$120k+	Founders	Global	tinyseed.com
+Earnest Capital	Calm Company	Startup Programs	Funding.	Investment	SEAL	Founders	Global	calmfund.com
+Village Global	Village Global	Startup Programs	Network.	Investment	Variable	Founders	Global	villageglobal.vc
+On Deck	On Deck	Startup Programs	Fellowship.	Program	Variable	Founders	Global	beondeck.com
+Pioneer	Pioneer	Startup Programs	Remote Accelerator.	Investment	Variable	Founders	Global	pioneer.app
+Entrepreneurship World Cup	GEN	Competitions	Global Competition.	Prize	Variable	Founders	Global	entrepreneurshipworldcup.com
+Hult Prize	Hult	Competitions	Social Impact.	Prize	$1M	Students	Global	hultprize.org
+Fowler Global Challenge	St. Thomas	Competitions	Social Venture.	Prize	Variable	Students	Global	fowlerchallenge.com
+e-Fest	Schulze	Competitions	Undergrad Comp.	Prize	$215k	Undergrad Students	US	eix.org
+MN Cup	Minnesota	Competitions	Startup Comp.	Prize	Variable	Residents	US (MN)	mncup.org
+Baylor New Venture	Baylor	Competitions	Startup Comp.	Prize	Variable	Students	Global	baylor.edu
+VT Global Challenge	Virginia Tech	Competitions	Entrepreneurship.	Prize	Variable	Students	Global	apex.vt.edu
+HKUST One Million	HKUST	Competitions	Startup Comp.	Prize	$1M HKD	Students	Global	onemilliondollar.ust.hk
+StartUp Lehigh Valley	Lehigh	Competitions	Startup Comp.	Prize	Variable	Everyone	US (PA)	startuplehighvalley.com
+Cisco Startup Program	Cisco	Startup Programs	Accelerator.	Program	Equity Free	Startups	Global	cisco.com
+KPMG Tech Innovator	KPMG	Competitions	Startup Comp.	Prize	Global Rec	Startups	Global	kpmg.com
+Startup with IBM	IBM	Startup Programs	Cloud Credits.	Credits	$120k	Startups	Global	developer.ibm.com
+BootUp360	BootUp	Startup Programs	Incubation.	Program	Mentorship	Everyone	Global	bootupventures.com
+Amity Innovation	Amity	Startup Programs	Incubator.	Program	Variable	Everyone	India	amity.edu
+Draper Startup House	Draper	Startup Programs	Pre-Accelerator.	Program	Education	Everyone	Global	draperstartuphouse.com
+LaunchVic	LaunchVic	Startup Programs	Ecosystem.	Program	Variable	Residents	Australia (Vic)	launchvic.org
+AUC Venture Lab	AUC	Startup Programs	University Incubator.	Program	Equity Free	Students	Egypt	aucegypt.edu
+Kaplan EdTech	Kaplan	Startup Programs	Accelerator.	Program	Variable	EdTech	US	kaplan.com
+Intelak Hub	Intelak	Startup Programs	Aviation/Travel.	Program	Variable	Startups	UAE	intelak.com
+Qatar STP	QSTP	Startup Programs	Tech Park.	Grant	Variable	Startups	Qatar	qstp.org.qa
+Xelpmoc	Xelpmoc	Startup Programs	Tech Partner.	Investment	Tech for Equity	Startups	India	xelpmoc.in
+Jefferson Education	UVA	Startup Programs	EdTech.	Program	Research	EdTech	US	curry.virginia.edu
+Fogarty Institute	Fogarty	Startup Programs	MedTech.	Program	Mentorship	MedTech	US	fogartyinstitute.org
+Springboard	Springboard	Startup Programs	Accelerator.	Program	Variable	Startups	UK	springboard.com
+Luma Launch	Luma	Startup Programs	Accelerator.	Investment	Variable	Startups	US	lumalaunch.com
+Kauffman Foundation	Kauffman	Startup Programs	Grants.	Grant	Variable	Entrepreneurs	US	kauffman.org
+Google Career Certificates	Google	Learning	Scholarship.	Scholarship	Free Cert	Students	Global (EMEA/US)	grow.google
+MLH Fellowship	MLH	Learning	Remote Internship.	Stipend	Variable	Students	Global	fellowship.mlh.io
+Google Summer of Code	Google	Learning	Stipend for OSS.	Stipend	Variable	Students	Global	summerofcode.withgoogle.com
+Outreachy	Outreachy	Learning	Stipend for OSS.	Stipend	$7,000	Underrepresented	Global	outreachy.org
+Linux Foundation	Linux Foundation	Learning	Training Scholarship.	Scholarship	Variable	Everyone	Global	training.linuxfoundation.org
+CNCF Diversity	CNCF	Learning	Diversity Scholarship.	Scholarship	Variable	Everyone	Global	cncf.io
+AnitaB.org	AnitaB	Learning	GHC Scholarship.	Scholarship	Variable	Women in Tech	Global	anitab.org
+OpenAI Residency	OpenAI	Learning	Research Residency.	Salary	Full Salary	Researchers	Global	openai.com
+Google AI Residency	Google	Learning	Research Residency.	Salary	Full Salary	Researchers	Global	research.google
+Meta AI Residency	Meta	Learning	Research Residency.	Salary	Full Salary	Researchers	Global	ai.facebook.com
+Microsoft Research	Microsoft	Learning	PhD Fellowship.	Scholarship	Variable	PhD Students	Global	microsoft.com
+Apple Scholars	Apple	Learning	AI/ML Scholarship.	Scholarship	Variable	PhD Students	Global	machinelearning.apple.com
+Adobe Research	Adobe	Learning	Fellowship.	Scholarship	$10,000	Students	Global	research.adobe.com
+NVIDIA Grad Fellowship	NVIDIA	Learning	Graduate Fellowship.	Scholarship	$50,000	PhD Students	Global	nvidia.com
+IBM PhD Fellowship	IBM	Learning	PhD Fellowship.	Scholarship	Variable	PhD Students	Global	research.ibm.com
+Google PhD Fellowship	Google	Learning	PhD Fellowship.	Scholarship	Variable	PhD Students	Global	research.google
+Facebook Fellowship	Meta	Learning	PhD Fellowship.	Scholarship	Variable	PhD Students	Global	research.facebook.com
+Amazon Research	Amazon	Learning	Research Awards.	Grant	Variable	Faculty/Students	Global	amazon.science
+Qualcomm Innovation	Qualcomm	Learning	Innovation Fellowship.	Scholarship	Variable	PhD Students	Global	qualcomm.com
+Intel PhD Fellowship	Intel	Learning	PhD Fellowship.	Scholarship	Variable	PhD Students	US	intel.com
+Jane Street	Jane Street	Learning	Graduate Research Fellowship.	Scholarship	Variable	PhD Students	Global	janestreet.com
+Two Sigma	Two Sigma	Learning	PhD Fellowship.	Scholarship	Variable	PhD Students	US	twosigma.com
+Citadel Data Open	Citadel	Learning	Data Open.	Prize	$25,000	Students	Global	citadel.com
+DE Shaw Fellowships	DE Shaw	Learning	Fellowships.	Scholarship	Variable	Students	Global	deshaw.com
+Goldman Sachs	Goldman Sachs	Learning	Scholarship for Excellence.	Scholarship	Variable	Students	Global	goldmansachs.com
+JP Morgan GenTech	JP Morgan	Learning	GenerationTech.	Program	N/A	Students	Global	careers.jpmorgan.com
+Morgan Stanley	Morgan Stanley	Learning	Richard B. Fisher Scholarship.	Scholarship	Variable	Students	US	morganstanley.com
+Bank of America Leaders	BoA	Learning	Student Leaders.	Program	Intern/Trip	High School	US	about.bankofamerica.com
+McKinsey NGW	McKinsey	Learning	Next Generation Women.	Award	Variable	Students	Global	mckinsey.com
+BCG Unlimited	BCG	Learning	Unlimited.	Program	Mentorship	Students	Global	careers.bcg.com
+Bain BEL	Bain	Learning	BEL Program.	Program	Mentorship	Students	Global	bain.com
+P&G Standout	P&G	Learning	Standout Program.	Program	Mentorship	Students	Global	pgcareers.com
+Unilever Future Leaders	Unilever	Learning	Future Leaders.	Program	Management	Graduates	Global	careers.unilever.com
+L'Oreal Brandstorm	L'Oreal	Learning	Brandstorm.	Prize	Intrapreneurship	Students	Global	brandstorm.loreal.com
+Red Bull Basement	Red Bull	Learning	Basement.	Program	Incubator	Students	Global	basement.redbull.com

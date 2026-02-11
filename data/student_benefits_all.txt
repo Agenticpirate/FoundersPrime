@@ -1,0 +1,601 @@
+GitHub Student Developer Pack	GitHub	Developer Tools	Bundle of 80+ pro tools, credits, and training.	Hybrid	$200k+	Age 13+, Enrolled Degree/Diploma	Global	School Email / ID / Documents	education.github.com/pack
+JetBrains Educational Pack	JetBrains	Developer Tools	Free access to all IDEs (IntelliJ, PyCharm, WebStorm, etc.).	Subscription	~$650/yr	High School, College, Univ	Global	Edu Email / ISIC / Official Doc	jetbrains.com/student
+Visual Studio Enterprise	Microsoft	Developer Tools	Enterprise IDE + Azure DevOps + Pluralsight access.	Hybrid	~$3,000+	Higher Ed Students	Global	MS Account + Edu Email	visualstudio.microsoft.com
+Azure for Students	Microsoft	Cloud & Credits	$100 credit + 25+ free services (SQL, AI, App Service).	Credits	$100+	Age 18+, Students	Global	Edu Email / SheerID	azure.microsoft.com/en-us/free/students
+AWS Educate	Amazon Web Services	Cloud & Credits	Free cloud content, labs, and career pathways.	Hybrid	Variable	Students	Global	Edu Email	aws.amazon.com/education/awseducate
+Google Cloud for Students	Google	Cloud & Credits	$300 credits + free tier usage (Compute, Storage).	Credits	$300+	Students	Global	Edu Email	cloud.google.com/edu/students
+Heroku for Students	Salesforce	Cloud & Credits	$13/month platform credit for 24 months.	Credits	$312	Verified GitHub Student	Global	GitHub Pack	heroku.com/students
+DigitalOcean	DigitalOcean	Cloud & Credits	$200 in platform credits valid for 1 year.	Credits	$200	Verified GitHub Student	Global	GitHub Pack	education.github.com/pack
+Oracle Cloud Always Free	Oracle	Cloud & Credits	2 AMD VMs, 4 ARM vCPUs, 24GB RAM, 200GB storage.	Free	N/A	Everyone (Student friendly)	Global	Credit Card	oracle.com/cloud/free
+Termius Student Plan	Termius	Developer Tools	Free Termius Pro (SSH client) access.	Subscription	$120/yr	Students	Global	GitHub Pack	termius.com/education
+GitKraken Student	GitKraken	Developer Tools	Free Pro Client for Git visualization.	Subscription	$60/yr	Students	Global	GitHub Pack	gitkraken.com/student-resources
+Bootstrap Studio	Bootstrap Studio	Design & Creative	Free License for website design tool.	License	$60	Students	Global	GitHub Pack	bootstrapstudio.io/student
+BrowserStack	BrowserStack	Developer Tools	Free Automate Mobile Plan (1 parallel user).	Subscription	Enterprise	Students	Global	GitHub Pack	education.github.com/pack
+Sentry for Education	Sentry	Developer Tools	500k errors/mo, 100k transactions, performance monitoring.	Subscription	Enterprise	Students	Global	GitHub Pack	education.github.com/pack
+Travis CI	Travis CI	Developer Tools	Free private builds for students.	Subscription	$69/mo	Students	Global	GitHub Pack	education.github.com/pack
+Deepnote Team	Deepnote	Data Science	Free Team Plan (Collaboration, History, 5GB RAM machines).	Subscription	$40/mo	Students	Global	Edu Email / GH Pack	deepnote.com/education
+Namecheap	Namecheap	Developer Tools	1 Free.me domain + SSL certificate for 1 year.	Product	~$20	Students	Global	GitHub Pack	nc.me
+Name.com	Name.com	Developer Tools	1 Free domain + Whois Privacy.	Product	~$20	Students	Global	GitHub Pack	name.com/partner/github-education
+Arduino Create	Arduino	Hardware/Dev	Free Create Maker Plan (6 months).	Subscription	$36	Students	Global	GitHub Pack	education.github.com/pack
+Unity Student Plan	Unity	Developer Tools	Free RT3D Dev Tools, Cloud Build, Asset Store discounts.	Subscription	~$300	Students 16+	Global	SheerID	unity.com/products/unity-student
+Unreal Engine	Epic Games	Developer Tools	Free License (Standard) for creators.	License	N/A	Everyone	Global	N/A	unrealengine.com/license
+Polypane	Polypane	Developer Tools	Free Individual Plan (1 year) for web development.	Subscription	$100+	Students	Global	GitHub Pack	polypane.app/education
+Tower Git	Tower	Developer Tools	Free Pro License for Mac/Windows.	License	$69	Students	Global	Edu Email / Doc	git-tower.com/education
+SQLGate	SQLGate	Developer Tools	Free Standard License for database management.	License	$100+	Students	Global	GitHub Pack	education.github.com/pack
+PopSQL Premium	PopSQL	Developer Tools	Free Premium Subscription for collaborative SQL.	Subscription	$20/mo	Students	Global	Edu Email	popsql.com/education
+Datadog Pro	Datadog	Developer Tools	Pro Account + 10 Servers for 2 years.	Subscription	Enterprise	Students	Global	GitHub Pack	education.github.com/pack
+New Relic	New Relic	Developer Tools	Free Full Stack Observability (Standard).	Subscription	Enterprise	Students	Global	GitHub Pack	newrelic.com/students
+Blackfire.io	Blackfire	Developer Tools	Free Profiler Subscription for PHP performance.	Subscription	Premium	Students	Global	GitHub Pack	blackfire.io/docs/integrations/github-student-pack
+CodeScene	CodeScene	Developer Tools	Free Student Account for code analysis.	Subscription	Premium	Students	Global	GitHub Pack	codescene.com/students
+Astra Security	Astra	Developer Tools	6-month website firewall & malware scanner.	Subscription	$200+	Students	Global	GitHub Pack	getastra.com/github-student-pack
+Cryptolens	Cryptolens	Developer Tools	10 Licenses Free for software licensing.	License	Commercial	Students	Global	GitHub Pack	education.github.com/pack
+DailyBot	DailyBot	Developer Tools	Business Plan Free (10 users) for 6 months.	Subscription	Commercial	Students	Global	GitHub Pack	education.github.com/pack
+Imgbot	Imgbot	Developer Tools	Free Image Optimization for GitHub repos.	Subscription	Usage	Students	Global	GitHub Pack	education.github.com/pack
+ConfigCat	ConfigCat	Developer Tools	1000 Feature Flags free forever.	Subscription	Usage	Students	Global	GitHub Pack	education.github.com/pack
+Honeybadger	Honeybadger	Developer Tools	Free Exception Monitoring (Unlimited).	Subscription	Startup	Students	Global	GitHub Pack	education.github.com/pack
+Doppler	Doppler	Developer Tools	Free Secret Management for unlimited projects.	Subscription	Team	Students	Global	GitHub Pack	education.github.com/pack
+Testmail	Testmail.app	Developer Tools	Free Essential Plan for email testing.	Subscription	$10/mo	Students	Global	GitHub Pack	education.github.com/pack
+Typeform	Typeform	Developer Tools	Free Professional Plan (1 year).	Subscription	$50/mo	Students	Global	GitHub Pack	education.github.com/pack
+Mailgun	Mailgun	Developer Tools	20,000 free emails/mo for 12 months.	Credits	Usage	Students	Global	GitHub Pack	education.github.com/pack
+LambdaTest	LambdaTest	Developer Tools	Free Live Plan (1 year) for cross-browser testing.	Subscription	$15/mo	Students	Global	GitHub Pack	education.github.com/pack
+SimpleAnalytics	SimpleAnalytics	Developer Tools	Free Starter Plan (Privacy-first analytics).	Subscription	$9/mo	Students	Global	GitHub Pack	education.github.com/pack
+Vaadin	Vaadin	Developer Tools	Free Pro Subscription for web apps.	Subscription	$50/mo	Students	Global	GitHub Pack	education.github.com/pack
+Xojo	Xojo	Developer Tools	Free Desktop License for cross-platform dev.	License	$300	Students	Global	GitHub Pack	education.github.com/pack
+Vercel	Vercel	Developer Tools	Hobby tier (generous limits for frontend).	Free	N/A	Everyone	Global	N/A	vercel.com/pricing
+Netlify	Netlify	Developer Tools	Starter Tier (generous build/hosting).	Free	N/A	Everyone	Global	N/A	netlify.com/pricing
+Render	Render	Developer Tools	Free Individual Services (Web/Postgres).	Free	N/A	Everyone	Global	N/A	render.com/pricing
+Fly.io	Fly.io	Developer Tools	Free Allowance (3 VMs, limited storage).	Free	~$5/mo	Everyone	Global	N/A	fly.io/docs/about/pricing
+Supabase	Supabase	Developer Tools	Free Tier (500MB DB, Auth, Storage).	Free	N/A	Everyone	Global	N/A	supabase.com/pricing
+PlanetScale	PlanetScale	Developer Tools	Hobby Plan (5GB storage, 1B reads).	Free	N/A	Everyone	Global	N/A	planetscale.com/pricing
+MongoDB Atlas	MongoDB	Developer Tools	Shared Cluster (Free Tier) M0 Sandbox.	Free	N/A	Everyone	Global	N/A	mongodb.com/pricing
+Neo4j Aura	Neo4j	Developer Tools	AuraDB Free Tier (Graph DB).	Free	N/A	Everyone	Global	N/A	neo4j.com/cloud/aura/pricing
+Redis Cloud	Redis	Developer Tools	Free 30MB Database.	Free	N/A	Everyone	Global	N/A	redis.com/try-free
+InfluxDB Cloud	InfluxData	Developer Tools	Free Cloud Tier (Time series).	Free	N/A	Everyone	Global	N/A	influxdata.com/influxdb-cloud-pricing
+Docker Personal	Docker	Developer Tools	Personal Plan (Free for individuals/edu).	Free	N/A	Everyone	Global	N/A	docker.com/pricing
+Postman	Postman	Developer Tools	Free Tier (3 users, API testing).	Free	N/A	Everyone	Global	N/A	postman.com/pricing
+Cloudflare	Cloudflare	Cloud & Credits	Free Tier (CDN, Pages, Security).	Free	N/A	Everyone	Global	N/A	cloudflare.com/plans
+Auth0	Okta	Developer Tools	Free Tier (7k active users).	Free	N/A	Everyone	Global	N/A	auth0.com/pricing
+Clerk	Clerk	Developer Tools	Free Tier (10k active users).	Free	N/A	Everyone	Global	N/A	clerk.com/pricing
+Firebase	Google	Developer Tools	Spark Plan (Free authentication, hosting).	Free	N/A	Everyone	Global	N/A	firebase.google.com/pricing
+Appwrite Cloud	Appwrite	Developer Tools	Starter Plan (Authentication, DB).	Free	N/A	Everyone	Global	N/A	appwrite.io/pricing
+Hasura	Hasura	Developer Tools	Free Tier (GraphQL Engine).	Free	N/A	Everyone	Global	N/A	hasura.io/pricing
+Grafana Cloud	Grafana	Developer Tools	Free Forever Plan (Metrics/Logs).	Free	N/A	Everyone	Global	N/A	grafana.com/pricing
+Splunk	Cisco	Developer Tools	Free Trial/Dev License.	Free	N/A	Everyone	Global	N/A	splunk.com
+PagerDuty	PagerDuty	Developer Tools	Free Tier (5 users, on-call).	Free	N/A	Everyone	Global	N/A	pagerduty.com/pricing
+Atlassian Jira	Atlassian	Developer Tools	Free Tier (10 users, agile boards).	Free	N/A	Everyone	Global	N/A	atlassian.com/software/jira
+Bitbucket	Atlassian	Developer Tools	Free Tier (5 users, unlimited private repos).	Free	N/A	Everyone	Global	N/A	bitbucket.org/product/pricing
+GitLab	GitLab	Developer Tools	Free Tier (5GB storage, 400 CI minutes).	Free	N/A	Everyone	Global	N/A	about.gitlab.com/pricing
+Twilio SendGrid	Twilio	Developer Tools	Student Plan (Free emails via GitHub).	Credits	Usage	Students	Global	GitHub Pack	education.github.com/pack
+Stripe Atlas	Stripe	Finance	Waived Fees/Credits for incubated startups.	Discount	Variable	Startup Students	Global	Incubator	stripe.com/atlas
+PayPal Developers	PayPal	Developer Tools	Sandbox/API access for testing.	Free	N/A	Everyone	Global	N/A	developer.paypal.com
+Algolia	Algolia	Developer Tools	Free Build Plan (10k records).	Free	N/A	Everyone	Global	N/A	algolia.com/pricing
+Intel Student Tools	Intel	Developer Tools	Free Parallel Studio & other tools.	License	N/A	Students	Global	Edu Email	software.intel.com
+Twilio	Twilio	Developer Tools	Free Trial Credit for SMS/Voice APIs.	Credits	~$15	Everyone	Global	N/A	twilio.com/try-twilio
+Linode	Akamai	Cloud & Credits	$100 Credit for new accounts.	Credits	$100	New Users	Global	N/A	linode.com/lp/credit-100
+Vultr	Vultr	Cloud & Credits	$100 Credit for new users.	Credits	$100	New Users	Global	N/A	vultr.com/promo
+Alibaba Cloud	Alibaba	Cloud & Credits	Free Trial + Student Credits.	Credits	$1000	New Users	Global	N/A	alibabacloud.com/free
+IBM Cloud	IBM	Cloud & Credits	Free Tier (40+ services, lite plans).	Free	N/A	Everyone	Global	N/A	ibm.com/cloud/free
+XAMPP	Apache Friends	Developer Tools	Free Open Source Web Server Stack.	Free	N/A	Everyone	Global	N/A	apachefriends.org
+CyberChef	GCHQ	Developer Tools	Free Open Source Data Tool.	Free	N/A	Everyone	Global	N/A	gchq.github.io/CyberChef
+Regex101	Regex101	Developer Tools	Free Regex Tester.	Free	N/A	Everyone	Global	N/A	regex101.com
+JSONCrack	JSONCrack	Developer Tools	Free JSON Visualization.	Free	N/A	Everyone	Global	N/A	jsoncrack.com
+Carbon	Carbon	Developer Tools	Free Code Image Generator.	Free	N/A	Everyone	Global	N/A	carbon.now.sh
+Working Copy	Working Copy	Developer Tools	Free Pro iOS Git Client features.	Subscription	$20	Students	Global	GitHub Pack	workingcopyapp.com
+GitLens Pro	GitKraken	Developer Tools	Free Pro extension for VS Code.	Subscription	$10/mo	Students	Global	GitHub Pack	gitkraken.com/gitlens
+Bump.sh	Bump.sh	Developer Tools	Free Standard Plan for API docs.	Subscription	$12/mo	Students	Global	GitHub Pack	education.github.com/pack
+OpenSauced	OpenSauced	Developer Tools	Free Insights for open source tracking.	Subscription	Usage	Students	Global	GitHub Pack	education.github.com/pack
+Azure AI Search	Microsoft	Cloud & Credits	Free Tier (5MB storage, 10k docs).	Free	N/A	Everyone	Global	N/A	azure.microsoft.com
+Azure Maps	Microsoft	Cloud & Credits	Free Tier (Usage limits).	Free	N/A	Everyone	Global	N/A	azure.microsoft.com
+Azure App Service	Microsoft	Cloud & Credits	Free Tier (F1 - Shared infrastructure).	Free	N/A	Everyone	Global	N/A	azure.microsoft.com
+Azure Functions	Microsoft	Cloud & Credits	1 Million Calls/mo Free.	Free	N/A	Everyone	Global	N/A	azure.microsoft.com
+Azure Cosmos DB	Microsoft	Cloud & Credits	Free Tier (1000 RU/s, 25GB).	Free	N/A	Everyone	Global	N/A	azure.microsoft.com
+AWS Lambda	AWS	Cloud & Credits	1 Million Requests/mo Free.	Free	N/A	Everyone	Global	N/A	aws.amazon.com/free
+AWS DynamoDB	AWS	Cloud & Credits	25GB Storage Free.	Free	N/A	Everyone	Global	N/A	aws.amazon.com/free
+AWS S3	AWS	Cloud & Credits	5GB Standard Storage (12 months).	Free	N/A	Everyone	Global	N/A	aws.amazon.com/free
+AWS EC2	AWS	Cloud & Credits	750 hours/mo t2.micro/t3.micro (12 mo).	Free	N/A	Everyone	Global	N/A	aws.amazon.com/free
+Google Cloud Run	Google	Cloud & Credits	2 Million Requests/mo Free.	Free	N/A	Everyone	Global	N/A	cloud.google.com/free
+Google Compute Engine	Google	Cloud & Credits	e2-micro Instance Free (US regions).	Free	N/A	Everyone	Global	N/A	cloud.google.com/free
+Backblaze B2	Backblaze	Cloud & Credits	10GB Free Storage.	Free	N/A	Everyone	Global	N/A	backblaze.com/b2
+Wasabi	Wasabi	Cloud & Credits	Free Trial (30 days, 1TB limit).	Trial	N/A	Everyone	Global	N/A	wasabi.com
+Cloudinary	Cloudinary	Developer Tools	Free Tier (Media management).	Free	N/A	Everyone	Global	N/A	cloudinary.com/pricing
+Uploadcare	Uploadcare	Developer Tools	Free Tier (File uploading).	Free	N/A	Everyone	Global	N/A	uploadcare.com/pricing
+Filestack	Filestack	Developer Tools	Free Tier (File uploading).	Free	N/A	Everyone	Global	N/A	filestack.com/pricing
+Plaid Dev	Plaid	Developer Tools	Free Development Environment.	Free	N/A	Everyone	Global	N/A	plaid.com/pricing
+Square Dev	Block	Developer Tools	Sandbox/API access.	Free	N/A	Everyone	Global	N/A	developer.squareup.com
+OVHcloud	OVH	Cloud & Credits	Student Program (Cloud Credits).	Credits	Variable	Students	Global	Upload ID	startup.ovhcloud.com
+MAMP	MAMP	Developer Tools	Free Version (Local server).	Free	N/A	Everyone	Global	N/A	mAMP.info
+LocalWP	WP Engine	Developer Tools	Free WordPress Development Tool.	Free	N/A	Everyone	Global	N/A	localwp.com
+WampServer	WampServer	Developer Tools	Free Open Source Windows Web Dev Environment.	Free	N/A	Everyone	Global	N/A	wampserver.com
+Wireshark	Wireshark	Developer Tools	Free Open Source Network Protocol Analyzer.	Free	N/A	Everyone	Global	N/A	wireshark.org
+CyberDuck	CyberDuck	Developer Tools	Free Open Source Cloud Storage Client.	Free	N/A	Everyone	Global	N/A	cyberduck.io
+FileZilla	FileZilla	Developer Tools	Free Open Source FTP Client.	Free	N/A	Everyone	Global	N/A	filezilla-project.org
+Putty	Putty	Developer Tools	Free Open Source SSH Client.	Free	N/A	Everyone	Global	N/A	putty.org
+WinSCP	WinSCP	Developer Tools	Free Open Source SFTP Client.	Free	N/A	Everyone	Global	N/A	winscp.net
+VMWare Fusion	Broadcom	Developer Tools	Free Personal Use License (Mac virtualization).	License	~$150	Everyone	Global	N/A	vmware.com
+VirtualBox	Oracle	Developer Tools	Free Open Source Virtualization.	Free	N/A	Everyone	Global	N/A	virtualbox.org
+Figma for Education	Figma	Design & Creative	Free Professional Plan (Unlimited files/projects).	Subscription	$144/yr	K-12, Higher Ed	Global	School Email / Doc	figma.com/education
+Canva for Education	Canva	Design & Creative	Free Premium Features (Pro) for K-12.	Subscription	$119/yr	K-12 (Student/Teacher)	Global	Teacher Invite	canva.com/education
+Adobe Creative Cloud	Adobe	Design & Creative	60%+ Discount on All Apps (Photoshop, etc.).	Discount	~$360/yr	Students 13+	Global	Edu Email / Doc	adobe.com/students
+Sketch for Education	Sketch	Design & Creative	Free License for Mac app.	License	$99/yr	Students	Global	Upload Proof	sketch.com/education
+Autodesk Education	Autodesk	Design & Creative	Free 1-Year Renewable (AutoCAD, Maya, Revit).	License	$1,000s	Students	Global	SheerID	autodesk.com/education
+Shapr3D	Shapr3D	Design & Creative	Free Educational License (3D CAD).	License	$299/yr	Students	Global	Edu Email / Doc	shapr3d.com/education
+Blender	Blender Fdn	Design & Creative	Free Open Source 3D Creation Suite.	Free	N/A	Everyone	Global	N/A	blender.org
+Perplexity Pro	Perplexity	AI Tools	1 Year Free via partnerships (e.g., Uber/PayPal).	Subscription	$200	Students	US/Global	Partner/Edu Email	perplexity.ai
+Cursor Pro	Cursor	AI Tools	1 Year Free for eligible students.	Subscription	$240	Students	Global	Edu Email	cursor.com/students
+GitHub Copilot	Microsoft	AI Tools	Free Access for verified students.	Free	$100/yr	Students	Global	GitHub Pack	education.github.com
+Mistral Le Chat	Mistral AI	AI Tools	50% Off Pro tier for students.	Discount	Variable	Students	Global	Edu Email	help.mistral.ai
+Warp AI	Warp	AI Tools	Free Tier (100 requests/mo).	Free	N/A	Everyone	Global	N/A	warp.dev/warp-ai
+OpenAI ChatGPT	OpenAI	AI Tools	Free Tier (GPT-4o limited access).	Free	N/A	Everyone	Global	N/A	chat.openai.com
+Claude	Anthropic	AI Tools	Free Tier (Claude 3.5 Sonnet limited).	Free	N/A	Everyone	Global	N/A	claude.ai
+Gemini	Google	AI Tools	Free Tier (Gemini Flash).	Free	N/A	Everyone	Global	N/A	gemini.google.com
+Microsoft Copilot	Microsoft	AI Tools	Free Tier (GPT-4 integrated).	Free	N/A	Everyone	Global	N/A	copilot.microsoft.com
+NotebookLM	Google	AI Tools	Free AI Research Assistant.	Free	N/A	Everyone	Global	N/A	notebooklm.google.com
+Wolfram Alpha Pro	Wolfram	AI Tools	Discounted Pro Plan ($5/mo).	Discount	$5/mo	Students	Global	Edu Email	wolframalpha.com
+Prezi	Prezi	Design & Creative	Edu Plus Plan ($3/mo).	Discount	$10/mo	Students	Global	Edu Email	prezi.com/pricing/edu
+Lucidchart	Lucid	Productivity	Free Educational Plan.	Subscription	$8/mo	K-12/Higher Ed	Global	Edu Email	lucidchart.com/education
+Unity Personal	Unity	Developer Tools	Free Personal Edition (Revenue cap <$100k).	Free	N/A	Everyone	Global	N/A	unity.com/download
+CryEngine	Crytek	Developer Tools	Free License (5% royalty after $5k).	Free	N/A	Everyone	Global	N/A	cryengine.com
+Godot	Godot Engine	Developer Tools	Free Open Source Game Engine.	Free	N/A	Everyone	Global	N/A	godotengine.org
+Maya Learning Ed	Autodesk	Design & Creative	Free Personal Learning Edition.	License	N/A	Everyone	Global	N/A	autodesk.com
+Houdini Apprentice	SideFX	Design & Creative	Free Learning Edition (Non-commercial).	License	N/A	Everyone	Global	N/A	sidefx.com
+Nuke Non-commercial	Foundry	Design & Creative	Free Personal Learning Edition.	License	N/A	Everyone	Global	N/A	foundry.com
+DaVinci Resolve	Blackmagic	Design & Creative	Free Standard Version.	Free	$295	Everyone	Global	N/A	blackmagicdesign.com
+Avid Pro Tools Intro	Avid	Design & Creative	Free Intro Version.	Free	N/A	Everyone	Global	N/A	avid.com
+Ableton Live Trial	Ableton	Design & Creative	90 Day Free Trial.	Trial	$100+	Everyone	Global	N/A	ableton.com
+FL Studio Trial	Image-Line	Design & Creative	Unlimited Free Trial (No save project).	Trial	$100+	Everyone	Global	N/A	image-line.com
+Logic Pro Trial	Apple	Design & Creative	90 Day Free Trial.	Trial	$200	Mac Users	Global	N/A	apple.com
+Final Cut Pro Trial	Apple	Design & Creative	90 Day Free Trial.	Trial	$300	Mac Users	Global	N/A	apple.com
+Cinema 4D Student	Maxon	Design & Creative	Low cost Student License (Admin fee).	Discount	~$3/mo	Students	Global	SheerID	maxon.net
+Axure RP	Axure	Design & Creative	Free Educational License.	License	$25/mo	Students	Global	Edu Email / Doc	axure.com/edu
+Balsamiq Cloud	Balsamiq	Design & Creative	Free Cloud Plan.	Subscription	$9/mo	Students	Global	Edu Email	balsamiq.com
+Framer	Framer	Design & Creative	Free Site Plan (Education).	Subscription	$15/mo	Students	Global	Code	framer.com/education
+Webflow Student	Webflow	Developer Tools	Free Student Plan (1 year).	Subscription	$12/mo	Students	Global	Edu Email	webflow.com/classroom
+Squarespace Student	Squarespace	Developer Tools	50% Off First Year.	Discount	~$70	Students	Global	Student Beans	squarespace.com
+Wix Student	Wix	Developer Tools	50% Off Premium.	Discount	~$60	Students	Global	Student Beans	wix.com/student
+WordPress.com	Automattic	Developer Tools	Free Website (Subdomain).	Free	N/A	Everyone	Global	N/A	wordpress.com
+Icons8	Icons8	Design & Creative	Free Design Assets subscription.	Subscription	$30/mo	Students	Global	GitHub Pack	education.github.com/pack
+IconScout	IconScout	Design & Creative	60 Premium downloads/mo.	Credits	$20/mo	Students	Global	GitHub Pack	education.github.com/pack
+Adobe Aero	Adobe	Design & Creative	Free Mobile AR App.	Free	N/A	Everyone	Global	N/A	adobe.com
+Lens Studio	Snap	Design & Creative	Free AR Creation Tool.	Free	N/A	Everyone	Global	N/A	ar.snap.com
+Spark AR	Meta	Design & Creative	Free AR Creation Tool.	Free	N/A	Everyone	Global	N/A	sparkar.facebook.com
+8th Wall	Niantic	Developer Tools	Education Plan (WebAR).	Discount	N/A	Students	Global	Application	8thwall.com
+Excalidraw	Excalidraw	Design & Creative	Free Open Source Whiteboard.	Free	N/A	Everyone	Global	N/A	excalidraw.com
+Excalidraw Plus	Excalidraw	Design & Creative	Free for Education (Class access).	Free	N/A	Educators	Global	Application	plus.excalidraw.com
+LottieFiles	LottieFiles	Design & Creative	Free Tier (Unlimited public).	Free	N/A	Everyone	Global	N/A	lottiefiles.com
+Rive	Rive	Design & Creative	Free Tier (3 files).	Free	N/A	Everyone	Global	N/A	rive.app/pricing
+Spline	Spline	Design & Creative	Free Tier (Public files).	Free	N/A	Everyone	Global	N/A	spline.design
+Vectary	Vectary	Design & Creative	Free Tier (10 projects).	Free	N/A	Everyone	Global	N/A	vectary.com
+Bezi	Bezi	Design & Creative	Free Tier (Unlimited public).	Free	N/A	Everyone	Global	N/A	bezi.com
+Shapes XR	Shapes	Design & Creative	Education License (Class use).	License	N/A	Students	Global	Institution	shapesxr.com
+Gravity Sketch	Gravity Sketch	Design & Creative	Free Individual Plan.	Free	N/A	Everyone	Global	N/A	gravitysketch.com
+Milanote	Milanote	Design & Creative	Education Plan (Discount/Free).	Discount	N/A	Students	Global	Application	milanote.com
+MockFlow	MockFlow	Design & Creative	Free Tier (1 project).	Free	N/A	Everyone	Global	N/A	mockflow.com
+Marvel App	Marvel	Design & Creative	Free Tier (1 project).	Free	N/A	Everyone	Global	N/A	marvelapp.com
+InVision	InVision	Design & Creative	Free Tier (Legacy).	Free	N/A	Everyone	Global	N/A	invisionapp.com
+Zeplin	Zeplin	Design & Creative	Free Tier (1 project).	Free	N/A	Everyone	Global	N/A	zeplin.io
+Abstract	Abstract	Design & Creative	Education Discount.	Discount	N/A	Students	Global	Application	abstract.com
+OBS Studio	OBS	Design & Creative	Free Open Source Streaming.	Free	N/A	Everyone	Global	N/A	obsproject.com
+Audacity	Muse Group	Design & Creative	Free Open Source Audio Editor.	Free	N/A	Everyone	Global	N/A	audacityteam.org
+GIMPGIMP	Design & Creative	Free Open Source Image Editor.	Free	N/A	Everyone	Global	N/A	gimp.org
+Inkscape	Inkscape	Design & Creative	Free Open Source Vector Editor.	Free	N/A	Everyone	Global	N/A	inkscape.org
+Krita	Krita	Design & Creative	Free Open Source Painting.	Free	N/A	Everyone	Global	N/A	krita.org
+Scribus	Scribus	Design & Creative	Free Open Source Publishing.	Free	N/A	Everyone	Global	N/A	scribus.net
+Darktable	Darktable	Design & Creative	Free Open Source Photo Workflow.	Free	N/A	Everyone	Global	N/A	darktable.org
+RawTherapee	RawTherapee	Design & Creative	Free Open Source RAW Converter.	Free	N/A	Everyone	Global	N/A	rawtherapee.com
+Shotcut	Meltytech	Design & Creative	Free Open Source Video Editor.	Free	N/A	Everyone	Global	N/A	shotcut.org
+OpenShot	OpenShot	Design & Creative	Free Open Source Video Editor.	Free	N/A	Everyone	Global	N/A	openshot.org
+Kdenlive	KDE	Design & Creative	Free Open Source Video Editor.	Free	N/A	Everyone	Global	N/A	kdenlive.org
+Natron	Natron	Design & Creative	Free Open Source Compositing.	Free	N/A	Everyone	Global	N/A	natrongithub.github.io
+Pencil2D	Pencil2D	Design & Creative	Free Open Source Animation.	Free	N/A	Everyone	Global	N/A	pencil2d.org
+Synfig Studio	Synfig	Design & Creative	Free Open Source 2D Animation.	Free	N/A	Everyone	Global	N/A	synfig.org
+OpenToonz	Dwango	Design & Creative	Free Open Source Animation.	Free	N/A	Everyone	Global	N/A	opentoonz.github.io
+Tiled	Thorbjørn	Design & Creative	Free/Donation Level Editor.	Free	N/A	Everyone	Global	N/A	mapeditor.org
+LMMS	LMMS	Design & Creative	Free Open Source DAW.	Free	N/A	Everyone	Global	N/A	lmms.io
+MuseScore	Muse Group	Design & Creative	Free Open Source Notation.	Free	N/A	Everyone	Global	N/A	musescore.org
+Ardour	Ardour	Design & Creative	Free/Donation DAW.	Free	N/A	Everyone	Global	N/A	ardour.org
+Mixxx	Mixxx	Design & Creative	Free Open Source DJ Software.	Free	N/A	Everyone	Global	N/A	mixxx.org
+Notion for Students	Notion	Productivity	Free Personal Pro (Plus) Plan.	Subscription	$48/yr	Students	Global	Edu Email	notion.so/students
+YNAB College Program	YNAB	Finance	1 Year Free subscription.	Subscription	$99	College Students	Global	Proof of Enrollment	ynab.com/college
+Todoist for Education	Doist	Productivity	50% Off Pro Plan.	Discount	$4/mo	Students	Global	StudentAppCentre	todoist.com/education
+Evernote Student	Evernote	Productivity	50% Off Personal Plan.	Discount	$70	Students	Global	UNiDAYS	evernote.com/students
+Microsoft 365 Personal	Microsoft	Productivity	$2.99/mo via Amazon Prime Student.	Discount	$7/mo	Students	US (Verified)	Prime Student	amazon.com
+Google Workspace for Edu	Google	Productivity	Free Institutional License.	License	Institutional	Students	Global	Institution	edu.google.com
+Coursera for Students	Coursera	Learning	Free Courses (Once/yr) or Aid.	Course	Variable	Students	Global	Edu Email	coursera.org
+edX Financial Aid	edX	Learning	90% Off Verified Certificates.	Discount	~$100	Low Income	Global	Application	edx.org/financial-aid
+LinkedIn Learning	LinkedIn	Learning	Free via University/Library.	Subscription	$300	Students	Global	Institution	learning.linkedin.com
+O'Reilly Learning	O'Reilly	Learning	Institutional Access.	Subscription	$500	Students	Global	Institution	oreilly.com
+Codecademy Student	Codecademy	Learning	Student Pro Plan (50% Off).	Discount	$150	Students	Global	SheerID	codecademy.com
+Udacity Scholarships	Udacity	Learning	Regional Scholarships (Cohort based).	Scholarship	$1000+	Students	Global	Application	udacity.com/scholarships
+Skillshare Student	Skillshare	Learning	50% Off Membership.	Discount	$80	Students	Global	Student Beans	skillshare.com
+Tableau for Students	Tableau	Data Science	Free 1-Year License.	License	$70/yr	Students	Global	SheerID	tableau.com
+Alteryx for Students	Alteryx	Data Science	Free Designer License.	License	Enterprise	Students	Global	Upload ID	alteryx.com
+SAS for Academics	SAS	Data Science	Free SAS OnDemand.	Subscription	Enterprise	Students	Global	Edu Email	sas.com
+Grammarly Student	Grammarly	Productivity	25% Off Pro.	Discount	$12/mo	Students	Global	UNiDAYS	grammarly.com
+QuillBot Student	QuillBot	Productivity	Up to 25% Off.	Discount	~$4/mo	Students	Global	UNiDAYS	quillbot.com
+Speechify Student	Speechify	Productivity	25% Off.	Discount	$100+	Students	Global	UNiDAYS	speechify.com
+Knowt	Knowt	Learning	1 Month Free + 15% Off.	Hybrid	~$5	Students	Global	UNiDAYS	knowt.com
+Mind Tools	Mind Tools	Productivity	25% Off Membership.	Discount	Variable	Students	Global	UNiDAYS	mindtools.com
+Dropbox Student	Dropbox	Productivity	30% Off Plus.	Discount	$10/mo	Students	Global	UNiDAYS	dropbox.com
+Setapp Education	MacPaw	Productivity	50% Off Mac App Bundle.	Discount	$5/mo	Students	Global	Edu Email	setapp.com
+CleanMyMac Student	MacPaw	Productivity	30% Off.	Discount	$30+	Students	Global	StudentAppCentre	macpaw.com
+Parallels Desktop	Alludo	Productivity	50% Off Student Edition.	Discount	$50+	Students	Global	StudentAppCentre	parallels.com
+Loom for Education	Loom	Productivity	Free Education Plan (Unlimited videos).	Subscription	$8/mo	K-12/Higher Ed	Global	Edu Email	loom.com/education
+Scrivener	Literature & Latte	Productivity	~20% Off Education License.	Discount	$50	Students	Global	Proof of Status	literatureandlatte.com
+Ulysses	Ulysses	Productivity	Discounted Subscription ($11/6mo).	Discount	$30/yr	Students	Global	In-app	ulysses.app
+Zoom for Education	Zoom	Productivity	Lift of 40min limit (K-12 only).	Free	N/A	K-12 Schools	Global	Domain Verify	zoom.us/education
+Slack for Education	Slack	Productivity	85% Off for Education.	Discount	Standard	Students (via Inst)	Global	Institution	slack.com
+Discord Student Hubs	Discord	Productivity	Student Hubs access.	Free	N/A	Students	Global	Edu Email	support.discord.com
+LastPass Student	GoTo	Productivity	6 Months Free Premium.	Subscription	$20	Students	Global	Edu Email	lastpass.com
+Bitwarden	Bitwarden	Productivity	Free Personal Plan (Unlimited).	Free	N/A	Everyone	Global	N/A	bitwarden.com
+Keeper Security	Keeper	Productivity	50% Off.	Discount	$17/yr	Students	Global	Student Beans	studentbeans.com
+NordPass Student	Nord Security	Productivity	Free Premium (Student).	Subscription	$30	Students	Global	Student Beans	nordpass.com
+RoboForm	Siber Systems	Productivity	Free for College Students.	Subscription	$24	Students	Global	Edu Email	roboform.com
+ExpressVPN	Kape	Security	Discounted Plan (12+4 mo free).	Discount	Premium	Students	Global	Student Beans	expressvpn.com
+Surfshark	Surfshark	Security	85% Off + 3 mo free.	Discount	$2/mo	Students	Global	Student Beans	surfshark.com
+CyberGhost	Kape	Security	79% Off.	Discount	$2/mo	Students	Global	Student Beans	cyberghostvpn.com
+PureVPN	PureVPN	Security	15% Extra Off.	Discount	$2/mo	Students	Global	Student Beans	purevpn.com
+Private Internet Access	Kape	Security	3 Years + 3 Mo Free.	Discount	$2/mo	Students	Global	Student Beans	privateinternetaccess.com
+Norton 360	Gen Digital	Security	~$20/yr (Student).	Discount	$50+	Students	Global	Student Beans	us.norton.com
+McAfee	McAfee	Security	Student Discount.	Discount	$30+	Students	Global	Student Beans	mcafee.com
+Malwarebytes	Malwarebytes	Security	4-Year Student Plan ($20).	Discount	$100+	Students	Global	Student Beans	malwarebytes.com
+ESET	ESET	Security	50% Off.	Discount	$25	Students	Global	ID.me	eset.com
+Bitdefender	Bitdefender	Security	Student Discount.	Discount	$20	Students	Global	Student Beans	bitdefender.com
+Dashlane Student	Dashlane	Security	Free Premium (1 year).	Subscription	$60	Students	Global	Edu Email	dashlane.com
+Kaspersky	Kaspersky	Security	Student Discount.	Discount	Variable	Students	Global	Student Beans	kaspersky.com
+Trend Micro	Trend Micro	Security	Student Discount.	Discount	Variable	Students	Global	Verification	trendmicro.com
+Sophos Home	Sophos	Security	Free Commercial Edition.	Free	N/A	Students	Global	Edu Email	home.sophos.com
+Proton Mail	Proton	Productivity	Free Encrypted Mail (1GB).	Free	N/A	Everyone	Global	N/A	proton.me
+Tutanota	Tuta	Productivity	Free Encrypted Mail (1GB).	Free	N/A	Everyone	Global	N/A	tuta.com
+Standard Notes	Standard Notes	Productivity	Free Encrypted Notes.	Free	N/A	Everyone	Global	N/A	standardnotes.com
+Joplin	Joplin	Productivity	Free Open Source Notes.	Free	N/A	Everyone	Global	N/A	joplinapp.org
+Obsidian	Obsidian	Productivity	Free Personal Use.	Free	N/A	Everyone	Global	N/A	obsidian.md
+Logseq	Logseq	Productivity	Free Open Source.	Free	N/A	Everyone	Global	N/A	logseq.com
+Roam Research	Roam	Productivity	Scholars Program ($500 off).	Discount	$165/yr	Students <22	Global	Application	roamresearch.com
+Heptabase	Heptabase	Productivity	50% Off.	Discount	$60/yr	Students	Global	Edu Email	heptabase.com
+Reflect	Reflect	Productivity	Free for Students.	Subscription	$120/yr	Students	Global	Edu Email	reflect.app
+Craft Docs	Craft	Productivity	Free Education Plan.	Subscription	$60/yr	Students	Global	Edu Email	craft.do
+Whimsical	Whimsical	Productivity	Free Tier (3000 items).	Free	N/A	Everyone	Global	N/A	whimsical.com
+Eraser	Eraser	Developer Tools	Free Tier (5 files).	Free	N/A	Everyone	Global	N/A	eraser.io
+Mermaid Chart	Mermaid	Developer Tools	Free Tier (5 diagrams).	Free	N/A	Everyone	Global	N/A	mermaidchart.com
+Pluralsight	Pluralsight	Learning	Free via Azure/VS Dev Essentials.	Course	$300	Students	Global	MS Dev Essentials	pluralsight.com
+Treehouse	Treehouse	Learning	Student Discounts (Case by case).	Discount	Variable	Students	Global	Application	teamtreehouse.com
+FutureLearn	FutureLearn	Learning	Unlimited for Students (Discount).	Discount	Variable	Students	Global	Student Beans	futurelearn.com
+Khan Academy	Khan Academy	Learning	Free World-class Education.	Free	N/A	Everyone	Global	N/A	khanacademy.org
+Wolfram U	Wolfram	Learning	Free Open Courses.	Course	N/A	Everyone	Global	N/A	wolfram.com
+Brilliant.org	Brilliant	Learning	Free for Educators/Classrooms.	Subscription	$150	K-12 Teachers/Students	Global	Teacher Application	brilliant.org
+Duolingo for Schools	Duolingo	Learning	Free Ad-Free Classroom.	Free	N/A	K-12 Students	Global	Teacher Invite	schools.duolingo.com
+Quizlet	Quizlet	Learning	Free Basic / Teacher Discounts.	Free	N/A	Everyone	Global	N/A	quizlet.com
+Kahoot!	Kahoot!	Learning	Free Basic / Edu Discounts.	Free	N/A	Everyone	Global	N/A	kahoot.com
+Chegg	Chegg	Learning	Textbook Rental Discounts.	Discount	Variable	Students	US	N/A	chegg.com
+Course Hero	Course Hero	Learning	Upload to Unlock (1:1 ratio).	Hybrid	Variable	Students	Global	N/A	coursehero.com
+Scribd	Scribd	Learning	Student Discount ($10/mo).	Discount	$10/mo	Students	Global	SheerID	scribd.com
+Perlego	Perlego	Learning	Student Discount (15%+).	Discount	$100/yr	Students	Global	Student Beans	perlego.com
+Blinkist	Blinkist	Learning	Student Discount.	Discount	$50	Students	Global	Student Beans	blinkist.com
+MasterClass	MasterClass	Learning	Buy One Get One (Seasonal).	Discount	$180	Everyone	Global	N/A	masterclass.com
+Simplilearn	Simplilearn	Learning	Student Ambassador Program.	Hybrid	Variable	Students	Global	Application	simplilearn.com
+Great Learning	Great Learning	Learning	Free Courses (Certificates free).	Course	N/A	Everyone	Global	N/A	mygreatlearning.com
+UpGrad	UpGrad	Learning	Scholarship Test.	Scholarship	Variable	Students	India/Global	Exam	upgrad.com
+Coding Ninjas	Coding Ninjas	Learning	CNSAT Scholarship.	Scholarship	Up to 100%	Students	India	Exam	codingninjas.com
+GeeksforGeeks	GeeksforGeeks	Learning	Student Chapter Benefits.	Hybrid	Variable	Students	India	Institution	geeksforgeeks.org
+LeetCode Student	LeetCode	Learning	Student Discount ($99/yr).	Discount	$60	Students (50+ group)	Global	School Email	leetcode.com
+HackerRank	HackerRank	Learning	Free Practice.	Free	N/A	Everyone	Global	N/A	hackerrank.com
+Kaggle	Google	Data Science	Free Kernels/Datasets.	Free	N/A	Everyone	Global	N/A	kaggle.com
+Google Colab	Google	Data Science	Free GPU Access (Usage limits).	Free	N/A	Everyone	Global	N/A	colab.research.google.com
+Binder	Project Jupyter	Data Science	Free Notebook Hosting.	Free	N/A	Everyone	Global	N/A	mybinder.org
+CoCalc	SageMath	Data Science	Free Tier (No internet).	Free	N/A	Everyone	Global	N/A	cocalc.com
+Overleaf Personal	Digital Science	Productivity	Free Plan (1 collaborator).	Free	N/A	Everyone	Global	N/A	overleaf.com
+Resoomer	Resoomer	Productivity	Free Summarizer.	Free	N/A	Everyone	Global	N/A	resoomer.com
+Smallpdf	Smallpdf	Productivity	Free Tier (2 tasks/day).	Free	N/A	Everyone	Global	N/A	smallpdf.com
+ILovePDF	ILovePDF	Productivity	Free Tier (File size limit).	Free	N/A	Everyone	Global	N/A	ilovepdf.com
+WeTransfer	WeTransfer	Productivity	Free Tier (2GB transfer).	Free	N/A	Everyone	Global	N/A	wetransfer.com
+Google Drive	Google	Cloud & Credits	15GB Free Storage.	Free	N/A	Everyone	Global	N/A	google.com/drive
+Dropbox Basic	Dropbox	Cloud & Credits	2GB Free Storage.	Free	N/A	Everyone	Global	N/A	dropbox.com
+OneDrive	Microsoft	Cloud & Credits	5GB Free Storage.	Free	N/A	Everyone	Global	N/A	microsoft.com
+Box	Box	Cloud & Credits	10GB Free Storage.	Free	N/A	Everyone	Global	N/A	box.com
+MEGA	MEGA	Cloud & Credits	20GB Free Storage.	Free	N/A	Everyone	Global	N/A	mega.io
+pCloud	pCloud	Cloud & Credits	10GB Free Storage.	Free	N/A	Everyone	Global	N/A	pcloud.com
+Proton Drive	Proton	Cloud & Credits	1GB Free Encrypted Storage.	Free	N/A	Everyone	Global	N/A	proton.me/drive
+Internxt	Internxt	Cloud & Credits	10GB Free Storage.	Free	N/A	Everyone	Global	N/A	internxt.com
+Icedrive	Icedrive	Cloud & Credits	10GB Free Storage.	Free	N/A	Everyone	Global	N/A	icedrive.net
+Sync.com	Sync	Cloud & Credits	5GB Free Storage.	Free	N/A	Everyone	Global	N/A	sync.com
+MediaFire	MediaFire	Cloud & Credits	10GB Free Storage (Ad supported).	Free	N/A	Everyone	Global	N/A	mediafire.com
+Linear	Linear	Productivity	Free Tier (250 issues).	Free	N/A	Everyone	Global	N/A	linear.app/pricing
+Asana	Asana	Productivity	Basic Plan (Free).	Free	N/A	Everyone	Global	N/A	asana.com/pricing
+ClickUp	ClickUp	Productivity	Free Forever.	Free	N/A	Everyone	Global	N/A	clickup.com/pricing
+Monday.com	Monday.com	Productivity	Free (2 seats).	Free	N/A	Everyone	Global	N/A	monday.com/pricing
+Zapier	Zapier	Productivity	Free Tier (100 tasks/mo).	Free	N/A	Everyone	Global	N/A	zapier.com/pricing
+Make	Make	Productivity	Free Tier (1000 ops/mo).	Free	N/A	Everyone	Global	N/A	make.com
+Miro	Miro	Productivity	Free (3 boards).	Free	N/A	Everyone	Global	N/A	miro.com/pricing
+Mural	Mural	Productivity	Free Tier.	Free	N/A	Everyone	Global	N/A	mural.co/pricing
+JotForm Education	JotForm	Productivity	50% Off Education.	Discount	Variable	Students/Edu	Global	Edu Email	jotform.com
+Tally Forms	Tally	Productivity	Free Tier (99% features).	Free	N/A	Everyone	Global	N/A	tally.so
+Airtable Student	Airtable	Productivity	Free Student Plan.	Subscription	$240/yr	Students	Global	Edu Email	airtable.com/education
+Coda Education	Coda	Productivity	Education Discount.	Discount	N/A	Students/Edu	Global	Application	coda.io/for/education
+SmartSheet Edu	SmartSheet	Productivity	Education Pricing.	Discount	N/A	Students/Edu	Global	Contact Sales	smartsheet.com
+TeamGantt	TeamGantt	Productivity	Free Student Project.	Free	N/A	Students	Global	N/A	teamgantt.com
+Basecamp Edu	Basecamp	Productivity	Free for Teachers/Students.	Subscription	$99/mo	K-12/Higher Ed	Global	Email Support	basecamp.com
+Harvest	Harvest	Productivity	Free 1 Seat 2 Projects.	Free	N/A	Everyone	Global	N/A	getharvest.com
+Toggl Track	Toggl	Productivity	Free Tier (5 users).	Free	N/A	Everyone	Global	N/A	toggl.com
+Clockify	Clockify	Productivity	Free Forever.	Free	N/A	Everyone	Global	N/A	clockify.me
+RescueTime	RescueTime	Productivity	50% Off Student.	Discount	$6/mo	Students	Global	N/A	rescuetime.com
+Freedom	Freedom	Productivity	30% Off Code.	Discount	$30/yr	Students	Global	Code	freedom.to
+Forest	Forest	Productivity	Low Cost App.	Paid	$2	Everyone	Global	App Store	forestapp.cc
+TickTick Education	TickTick	Productivity	25% Off Premium.	Discount	$28/yr	Students	Global	Proof of Status	ticktick.com
+7-Zip	7-Zip	Productivity	Free Open Source Archiver.	Free	N/A	Everyone	Global	N/A	7-zip.org
+VLC Media Player	VideoLAN	Productivity	Free Open Source Media Player.	Free	N/A	Everyone	Global	N/A	videolan.org
+HandBrake	HandBrake	Productivity	Free Open Source Video Transcoder.	Free	N/A	Everyone	Global	N/A	handbrake.fr
+LibreOffice	Document Foundation	Productivity	Free Open Source Office Suite.	Free	N/A	Everyone	Global	N/A	libreoffice.org
+OnlyOffice	Ascensio System	Productivity	Free Personal Office Suite.	Free	N/A	Everyone	Global	N/A	onlyoffice.com
+Zettlr	Zettlr	Productivity	Free Open Source Markdown Editor.	Free	N/A	Everyone	Global	N/A	zettlr.com
+Thunderbird	Mozilla	Productivity	Free Open Source Email Client.	Free	N/A	Everyone	Global	N/A	thunderbird.net
+Firefox	Mozilla	Productivity	Free Open Source Browser.	Free	N/A	Everyone	Global	N/A	mozilla.org
+Brave Browser	Brave	Productivity	Free Privacy Browser.	Free	N/A	Everyone	Global	N/A	brave.com
+Tor Browser	Tor Project	Productivity	Free Privacy/Anonymity Browser.	Free	N/A	Everyone	Global	N/A	torproject.org
+Signal	Signal	Productivity	Free Encrypted Messaging.	Free	N/A	Everyone	Global	N/A	signal.org
+Telegram	Telegram	Productivity	Free Messaging.	Free	N/A	Everyone	Global	N/A	telegram.org
+Element	Element	Productivity	Free Personal Matrix Client.	Free	N/A	Everyone	Global	N/A	element.io
+Mattermost	Mattermost	Productivity	Free Self-Hosted Collaboration.	Free	N/A	Everyone	Global	N/A	mattermost.com
+Rocket.Chat	Rocket.Chat	Productivity	Free Community Edition.	Free	N/A	Everyone	Global	N/A	rocket.chat
+Zulip	Zulip	Productivity	Free Cloud Standard.	Free	N/A	Everyone	Global	N/A	zulip.com
+Jitsi Meet	8x8	Productivity	Free Open Source Video Conf.	Free	N/A	Everyone	Global	N/A	jitsi.org
+BigBlueButton	BigBlueButton	Learning	Free Open Source Virtual Classroom.	Free	N/A	Educators	Global	N/A	bigbluebutton.org
+Moodle	Moodle	Learning	Free Open Source LMS.	Free	N/A	Educators	Global	N/A	moodle.org
+Canvas LMS	Instructure	Learning	Free for Teachers.	Free	N/A	Educators	Global	N/A	instructure.com
+Open edX	Axim	Learning	Free Open Source Platform.	Free	N/A	Educators	Global	N/A	open.edx.org
+Chamilo	Chamilo	Learning	Free Open Source LMS.	Free	N/A	Educators	Global	N/A	chamilo.org
+Sakai	Sakai	Learning	Free Open Source LMS.	Free	N/A	Educators	Global	N/A	sakailms.org
+Chase College Checking	Chase	Finance	No Monthly Service Fee (up to 5 years).	Free	$12/mo	Students 17-24	US	Proof of Status	chase.com
+Bank of America Student	Bank of America	Finance	SafeBalance Banking (No monthly fee).	Free	$5/mo	Students <25	US	Proof of Status	bankofamerica.com
+Wells Fargo Student	Wells Fargo	Finance	Clear Access Banking (No monthly fee).	Free	$5/mo	Students 13-24	US	Proof of Status	wellsfargo.com
+US Bank Student	US Bank	Finance	Smartly Checking (No monthly maintenance fee).	Free	$7/mo	Students	US	Proof of Status	usbank.com
+TD Student Chequing	TD Bank	Finance	No Monthly Fee + Unlimited Transactions.	Free	$10/mo	Students	Canada	Proof of Status	td.com
+RBC Student Banking	RBC	Finance	No Monthly Fee.	Free	$10/mo	Students	Canada	Proof of Status	rbcroyalbank.com
+Scotiabank Student	Scotiabank	Finance	No Monthly Fee + Scene+ points.	Free	$10/mo	Students	Canada	Proof of Status	scotiabank.com
+BMO Student	BMO	Finance	No Monthly Fee.	Free	$10/mo	Students	Canada	Proof of Status	bmo.com
+CIBC Student	CIBC	Finance	No Monthly Fee + Free SPC Card.	Free	$10/mo	Students	Canada	Proof of Status	cibc.com
+HSBC Student Account	HSBC	Finance	£100 Cash + £1000+ Overdraft.	Prize	£100	Students	UK	UCAS Code	hsbc.co.uk
+Santander Student	Santander	Finance	Free 4-Year Railcard.	Free	£100 value	Students	UK	UCAS Code	santander.co.uk
+NatWest Student	NatWest	Finance	Free Tastecard / Cash offer.	Free	Variable	Students	UK	UCAS Code	natwest.com
+Lloyds Student	Lloyds Bank	Finance	Cash Bonus / Interest on credit.	Prize	Variable	Students	UK	UCAS Code	lloydsbank.com
+Barclays Student	Barclays	Finance	Interest Free Overdraft.	Free	Variable	Students	UK	UCAS Code	barclays.co.uk
+Monzo	Monzo	Finance	Standard Free Account (Student friendly).	Free	N/A	Everyone	UK	N/A	monzo.com
+Revolut <18	Revolut	Finance	Teen Account with parent oversight.	Free	N/A	6-17 Years	Global	Parent	revolut.com
+Discover Student Chrome	Discover	Finance	Cash Back + Good Grade Reward ($20).	Hybrid	Variable	Students	US	Application	discover.com
+Capital One Savor Student	Capital One	Finance	3% Cash Back on Dining/Groceries.	Hybrid	Variable	Students	US	Application	capitalone.com
+Deserve EDU	Deserve	Finance	1% Cash Back + Amazon Prime Student credit.	Hybrid	Variable	Students	US	Application	deserve.com
+SBI Student Loan	SBI	Finance	Global Ed-Vantage (Overseas Loan).	Loan	Low Interest	Students (India)	India	Admission	sbi.bank.in
+Wise Business	Wise	Finance	International Banking for Startups.	Service	Low Fee	Everyone	Global	N/A	wise.com
+Revolut Business	Revolut	Finance	Free Tier for Startups.	Free	N/A	Everyone	Global	N/A	revolut.com
+Stripe Atlas	Stripe	Finance	Waived Fees/Credits for incubated startups.	Discount	Variable	Startup Students	Global	Incubator	stripe.com/atlas
+Brex for Startups	Brex	Finance	Startup Points/Credits.	Credits	Variable	Startup Students	Global	Application	brex.com
+Mercury	Mercury	Finance	Banking for Startups.	Service	N/A	Startup Students	US	Application	mercury.com
+Silicon Valley Bank	SVB	Finance	Startup Banking.	Service	N/A	Startup Students	US/Global	Application	svb.com
+Samsung Education	Samsung	Hardware	Up to 30% Off products.	Discount	Variable	Students	Global	Edu Email	samsung.com
+Apple Education Pricing	Apple	Hardware	~$100 Off Mac/iPad + Gift Card promo.	Hybrid	Variable	Higher Ed	Global	UNiDAYS	apple.com
+Dell University	Dell	Hardware	Extra 5-10% Off + Rewards.	Discount	Variable	Students	Global	Edu Email	dell.com
+HP Education Store	HP	Hardware	Up to 40% Off.	Discount	Variable	Students	Global	Edu Email	hp.com
+Lenovo Education	Lenovo	Hardware	Extra 5% Off.	Discount	Variable	Students	Global	ID.me	lenovo.com
+Microsoft Surface Edu	Microsoft	Hardware	10% Off Surface devices.	Discount	Variable	Students	Global	MS Account	microsoft.com
+Razer Education	Razer	Hardware	15% Peripherals / 5% Systems.	Discount	Variable	Students	Global	Razer ID	razer.com
+Logitech Education	Logitech	Hardware	25% Off.	Discount	Variable	Students	Global	SheerID	logitech.com
+Bose Education	Bose	Hardware	Student Discount ($20-$30 off).	Discount	Variable	Students	Global	ID.me	bose.com
+Sony Education	Sony	Hardware	10% Off.	Discount	Variable	Students	US	ID.me	electronics.sony.com
+Canon Education	Canon	Hardware	Student Pricing.	Discount	Variable	Students	Global	UNiDAYS	usa.canon.com
+GoPro Student	GoPro	Hardware	5% Extra Off.	Discount	Variable	Students	Global	UNiDAYS	gopro.com
+Western Digital	WD	Hardware	15% Off.	Discount	Variable	Students	Global	Student Beans	westerndigital.com
+Sennheiser	Sennheiser	Hardware	30% Off.	Discount	Variable	Students	Global	UNiDAYS	en-us.sennheiser.com
+Skullcandy	Skullcandy	Hardware	25% Off.	Discount	Variable	Students	Global	Student Beans	skullcandy.com
+JBL	JBL	Hardware	20% Off.	Discount	Variable	Students	Global	UNiDAYS	jbl.com
+Phillips	Phillips	Hardware	15-25% Off.	Discount	Variable	Students	Global	Student Beans	usa.philips.com
+Sonos	Sonos	Hardware	15% Off.	Discount	Variable	Students	Global	UNiDAYS	sonos.com
+Acer	Acer	Hardware	10% Off.	Discount	Variable	Students	Global	Student Beans	store.acer.com
+ASUS	ASUS	Hardware	Education Store Pricing.	Discount	Variable	Students	Global	Edu Email	asus.com
+OnePlus	OnePlus	Hardware	Up to 10% Off.	Discount	Variable	Students	Global	Student Beans	oneplus.com
+Peloton Hardware	Peloton	Hardware	$200 Off Bike.	Discount	$200	Students	US/UK	SheerID	onepeloton.com
+Remarkable	Remarkable	Hardware	$30 Off.	Discount	$30	Students	Global	Contact	remarkable.com
+Wacom	Wacom	Hardware	Education Pricing.	Discount	Variable	Students	Global	Verification	estore.wacom.com
+Adorama	Adorama	Hardware	Student Discount Program.	Discount	Variable	Students	US	SheerID	adorama.com
+B&H Photo	B&H	Hardware	EDU Advantage.	Discount	Variable	Students	US	Edu Email	bhphotovideo.com
+Best Buy Student	Best Buy	Hardware	Student Deals.	Discount	Variable	Students	US/CA	Account	bestbuy.com
+ISIC Card	ISIC	Miscellaneous	Global Student ID + Discounts.	Hybrid	Variable	Students	Global	Proof of Status	isic.org
+UNiDAYS	UNiDAYS	Miscellaneous	Verification Platform/Deals.	Hybrid	N/A	Students	Global	Edu Email	myunidays.com
+Student Beans	Student Beans	Miscellaneous	Verification Platform/Deals.	Hybrid	N/A	Students	Global	Edu Email	studentbeans.com
+Totum	NUS	Miscellaneous	UK Student Discount Card.	Hybrid	Variable	Students	UK	Edu Email	totum.com
+SPC Card	SPC	Miscellaneous	Canada Student Discount Card.	Hybrid	Variable	Students	Canada	ID	spccard.ca
+Target Student	Target	Miscellaneous	15-20% Off (Seasonal).	Discount	Variable	Students	US	Verification	target.com
+Walmart+ Student	Walmart	Miscellaneous	50% Off Walmart+.	Discount	$50	Students	US	Verification	walmart.com
+Amazon Prime Student	Amazon	Miscellaneous	6 Mo Free + 50% Off.	Hybrid	$75+	Students 18-24	Global	Edu Email	amazon.com/joinstudent
+StudentUniverse	StudentUniverse	Travel	Flight/Hotel Discounts.	Discount	Variable	Students	Global	Edu Email / Doc	studentuniverse.com
+Amtrak Student	Amtrak	Travel	15% Off (Regional).	Discount	Variable	Students	US	ID / Code	amtrak.com
+FlixBus Student	FlixBus	Travel	10-15% Off.	Discount	Variable	Students	Global	StudentBeans / ISIC	flixbus.com
+United Airlines	United	Travel	5% Off (Young Adult).	Discount	Variable	Ages 18-23	Global	MileagePlus	united.com
+Lufthansa Student	Lufthansa	Travel	Student Fares.	Discount	Variable	Students	Global	Verification	lufthansa.com
+Turkish Airlines	Turkish Airlines	Travel	Up to 20% Off.	Discount	Variable	Students	Global	Miles&Smiles	turkishairlines.com
+Emirates Student	Emirates	Travel	Up to 10% Off.	Discount	Variable	Students	Global	Code 'STUDENT'	emirates.com
+Qatar Airways	Qatar Airways	Travel	Student Club (Discounts).	Discount	10-20%	Students	Global	Student Club	qatarairways.com
+Singapore Airlines	Singapore Airlines	Travel	Student Privileges (10% + Bag).	Discount	Variable	Students	Global	KrisFlyer	singaporeair.com
+Air France Student	Air France	Travel	Student Fares.	Discount	Variable	Students	Global	Verification	airfrance.com
+Cathay Pacific	Cathay Pacific	Travel	Student Fares.	Discount	Variable	Students	Global	Verification	cathaypacific.com
+Etihad Student	Etihad	Travel	Student Offer (Up to 10%).	Discount	Variable	Students	Global	Verification	etihad.com
+SAS Youth	SAS	Travel	Youth Fares (Under 26).	Discount	Variable	Under 26	Global	ID	flysas.com
+Eurail Pass	Eurail	Travel	Youth Pass (25% Off).	Discount	Variable	Under 27	Europe	ID	eurail.com
+Interrail Pass	Interrail	Travel	Youth Pass (25% Off).	Discount	Variable	Under 27	Europe	ID	interrail.eu
+Greyhound	Greyhound	Travel	Student Advantage (10%).	Discount	10%	Students	US	Student Advantage	greyhound.com
+Megabus	Megabus	Travel	$3 Off (UNiDAYS).	Discount	$3	Students	US/UK	UNiDAYS	us.megabus.com
+TfL 18+ Oyster	TfL	Travel	30% Off Travelcards.	Discount	30%	Students	UK (London)	Institution	tfl.gov.uk
+16-25 Railcard	National Rail	Travel	1/3 Off Rail Fares.	Discount	33%	16-25 or Student	UK	ID	16-25railcard.co.uk
+Spotify Student	Spotify	Entertainment	$5.99/mo + Hulu + Showtime.	Bundle	$15/mo savings	Students	Global	SheerID	spotify.com/student
+YouTube Premium	Google	Entertainment	~$7/mo Student Plan.	Discount	$7/mo savings	Students	Global	SheerID	youtube.com
+Apple Music Student	Apple	Entertainment	$5.99/mo + Apple TV+.	Bundle	$15/mo savings	Students	Global	UNiDAYS	apple.com
+Amazon Music	Amazon	Entertainment	$5.99/mo Student.	Discount	$5/mo savings	Students	Global	Prime Student	amazon.com
+Hulu Student	Hulu	Entertainment	$1.99/mo (Ad supported).	Discount	$6/mo savings	Students	US	SheerID	hulu.com/student
+Peacock Student	NBCUniversal	Entertainment	$1.99/mo (12 months).	Discount	$4/mo savings	Students	US	SheerID	peacocktv.com
+Paramount+ Student	Paramount	Entertainment	25% Off Essential.	Discount	Variable	Students	US	SheerID	paramountplus.com
+HBO Max Student	Warner Bros	Entertainment	50% Off.	Discount	Variable	Students	US	UNiDAYS	max.com
+Tidal Student	Tidal	Entertainment	50% Off.	Discount	$5/mo savings	Students	Global	SheerID	tidal.com
+Deezer Student	Deezer	Entertainment	50% Off.	Discount	$5/mo savings	Students	Global	SheerID	deezer.com
+SoundCloud Go+	SoundCloud	Entertainment	50% Off.	Discount	$5/mo savings	Students	Global	SheerID	soundcloud.com
+Pandora Student	Pandora	Entertainment	$4.99/mo Premium.	Discount	$5/mo savings	Students	US	SheerID	pandora.com
+Headspace Student	Headspace	Health	$9.99/year.	Discount	$60/yr savings	Students	US/UK/CA	SheerID	headspace.com
+Calm Student	Calm	Health	Amazon Prime Deal ($9/yr).	Discount	Variable	Students	Global	Prime Student	calm.com
+Peloton App	Peloton	Health	$6.99/mo.	Discount	$6/mo savings	Students	US/UK	SheerID	onepeloton.com
+Strava Student	Strava	Health	50% Off Subscription.	Discount	Variable	Students	Global	SheerID	strava.com
+MEC Student	MEC	Miscellaneous	10% Off.	Discount	Variable	Students	Canada	SPC	mec.ca
+Bulk	Bulk	Health	45% Off.	Discount	Variable	Students	UK	Student Beans	bulk.com
+MyProtein	MyProtein	Health	35% Off.	Discount	Variable	Students	Global	UNiDAYS	myprotein.com
+HelloFresh Student	HelloFresh	Miscellaneous	Discounted Boxes.	Discount	Variable	Students	Global	UNiDAYS	hellofresh.com
+Uber Eats Student	Uber	Miscellaneous	£10 Off.	Discount	£10	Students	UK	UNiDAYS	ubereats.com
+DoorDash Student	DoorDash	Miscellaneous	DashPass Student ($4.99/mo).	Discount	$5/mo savings	Students	US	SheerID	doordash.com
+Grubhub Student	Grubhub	Miscellaneous	Free Plus (Amazon Prime).	Free	$10/mo savings	Students	US	Prime Student	grubhub.com
+Washington Post	WaPo	Miscellaneous	$1/mo Subscription.	Discount	$9/mo savings	Students	US	Amazon Prime	washingtonpost.com
+New York Times	NYT	Miscellaneous	$1/week Subscription.	Discount	Variable	Students	Global	Verification	nytimes.com
+Wall Street Journal	WSJ	Miscellaneous	$4/mo Subscription.	Discount	Variable	Students	Global	Verification	store.wsj.com
+The Economist	The Economist	Miscellaneous	50-75% Off.	Discount	Variable	Students	Global	Verification	economist.com
+Financial Times	FT	Miscellaneous	50% Off.	Discount	Variable	Students	Global	Verification	subs.ft.com
+Bloomberg	Bloomberg	Miscellaneous	$9.99/mo.	Discount	Variable	Students	Global	Verification	bloomberg.com
+Nike Student	Nike	Fashion	10% Off.	Discount	Variable	Students	US/UK/EU	SheerID/UNiDAYS	nike.com
+Adidas Student	Adidas	Fashion	15% Off + Free Shipping.	Discount	Variable	Students	US/UK/EU	UNiDAYS	adidas.com
+ASOS Student	ASOS	Fashion	10% Off.	Discount	Variable	Students	Global	UNiDAYS	asos.com
+H&M Student	H&M	Fashion	10-15% Off.	Discount	Variable	Students	Global	Student Beans	hm.com
+Levi's Student	Levi's	Fashion	15% Off.	Discount	Variable	Students	US/UK	UNiDAYS	levi.com
+Uniqlo Student	Uniqlo	Fashion	Student Discount (Regional).	Discount	Variable	Students	US/UK	UNiDAYS	uniqlo.com
+Gymshark Student	Gymshark	Fashion	10% Off.	Discount	Variable	Students	Global	Student Beans	gymshark.com
+New Balance Student	New Balance	Fashion	Student Discount.	Discount	Variable	Students	US/UK	UNiDAYS	newbalance.com
+Reebok Student	Reebok	Fashion	50% Off (varies).	Discount	Variable	Students	US	UNiDAYS	reebok.com
+Puma Student	Puma	Fashion	10% Off.	Discount	Variable	Students	Global	UNiDAYS	us.puma.com
+Converse Student	Converse	Fashion	10% Off.	Discount	Variable	Students	US/UK	SheerID	converse.com
+Dr. Martens	Dr. Martens	Fashion	15% Off.	Discount	Variable	Students	Global	UNiDAYS	drmartens.com
+UGG Student	UGG	Fashion	10% Off.	Discount	Variable	Students	US/UK	UNiDAYS	ugg.com
+Crocs Student	Crocs	Fashion	25% Off.	Discount	Variable	Students	US	Student Beans	crocs.com
+Ray-Ban Student	Ray-Ban	Fashion	15% Off.	Discount	Variable	Students	Global	UNiDAYS	ray-ban.com
+Oakley Student	Oakley	Fashion	15% Off.	Discount	Variable	Students	Global	UNiDAYS	oakley.com
+Chevening Scholarship	UK Gov	Scholarships	Masters in UK (Full Ride).	Scholarship	Full	Int'l Students	Global	chevening.org
+Fulbright Foreign Student	Fulbright	Scholarships	Grad Study in US (Full Ride).	Scholarship	Full	Int'l Students	Global	foreign.fulbrightonline.org
+Gates Cambridge	Gates Fdn	Scholarships	Postgrad at Cambridge (Full).	Scholarship	Full	Int'l Students	UK	gatescambridge.org
+MPOWER Global Citizen	MPOWER	Scholarships	Study in US/CA ($2k-$10k).	Scholarship	Variable	Int'l Students	US/Canada	mpowerfinancing.com
+Erasmus Mundus	EU	Scholarships	Joint Masters in Europe.	Scholarship	Full	Global Students	Europe	erasmus-plus.ec.europa.eu
+DAAD Study Scholarship	DAAD	Scholarships	Masters in Germany.	Scholarship	Monthly	Int'l Students	Germany	daad.de
+Rhodes Scholarship	Rhodes Trust	Scholarships	Postgrad at Oxford.	Scholarship	Full	Int'l Students	UK	rhodeshouse.ox.ac.uk
+Commonwealth Masters	CSC	Scholarships	Masters in UK for Commonwealth.	Scholarship	Full	Commonwealth	UK	cscuk.fcdo.gov.uk
+JWU Global Scholarship	Johnson & Wales	Scholarships	Full Tuition.	Scholarship	Full Tuition	Int'l Students	US	jwu.edu
+UMass Lowell Latin	UMass Lowell	Scholarships	Graduate Scholarship.	Scholarship	$20,000	Int'l Students	US	uml.edu
+UMass Lowell SE Asia	UMass Lowell	Scholarships	Graduate Scholarship.	Scholarship	$20,000	Int'l Students	US	uml.edu
+UConn Global Excellence	UConn	Scholarships	Merit Award.	Scholarship	Variable	Int'l Students	US	admissions.uconn.edu
+CMU METALS	CMU	Scholarships	Merit Scholarship.	Scholarship	Variable	Grad Students	US	metals.hcii.cmu.edu
+Wesleyan African	Wesleyan	Scholarships	Full Scholarship.	Scholarship	Full	African Students	US	wesleyan.edu
+Wesleyan Freeman	Wesleyan	Scholarships	Full Scholarship.	Scholarship	Full	Asian Students	US	wesleyan.edu
+Trailblazer Opportunity	Fulbright NL	Scholarships	Year in US.	Scholarship	Full	Dutch Students	US	fulbright.nl
+Roger Williams Int'l	Roger Williams	Scholarships	Merit Scholarship.	Scholarship	50% Tuition	Int'l Students	US	rwu.edu
+Aga Khan Foundation	AKF	Scholarships	Postgrad Study (50% Grant/Loan).	Hybrid	50% Grant/Loan	Dev Countries	Global	akdn.org
+Vidyasaarathi	NSDL	Scholarships	Corporate Scholarships.	Scholarship	Variable	Indian Students	India	vidyasaarathi.co.in
+PMSS	Govt of India	Scholarships	CAPF/Police Wards.	Scholarship	Monthly	Indian Students	India	scholarships.gov.in
+Thiel Fellowship	Thiel Fdn	Startup Programs	$100k Grant to build.	Grant	$100,000	Under 22	Global	thielfellowship.org
+Rice Business Plan	Rice	Competitions	Startup Competition.	Prize	$1M+	Graduate Students	Global	rbpc.rice.edu
+Microsoft Imagine Cup	Microsoft	Competitions	Global Tech Competition.	Prize	$100k+	Students	Global	imaginecup.microsoft.com
+Google Solution Challenge	Google	Competitions	GDSC Competition.	Prize	Mentorship	Students	Global	developers.google.com
+NASA Apps Challenge	NASA	Competitions	Space Apps Hackathon.	Prize	Global Rec	Everyone	Global	spaceappschallenge.org
+IBM Call for Code	IBM	Competitions	Global Challenge.	Prize	$200k	Everyone	Global	callforcode.org
+James Dyson Award	Dyson	Competitions	Design Award.	Prize	£30,000	Students	Global	jamesdysonaward.org
+776 Fellows	776	Grants	Climate Fellowship.	Grant	$100k	18-23 Years	Global	776.org
+Ashoka Fellows	Ashoka	Grants	Social Entrepreneurship.	Grant	Variable	Social Ent	Global	ashoka.org
+Aspen Tech Policy	Aspen Inst	Grants	Policy Hub.	Grant	Variable	Technologists	US	aspentechpolicyhub.org
+Bloomberg New Economy	Bloomberg	Grants	Solutions.	Grant	Variable	Everyone	Global	bloombergneweconomy.com
+Buckminster Fuller	BFI	Grants	Design Challenge.	Grant	$100k	Everyone	Global	bfi.org
+Y Combinator	YC	Startup Programs	Accelerator.	Investment	$500k	Founders	Global	ycombinator.com
+Techstars	Techstars	Startup Programs	Accelerator.	Investment	$120k	Founders	Global	techstars.com
+500 Global	500 Global	Startup Programs	Accelerator.	Investment	$150k	Founders	Global	500.co
+Antler	Antler	Startup Programs	Residency.	Investment	Pre-seed	Founders	Global	antler.co
+Entrepreneur First	EF	Startup Programs	Talent Investor.	Investment	Pre-seed	Founders	Global	joinef.com
+Berkeley SkyDeck	Berkeley	Startup Programs	Accelerator.	Investment	$200k	Founders	Global	skydeck.berkeley.edu
+StartX	Stanford	Startup Programs	Accelerator.	Program	Equity Free	Founders	Global	startx.com
+MassChallenge	MassChallenge	Startup Programs	Accelerator.	Program	Equity Free	Founders	Global	masschallenge.org
+Plug and Play	Plug and Play	Startup Programs	Accelerator.	Investment	Variable	Founders	Global	plugandplaytechcenter.com
+SOSV	SOSV	Startup Programs	Accelerator (Hard Tech).	Investment	Variable	Founders	Global	sosv.com
+HAX	SOSV	Startup Programs	Hardware Accelerator.	Investment	$250k	Founders	Global	hax.co
+IndieBio	SOSV	Startup Programs	Biotech Accelerator.	Investment	$525k	Founders	Global	indiebio.com
+Orbit Startups	SOSV	Startup Programs	Emerging Markets.	Investment	Variable	Founders	Global	orbitstartups.com
+d.lab	SOSV	Startup Programs	Blockchain.	Investment	Variable	Founders	Global	dlab.vc
+Seedstars	Seedstars	Startup Programs	Emerging Markets.	Investment	Variable	Founders	Global	seedstars.com
+Flat6Labs	Flat6Labs	Startup Programs	MENA Accelerator.	Investment	Variable	Founders	MENA	flat6labs.com
+Startupbootcamp	SBC	Startup Programs	Industry Accelerator.	Investment	Variable	Founders	Global	startupbootcamp.org
+Founders Factory	FF	Startup Programs	Venture Studio.	Investment	Variable	Founders	Global	foundersfactory.com
+Rockstart	Rockstart	Startup Programs	Accelerator.	Investment	Variable	Founders	Europe	rockstart.com
+Bethnal Green Ventures	BGV	Startup Programs	Tech for Good.	Investment	£30k	Founders	UK	bethnalgreenventures.com
+Zinc	Zinc	Startup Programs	Venture Builder.	Investment	Variable	Founders	UK	zinc.vc
+EIT Digital	EU	Startup Programs	Accelerator.	Investment	Variable	Founders	Europe	eitdigital.eu
+Station F	Station F	Startup Programs	Campus/Program.	Service	Variable	Founders	France	stationf.co
+Creative Destruction Lab	CDL	Startup Programs	Mentorship Program.	Program	Equity Free	Founders	Global	creativedestructionlab.com
+Next 36	NEXT Canada	Startup Programs	Founder Dev.	Program	Variable	Students	Canada	nextcanada.com
+Velocity	Waterloo	Startup Programs	Incubator.	Program	Equity Free	Students	Canada	velocityincubator.com
+DMZ	TMU	Startup Programs	Incubator.	Program	Equity Free	Founders	Canada	dmz.ryerson.ca
+1871	1871	Startup Programs	Incubator.	Program	Variable	Founders	US	1871.com
+Capital Factory	Capital Factory	Startup Programs	Accelerator.	Investment	Variable	Founders	US	capitalfactory.com
+Gener8tor	Gener8tor	Startup Programs	Accelerator.	Investment	$100k	Founders	US	gener8tor.com
+Alchemist	Alchemist	Startup Programs	B2B Accelerator.	Investment	Variable	Founders	US	alchemistaccelerator.com
+Forum Ventures	Forum	Startup Programs	B2B SaaS.	Investment	$100k	Founders	US	forumvc.com
+TinySeed	TinySeed	Startup Programs	Remote Accelerator.	Investment	$120k+	Founders	Global	tinyseed.com
+Earnest Capital	Calm Company	Startup Programs	Funding.	Investment	SEAL	Founders	Global	calmfund.com
+Village Global	Village Global	Startup Programs	Network.	Investment	Variable	Founders	Global	villageglobal.vc
+On Deck	On Deck	Startup Programs	Fellowship.	Program	Variable	Founders	Global	beondeck.com
+Pioneer	Pioneer	Startup Programs	Remote Accelerator.	Investment	Variable	Founders	Global	pioneer.app
+Entrepreneurship World Cup	GEN	Competitions	Global Competition.	Prize	Variable	Founders	Global	entrepreneurshipworldcup.com
+Hult Prize	Hult	Competitions	Social Impact.	Prize	$1M	Students	Global	hultprize.org
+Fowler Global Challenge	St. Thomas	Competitions	Social Venture.	Prize	Variable	Students	Global	fowlerchallenge.com
+e-Fest	Schulze	Competitions	Undergrad Comp.	Prize	$215k	Undergrad Students	US	eix.org
+MN Cup	Minnesota	Competitions	Startup Comp.	Prize	Variable	Residents	US (MN)	mncup.org
+Baylor New Venture	Baylor	Competitions	Startup Comp.	Prize	Variable	Students	Global	baylor.edu
+VT Global Challenge	Virginia Tech	Competitions	Entrepreneurship.	Prize	Variable	Students	Global	apex.vt.edu
+HKUST One Million	HKUST	Competitions	Startup Comp.	Prize	$1M HKD	Students	Global	onemilliondollar.ust.hk
+StartUp Lehigh Valley	Lehigh	Competitions	Startup Comp.	Prize	Variable	Everyone	US (PA)	startuplehighvalley.com
+Cisco Startup Program	Cisco	Startup Programs	Accelerator.	Program	Equity Free	Startups	Global	cisco.com
+KPMG Tech Innovator	KPMG	Competitions	Startup Comp.	Prize	Global Rec	Startups	Global	kpmg.com
+Startup with IBM	IBM	Startup Programs	Cloud Credits.	Credits	$120k	Startups	Global	developer.ibm.com
+BootUp360	BootUp	Startup Programs	Incubation.	Program	Mentorship	Everyone	Global	bootupventures.com
+Amity Innovation	Amity	Startup Programs	Incubator.	Program	Variable	Everyone	India	amity.edu
+Draper Startup House	Draper	Startup Programs	Pre-Accelerator.	Program	Education	Everyone	Global	draperstartuphouse.com
+LaunchVic	LaunchVic	Startup Programs	Ecosystem.	Program	Variable	Residents	Australia (Vic)	launchvic.org
+AUC Venture Lab	AUC	Startup Programs	University Incubator.	Program	Equity Free	Students	Egypt	aucegypt.edu
+Kaplan EdTech	Kaplan	Startup Programs	Accelerator.	Program	Variable	EdTech	US	kaplan.com
+Intelak Hub	Intelak	Startup Programs	Aviation/Travel.	Program	Variable	Startups	UAE	intelak.com
+Qatar STP	QSTP	Startup Programs	Tech Park.	Grant	Variable	Startups	Qatar	qstp.org.qa
+Xelpmoc	Xelpmoc	Startup Programs	Tech Partner.	Investment	Tech for Equity	Startups	India	xelpmoc.in
+Jefferson Education	UVA	Startup Programs	EdTech.	Program	Research	EdTech	US	curry.virginia.edu
+Fogarty Institute	Fogarty	Startup Programs	MedTech.	Program	Mentorship	MedTech	US	fogartyinstitute.org
+Springboard	Springboard	Startup Programs	Accelerator.	Program	Variable	Startups	UK	springboard.com
+Luma Launch	Luma	Startup Programs	Accelerator.	Investment	Variable	Startups	US	lumalaunch.com
+Kauffman Foundation	Kauffman	Startup Programs	Grants.	Grant	Variable	Entrepreneurs	US	kauffman.org
+Google Career Certificates	Google	Learning	Scholarship.	Scholarship	Free Cert	Students	Global (EMEA/US)	grow.google
+MLH Fellowship	MLH	Learning	Remote Internship.	Stipend	Variable	Students	Global	fellowship.mlh.io
+Google Summer of Code	Google	Learning	Stipend for OSS.	Stipend	Variable	Students	Global	summerofcode.withgoogle.com
+Outreachy	Outreachy	Learning	Stipend for OSS.	Stipend	$7,000	Underrepresented	Global	outreachy.org
+Linux Foundation	Linux Foundation	Learning	Training Scholarship.	Scholarship	Variable	Everyone	Global	training.linuxfoundation.org
+CNCF Diversity	CNCF	Learning	Diversity Scholarship.	Scholarship	Variable	Everyone	Global	cncf.io
+AnitaB.org	AnitaB	Learning	GHC Scholarship.	Scholarship	Variable	Women in Tech	Global	anitab.org
+OpenAI Residency	OpenAI	Learning	Research Residency.	Salary	Full Salary	Researchers	Global	openai.com
+Google AI Residency	Google	Learning	Research Residency.	Salary	Full Salary	Researchers	Global	research.google
+Meta AI Residency	Meta	Learning	Research Residency.	Salary	Full Salary	Researchers	Global	ai.facebook.com
+Microsoft Research	Microsoft	Learning	PhD Fellowship.	Scholarship	Variable	PhD Students	Global	microsoft.com
+Apple Scholars	Apple	Learning	AI/ML Scholarship.	Scholarship	Variable	PhD Students	Global	machinelearning.apple.com
+Adobe Research	Adobe	Learning	Fellowship.	Scholarship	$10,000	Students	Global	research.adobe.com
+NVIDIA Grad Fellowship	NVIDIA	Learning	Graduate Fellowship.	Scholarship	$50,000	PhD Students	Global	nvidia.com
+IBM PhD Fellowship	IBM	Learning	PhD Fellowship.	Scholarship	Variable	PhD Students	Global	research.ibm.com
+Google PhD Fellowship	Google	Learning	PhD Fellowship.	Scholarship	Variable	PhD Students	Global	research.google
+Facebook Fellowship	Meta	Learning	PhD Fellowship.	Scholarship	Variable	PhD Students	Global	research.facebook.com
+Amazon Research	Amazon	Learning	Research Awards.	Grant	Variable	Faculty/Students	Global	amazon.science
+Qualcomm Innovation	Qualcomm	Learning	Innovation Fellowship.	Scholarship	Variable	PhD Students	Global	qualcomm.com
+Intel PhD Fellowship	Intel	Learning	PhD Fellowship.	Scholarship	Variable	PhD Students	US	intel.com
+Jane Street	Jane Street	Learning	Graduate Research Fellowship.	Scholarship	Variable	PhD Students	Global	janestreet.com
+Two Sigma	Two Sigma	Learning	PhD Fellowship.	Scholarship	Variable	PhD Students	US	twosigma.com
+Citadel Data Open	Citadel	Learning	Data Open.	Prize	$25,000	Students	Global	citadel.com
+DE Shaw Fellowships	DE Shaw	Learning	Fellowships.	Scholarship	Variable	Students	Global	deshaw.com
+Goldman Sachs	Goldman Sachs	Learning	Scholarship for Excellence.	Scholarship	Variable	Students	Global	goldmansachs.com
+JP Morgan GenTech	JP Morgan	Learning	GenerationTech.	Program	N/A	Students	Global	careers.jpmorgan.com
+Morgan Stanley	Morgan Stanley	Learning	Richard B. Fisher Scholarship.	Scholarship	Variable	Students	US	morganstanley.com
+Bank of America Leaders	BoA	Learning	Student Leaders.	Program	Intern/Trip	High School	US	about.bankofamerica.com
+McKinsey NGW	McKinsey	Learning	Next Generation Women.	Award	Variable	Students	Global	mckinsey.com
+BCG Unlimited	BCG	Learning	Unlimited.	Program	Mentorship	Students	Global	careers.bcg.com
+Bain BEL	Bain	Learning	BEL Program.	Program	Mentorship	Students	Global	bain.com
+P&G Standout	P&G	Learning	Standout Program.	Program	Mentorship	Students	Global	pgcareers.com
+Unilever Future Leaders	Unilever	Learning	Future Leaders.	Program	Management	Graduates	Global	careers.unilever.com
+L'Oreal Brandstorm	L'Oreal	Learning	Brandstorm.	Prize	Intrapreneurship	Students	Global	brandstorm.loreal.com
+Red Bull Basement	Red Bull	Learning	Basement.	Program	Incubator	Students	Global	basement.redbull.com
