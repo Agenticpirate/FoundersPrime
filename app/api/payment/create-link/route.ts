@@ -2,52 +2,61 @@ import DodoPayments from 'dodopayments';
 import { NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 
-const client = new DodoPayments({
-    bearerToken: process.env.DODO_PAYMENTS_API_KEY,
-    environment: process.env.DODO_PAYMENTS_ENVIRONMENT as 'test_mode' | 'live_mode',
-});
+// Check if environment variables are set
+const DODO_API_KEY = process.env.DODO_PAYMENTS_API_KEY || '';
+const DODO_ENV = process.env.DODO_PAYMENTS_ENVIRONMENT as 'test_mode' | 'live_mode' || 'test_mode';
+
+const client = DODO_API_KEY ? new DodoPayments({
+  bearerToken: DODO_API_KEY,
+  environment: DODO_ENV,
+}) : null;
 
 // Actual Product IDs provided by user
 const PRODUCTS: Record<string, string> = {
-    monthly: "pdt_0NXSovAmBrXoKozax8uOu",
-    annual: "pdt_0NXSpHZkJ3MjXA2DgiCoY",
-    lifetime: "pdt_0NXSpXlBKeUhWZCWJ4Pxd"
+  monthly: "pdt_0NXSovAmBrXoKozax8uOu",
+  annual: "pdt_0NXSpHzkJ3MjXA2DgiCov",
+  lifetime: "pdt_0NXSpKlBKeUhNzCWJ4Pxd"
 };
 
 export async function POST(request: Request) {
-    // 🔒 Require authentication — only logged-in users can initiate payment
-    const supabase = createClient()
-    const { data: { user } } = await supabase.auth.getUser()
-    if (!user) {
-        return NextResponse.json({ error: 'Unauthorized: Please log in to subscribe' }, { status: 401 });
+  // Check if DodoPayments client is initialized
+  if (!client) {
+    return NextResponse.json({ error: 'Payment system not configured. Please contact support.' }, { status: 500 });
+  }
+
+  // 🔒 Require authentication — only logged-in users can initiate payment
+  const supabase = createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) {
+    return NextResponse.json({ error: 'Unauthorized: Please log in to subscribe' }, { status: 401 });
+  }
+
+  try {
+    const { plan } = await request.json();
+
+    if (!plan || !PRODUCTS[plan]) {
+      return NextResponse.json({ error: 'Invalid plan selected' }, { status: 400 });
     }
 
-    try {
-        const { plan } = await request.json();
+    const productId = PRODUCTS[plan];
 
-        if (!plan || !PRODUCTS[plan]) {
-            return NextResponse.json({ error: 'Invalid plan selected' }, { status: 400 });
-        }
+    // Use the authenticated user's email automatically — never trust client-supplied email
+    const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://www.foundersprime.com'
 
-        const productId = PRODUCTS[plan];
+    const sessionPayload: any = {
+      product_cart: [{ product_id: productId, quantity: 1 }],
+      return_url: `${appUrl}/dashboard?status={status}`,
+      customer: { email: user.email },
+    };
 
-        // Use the authenticated user's email automatically — never trust client-supplied email
-        const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://www.foundersprime.com'
+    const session = await client.checkoutSessions.create(sessionPayload);
 
-        const sessionPayload: any = {
-            product_cart: [{ product_id: productId, quantity: 1 }],
-            return_url: `${appUrl}/dashboard?status={status}`,
-            customer: { email: user.email },
-        };
-
-        const session = await client.checkoutSessions.create(sessionPayload);
-
-        return NextResponse.json({
-            url: session.checkout_url,
-            payment_id: session.session_id
-        });
-    } catch (error: any) {
-        console.error('Dodo Payment Error:', error);
-        return NextResponse.json({ error: 'Payment creation failed' }, { status: 500 });
-    }
+    return NextResponse.json({
+      url: session.checkout_url,
+      payment_id: session.session_id
+    });
+  } catch (error: any) {
+    console.error('Dodo Payment Error:', error);
+    return NextResponse.json({ error: 'Payment creation failed' }, { status: 500 });
+  }
 }
