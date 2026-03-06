@@ -2,6 +2,9 @@
 
 import { useState, useEffect } from 'react'
 import StartupCard from './StartupCard'
+import ProGateOverlay from '@/components/ProGateOverlay'
+import { checkProStatus } from '@/lib/auth/user-context'
+import { YCCompany } from '@/types/startup'
 
 interface Startup {
   id: string
@@ -39,11 +42,42 @@ interface StartupsGridProps {
   }
 }
 
+const FREE_PAGE_LIMIT = 3 // pages 1–3 are visible, page 4+ is gated
+
+function toYCCompany(startup: Startup): YCCompany {
+  return {
+    id: parseInt(startup.id) || Math.random(),
+    name: startup.name,
+    slug: startup.slug,
+    website: startup.sourceUrl || '#',
+    small_logo_thumb_url: startup.logoUrl,
+    one_liner: startup.shortDescription,
+    long_description: startup.description,
+    team_size: parseInt(startup.teamSize) || 0,
+    industry: startup.category,
+    subindustry: '',
+    launched_at: 0,
+    tags: [startup.category, startup.country].filter(Boolean),
+    batch: '',
+    status: '',
+    all_locations: startup.country,
+    founders_enriched: [],
+  }
+}
+
 export default function StartupsGrid({ filters }: StartupsGridProps) {
   const [startups, setStartups] = useState<Startup[]>([])
   const [loading, setLoading] = useState(true)
   const [currentPage, setCurrentPage] = useState(1)
+  const [isPro, setIsPro] = useState(false)
   const startupsPerPage = 12
+
+  // Check Pro status on mount
+  useEffect(() => {
+    checkProStatus()
+      .then(({ isPro: pro }) => setIsPro(pro))
+      .catch(() => setIsPro(false))
+  }, [])
 
   useEffect(() => {
     const fetchStartups = async () => {
@@ -61,10 +95,7 @@ export default function StartupsGrid({ filters }: StartupsGridProps) {
 
         const response = await fetch(`/api/startups?${params}`)
         const data = await response.json()
-        
-        if (data.success) {
-          setStartups(data.startups)
-        }
+        if (data.success) setStartups(data.startups)
       } catch (error) {
         console.error('Error fetching startups:', error)
       } finally {
@@ -79,6 +110,12 @@ export default function StartupsGrid({ filters }: StartupsGridProps) {
   const totalPages = Math.ceil(startups.length / startupsPerPage)
   const startIndex = (currentPage - 1) * startupsPerPage
   const currentStartups = startups.slice(startIndex, startIndex + startupsPerPage)
+
+  // For the blur preview: show the first 4 cards of the gated page blurred
+  const blurPreviewStartups = startups.slice(
+    FREE_PAGE_LIMIT * startupsPerPage,
+    FREE_PAGE_LIMIT * startupsPerPage + 4
+  )
 
   if (loading) {
     return (
@@ -99,6 +136,9 @@ export default function StartupsGrid({ filters }: StartupsGridProps) {
     )
   }
 
+  // Is the current page gated?
+  const isGated = !isPro && currentPage > FREE_PAGE_LIMIT
+
   return (
     <div>
       {/* Results Header */}
@@ -109,28 +149,48 @@ export default function StartupsGrid({ filters }: StartupsGridProps) {
             Page {currentPage} of {totalPages}
           </span>
         </div>
+        {!isPro && (
+          <span className="font-mono text-xs text-gray-500 border border-dashed border-gray-400 px-3 py-1">
+            Free: pages 1–{FREE_PAGE_LIMIT} · <a href="/pricing" className="text-primary font-bold hover:underline">Upgrade for all {totalPages} pages →</a>
+          </span>
+        )}
       </div>
 
-      {/* Startups Grid */}
-      <div className="space-y-6">
-        {currentStartups.map((startup) => (
-          <StartupCard key={startup.id} startup={startup} />
-        ))}
-      </div>
+      {/* Grid or Pro Gate */}
+      {isGated ? (
+        <ProGateOverlay
+          totalCount={startups.length}
+          visibleCount={FREE_PAGE_LIMIT * startupsPerPage}
+          label="Startups"
+        >
+          {/* Blurred preview cards behind the overlay */}
+          <div className="space-y-6">
+            {blurPreviewStartups.map((startup) => (
+              <StartupCard key={startup.id} company={toYCCompany(startup)} />
+            ))}
+          </div>
+        </ProGateOverlay>
+      ) : (
+        <div className="space-y-6">
+          {currentStartups.map((startup) => (
+            <StartupCard key={startup.id} company={toYCCompany(startup)} />
+          ))}
+        </div>
+      )}
 
-      {/* Pagination */}
+      {/* Pagination — always show so users know how many pages exist */}
       {totalPages > 1 && (
         <div className="flex items-center justify-center gap-2 mt-12">
-          <button 
+          <button
             onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
             disabled={currentPage === 1}
             className="px-4 py-2 bg-white border-2 border-black font-mono text-sm rounded-sm hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             Previous
           </button>
-          
+
           {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
-            let pageNum
+            let pageNum: number
             if (totalPages <= 5) {
               pageNum = i + 1
             } else if (currentPage <= 3) {
@@ -140,35 +200,43 @@ export default function StartupsGrid({ filters }: StartupsGridProps) {
             } else {
               pageNum = currentPage - 2 + i
             }
-            
+
+            const locked = !isPro && pageNum > FREE_PAGE_LIMIT
+
             return (
               <button
                 key={pageNum}
                 onClick={() => setCurrentPage(pageNum)}
-                className={`px-4 py-2 border-2 border-black font-mono text-sm rounded-sm ${
-                  currentPage === pageNum 
-                    ? 'bg-black text-white' 
-                    : 'bg-white hover:bg-gray-100'
-                }`}
+                className={`px-4 py-2 border-2 border-black font-mono text-sm rounded-sm transition-colors flex items-center gap-1 ${currentPage === pageNum
+                    ? 'bg-black text-white'
+                    : locked
+                      ? 'bg-gray-100 text-gray-400 hover:bg-primary/20'
+                      : 'bg-white hover:bg-gray-100'
+                  }`}
               >
+                {locked && (
+                  <span className="material-symbols-outlined text-xs" style={{ fontSize: 12 }}>lock</span>
+                )}
                 {pageNum}
               </button>
             )
           })}
-          
+
           {totalPages > 5 && currentPage < totalPages - 2 && (
             <>
               <span className="px-2 font-mono text-sm">...</span>
               <button
                 onClick={() => setCurrentPage(totalPages)}
-                className="px-4 py-2 bg-white border-2 border-black font-mono text-sm rounded-sm hover:bg-gray-100"
+                className={`px-4 py-2 border-2 border-black font-mono text-sm rounded-sm transition-colors flex items-center gap-1 ${!isPro ? 'bg-gray-100 text-gray-400 hover:bg-primary/20' : 'bg-white hover:bg-gray-100'
+                  }`}
               >
+                {!isPro && <span className="material-symbols-outlined" style={{ fontSize: 12 }}>lock</span>}
                 {totalPages}
               </button>
             </>
           )}
-          
-          <button 
+
+          <button
             onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
             disabled={currentPage === totalPages}
             className="px-4 py-2 bg-white border-2 border-black font-mono text-sm rounded-sm hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"

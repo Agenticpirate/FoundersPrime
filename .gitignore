@@ -40,3 +40,15 @@ next-env.d.ts
 /*.md
 !README.md
 
+# backup and disabled files
+*.bak
+*.disabled
+
+# debug / test / lighthouse files (should never be committed)
+*.lighthouse.json
+lighthouse-*.json
+algolia_test.json
+debug_*.html
+sample-test-*.json
+yc_source.html
+logo-report.json

@@ -47,12 +47,12 @@ export default function UserProfileHeader({ user }: UserProfileHeaderProps) {
     <div className="mb-8">
       {/* Back Button */}
       <div className="mb-6">
-        <Link 
-          href="/community"
+        <Link
+          href="/deals"
           className="inline-flex items-center gap-2 text-sm text-gray-600 hover:text-[#13b6ec] transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
-          Back to Community
+          Back to Deals
         </Link>
       </div>
 
@@ -62,8 +62,8 @@ export default function UserProfileHeader({ user }: UserProfileHeaderProps) {
           Home
         </Link>
         <span>/</span>
-        <Link href="/community" className="hover:text-[#13b6ec] transition-colors">
-          Community
+        <Link href="/deals" className="hover:text-[#13b6ec] transition-colors">
+          Deals
         </Link>
         <span>/</span>
         <span className="text-gray-900 font-medium">@{user.username}</span>
@@ -77,7 +77,7 @@ export default function UserProfileHeader({ user }: UserProfileHeaderProps) {
             <div className="bg-[#13b6ec] border-3 border-black p-6 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] flex-shrink-0">
               <span className="text-white font-bold text-3xl">{user.avatar}</span>
             </div>
-            
+
             <div className="flex-1">
               <div className="flex items-center gap-3 mb-2">
                 <h1 className="text-3xl font-bold font-mono text-black">
@@ -87,10 +87,10 @@ export default function UserProfileHeader({ user }: UserProfileHeaderProps) {
                   {user.badge}
                 </span>
               </div>
-              
+
               <p className="text-gray-600 text-lg mb-2">@{user.username}</p>
               <p className="text-gray-800 font-medium mb-4">{user.title}</p>
-              
+
               {/* Location and Links */}
               <div className="flex flex-wrap items-center gap-4 text-sm text-gray-600 mb-4">
                 <div className="flex items-center gap-1">
@@ -102,7 +102,7 @@ export default function UserProfileHeader({ user }: UserProfileHeaderProps) {
                   <span>Joined {user.joinedDate}</span>
                 </div>
                 {user.website && (
-                  <a 
+                  <a
                     href={user.website}
                     target="_blank"
                     rel="noopener noreferrer"
@@ -113,7 +113,7 @@ export default function UserProfileHeader({ user }: UserProfileHeaderProps) {
                   </a>
                 )}
                 {user.twitter && (
-                  <a 
+                  <a
                     href={`https://twitter.com/${user.twitter.replace('@', '')}`}
                     target="_blank"
                     rel="noopener noreferrer"
@@ -124,7 +124,7 @@ export default function UserProfileHeader({ user }: UserProfileHeaderProps) {
                   </a>
                 )}
                 {user.linkedin && (
-                  <a 
+                  <a
                     href={`https://linkedin.com/in/${user.linkedin}`}
                     target="_blank"
                     rel="noopener noreferrer"
@@ -135,16 +135,16 @@ export default function UserProfileHeader({ user }: UserProfileHeaderProps) {
                   </a>
                 )}
               </div>
-              
+
               {/* Bio */}
               <p className="text-gray-700 leading-relaxed mb-6">
                 {user.bio}
               </p>
-              
+
               {/* Achievement Badges */}
               <div className="flex flex-wrap gap-3">
                 {user.badges.map((badge, index) => (
-                  <div 
+                  <div
                     key={index}
                     className="bg-gray-50 border-2 border-gray-300 p-3 shadow-[2px_2px_0px_0px_rgba(107,114,128,1)] group hover:shadow-[4px_4px_0px_0px_rgba(107,114,128,1)] transition-all"
                     title={badge.description}
@@ -165,33 +165,33 @@ export default function UserProfileHeader({ user }: UserProfileHeaderProps) {
           <h3 className="text-lg font-bold font-mono text-black mb-4">
             COMMUNITY_STATS
           </h3>
-          
+
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
             <div className="bg-blue-50 border-3 border-blue-500 p-4 shadow-[3px_3px_0px_0px_rgba(59,130,246,1)] text-center">
               <div className="text-2xl font-bold text-blue-800 mb-1">{user.stats.points.toLocaleString()}</div>
               <div className="text-xs font-bold text-blue-600 uppercase">Points</div>
             </div>
-            
+
             <div className="bg-green-50 border-3 border-green-500 p-4 shadow-[3px_3px_0px_0px_rgba(34,197,94,1)] text-center">
               <div className="text-2xl font-bold text-green-800 mb-1">{user.stats.discussions}</div>
               <div className="text-xs font-bold text-green-600 uppercase">Discussions</div>
             </div>
-            
+
             <div className="bg-yellow-50 border-3 border-yellow-500 p-4 shadow-[3px_3px_0px_0px_rgba(234,179,8,1)] text-center">
               <div className="text-2xl font-bold text-yellow-800 mb-1">{user.stats.comments}</div>
               <div className="text-xs font-bold text-yellow-600 uppercase">Comments</div>
             </div>
-            
+
             <div className="bg-purple-50 border-3 border-purple-500 p-4 shadow-[3px_3px_0px_0px_rgba(147,51,234,1)] text-center">
               <div className="text-2xl font-bold text-purple-800 mb-1">{user.stats.helpfulAnswers}</div>
               <div className="text-xs font-bold text-purple-600 uppercase">Helpful</div>
             </div>
-            
+
             <div className="bg-red-50 border-3 border-red-500 p-4 shadow-[3px_3px_0px_0px_rgba(239,68,68,1)] text-center">
               <div className="text-2xl font-bold text-red-800 mb-1">{user.stats.dealsApplied}</div>
               <div className="text-xs font-bold text-red-600 uppercase">Deals Applied</div>
             </div>
-            
+
             <div className="bg-gray-50 border-3 border-gray-500 p-4 shadow-[3px_3px_0px_0px_rgba(107,114,128,1)] text-center">
               <div className="text-2xl font-bold text-gray-800 mb-1">{user.stats.creditsSecured}</div>
               <div className="text-xs font-bold text-gray-600 uppercase">Credits Secured</div>

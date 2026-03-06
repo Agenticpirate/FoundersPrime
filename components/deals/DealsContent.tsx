@@ -50,11 +50,12 @@ export default function DealsContent() {
         {/* Right Column: Filters & Grid - Takes remaining space */}
         <div className="flex-1 min-w-0 flex flex-col gap-4">
           {/* Pro Tip Alert */}
-          <div className="bg-yellow-50 border-1 border-yellow-200 p-4 rounded-lg flex items-start gap-3">
-            <span className="material-symbols-outlined text-yellow-600 mt-0.5">lightbulb</span>
+          <div className="bg-yellow-50 border-2 border-yellow-200 p-4 rounded-sm flex items-start gap-3 shadow-sm">
+            <span className="material-symbols-outlined text-yellow-600 mt-0.5 shrink-0">lightbulb</span>
             <div>
-              <p className="text-sm text-yellow-800 font-medium">
-                <span className="font-bold">Pro Tip:</span> Use a professional email/domain (e.g. name@FoundersPrime.com) instead of generic providers (gmail, yahoo) to increase approval chances.
+              <p className="text-xs md:text-sm text-yellow-800 font-medium">
+                <span className="font-bold uppercase tracking-wider text-[10px] md:text-xs bg-yellow-200 px-1 py-0.5 rounded-sm mr-2 mb-1 inline-block">Pro Tip</span>
+                Use a professional email/domain (e.g. name@startup.com) instead of generic providers (gmail, yahoo) to increase approval chances.
               </p>
             </div>
           </div>

@@ -158,14 +158,24 @@ export function rateLimit(config: RateLimitConfig = { maxRequests: 100, windowMs
 }
 
 /**
- * CORS headers for API routes
+ * CORS headers for API routes — restrict to known origins
  */
+const ALLOWED_ORIGINS = [
+  'https://www.foundersprime.com',
+  'https://foundersprime.com',
+  'http://localhost:3000',
+  'http://localhost:3001',
+]
+
 export function corsHeaders(origin?: string) {
+  const allowedOrigin = origin && ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0]
   return {
-    'Access-Control-Allow-Origin': origin || '*',
+    'Access-Control-Allow-Origin': allowedOrigin,
     'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+    'Access-Control-Allow-Credentials': 'true',
     'Access-Control-Max-Age': '86400',
+    'Vary': 'Origin',
   }
 }
 

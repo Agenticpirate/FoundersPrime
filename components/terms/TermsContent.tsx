@@ -328,13 +328,6 @@ export default function TermsContent() {
               <p className="font-sans text-sm text-gray-800">
                 <strong>Email:</strong> support@foundersprime.com
               </p>
-              <p className="font-sans text-sm text-gray-800">
-                <strong>Phone:</strong> +1 (555) 123-4567
-              </p>
-              <p className="font-sans text-sm text-gray-800">
-                <strong>Address:</strong> 123 Startup Street, Suite 456<br />
-                San Francisco, CA 94105, United States
-              </p>
             </div>
           </div>
           <div>
@@ -344,10 +337,7 @@ export default function TermsContent() {
                 <strong>Email:</strong> support@foundersprime.com
               </p>
               <p className="font-sans text-sm text-gray-800">
-                <strong>Live Chat:</strong> Available Mon-Fri, 9AM-6PM PST
-              </p>
-              <p className="font-sans text-sm text-gray-800">
-                <strong>Help Center:</strong> help.foundersprime.com
+                <strong>Response Time:</strong> Within 1 business day
               </p>
             </div>
           </div>
@@ -355,15 +345,12 @@ export default function TermsContent() {
 
         <div className="mt-4 pt-4 border-t-2 border-gray-200">
           <div className="flex flex-col sm:flex-row gap-3">
-            <button className="px-5 py-2.5 bg-accent-yellow hover:bg-black hover:text-white border-2 border-black text-black font-mono text-sm font-bold rounded-sm transition-all shadow-[2px_2px_0px_0px_#1a1a1a] hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px]">
+            <a href="mailto:support@foundersprime.com?subject=Legal%20Inquiry" className="px-5 py-2.5 bg-accent-yellow hover:bg-black hover:text-white border-2 border-black text-black font-mono text-sm font-bold rounded-sm transition-all shadow-[2px_2px_0px_0px_#1a1a1a] hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px]">
               Contact Legal Team
-            </button>
-            <button className="px-5 py-2.5 bg-white hover:bg-gray-100 border-2 border-black text-black font-mono text-sm font-bold rounded-sm transition-all shadow-[2px_2px_0px_0px_#1a1a1a] hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px]">
+            </a>
+            <a href="mailto:support@foundersprime.com" className="px-5 py-2.5 bg-white hover:bg-gray-100 border-2 border-black text-black font-mono text-sm font-bold rounded-sm transition-all shadow-[2px_2px_0px_0px_#1a1a1a] hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px]">
               Get Support
-            </button>
-            <button className="px-5 py-2.5 bg-white hover:bg-gray-100 border-2 border-black text-black font-mono text-sm font-bold rounded-sm transition-all shadow-[2px_2px_0px_0px_#1a1a1a] hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px]">
-              View Privacy Policy
-            </button>
+            </a>
           </div>
         </div>
       </div>

@@ -84,9 +84,13 @@ export default function Header() {
                     <span className="material-symbols-outlined text-lg">lightbulb</span>
                     Incubators
                   </Link>
-                  <Link href="/deals/grants" className="block px-4 py-3 text-sm font-bold hover:bg-primary/20 flex items-center gap-2">
+                  <Link href="/deals/grants" className="block px-4 py-3 text-sm font-bold hover:bg-primary/20 border-b border-black/10 flex items-center gap-2">
                     <span className="material-symbols-outlined text-lg">payments</span>
                     Grants
+                  </Link>
+                  <Link href="/resources/funding-opportunities" className="block px-4 py-3 text-sm font-bold hover:bg-primary/20 flex items-center gap-2">
+                    <span className="material-symbols-outlined text-lg">monetization_on</span>
+                    Funding &amp; Opportunities
                   </Link>
                 </div>
               </div>
@@ -100,16 +104,12 @@ export default function Header() {
               <div className="absolute left-0 top-full pt-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
                 <div className="bg-white border-3 border-black shadow-[6px_6px_0px_#111111] min-w-[240px]">
                   <Link href="/resources/free-access" className="block px-4 py-3 text-sm font-bold hover:bg-primary/20 border-b border-black/10 flex items-center gap-2">
-                    <span className="material-symbols-outlined text-lg">school</span>
-                    Free Access
+                    <span className="material-symbols-outlined text-lg">workspace_premium</span>
+                    Campus Edge
                   </Link>
-                  <Link href="/resources/credits-savings" className="block px-4 py-3 text-sm font-bold hover:bg-primary/20 border-b border-black/10 flex items-center gap-2">
+                  <Link href="/resources/credits-savings" className="block px-4 py-3 text-sm font-bold hover:bg-primary/20 flex items-center gap-2">
                     <span className="material-symbols-outlined text-lg">savings</span>
-                    Credits & Savings
-                  </Link>
-                  <Link href="/resources/funding-opportunities" className="block px-4 py-3 text-sm font-bold hover:bg-primary/20 flex items-center gap-2">
-                    <span className="material-symbols-outlined text-lg">monetization_on</span>
-                    Funding & Opportunities
+                    Credits &amp; Savings
                   </Link>
                 </div>
               </div>
@@ -130,21 +130,9 @@ export default function Header() {
                     <span className="material-symbols-outlined text-lg">emoji_objects</span>
                     Startup Ideas
                   </Link>
-                  <Link href="/community" className="block px-4 py-3 text-sm font-bold hover:bg-primary/20 border-b border-black/10 flex items-center gap-2">
-                    <span className="material-symbols-outlined text-lg">groups</span>
-                    Community
-                  </Link>
                   <Link href="/resources" className="block px-4 py-3 text-sm font-bold hover:bg-primary/20 border-b border-black/10 flex items-center gap-2">
                     <span className="material-symbols-outlined text-lg">folder_open</span>
                     Templates & Guides
-                  </Link>
-                  <Link href="/blog" className="block px-4 py-3 text-sm font-bold hover:bg-primary/20 border-b border-black/10 flex items-center gap-2">
-                    <span className="material-symbols-outlined text-lg">article</span>
-                    Blog
-                  </Link>
-                  <Link href="/about" className="block px-4 py-3 text-sm font-bold hover:bg-primary/20 border-b border-black/10 flex items-center gap-2">
-                    <span className="material-symbols-outlined text-lg">info</span>
-                    About Us
                   </Link>
                   <Link href="/contact" className="block px-4 py-3 text-sm font-bold hover:bg-primary/20 flex items-center gap-2">
                     <span className="material-symbols-outlined text-lg">mail</span>

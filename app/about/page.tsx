@@ -1,10 +1,11 @@
 import { Metadata } from 'next'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
+import Link from 'next/link'
 
 export const metadata: Metadata = {
-  title: 'About FoundersPrime | FoundersPrime',
-  description: 'Learn about FoundersPrime\'s mission to help founders access non-dilutive capital and resources. Built from experience, not theory.',
+  title: 'About FoundersPrime — Built by Founders, for Founders',
+  description: 'FoundersPrime was built to give every bootstrapped and funded startup the unfair advantage—verified deals, non-dilutive capital, and tools that actually work.',
 }
 
 export default function AboutPage() {
@@ -12,248 +13,247 @@ export default function AboutPage() {
     <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden bg-[#F4F3EF]">
       <Header />
       <main className="flex-1">
-        {/* Hero Section */}
-        <section className="border-b-3 border-surface-dark bg-white py-16 md:py-24 pattern-grid-lg">
-          <div className="mx-auto max-w-7xl px-6 lg:px-12">
-            <div className="flex flex-col md:flex-row gap-12 items-start">
+
+        {/* ── HERO ─────────────────────────────────────────────────── */}
+        <section className="bg-white border-b-3 border-black pattern-grid-lg">
+          <div className="mx-auto max-w-7xl px-6 lg:px-12 py-20 md:py-28">
+            <div className="flex flex-col md:flex-row gap-14 items-center">
               <div className="flex-1">
-                <div className="inline-block bg-accent-yellow border-2 border-surface-dark px-3 py-1 mb-6 shadow-neo-sm">
-                  <span className="font-mono text-xs font-bold uppercase">Our Mission</span>
+                <div className="inline-flex items-center gap-2 bg-accent-yellow border-2 border-black px-3 py-1 mb-6 shadow-neo-sm">
+                  <span className="material-symbols-outlined text-sm">bolt</span>
+                  <span className="font-mono text-xs font-bold uppercase tracking-wider">Our Mission</span>
                 </div>
-                <h1 className="font-display text-5xl md:text-7xl font-black leading-[0.9] tracking-tighter text-surface-dark mb-8 uppercase">
-                  Built From <br className="hidden md:block" />
-                  <span className="text-primary bg-surface-dark px-2">Experience</span>, <br className="hidden md:block" />
-                  Not Theory
+                <h1 className="font-mono text-5xl md:text-6xl font-black leading-[1.05] tracking-tight text-black mb-6 uppercase">
+                  Built by Founders,<br />
+                  <span className="bg-black text-primary px-2">For Founders</span>
                 </h1>
-                <p className="font-mono text-lg md:text-xl leading-relaxed max-w-2xl border-l-4 border-primary pl-6 text-slate-700">
-                  We saved $20,000+ using these resources. Now we help other founders do the same. No fluff. No expensive consultants. Just the raw data you need.
+                <p className="font-mono text-base md:text-lg leading-relaxed text-gray-700 border-l-4 border-primary pl-5 max-w-xl">
+                  FoundersPrime is the unfair advantage for bootstrapped and funded startups. We give you the verified deals, non-dilutive capital sources, and battle-tested tools that others hide behind paywalls or consultants.
                 </p>
               </div>
-              <div className="w-full md:w-[400px] shrink-0">
-                <div className="neo-brutal-box p-6 bg-primary/10 relative overflow-hidden">
-                  <div className="absolute -right-4 -top-4 text-surface-dark/10">
-                    <span className="material-symbols-outlined text-[150px]">savings</span>
+
+              {/* Stats card */}
+              <div className="w-full md:w-[360px] shrink-0">
+                <div className="bg-black border-3 border-black shadow-[8px_8px_0px_#ffd700] p-8">
+                  <p className="font-mono text-xs text-gray-400 uppercase tracking-widest mb-6">Impact So Far</p>
+                  <div className="space-y-5">
+                    {[
+                      { value: '$4.2M+', label: 'Tracked in savings' },
+                      { value: '1,200+', label: 'Startups in network' },
+                      { value: '500+', label: 'Verified deals listed' },
+                      { value: '43+', label: 'Countries reached' },
+                    ].map(({ value, label }) => (
+                      <div key={label} className="flex items-baseline justify-between border-b border-white/10 pb-5 last:border-0 last:pb-0">
+                        <span className="font-mono text-3xl font-black text-primary">{value}</span>
+                        <span className="font-mono text-xs text-gray-400 uppercase tracking-wide">{label}</span>
+                      </div>
+                    ))}
                   </div>
-                  <h3 className="font-display text-2xl font-bold mb-4 relative z-10">Total Savings Tracked</h3>
-                  <div className="font-mono text-5xl font-bold text-primary mb-2 relative z-10">$4.2M+</div>
-                  <p className="font-mono text-sm text-surface-dark/70 relative z-10">Across 1,200+ startups in our network.</p>
                 </div>
               </div>
             </div>
           </div>
         </section>
 
-        {/* The Story */}
-        <section className="py-20 bg-[#F4F3EF] border-b-3 border-surface-dark">
+        {/* ── THE STORY ────────────────────────────────────────────── */}
+        <section className="py-20 bg-[#F4F3EF] border-b-3 border-black">
           <div className="mx-auto max-w-4xl px-6 lg:px-12">
-            <h2 className="font-display text-3xl font-black uppercase mb-8 flex items-center gap-3">
+            <div className="flex items-center gap-3 mb-10">
               <span className="material-symbols-outlined text-4xl">history_edu</span>
-              The Story
-            </h2>
-            <div className="space-y-6 font-body text-lg leading-relaxed text-surface-dark">
+              <h2 className="font-mono text-3xl font-black uppercase">The Story</h2>
+            </div>
+            <div className="space-y-5 font-sans text-lg leading-relaxed text-gray-800">
               <p>
-                It started with a spreadsheet. After wasting weeks navigating broken links, expired offers, and predatory &quot;consultants&quot; asking for 5% equity just to introduce us to a grant officer, we realized the startup ecosystem was fundamentally broken.
+                It started with a spreadsheet. After wasting weeks navigating broken links, expired offers, and predatory &ldquo;consultants&rdquo; asking for 5% equity just to introduce us to a grant officer, we realised the startup ecosystem was fundamentally broken for founders who don&apos;t have the right network.
               </p>
               <p>
-                The information was out there, but it was fragmented, hidden behind paywalls, or buried in SEO-spam articles.
+                The information was out there — but it was fragmented, hidden behind paywalls, or buried inside SEO-spam articles optimised for clicks, not founders.
               </p>
-              <p className="font-bold border-b-2 border-primary inline-block">
+              <p className="font-bold font-mono text-xl border-b-2 border-primary inline-block pb-1">
                 So we built FoundersPrime.
               </p>
               <p>
-                We designed it to be the resource we wished we had—a verified, no-nonsense database of non-dilutive capital and tools. We don&apos;t sell your data. We don&apos;t take a cut. We just give you the map.
+                A verified, no-nonsense database of non-dilutive capital, SaaS deals, accelerators, and tools. We don&apos;t sell your data. We don&apos;t take a cut of your funding. We just give you the map — and keep it accurate.
               </p>
             </div>
           </div>
         </section>
 
-        {/* What We Do (Methodology) */}
-        <section className="py-20 bg-white border-b-3 border-surface-dark">
+        {/* ── HOW WE MAINTAIN QUALITY ──────────────────────────────── */}
+        <section className="py-20 bg-white border-b-3 border-black">
           <div className="mx-auto max-w-7xl px-6 lg:px-12">
-            <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
-              <h2 className="font-display text-4xl md:text-5xl font-black uppercase tracking-tight max-w-xl">
+            <div className="flex flex-col md:flex-row justify-between items-end mb-14 gap-6">
+              <h2 className="font-mono text-4xl md:text-5xl font-black uppercase tracking-tight max-w-xl">
                 How We Maintain Quality
               </h2>
-              <div className="font-mono text-sm border-2 border-surface-dark px-3 py-1 bg-white">
-                System Status: <span className="text-green-600 font-bold">OPERATIONAL</span>
+              <div className="font-mono text-sm border-2 border-black px-3 py-1.5 bg-white flex items-center gap-2">
+                <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse inline-block"></span>
+                System Status: <span className="text-green-600 font-bold ml-1">OPERATIONAL</span>
               </div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-              <div className="neo-brutal-box p-6 bg-white relative group">
-                <div className="absolute -top-5 -left-3 bg-surface-dark text-white font-mono text-xl font-bold p-2 border-2 border-white shadow-sm">01</div>
-                <div className="mb-4 text-accent-blue mt-2">
-                  <span className="material-symbols-outlined text-5xl">search</span>
+              {[
+                { num: '01', icon: 'search', color: 'text-primary', bg: 'bg-primary/10', title: 'Research', desc: 'We scour government portals, corporate partner pages, and investor networks daily to find new opportunities.' },
+                { num: '02', icon: 'verified', color: 'text-accent-yellow', bg: 'bg-accent-yellow/10', title: 'Verify', desc: 'We personally test promo codes, call grant offices, and apply ourselves to confirm every listing is active.' },
+                { num: '03', icon: 'update', color: 'text-green-600', bg: 'bg-green-50', title: 'Update', desc: 'Dead links are removed weekly. If it\'s listed on FoundersPrime, it works. No 404s allowed.' },
+                { num: '04', icon: 'visibility', color: 'text-accent-red', bg: 'bg-red-50', title: 'Add Context', desc: 'We translate legalese into plain English so you know exactly what the catch is — before you apply.' },
+              ].map(({ num, icon, color, bg, title, desc }) => (
+                <div key={num} className="neo-brutal-box p-6 bg-white relative group hover:translate-x-[-2px] hover:translate-y-[-2px] transition-transform">
+                  <div className="absolute -top-4 -left-3 bg-black text-white font-mono text-sm font-bold px-3 py-1.5 border-2 border-black">
+                    {num}
+                  </div>
+                  <div className={`w-14 h-14 ${bg} border-2 border-black flex items-center justify-center mb-5 mt-3`}>
+                    <span className={`material-symbols-outlined text-3xl ${color}`}>{icon}</span>
+                  </div>
+                  <h3 className="font-mono text-lg font-black uppercase mb-2">{title}</h3>
+                  <p className="text-sm text-gray-600 leading-relaxed">{desc}</p>
                 </div>
-                <h3 className="font-display text-xl font-bold uppercase mb-2">Research</h3>
-                <p className="text-sm">We scour gov sites, corporate portals, and private investor networks daily for new opportunities.</p>
-              </div>
-              <div className="neo-brutal-box p-6 bg-white relative group">
-                <div className="absolute -top-5 -left-3 bg-surface-dark text-white font-mono text-xl font-bold p-2 border-2 border-white shadow-sm">02</div>
-                <div className="mb-4 text-accent-yellow mt-2">
-                  <span className="material-symbols-outlined text-5xl">verified</span>
-                </div>
-                <h3 className="font-display text-xl font-bold uppercase mb-2">Verify</h3>
-                <p className="text-sm">We personally test promo codes and call grant offices to ensure programs are active before listing.</p>
-              </div>
-              <div className="neo-brutal-box p-6 bg-white relative group">
-                <div className="absolute -top-5 -left-3 bg-surface-dark text-white font-mono text-xl font-bold p-2 border-2 border-white shadow-sm">03</div>
-                <div className="mb-4 text-primary mt-2">
-                  <span className="material-symbols-outlined text-5xl">update</span>
-                </div>
-                <h3 className="font-display text-xl font-bold uppercase mb-2">Update</h3>
-                <p className="text-sm">Dead links are removed weekly. If it&apos;s on FoundersPrime, it works. No 404s allowed.</p>
-              </div>
-              <div className="neo-brutal-box p-6 bg-white relative group">
-                <div className="absolute -top-5 -left-3 bg-surface-dark text-white font-mono text-xl font-bold p-2 border-2 border-white shadow-sm">04</div>
-                <div className="mb-4 text-accent-red mt-2">
-                  <span className="material-symbols-outlined text-5xl">visibility</span>
-                </div>
-                <h3 className="font-display text-xl font-bold uppercase mb-2">Add Context</h3>
-                <p className="text-sm">We translate &quot;legalese&quot; into plain English so you know exactly what the catch is.</p>
-              </div>
+              ))}
             </div>
           </div>
         </section>
 
-        {/* Comparison Table */}
-        <section className="py-20 bg-[#F4F3EF] border-b-3 border-surface-dark">
+        {/* ── COMPARISON TABLE ─────────────────────────────────────── */}
+        <section className="py-20 bg-[#F4F3EF] border-b-3 border-black">
           <div className="mx-auto max-w-5xl px-6 lg:px-12">
-            <h2 className="font-display text-3xl font-black uppercase mb-10 text-center">What Makes Us Different</h2>
-            <div className="overflow-x-auto neo-brutal-box p-0">
+            <h2 className="font-mono text-3xl font-black uppercase mb-12 text-center">What Makes Us Different</h2>
+            <div className="neo-brutal-box p-0 overflow-x-auto">
               <table className="w-full text-left border-collapse">
                 <thead>
-                  <tr className="bg-surface-dark text-white font-mono text-sm uppercase">
+                  <tr className="bg-black text-white font-mono text-xs uppercase">
                     <th className="p-4 border-r-2 border-white/20 w-1/3">Feature</th>
-                    <th className="p-4 border-r-2 border-white/20 w-1/4 bg-primary text-surface-dark font-bold">FoundersPrime</th>
+                    <th className="p-4 border-r-2 border-black w-1/4 bg-primary text-black font-bold">FoundersPrime ✓</th>
                     <th className="p-4 border-r-2 border-white/20 w-1/4 opacity-70">Other Platforms</th>
-                    <th className="p-4 w-1/4 opacity-70">Google Sheets</th>
+                    <th className="p-4 w-1/4 opacity-70">Random Spreadsheets</th>
                   </tr>
                 </thead>
-                <tbody className="font-medium">
-                  <tr className="border-b-2 border-surface-dark/10 hover:bg-white">
-                    <td className="p-4 border-r-2 border-surface-dark">Link Verification</td>
-                    <td className="p-4 border-r-2 border-surface-dark bg-primary/10 font-bold">Weekly Manual Tests</td>
-                    <td className="p-4 border-r-2 border-surface-dark text-sm text-gray-600">Automated/Rare</td>
-                    <td className="p-4 text-sm text-gray-600">None</td>
-                  </tr>
-                  <tr className="border-b-2 border-surface-dark/10 hover:bg-white">
-                    <td className="p-4 border-r-2 border-surface-dark">Non-Dilutive Focus</td>
-                    <td className="p-4 border-r-2 border-surface-dark bg-primary/10 font-bold">100% Focused</td>
-                    <td className="p-4 border-r-2 border-surface-dark text-sm text-gray-600">Mixed/SaaS deals</td>
-                    <td className="p-4 text-sm text-gray-600">Random</td>
-                  </tr>
-                  <tr className="border-b-2 border-surface-dark/10 hover:bg-white">
-                    <td className="p-4 border-r-2 border-surface-dark">Hidden Fees</td>
-                    <td className="p-4 border-r-2 border-surface-dark bg-primary/10 font-bold">Zero ($0)</td>
-                    <td className="p-4 border-r-2 border-surface-dark text-sm text-gray-600">Upsells</td>
-                    <td className="p-4 text-sm text-gray-600">Ads/Phishing</td>
-                  </tr>
-                  <tr className="hover:bg-white">
-                    <td className="p-4 border-r-2 border-surface-dark">Context & Guides</td>
-                    <td className="p-4 border-r-2 border-surface-dark bg-primary/10 font-bold">Included</td>
-                    <td className="p-4 border-r-2 border-surface-dark text-sm text-gray-600">Basic Info</td>
-                    <td className="p-4 text-sm text-gray-600">None</td>
-                  </tr>
+                <tbody className="font-mono text-sm">
+                  {[
+                    ['Link Verification', 'Weekly manual tests', 'Automated / rarely', 'None'],
+                    ['Non-Dilutive Focus', '100% focused', 'Mixed with VC deals', 'Random'],
+                    ['Hidden Fees', '$0 — always', 'Upsells & paywalls', 'Ads / phishing'],
+                    ['Plain-English Context', 'Every listing', 'Basic info only', 'None'],
+                    ['Updated Frequency', 'Weekly', 'Monthly / never', 'Abandoned'],
+                  ].map(([feature, us, them, sheet], i) => (
+                    <tr key={i} className="border-b-2 border-black/10 hover:bg-white transition-colors">
+                      <td className="p-4 border-r-2 border-black font-bold">{feature}</td>
+                      <td className="p-4 border-r-2 border-black bg-primary/10 font-bold text-black">{us}</td>
+                      <td className="p-4 border-r-2 border-black text-gray-500">{them}</td>
+                      <td className="p-4 text-gray-500">{sheet}</td>
+                    </tr>
+                  ))}
                 </tbody>
               </table>
             </div>
           </div>
         </section>
 
-        {/* Our Principles */}
-        <section className="py-20 bg-white border-b-3 border-surface-dark">
+        {/* ── PRINCIPLES ───────────────────────────────────────────── */}
+        <section className="py-20 bg-white border-b-3 border-black">
           <div className="mx-auto max-w-7xl px-6 lg:px-12">
-            <h2 className="font-display text-3xl font-black uppercase mb-12">Our Principles</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-0 border-3 border-surface-dark">
-              <div className="p-8 border-b-3 md:border-b-0 md:border-r-3 border-surface-dark hover:bg-background-light transition-colors">
-                <div className="inline-flex items-center gap-2 mb-3 bg-accent-blue/20 px-3 py-1 rounded-sm">
-                  <span className="material-symbols-outlined text-sm font-bold">target</span>
-                  <span className="font-mono text-xs font-bold uppercase">Principle 01</span>
+            <h2 className="font-mono text-3xl font-black uppercase mb-12">Our Principles</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 border-3 border-black">
+              {[
+                { icon: 'target', color: 'bg-primary/15 text-primary', label: '01', title: 'Accuracy Over Quantity', desc: "We'd rather list 50 grants that actually pay out than 5,000 that are expired or scams. Quality is our single metric." },
+                { icon: 'person', color: 'bg-accent-yellow/20 text-yellow-700', label: '02', title: 'Founder-First', desc: 'We build for the founder with 2 months of runway left. Every resource is vetted for speed, utility, and zero friction.' },
+                { icon: 'visibility', color: 'bg-green-100 text-green-700', label: '03', title: 'Radical Transparency', desc: "If we earn a commission on a tool, we say so. If a grant is hard to get, we say so. No surprises. Ever." },
+                { icon: 'block', color: 'bg-red-100 text-red-700', label: '04', title: 'No Bullshit', desc: 'Zero hype. Zero growth-hacking buzzwords. Just verified tools and money to build your company.' },
+              ].map(({ icon, color, label, title, desc }, i) => (
+                <div key={i} className={`p-8 hover:bg-[#F4F3EF] transition-colors ${i < 2 ? 'border-b-3 md:border-b-3' : ''} ${i % 2 === 0 ? 'md:border-r-3' : ''} border-black`}>
+                  <div className={`inline-flex items-center gap-2 mb-4 px-3 py-1 ${color} border border-current/30`}>
+                    <span className="material-symbols-outlined text-sm">{icon}</span>
+                    <span className="font-mono text-xs font-bold uppercase">Principle {label}</span>
+                  </div>
+                  <h3 className="font-mono text-xl font-black mb-3">{title}</h3>
+                  <p className="text-gray-700 leading-relaxed">{desc}</p>
                 </div>
-                <h3 className="font-display text-2xl font-bold mb-3">Accuracy Over Quantity</h3>
-                <p className="text-surface-dark/80">We&apos;d rather list 50 grants that actually pay out than 5,000 that are expired or scams. Quality is our metric.</p>
-              </div>
-              <div className="p-8 border-b-3 md:border-b-0 border-surface-dark hover:bg-background-light transition-colors">
-                <div className="inline-flex items-center gap-2 mb-3 bg-primary/20 px-3 py-1 rounded-sm">
-                  <span className="material-symbols-outlined text-sm font-bold">person</span>
-                  <span className="font-mono text-xs font-bold uppercase">Principle 02</span>
-                </div>
-                <h3 className="font-display text-2xl font-bold mb-3">Founder-First</h3>
-                <p className="text-surface-dark/80">We build for the founder with 2 months of runway left. Every resource is vetted for speed and utility.</p>
-              </div>
-              <div className="p-8 border-b-3 md:border-b-0 md:border-r-3 border-surface-dark md:border-t-3 hover:bg-background-light transition-colors">
-                <div className="inline-flex items-center gap-2 mb-3 bg-accent-yellow/20 px-3 py-1 rounded-sm">
-                  <span className="material-symbols-outlined text-sm font-bold">visibility</span>
-                  <span className="font-mono text-xs font-bold uppercase">Principle 03</span>
-                </div>
-                <h3 className="font-display text-2xl font-bold mb-3">Transparency</h3>
-                <p className="text-surface-dark/80">If we make a commission on a tool, we say it. If a grant is hard to get, we say it. No surprises.</p>
-              </div>
-              <div className="p-8 md:border-t-3 border-surface-dark hover:bg-background-light transition-colors">
-                <div className="inline-flex items-center gap-2 mb-3 bg-accent-red/20 px-3 py-1 rounded-sm">
-                  <span className="material-symbols-outlined text-sm font-bold">block</span>
-                  <span className="font-mono text-xs font-bold uppercase">Principle 04</span>
-                </div>
-                <h3 className="font-display text-2xl font-bold mb-3">No Bullshit</h3>
-                <p className="text-surface-dark/80">Zero hype. Zero growth-hacking buzzwords. Just tools and money to build your business.</p>
-              </div>
+              ))}
             </div>
           </div>
         </section>
 
-        {/* The Team & Contact */}
+        {/* ── FOUNDER + CONTACT ─────────────────────────────────────── */}
         <section className="py-20 bg-[#F4F3EF]">
           <div className="mx-auto max-w-7xl px-6 lg:px-12">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
-              <div className="lg:col-span-5">
-                <h2 className="font-display text-3xl font-black uppercase mb-8">The Team</h2>
-                <div className="neo-brutal-box p-6 bg-white flex flex-col items-center text-center">
-                  <div className="w-32 h-32 bg-gray-300 border-3 border-surface-dark mb-4 overflow-hidden grayscale contrast-125 rounded-full">
-                    <img className="w-full h-full object-cover" alt="Black and white portrait of a serious man in a suit" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBwz9Rb06yhRNPmB89DSm22JXXzHxo6iiT7Tbbl0xxbDcOPDp7KQHU9aRkyoe449Lrbbv4E8HNu9-0U5zEZ6GLMo_R4ztSsRthtQO9jFAooIaW_xNEM_TfmlyvJYdZ2XGbqpYhUGb6dNhL2d8rCfejf4lpw8p3WK3eTw6ssHtEG_ARqdyhEDLMuSEcqMcGlx4_Zwzm8684qHfEXlOKho7xJJl62lYqCxLm2XNYjG9UYUxhU6H6fri-mxSaHy-BZDx-MFoxPr1pCMmYG" />
+
+              {/* Founder card */}
+              <div className="lg:col-span-4">
+                <h2 className="font-mono text-2xl font-black uppercase mb-8 flex items-center gap-2">
+                  <span className="material-symbols-outlined">groups</span>
+                  The Team
+                </h2>
+                <div className="neo-brutal-box bg-white p-8 flex flex-col items-center text-center">
+                  {/* Branded avatar — no external image */}
+                  <div className="w-24 h-24 bg-black border-3 border-black shadow-[4px_4px_0px_#ffd700] flex items-center justify-center mb-5">
+                    <span className="font-mono text-3xl font-black text-primary">FP</span>
                   </div>
-                  <h3 className="font-display text-2xl font-bold">Alex Mercer</h3>
-                  <p className="font-mono text-sm text-primary font-bold mb-4">FOUNDER & CEO</p>
-                  <p className="text-sm mb-6 max-w-xs mx-auto">Former YC founder. 3x bootstrapper. Obsessed with efficient capital allocation.</p>
-                  <a className="neo-button w-full py-2 flex items-center justify-center gap-2 bg-surface-dark text-white font-mono text-sm uppercase hover:bg-primary hover:text-surface-dark transition-colors" href="#">
-                    <span className="material-symbols-outlined text-sm">alternate_email</span>
-                    @AlexMercer
-                  </a>
+                  <h3 className="font-mono text-xl font-black mb-1">Ravi Teja</h3>
+                  <p className="font-mono text-xs text-primary font-bold uppercase tracking-widest mb-4">Founder & CEO</p>
+                  <p className="text-sm text-gray-600 leading-relaxed mb-6 max-w-xs">
+                    Serial builder obsessed with helping bootstrapped founders save money, extend runway, and build faster through verified non-dilutive capital.
+                  </p>
+                  <div className="w-full space-y-3">
+                    <a
+                      href="mailto:support@foundersprime.com"
+                      className="neo-button w-full py-2.5 flex items-center justify-center gap-2 bg-black text-white font-mono text-xs uppercase hover:bg-primary hover:text-black transition-colors"
+                    >
+                      <span className="material-symbols-outlined text-sm">mail</span>
+                      Get in Touch
+                    </a>
+                    <a
+                      href="https://twitter.com/foundersprime"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="neo-button w-full py-2.5 flex items-center justify-center gap-2 bg-white font-mono text-xs uppercase hover:bg-accent-yellow transition-colors"
+                    >
+                      <span className="material-symbols-outlined text-sm">alternate_email</span>
+                      @FoundersPrime
+                    </a>
+                  </div>
                 </div>
               </div>
-              <div className="lg:col-span-7">
-                <h2 className="font-display text-3xl font-black uppercase mb-8">Contact Us</h2>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <a className="neo-brutal-box p-5 hover:bg-accent-yellow transition-colors group" href="mailto:support@foundersprime.com">
-                    <span className="font-mono text-xs text-surface-dark/60 font-bold uppercase block mb-1">General</span>
-                    <span className="font-display text-lg font-bold group-hover:underline">support@foundersprime.com</span>
-                  </a>
-                  <a className="neo-brutal-box p-5 hover:bg-primary transition-colors group" href="mailto:support@foundersprime.com">
-                    <span className="font-mono text-xs text-surface-dark/60 font-bold uppercase block mb-1">Support</span>
-                    <span className="font-display text-lg font-bold group-hover:underline">support@foundersprime.com</span>
-                  </a>
-                  <a className="neo-brutal-box p-5 hover:bg-accent-blue hover:text-white transition-colors group" href="mailto:support@foundersprime.com">
-                    <span className="font-mono text-xs text-surface-dark/60 group-hover:text-white/80 font-bold uppercase block mb-1">Press</span>
-                    <span className="font-display text-lg font-bold group-hover:underline">support@foundersprime.com</span>
-                  </a>
-                  <a className="neo-brutal-box p-5 hover:bg-accent-red hover:text-white transition-colors group" href="mailto:support@foundersprime.com">
-                    <span className="font-mono text-xs text-surface-dark/60 group-hover:text-white/80 font-bold uppercase block mb-1">Partnerships</span>
-                    <span className="font-display text-lg font-bold group-hover:underline">support@foundersprime.com</span>
-                  </a>
+
+              {/* Contact */}
+              <div className="lg:col-span-8">
+                <h2 className="font-mono text-2xl font-black uppercase mb-8 flex items-center gap-2">
+                  <span className="material-symbols-outlined">contact_support</span>
+                  Reach Out
+                </h2>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+                  {[
+                    { label: 'General Enquiries', hover: 'hover:bg-accent-yellow' },
+                    { label: 'Support', hover: 'hover:bg-primary' },
+                    { label: 'Press & Media', hover: 'hover:bg-accent-blue hover:text-white' },
+                    { label: 'Partnerships & Deals', hover: 'hover:bg-black hover:text-white' },
+                  ].map(({ label, hover }) => (
+                    <a key={label} href="mailto:support@foundersprime.com" className={`neo-brutal-box p-5 group transition-colors ${hover}`}>
+                      <span className="font-mono text-xs font-bold uppercase text-gray-500 group-hover:text-current block mb-1">{label}</span>
+                      <span className="font-mono text-sm font-bold">support@foundersprime.com</span>
+                    </a>
+                  ))}
                 </div>
-                <div className="flex gap-4 mt-6">
-                  <a className="neo-button px-6 py-3 flex-1 flex items-center justify-center gap-2 bg-white font-bold uppercase hover:bg-gray-100" href="#">
-                    <span className="material-symbols-outlined">link</span>
-                    Twitter / X
-                  </a>
-                  <a className="neo-button px-6 py-3 flex-1 flex items-center justify-center gap-2 bg-white font-bold uppercase hover:bg-gray-100" href="#">
-                    <span className="material-symbols-outlined">business_center</span>
-                    LinkedIn
-                  </a>
+
+                {/* CTA strip */}
+                <div className="border-3 border-black bg-black p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+                  <div>
+                    <p className="font-mono text-white font-black text-lg uppercase">Ready to save money?</p>
+                    <p className="font-mono text-gray-400 text-sm mt-1">Start with our verified deals — free, no credit card.</p>
+                  </div>
+                  <Link
+                    href="/deals"
+                    className="shrink-0 inline-flex items-center gap-2 bg-primary text-black font-mono font-black text-sm uppercase px-6 py-3 border-2 border-primary hover:bg-accent-yellow transition-colors shadow-[4px_4px_0px_#ffd700] hover:shadow-[2px_2px_0px_#ffd700]"
+                  >
+                    Browse Deals
+                    <span className="material-symbols-outlined text-base">arrow_forward</span>
+                  </Link>
                 </div>
               </div>
+
             </div>
           </div>
         </section>
+
       </main>
       <Footer />
     </div>

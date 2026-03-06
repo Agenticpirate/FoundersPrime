@@ -236,12 +236,12 @@ export default function DealComments({ dealId, dealTitle }: DealCommentsProps) {
           <span className="text-xs font-bold uppercase">Pinned Comment</span>
         </div>
       )}
-      
+
       <div className="flex items-start gap-4">
         <div className="bg-[#13b6ec] border-3 border-black p-2 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] flex-shrink-0">
           <span className="text-white font-bold text-sm">{comment.author.avatar}</span>
         </div>
-        
+
         <div className="flex-1">
           <div className="flex items-center gap-3 mb-2">
             <span className="font-bold text-black">{comment.author.name}</span>
@@ -260,9 +260,9 @@ export default function DealComments({ dealId, dealTitle }: DealCommentsProps) {
               </>
             )}
           </div>
-          
+
           <p className="text-gray-800 mb-4 leading-relaxed">{comment.content}</p>
-          
+
           <div className="flex items-center gap-4">
             <button className="flex items-center gap-1 text-sm text-gray-600 hover:text-green-600 transition-colors">
               <ThumbsUp className="w-4 h-4" />
@@ -273,7 +273,7 @@ export default function DealComments({ dealId, dealTitle }: DealCommentsProps) {
               <span>{comment.downvotes}</span>
             </button>
             {!isReply && (
-              <button 
+              <button
                 onClick={() => setReplyingTo(comment.id)}
                 className="flex items-center gap-1 text-sm text-gray-600 hover:text-[#13b6ec] transition-colors"
               >
@@ -286,7 +286,7 @@ export default function DealComments({ dealId, dealTitle }: DealCommentsProps) {
               <span>Report</span>
             </button>
           </div>
-          
+
           {replyingTo === comment.id && (
             <form onSubmit={(e) => handleSubmitReply(e, comment.id)} className="mt-4">
               <textarea
@@ -315,7 +315,7 @@ export default function DealComments({ dealId, dealTitle }: DealCommentsProps) {
           )}
         </div>
       </div>
-      
+
       {comment.replies.length > 0 && (
         <div className="mt-6 space-y-4">
           {comment.replies.map((reply) => (
@@ -340,7 +340,7 @@ export default function DealComments({ dealId, dealTitle }: DealCommentsProps) {
               {comments.length} comments
             </span>
           </div>
-          
+
           <div className="flex items-center gap-3">
             <span className="text-sm font-bold text-gray-600">Sort by:</span>
             <select
@@ -354,7 +354,7 @@ export default function DealComments({ dealId, dealTitle }: DealCommentsProps) {
             </select>
           </div>
         </div>
-        
+
         <p className="text-gray-600 text-sm">
           Share your experience with <strong>{dealTitle}</strong> or ask questions to help other founders.
         </p>
@@ -363,7 +363,7 @@ export default function DealComments({ dealId, dealTitle }: DealCommentsProps) {
       {/* Add Comment Form */}
       <div className="bg-white border-3 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] p-6 mb-6">
         <h4 className="text-lg font-bold font-mono text-black mb-4">ADD_COMMENT</h4>
-        
+
         <form onSubmit={handleSubmitComment}>
           <div className="flex items-start gap-4 mb-4">
             <div className="bg-[#13b6ec] border-3 border-black p-2 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] flex-shrink-0">
@@ -380,7 +380,7 @@ export default function DealComments({ dealId, dealTitle }: DealCommentsProps) {
               <p className="text-xs text-gray-500 mt-2">{newComment.length}/1000 characters</p>
             </div>
           </div>
-          
+
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
               <label className="flex items-center gap-2 text-sm">
@@ -392,7 +392,7 @@ export default function DealComments({ dealId, dealTitle }: DealCommentsProps) {
                 <span>Post anonymously</span>
               </label>
             </div>
-            
+
             <button
               type="submit"
               disabled={!newComment.trim()}
@@ -411,8 +411,8 @@ export default function DealComments({ dealId, dealTitle }: DealCommentsProps) {
           <div>
             <p className="font-bold text-blue-800 text-sm mb-1">Community Guidelines</p>
             <p className="text-sm text-blue-700">
-              Keep comments helpful and respectful. Share specific experiences and avoid promotional content. 
-              <Link href="/community/guidelines" className="text-[#13b6ec] hover:underline ml-1">
+              Keep comments helpful and respectful. Share specific experiences and avoid promotional content.
+              <Link href="/terms" className="text-[#13b6ec] hover:underline ml-1">
                 Read full guidelines →
               </Link>
             </p>

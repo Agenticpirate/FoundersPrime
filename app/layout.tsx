@@ -39,13 +39,15 @@ const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
   name: 'FoundersPrime',
+  alternateName: ['Founders Prime', 'FoundersPrime Terminal'],
   url: 'https://www.foundersprime.com',
   logo: 'https://www.foundersprime.com/icon.svg',
   sameAs: [
     'https://twitter.com/foundersprime',
     'https://linkedin.com/company/foundersprime'
   ],
-  description: 'The intelligence terminal for 500+ verified deals, non-dilutive grants, and startup credits.'
+  description: 'The intelligence terminal for 500+ verified deals, non-dilutive grants, and startup credits.',
+  slogan: 'The Intelligence Terminal for Startups'
 }
 
 export default function RootLayout({
@@ -56,6 +58,8 @@ export default function RootLayout({
   return (
     <html lang="en" className="light">
       <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
         <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
       </head>

@@ -1,0 +1,878 @@
+[
+  {
+    "title": "Cursor for Product Managers",
+    "description": "Over the last few years, we've seen an explosion of AI tools for writing code. Cursor and Claude Code are great at helping teams build software once it's clear what needs to be built. But writing code is only part of building a product people want. The most important part is figuring out what to build in the first place! Every successful product requires product management: talking to users, understanding markets, synthesizing feedback, and deciding what problems are worth solving and how the product should work.",
+    "author": "Andrew Miklas",
+    "category": "AI Tools",
+    "source": "YC RFS Spring 2026",
+    "tags": [
+      "AI",
+      "Product Management",
+      "SaaS"
+    ]
+  },
+  {
+    "title": "AI-Native Hedge Funds",
+    "description": "In the 1980s, a small group of funds started using computers to analyze markets. At the time it seemed silly, but quantitative trading is now obvious. We're at a similar inflection point now, and the next Renaissance, Bridgewater, and D.E. Shaw's are going to be built on AI.",
+    "author": "Charlie Holtz",
+    "category": "Fintech",
+    "source": "YC RFS Spring 2026",
+    "tags": [
+      "AI",
+      "Finance",
+      "Trading"
+    ]
+  },
+  {
+    "title": "AI-Native Agencies",
+    "description": "Traditional agencies are labor-intensive businesses that rely on armies of people to deliver services. AI is changing this. The next generation of agencies will use AI to dramatically reduce costs while delivering better results. Think marketing agencies that use AI to create campaigns, design agencies that use AI to generate designs, or consulting firms that use AI to analyze data.",
+    "author": "Aaron Epstein",
+    "category": "Services",
+    "source": "YC RFS Spring 2026",
+    "tags": [
+      "AI",
+      "Agencies",
+      "Automation"
+    ]
+  },
+  {
+    "title": "Stablecoin Financial Services",
+    "description": "Stablecoins are becoming the rails for global payments. The next wave of fintech will be built on stablecoins, offering services like lending, savings, and payments that are faster, cheaper, and more accessible than traditional banking.",
+    "author": "Daivik Goel",
+    "category": "Fintech",
+    "source": "YC RFS Spring 2026",
+    "tags": [
+      "Crypto",
+      "Fintech",
+      "Payments"
+    ]
+  },
+  {
+    "title": "AI for Government",
+    "description": "Government is one of the last sectors to be transformed by technology. AI can help governments deliver better services, reduce costs, and improve decision-making. From processing permits to analyzing policy impacts, there are countless opportunities to modernize government operations.",
+    "author": "Tom Blomfield",
+    "category": "GovTech",
+    "source": "YC RFS Spring 2026",
+    "tags": [
+      "AI",
+      "Government",
+      "Public Sector"
+    ]
+  },
+  {
+    "title": "Modern Metal Mills",
+    "description": "The steel and metal industry is ripe for disruption. Modern manufacturing techniques, automation, and AI can dramatically improve efficiency and reduce costs. The next generation of metal mills will be cleaner, faster, and more profitable.",
+    "author": "Zane Hengsperger",
+    "category": "Manufacturing",
+    "source": "YC RFS Spring 2026",
+    "tags": [
+      "Manufacturing",
+      "Hardware",
+      "Industrial"
+    ]
+  },
+  {
+    "title": "AI Guidance for Physical Work",
+    "description": "While AI has transformed knowledge work, physical work remains largely unchanged. AI-powered guidance systems can help workers in construction, manufacturing, and other physical industries work more safely and efficiently. Think AR glasses that show workers exactly what to do, or AI systems that prevent accidents before they happen.",
+    "author": "David Lieb",
+    "category": "Industrial",
+    "source": "YC RFS Spring 2026",
+    "tags": [
+      "AI",
+      "AR",
+      "Safety"
+    ]
+  },
+  {
+    "title": "Large Spatial Models",
+    "description": "Just as large language models transformed text, large spatial models will transform how we understand and interact with the physical world. These models can power everything from autonomous vehicles to robotics to AR/VR experiences.",
+    "author": "Ryan McLinko",
+    "category": "AI Infrastructure",
+    "source": "YC RFS Spring 2026",
+    "tags": [
+      "AI",
+      "Spatial Computing",
+      "Infrastructure"
+    ]
+  },
+  {
+    "title": "Infra for Government Fraud Hunters",
+    "description": "Government fraud costs taxpayers billions every year. Modern data tools can help fraud investigators find and stop fraud faster. The right infrastructure can make fraud hunting 10x more effective.",
+    "author": "Garry Tan",
+    "category": "GovTech",
+    "source": "YC RFS Spring 2026",
+    "tags": [
+      "Government",
+      "Fraud Detection",
+      "Data"
+    ]
+  },
+  {
+    "title": "Make LLMs Easy to Train",
+    "description": "Training large language models is still too hard and expensive. Tools that make it easier for companies to train custom models on their own data will unlock a new wave of AI applications.",
+    "author": "Gabriel Birnbaum",
+    "category": "AI Infrastructure",
+    "source": "YC RFS Spring 2026",
+    "tags": [
+      "AI",
+      "ML",
+      "Infrastructure"
+    ]
+  },
+  {
+    "title": "Why do freelancers ghost projects after partial payments without accountability systems?",
+    "description": "Real problem identified by users in India. Itch Score: 76/100 - indicating high demand and urgency for a solution.",
+    "author": "Razorpay Community",
+    "category": "B2B Services",
+    "source": "Razorpay Fix My Itch",
+    "tags": [
+      "B2B Services",
+      "Validated Problem",
+      "India"
+    ]
+  },
+  {
+    "title": "Why can't pet owners find trusted home-stay alternatives to boarding?",
+    "description": "Real problem identified by users in India. Itch Score: 70/100 - indicating high demand and urgency for a solution.",
+    "author": "Razorpay Community",
+    "category": "Consumer Services",
+    "source": "Razorpay Fix My Itch",
+    "tags": [
+      "Consumer Services",
+      "Validated Problem",
+      "India"
+    ]
+  },
+  {
+    "title": "How do parents find trustworthy evening childcare for 2-4 hours?",
+    "description": "Real problem identified by users in India. Itch Score: 81/100 - indicating high demand and urgency for a solution.",
+    "author": "Razorpay Community",
+    "category": "Consumer Services",
+    "source": "Razorpay Fix My Itch",
+    "tags": [
+      "Consumer Services",
+      "Validated Problem",
+      "India"
+    ]
+  },
+  {
+    "title": "Why are CRM systems too complex for 3-person businesses?",
+    "description": "Real problem identified by users in India. Itch Score: 74/100 - indicating high demand and urgency for a solution.",
+    "author": "Razorpay Community",
+    "category": "SaaS",
+    "source": "Razorpay Fix My Itch",
+    "tags": [
+      "SaaS",
+      "Validated Problem",
+      "India"
+    ]
+  },
+  {
+    "title": "Why is booking cargo vehicles harder than passenger transport?",
+    "description": "Real problem identified by users in India. Itch Score: 92.1/100 - indicating high demand and urgency for a solution.",
+    "author": "Razorpay Community",
+    "category": "Logistics",
+    "source": "Razorpay Fix My Itch",
+    "tags": [
+      "Logistics",
+      "Validated Problem",
+      "India"
+    ]
+  },
+  {
+    "title": "Why can't hosts prepare restaurant-quality meals in 15 minutes?",
+    "description": "Real problem identified by users in India. Itch Score: 73.5/100 - indicating high demand and urgency for a solution.",
+    "author": "Razorpay Community",
+    "category": "Food & Beverage",
+    "source": "Razorpay Fix My Itch",
+    "tags": [
+      "Food & Beverage",
+      "Validated Problem",
+      "India"
+    ]
+  },
+  {
+    "title": "Why can't first time used car buyers verify car histories and conditions?",
+    "description": "Real problem identified by users in India. Itch Score: 78/100 - indicating high demand and urgency for a solution.",
+    "author": "Razorpay Community",
+    "category": "Automotive",
+    "source": "Razorpay Fix My Itch",
+    "tags": [
+      "Automotive",
+      "Validated Problem",
+      "India"
+    ]
+  },
+  {
+    "title": "Why can't renters access verified mold, pests or hazards before signing leases?",
+    "description": "Real problem identified by users in India. Itch Score: 82/100 - indicating high demand and urgency for a solution.",
+    "author": "Razorpay Community",
+    "category": "Housing",
+    "source": "Razorpay Fix My Itch",
+    "tags": [
+      "Housing",
+      "Validated Problem",
+      "India"
+    ]
+  },
+  {
+    "title": "Why is caring for aging parents for sole earners across cities still fragmented?",
+    "description": "Real problem identified by users in India. Itch Score: 85/100 - indicating high demand and urgency for a solution.",
+    "author": "Razorpay Community",
+    "category": "Healthcare",
+    "source": "Razorpay Fix My Itch",
+    "tags": [
+      "Healthcare",
+      "Validated Problem",
+      "India"
+    ]
+  },
+  {
+    "title": "Why do teachers lack real time mental health support at work?",
+    "description": "Real problem identified by users in India. Itch Score: 79/100 - indicating high demand and urgency for a solution.",
+    "author": "Razorpay Community",
+    "category": "Healthcare",
+    "source": "Razorpay Fix My Itch",
+    "tags": [
+      "Healthcare",
+      "Validated Problem",
+      "India"
+    ]
+  },
+  {
+    "title": "Why do STEM students face education loan anxiety from unclear costs?",
+    "description": "Real problem identified by users in India. Itch Score: 77/100 - indicating high demand and urgency for a solution.",
+    "author": "Razorpay Community",
+    "category": "EdTech",
+    "source": "Razorpay Fix My Itch",
+    "tags": [
+      "EdTech",
+      "Validated Problem",
+      "India"
+    ]
+  },
+  {
+    "title": "Why can't consumers see verified kitchen safety standards on food delivery apps?",
+    "description": "Real problem identified by users in India. Itch Score: 71/100 - indicating high demand and urgency for a solution.",
+    "author": "Razorpay Community",
+    "category": "Consumer Services",
+    "source": "Razorpay Fix My Itch",
+    "tags": [
+      "Consumer Services",
+      "Validated Problem",
+      "India"
+    ]
+  },
+  {
+    "title": "Why is connecting specialized hardware to laptops still unreliable?",
+    "description": "Real problem identified by users in India. Itch Score: 68/100 - indicating high demand and urgency for a solution.",
+    "author": "Razorpay Community",
+    "category": "Hardware",
+    "source": "Razorpay Fix My Itch",
+    "tags": [
+      "Hardware",
+      "Validated Problem",
+      "India"
+    ]
+  },
+  {
+    "title": "Why is distinguishing sprains from fractures impossible without costly hospital visits?",
+    "description": "Real problem identified by users in India. Itch Score: 80/100 - indicating high demand and urgency for a solution.",
+    "author": "Razorpay Community",
+    "category": "Healthcare",
+    "source": "Razorpay Fix My Itch",
+    "tags": [
+      "Healthcare",
+      "Validated Problem",
+      "India"
+    ]
+  },
+  {
+    "title": "Why do people leaving formal education lack structure and career guidance?",
+    "description": "Real problem identified by users in India. Itch Score: 75/100 - indicating high demand and urgency for a solution.",
+    "author": "Razorpay Community",
+    "category": "Career",
+    "source": "Razorpay Fix My Itch",
+    "tags": [
+      "Career",
+      "Validated Problem",
+      "India"
+    ]
+  },
+  {
+    "title": "Why can't anxious people find trustworthy non-prescription sleep solutions?",
+    "description": "Real problem identified by users in India. Itch Score: 72/100 - indicating high demand and urgency for a solution.",
+    "author": "Razorpay Community",
+    "category": "Healthcare",
+    "source": "Razorpay Fix My Itch",
+    "tags": [
+      "Healthcare",
+      "Validated Problem",
+      "India"
+    ]
+  },
+  {
+    "title": "Why are small retailers forced into distributor margins without direct brand access?",
+    "description": "Real problem identified by users in India. Itch Score: 68.5/100 - indicating high demand and urgency for a solution.",
+    "author": "Razorpay Community",
+    "category": "B2B Services",
+    "source": "Razorpay Fix My Itch",
+    "tags": [
+      "B2B Services",
+      "Validated Problem",
+      "India"
+    ]
+  },
+  {
+    "title": "Why do micro-SMEs waste 10+ hours weekly on invoice management?",
+    "description": "Real problem identified by users in India. Itch Score: 67.5/100 - indicating high demand and urgency for a solution.",
+    "author": "Razorpay Community",
+    "category": "B2B Services",
+    "source": "Razorpay Fix My Itch",
+    "tags": [
+      "B2B Services",
+      "Validated Problem",
+      "India"
+    ]
+  },
+  {
+    "title": "Why can't manufacturers rely on guaranteed pickup logistics for outbound deliveries?",
+    "description": "Real problem identified by users in India. Itch Score: 79/100 - indicating high demand and urgency for a solution.",
+    "author": "Razorpay Community",
+    "category": "B2B Services",
+    "source": "Razorpay Fix My Itch",
+    "tags": [
+      "B2B Services",
+      "Validated Problem",
+      "India"
+    ]
+  },
+  {
+    "title": "Why do factory owners wait days for industrial repair technicians?",
+    "description": "Real problem identified by users in India. Itch Score: 78.5/100 - indicating high demand and urgency for a solution.",
+    "author": "Razorpay Community",
+    "category": "B2B Services",
+    "source": "Razorpay Fix My Itch",
+    "tags": [
+      "B2B Services",
+      "Validated Problem",
+      "India"
+    ]
+  },
+  {
+    "title": "Why can't shops see real-time supplier stock levels?",
+    "description": "Real problem identified by users in India. Itch Score: 67.5/100 - indicating high demand and urgency for a solution.",
+    "author": "Razorpay Community",
+    "category": "B2B Services",
+    "source": "Razorpay Fix My Itch",
+    "tags": [
+      "B2B Services",
+      "Validated Problem",
+      "India"
+    ]
+  },
+  {
+    "title": "Why can't small restaurants access wholesale ingredient pricing without large minimum orders?",
+    "description": "Real problem identified by users in India. Itch Score: 71.5/100 - indicating high demand and urgency for a solution.",
+    "author": "Razorpay Community",
+    "category": "B2B Services",
+    "source": "Razorpay Fix My Itch",
+    "tags": [
+      "B2B Services",
+      "Validated Problem",
+      "India"
+    ]
+  },
+  {
+    "title": "Why can't businesses verify new suppliers before purchasing?",
+    "description": "Real problem identified by users in India. Itch Score: 76/100 - indicating high demand and urgency for a solution.",
+    "author": "Razorpay Community",
+    "category": "B2B Services",
+    "source": "Razorpay Fix My Itch",
+    "tags": [
+      "B2B Services",
+      "Validated Problem",
+      "India"
+    ]
+  },
+  {
+    "title": "Why can't SMEs negotiate favorable payment terms with large buyers?",
+    "description": "Real problem identified by users in India. Itch Score: 82.8/100 - indicating high demand and urgency for a solution.",
+    "author": "Razorpay Community",
+    "category": "B2B Services",
+    "source": "Razorpay Fix My Itch",
+    "tags": [
+      "B2B Services",
+      "Validated Problem",
+      "India"
+    ]
+  },
+  {
+    "title": "Why do businesses struggle finding reliable contract manufacturers for small batches?",
+    "description": "Real problem identified by users in India. Itch Score: 75.2/100 - indicating high demand and urgency for a solution.",
+    "author": "Razorpay Community",
+    "category": "B2B Services",
+    "source": "Razorpay Fix My Itch",
+    "tags": [
+      "B2B Services",
+      "Validated Problem",
+      "India"
+    ]
+  },
+  {
+    "title": "Why can't online shoppers visualize furniture in their actual rooms before buying?",
+    "description": "Real problem identified by users in India. Itch Score: 69/100 - indicating high demand and urgency for a solution.",
+    "author": "Razorpay Community",
+    "category": "E-commerce",
+    "source": "Razorpay Fix My Itch",
+    "tags": [
+      "E-commerce",
+      "Validated Problem",
+      "India"
+    ]
+  },
+  {
+    "title": "Why do D2C brands lose 30% of customers at checkout due to payment failures?",
+    "description": "Real problem identified by users in India. Itch Score: 88/100 - indicating high demand and urgency for a solution.",
+    "author": "Razorpay Community",
+    "category": "E-commerce",
+    "source": "Razorpay Fix My Itch",
+    "tags": [
+      "E-commerce",
+      "Validated Problem",
+      "India"
+    ]
+  },
+  {
+    "title": "Why can't sellers predict returns before shipping products?",
+    "description": "Real problem identified by users in India. Itch Score: 73/100 - indicating high demand and urgency for a solution.",
+    "author": "Razorpay Community",
+    "category": "E-commerce",
+    "source": "Razorpay Fix My Itch",
+    "tags": [
+      "E-commerce",
+      "Validated Problem",
+      "India"
+    ]
+  },
+  {
+    "title": "Why do rural customers face 7-10 day delivery times for essentials?",
+    "description": "Real problem identified by users in India. Itch Score: 84/100 - indicating high demand and urgency for a solution.",
+    "author": "Razorpay Community",
+    "category": "E-commerce",
+    "source": "Razorpay Fix My Itch",
+    "tags": [
+      "E-commerce",
+      "Validated Problem",
+      "India"
+    ]
+  },
+  {
+    "title": "Why can't fashion brands reduce size-related returns?",
+    "description": "Real problem identified by users in India. Itch Score: 76/100 - indicating high demand and urgency for a solution.",
+    "author": "Razorpay Community",
+    "category": "E-commerce",
+    "source": "Razorpay Fix My Itch",
+    "tags": [
+      "E-commerce",
+      "Validated Problem",
+      "India"
+    ]
+  },
+  {
+    "title": "Why do college students struggle to find affordable textbook rentals?",
+    "description": "Real problem identified by users in India. Itch Score: 70/100 - indicating high demand and urgency for a solution.",
+    "author": "Razorpay Community",
+    "category": "EdTech",
+    "source": "Razorpay Fix My Itch",
+    "tags": [
+      "EdTech",
+      "Validated Problem",
+      "India"
+    ]
+  },
+  {
+    "title": "Why can't working professionals access micro-learning for skill upgrades?",
+    "description": "Real problem identified by users in India. Itch Score: 72/100 - indicating high demand and urgency for a solution.",
+    "author": "Razorpay Community",
+    "category": "EdTech",
+    "source": "Razorpay Fix My Itch",
+    "tags": [
+      "EdTech",
+      "Validated Problem",
+      "India"
+    ]
+  },
+  {
+    "title": "Why do parents lack tools to track their child's actual learning progress?",
+    "description": "Real problem identified by users in India. Itch Score: 78/100 - indicating high demand and urgency for a solution.",
+    "author": "Razorpay Community",
+    "category": "EdTech",
+    "source": "Razorpay Fix My Itch",
+    "tags": [
+      "EdTech",
+      "Validated Problem",
+      "India"
+    ]
+  },
+  {
+    "title": "Why can't rural students access quality test prep coaching?",
+    "description": "Real problem identified by users in India. Itch Score: 81/100 - indicating high demand and urgency for a solution.",
+    "author": "Razorpay Community",
+    "category": "EdTech",
+    "source": "Razorpay Fix My Itch",
+    "tags": [
+      "EdTech",
+      "Validated Problem",
+      "India"
+    ]
+  },
+  {
+    "title": "Why do gig workers struggle to access instant credit for emergencies?",
+    "description": "Real problem identified by users in India. Itch Score: 86/100 - indicating high demand and urgency for a solution.",
+    "author": "Razorpay Community",
+    "category": "FinTech",
+    "source": "Razorpay Fix My Itch",
+    "tags": [
+      "FinTech",
+      "Validated Problem",
+      "India"
+    ]
+  },
+  {
+    "title": "Why can't small businesses get working capital without collateral?",
+    "description": "Real problem identified by users in India. Itch Score: 83/100 - indicating high demand and urgency for a solution.",
+    "author": "Razorpay Community",
+    "category": "FinTech",
+    "source": "Razorpay Fix My Itch",
+    "tags": [
+      "FinTech",
+      "Validated Problem",
+      "India"
+    ]
+  },
+  {
+    "title": "Why do freelancers lose 20% of earnings to currency conversion fees?",
+    "description": "Real problem identified by users in India. Itch Score: 79/100 - indicating high demand and urgency for a solution.",
+    "author": "Razorpay Community",
+    "category": "FinTech",
+    "source": "Razorpay Fix My Itch",
+    "tags": [
+      "FinTech",
+      "Validated Problem",
+      "India"
+    ]
+  },
+  {
+    "title": "Why can't migrant workers send money home without high fees?",
+    "description": "Real problem identified by users in India. Itch Score: 87/100 - indicating high demand and urgency for a solution.",
+    "author": "Razorpay Community",
+    "category": "FinTech",
+    "source": "Razorpay Fix My Itch",
+    "tags": [
+      "FinTech",
+      "Validated Problem",
+      "India"
+    ]
+  },
+  {
+    "title": "Why do cloud kitchens struggle with ingredient wastage?",
+    "description": "Real problem identified by users in India. Itch Score: 74/100 - indicating high demand and urgency for a solution.",
+    "author": "Razorpay Community",
+    "category": "Food & Beverage",
+    "source": "Razorpay Fix My Itch",
+    "tags": [
+      "Food & Beverage",
+      "Validated Problem",
+      "India"
+    ]
+  },
+  {
+    "title": "Why can't home cooks monetize their skills part-time?",
+    "description": "Real problem identified by users in India. Itch Score: 71/100 - indicating high demand and urgency for a solution.",
+    "author": "Razorpay Community",
+    "category": "Food & Beverage",
+    "source": "Razorpay Fix My Itch",
+    "tags": [
+      "Food & Beverage",
+      "Validated Problem",
+      "India"
+    ]
+  },
+  {
+    "title": "Why do restaurants lack real-time demand forecasting?",
+    "description": "Real problem identified by users in India. Itch Score: 76/100 - indicating high demand and urgency for a solution.",
+    "author": "Razorpay Community",
+    "category": "Food & Beverage",
+    "source": "Razorpay Fix My Itch",
+    "tags": [
+      "Food & Beverage",
+      "Validated Problem",
+      "India"
+    ]
+  },
+  {
+    "title": "Why can't delivery drivers optimize multi-order routes in real-time?",
+    "description": "Real problem identified by users in India. Itch Score: 80/100 - indicating high demand and urgency for a solution.",
+    "author": "Razorpay Community",
+    "category": "Logistics",
+    "source": "Razorpay Fix My Itch",
+    "tags": [
+      "Logistics",
+      "Validated Problem",
+      "India"
+    ]
+  },
+  {
+    "title": "Why do warehouses struggle with inventory accuracy?",
+    "description": "Real problem identified by users in India. Itch Score: 77/100 - indicating high demand and urgency for a solution.",
+    "author": "Razorpay Community",
+    "category": "Logistics",
+    "source": "Razorpay Fix My Itch",
+    "tags": [
+      "Logistics",
+      "Validated Problem",
+      "India"
+    ]
+  },
+  {
+    "title": "Why can't SMEs track shipments across multiple carriers?",
+    "description": "Real problem identified by users in India. Itch Score: 75/100 - indicating high demand and urgency for a solution.",
+    "author": "Razorpay Community",
+    "category": "Logistics",
+    "source": "Razorpay Fix My Itch",
+    "tags": [
+      "Logistics",
+      "Validated Problem",
+      "India"
+    ]
+  },
+  {
+    "title": "Why do small teams waste hours on manual meeting scheduling?",
+    "description": "Real problem identified by users in India. Itch Score: 69/100 - indicating high demand and urgency for a solution.",
+    "author": "Razorpay Community",
+    "category": "SaaS",
+    "source": "Razorpay Fix My Itch",
+    "tags": [
+      "SaaS",
+      "Validated Problem",
+      "India"
+    ]
+  },
+  {
+    "title": "Why can't solopreneurs automate social media without losing authenticity?",
+    "description": "Real problem identified by users in India. Itch Score: 71/100 - indicating high demand and urgency for a solution.",
+    "author": "Razorpay Community",
+    "category": "SaaS",
+    "source": "Razorpay Fix My Itch",
+    "tags": [
+      "SaaS",
+      "Validated Problem",
+      "India"
+    ]
+  },
+  {
+    "title": "Why do remote teams struggle with async communication?",
+    "description": "Real problem identified by users in India. Itch Score: 73/100 - indicating high demand and urgency for a solution.",
+    "author": "Razorpay Community",
+    "category": "SaaS",
+    "source": "Razorpay Fix My Itch",
+    "tags": [
+      "SaaS",
+      "Validated Problem",
+      "India"
+    ]
+  },
+  {
+    "title": "Why can't non-technical founders build MVPs without developers?",
+    "description": "Real problem identified by users in India. Itch Score: 82/100 - indicating high demand and urgency for a solution.",
+    "author": "Razorpay Community",
+    "category": "SaaS",
+    "source": "Razorpay Fix My Itch",
+    "tags": [
+      "SaaS",
+      "Validated Problem",
+      "India"
+    ]
+  },
+  {
+    "title": "Why do mental health apps fail to provide crisis support?",
+    "description": "Real problem identified by users in India. Itch Score: 85/100 - indicating high demand and urgency for a solution.",
+    "author": "Razorpay Community",
+    "category": "Healthtech",
+    "source": "Razorpay Fix My Itch",
+    "tags": [
+      "Healthtech",
+      "Validated Problem",
+      "India"
+    ]
+  },
+  {
+    "title": "Why can't patients access their medical records across hospitals?",
+    "description": "Real problem identified by users in India. Itch Score: 88/100 - indicating high demand and urgency for a solution.",
+    "author": "Razorpay Community",
+    "category": "Healthtech",
+    "source": "Razorpay Fix My Itch",
+    "tags": [
+      "Healthtech",
+      "Validated Problem",
+      "India"
+    ]
+  },
+  {
+    "title": "Why do chronic disease patients lack personalized diet plans?",
+    "description": "Real problem identified by users in India. Itch Score: 79/100 - indicating high demand and urgency for a solution.",
+    "author": "Razorpay Community",
+    "category": "Healthtech",
+    "source": "Razorpay Fix My Itch",
+    "tags": [
+      "Healthtech",
+      "Validated Problem",
+      "India"
+    ]
+  },
+  {
+    "title": "Why can't elderly people get medicine delivered with dosage reminders?",
+    "description": "Real problem identified by users in India. Itch Score: 81/100 - indicating high demand and urgency for a solution.",
+    "author": "Razorpay Community",
+    "category": "Healthtech",
+    "source": "Razorpay Fix My Itch",
+    "tags": [
+      "Healthtech",
+      "Validated Problem",
+      "India"
+    ]
+  },
+  {
+    "title": "Why do apartment residents struggle to find reliable plumbers?",
+    "description": "Real problem identified by users in India. Itch Score: 72/100 - indicating high demand and urgency for a solution.",
+    "author": "Razorpay Community",
+    "category": "Home Services",
+    "source": "Razorpay Fix My Itch",
+    "tags": [
+      "Home Services",
+      "Validated Problem",
+      "India"
+    ]
+  },
+  {
+    "title": "Why can't homeowners get transparent pricing for repairs?",
+    "description": "Real problem identified by users in India. Itch Score: 76/100 - indicating high demand and urgency for a solution.",
+    "author": "Razorpay Community",
+    "category": "Home Services",
+    "source": "Razorpay Fix My Itch",
+    "tags": [
+      "Home Services",
+      "Validated Problem",
+      "India"
+    ]
+  },
+  {
+    "title": "Why do tenants lack tools to report maintenance issues efficiently?",
+    "description": "Real problem identified by users in India. Itch Score: 70/100 - indicating high demand and urgency for a solution.",
+    "author": "Razorpay Community",
+    "category": "Home Services",
+    "source": "Razorpay Fix My Itch",
+    "tags": [
+      "Home Services",
+      "Validated Problem",
+      "India"
+    ]
+  },
+  {
+    "title": "Why can't travelers find authentic local experiences?",
+    "description": "Real problem identified by users in India. Itch Score: 68/100 - indicating high demand and urgency for a solution.",
+    "author": "Razorpay Community",
+    "category": "Travel",
+    "source": "Razorpay Fix My Itch",
+    "tags": [
+      "Travel",
+      "Validated Problem",
+      "India"
+    ]
+  },
+  {
+    "title": "Why do solo travelers struggle to find safe accommodation?",
+    "description": "Real problem identified by users in India. Itch Score: 74/100 - indicating high demand and urgency for a solution.",
+    "author": "Razorpay Community",
+    "category": "Travel",
+    "source": "Razorpay Fix My Itch",
+    "tags": [
+      "Travel",
+      "Validated Problem",
+      "India"
+    ]
+  },
+  {
+    "title": "Why can't budget travelers access flexible cancellation policies?",
+    "description": "Real problem identified by users in India. Itch Score: 71/100 - indicating high demand and urgency for a solution.",
+    "author": "Razorpay Community",
+    "category": "Travel",
+    "source": "Razorpay Fix My Itch",
+    "tags": [
+      "Travel",
+      "Validated Problem",
+      "India"
+    ]
+  },
+  {
+    "title": "Why do commuters waste time finding parking spots?",
+    "description": "Real problem identified by users in India. Itch Score: 78/100 - indicating high demand and urgency for a solution.",
+    "author": "Razorpay Community",
+    "category": "Transportation",
+    "source": "Razorpay Fix My Itch",
+    "tags": [
+      "Transportation",
+      "Validated Problem",
+      "India"
+    ]
+  },
+  {
+    "title": "Why can't EV owners find reliable charging stations?",
+    "description": "Real problem identified by users in India. Itch Score: 82/100 - indicating high demand and urgency for a solution.",
+    "author": "Razorpay Community",
+    "category": "Transportation",
+    "source": "Razorpay Fix My Itch",
+    "tags": [
+      "Transportation",
+      "Validated Problem",
+      "India"
+    ]
+  },
+  {
+    "title": "Why do women feel unsafe in late-night ride-sharing?",
+    "description": "Real problem identified by users in India. Itch Score: 89/100 - indicating high demand and urgency for a solution.",
+    "author": "Razorpay Community",
+    "category": "Transportation",
+    "source": "Razorpay Fix My Itch",
+    "tags": [
+      "Transportation",
+      "Validated Problem",
+      "India"
+    ]
+  },
+  {
+    "title": "Why can't renters negotiate rent based on market rates?",
+    "description": "Real problem identified by users in India. Itch Score: 77/100 - indicating high demand and urgency for a solution.",
+    "author": "Razorpay Community",
+    "category": "Real Estate",
+    "source": "Razorpay Fix My Itch",
+    "tags": [
+      "Real Estate",
+      "Validated Problem",
+      "India"
+    ]
+  },
+  {
+    "title": "Why do first-time homebuyers struggle with legal paperwork?",
+    "description": "Real problem identified by users in India. Itch Score: 80/100 - indicating high demand and urgency for a solution.",
+    "author": "Razorpay Community",
+    "category": "Real Estate",
+    "source": "Razorpay Fix My Itch",
+    "tags": [
+      "Real Estate",
+      "Validated Problem",
+      "India"
+    ]
+  }
+]

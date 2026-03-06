@@ -102,31 +102,28 @@ export default function UserProfileContent({ user }: UserProfileContentProps) {
         <div className="flex flex-wrap gap-2">
           <button
             onClick={() => setActiveTab('activity')}
-            className={`px-4 py-2 font-bold border-3 border-black shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] transition-all ${
-              activeTab === 'activity' 
-                ? 'bg-[#13b6ec] text-white' 
+            className={`px-4 py-2 font-bold border-3 border-black shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] transition-all ${activeTab === 'activity'
+                ? 'bg-[#13b6ec] text-white'
                 : 'bg-white text-black hover:bg-gray-50'
-            }`}
+              }`}
           >
             Recent Activity
           </button>
           <button
             onClick={() => setActiveTab('discussions')}
-            className={`px-4 py-2 font-bold border-3 border-black shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] transition-all ${
-              activeTab === 'discussions' 
-                ? 'bg-[#13b6ec] text-white' 
+            className={`px-4 py-2 font-bold border-3 border-black shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] transition-all ${activeTab === 'discussions'
+                ? 'bg-[#13b6ec] text-white'
                 : 'bg-white text-black hover:bg-gray-50'
-            }`}
+              }`}
           >
             Top Discussions
           </button>
           <button
             onClick={() => setActiveTab('deals')}
-            className={`px-4 py-2 font-bold border-3 border-black shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] transition-all ${
-              activeTab === 'deals' 
-                ? 'bg-[#13b6ec] text-white' 
+            className={`px-4 py-2 font-bold border-3 border-black shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] transition-all ${activeTab === 'deals'
+                ? 'bg-[#13b6ec] text-white'
                 : 'bg-white text-black hover:bg-gray-50'
-            }`}
+              }`}
           >
             Deal Activity
           </button>
@@ -139,7 +136,7 @@ export default function UserProfileContent({ user }: UserProfileContentProps) {
           <h3 className="text-xl font-bold font-mono text-black mb-6">
             RECENT_ACTIVITY
           </h3>
-          
+
           <div className="space-y-6">
             {user.recentActivity.map((activity, index) => {
               const IconComponent = getActivityIcon(activity.type)
@@ -148,19 +145,19 @@ export default function UserProfileContent({ user }: UserProfileContentProps) {
                   <div className={`p-2 border-2 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] flex-shrink-0 ${getActivityColor(activity.type)}`}>
                     <IconComponent className="w-5 h-5" />
                   </div>
-                  
+
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-2">
                       <h4 className="font-bold text-black">{activity.title}</h4>
                       <span className="text-sm text-gray-500">•</span>
                       <span className="text-sm text-gray-500">{activity.timestamp}</span>
                     </div>
-                    
+
                     <p className="text-gray-700 mb-3 leading-relaxed">
                       {activity.description}
                     </p>
-                    
-                    <Link 
+
+                    <Link
                       href={activity.link}
                       className="inline-flex items-center gap-1 text-sm text-[#13b6ec] hover:underline font-bold"
                     >
@@ -172,7 +169,7 @@ export default function UserProfileContent({ user }: UserProfileContentProps) {
               )
             })}
           </div>
-          
+
           <div className="mt-6 text-center">
             <button className="bg-gray-200 hover:bg-gray-100 text-black font-bold py-3 px-6 border-3 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all duration-200">
               Load More Activity
@@ -187,12 +184,12 @@ export default function UserProfileContent({ user }: UserProfileContentProps) {
           <h3 className="text-xl font-bold font-mono text-black mb-6">
             TOP_DISCUSSIONS
           </h3>
-          
+
           <div className="space-y-4">
             {user.topDiscussions.map((discussion, index) => (
               <div key={index} className="bg-gray-50 border-3 border-gray-300 p-4 shadow-[3px_3px_0px_0px_rgba(107,114,128,1)] hover:shadow-[5px_5px_0px_0px_rgba(107,114,128,1)] transition-all">
                 <div className="flex items-start justify-between mb-3">
-                  <Link 
+                  <Link
                     href={discussion.link}
                     className="font-bold text-black hover:text-[#13b6ec] transition-colors flex-1"
                   >
@@ -200,7 +197,7 @@ export default function UserProfileContent({ user }: UserProfileContentProps) {
                   </Link>
                   <span className="text-sm text-gray-500 ml-4">{discussion.timestamp}</span>
                 </div>
-                
+
                 <div className="flex items-center gap-4 text-sm text-gray-600">
                   <div className="flex items-center gap-1">
                     <MessageSquare className="w-4 h-4" />
@@ -214,13 +211,13 @@ export default function UserProfileContent({ user }: UserProfileContentProps) {
               </div>
             ))}
           </div>
-          
+
           <div className="mt-6 text-center">
-            <Link 
-              href={`/community?author=${user.username}`}
+            <Link
+              href="/deals"
               className="inline-block bg-[#13b6ec] hover:bg-[#0ea5db] text-white font-bold py-3 px-6 border-3 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all duration-200"
             >
-              View All Discussions
+              Browse More Deals
             </Link>
           </div>
         </div>
@@ -232,7 +229,7 @@ export default function UserProfileContent({ user }: UserProfileContentProps) {
           <h3 className="text-xl font-bold font-mono text-black mb-6">
             DEAL_ACTIVITY
           </h3>
-          
+
           <div className="space-y-4">
             {user.dealActivity.map((deal, index) => {
               const StatusIcon = getStatusIcon(deal.status)
@@ -241,7 +238,7 @@ export default function UserProfileContent({ user }: UserProfileContentProps) {
                   <div className="flex items-start justify-between mb-3">
                     <div className="flex-1">
                       <div className="flex items-center gap-3 mb-2">
-                        <Link 
+                        <Link
                           href={deal.link}
                           className="font-bold text-black hover:text-[#13b6ec] transition-colors"
                         >
@@ -252,7 +249,7 @@ export default function UserProfileContent({ user }: UserProfileContentProps) {
                           <span>{deal.status}</span>
                         </div>
                       </div>
-                      
+
                       <div className="flex items-center gap-4 text-sm text-gray-600">
                         <span>Value: <strong>{deal.value}</strong></span>
                         <span>•</span>
@@ -264,9 +261,9 @@ export default function UserProfileContent({ user }: UserProfileContentProps) {
               )
             })}
           </div>
-          
+
           <div className="mt-6 text-center">
-            <Link 
+            <Link
               href="/deals"
               className="inline-block bg-[#13b6ec] hover:bg-[#0ea5db] text-white font-bold py-3 px-6 border-3 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all duration-200"
             >

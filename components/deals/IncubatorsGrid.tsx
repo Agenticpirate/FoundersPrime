@@ -1,11 +1,29 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import DealCard from './DealCard'
 import { incubators2026, Incubator } from '@/data/incubators-2026'
+import { useAuth } from '@/lib/auth/hooks'
+import { checkProStatus } from '@/lib/auth/user-context'
+import ProGateOverlay from '@/components/ProGateOverlay'
 
 export default function IncubatorsGrid() {
+  const { user } = useAuth()
+  const [isPro, setIsPro] = useState(false)
+
+  useEffect(() => {
+    const checkAccess = async () => {
+      if (user) {
+        const { isPro: hasProAccess } = await checkProStatus()
+        setIsPro(hasProAccess)
+      } else {
+        setIsPro(false)
+      }
+    }
+    checkAccess()
+  }, [user])
+
   const [filterRegion, setFilterRegion] = useState('All')
 
   const regions = ['All', 'Global', 'North America', 'India', 'Europe', 'Southeast Asia', 'MENA', 'Africa', 'LatAm', 'Oceania']
@@ -62,10 +80,28 @@ export default function IncubatorsGrid() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filteredDeals.map((inc) => (
-          <DealCard key={inc.id} deal={convertToCard(inc)} />
+        {(isPro ? filteredDeals : filteredDeals.slice(0, 3)).map((inc) => (
+          <DealCard
+            key={inc.id}
+            deal={convertToCard(inc)}
+            overrideHref={isPro ? undefined : '/pricing'}
+          />
         ))}
       </div>
+
+      {!isPro && filteredDeals.length > 3 && (
+        <ProGateOverlay
+          totalCount={filteredDeals.length}
+          visibleCount={3}
+          label="Incubators"
+        >
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filteredDeals.slice(3, 9).map((inc) => (
+              <DealCard key={inc.id} deal={convertToCard(inc)} />
+            ))}
+          </div>
+        </ProGateOverlay>
+      )}
 
       {filteredDeals.length === 0 && (
         <div className="text-center py-12 bg-gray-50 border-2 border-dashed border-gray-300 rounded-lg">

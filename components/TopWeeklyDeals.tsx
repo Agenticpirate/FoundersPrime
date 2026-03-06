@@ -52,12 +52,12 @@ export default function TopWeeklyDeals() {
   return (
     <section className="py-20 bg-accent-yellow border-y-2 border-black bg-opacity-90 relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-4">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-6 md:gap-4">
           <div>
             <h2 className="text-3xl md:text-4xl font-bold text-black mb-2 font-mono">TOP_WEEKLY_DEALS</h2>
             <p className="text-black font-medium border-l-4 border-black pl-3 ml-1">Hand-picked savings for modern founders.</p>
           </div>
-          <Link href="/deals" className="bg-black text-white px-6 py-3 font-mono font-bold rounded-none neo-shadow hover:bg-gray-900 transition-all flex items-center gap-2">
+          <Link href="/deals" className="bg-black text-white px-6 py-3 font-mono font-bold rounded-none neo-shadow hover:bg-gray-900 transition-all flex items-center justify-center gap-2 w-full md:w-auto">
             VIEW_ALL_1000+_DEALS <span className="material-symbols-outlined text-sm">arrow_forward</span>
           </Link>
         </div>

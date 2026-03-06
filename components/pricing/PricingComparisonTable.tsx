@@ -6,25 +6,29 @@ export default function PricingComparisonTable() {
         {
             category: "Core Access",
             items: [
-                { name: "Deal Directory Access", free: "Limited", pro: "Unlimited", lifetime: "Unlimited" },
-                { name: "Deal Value", free: "< $1k", pro: "$500k+", lifetime: "$500k+" },
-                { name: "Update Frequency", free: "Monthly", pro: "Daily", lifetime: "Daily" },
+                { name: "All Deals & SaaS Credits", explorer: "✓", founder: "✓", legend: "✓" },
+                { name: "Cloud Credits (AWS, Google, Azure)", explorer: "✓", founder: "✓", legend: "✓" },
+                { name: "Ad Credits (Google, Meta)", explorer: "✓", founder: "✓", legend: "✓" },
+                { name: "Update Frequency", explorer: "Daily", founder: "Daily", legend: "Daily" },
             ]
         },
         {
-            category: "Premium Perks",
+            category: "Programs & Databases",
             items: [
-                { name: "Cloud Credits (AWS, Google)", free: "-", pro: "Included", lifetime: "Included" },
-                { name: "SaaS Discounts", free: "-", pro: "Included", lifetime: "Included" },
-                { name: "Founder Community", free: "Public", pro: "Private", lifetime: "Elite" },
+                { name: "Grants Database", explorer: "—", founder: "✓", legend: "✓" },
+                { name: "Accelerator Programs", explorer: "—", founder: "✓", legend: "✓" },
+                { name: "Incubator Programs", explorer: "—", founder: "✓", legend: "✓" },
+                { name: "Verified Startups Database", explorer: "—", founder: "✓", legend: "✓" },
+                { name: "Investor Database", explorer: "—", founder: "✓", legend: "✓" },
             ]
         },
         {
-            category: "Support & Resources",
+            category: "Resources & Support",
             items: [
-                { name: "Support Level", free: "Community", pro: "Priority", lifetime: "1:1 Dedicated" },
-                { name: "Mentorship", free: "-", pro: "Group", lifetime: "1:1 Session" },
-                { name: "Resource Library", free: "Basic", pro: "Full Access", lifetime: "Full Access" },
+                { name: "Templates & Guides Library", explorer: "—", founder: "✓", legend: "✓" },
+                { name: "Support Level", explorer: "Standard", founder: "Priority", legend: "1:1 Dedicated" },
+                { name: "All Future Updates", explorer: "✓", founder: "✓", legend: "✓" },
+                { name: "Lifetime Access", explorer: "—", founder: "—", legend: "✓ One-time" },
             ]
         }
     ]
@@ -60,11 +64,15 @@ export default function PricingComparisonTable() {
                                     {section.items.map((item, iIdx) => (
                                         <tr key={iIdx} className="border-b border-gray-100 hover:bg-gray-50 transition-colors">
                                             <td className="p-3 pl-4 border-r border-gray-100 font-bold text-xs">{item.name}</td>
-                                            <td className="p-3 text-center border-r border-gray-100 text-gray-400 text-xs font-medium">{item.free}</td>
-                                            <td className="p-3 text-center border-r border-gray-100 font-bold text-xs text-[#111111] bg-[#f0f9ff]">
-                                                {item.pro}
+                                            <td className={`p-3 text-center border-r border-gray-100 text-xs font-medium ${item.explorer === '✓' ? 'text-green-600 font-bold' : item.explorer === '—' ? 'text-gray-300' : 'text-gray-500'}`}>
+                                                {item.explorer}
                                             </td>
-                                            <td className="p-3 text-center font-bold text-xs text-[#111111]">{item.lifetime}</td>
+                                            <td className={`p-3 text-center border-r border-gray-100 text-xs font-bold bg-[#f0f9ff] ${item.founder === '✓' ? 'text-green-600' : item.founder === '—' ? 'text-gray-300' : 'text-[#111111]'}`}>
+                                                {item.founder}
+                                            </td>
+                                            <td className={`p-3 text-center text-xs font-bold ${item.legend === '✓' || item.legend.startsWith('✓') ? 'text-green-600' : item.legend === '—' ? 'text-gray-300' : 'text-[#111111]'}`}>
+                                                {item.legend}
+                                            </td>
                                         </tr>
                                     ))}
                                 </React.Fragment>

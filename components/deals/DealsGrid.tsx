@@ -6,6 +6,8 @@ import { Deal, getAllCategories } from '@/lib/deals-database'
 import { getStartupProgramUrl } from '@/lib/comprehensive-startup-urls'
 import DealCard from './DealCard'
 import Pagination from '@/components/Pagination'
+import { useAuth } from '@/lib/auth/hooks'
+import { checkProStatus } from '@/lib/auth/user-context'
 
 interface FilterState {
   search: string
@@ -23,6 +25,21 @@ export default function DealsGrid({ filters }: DealsGridProps) {
   const router = useRouter()
   const searchParams = useSearchParams()
   const pathname = usePathname()
+
+  const { user } = useAuth()
+  const [isPro, setIsPro] = useState(false)
+
+  useEffect(() => {
+    const checkAccess = async () => {
+      if (user) {
+        const { isPro: hasProAccess } = await checkProStatus()
+        setIsPro(hasProAccess)
+      } else {
+        setIsPro(false)
+      }
+    }
+    checkAccess()
+  }, [user])
 
   const [deals, setDeals] = useState<Deal[]>([])
   const [filteredDeals, setFilteredDeals] = useState<Deal[]>([])
@@ -281,13 +298,26 @@ export default function DealsGrid({ filters }: DealsGridProps) {
         </div>
       )}
 
-      {/* Deals Grid */}
+      {/* Deals Grid or Lock CTA */}
       {!loading && filteredDeals.length > 0 && (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {currentDeals.map((deal) => (
-            <DealCard key={deal.id} deal={convertDealToCardFormat(deal)} />
-          ))}
-        </div>
+        (!isPro && currentPage > 3) ? (
+          <div className="mt-12 mb-8 bg-gray-50 border-4 border-black p-8 text-center neo-shadow">
+            <span className="material-symbols-outlined text-4xl mb-4">lock</span>
+            <h3 className="text-2xl font-bold font-mono uppercase mb-2">Unlock {filteredDeals.length - (3 * dealsPerPage)}+ More Deals</h3>
+            <p className="text-gray-600 mb-6 max-w-xl mx-auto">
+              You've reached the limit of free public deals. Upgrade to Premium to instantly access our entire database of active software credits and grants.
+            </p>
+            <a href="/pricing" className="inline-block bg-primary text-black font-bold font-mono px-8 py-4 border-2 border-black hover:bg-yellow-400 neo-shadow transition-all">
+              UPGRADE TO ACCESS ALL DEALS
+            </a>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+            {currentDeals.map((deal) => (
+              <DealCard key={deal.id} deal={convertDealToCardFormat(deal)} />
+            ))}
+          </div>
+        )
       )}
 
       {/* Pagination */}

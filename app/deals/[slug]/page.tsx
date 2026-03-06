@@ -25,22 +25,65 @@ export async function generateMetadata(
   const allDeals = getAllDeals()
   let deal = allDeals.find((d: any) => d.slug === params.slug)
 
-  if (!deal) {
+  let title = 'Deal Not Found | FoundersPrime'
+  let description = ''
+  let image = 'https://www.foundersprime.com/og-image.jpg'
+
+  if (deal) {
+    title = `${deal.title} Deal - ${deal.value} Value | FoundersPrime`
+    description = `Get ${deal.title} credits and save ${deal.value}. ${deal.description.substring(0, 150)}... Verified startup deal.`
+    image = deal.logoUrl || image
+  } else {
     const accelerator = accelerators2026.find(a => a.slug === params.slug)
     if (accelerator) {
-      return {
-        title: `${accelerator.name} - Accelerator Program | FoundersPrime`,
-        description: `Apply to ${accelerator.name}. ${accelerator.investment} funding, ${accelerator.equity} equity. ${accelerator.description}`,
+      title = `${accelerator.name} - Accelerator Program | FoundersPrime`
+      description = `Apply to ${accelerator.name}. ${accelerator.investment} funding, ${accelerator.equity} equity. ${accelerator.description.substring(0, 150)}`
+      image = accelerator.logo || image
+    } else {
+      const incubator = incubators2026.find(i => i.slug === params.slug)
+      if (incubator) {
+        title = `${incubator.name} - Incubator Program | FoundersPrime`
+        description = `Apply to ${incubator.name}. ${incubator.support} support. ${incubator.description.substring(0, 150)}`
+        image = incubator.logo || image
+      } else {
+        const grant = grants2026.find(g => g.slug === params.slug)
+        if (grant) {
+          title = `${grant.name} - Grant Program | FoundersPrime`
+          description = `Apply to ${grant.name}. ${grant.fundingAmount} funding. ${grant.description.substring(0, 150)}`
+          image = grant.logo || image
+        } else {
+          return { title }
+        }
       }
-    }
-    return {
-      title: 'Deal Not Found | FoundersPrime',
     }
   }
 
   return {
-    title: `${deal.title} Deal - ${deal.value} Value | FoundersPrime`,
-    description: `Get ${deal.title} credits and save ${deal.value}. ${deal.description.substring(0, 150)}... Verified startup deal.`,
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      url: `https://www.foundersprime.com/deals/${params.slug}`,
+      siteName: 'FoundersPrime',
+      images: [
+        {
+          url: image,
+          width: 800,
+          height: 600,
+          alt: title,
+        },
+      ],
+      locale: 'en_US',
+      type: 'website',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: [image],
+      creator: '@FoundersPrime',
+    },
   }
 }
 
@@ -113,19 +156,31 @@ function convertDealForDisplay(deal: any, displaySimilarDeals: any[]) {
   }
 }
 
-// Get all deals from the JSON file
+// Global cache for deals to handle high concurrency
+let cachedDeals: any[] | null = null;
+let lastCacheTime = 0;
+const CACHE_TTL = 1000 * 60 * 5; // 5 minutes
+
+// Get all deals from the JSON file with memory caching
 function getAllDeals() {
   try {
+    const now = Date.now();
+    if (cachedDeals && (now - lastCacheTime < CACHE_TTL)) {
+      return cachedDeals;
+    }
+
     const filePath = path.join(process.cwd(), 'public', 'data', 'all-deals.json')
     if (fs.existsSync(filePath)) {
       const fileContent = fs.readFileSync(filePath, 'utf8')
       const deals = JSON.parse(fileContent)
-      return Array.isArray(deals) ? deals : []
+      cachedDeals = Array.isArray(deals) ? deals : []
+      lastCacheTime = now;
+      return cachedDeals;
     }
   } catch (error) {
     console.error('Error loading deals:', error)
   }
-  return []
+  return cachedDeals || []
 }
 
 interface PageProps {

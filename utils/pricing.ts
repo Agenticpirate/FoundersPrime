@@ -30,130 +30,120 @@ export interface PricingConfig {
 export const PRICING_CONFIG: PricingConfig = {
     explorer: {
         INR: {
-            actual: 599,
-            discounted: 299,
-            savings: 400,
+            actual: null,
+            discounted: 599,
+            savings: null,
             symbol: '₹',
-            period: '/mo'
+            period: '/yr'
         },
         USD: {
-            actual: 14.99,
+            actual: null,
             discounted: 9.99,
-            savings: 10,
+            savings: null,
             symbol: '$',
-            period: '/mo'
+            period: '/yr'
         },
         EUR: {
-            actual: 14.99,
+            actual: null,
             discounted: 9.99,
-            savings: 10,
+            savings: null,
             symbol: '€',
-            period: '/mo'
+            period: '/yr'
         },
         GBP: {
-            actual: 12.99,
+            actual: null,
             discounted: 8.99,
-            savings: 9,
+            savings: null,
             symbol: '£',
-            period: '/mo'
+            period: '/yr'
         },
         AUD: {
-            actual: 22.99,
+            actual: null,
             discounted: 14.99,
-            savings: 15,
+            savings: null,
             symbol: 'A$',
-            period: '/mo'
+            period: '/yr'
         }
     },
 
     founder: {
         INR: {
-            actual: 3499,
-            discounted: 1499,
-            savings: 2089,
+            actual: null,
+            discounted: 2999,
+            savings: null,
             symbol: '₹',
             period: '/yr',
-            badge: 'SAVE ₹2,089',
-            monthlyEquivalent: 125
+            monthlyEquivalent: 250
         },
         USD: {
-            actual: 99.99,
-            discounted: 59.99,
-            savings: 60,
+            actual: null,
+            discounted: 79.99,
+            savings: null,
             symbol: '$',
             period: '/yr',
-            badge: 'SAVE $60',
-            monthlyEquivalent: 5
+            monthlyEquivalent: 6.67
         },
         EUR: {
-            actual: 99.99,
-            discounted: 54.99,
-            savings: 65,
+            actual: null,
+            discounted: 79.99,
+            savings: null,
             symbol: '€',
             period: '/yr',
-            badge: 'SAVE €65',
-            monthlyEquivalent: 4.58
+            monthlyEquivalent: 6.67
         },
         GBP: {
-            actual: 89.99,
-            discounted: 49.99,
-            savings: 58,
+            actual: null,
+            discounted: 69.99,
+            savings: null,
             symbol: '£',
             period: '/yr',
-            badge: 'SAVE £58',
-            monthlyEquivalent: 4.17
+            monthlyEquivalent: 5.83
         },
         AUD: {
-            actual: 149.99,
-            discounted: 84.99,
-            savings: 95,
+            actual: null,
+            discounted: 119.99,
+            savings: null,
             symbol: 'A$',
             period: '/yr',
-            badge: 'SAVE A$95',
-            monthlyEquivalent: 7.08
+            monthlyEquivalent: 10
         }
     },
 
     legend: {
         INR: {
-            actual: 8999,
-            discounted: 4999,
-            savings: 10000,
+            actual: null,
+            discounted: 7999,
+            savings: null,
             symbol: '₹',
-            period: '/once',
-            badge: 'SAVE ₹10,000'
+            period: '/once'
         },
         USD: {
-            actual: 199.99,
+            actual: null,
             discounted: 199.99,
-            savings: 100,
+            savings: null,
             symbol: '$',
-            period: '/once',
-            badge: 'SAVE $100'
+            period: '/once'
         },
         EUR: {
-            actual: 189.99,
-            discounted: 189.99,
-            savings: 85,
+            actual: null,
+            discounted: 199.99,
+            savings: null,
             symbol: '€',
-            period: '/once',
-            badge: 'SAVE €85'
+            period: '/once'
         },
         GBP: {
-            actual: 169.99,
+            actual: null,
             discounted: 179.99,
-            savings: 70,
+            savings: null,
             symbol: '£',
-            period: '/once',
-            badge: 'SAVE £70'
+            period: '/once'
         },
         AUD: {
-            actual: 279.99,
+            actual: null,
             discounted: 299.99,
-            savings: 125,
+            savings: null,
             symbol: 'A$',
-            period: '/once',
-            badge: 'SAVE A$125'
+            period: '/once'
         }
     }
 }

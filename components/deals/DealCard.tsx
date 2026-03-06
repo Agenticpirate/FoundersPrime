@@ -23,9 +23,10 @@ interface Deal {
 interface DealCardProps {
   deal: Deal
   basePath?: string  // Optional base path for routing (default: '/deals')
+  overrideHref?: string // If set, overrides the default href entirely
 }
 
-export default function DealCard({ deal, basePath = '/deals' }: DealCardProps) {
+export default function DealCard({ deal, basePath = '/deals', overrideHref }: DealCardProps) {
   const {
     id,
     logo,
@@ -43,8 +44,8 @@ export default function DealCard({ deal, basePath = '/deals' }: DealCardProps) {
   const [hasError, setHasError] = useState(false)
   const [imageLoaded, setImageLoaded] = useState(false)
 
-  // Always use internal detail page for the card click
-  const href = `${basePath}/${id}`
+  // Use overrideHref if provided (e.g. redirect non-Pro users to /pricing)
+  const href = overrideHref ?? `${basePath}/${id}`
   const isExternal = false
 
   const linkProps = {

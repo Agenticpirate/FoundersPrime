@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import Link from 'next/link'
+import Image from 'next/image'
 
 export default function AdminSubmissionsPage() {
     const [submissions, setSubmissions] = useState<any[]>([])
@@ -59,7 +60,11 @@ export default function AdminSubmissionsPage() {
                                 <tr key={sub.id} className="border-b-2 border-gray-200 hover:bg-yellow-50 transition-colors">
                                     <td className="p-4 font-bold border-r-2 border-gray-100 text-black">
                                         <div className="flex items-center gap-3">
-                                            {sub.logo_url && <img src={sub.logo_url} alt="" className="w-8 h-8 object-contain border border-black p-1 bg-white" />}
+                                            {sub.logo_url && (
+                                                <div className="relative w-8 h-8 flex-shrink-0">
+                                                    <Image src={sub.logo_url} alt="" fill sizes="32px" className="object-contain border border-black p-1 bg-white" />
+                                                </div>
+                                            )}
                                             {sub.company_name}
                                         </div>
                                     </td>

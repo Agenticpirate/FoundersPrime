@@ -1,10 +1,29 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import { useRouter, useSearchParams, usePathname } from 'next/navigation'
 import { grants2026, Grant } from '@/data/grants-2026'
 import Link from 'next/link'
+import Image from 'next/image'
 import Pagination from '@/components/Pagination'
+import { useAuth } from '@/lib/auth/hooks'
+import { checkProStatus } from '@/lib/auth/user-context'
+import ProGateOverlay from '@/components/ProGateOverlay'
 
 export default function GrantsGrid() {
+  const { user } = useAuth()
+  const [isPro, setIsPro] = useState(false)
+
+  useEffect(() => {
+    const checkAccess = async () => {
+      if (user) {
+        const { isPro: hasProAccess } = await checkProStatus()
+        setIsPro(hasProAccess)
+      } else {
+        setIsPro(false)
+      }
+    }
+    checkAccess()
+  }, [user])
+
   const router = useRouter()
   const searchParams = useSearchParams()
   const pathname = usePathname()
@@ -155,10 +174,10 @@ export default function GrantsGrid() {
 
       {/* Grants Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {currentGrants.map((grant) => (
+        {(isPro ? currentGrants : currentGrants.slice(0, 3)).map((grant) => (
           <Link
             key={grant.id}
-            href={`/deals/${grant.slug}`}
+            href={isPro ? `/deals/${grant.slug}` : '/pricing'}
             className="flex flex-col bg-white border-4 border-black rounded-lg shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all duration-200 overflow-hidden group relative h-full"
           >
             {/* Status Badge */}
@@ -171,16 +190,15 @@ export default function GrantsGrid() {
             {/* Header with Logo and Title */}
             <div className="px-4 pt-2 pb-3">
               <div className="flex items-center gap-3">
-                {/* Logo Container */}
                 <div className="w-16 h-16 bg-white border-2 border-black rounded flex items-center justify-center p-2.5 flex-shrink-0">
                   {grant.logo ? (
-                    <img src={grant.logo} alt={grant.organization} className="w-full h-full object-contain" />
+                    <div className="relative w-full h-full">
+                      <Image src={grant.logo} alt={grant.organization} fill sizes="44px" className="object-contain" />
+                    </div>
                   ) : (
                     <span className="material-symbols-outlined text-4xl text-gray-400">workspace_premium</span>
                   )}
                 </div>
-
-                {/* Title */}
                 <div className="flex-1 min-w-0">
                   <h3 className="text-sm font-bold text-gray-900 leading-snug group-hover:text-primary transition-colors line-clamp-2">
                     {grant.name}
@@ -196,19 +214,13 @@ export default function GrantsGrid() {
 
             {/* Description */}
             <div className="px-4 pb-3 flex-grow">
-              <p className="text-xs text-gray-600 leading-relaxed line-clamp-3">
-                {grant.description}
-              </p>
+              <p className="text-xs text-gray-600 leading-relaxed line-clamp-3">{grant.description}</p>
             </div>
 
-            {/* Funding Amount - Simplified */}
+            {/* Funding Amount */}
             <div className="px-4 pb-3">
-              <p className="text-base font-bold text-green-600 leading-tight">
-                {grant.fundingAmount}
-              </p>
-              <p className="text-[11px] text-gray-500 leading-tight">
-                {grant.equity}
-              </p>
+              <p className="text-base font-bold text-green-600 leading-tight">{grant.fundingAmount}</p>
+              <p className="text-[11px] text-gray-500 leading-tight">{grant.equity}</p>
             </div>
 
             {/* Meta Info */}
@@ -238,6 +250,42 @@ export default function GrantsGrid() {
         ))}
       </div>
 
+      {/* Pro Gate Overlay */}
+      {!isPro && filteredGrants.length > 3 && (
+        <ProGateOverlay
+          totalCount={filteredGrants.length}
+          visibleCount={3}
+          label="Grants"
+        >
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filteredGrants.slice(3, 9).map((grant) => (
+              <Link
+                key={grant.id}
+                href={`/deals/${grant.slug}`}
+                className="flex flex-col bg-white border-4 border-black rounded-lg overflow-hidden h-64 p-4 gap-3"
+                tabIndex={-1}
+              >
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 bg-gray-100 border-2 border-gray-200 rounded flex items-center justify-center flex-shrink-0">
+                    {grant.logo ? (
+                      <img src={grant.logo} alt={grant.organization} className="w-full h-full object-contain" />
+                    ) : (
+                      <span className="material-symbols-outlined text-2xl text-gray-400">workspace_premium</span>
+                    )}
+                  </div>
+                  <div>
+                    <p className="text-sm font-bold text-gray-900 line-clamp-2">{grant.name}</p>
+                    <p className="text-xs text-gray-500">{grant.organization}</p>
+                  </div>
+                </div>
+                <p className="text-xs text-gray-600 line-clamp-3">{grant.description}</p>
+                <p className="text-sm font-bold text-green-700">{grant.fundingAmount}</p>
+              </Link>
+            ))}
+          </div>
+        </ProGateOverlay>
+      )}
+
       {filteredGrants.length === 0 && (
         <div className="neo-card bg-white p-12 text-center">
           <span className="material-symbols-outlined text-6xl text-gray-300 mb-4">search_off</span>
@@ -258,11 +306,13 @@ export default function GrantsGrid() {
       )}
 
       {/* Pagination */}
-      <Pagination
-        currentPage={currentPage}
-        totalPages={totalPages}
-        onPageChange={handlePageChange}
-      />
+      {isPro && (
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={handlePageChange}
+        />
+      )}
     </div>
   )
 }

@@ -58,9 +58,11 @@ interface Deal {
 
 interface SingleDealContentProps {
   deal: Deal
+  freeAccess?: boolean
+  basePath?: string
 }
 
-export default function SingleDealContent({ deal }: SingleDealContentProps) {
+export default function SingleDealContent({ deal, freeAccess = false, basePath = '/deals' }: SingleDealContentProps) {
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(null)
   const [isSaved, setIsSaved] = useState(false)
   const [isSaving, setIsSaving] = useState(false)
@@ -76,6 +78,12 @@ export default function SingleDealContent({ deal }: SingleDealContentProps) {
 
   // Check Pro Status on Mount
   useEffect(() => {
+    if (freeAccess) {
+      // Student Benefits are free — no Pro check needed
+      setIsPro(true)
+      setIsLoadingPro(false)
+      return
+    }
     const checkStatus = async () => {
       try {
         const proStatus = await isProUser()
@@ -87,7 +95,7 @@ export default function SingleDealContent({ deal }: SingleDealContentProps) {
       }
     }
     checkStatus()
-  }, [])
+  }, [freeAccess])
 
   // Check if deal is saved on mount
   useEffect(() => {
@@ -304,8 +312,8 @@ export default function SingleDealContent({ deal }: SingleDealContentProps) {
                 onClick={handleApplyClick}
                 className="inline-flex items-center gap-2 rounded-sm border-4 border-black bg-primary px-8 py-4 font-mono text-lg font-bold uppercase text-black shadow-[6px_6px_0px_#111111] hover:bg-yellow-300 hover:shadow-[8px_8px_0px_#111111] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all cursor-pointer"
               >
-                {isPro ? 'Apply Now' : 'Apply Now (Pro Only)'}
-                <span className="material-symbols-outlined">{isPro ? 'arrow_forward' : 'lock'}</span>
+                {freeAccess ? 'Apply Now' : isPro ? 'Apply Now' : 'Apply Now (Pro Only)'}
+                <span className="material-symbols-outlined">{freeAccess || isPro ? 'arrow_forward' : 'lock'}</span>
               </a>
             )}
             <p className="mt-3 text-sm text-gray-600 font-mono flex items-center gap-1">
@@ -351,13 +359,13 @@ export default function SingleDealContent({ deal }: SingleDealContentProps) {
           <section>
             <h2 className="mb-4 font-mono text-2xl font-bold uppercase text-black flex items-center gap-2">
               <span className="material-symbols-outlined text-primary">recommend</span>
-              Similar Deals
+              {freeAccess ? 'Related Benefits' : 'Similar Deals'}
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {deal.similarDeals.slice(0, 4).map((similarDeal, index) => (
                 <a
                   key={index}
-                  href={`/deals/${similarDeal.slug}`}
+                  href={similarDeal.slug ? `${basePath}/${similarDeal.slug}` : '#'}
                   className="group rounded-sm border-4 border-black bg-white p-5 shadow-[4px_4px_0px_#111111] hover:shadow-[6px_6px_0px_#111111] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all"
                 >
                   <div className="flex items-start justify-between mb-3">

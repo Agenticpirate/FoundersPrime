@@ -34,7 +34,7 @@ export default function ResourcesSidebar() {
   return (
     <div className="space-y-6">
       {/* Quick Stats */}
-      <div className="bg-white border-3 border-black shadow-[6px_6px_0px_0px_#1a1a1a] rounded-sm p-6">
+      <div className="bg-white border-3 border-black shadow-[6px_6px_0px_0px_#1a1a1a] rounded-sm p-4 md:p-6">
         <h3 className="font-mono text-lg font-bold mb-4 flex items-center gap-2">
           <span className="material-symbols-outlined">analytics</span>
           Quick Stats
@@ -44,28 +44,28 @@ export default function ResourcesSidebar() {
             <div key={index} className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <span className="material-symbols-outlined text-sm text-gray-500">{stat.icon}</span>
-                <span className="font-mono text-sm">{stat.label}</span>
+                <span className="font-mono text-[10px] md:text-sm">{stat.label}</span>
               </div>
-              <span className="font-mono text-sm font-bold">{stat.value}</span>
+              <span className="font-mono text-[10px] md:text-sm font-bold">{stat.value}</span>
             </div>
           ))}
         </div>
       </div>
 
       {/* Top Categories */}
-      <div className="bg-white border-3 border-black shadow-[6px_6px_0px_0px_#1a1a1a] rounded-sm p-6">
+      <div className="bg-white border-3 border-black shadow-[6px_6px_0px_0px_#1a1a1a] rounded-sm p-4 md:p-6">
         <h3 className="font-mono text-lg font-bold mb-4 flex items-center gap-2">
           <span className="material-symbols-outlined">category</span>
           Top Categories
         </h3>
-        <div className="space-y-3">
+        <div className="space-y-2 md:space-y-3">
           {topCategories.map((category, index) => (
             <div key={index} className="flex items-center justify-between p-2 hover:bg-gray-50 rounded-sm cursor-pointer transition-colors">
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2 md:gap-3">
                 <span className="material-symbols-outlined text-sm text-gray-500">{category.icon}</span>
-                <span className="font-mono text-sm font-bold">{category.name}</span>
+                <span className="font-mono text-xs md:text-sm font-bold">{category.name}</span>
               </div>
-              <span className="font-mono text-sm text-gray-600">{category.count}</span>
+              <span className="font-mono text-xs md:text-sm text-gray-600">{category.count}</span>
             </div>
           ))}
         </div>
@@ -145,9 +145,9 @@ export default function ResourcesSidebar() {
           Get the latest resources, templates, and tools delivered to your inbox every week.
         </p>
         <div className="space-y-3">
-          <input 
-            className="w-full bg-gray-50 border-2 border-black text-black px-3 py-2 font-mono text-sm focus:outline-none focus:border-primary focus:ring-0 placeholder:text-gray-500 rounded-sm" 
-            placeholder="your@email.com" 
+          <input
+            className="w-full bg-gray-50 border-2 border-black text-black px-3 py-2 font-mono text-sm focus:outline-none focus:border-primary focus:ring-0 placeholder:text-gray-500 rounded-sm"
+            placeholder="your@email.com"
             type="email"
           />
           <button className="w-full py-2 text-sm bg-primary hover:bg-black hover:text-white border-2 border-black text-black font-mono font-bold rounded-sm transition-colors">

@@ -1,12 +1,12 @@
 import DodoPayments from 'dodopayments';
 import { NextResponse } from 'next/server';
+import { createClient } from '@/lib/supabase/server';
 
 const client = new DodoPayments({
     bearerToken: process.env.DODO_PAYMENTS_API_KEY,
     environment: process.env.DODO_PAYMENTS_ENVIRONMENT as 'test_mode' | 'live_mode',
 });
 
-// TODO: Replace with ACTUAL Product IDs provided by user
 // Actual Product IDs provided by user
 const PRODUCTS: Record<string, string> = {
     monthly: "pdt_0NXSovAmBrXoKozax8uOu",
@@ -15,8 +15,15 @@ const PRODUCTS: Record<string, string> = {
 };
 
 export async function POST(request: Request) {
+    // 🔒 Require authentication — only logged-in users can initiate payment
+    const supabase = createClient()
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) {
+        return NextResponse.json({ error: 'Unauthorized: Please log in to subscribe' }, { status: 401 });
+    }
+
     try {
-        const { plan, customerEmail } = await request.json();
+        const { plan } = await request.json();
 
         if (!plan || !PRODUCTS[plan]) {
             return NextResponse.json({ error: 'Invalid plan selected' }, { status: 400 });
@@ -24,25 +31,15 @@ export async function POST(request: Request) {
 
         const productId = PRODUCTS[plan];
 
-        // Prepare session payload
+        // Use the authenticated user's email automatically — never trust client-supplied email
+        const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://www.foundersprime.com'
+
         const sessionPayload: any = {
-            product_cart: [
-                {
-                    product_id: productId,
-                    quantity: 1
-                }
-            ],
-            return_url: `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3001'}/dashboard?status={status}`,
+            product_cart: [{ product_id: productId, quantity: 1 }],
+            return_url: `${appUrl}/dashboard?status={status}`,
+            customer: { email: user.email },
         };
 
-        // Only attach customer if we actually have an email
-        if (customerEmail) {
-            sessionPayload.customer = {
-                email: customerEmail,
-            };
-        }
-
-        // Create a Checkout Session
         const session = await client.checkoutSessions.create(sessionPayload);
 
         return NextResponse.json({
@@ -51,6 +48,6 @@ export async function POST(request: Request) {
         });
     } catch (error: any) {
         console.error('Dodo Payment Error:', error);
-        return NextResponse.json({ error: error.message || 'Payment creation failed' }, { status: 500 });
+        return NextResponse.json({ error: 'Payment creation failed' }, { status: 500 });
     }
 }

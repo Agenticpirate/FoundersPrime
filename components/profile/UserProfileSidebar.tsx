@@ -47,18 +47,18 @@ export default function UserProfileSidebar({ user }: UserProfileSidebarProps) {
             {membershipLevel.toUpperCase()}_MEMBER
           </h3>
         </div>
-        
+
         <div className="space-y-3">
           <div className="flex items-center justify-between">
             <span className={`text-sm font-bold text-${membershipColor}-800`}>Member Since</span>
             <span className={`text-sm text-${membershipColor}-700`}>{user.joinedDate}</span>
           </div>
-          
+
           <div className="flex items-center justify-between">
             <span className={`text-sm font-bold text-${membershipColor}-800`}>Community Points</span>
             <span className={`text-sm text-${membershipColor}-700`}>{user.stats.points.toLocaleString()}</span>
           </div>
-          
+
           <div className="flex items-center justify-between">
             <span className={`text-sm font-bold text-${membershipColor}-800`}>Reputation Level</span>
             <span className={`text-sm text-${membershipColor}-700`}>
@@ -88,7 +88,7 @@ export default function UserProfileSidebar({ user }: UserProfileSidebarProps) {
         <h3 className="text-lg font-bold font-mono text-black mb-4">
           QUICK_STATS
         </h3>
-        
+
         <div className="space-y-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
@@ -137,7 +137,7 @@ export default function UserProfileSidebar({ user }: UserProfileSidebarProps) {
         <h3 className="text-lg font-bold font-mono text-black mb-4">
           ACHIEVEMENTS
         </h3>
-        
+
         <div className="space-y-3">
           {user.badges.slice(0, 3).map((badge, index) => (
             <div key={index} className="bg-gray-50 border-2 border-gray-300 p-3 shadow-[2px_2px_0px_0px_rgba(107,114,128,1)]">
@@ -162,7 +162,7 @@ export default function UserProfileSidebar({ user }: UserProfileSidebarProps) {
         <h3 className="text-lg font-bold font-mono text-black mb-4">
           COMMUNITY_RANKING
         </h3>
-        
+
         <div className="space-y-4">
           <div className="text-center">
             <div className="text-3xl font-bold text-[#13b6ec] mb-1">
@@ -170,7 +170,7 @@ export default function UserProfileSidebar({ user }: UserProfileSidebarProps) {
             </div>
             <div className="text-sm font-bold text-gray-600">Overall Ranking</div>
           </div>
-          
+
           <div className="grid grid-cols-2 gap-3 text-center">
             <div className="bg-blue-50 border-2 border-blue-500 p-2">
               <div className="text-lg font-bold text-blue-800">#3</div>
@@ -189,17 +189,17 @@ export default function UserProfileSidebar({ user }: UserProfileSidebarProps) {
         <h3 className="text-lg font-bold font-mono text-black mb-4">
           CONNECT
         </h3>
-        
+
         <div className="space-y-3">
           <button className="w-full bg-[#13b6ec] hover:bg-[#0ea5db] text-white font-bold py-3 px-4 border-3 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all duration-200">
             Send Message
           </button>
-          
+
           <button className="w-full bg-gray-200 hover:bg-gray-100 text-black font-bold py-3 px-4 border-3 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all duration-200">
             Follow Updates
           </button>
         </div>
-        
+
         <div className="mt-4 pt-4 border-t-2 border-gray-200">
           <p className="text-xs text-gray-500 text-center">
             Connect with {user.displayName} to collaborate and share insights
@@ -212,7 +212,7 @@ export default function UserProfileSidebar({ user }: UserProfileSidebarProps) {
         <h3 className="text-lg font-bold font-mono text-black mb-4">
           SIMILAR_PROFILES
         </h3>
-        
+
         <div className="space-y-3">
           <Link href="/u/mike-rodriguez" className="block group">
             <div className="bg-gray-50 hover:bg-gray-100 border-2 border-gray-300 p-3 shadow-[2px_2px_0px_0px_rgba(107,114,128,1)] group-hover:shadow-[3px_3px_0px_0px_rgba(107,114,128,1)] transition-all">
@@ -227,7 +227,7 @@ export default function UserProfileSidebar({ user }: UserProfileSidebarProps) {
               </div>
             </div>
           </Link>
-          
+
           <div className="bg-gray-50 border-2 border-gray-300 p-3 shadow-[2px_2px_0px_0px_rgba(107,114,128,1)]">
             <div className="flex items-center gap-3">
               <div className="bg-[#13b6ec] border-2 border-black p-2 shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] flex-shrink-0">
@@ -240,13 +240,13 @@ export default function UserProfileSidebar({ user }: UserProfileSidebarProps) {
             </div>
           </div>
         </div>
-        
+
         <div className="mt-4">
-          <Link 
-            href="/community"
+          <Link
+            href="/deals"
             className="block w-full bg-gray-200 hover:bg-gray-100 text-black font-bold py-2 px-4 text-sm text-center border-3 border-black shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] hover:shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] transition-all duration-200"
           >
-            Browse Community
+            Browse Deals
           </Link>
         </div>
       </section>

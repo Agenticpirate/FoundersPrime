@@ -130,6 +130,12 @@ const testimonials: Testimonial[] = [
         designation: "CEO, Nexa",
         avatar: "https://images.unsplash.com/photo-1557862921-37829c790f19?q=80&w=80&h=80&auto=format&fit=crop",
     },
+    {
+        quote: "We activated $100,000 in AWS credits through FoundersPrime in under 48 hours. Our infrastructure costs dropped to near zero for 12 months. That kind of runway extension is genuinely startup-changing.",
+        name: "David Park",
+        designation: "CTO & Co-founder, Stackwise",
+        avatar: "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?q=80&w=80&h=80&auto=format&fit=crop",
+    },
 ];
 
 // Split into 3 columns for masonry

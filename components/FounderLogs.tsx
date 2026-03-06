@@ -1,3 +1,5 @@
+import Image from 'next/image'
+
 export default function FounderLogs() {
   const testimonials = [
     {
@@ -100,9 +102,9 @@ export default function FounderLogs() {
 function FounderImage({ image }: { image: string }) {
   return (
     <div
-      className="w-10 h-10 border-2 border-black rounded-full overflow-hidden transition-all duration-300 grayscale group-hover:grayscale-0 group-hover:scale-110 group-hover:ring-2 group-hover:ring-accent-yellow"
+      className="w-10 h-10 border-2 border-black rounded-full overflow-hidden transition-all duration-300 grayscale group-hover:grayscale-0 group-hover:scale-110 group-hover:ring-2 group-hover:ring-accent-yellow relative"
     >
-      <img src={image} alt="Founder" className="w-full h-full object-cover" />
+      <Image src={image} alt="Founder" fill className="object-cover" sizes="40px" />
     </div>
   )
 }

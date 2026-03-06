@@ -1,7 +1,7 @@
 import SearchResultCard from '@/components/search/SearchResultCard'
 
 interface SearchResult {
-  type: 'deal' | 'startup' | 'idea' | 'resource' | 'blog'
+  type: 'deal' | 'startup' | 'idea' | 'resource'
   title: string
   description: string
   category: string
@@ -73,13 +73,13 @@ export default function SearchResults() {
       }
     },
     {
-      type: 'blog',
+      type: 'resource',
       title: 'The Complete Guide to Startup Funding in 2024',
       description: 'Everything you need to know about raising capital, from pre-seed to Series A. We break down the latest trends and strategies.',
       category: 'Funding',
       author: 'Alex Chen',
       readTime: '12 min read',
-      url: '/blog/complete-guide-startup-funding-2024',
+      url: 'https://foundersblog.com/complete-guide-startup-funding-2024',
       metadata: {
         published: '2024-01-08',
         views: '12.5K',
@@ -146,13 +146,13 @@ export default function SearchResults() {
       }
     },
     {
-      type: 'blog',
+      type: 'resource',
       title: 'How to Validate Your Startup Idea in 30 Days',
       description: 'A step-by-step framework for testing your startup concept before you build anything. Learn the exact validation process.',
       category: 'Product',
       author: 'Sarah Kim',
       readTime: '8 min read',
-      url: '/blog/validate-startup-idea-30-days',
+      url: 'https://foundersblog.com/validate-startup-idea-30-days',
       metadata: {
         published: '2024-01-07',
         views: '8.9K',
@@ -173,7 +173,7 @@ export default function SearchResults() {
             Found {searchResults.length} results • Showing 1-10 of 1,247 total results
           </p>
         </div>
-        
+
         <div className="flex items-center gap-2">
           <span className="font-mono text-sm text-gray-600">View:</span>
           <div className="flex border-2 border-black rounded-sm overflow-hidden">
@@ -186,29 +186,28 @@ export default function SearchResults() {
           </div>
         </div>
       </div>
-      
+
       {/* Results List */}
       <div className="space-y-6">
         {searchResults.map((result, index) => (
           <SearchResultCard key={index} result={result} />
         ))}
       </div>
-      
+
       {/* Pagination */}
       <div className="mt-12 flex items-center justify-center gap-2">
         <button className="px-4 py-2 border-2 border-black bg-white hover:bg-gray-100 font-mono font-bold rounded-sm transition-colors disabled:opacity-50" disabled>
           Previous
         </button>
-        
+
         <div className="flex gap-1">
           {[1, 2, 3, 4, 5].map((page) => (
             <button
               key={page}
-              className={`px-4 py-2 border-2 border-black font-mono font-bold rounded-sm transition-colors ${
-                page === 1
+              className={`px-4 py-2 border-2 border-black font-mono font-bold rounded-sm transition-colors ${page === 1
                   ? 'bg-primary text-black'
                   : 'bg-white hover:bg-gray-100 text-black'
-              }`}
+                }`}
             >
               {page}
             </button>
@@ -218,12 +217,12 @@ export default function SearchResults() {
             125
           </button>
         </div>
-        
+
         <button className="px-4 py-2 border-2 border-black bg-white hover:bg-gray-100 font-mono font-bold rounded-sm transition-colors">
           Next
         </button>
       </div>
-      
+
       {/* Results Per Page */}
       <div className="mt-6 text-center">
         <div className="flex items-center justify-center gap-2">

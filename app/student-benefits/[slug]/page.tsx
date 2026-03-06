@@ -38,13 +38,32 @@ export async function generateMetadata(
 
 // Helper function to convert StudentBenefit to Deal format
 function convertBenefitToDeal(benefit: StudentBenefit, allBenefits: StudentBenefit[]) {
-    // Find similar benefits (same category, different benefit)
-    const similarDeals = allBenefits
+    // Find similar benefits — same specific category, different slug, shuffled for variety
+    const sameCategoryBenefits = allBenefits
         .filter(b =>
             b.category === benefit.category &&
             b.slug !== benefit.slug &&
-            b.slug // Only include benefits with slugs
+            b.slug
         )
+
+    // If not enough in same category, fill from same appCategory
+    const fallbackBenefits = allBenefits
+        .filter(b =>
+            b.appCategory === benefit.appCategory &&
+            b.category !== benefit.category &&
+            b.slug !== benefit.slug &&
+            b.slug
+        )
+
+    // Combine: prefer same category, pad with appCategory fallbacks, shuffle
+    const combined = [...sameCategoryBenefits, ...fallbackBenefits]
+    // Simple deterministic shuffle based on slug chars for consistency
+    const shuffled = combined.sort((a, b) => {
+        const seed = benefit.slug?.length ?? 1
+        return (a.slug!.charCodeAt(seed % a.slug!.length) - b.slug!.charCodeAt(seed % b.slug!.length))
+    })
+
+    const similarDeals = shuffled
         .slice(0, 6)
         .map(b => ({
             title: b.title,
@@ -177,19 +196,19 @@ export default async function StudentBenefitDetailPage({ params }: PageProps) {
                                 <span className="text-gray-400">/</span>
                                 {benefitData.appCategory === 'Free Access' && (
                                     <>
-                                        <a className="hover:text-black underline decoration-2 underline-offset-2" href="/student-benefits/free-access">Free Access</a>
+                                        <a className="hover:text-black underline decoration-2 underline-offset-2" href="/resources/free-access">Campus Edge</a>
                                         <span className="text-gray-400">/</span>
                                     </>
                                 )}
                                 {benefitData.appCategory === 'Credits & Savings' && (
                                     <>
-                                        <a className="hover:text-black underline decoration-2 underline-offset-2" href="/student-benefits/credits-savings">Credits & Savings</a>
+                                        <a className="hover:text-black underline decoration-2 underline-offset-2" href="/resources/credits-savings">Credits &amp; Savings</a>
                                         <span className="text-gray-400">/</span>
                                     </>
                                 )}
                                 {benefitData.appCategory === 'Funding & Opportunities' && (
                                     <>
-                                        <a className="hover:text-black underline decoration-2 underline-offset-2" href="/student-benefits/funding-opportunities">Funding & Opportunities</a>
+                                        <a className="hover:text-black underline decoration-2 underline-offset-2" href="/resources/funding-opportunities">Funding &amp; Opportunities</a>
                                         <span className="text-gray-400">/</span>
                                     </>
                                 )}
@@ -261,7 +280,7 @@ export default async function StudentBenefitDetailPage({ params }: PageProps) {
 
                     {/* Main content - full width */}
                     <div className="max-w-[1400px] mx-auto px-6 py-8">
-                        <SingleDealContent deal={deal} />
+                        <SingleDealContent deal={deal} freeAccess={true} basePath="/student-benefits" />
                     </div>
                 </main>
                 <Footer />

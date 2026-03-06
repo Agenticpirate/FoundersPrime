@@ -1,15 +1,33 @@
 'use client'
 
-import { useState, useMemo, useCallback } from 'react'
+import { useState, useMemo, useCallback, useEffect } from 'react'
 import Link from 'next/link'
 import DealCard from './DealCard'
 import AcceleratorsSearch from './AcceleratorsSearch'
 import ViewToggle, { ViewMode } from './ViewToggle'
 import { accelerators2026, Accelerator } from '@/data/accelerators-2026'
+import { useAuth } from '@/lib/auth/hooks'
+import { checkProStatus } from '@/lib/auth/user-context'
+import ProGateOverlay from '@/components/ProGateOverlay'
 
 type SortOption = 'name' | 'investment' | 'deadline' | 'equity'
 
 export default function AcceleratorsGrid() {
+  const { user } = useAuth()
+  const [isPro, setIsPro] = useState(false)
+
+  useEffect(() => {
+    const checkAccess = async () => {
+      if (user) {
+        const { isPro: hasProAccess } = await checkProStatus()
+        setIsPro(hasProAccess)
+      } else {
+        setIsPro(false)
+      }
+    }
+    checkAccess()
+  }, [user])
+
   const [filterRegion, setFilterRegion] = useState('All')
   const [searchQuery, setSearchQuery] = useState('')
   const [sortBy, setSortBy] = useState<SortOption>('name')
@@ -128,8 +146,8 @@ export default function AcceleratorsGrid() {
                 key={region}
                 onClick={() => setFilterRegion(region)}
                 className={`px-3 py-1.5 font-mono text-xs border-2 border-black rounded-sm whitespace-nowrap transition-all ${filterRegion === region
-                    ? 'bg-black text-white shadow-[2px_2px_0px_0px_rgba(0,0,0,0.3)]'
-                    : 'bg-white text-black hover:bg-gray-100'
+                  ? 'bg-black text-white shadow-[2px_2px_0px_0px_rgba(0,0,0,0.3)]'
+                  : 'bg-white text-black hover:bg-gray-100'
                   }`}
                 aria-pressed={filterRegion === region}
               >
@@ -179,16 +197,38 @@ export default function AcceleratorsGrid() {
 
       {/* Grid/List View */}
       {filteredAndSearchedDeals.length > 0 ? (
-        <div
-          className={
-            viewMode === 'grid'
-              ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'
-              : 'flex flex-col gap-4'
-          }
-        >
-          {filteredAndSearchedDeals.map((acc) => (
-            <DealCard key={acc.id} deal={convertToCard(acc)} />
-          ))}
+        <div>
+          {/* Always-visible cards (first 3 for free users, all for pro) */}
+          <div
+            className={
+              viewMode === 'grid'
+                ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'
+                : 'flex flex-col gap-4'
+            }
+          >
+            {(isPro ? filteredAndSearchedDeals : filteredAndSearchedDeals.slice(0, 3)).map((acc) => (
+              <DealCard
+                key={acc.id}
+                deal={convertToCard(acc)}
+                overrideHref={isPro ? undefined : '/pricing'}
+              />
+            ))}
+          </div>
+
+          {/* Pro Gate — real cards blurred behind glass */}
+          {!isPro && filteredAndSearchedDeals.length > 3 && (
+            <ProGateOverlay
+              totalCount={filteredAndSearchedDeals.length}
+              visibleCount={3}
+              label="Accelerators"
+            >
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {filteredAndSearchedDeals.slice(3, 9).map((acc) => (
+                  <DealCard key={acc.id} deal={convertToCard(acc)} />
+                ))}
+              </div>
+            </ProGateOverlay>
+          )}
         </div>
       ) : (
         <div className="text-center py-16 bg-white border-3 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] rounded-sm">

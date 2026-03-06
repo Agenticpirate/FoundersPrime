@@ -18,17 +18,17 @@ export default function BillingHeader() {
       </div>
 
       {/* Header */}
-      <div className="bg-white border-3 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] p-8 mb-8">
-        <div className="flex items-start gap-4 mb-6">
+      <div className="bg-white border-3 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] p-5 md:p-8 mb-8">
+        <div className="flex flex-col md:flex-row items-start gap-4 mb-6">
           <div className="bg-[#13b6ec] border-3 border-black p-3 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
             <CreditCard className="w-8 h-8 text-white" />
           </div>
           <div className="flex-1">
-            <h1 className="text-4xl font-bold font-mono text-black mb-3">
+            <h1 className="text-2xl md:text-4xl font-bold font-mono text-black mb-2 md:mb-3">
               BILLING_DASHBOARD
             </h1>
-            <p className="text-lg text-gray-700 leading-relaxed">
-              Manage your subscription, billing information, and payment methods. 
+            <p className="text-base md:text-lg text-gray-700 leading-relaxed">
+              Manage your subscription, billing information, and payment methods.
               View your usage and billing history all in one place.
             </p>
           </div>

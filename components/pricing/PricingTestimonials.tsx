@@ -52,7 +52,7 @@ export default function PricingTestimonials() {
                     </p>
                 </div>
 
-                <div className="relative bg-white border-3 border-[#111111] shadow-neo p-8 md:p-12 mx-auto max-w-3xl">
+                <div className="relative bg-white border-3 border-[#111111] shadow-neo p-6 md:p-12 mx-auto max-w-3xl">
                     <div className="flex gap-1 justify-center mb-6">
                         {[...Array(activeTestimonial.rating)].map((_, i) => (
                             <span key={i} className="material-symbols-outlined text-[#ffd700] fill-current text-2xl drop-shadow-[1px_1px_0_#111]">star</span>

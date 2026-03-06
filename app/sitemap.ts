@@ -1,5 +1,8 @@
 import { MetadataRoute } from 'next'
 import { accelerators2026 } from '@/data/accelerators-2026'
+import { incubators2026 } from '@/data/incubators-2026'
+import { grants2026 } from '@/data/grants-2026'
+import startupsData from '@/data/yc_companies_2024_2026.json'
 import fs from 'fs'
 import path from 'path'
 
@@ -56,13 +59,43 @@ export default function sitemap(): MetadataRoute.Sitemap {
     }))
 
     // 3. Dynamic Accelerator Routes
-    // Note: keying off the same /deals/[slug] pattern
     const acceleratorRoutes = accelerators2026.map((accelerator) => ({
         url: `${baseUrl}/deals/${accelerator.slug}`,
         lastModified: new Date(),
         changeFrequency: 'monthly' as const,
-        priority: 0.9, // Higher priority for accelerators
+        priority: 0.9,
     }))
 
-    return [...staticRoutes, ...dealRoutes, ...acceleratorRoutes]
+    // 4. Dynamic Incubator Routes
+    const incubatorRoutes = incubators2026.map((incubator) => ({
+        url: `${baseUrl}/deals/${incubator.slug}`,
+        lastModified: new Date(),
+        changeFrequency: 'monthly' as const,
+        priority: 0.8,
+    }))
+
+    // 5. Dynamic Grant Routes
+    const grantRoutes = grants2026.map((grant) => ({
+        url: `${baseUrl}/deals/${grant.slug}`,
+        lastModified: new Date(),
+        changeFrequency: 'weekly' as const,
+        priority: 0.8,
+    }))
+
+    // 6. Dynamic Startup Routes
+    const startupRoutes = startupsData.map((startup: any) => ({
+        url: `${baseUrl}/startups/${startup.slug}`,
+        lastModified: new Date(),
+        changeFrequency: 'monthly' as const,
+        priority: 0.7,
+    }))
+
+    return [
+        ...staticRoutes,
+        ...dealRoutes,
+        ...acceleratorRoutes,
+        ...incubatorRoutes,
+        ...grantRoutes,
+        ...startupRoutes
+    ]
 }

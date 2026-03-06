@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 
 interface Deal {
   id: string
@@ -27,9 +28,9 @@ export default function SavedDealsSection({ savedDealSlugs }: SavedDealsSectionP
       try {
         const response = await fetch('/api/deals')
         const data = await response.json()
-        
+
         if (data.success) {
-          const savedDeals = data.deals.filter((deal: Deal) => 
+          const savedDeals = data.deals.filter((deal: Deal) =>
             savedDealSlugs.includes(deal.slug) || savedDealSlugs.includes(deal.id)
           )
           setDeals(savedDeals)
@@ -86,7 +87,7 @@ export default function SavedDealsSection({ savedDealSlugs }: SavedDealsSectionP
           <span className="material-symbols-outlined text-primary">bookmark</span>
           Saved Deals ({deals.length})
         </h2>
-        <Link 
+        <Link
           href="/deals"
           className="text-sm font-bold text-primary hover:underline flex items-center gap-1"
         >
@@ -94,24 +95,22 @@ export default function SavedDealsSection({ savedDealSlugs }: SavedDealsSectionP
           <span className="material-symbols-outlined !text-[16px]">arrow_forward</span>
         </Link>
       </div>
-      
+
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {deals.map((deal) => (
-          <div 
+          <div
             key={deal.id}
             className="border-3 border-black bg-white shadow-[4px_4px_0px_#111111] p-4 hover:shadow-[6px_6px_0px_#111111] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all"
           >
             <div className="flex items-start gap-3 mb-3">
-              <div className="w-10 h-10 bg-gray-100 border-2 border-black rounded flex items-center justify-center overflow-hidden flex-shrink-0">
+              <div className="w-10 h-10 bg-gray-100 border-2 border-black rounded flex items-center justify-center overflow-hidden flex-shrink-0 relative">
                 {deal.logoUrl ? (
-                  <img 
-                    src={deal.logoUrl} 
+                  <Image
+                    src={deal.logoUrl}
                     alt={deal.title}
-                    className="w-full h-full object-contain"
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement
-                      target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(deal.provider)}&background=f3f4f6&color=1f2937&size=40`
-                    }}
+                    fill
+                    sizes="40px"
+                    className="object-contain"
                   />
                 ) : (
                   <span className="text-lg font-bold">{deal.provider.charAt(0)}</span>
@@ -129,9 +128,9 @@ export default function SavedDealsSection({ savedDealSlugs }: SavedDealsSectionP
                 <span className="material-symbols-outlined !text-[18px]">close</span>
               </button>
             </div>
-            
+
             <p className="text-xs text-gray-600 mb-3 line-clamp-2">{deal.shortDescription}</p>
-            
+
             <div className="flex items-center justify-between">
               <span className="text-sm font-bold text-green-600">{deal.value}</span>
               <Link

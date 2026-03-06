@@ -55,7 +55,7 @@ export default function GoogleTranslate() {
             <div id="google_translate_element" className="google-translate-container" />
             <Script
                 src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
-                strategy="afterInteractive"
+                strategy="lazyOnload"
                 onError={(e) => console.warn("Google Translate script failed to load", e)}
             />
         </>

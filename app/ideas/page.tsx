@@ -1,5 +1,4 @@
 import IdeasHeader from '@/components/ideas/IdeasHeader'
-import IdeasHero from '@/components/ideas/IdeasHero'
 import IdeasFilterBar from '@/components/ideas/IdeasFilterBar'
 import IdeasContent from '@/components/ideas/IdeasContent'
 import Header from '@/components/Header'
@@ -12,7 +11,6 @@ export default function IdeasPage() {
       <main className="flex-1">
         <div className="max-w-[1600px] mx-auto px-4 lg:px-6 py-4 lg:py-6">
           <IdeasHeader />
-          <IdeasHero />
           <IdeasFilterBar />
           <IdeasContent />
         </div>

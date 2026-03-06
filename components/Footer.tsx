@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import GoogleTranslate from './GoogleTranslate'
 
 export default function Footer() {
@@ -19,15 +20,13 @@ export default function Footer() {
       title: "Startups",
       links: [
         { text: "Funded Database", href: "/startups" },
-        { text: "Startup Ideas", href: "/ideas" },
-        { text: "Community", href: "/community" }
+        { text: "Startup Ideas", href: "/ideas" }
       ]
     },
     {
       title: "Resources",
       links: [
         { text: "Templates & Guides", href: "/resources" },
-        { text: "Blog", href: "/blog" },
         { text: "Search", href: "/search" }
       ]
     },
@@ -51,26 +50,88 @@ export default function Footer() {
   ]
 
   return (
-    <footer className="bg-white text-black border-t-2 border-black pt-16">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-2 md:grid-cols-7 gap-8 mb-12">
-          <div className="col-span-2">
-            <Link className="text-2xl font-bold tracking-tight text-black flex items-center gap-2 mb-4 font-mono" href="/">
-              <div className="w-6 h-6 relative">
-                <img src="/logo.svg" alt="FoundersPrime Logo" className="w-full h-full object-contain" />
-              </div>
-              <span>FOUNDERS<span className="text-blue-600">[</span>PRIME<span className="text-blue-600">]</span></span>
-            </Link>
-            <p className="text-gray-600 text-sm max-w-xs font-mono">The unfair advantage for bootstrapped and funded startups. Save money, extend runway, build faster.</p>
+    <footer style={{ backgroundColor: '#fafafa', borderTop: '1px solid #e5e5e5' }}>
+      {/* Main footer body */}
+      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '56px 24px 48px' }}>
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fill, minmax(140px, 1fr))',
+          gap: '40px 32px',
+          alignItems: 'start'
+        }}>
+
+          {/* Brand column — always full width on mobile */}
+          <div style={{
+            gridColumn: '1 / -1',
+            marginBottom: '8px'
+          }}
+            className="footer-brand-col"
+          >
+            {/* Inner wrapper so brand + tagline sit side-by-side on md+ */}
+            <div className="footer-brand-inner">
+              <Link href="/" style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '8px',
+                textDecoration: 'none'
+              }}>
+                <div style={{ width: '22px', height: '22px', position: 'relative', flexShrink: 0 }}>
+                  <Image src="/logo.svg" alt="FoundersPrime Logo" fill className="object-contain" sizes="22px" />
+                </div>
+                <span style={{
+                  fontFamily: 'var(--font-mono, monospace)',
+                  fontWeight: 700,
+                  fontSize: '15px',
+                  letterSpacing: '0.04em',
+                  color: '#0a0a0a'
+                }}>
+                  FOUNDERS<span style={{ color: '#2563eb' }}>[</span>PRIME<span style={{ color: '#2563eb' }}>]</span>
+                </span>
+              </Link>
+              <p style={{
+                fontFamily: 'var(--font-mono, monospace)',
+                fontSize: '12px',
+                color: '#6b7280',
+                lineHeight: 1.65,
+                marginTop: '10px',
+                maxWidth: '260px'
+              }}>
+                The unfair advantage for bootstrapped and funded startups. Save money, extend runway, build faster.
+              </p>
+            </div>
           </div>
 
+          {/* Nav columns */}
           {footerSections.map((section, index) => (
             <div key={index}>
-              <h4 className="font-bold mb-4 font-mono uppercase text-sm border-b-2 border-black inline-block pb-1">{section.title}</h4>
-              <ul className="space-y-2 text-sm text-gray-600 font-mono">
+              <p style={{
+                fontFamily: 'var(--font-mono, monospace)',
+                fontSize: '10px',
+                fontWeight: 700,
+                letterSpacing: '0.12em',
+                textTransform: 'uppercase',
+                color: '#9ca3af',
+                marginBottom: '14px'
+              }}>
+                {section.title}
+              </p>
+              <ul style={{ listStyle: 'none', margin: 0, padding: 0, display: 'flex', flexDirection: 'column', gap: '9px' }}>
                 {section.links.map((link, linkIndex) => (
                   <li key={linkIndex}>
-                    <Link className="hover:text-primary hover:underline" href={link.href}>{link.text}</Link>
+                    <Link
+                      href={link.href}
+                      className="footer-nav-link"
+                      style={{
+                        fontFamily: 'var(--font-mono, monospace)',
+                        fontSize: '13px',
+                        color: '#374151',
+                        textDecoration: 'none',
+                        display: 'inline-block',
+                        transition: 'color 0.15s ease'
+                      }}
+                    >
+                      {link.text}
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -79,18 +140,81 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className="border-t-2 border-black py-4 bg-[#f6f6f8]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-4">
-          <div className="text-xs font-bold font-mono">© 2026 FoundersPrime. Built by founders, for founders.</div>
-          <div className="flex items-center gap-4">
+      {/* Bottom bar */}
+      <div style={{ borderTop: '1px solid #e5e5e5', backgroundColor: '#f3f4f6' }}>
+        <div style={{
+          maxWidth: '1200px',
+          margin: '0 auto',
+          padding: '14px 24px',
+          display: 'flex',
+          flexWrap: 'wrap',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          gap: '12px'
+        }}>
+          <span style={{
+            fontFamily: 'var(--font-mono, monospace)',
+            fontSize: '11px',
+            fontWeight: 600,
+            color: '#6b7280'
+          }}>
+            © 2026 FoundersPrime. Built by founders, for founders.
+          </span>
+
+          <div style={{ display: 'flex', alignItems: 'center', gap: '16px', flexWrap: 'wrap' }}>
             <GoogleTranslate />
-            <div className="flex items-center gap-2 text-xs font-bold px-3 py-1 bg-white border border-black rounded-none font-mono uppercase">
-              <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+            <div style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '6px',
+              fontFamily: 'var(--font-mono, monospace)',
+              fontSize: '10px',
+              fontWeight: 700,
+              letterSpacing: '0.08em',
+              textTransform: 'uppercase',
+              color: '#374151',
+              padding: '5px 10px',
+              border: '1px solid #d1d5db',
+              borderRadius: '4px',
+              backgroundColor: '#fff'
+            }}>
+              <span style={{ width: '6px', height: '6px', borderRadius: '50%', backgroundColor: '#22c55e', animation: 'pulse 2s infinite' }} />
               System Status: Operational
             </div>
           </div>
         </div>
       </div>
+
+      <style jsx>{`
+        /* Hover state for nav links */
+        :global(.footer-nav-link:hover) {
+          color: #0a0a0a !important;
+        }
+
+        /* On md+ screens: brand col is only 2 grid columns wide, not full-width */
+        @media (min-width: 640px) {
+          :global(.footer-brand-col) {
+            grid-column: 1 / 3 !important;
+          }
+          :global(.footer-brand-inner) {
+            display: flex;
+            flex-direction: column;
+          }
+        }
+
+        /* On larger screens keep brand as its own column beside nav */
+        @media (min-width: 900px) {
+          :global(.footer-brand-col) {
+            grid-column: 1 / 1 !important;
+            margin-bottom: 0 !important;
+          }
+        }
+
+        @keyframes pulse {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0.4; }
+        }
+      `}</style>
     </footer>
   )
 }

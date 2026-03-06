@@ -5,6 +5,27 @@ import { accelerators2026 } from '@/data/accelerators-2026'
 import { grants2026 } from '@/data/grants-2026'
 import { incubators2026 } from '@/data/incubators-2026'
 import { Deal } from '@/lib/deals-database'
+import { createClient } from '@/lib/supabase/server'
+
+// Helper: verify caller is an active admin
+async function assertAdmin(): Promise<NextResponse | null> {
+  const supabase = createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) {
+    return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 401 })
+  }
+  const { data: adminUser } = await supabase
+    .from('admin_users')
+    .select('role')
+    .eq('email', user.email)
+    .eq('is_active', true)
+    .single()
+  if (!adminUser) {
+    console.error(`🚨 Unauthorized write attempt on /api/deals by ${user.email}`)
+    return NextResponse.json({ success: false, error: 'Forbidden' }, { status: 403 })
+  }
+  return null // authorised
+}
 
 const PUBLIC_DEALS_PATH = path.join(process.cwd(), 'public', 'data', 'all-deals.json')
 const PROCESSED_DEALS_PATH = path.join(process.cwd(), 'data', 'processed-deals', 'all-deals.json')
@@ -114,8 +135,18 @@ function normalizeIncubator(inc: any): Deal {
   }
 }
 
+// Global cache for API route
+let cachedDealsAPI: Deal[] | null = null;
+let lastCacheTimeAPI = 0;
+const CACHE_TTL_API = 1000 * 60 * 5; // 5 minutes
+
 // Helper to read deals from file (checks multiple locations)
 function readDeals(): Deal[] {
+  const now = Date.now();
+  if (cachedDealsAPI && (now - lastCacheTimeAPI < CACHE_TTL_API)) {
+    return cachedDealsAPI;
+  }
+
   let allDeals: Deal[] = []
 
   try {
@@ -157,11 +188,13 @@ function readDeals(): Deal[] {
     ].filter(d => !existingSlugs.has(d.slug))
 
     allDeals = [...allDeals, ...newDeals]
+    cachedDealsAPI = allDeals
+    lastCacheTimeAPI = now
 
   } catch (error) {
     console.error('Error reading deals:', error)
   }
-  return allDeals
+  return allDeals || []
 }
 
 // Helper: Get only JSON deals (for writing)
@@ -189,6 +222,8 @@ function writeDeals(deals: any[]): void {
   // We will ONLY write deals that are NOT from the TS imports to the JSON file
   const dealsPersist = deals.filter(d => d.dataSource !== 'import')
   fs.writeFileSync(PUBLIC_DEALS_PATH, JSON.stringify(dealsPersist, null, 2))
+  // Bust cache
+  cachedDealsAPI = null;
 }
 
 // GET - Fetch all deals or filter by query params
@@ -291,6 +326,9 @@ export async function GET(request: NextRequest) {
 
 // POST - Create new deal(s)
 export async function POST(request: NextRequest) {
+  const authError = await assertAdmin()
+  if (authError) return authError
+
   try {
     const body = await request.json()
 
@@ -359,6 +397,9 @@ export async function POST(request: NextRequest) {
 
 // PUT - Update existing deal
 export async function PUT(request: NextRequest) {
+  const authError = await assertAdmin()
+  if (authError) return authError
+
   try {
     const body = await request.json()
     const { id, slug, ...updates } = body
@@ -405,6 +446,9 @@ export async function PUT(request: NextRequest) {
 
 // DELETE - Delete deal(s)
 export async function DELETE(request: NextRequest) {
+  const authError = await assertAdmin()
+  if (authError) return authError
+
   try {
     const { searchParams } = new URL(request.url)
     const id = searchParams.get('id')
