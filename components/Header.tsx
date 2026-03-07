@@ -31,7 +31,7 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-50 bg-[#f6f8f8] border-b-2 border-black">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-20 gap-4">
+        <div className="flex justify-between items-center h-14 md:h-20 gap-4">
           <div className="flex-shrink-0 flex items-center">
             <Link className="text-xl md:text-2xl font-bold tracking-tighter text-black flex items-center gap-2 font-mono" href="/">
               <div className="w-8 h-8 relative">
@@ -218,51 +218,51 @@ export default function Header() {
 
         {/* Mobile Menu */}
         {mobileMenuOpen && (
-          <div className="md:hidden absolute left-0 right-0 hidden-scrollbar bg-[#f6f8f8] border-b-2 border-black border-t-2 overflow-y-auto max-h-[calc(100vh-80px)] shadow-xl z-40">
-            <div className="p-4 space-y-4">
-              <nav className="flex flex-col space-y-2">
-                <Link href="/deals" className="block px-4 py-3 font-mono font-bold uppercase hover:bg-primary/10 border-2 border-transparent hover:border-black transition-all" onClick={() => setMobileMenuOpen(false)}>
+          <div className="md:hidden absolute left-0 right-0 hidden-scrollbar bg-[#f6f8f8] border-b-2 border-black border-t-2 overflow-y-auto max-h-[75vh] shadow-xl z-40">
+            <div className="p-3 space-y-2">
+              <nav className="flex flex-col space-y-1">
+                <Link href="/deals" className="block px-3 py-2 text-sm font-mono font-bold uppercase hover:bg-primary/10 border-2 border-transparent hover:border-black transition-all" onClick={() => setMobileMenuOpen(false)}>
                   Deals
                 </Link>
-                <Link href="/deals/accelerators" className="block px-4 py-3 font-mono font-bold uppercase hover:bg-primary/10 border-2 border-transparent hover:border-black transition-all" onClick={() => setMobileMenuOpen(false)}>
+                <Link href="/deals/accelerators" className="block px-3 py-2 text-sm font-mono font-bold uppercase hover:bg-primary/10 border-2 border-transparent hover:border-black transition-all" onClick={() => setMobileMenuOpen(false)}>
                   Programs
                 </Link>
-                <Link href="/startups" className="block px-4 py-3 font-mono font-bold uppercase hover:bg-primary/10 border-2 border-transparent hover:border-black transition-all" onClick={() => setMobileMenuOpen(false)}>
+                <Link href="/startups" className="block px-3 py-2 text-sm font-mono font-bold uppercase hover:bg-primary/10 border-2 border-transparent hover:border-black transition-all" onClick={() => setMobileMenuOpen(false)}>
                   Startups
                 </Link>
-                <Link href="/resources" className="block px-4 py-3 font-mono font-bold uppercase hover:bg-primary/10 border-2 border-transparent hover:border-black transition-all" onClick={() => setMobileMenuOpen(false)}>
+                <Link href="/resources" className="block px-3 py-2 text-sm font-mono font-bold uppercase hover:bg-primary/10 border-2 border-transparent hover:border-black transition-all" onClick={() => setMobileMenuOpen(false)}>
                   Resources
                 </Link>
-                <Link href="/pricing" className="block px-4 py-3 font-mono font-bold uppercase hover:bg-primary/10 border-2 border-transparent hover:border-black transition-all" onClick={() => setMobileMenuOpen(false)}>
+                <Link href="/pricing" className="block px-3 py-2 text-sm font-mono font-bold uppercase hover:bg-primary/10 border-2 border-transparent hover:border-black transition-all" onClick={() => setMobileMenuOpen(false)}>
                   Pricing
                 </Link>
               </nav>
 
               <hr className="border-black/10" />
 
-              <div className="space-y-4 pt-2">
+              <div className="space-y-2 pt-1">
                 {user ? (
                   <>
-                    <div className="px-4 py-2 flex items-center gap-2 font-mono font-bold">
-                      <span className="material-symbols-outlined">account_circle</span>
+                    <div className="px-3 py-1.5 flex items-center gap-2 font-mono font-bold text-sm">
+                      <span className="material-symbols-outlined text-base">account_circle</span>
                       {user.user_metadata?.full_name || user.email?.split('@')[0]}
                     </div>
-                    <Link href="/dashboard" className="w-full block text-center px-4 py-3 neo-border bg-white font-mono font-bold uppercase hover:shadow-[4px_4px_0px_#111111] transition-all" onClick={() => setMobileMenuOpen(false)}>
+                    <Link href="/dashboard" className="w-full block text-center px-4 py-2 text-sm neo-border bg-white font-mono font-bold uppercase hover:shadow-[4px_4px_0px_#111111] transition-all" onClick={() => setMobileMenuOpen(false)}>
                       Dashboard
                     </Link>
                     <button
                       onClick={() => { signOut(); setMobileMenuOpen(false); }}
-                      className="w-full text-center px-4 py-3 neo-border bg-red-100 text-red-600 font-mono font-bold uppercase hover:bg-red-200 transition-all"
+                      className="w-full text-center px-4 py-2 text-sm neo-border bg-red-100 text-red-600 font-mono font-bold uppercase hover:bg-red-200 transition-all"
                     >
                       Sign Out
                     </button>
                   </>
                 ) : (
                   <>
-                    <Link href="/login" className="w-full block text-center px-4 py-3 neo-border bg-white font-mono font-bold uppercase hover:shadow-[4px_4px_0px_#111111] transition-all" onClick={() => setMobileMenuOpen(false)}>
+                    <Link href="/login" className="w-full block text-center px-4 py-2 text-sm neo-border bg-white font-mono font-bold uppercase hover:shadow-[4px_4px_0px_#111111] transition-all" onClick={() => setMobileMenuOpen(false)}>
                       Log In
                     </Link>
-                    <Link href="/pricing" className="w-full block text-center px-4 py-3 neo-border bg-accent-yellow font-mono font-bold uppercase hover:shadow-[4px_4px_0px_#111111] transition-all" onClick={() => setMobileMenuOpen(false)}>
+                    <Link href="/pricing" className="w-full block text-center px-4 py-2 text-sm neo-border bg-accent-yellow font-mono font-bold uppercase hover:shadow-[4px_4px_0px_#111111] transition-all" onClick={() => setMobileMenuOpen(false)}>
                       Get Started
                     </Link>
                   </>

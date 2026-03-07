@@ -1,4 +1,7 @@
+'use client'
+
 import Link from 'next/link'
+import { useRef, useState } from 'react'
 
 export default function SystemModules() {
   const modules = [
@@ -58,18 +61,77 @@ export default function SystemModules() {
     }
   ]
 
+  const scrollRef = useRef<HTMLDivElement>(null)
+  const [activeIdx, setActiveIdx] = useState(0)
+
+  const scrollTo = (idx: number) => {
+    const container = scrollRef.current
+    if (!container) return
+    const card = container.children[idx] as HTMLElement
+    if (card) {
+      container.scrollTo({ left: card.offsetLeft - 16, behavior: 'smooth' })
+      setActiveIdx(idx)
+    }
+  }
+
+  const handleScroll = () => {
+    const container = scrollRef.current
+    if (!container) return
+    const scrollLeft = container.scrollLeft
+    const cardWidth = (container.children[0] as HTMLElement)?.offsetWidth || 0
+    const idx = Math.round(scrollLeft / (cardWidth + 16))
+    setActiveIdx(Math.min(idx, modules.length - 1))
+  }
+
   return (
-    <section className="relative py-12 grid-bg overflow-hidden border-b-2 border-black">
+    <section className="relative py-6 md:py-12 grid-bg overflow-hidden border-b-2 border-black">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col md:flex-row justify-between items-end mb-10 border-b-[3px] border-[#101622] pb-4">
+        <div className="flex flex-col md:flex-row justify-between items-end mb-5 md:mb-10 border-b-[3px] border-[#101622] pb-3 md:pb-4">
           <div>
-            <h2 className="text-3xl md:text-4xl font-bold text-[#101622] font-mono tracking-tight">CORE AREAS</h2>
-            <div className="h-1 w-16 bg-accent-cyan mt-2"></div>
+            <h2 className="text-2xl md:text-4xl font-bold text-[#101622] font-mono tracking-tight">CORE AREAS</h2>
+            <div className="h-1 w-12 md:w-16 bg-accent-cyan mt-1.5 md:mt-2"></div>
           </div>
-          <p className="font-mono text-xs md:text-sm text-gray-600 mt-4 md:mt-0 uppercase tracking-widest font-bold">Everything Founders Need. Nothing They Don't.</p>
+          <p className="font-mono text-xs text-gray-600 mt-2 md:mt-0 uppercase tracking-widest font-bold">Everything Founders Need. Nothing They Don't.</p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {/* Mobile: horizontal snap carousel */}
+        <div
+          ref={scrollRef}
+          onScroll={handleScroll}
+          className="flex md:hidden gap-4 overflow-x-auto snap-x snap-mandatory pb-3 mobile-scroll-hide"
+          style={{ scrollPaddingLeft: '16px' }}
+        >
+          {modules.map((module) => (
+            <div key={module.id} className="bg-white border-[3px] border-[#101622] p-4 shadow-[4px_4px_0px_0px_#101622] flex flex-col snap-start shrink-0 w-[78vw]">
+              <div className="flex justify-between items-start mb-3">
+                <div className={`w-10 h-10 bg-[#f6f6f8] border-[3px] border-[#101622] flex items-center justify-center transition-colors duration-300`}>
+                  <span className="material-symbols-outlined text-xl">{module.icon}</span>
+                </div>
+                <span className="font-mono text-[10px] font-bold border-[2px] border-[#101622] px-1.5 py-0.5 bg-white shadow-[2px_2px_0px_0px_#101622]">{module.id}</span>
+              </div>
+              <h3 className="text-base font-bold mb-1.5 font-mono uppercase">{module.title}</h3>
+              <p className="text-gray-600 mb-4 text-xs leading-relaxed font-mono flex-grow">{module.description}</p>
+              <Link className="flex items-center justify-center gap-2 w-full py-2 border-[3px] border-[#101622] font-mono font-bold text-xs uppercase bg-transparent hover:bg-[#101622] hover:text-white transition-all duration-300" href={module.href}>
+                <span>{module.buttonText}</span>
+                <span className="material-symbols-outlined text-sm">arrow_forward</span>
+              </Link>
+            </div>
+          ))}
+        </div>
+
+        {/* Mobile dots indicator */}
+        <div className="flex md:hidden justify-center gap-1.5 mt-3">
+          {modules.map((_, idx) => (
+            <button
+              key={idx}
+              onClick={() => scrollTo(idx)}
+              className={`h-1.5 rounded-full transition-all duration-300 ${activeIdx === idx ? 'w-5 bg-black' : 'w-1.5 bg-gray-300'}`}
+            />
+          ))}
+        </div>
+
+        {/* Desktop: grid */}
+        <div className="hidden md:grid grid-cols-2 lg:grid-cols-3 gap-6">
           {modules.map((module) => (
             <div key={module.id} className="bg-white border-[3px] border-[#101622] p-6 shadow-[6px_6px_0px_0px_#101622] hover:-translate-y-1 hover:shadow-[8px_8px_0px_0px_#101622] transition-all duration-300 group flex flex-col h-full">
               <div className="flex justify-between items-start mb-6">

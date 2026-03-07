@@ -26,9 +26,9 @@ export default function VerifiedIdeasAndFundedDB() {
   ]
 
   return (
-    <section className="py-20 bg-white">
+    <section className="py-8 md:py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-12">
           {/* Verified Ideas */}
           <div className="bg-[#f6f6f8] neo-border p-4 md:p-8">
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-6 md:mb-8 border-b-2 border-black pb-4 gap-4 sm:gap-0">

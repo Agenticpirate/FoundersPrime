@@ -1,4 +1,7 @@
+'use client'
+
 import Image from 'next/image'
+import { useEffect, useRef, useState, useCallback } from 'react'
 
 export default function FounderLogs() {
   const testimonials = [
@@ -52,14 +55,111 @@ export default function FounderLogs() {
     }
   ]
 
+  const [activeIdx, setActiveIdx] = useState(0)
+  const [isHovered, setIsHovered] = useState(false)
+  const scrollRef = useRef<HTMLDivElement>(null)
+  const autoPlayRef = useRef<NodeJS.Timeout | null>(null)
+
+  const goTo = useCallback((idx: number) => {
+    const container = scrollRef.current
+    if (!container) return
+    const card = container.children[idx] as HTMLElement
+    if (card) {
+      container.scrollTo({ left: card.offsetLeft - 16, behavior: 'smooth' })
+      setActiveIdx(idx)
+    }
+  }, [])
+
+  const goNext = useCallback(() => {
+    const next = (activeIdx + 1) % testimonials.length
+    goTo(next)
+  }, [activeIdx, testimonials.length, goTo])
+
+  // Auto-play carousel
+  useEffect(() => {
+    if (isHovered) return
+    autoPlayRef.current = setInterval(goNext, 3200)
+    return () => { if (autoPlayRef.current) clearInterval(autoPlayRef.current) }
+  }, [goNext, isHovered])
+
+  const handleScroll = () => {
+    const container = scrollRef.current
+    if (!container) return
+    const scrollLeft = container.scrollLeft
+    const cardWidth = (container.children[0] as HTMLElement)?.offsetWidth || 0
+    const idx = Math.round(scrollLeft / (cardWidth + 12))
+    setActiveIdx(Math.min(idx, testimonials.length - 1))
+  }
+
   return (
-    <section className="py-20 bg-[#f6f8f8] border-y-2 border-black">
+    <section className="py-8 md:py-20 bg-[#f6f8f8] border-y-2 border-black">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-3xl md:text-5xl font-bold text-black mb-16 text-center font-mono uppercase">
-          <span className="bg-accent-yellow px-4 py-1 border-2 border-black shadow-[4px_4px_0px_#000]">Founder_Logs</span>
+        <h2 className="text-xl md:text-5xl font-bold text-black mb-5 md:mb-16 text-center font-mono uppercase">
+          <span className="bg-accent-yellow px-3 md:px-4 py-1 border-2 border-black shadow-[4px_4px_0px_#000]">Founder_Logs</span>
         </h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {/* Mobile: auto-playing smooth carousel */}
+        <div
+          className="md:hidden relative"
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+          onTouchStart={() => setIsHovered(true)}
+          onTouchEnd={() => setIsHovered(false)}
+        >
+          <div
+            ref={scrollRef}
+            onScroll={handleScroll}
+            className="flex gap-3 overflow-x-auto snap-x snap-mandatory pb-3 mobile-scroll-hide"
+          >
+            {testimonials.map((testimonial, index) => (
+              <div
+                key={index}
+                className="bg-white border-2 border-black p-4 snap-start shrink-0 w-[82vw] shadow-[3px_3px_0px_#000] flex flex-col"
+              >
+                <div className="flex justify-between items-start mb-3">
+                  <div className="flex gap-0.5">
+                    {[...Array(5)].map((_, i) => (
+                      <span
+                        key={i}
+                        className="material-symbols-outlined text-xs text-accent-yellow"
+                        style={{ fontVariationSettings: "'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24" }}
+                      >
+                        star
+                      </span>
+                    ))}
+                  </div>
+                  <span className="material-symbols-outlined text-gray-200 text-lg">format_quote</span>
+                </div>
+
+                <p className="text-xs font-medium font-mono leading-relaxed text-gray-700 flex-grow">
+                  &ldquo;{testimonial.quote}&rdquo;
+                </p>
+
+                <div className="flex items-center gap-2 border-t-2 border-dashed border-gray-200 pt-3 mt-3">
+                  <FounderImage image={testimonial.image} />
+                  <div className="text-xs">
+                    <div className="font-bold uppercase">{testimonial.name}</div>
+                    <div className="text-gray-500 font-mono">{testimonial.title}</div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Dots */}
+          <div className="flex justify-center gap-1.5 mt-3">
+            {testimonials.map((_, idx) => (
+              <button
+                key={idx}
+                onClick={() => goTo(idx)}
+                className={`h-1.5 rounded-full transition-all duration-300 ${activeIdx === idx ? 'w-5 bg-black' : 'w-1.5 bg-gray-300'}`}
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* Desktop: grid */}
+        <div className="hidden md:grid grid-cols-2 lg:grid-cols-4 gap-6">
           {testimonials.map((testimonial, index) => (
             <div
               key={index}
@@ -81,7 +181,7 @@ export default function FounderLogs() {
               </div>
 
               <p className="text-sm font-medium mb-6 font-mono leading-relaxed text-gray-700 group-hover:text-black transition-colors">
-                "{testimonial.quote}"
+                &ldquo;{testimonial.quote}&rdquo;
               </p>
 
               <div className="flex items-center gap-3 border-t-2 border-dashed border-gray-200 group-hover:border-black pt-4 transition-colors">
@@ -102,9 +202,9 @@ export default function FounderLogs() {
 function FounderImage({ image }: { image: string }) {
   return (
     <div
-      className="w-10 h-10 border-2 border-black rounded-full overflow-hidden transition-all duration-300 grayscale group-hover:grayscale-0 group-hover:scale-110 group-hover:ring-2 group-hover:ring-accent-yellow relative"
+      className="w-9 h-9 border-2 border-black rounded-full overflow-hidden transition-all duration-300 relative flex-shrink-0"
     >
-      <Image src={image} alt="Founder" fill className="object-cover" sizes="40px" />
+      <Image src={image} alt="Founder" fill className="object-cover" sizes="36px" />
     </div>
   )
 }

@@ -13,7 +13,7 @@ export default function FinalCTA() {
   }
 
   return (
-    <section className="py-10 bg-black text-white border-t-2 border-black border-b-4 border-b-accent-yellow relative overflow-hidden">
+    <section className="py-8 md:py-10 bg-black text-white border-t-2 border-black border-b-4 border-b-accent-yellow relative overflow-hidden">
       <div
         className="absolute inset-0 z-0 opacity-10 pointer-events-none"
         style={{
@@ -44,9 +44,9 @@ export default function FinalCTA() {
               </div>
             ) : (
               <div>
-                <form onSubmit={handleSubmit} className="flex gap-0 neo-shadow">
+                <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-0 neo-shadow">
                   <input
-                    className="w-64 bg-white text-black text-sm p-3 focus:ring-0 focus:outline-none font-mono rounded-none placeholder-gray-500"
+                    className="w-full sm:w-64 bg-white text-black text-sm p-3 focus:ring-0 focus:outline-none font-mono rounded-none placeholder-gray-500"
                     placeholder="YOUR EMAIL ADDRESS"
                     type="email"
                     required
@@ -55,7 +55,7 @@ export default function FinalCTA() {
                   />
                   <button
                     type="submit"
-                    className="bg-accent-yellow text-black text-sm font-black px-5 py-3 hover:bg-white transition-all whitespace-nowrap font-mono uppercase flex items-center gap-1.5 border-2 border-accent-yellow"
+                    className="bg-accent-yellow text-black text-sm font-black px-5 py-3 hover:bg-white transition-all whitespace-nowrap font-mono uppercase flex items-center justify-center gap-1.5 border-2 border-accent-yellow"
                   >
                     Subscribe
                     <span className="material-symbols-outlined text-sm">arrow_forward</span>

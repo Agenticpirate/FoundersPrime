@@ -52,7 +52,7 @@ export default function Footer() {
   return (
     <footer className="bg-[#fafafa] border-t border-[#e5e5e5]">
       {/* ── Main grid ── */}
-      <div className="max-w-7xl mx-auto px-6 sm:px-8 pt-14 pb-12">
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 pt-8 md:pt-14 pb-6 md:pb-12">
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-7 gap-x-8 gap-y-10">
 
           {/* Brand — full width on mobile, 2 cols on sm, 2 cols on lg */}

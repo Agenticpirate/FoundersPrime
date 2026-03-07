@@ -330,3 +330,19 @@ h6 {
 .animate-pulse-subtle {
   animation: pulse-subtle 3s ease-in-out infinite;
 }
+
+/* Mobile: hide scrollbar for horizontal carousels */
+.mobile-scroll-hide {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+}
+.mobile-scroll-hide::-webkit-scrollbar {
+  display: none; /* Chrome/Safari */
+}
+
+/* Mobile: reduce section padding globally for tighter layout */
+@media (max-width: 767px) {
+  .grid-bg {
+    background-size: 30px 30px;
+  }
+}

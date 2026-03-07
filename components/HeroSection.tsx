@@ -57,47 +57,47 @@ export default function HeroSection() {
   }
 
   return (
-    <section className="relative pt-8 pb-0 lg:pt-16 lg:pb-0 overflow-hidden grid-bg flex flex-col">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex-grow mb-12 lg:mb-16">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center h-full">
-          <div className="lg:col-span-7 flex flex-col justify-center items-start pt-6 lg:pt-0">
-            <div className="inline-flex items-center gap-2 bg-white neo-border px-3 py-1 mb-4 neo-shadow-static">
-              <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
-              <span className="text-[10px] sm:text-xs font-mono font-bold text-black uppercase tracking-wide">VERIFIED SAVINGS OPPORTUNITIES IDENTIFIED THIS WEEK</span>
+    <section className="relative pt-4 pb-0 md:pt-8 lg:pt-16 lg:pb-0 overflow-hidden grid-bg flex flex-col">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex-grow mb-6 md:mb-12 lg:mb-16">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 items-center h-full">
+          <div className="lg:col-span-7 flex flex-col justify-center items-start pt-2 lg:pt-0">
+            <div className="inline-flex items-center gap-2 bg-white neo-border px-2 py-0.5 mb-3 neo-shadow-static">
+              <span className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></span>
+              <span className="text-[9px] sm:text-xs font-mono font-bold text-black uppercase tracking-wide">VERIFIED SAVINGS OPPORTUNITIES IDENTIFIED THIS WEEK</span>
             </div>
 
-            <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold text-black tracking-tight mb-4 leading-none font-mono">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold text-black tracking-tight mb-3 leading-none font-mono">
               FREE CREDITS.<br />
               REAL GRANTS.<br />
               <span className="bg-accent-yellow px-2 mt-1 inline-block neo-border box-decoration-clone">ZERO DILUTION.</span>
             </h1>
 
-            <p className="mt-4 text-base sm:text-lg md:text-xl text-black mb-6 font-medium max-w-lg border-l-4 border-black pl-4">
+            <p className="mt-2 text-sm sm:text-base md:text-lg lg:text-xl text-black mb-4 font-medium max-w-lg border-l-4 border-black pl-3">
               FoundersPrime is a founder intelligence platform.<br />
               Discover verified startup credits, non-dilutive grants, and accelerator opportunities in one place.
             </p>
 
-            <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 mb-8 mt-2 w-full sm:w-auto">
-              <Link href="/deals" className="bg-black text-white text-base font-medium py-3 px-6 rounded-lg flex items-center justify-center gap-2 transition-all hover:bg-gray-800 shadow-md hover:shadow-lg hover:-translate-y-0.5 w-full sm:w-auto font-sans">
+            <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-6 mb-4 mt-1 w-full sm:w-auto">
+              <Link href="/deals" className="bg-black text-white text-sm md:text-base font-medium py-2.5 md:py-3 px-6 rounded-lg flex items-center justify-center gap-2 transition-all hover:bg-gray-800 shadow-md hover:shadow-lg hover:-translate-y-0.5 w-full sm:w-auto font-sans">
                 Access Deals <span className="material-symbols-outlined text-sm">arrow_forward</span>
               </Link>
 
-              <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 w-full sm:w-auto justify-center sm:justify-start">
+              <div className="flex flex-row gap-4 sm:gap-6 w-full sm:w-auto justify-center sm:justify-start">
                 <Link href="/deals/grants" className="text-gray-600 font-medium hover:text-black transition-colors flex items-center justify-center sm:justify-start gap-1.5 text-sm font-sans">
-                  Find Grants <span className="material-symbols-outlined text-lg leading-none">arrow_outward</span>
+                  Find Grants <span className="material-symbols-outlined text-base leading-none">arrow_outward</span>
                 </Link>
                 <Link href="/deals/accelerators" className="text-gray-600 font-medium hover:text-black transition-colors flex items-center justify-center sm:justify-start gap-1.5 text-sm font-sans">
-                  View Accelerators <span className="material-symbols-outlined text-lg leading-none">arrow_outward</span>
+                  View Accelerators <span className="material-symbols-outlined text-base leading-none">arrow_outward</span>
                 </Link>
               </div>
             </div>
 
-            <div className="flex flex-wrap gap-x-4 sm:gap-x-8 gap-y-2 text-[10px] sm:text-xs font-mono font-bold text-black uppercase border-t-2 border-black pt-4 w-full pr-0 lg:pr-12">
+            <div className="flex flex-wrap gap-x-4 sm:gap-x-8 gap-y-1 text-[9px] sm:text-xs font-mono font-bold text-black uppercase border-t-2 border-black pt-3 w-full pr-0 lg:pr-12">
               <span>VERIFIED DEALS</span> • <span>NON-DILUTIVE GRANTS</span> • <span>TOP ACCELERATORS</span>
             </div>
           </div>
 
-          <div className="lg:col-span-5 relative mt-12 lg:mt-0">
+          <div className="lg:col-span-5 relative mt-4 lg:mt-0 hidden md:block">
             <div className="bg-white neo-border neo-shadow p-2 relative z-10 mx-auto max-w-md lg:max-w-none">
               <div className="bg-black text-white p-2 text-[10px] md:text-xs font-mono flex justify-between border-b-2 border-black mb-0">
                 <span>FOUNDERSPRIME INDEX</span>
