@@ -88,29 +88,28 @@ export default function DealsFilterBar({ onFilterChange, currentFilters }: Deals
 
   return (
     <div className="bg-white border-2 border-gray-200 p-3 shadow-sm">
-      {/* Main Filter Row - Single Line on Desktop */}
-      <div className="flex flex-col md:flex-row gap-3">
-        {/* Search - Takes more space */}
-        <div className="relative flex-1 min-w-0">
+      {/* Main Filter Row */}
+      <div className="flex flex-col gap-2">
+        {/* Search */}
+        <div className="relative">
           <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-lg">search</span>
-          <input 
-            className="w-full h-10 pl-10 pr-4 border border-gray-300 focus:border-primary focus:ring-1 focus:ring-primary font-sans text-sm bg-white placeholder:text-gray-400 rounded" 
-            placeholder="Search deals..." 
+          <input
+            className="w-full h-9 md:h-10 pl-10 pr-4 border border-gray-300 focus:border-primary focus:ring-1 focus:ring-primary font-sans text-sm bg-white placeholder:text-gray-400 rounded"
+            placeholder="Search deals..."
             type="text"
             value={filters.search}
             onChange={(e) => handleFilterChange('search', e.target.value)}
           />
         </div>
-        
-        {/* Compact Filter Controls */}
-        <div className="flex flex-wrap md:flex-nowrap gap-2">
-          {/* Category Dropdown */}
-          <select 
-            className="h-10 border border-gray-300 bg-white px-3 py-1 text-sm focus:ring-1 focus:ring-primary focus:border-primary cursor-pointer rounded min-w-[140px]"
+
+        {/* Dropdowns — 3-col on mobile */}
+        <div className="grid grid-cols-3 md:flex gap-2">
+          <select
+            className="h-9 md:h-10 border border-gray-300 bg-white px-2 md:px-3 py-1 text-xs md:text-sm focus:ring-1 focus:ring-primary focus:border-primary cursor-pointer rounded w-full"
             value={filters.category}
             onChange={(e) => handleFilterChange('category', e.target.value)}
           >
-            <option value="">All Categories</option>
+            <option value="">Category</option>
             {categories.map(category => (
               <option key={category.id} value={category.id}>
                 {category.name}
@@ -118,27 +117,25 @@ export default function DealsFilterBar({ onFilterChange, currentFilters }: Deals
             ))}
           </select>
 
-          {/* Value Filter */}
-          <select 
-            className="h-10 border border-gray-300 bg-white px-3 py-1 text-sm focus:ring-1 focus:ring-primary focus:border-primary cursor-pointer rounded min-w-[120px]"
+          <select
+            className="h-9 md:h-10 border border-gray-300 bg-white px-2 md:px-3 py-1 text-xs md:text-sm focus:ring-1 focus:ring-primary focus:border-primary cursor-pointer rounded w-full"
             value={filters.value}
             onChange={(e) => handleFilterChange('value', e.target.value)}
           >
-            <option value="">Any Value</option>
+            <option value="">Value</option>
             <option value="under-1k">&lt; $1K</option>
-            <option value="1k-10k">$1K - $10K</option>
-            <option value="10k-50k">$10K - $50K</option>
-            <option value="50k-100k">$50K - $100K</option>
+            <option value="1k-10k">$1K-$10K</option>
+            <option value="10k-50k">$10K-$50K</option>
+            <option value="50k-100k">$50K-$100K</option>
             <option value="over-100k">&gt; $100K</option>
           </select>
 
-          {/* Sort */}
-          <select 
-            className="h-10 border border-gray-300 bg-white px-3 py-1 text-sm focus:ring-1 focus:ring-primary focus:border-primary cursor-pointer rounded min-w-[130px]"
+          <select
+            className="h-9 md:h-10 border border-gray-300 bg-white px-2 md:px-3 py-1 text-xs md:text-sm focus:ring-1 focus:ring-primary focus:border-primary cursor-pointer rounded w-full"
             value={filters.sort}
             onChange={(e) => handleFilterChange('sort', e.target.value)}
           >
-            <option value="relevance">Relevance</option>
+            <option value="relevance">Sort</option>
             <option value="newest">Newest</option>
             <option value="value-high">Value ↓</option>
             <option value="value-low">Value ↑</option>
@@ -146,49 +143,44 @@ export default function DealsFilterBar({ onFilterChange, currentFilters }: Deals
             <option value="alphabetical">A-Z</option>
           </select>
 
-          {/* Clear Filters */}
           {activeFiltersCount > 0 && (
-            <button 
+            <button
               onClick={resetFilters}
-              className="h-10 px-3 bg-gray-100 text-gray-700 text-sm font-medium border border-gray-300 hover:bg-gray-200 transition-colors rounded whitespace-nowrap"
+              className="hidden md:block h-10 px-3 bg-gray-100 text-gray-700 text-sm font-medium border border-gray-300 hover:bg-gray-200 transition-colors rounded whitespace-nowrap"
             >
               Clear ({activeFiltersCount})
             </button>
           )}
         </div>
       </div>
-      
-      {/* Quick Filters - Collapsible on Mobile */}
-      <div className="flex flex-wrap gap-2 mt-3 pt-3 border-t border-gray-100">
-        <button 
+
+      {/* Quick Filters - Horizontally scrollable on mobile */}
+      <div className="flex gap-2 mt-2 md:mt-3 pt-2 md:pt-3 border-t border-gray-100 overflow-x-auto mobile-scroll-hide pb-0.5">
+        <button
           onClick={() => resetFilters()}
-          className={`px-2.5 py-1 text-xs font-medium border rounded transition-colors ${
-            activeFiltersCount === 0 ? 'bg-ink text-white border-ink' : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
-          }`}
+          className={`px-2.5 py-1 text-xs font-medium border rounded transition-colors whitespace-nowrap flex-shrink-0 ${activeFiltersCount === 0 ? 'bg-ink text-white border-ink' : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
+            }`}
         >
           All
         </button>
-        <button 
+        <button
           onClick={() => handleFilterChange('sort', 'newest')}
-          className={`px-2.5 py-1 text-xs font-medium border rounded transition-colors ${
-            filters.sort === 'newest' ? 'bg-ink text-white border-ink' : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
-          }`}
+          className={`px-2.5 py-1 text-xs font-medium border rounded transition-colors whitespace-nowrap flex-shrink-0 ${filters.sort === 'newest' ? 'bg-ink text-white border-ink' : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
+            }`}
         >
           New
         </button>
-        <button 
+        <button
           onClick={() => handleFilterChange('category', 'ai')}
-          className={`px-2.5 py-1 text-xs font-medium border rounded transition-colors ${
-            filters.category === 'ai' ? 'bg-ink text-white border-ink' : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
-          }`}
+          className={`px-2.5 py-1 text-xs font-medium border rounded transition-colors whitespace-nowrap flex-shrink-0 ${filters.category === 'ai' ? 'bg-ink text-white border-ink' : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
+            }`}
         >
           AI Tools
         </button>
-        <button 
+        <button
           onClick={() => handleFilterChange('value', 'over-100k')}
-          className={`px-2.5 py-1 text-xs font-medium border rounded transition-colors ${
-            filters.value === 'over-100k' ? 'bg-ink text-white border-ink' : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
-          }`}
+          className={`px-2.5 py-1 text-xs font-medium border rounded transition-colors whitespace-nowrap flex-shrink-0 ${filters.value === 'over-100k' ? 'bg-ink text-white border-ink' : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
+            }`}
         >
           High Value
         </button>

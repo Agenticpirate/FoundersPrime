@@ -117,11 +117,11 @@ export default function AcceleratorsGrid() {
 
   return (
     <div className="w-full">
-      {/* Header with Title and View Toggle */}
-      <div className="flex flex-col md:flex-row md:items-center gap-4 mb-6 border-b-3 border-black pb-4">
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center gap-2 md:gap-4 mb-4 md:mb-6 border-b-2 md:border-b-3 border-black pb-3 md:pb-4">
         <div className="flex-1">
-          <h2 className="font-mono text-3xl font-bold text-black">Top Programs 2026</h2>
-          <span className="font-mono text-sm text-gray-500 mt-1 block">
+          <h2 className="font-mono text-xl md:text-3xl font-bold text-black">Top Programs 2026</h2>
+          <span className="font-mono text-xs md:text-sm text-gray-500 mt-0.5 block">
             Verified terms and deadlines for Q1 2026
           </span>
         </div>
@@ -134,47 +134,37 @@ export default function AcceleratorsGrid() {
       </div>
 
       {/* Filters and Sorting */}
-      <div className="flex flex-col lg:flex-row gap-4 mb-6">
-        {/* Region Filters */}
-        <div className="flex-1">
-          <label className="font-mono text-xs font-bold text-gray-600 uppercase mb-2 block">
-            Filter by Region
-          </label>
-          <div className="flex gap-2 overflow-x-auto pb-2 lg:pb-0">
-            {regions.map(region => (
-              <button
-                key={region}
-                onClick={() => setFilterRegion(region)}
-                className={`px-3 py-1.5 font-mono text-xs border-2 border-black rounded-sm whitespace-nowrap transition-all ${filterRegion === region
-                  ? 'bg-black text-white shadow-[2px_2px_0px_0px_rgba(0,0,0,0.3)]'
-                  : 'bg-white text-black hover:bg-gray-100'
-                  }`}
-                aria-pressed={filterRegion === region}
-              >
-                {region}
-              </button>
-            ))}
-          </div>
+      <div className="flex flex-col gap-3 mb-4 md:mb-6">
+        {/* Region Filters - always horizontal scroll */}
+        <div className="flex gap-1.5 overflow-x-auto mobile-scroll-hide pb-0.5">
+          {regions.map(region => (
+            <button
+              key={region}
+              onClick={() => setFilterRegion(region)}
+              className={`px-2.5 py-1 font-mono text-xs border-2 border-black rounded-sm whitespace-nowrap transition-all flex-shrink-0 ${filterRegion === region
+                ? 'bg-black text-white shadow-[2px_2px_0px_0px_rgba(0,0,0,0.3)]'
+                : 'bg-white text-black hover:bg-gray-100'
+                }`}
+              aria-pressed={filterRegion === region}
+            >
+              {region}
+            </button>
+          ))}
         </div>
 
-        {/* Sort Options */}
-        <div className="lg:w-64">
-          <label htmlFor="sort-select" className="font-mono text-xs font-bold text-gray-600 uppercase mb-2 block">
-            Sort By
-          </label>
-          <select
-            id="sort-select"
-            value={sortBy}
-            onChange={(e) => setSortBy(e.target.value as SortOption)}
-            className="w-full px-3 py-2 font-mono text-sm bg-white border-2 border-black rounded-sm shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] focus:shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] focus:outline-none transition-all"
-            aria-label="Sort accelerators"
-          >
-            <option value="name">Name (A-Z)</option>
-            <option value="investment">Investment (High to Low)</option>
-            <option value="equity">Equity (Low to High)</option>
-            <option value="deadline">Application Status</option>
-          </select>
-        </div>
+        {/* Sort */}
+        <select
+          id="sort-select"
+          value={sortBy}
+          onChange={(e) => setSortBy(e.target.value as SortOption)}
+          className="w-full md:w-64 px-3 py-2 font-mono text-sm bg-white border-2 border-black rounded-sm shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] focus:outline-none"
+          aria-label="Sort accelerators"
+        >
+          <option value="name">Name (A-Z)</option>
+          <option value="investment">Investment (High to Low)</option>
+          <option value="equity">Equity (Low to High)</option>
+          <option value="deadline">Application Status</option>
+        </select>
       </div>
 
       {/* Results Count and Clear Filters */}
@@ -202,7 +192,7 @@ export default function AcceleratorsGrid() {
           <div
             className={
               viewMode === 'grid'
-                ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'
+                ? 'grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6'
                 : 'flex flex-col gap-4'
             }
           >

@@ -122,62 +122,58 @@ export default function StudentBenefitsContent({ benefits, title, description }:
             {/* Main Content */}
             <div className="flex-1 min-w-0 w-full">
                 {/* Pro Tip Alert */}
-                <div className="mb-6 bg-blue-50 border-1 border-blue-200 p-4 rounded-lg flex items-start gap-3">
-                    <span className="material-symbols-outlined text-blue-600 mt-0.5">school</span>
-                    <div>
-                        <p className="text-sm text-blue-800 font-medium">
-                            <span className="font-bold">Student Verification:</span> Please use your educational email address (e.g. name@university.edu) to verify your student status for these benefits.
-                        </p>
-                    </div>
+                <div className="mb-3 md:mb-6 bg-blue-50 border border-blue-200 p-3 rounded-lg flex items-start gap-2">
+                    <span className="material-symbols-outlined text-blue-600 mt-0.5 text-base">school</span>
+                    <p className="text-xs md:text-sm text-blue-800 font-medium">
+                        <span className="font-bold">Student Tip:</span> Use your .edu email to unlock all benefits.
+                    </p>
                 </div>
 
                 {/* Filter Bar */}
-                <div className="flex flex-col md:flex-row gap-4 mb-6">
+                <div className="flex flex-row gap-2 mb-3 md:mb-6">
                     {/* Search */}
                     <div className="relative flex-1">
-                        <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">search</span>
+                        <span className="material-symbols-outlined absolute left-2.5 top-1/2 -translate-y-1/2 text-gray-400 text-base">search</span>
                         <input
                             type="text"
-                            placeholder="Search benefits..."
+                            placeholder="Search..."
                             value={search}
                             onChange={(e) => { setSearch(e.target.value); resetPage(); }}
-                            className="w-full pl-10 pr-4 py-2 bg-white border border-gray-300 rounded-lg focus:border-black focus:ring-1 focus:ring-black outline-none text-sm transition-colors"
+                            className="w-full pl-9 pr-2 py-1.5 md:py-2 bg-white border border-gray-300 rounded-lg focus:border-black focus:ring-1 focus:ring-black outline-none text-xs md:text-sm transition-colors"
                         />
                     </div>
 
-                    {/* Sort & Mobile Category */}
-                    <div className="flex gap-2">
-                        <select
-                            value={sort}
-                            onChange={(e) => setSort(e.target.value)}
-                            className="px-3 py-2 bg-white border border-gray-300 rounded-lg text-sm focus:border-black outline-none cursor-pointer"
-                        >
-                            <option value="relevance">Relevance</option>
-                            <option value="value-high">Value: High to Low</option>
-                            <option value="alphabetical">A-Z</option>
-                        </select>
+                    {/* Sort */}
+                    <select
+                        value={sort}
+                        onChange={(e) => setSort(e.target.value)}
+                        className="px-2 py-1.5 md:py-2 bg-white border border-gray-300 rounded-lg text-xs md:text-sm focus:border-black outline-none cursor-pointer"
+                    >
+                        <option value="relevance">Sort</option>
+                        <option value="value-high">Value ↓</option>
+                        <option value="alphabetical">A-Z</option>
+                    </select>
 
-                        {/* Mobile Category Dropdown (shown only on small screens) */}
-                        <select
-                            value={selectedCategory}
-                            onChange={(e) => handleCategoryChange(e.target.value)}
-                            className="lg:hidden px-3 py-2 bg-white border border-gray-300 rounded-lg text-sm focus:border-black outline-none cursor-pointer flex-1"
-                        >
-                            <option value="">All Categories</option>
-                            {categories.map(cat => (
-                                <option key={cat.name} value={cat.name}>{cat.name} ({cat.count})</option>
-                            ))}
-                        </select>
-                    </div>
+                    {/* Mobile Category Dropdown */}
+                    <select
+                        value={selectedCategory}
+                        onChange={(e) => handleCategoryChange(e.target.value)}
+                        className="lg:hidden px-2 py-1.5 bg-white border border-gray-300 rounded-lg text-xs focus:border-black outline-none cursor-pointer"
+                    >
+                        <option value="">All</option>
+                        {categories.map(cat => (
+                            <option key={cat.name} value={cat.name}>{cat.name}</option>
+                        ))}
+                    </select>
                 </div>
 
                 {/* Grid */}
                 {filteredBenefits.length > 0 ? (
                     <>
-                        <div className="mb-4 text-xs font-medium text-gray-500 uppercase tracking-wide">
-                            Showing {Math.min(filteredBenefits.length, (currentPage - 1) * itemsPerPage + 1)}-{Math.min(filteredBenefits.length, currentPage * itemsPerPage)} of {filteredBenefits.length} benefits
+                        <div className="mb-2 text-[10px] md:text-xs font-medium text-gray-500 uppercase tracking-wide">
+                            {Math.min(filteredBenefits.length, (currentPage - 1) * itemsPerPage + 1)}–{Math.min(filteredBenefits.length, currentPage * itemsPerPage)} of {filteredBenefits.length} benefits
                         </div>
-                        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 mb-12">
+                        <div className="grid grid-cols-2 md:grid-cols-2 xl:grid-cols-3 gap-3 md:gap-6 mb-8 md:mb-12">
                             {paginatedBenefits.map((benefit, idx) => {
                                 // Map to DealCard props
                                 const dealProps = {

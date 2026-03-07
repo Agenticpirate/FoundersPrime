@@ -7,16 +7,16 @@ export default function AcceleratorsStrategy() {
   ]
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-12">
+    <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 md:gap-6 mb-4 md:mb-12">
       <div className="lg:col-span-8">
-        <div className="bg-white border-2 border-black shadow-[4px_4px_0px_0px_#1a1a1a] rounded-sm p-6 md:p-8 relative overflow-hidden">
+        <div className="bg-white border-2 border-black shadow-[3px_3px_0px_0px_#1a1a1a] md:shadow-[4px_4px_0px_0px_#1a1a1a] rounded-sm p-4 md:p-8 relative overflow-hidden">
           {/* Decorative background pattern */}
           <div className="absolute top-0 right-0 p-4 opacity-5 pointer-events-none">
             <span className="material-symbols-outlined text-[150px]">psychology</span>
           </div>
 
-          <h2 className="font-mono text-2xl font-bold text-black mb-6 flex items-center gap-3">
-            <span className="bg-black text-white size-8 flex items-center justify-center text-lg rounded-sm">1</span>
+          <h2 className="font-mono text-lg md:text-2xl font-bold text-black mb-4 md:mb-6 flex items-center gap-2 md:gap-3">
+            <span className="bg-black text-white size-6 md:size-8 flex items-center justify-center text-sm md:text-lg rounded-sm flex-shrink-0">1</span>
             Global State of Acceleration: 2026
           </h2>
 
@@ -56,13 +56,13 @@ export default function AcceleratorsStrategy() {
         </div>
       </div>
 
-      <div className="lg:col-span-4 space-y-4">
+      <div className="lg:col-span-4 space-y-3 md:space-y-4">
         {/* Pro Tip Card */}
-        <div className="bg-accent-yellow border-2 border-black shadow-[4px_4px_0px_0px_#1a1a1a] rounded-sm p-6 relative overflow-hidden">
-          <div className="absolute -right-4 -top-4 bg-white border-2 border-black rounded-full p-2 size-16 flex items-end justify-center">
-            <span className="material-symbols-outlined text-3xl mb-1">network_node</span>
+        <div className="bg-accent-yellow border-2 border-black shadow-[3px_3px_0px_0px_#1a1a1a] rounded-sm p-4 md:p-6 relative overflow-hidden">
+          <div className="absolute -right-4 -top-4 bg-white border-2 border-black rounded-full p-2 size-12 md:size-16 flex items-end justify-center">
+            <span className="material-symbols-outlined text-2xl md:text-3xl mb-1">network_node</span>
           </div>
-          <h3 className="font-mono text-xl font-bold mb-3 uppercase">Valuation Bifurcation</h3>
+          <h3 className="font-mono text-base md:text-xl font-bold mb-2 md:mb-3 uppercase">Valuation Bifurcation</h3>
           <p className="font-mono text-xs leading-relaxed font-medium">
             "Elite Dev Tools" accelerators (like HF0) are currently the highest-valued asset class, commanding up to 10x the valuation of standard pre-seed startups.
           </p>

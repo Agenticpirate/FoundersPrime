@@ -95,6 +95,79 @@ export default function HeroSection() {
             <div className="flex flex-wrap gap-x-4 sm:gap-x-8 gap-y-1 text-[9px] sm:text-xs font-mono font-bold text-black uppercase border-t-2 border-black pt-3 w-full pr-0 lg:pr-12">
               <span>VERIFIED DEALS</span> • <span>NON-DILUTIVE GRANTS</span> • <span>TOP ACCELERATORS</span>
             </div>
+
+            {/* ── Mobile-only Brand Icons Scroller ── */}
+            <div className="md:hidden mt-5 w-full">
+              <p className="text-[9px] font-mono font-bold uppercase tracking-widest text-gray-400 mb-2">Credits &amp; grants from</p>
+              <div className="relative w-full overflow-hidden" style={{ maskImage: 'linear-gradient(to right,transparent,black 12%,black 88%,transparent)', WebkitMaskImage: 'linear-gradient(to right,transparent,black 12%,black 88%,transparent)' }}>
+                <div className="mobile-brand-marquee flex items-center gap-6 whitespace-nowrap">
+                  {[
+                    { name: 'AWS', domain: 'aws.amazon.com' },
+                    { name: 'Google Cloud', domain: 'cloud.google.com' },
+                    { name: 'Stripe', domain: 'stripe.com' },
+                    { name: 'Notion', domain: 'notion.so' },
+                    { name: 'HubSpot', domain: 'hubspot.com' },
+                    { name: 'Airtable', domain: 'airtable.com' },
+                    { name: 'Figma', domain: 'figma.com' },
+                    { name: 'Linear', domain: 'linear.app' },
+                    { name: 'Vercel', domain: 'vercel.com' },
+                    { name: 'Supabase', domain: 'supabase.com' },
+                    { name: 'DigitalOcean', domain: 'digitalocean.com' },
+                    { name: 'Twilio', domain: 'twilio.com' },
+                    { name: 'Algolia', domain: 'algolia.com' },
+                    { name: 'Intercom', domain: 'intercom.com' },
+                    { name: 'Miro', domain: 'miro.com' },
+                    { name: 'Mixpanel', domain: 'mixpanel.com' },
+                    { name: 'Monday', domain: 'monday.com' },
+                    { name: 'Asana', domain: 'asana.com' },
+                    { name: 'ClickUp', domain: 'clickup.com' },
+                    { name: 'Typeform', domain: 'typeform.com' },
+                    { name: 'Netlify', domain: 'netlify.com' },
+                    { name: 'Auth0', domain: 'auth0.com' },
+                    { name: 'SendGrid', domain: 'sendgrid.com' },
+                    { name: 'Zendesk', domain: 'zendesk.com' },
+                    /* duplicate for seamless loop */
+                    { name: 'AWS', domain: 'aws.amazon.com' },
+                    { name: 'Google Cloud', domain: 'cloud.google.com' },
+                    { name: 'Stripe', domain: 'stripe.com' },
+                    { name: 'Notion', domain: 'notion.so' },
+                    { name: 'HubSpot', domain: 'hubspot.com' },
+                    { name: 'Airtable', domain: 'airtable.com' },
+                    { name: 'Figma', domain: 'figma.com' },
+                    { name: 'Linear', domain: 'linear.app' },
+                    { name: 'Vercel', domain: 'vercel.com' },
+                    { name: 'Supabase', domain: 'supabase.com' },
+                    { name: 'DigitalOcean', domain: 'digitalocean.com' },
+                    { name: 'Twilio', domain: 'twilio.com' },
+                    { name: 'Algolia', domain: 'algolia.com' },
+                    { name: 'Intercom', domain: 'intercom.com' },
+                    { name: 'Miro', domain: 'miro.com' },
+                    { name: 'Mixpanel', domain: 'mixpanel.com' },
+                    { name: 'Monday', domain: 'monday.com' },
+                    { name: 'Asana', domain: 'asana.com' },
+                    { name: 'ClickUp', domain: 'clickup.com' },
+                    { name: 'Typeform', domain: 'typeform.com' },
+                    { name: 'Netlify', domain: 'netlify.com' },
+                    { name: 'Auth0', domain: 'auth0.com' },
+                    { name: 'SendGrid', domain: 'sendgrid.com' },
+                    { name: 'Zendesk', domain: 'zendesk.com' },
+                  ].map((b, i) => (
+                    <div key={i} className="flex flex-col items-center gap-1 flex-shrink-0">
+                      <div className="w-9 h-9 bg-white border border-gray-200 rounded-lg flex items-center justify-center shadow-sm">
+                        <img
+                          src={`https://www.google.com/s2/favicons?domain=${b.domain}&sz=64`}
+                          alt={b.name}
+                          className="w-5 h-5 object-contain"
+                          loading="lazy"
+                          onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
+                        />
+                      </div>
+                      <span className="text-[8px] font-mono text-gray-400 font-bold uppercase truncate max-w-[36px] text-center">{b.name.split(' ')[0]}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
           </div>
 
           <div className="lg:col-span-5 relative mt-4 lg:mt-0 hidden md:block">

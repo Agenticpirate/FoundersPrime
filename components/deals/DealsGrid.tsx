@@ -256,14 +256,14 @@ export default function DealsGrid({ filters }: DealsGridProps) {
   return (
     <>
       {/* Results Summary */}
-      <div className="mb-6 p-4 bg-gray-50 border-2 border-gray-200">
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
-          <p className="text-sm text-gray-600">
-            Showing {filteredDeals.length > 0 ? startIndex + 1 : 0}-{Math.min(endIndex, filteredDeals.length)} of {filteredDeals.length} deals
+      <div className="mb-3 md:mb-6 px-3 py-2 md:p-4 bg-gray-50 border-2 border-gray-200">
+        <div className="flex justify-between items-center gap-2">
+          <p className="text-xs md:text-sm text-gray-600">
+            {filteredDeals.length > 0 ? startIndex + 1 : 0}–{Math.min(endIndex, filteredDeals.length)} of {filteredDeals.length} deals
           </p>
           {filters?.search && (
-            <p className="text-sm text-gray-600">
-              Search results for: <span className="font-semibold">"{filters.search}"</span>
+            <p className="text-xs md:text-sm text-gray-600 truncate">
+              &ldquo;{filters.search}&rdquo;
             </p>
           )}
         </div>
@@ -301,18 +301,18 @@ export default function DealsGrid({ filters }: DealsGridProps) {
       {/* Deals Grid or Lock CTA */}
       {!loading && filteredDeals.length > 0 && (
         (!isPro && currentPage > 3) ? (
-          <div className="mt-12 mb-8 bg-gray-50 border-4 border-black p-8 text-center neo-shadow">
-            <span className="material-symbols-outlined text-4xl mb-4">lock</span>
-            <h3 className="text-2xl font-bold font-mono uppercase mb-2">Unlock {filteredDeals.length - (3 * dealsPerPage)}+ More Deals</h3>
-            <p className="text-gray-600 mb-6 max-w-xl mx-auto">
-              You've reached the limit of free public deals. Upgrade to Premium to instantly access our entire database of active software credits and grants.
+          <div className="mt-6 mb-4 md:mt-12 md:mb-8 bg-gray-50 border-4 border-black p-4 md:p-8 text-center neo-shadow">
+            <span className="material-symbols-outlined text-3xl md:text-4xl mb-2 md:mb-4">lock</span>
+            <h3 className="text-lg md:text-2xl font-bold font-mono uppercase mb-2">Unlock {filteredDeals.length - (3 * dealsPerPage)}+ More Deals</h3>
+            <p className="text-xs md:text-sm text-gray-600 mb-4 md:mb-6 max-w-xl mx-auto">
+              Upgrade to Premium to instantly access our entire database of active software credits and grants.
             </p>
-            <a href="/pricing" className="inline-block bg-primary text-black font-bold font-mono px-8 py-4 border-2 border-black hover:bg-yellow-400 neo-shadow transition-all">
+            <a href="/pricing" className="inline-block bg-primary text-black font-bold font-mono px-5 py-3 md:px-8 md:py-4 border-2 border-black hover:bg-yellow-400 neo-shadow transition-all text-sm">
               UPGRADE TO ACCESS ALL DEALS
             </a>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+          <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6 mb-8">
             {currentDeals.map((deal) => (
               <DealCard key={deal.id} deal={convertDealToCardFormat(deal)} />
             ))}

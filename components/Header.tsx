@@ -216,61 +216,63 @@ export default function Header() {
           </div>
         </div>
 
-        {/* Mobile Menu */}
+        {/* Mobile Menu — compact slide-down panel */}
         {mobileMenuOpen && (
-          <div className="md:hidden absolute left-0 right-0 hidden-scrollbar bg-[#f6f8f8] border-b-2 border-black border-t-2 overflow-y-auto max-h-[75vh] shadow-xl z-40">
-            <div className="p-3 space-y-2">
-              <nav className="flex flex-col space-y-1">
-                <Link href="/deals" className="block px-3 py-2 text-sm font-mono font-bold uppercase hover:bg-primary/10 border-2 border-transparent hover:border-black transition-all" onClick={() => setMobileMenuOpen(false)}>
-                  Deals
-                </Link>
-                <Link href="/deals/accelerators" className="block px-3 py-2 text-sm font-mono font-bold uppercase hover:bg-primary/10 border-2 border-transparent hover:border-black transition-all" onClick={() => setMobileMenuOpen(false)}>
-                  Programs
-                </Link>
-                <Link href="/startups" className="block px-3 py-2 text-sm font-mono font-bold uppercase hover:bg-primary/10 border-2 border-transparent hover:border-black transition-all" onClick={() => setMobileMenuOpen(false)}>
-                  Startups
-                </Link>
-                <Link href="/resources" className="block px-3 py-2 text-sm font-mono font-bold uppercase hover:bg-primary/10 border-2 border-transparent hover:border-black transition-all" onClick={() => setMobileMenuOpen(false)}>
-                  Resources
-                </Link>
-                <Link href="/pricing" className="block px-3 py-2 text-sm font-mono font-bold uppercase hover:bg-primary/10 border-2 border-transparent hover:border-black transition-all" onClick={() => setMobileMenuOpen(false)}>
-                  Pricing
-                </Link>
-              </nav>
+          <div className="md:hidden absolute left-0 right-0 bg-white border-b-2 border-black shadow-[0_8px_32px_rgba(0,0,0,0.12)] z-40 animate-slideDown">
+            <div className="px-4 py-3">
 
-              <hr className="border-black/10" />
-
-              <div className="space-y-2 pt-1">
-                {user ? (
-                  <>
-                    <div className="px-3 py-1.5 flex items-center gap-2 font-mono font-bold text-sm">
-                      <span className="material-symbols-outlined text-base">account_circle</span>
-                      {user.user_metadata?.full_name || user.email?.split('@')[0]}
-                    </div>
-                    <Link href="/dashboard" className="w-full block text-center px-4 py-2 text-sm neo-border bg-white font-mono font-bold uppercase hover:shadow-[4px_4px_0px_#111111] transition-all" onClick={() => setMobileMenuOpen(false)}>
-                      Dashboard
-                    </Link>
-                    <button
-                      onClick={() => { signOut(); setMobileMenuOpen(false); }}
-                      className="w-full text-center px-4 py-2 text-sm neo-border bg-red-100 text-red-600 font-mono font-bold uppercase hover:bg-red-200 transition-all"
-                    >
-                      Sign Out
-                    </button>
-                  </>
-                ) : (
-                  <>
-                    <Link href="/login" className="w-full block text-center px-4 py-2 text-sm neo-border bg-white font-mono font-bold uppercase hover:shadow-[4px_4px_0px_#111111] transition-all" onClick={() => setMobileMenuOpen(false)}>
-                      Log In
-                    </Link>
-                    <Link href="/pricing" className="w-full block text-center px-4 py-2 text-sm neo-border bg-accent-yellow font-mono font-bold uppercase hover:shadow-[4px_4px_0px_#111111] transition-all" onClick={() => setMobileMenuOpen(false)}>
-                      Get Started
-                    </Link>
-                  </>
-                )}
+              {/* Nav links — 3-across compact pill grid */}
+              <div className="grid grid-cols-3 gap-1.5 mb-3">
+                {[
+                  { label: 'Deals', href: '/deals' },
+                  { label: 'Programs', href: '/deals/accelerators' },
+                  { label: 'Startups', href: '/startups' },
+                  { label: 'Resources', href: '/resources' },
+                  { label: 'Pricing', href: '/pricing' },
+                  { label: 'Ideas', href: '/ideas' },
+                ].map(({ label, href }) => (
+                  <Link
+                    key={href}
+                    href={href}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="flex items-center justify-center py-2 px-2 text-[11px] font-mono font-bold uppercase bg-[#f6f8f8] border border-black/10 hover:bg-black hover:text-white hover:border-black transition-all duration-150 rounded-sm text-black"
+                  >
+                    {label}
+                  </Link>
+                ))}
               </div>
+
+              <hr className="border-black/8 mb-3" />
+
+              {/* Auth row */}
+              {user ? (
+                <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-1.5 flex-1 min-w-0">
+                    <span className="material-symbols-outlined text-base text-gray-500">account_circle</span>
+                    <span className="text-xs font-mono font-bold truncate">{user.user_metadata?.full_name?.split(' ')[0] || user.email?.split('@')[0]}</span>
+                    {isPro && <span className="bg-accent-yellow text-black text-[9px] px-1.5 py-0.5 font-bold uppercase border border-black">PRO</span>}
+                  </div>
+                  <Link href="/dashboard" onClick={() => setMobileMenuOpen(false)} className="text-[11px] font-mono font-bold uppercase px-3 py-1.5 border border-black hover:bg-black hover:text-white transition-all">
+                    Dashboard
+                  </Link>
+                  <button onClick={() => { signOut(); setMobileMenuOpen(false); }} className="text-[11px] font-mono font-bold uppercase px-3 py-1.5 border border-red-400 text-red-500 hover:bg-red-500 hover:text-white transition-all">
+                    Out
+                  </button>
+                </div>
+              ) : (
+                <div className="flex gap-2">
+                  <Link href="/login" onClick={() => setMobileMenuOpen(false)} className="flex-1 text-center py-2 text-xs font-mono font-bold uppercase border-2 border-black hover:bg-black hover:text-white transition-all">
+                    Log In
+                  </Link>
+                  <Link href="/pricing" onClick={() => setMobileMenuOpen(false)} className="flex-1 text-center py-2 text-xs font-mono font-bold uppercase border-2 border-black bg-accent-yellow hover:bg-yellow-400 transition-all">
+                    Get Started
+                  </Link>
+                </div>
+              )}
             </div>
           </div>
         )}
+
       </div>
     </header>
   )

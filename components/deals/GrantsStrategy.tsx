@@ -1,51 +1,51 @@
 export default function GrantsStrategy() {
   return (
-    <div className="neo-card bg-white border-2 border-black p-8 mb-12">
-      <div className="flex items-start gap-4 mb-6">
-        <div className="p-3 bg-accent-yellow border-2 border-black rounded-sm">
-          <span className="material-symbols-outlined text-3xl text-black">lightbulb</span>
+    <div className="neo-card bg-white border-2 border-black p-4 md:p-8 mb-4 md:mb-12">
+      <div className="flex items-start gap-3 mb-4 md:mb-6">
+        <div className="p-2 md:p-3 bg-accent-yellow border-2 border-black rounded-sm flex-shrink-0">
+          <span className="material-symbols-outlined text-xl md:text-3xl text-black">lightbulb</span>
         </div>
         <div>
-          <h2 className="text-3xl font-black mb-2 text-black">Strategic Insight: 2026 Grant Landscape</h2>
-          <p className="text-gray-700 font-mono text-sm">Non-dilutive capital has evolved from supplementary to primary funding pillar</p>
+          <h2 className="text-lg md:text-3xl font-black mb-1 md:mb-2 text-black">Strategic Insight: 2026 Grant Landscape</h2>
+          <p className="text-gray-700 font-mono text-xs md:text-sm">Non-dilutive capital has evolved from supplementary to primary funding pillar</p>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-        <div className="bg-gray-50 border-2 border-black p-5 rounded-sm">
-          <div className="flex items-center gap-2 mb-3">
-            <span className="material-symbols-outlined text-black">policy</span>
-            <h3 className="font-bold text-lg text-black">Industrial Policy Era</h3>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-6 mb-4 md:mb-6">
+        <div className="bg-gray-50 border-2 border-black p-3 md:p-5 rounded-sm">
+          <div className="flex items-center gap-2 mb-2">
+            <span className="material-symbols-outlined text-black text-base">policy</span>
+            <h3 className="font-bold text-sm md:text-lg text-black">Industrial Policy Era</h3>
           </div>
-          <p className="text-sm text-gray-700 leading-relaxed">
+          <p className="text-xs md:text-sm text-gray-700 leading-relaxed">
             Governments acting as "investors of first resort," de-risking deep technology ventures to crowd in private VC. Focus on technological sovereignty in AI, biotech, clean energy.
           </p>
         </div>
 
-        <div className="bg-gray-50 border-2 border-black p-5 rounded-sm">
-          <div className="flex items-center gap-2 mb-3">
-            <span className="material-symbols-outlined text-black">analytics</span>
-            <h3 className="font-bold text-lg text-black">Metric-Oriented</h3>
+        <div className="bg-gray-50 border-2 border-black p-3 md:p-5 rounded-sm">
+          <div className="flex items-center gap-2 mb-2">
+            <span className="material-symbols-outlined text-black text-base">analytics</span>
+            <h3 className="font-bold text-sm md:text-lg text-black">Metric-Oriented</h3>
           </div>
-          <p className="text-sm text-gray-700 leading-relaxed">
+          <p className="text-xs md:text-sm text-gray-700 leading-relaxed">
             2026 grants are highly competitive, requiring startups to demonstrate not just innovative capacity but tangible pathways to commercialization and societal impact.
           </p>
         </div>
 
-        <div className="bg-gray-50 border-2 border-black p-5 rounded-sm">
-          <div className="flex items-center gap-2 mb-3">
-            <span className="material-symbols-outlined text-black">emoji_events</span>
-            <h3 className="font-bold text-lg text-black">Megaprizes</h3>
+        <div className="bg-gray-50 border-2 border-black p-3 md:p-5 rounded-sm">
+          <div className="flex items-center gap-2 mb-2">
+            <span className="material-symbols-outlined text-black text-base">emoji_events</span>
+            <h3 className="font-bold text-sm md:text-lg text-black">Megaprizes</h3>
           </div>
-          <p className="text-sm text-gray-700 leading-relaxed">
+          <p className="text-xs md:text-sm text-gray-700 leading-relaxed">
             Trend toward "megaprizes" exceeding $10M designed to mobilize entire industries. XPRIZE portfolio alone exceeds $236M in active competitions.
           </p>
         </div>
       </div>
 
-      <div className="border-t-2 border-gray-200 pt-6">
-        <h3 className="font-bold text-xl mb-4 flex items-center gap-2 text-black">
-          <span className="material-symbols-outlined text-black">tips_and_updates</span>
+      <div className="border-t-2 border-gray-200 pt-4 md:pt-6">
+        <h3 className="font-bold text-base md:text-xl mb-3 flex items-center gap-2 text-black">
+          <span className="material-symbols-outlined text-black text-base">tips_and_updates</span>
           Key Trends for Founders
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

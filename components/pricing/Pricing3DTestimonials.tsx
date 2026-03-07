@@ -173,20 +173,44 @@ function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
 
 export default function Pricing3DTestimonials() {
     return (
-        <section className="w-full py-16 bg-[#F4F3EF] border-b-3 border-[#111111] overflow-hidden">
+        <section className="w-full py-10 md:py-16 bg-[#F4F3EF] border-b-3 border-[#111111] overflow-hidden">
             <div className="max-w-6xl mx-auto px-4 md:px-8 lg:px-12">
                 {/* Header */}
-                <div className="text-center mb-12">
-                    <h2 className="text-3xl md:text-4xl font-black uppercase mb-4 tracking-tighter text-[#111111]">
+                <div className="text-center mb-6 md:mb-12">
+                    <h2 className="text-2xl md:text-3xl lg:text-4xl font-black uppercase mb-2 md:mb-4 tracking-tighter text-[#111111]">
                         Don&apos;t Take Our Word For It
                     </h2>
-                    <p className="text-base font-medium text-gray-500 max-w-2xl mx-auto">
+                    <p className="text-sm md:text-base font-medium text-gray-500 max-w-2xl mx-auto">
                         Real founders. Real results. See how FoundersPrime is helping startups save thousands.
                     </p>
                 </div>
 
-                {/* Masonry Grid — 3 Columns */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {/* Mobile: Horizontal Snap Scroll */}
+                <div className="md:hidden flex gap-3 overflow-x-auto snap-x snap-mandatory pb-4 mobile-scroll-hide -mx-4 px-4">
+                    {testimonials.slice(0, 8).map((t) => (
+                        <div key={t.name} className="snap-start shrink-0 w-[80vw] bg-white border-2 border-[#e5e5e5] rounded-lg p-4">
+                            <div className="flex items-center gap-3 mb-3">
+                                <div className="w-8 h-8 rounded-full overflow-hidden border border-gray-200 flex-shrink-0">
+                                    <Image
+                                        src={t.avatar}
+                                        alt={t.name}
+                                        width={32}
+                                        height={32}
+                                        className="object-cover w-full h-full"
+                                    />
+                                </div>
+                                <div>
+                                    <p className="font-bold text-xs text-[#111111] leading-tight">{t.name}</p>
+                                    <p className="text-[10px] text-gray-500 leading-tight">{t.designation}</p>
+                                </div>
+                            </div>
+                            <p className="text-xs leading-relaxed text-gray-700">&ldquo;{t.quote}&rdquo;</p>
+                        </div>
+                    ))}
+                </div>
+
+                {/* Desktop: Masonry Grid 3 Columns */}
+                <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-4">
                     {/* Column 1 */}
                     <div className="flex flex-col gap-4">
                         {col1.map((t) => (

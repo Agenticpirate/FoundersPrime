@@ -70,9 +70,9 @@ export default function DealCard({ deal, basePath = '/deals', overrideHref }: De
 
       {/* Badge */}
       {badge && (
-        <div className="px-4 pt-3 pb-2">
+        <div className="px-3 pt-2.5 pb-1.5 md:px-4 md:pt-3 md:pb-2">
           <span
-            className={`inline-block px-2.5 py-1 ${badgeColor || 'bg-orange-500'} text-white text-[10px] font-bold rounded uppercase tracking-wide`}
+            className={`inline-block px-2 py-0.5 ${badgeColor || 'bg-orange-500'} text-white text-[9px] md:text-[10px] font-bold rounded uppercase tracking-wide`}
             role="status"
             aria-label={`Status: ${badge}`}
           >
@@ -82,10 +82,10 @@ export default function DealCard({ deal, basePath = '/deals', overrideHref }: De
       )}
 
       {/* Header with Logo and Title */}
-      <div className={`px-4 ${badge ? 'pt-2' : 'pt-4'} pb-3`}>
-        <div className="flex items-center gap-3">
-          {/* Logo Container - Enlarged for better visibility */}
-          <div className={`w-16 h-16 bg-white border-2 border-black rounded flex items-center justify-center p-2.5 flex-shrink-0 transition-all duration-200 ${hasError || !logo ? 'group-hover:bg-yellow-50' : ''} ${!imageLoaded && logo && !hasError ? 'animate-pulse bg-gray-100' : ''}`}>
+      <div className={`px-3 md:px-4 ${badge ? 'pt-2' : 'pt-3'} pb-2 md:pb-3`}>
+        <div className="flex items-center gap-2">
+          {/* Logo Container */}
+          <div className={`w-10 h-10 md:w-16 md:h-16 bg-white border-2 border-black rounded flex items-center justify-center p-1.5 md:p-2.5 flex-shrink-0 transition-all duration-200 ${hasError || !logo ? 'group-hover:bg-yellow-50' : ''} ${!imageLoaded && logo && !hasError ? 'animate-pulse bg-gray-100' : ''}`}>
             {logo && !hasError ? (
               <img
                 alt={`${title} logo`}
@@ -97,7 +97,7 @@ export default function DealCard({ deal, basePath = '/deals', overrideHref }: De
               />
             ) : (
               <span
-                className="material-symbols-outlined text-4xl text-gray-400 group-hover:text-yellow-500 group-hover:scale-110 transition-all duration-200 group-hover:drop-shadow-[0_0_8px_rgba(234,179,8,0.8)]"
+                className="material-symbols-outlined text-2xl md:text-4xl text-gray-400 group-hover:text-yellow-500 transition-all duration-200"
                 aria-hidden="true"
               >
                 rocket_launch
@@ -105,9 +105,9 @@ export default function DealCard({ deal, basePath = '/deals', overrideHref }: De
             )}
           </div>
 
-          {/* Title - Aligned with logo center */}
+          {/* Title */}
           <div className="flex-1 min-w-0 flex items-center">
-            <h3 className="text-sm font-bold text-gray-900 leading-snug group-hover:text-primary transition-colors line-clamp-2">
+            <h3 className="text-xs md:text-sm font-bold text-gray-900 leading-snug group-hover:text-primary transition-colors line-clamp-2">
               {title}
             </h3>
           </div>
@@ -115,19 +115,19 @@ export default function DealCard({ deal, basePath = '/deals', overrideHref }: De
       </div>
 
       {/* Description */}
-      <div className="px-4 pb-3 flex-grow">
-        <p className="text-xs text-gray-600 leading-relaxed line-clamp-3">
+      <div className="px-3 md:px-4 pb-2 md:pb-3 flex-grow">
+        <p className="text-[10px] md:text-xs text-gray-600 leading-relaxed line-clamp-2 md:line-clamp-3">
           {description}
         </p>
       </div>
 
       {/* Value Section - Always at bottom */}
-      <div className="px-4 pb-4 mt-auto">
-        <p className="text-base font-bold text-green-600 leading-tight mb-0.5">
+      <div className="px-3 md:px-4 pb-3 md:pb-4 mt-auto">
+        <p className="text-sm md:text-base font-bold text-green-600 leading-tight mb-0.5">
           {value}
         </p>
         {valueSubtext && (
-          <p className="text-[11px] text-gray-500 leading-tight">
+          <p className="text-[10px] md:text-[11px] text-gray-500 leading-tight">
             {valueSubtext}
           </p>
         )}

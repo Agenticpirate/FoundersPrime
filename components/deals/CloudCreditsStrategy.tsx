@@ -15,7 +15,7 @@ export default function CloudCreditsStrategy() {
             <span className="material-symbols-outlined text-[200px]">strategy</span>
           </div>
 
-          <h2 className="font-mono text-3xl font-bold text-black mb-8 flex items-center gap-3">
+          <h2 className="font-mono text-xl md:text-3xl font-bold text-black mb-8 flex items-center gap-3">
             <span className="bg-black text-white size-10 flex items-center justify-center text-xl rounded-sm">1</span>
             How to Maximize Credits
           </h2>

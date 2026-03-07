@@ -132,58 +132,48 @@ export default function StudentFundingGrid() {
                 <AcceleratorsSearch onSearch={handleSearch} placeholder="Search grants, scholarships, competitions..." />
             </div>
 
-            {/* Filters and Sorting (Accelerator Style) */}
-            <div className="flex flex-col lg:flex-row gap-4 mb-6">
-                {/* Type Filters (Horizontal Buttons) */}
-                <div className="flex-1">
-                    <label className="font-mono text-xs font-bold text-gray-600 uppercase mb-2 block">
-                        Filter by Type
-                    </label>
-                    <div className="flex gap-2 overflow-x-auto pb-2 lg:pb-0 scrollbar-hide">
-                        {types.map(type => (
-                            <button
-                                key={type}
-                                onClick={() => { setFundingType(type); setCurrentPage(1); }}
-                                className={`px-3 py-1.5 font-mono text-xs border-2 border-black rounded-sm whitespace-nowrap transition-all ${fundingType === type
-                                    ? 'bg-black text-white shadow-[2px_2px_0px_0px_rgba(0,0,0,0.3)]'
-                                    : 'bg-white text-black hover:bg-gray-100'
-                                    }`}
-                            >
-                                {type}
-                            </button>
-                        ))}
-                    </div>
+            {/* Filters and Sorting */}
+            <div className="flex flex-col gap-2 mb-4 md:mb-6">
+                {/* Type Filter Pills - always horizontal scroll */}
+                <div className="flex gap-1.5 overflow-x-auto mobile-scroll-hide pb-0.5">
+                    {types.map(type => (
+                        <button
+                            key={type}
+                            onClick={() => { setFundingType(type); setCurrentPage(1); }}
+                            className={`px-2.5 py-1 font-mono text-xs border-2 border-black rounded-sm whitespace-nowrap flex-shrink-0 transition-all ${fundingType === type
+                                ? 'bg-black text-white shadow-[2px_2px_0px_0px_rgba(0,0,0,0.3)]'
+                                : 'bg-white text-black hover:bg-gray-100'
+                                }`}
+                        >
+                            {type}
+                        </button>
+                    ))}
                 </div>
 
-                {/* Sort Options */}
-                <div className="lg:w-64">
-                    <label className="font-mono text-xs font-bold text-gray-600 uppercase mb-2 block">
-                        Sort By
-                    </label>
-                    <select
-                        value={sortBy}
-                        onChange={(e) => setSortBy(e.target.value as SortOption)}
-                        className="w-full px-3 py-2 font-mono text-sm bg-white border-2 border-black rounded-sm shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] focus:shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] focus:outline-none transition-all"
-                    >
-                        <option value="relevance">Relevance</option>
-                        <option value="value">Value (High to Low)</option>
-                        <option value="alphabetical">Name (A-Z)</option>
-                    </select>
-                </div>
+                {/* Sort */}
+                <select
+                    value={sortBy}
+                    onChange={(e) => setSortBy(e.target.value as SortOption)}
+                    className="w-full md:w-64 px-3 py-2 font-mono text-xs md:text-sm bg-white border-2 border-black rounded-sm shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] focus:outline-none"
+                >
+                    <option value="relevance">Sort: Relevance</option>
+                    <option value="value">Value (High to Low)</option>
+                    <option value="alphabetical">Name (A-Z)</option>
+                </select>
             </div>
 
             {/* Results Count */}
-            <div className="flex items-center justify-between mb-6 pb-4 border-b-2 border-dashed border-gray-300">
-                <div className="font-mono text-sm text-gray-600">
-                    Showing <span className="font-bold text-black">{filteredDeals.length}</span> opportunities
+            <div className="flex items-center justify-between mb-3 md:mb-6 pb-2 md:pb-4 border-b-2 border-dashed border-gray-300">
+                <div className="font-mono text-xs md:text-sm text-gray-600">
+                    <span className="font-bold text-black">{filteredDeals.length}</span> opportunities
                 </div>
                 {hasActiveFilters && (
                     <button
                         onClick={handleClearFilters}
-                        className="px-3 py-1.5 font-mono text-xs font-bold bg-white border-2 border-black rounded-sm hover:bg-gray-100 transition-colors flex items-center gap-2"
+                        className="px-2.5 py-1 font-mono text-xs font-bold bg-white border-2 border-black rounded-sm hover:bg-gray-100 transition-colors flex items-center gap-1"
                     >
-                        <span className="material-symbols-outlined text-sm">close</span>
-                        Clear Filters
+                        <span className="material-symbols-outlined text-xs">close</span>
+                        Clear
                     </button>
                 )}
             </div>
@@ -191,7 +181,7 @@ export default function StudentFundingGrid() {
             {/* Grid */}
             {paginatedDeals.length > 0 ? (
                 <>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6">
                         {paginatedDeals.map((benefit, idx) => (
                             <DealCard key={`${benefit.company}-${idx}`} deal={convertToCard(benefit, idx)} />
                         ))}

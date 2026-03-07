@@ -56,7 +56,7 @@ export default function GrantsFeatured() {
   return (
     <div className="mb-20">
       <div className="flex items-center justify-between mb-8 border-b-3 border-black pb-4">
-        <h2 className="font-mono text-3xl font-bold text-black flex items-center gap-3">
+        <h2 className="font-mono text-xl md:text-3xl font-bold text-black flex items-center gap-3">
           <span className="material-symbols-outlined text-3xl">star</span>
           Featured Grant Programs
         </h2>
