@@ -50,85 +50,48 @@ export default function Footer() {
   ]
 
   return (
-    <footer style={{ backgroundColor: '#fafafa', borderTop: '1px solid #e5e5e5' }}>
-      {/* Main footer body */}
-      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '56px 24px 48px' }}>
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(140px, 1fr))',
-          gap: '40px 32px',
-          alignItems: 'start'
-        }}>
+    <footer className="bg-[#fafafa] border-t border-[#e5e5e5]">
+      {/* ── Main grid ── */}
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 pt-14 pb-12">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-7 gap-x-8 gap-y-10">
 
-          {/* Brand column — always full width on mobile */}
-          <div style={{
-            gridColumn: '1 / -1',
-            marginBottom: '8px'
-          }}
-            className="footer-brand-col"
-          >
-            {/* Inner wrapper so brand + tagline sit side-by-side on md+ */}
-            <div className="footer-brand-inner">
-              <Link href="/" style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '8px',
-                textDecoration: 'none'
-              }}>
-                <div style={{ width: '22px', height: '22px', position: 'relative', flexShrink: 0 }}>
-                  <Image src="/logo.svg" alt="FoundersPrime Logo" fill className="object-contain" sizes="22px" />
-                </div>
-                <span style={{
-                  fontFamily: 'var(--font-mono, monospace)',
-                  fontWeight: 700,
-                  fontSize: '15px',
-                  letterSpacing: '0.04em',
-                  color: '#0a0a0a'
-                }}>
-                  FOUNDERS<span style={{ color: '#2563eb' }}>[</span>PRIME<span style={{ color: '#2563eb' }}>]</span>
-                </span>
-              </Link>
-              <p style={{
-                fontFamily: 'var(--font-mono, monospace)',
-                fontSize: '12px',
-                color: '#6b7280',
-                lineHeight: 1.65,
-                marginTop: '10px',
-                maxWidth: '260px'
-              }}>
-                The unfair advantage for bootstrapped and funded startups. Save money, extend runway, build faster.
-              </p>
-            </div>
+          {/* Brand — full width on mobile, 2 cols on sm, 2 cols on lg */}
+          <div className="col-span-2 sm:col-span-3 lg:col-span-2 flex flex-col gap-3">
+            <Link
+              href="/"
+              className="inline-flex items-center gap-2 no-underline w-fit"
+            >
+              <div className="w-[20px] h-[20px] relative flex-shrink-0">
+                <Image
+                  src="/logo.svg"
+                  alt="FoundersPrime Logo"
+                  fill
+                  className="object-contain"
+                  sizes="20px"
+                />
+              </div>
+              <span className="font-mono font-bold text-[14px] tracking-widest text-[#0a0a0a] uppercase">
+                FOUNDERS<span className="text-blue-600">[</span>PRIME<span className="text-blue-600">]</span>
+              </span>
+            </Link>
+            <p className="font-mono text-[12px] text-gray-400 leading-relaxed max-w-[240px]">
+              The unfair advantage for bootstrapped and funded startups. Save money, extend runway, build faster.
+            </p>
           </div>
 
           {/* Nav columns */}
           {footerSections.map((section, index) => (
-            <div key={index}>
-              <p style={{
-                fontFamily: 'var(--font-mono, monospace)',
-                fontSize: '10px',
-                fontWeight: 700,
-                letterSpacing: '0.12em',
-                textTransform: 'uppercase',
-                color: '#9ca3af',
-                marginBottom: '14px'
-              }}>
+            <div key={index} className="flex flex-col gap-3">
+              {/* Section label — no underline, muted caps */}
+              <p className="font-mono text-[10px] font-semibold tracking-[0.14em] uppercase text-gray-400">
                 {section.title}
               </p>
-              <ul style={{ listStyle: 'none', margin: 0, padding: 0, display: 'flex', flexDirection: 'column', gap: '9px' }}>
+              <ul className="flex flex-col gap-[8px] list-none p-0 m-0">
                 {section.links.map((link, linkIndex) => (
                   <li key={linkIndex}>
                     <Link
                       href={link.href}
-                      className="footer-nav-link"
-                      style={{
-                        fontFamily: 'var(--font-mono, monospace)',
-                        fontSize: '13px',
-                        color: '#374151',
-                        textDecoration: 'none',
-                        display: 'inline-block',
-                        transition: 'color 0.15s ease'
-                      }}
+                      className="font-mono text-[12.5px] text-gray-500 no-underline hover:text-gray-900 transition-colors duration-150"
                     >
                       {link.text}
                     </Link>
@@ -140,81 +103,22 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* Bottom bar */}
-      <div style={{ borderTop: '1px solid #e5e5e5', backgroundColor: '#f3f4f6' }}>
-        <div style={{
-          maxWidth: '1200px',
-          margin: '0 auto',
-          padding: '14px 24px',
-          display: 'flex',
-          flexWrap: 'wrap',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          gap: '12px'
-        }}>
-          <span style={{
-            fontFamily: 'var(--font-mono, monospace)',
-            fontSize: '11px',
-            fontWeight: 600,
-            color: '#6b7280'
-          }}>
+      {/* ── Bottom bar ── */}
+      <div className="border-t border-[#e5e5e5] bg-[#f3f4f6]">
+        <div className="max-w-7xl mx-auto px-6 sm:px-8 py-4 flex flex-col sm:flex-row justify-between items-center gap-3">
+          <span className="font-mono text-[11px] font-medium text-gray-400">
             © 2026 FoundersPrime. Built by founders, for founders.
           </span>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: '16px', flexWrap: 'wrap' }}>
+          <div className="flex items-center gap-4 flex-wrap justify-center sm:justify-end">
             <GoogleTranslate />
-            <div style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '6px',
-              fontFamily: 'var(--font-mono, monospace)',
-              fontSize: '10px',
-              fontWeight: 700,
-              letterSpacing: '0.08em',
-              textTransform: 'uppercase',
-              color: '#374151',
-              padding: '5px 10px',
-              border: '1px solid #d1d5db',
-              borderRadius: '4px',
-              backgroundColor: '#fff'
-            }}>
-              <span style={{ width: '6px', height: '6px', borderRadius: '50%', backgroundColor: '#22c55e', animation: 'pulse 2s infinite' }} />
+            <div className="inline-flex items-center gap-[6px] font-mono text-[10px] font-bold tracking-[0.08em] uppercase text-gray-600 px-3 py-[5px] bg-white border border-[#d1d5db] rounded-[4px]">
+              <span className="w-[6px] h-[6px] rounded-full bg-green-500 animate-pulse flex-shrink-0" />
               System Status: Operational
             </div>
           </div>
         </div>
       </div>
-
-      <style jsx>{`
-        /* Hover state for nav links */
-        :global(.footer-nav-link:hover) {
-          color: #0a0a0a !important;
-        }
-
-        /* On md+ screens: brand col is only 2 grid columns wide, not full-width */
-        @media (min-width: 640px) {
-          :global(.footer-brand-col) {
-            grid-column: 1 / 3 !important;
-          }
-          :global(.footer-brand-inner) {
-            display: flex;
-            flex-direction: column;
-          }
-        }
-
-        /* On larger screens keep brand as its own column beside nav */
-        @media (min-width: 900px) {
-          :global(.footer-brand-col) {
-            grid-column: 1 / 1 !important;
-            margin-bottom: 0 !important;
-          }
-        }
-
-        @keyframes pulse {
-          0%, 100% { opacity: 1; }
-          50% { opacity: 0.4; }
-        }
-      `}</style>
     </footer>
   )
 }
