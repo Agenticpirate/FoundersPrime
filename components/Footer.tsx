@@ -52,11 +52,13 @@ export default function Footer() {
   return (
     <footer className="bg-[#fafafa] border-t border-[#e5e5e5]">
       {/* ── Main grid ── */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-8 pt-6 md:pt-14 pb-4 md:pb-12">
+      <div className="max-w-6xl mx-auto px-4 sm:px-8 pt-8 md:pt-12 pb-6 md:pb-10">
 
-        {/* Brand row — compact on mobile */}
-        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-5 md:mb-0 pb-4 md:pb-0 border-b md:border-b-0 border-[#e5e5e5]">
-          <div className="flex flex-col gap-2">
+        {/* Brand row and Full link grid combined for better desktop flow */}
+        <div className="flex flex-col lg:flex-row lg:justify-between gap-8 md:gap-12">
+          
+          {/* Brand Column */}
+          <div className="flex flex-col gap-3 lg:max-w-[240px]">
             <Link href="/" className="inline-flex items-center gap-2 no-underline w-fit">
               <div className="w-[18px] h-[18px] relative flex-shrink-0">
                 <Image
@@ -71,63 +73,47 @@ export default function Footer() {
                 FOUNDERS<span className="text-blue-600">[</span>PRIME<span className="text-blue-600">]</span>
               </span>
             </Link>
-            <p className="font-mono text-[11px] text-gray-400 leading-relaxed max-w-[220px]">
+            <p className="font-mono text-[11px] text-gray-400 leading-relaxed">
               The unfair advantage for bootstrapped startups. Save money, extend runway, build faster.
             </p>
           </div>
 
-          {/* Mobile: show a quick 2×3 link grid of most important links */}
-          <div className="sm:hidden grid grid-cols-2 gap-x-6 gap-y-1.5">
-            {[
-              { text: 'All Deals', href: '/deals' },
-              { text: 'Cloud Credits', href: '/deals/cloud-credits' },
-              { text: 'Grants', href: '/programs/grants' },
-              { text: 'Accelerators', href: '/programs/accelerators' },
-              { text: 'Pricing', href: '/pricing' },
-              { text: 'About', href: '/about' },
-            ].map((link) => (
-              <Link key={link.href} href={link.href} className="font-mono text-[11px] text-gray-500 hover:text-gray-900 transition-colors">
-                {link.text}
-              </Link>
+          {/* Link Grid */}
+          <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-x-4 gap-y-8 flex-1 lg:justify-items-end">
+            {footerSections.map((section, index) => (
+              <div key={index} className="flex flex-col gap-3 min-w-[120px]">
+                <p className="font-mono text-[10px] font-bold tracking-[0.1em] uppercase text-gray-500">
+                  {section.title}
+                </p>
+                <ul className="flex flex-col gap-[6px] list-none p-0 m-0">
+                  {section.links.map((link, linkIndex) => (
+                    <li key={linkIndex}>
+                      <Link
+                        href={link.href}
+                        className="font-mono text-[11px] text-gray-400 no-underline hover:text-gray-900 transition-colors duration-150"
+                      >
+                        {link.text}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             ))}
           </div>
-        </div>
-
-        {/* Full link grid — hidden on mobile, shown on sm+ */}
-        <div className="hidden sm:grid sm:grid-cols-3 lg:grid-cols-5 gap-x-8 gap-y-10 mt-6 md:mt-12">
-          {footerSections.map((section, index) => (
-            <div key={index} className="flex flex-col gap-4">
-              <p className="font-mono text-[10px] font-semibold tracking-[0.14em] uppercase text-gray-400">
-                {section.title}
-              </p>
-              <ul className="flex flex-col gap-[7px] list-none p-0 m-0">
-                {section.links.map((link, linkIndex) => (
-                  <li key={linkIndex}>
-                    <Link
-                      href={link.href}
-                      className="font-mono text-[12px] text-gray-500 no-underline hover:text-gray-900 transition-colors duration-150"
-                    >
-                      {link.text}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
         </div>
       </div>
 
       {/* ── Bottom bar ── */}
-      <div className="border-t border-[#e5e5e5] bg-[#f3f4f6]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-8 py-4 flex flex-col sm:flex-row justify-between items-center gap-3">
-          <span className="font-mono text-[10px] font-medium text-gray-400 text-center sm:text-left leading-relaxed">
+      <div className="border-t border-[#f0f0f0] bg-[#fafafa]">
+        <div className="max-w-6xl mx-auto px-4 sm:px-8 py-4 flex flex-col sm:flex-row justify-between items-center gap-4">
+          <span className="font-mono text-[10px] text-gray-400 text-center sm:text-left">
             © 2026 FoundersPrime. Built by founders, for founders.
           </span>
 
-          <div className="flex items-center gap-3 flex-wrap justify-center sm:justify-end">
+          <div className="flex items-center gap-4 flex-wrap justify-center sm:justify-end">
             <GoogleTranslate />
-            <div className="inline-flex items-center gap-[5px] font-mono text-[9px] font-bold tracking-[0.06em] uppercase text-gray-600 px-2.5 py-[4px] bg-white border border-[#d1d5db] rounded-[4px]">
-              <span className="w-[5px] h-[5px] rounded-full bg-green-500 animate-pulse flex-shrink-0" />
+            <div className="inline-flex items-center gap-2 font-mono text-[9px] font-bold tracking-widest uppercase text-gray-400 px-2 py-1 bg-white border border-[#e5e5e5]">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
               Operational
             </div>
           </div>

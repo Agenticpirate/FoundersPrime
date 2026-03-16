@@ -83,7 +83,7 @@ export default function TopWeeklyDeals() {
             <div key={deal.id || index} className="bg-white neo-border p-0 relative snap-start shrink-0 w-[78vw] shadow-[4px_4px_0px_0px_#101622]">
               <div className="p-3 border-b-2 border-black flex justify-between items-center bg-gray-50">
                 <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 bg-white border border-gray-200 rounded flex items-center justify-center overflow-hidden">
+                  <div className="w-8 h-8 bg-white border border-gray-200 flex items-center justify-center overflow-hidden">
                     {deal.logoUrl ? (
                       <Image
                         src={deal.logoUrl}
@@ -129,7 +129,7 @@ export default function TopWeeklyDeals() {
         {/* Mobile dots */}
         <div className="flex md:hidden justify-center gap-1.5 mt-3">
           {deals.map((_, idx) => (
-            <div key={idx} className={`h-1.5 rounded-full transition-all duration-300 ${activeIdx === idx ? 'w-5 bg-black' : 'w-1.5 bg-black/30'}`} />
+            <div key={idx} className={`h-2 transition-all duration-300 border border-black ${activeIdx === idx ? 'w-6 bg-black' : 'w-2 bg-black/30'}`} />
           ))}
         </div>
 
@@ -139,7 +139,7 @@ export default function TopWeeklyDeals() {
             <div key={deal.id || index} className="bg-white neo-border p-0 relative group neo-shadow">
               <div className="p-4 border-b-2 border-black flex justify-between items-center bg-gray-50">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-white border border-gray-200 rounded flex items-center justify-center overflow-hidden">
+                  <div className="w-10 h-10 bg-white border border-gray-200 flex items-center justify-center overflow-hidden">
                     {deal.logoUrl ? (
                       <Image
                         src={deal.logoUrl}

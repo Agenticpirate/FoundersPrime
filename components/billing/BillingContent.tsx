@@ -36,7 +36,7 @@ export default function BillingContent() {
   if (loading) {
     return (
       <div className="flex items-center justify-center py-24">
-        <div className="animate-spin rounded-full h-10 w-10 border-b-3 border-black" />
+        <div className="animate-spin h-10 w-10 border-b-3 border-black" />
       </div>
     )
   }
@@ -44,9 +44,12 @@ export default function BillingContent() {
   if (!user) {
     return (
       <div className="bg-white border-3 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] p-10 text-center">
-        <p className="font-mono font-bold text-lg mb-4">You must be logged in to view billing.</p>
-        <Link href="/login" className="bg-black text-white font-bold py-3 px-6 border-3 border-black hover:bg-primary hover:text-black transition-colors">
-          Log In
+        <div className="inline-flex items-center justify-center w-16 h-16 bg-red-100 border-2 border-black mb-6">
+           <span className="material-symbols-outlined text-4xl text-black">lock</span>
+        </div>
+        <p className="font-mono font-bold text-xl mb-6 uppercase">You must be logged in to view billing.</p>
+        <Link href="/login" className="inline-block bg-primary text-black font-black py-4 px-10 border-3 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-all">
+          LOG IN TO ACCOUNT
         </Link>
       </div>
     )

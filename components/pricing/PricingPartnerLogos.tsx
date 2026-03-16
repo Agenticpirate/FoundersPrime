@@ -8,36 +8,50 @@ export default function PricingPartnerLogos() {
         { name: 'Google Cloud', domain: 'cloud.google.com' },
         { name: 'Stripe', domain: 'stripe.com' },
         { name: 'Notion', domain: 'notion.so' },
-        { name: 'Airtable', domain: 'airtable.com' },
-        { name: 'HubSpot', domain: 'hubspot.com' },
-        { name: 'Miro', domain: 'miro.com' },
-        { name: 'Zendesk', domain: 'zendesk.com' },
-        { name: 'Linear', domain: 'linear.app' },
-        { name: 'Figma', domain: 'figma.com' },
-        { name: 'Intercom', domain: 'intercom.com' },
-        { name: 'Mixpanel', domain: 'mixpanel.com' },
+        { name: 'OpenAI', domain: 'openai.com' },
+        { name: 'Anthropic', domain: 'anthropic.com' },
+        { name: 'Perplexity', domain: 'perplexity.ai' },
         { name: 'Vercel', domain: 'vercel.com' },
         { name: 'Supabase', domain: 'supabase.com' },
-        { name: 'Netlify', domain: 'netlify.com' },
-        { name: 'DigitalOcean', domain: 'digitalocean.com' },
+        { name: 'Figma', domain: 'figma.com' },
+        { name: 'Slack', domain: 'slack.com' },
+        { name: 'Linear', domain: 'linear.app' },
+        { name: 'Framer', domain: 'framer.com' },
+        { name: 'Webflow', domain: 'webflow.com' },
+        { name: 'Airtable', domain: 'airtable.com' },
+        { name: 'HubSpot', domain: 'hubspot.com' },
+        { name: 'Intercom', domain: 'intercom.com' },
+        { name: 'Postman', domain: 'postman.com' },
+        { name: 'Datadog', domain: 'datadog.com' },
+        { name: 'Sentry', domain: 'sentry.io' },
+        { name: 'Mixpanel', domain: 'mixpanel.com' },
+        { name: 'Retool', domain: 'retool.com' },
         { name: 'Twilio', domain: 'twilio.com' },
         { name: 'SendGrid', domain: 'sendgrid.com' },
+        { name: 'DigitalOcean', domain: 'digitalocean.com' },
         { name: 'Auth0', domain: 'auth0.com' },
-        { name: 'Algolia', domain: 'algolia.com' },
         { name: 'Typeform', domain: 'typeform.com' },
         { name: 'ClickUp', domain: 'clickup.com' },
         { name: 'Monday', domain: 'monday.com' },
         { name: 'Asana', domain: 'asana.com' },
-        { name: 'Gusto', domain: 'gusto.com' },
+        { name: 'Discord', domain: 'discord.com' },
+        { name: 'Zoom', domain: 'zoom.us' },
+        { name: 'Loom', domain: 'loom.com' },
+        { name: 'Canva', domain: 'canva.com' },
+        { name: 'Adobe', domain: 'adobe.com' },
+        { name: 'Mailchimp', domain: 'mailchimp.com' },
+        { name: 'Klaviyo', domain: 'klaviyo.com' },
+        { name: 'Salesforce', domain: 'salesforce.com' },
+        { name: 'Deel', domain: 'deel.com' },
         { name: 'Rippling', domain: 'rippling.com' },
+        { name: 'Gusto', domain: 'gusto.com' },
         { name: 'Brex', domain: 'brex.com' },
         { name: 'Ramp', domain: 'ramp.com' },
-        { name: 'Deel', domain: 'deel.com' },
         { name: 'Attio', domain: 'attio.com' }
     ]
 
-    // Duplicate partners to create seamless loop
-    const seamlessPartners = [...partners, ...partners]
+    // Triple partners for a very smooth long loop
+    const seamlessPartners = [...partners, ...partners, ...partners]
 
     return (
         <section className="w-full py-6 bg-white border-b-3 border-[#111111] overflow-hidden">
@@ -66,14 +80,14 @@ export default function PricingPartnerLogos() {
             </div>
             <style jsx>{`
         .animate-marquee {
-          animation: marquee 15s linear infinite;
+          animation: marquee 20s linear infinite;
         }
         .animate-marquee:hover {
           animation-play-state: paused;
         }
         @keyframes marquee {
           0% { transform: translateX(0); }
-          100% { transform: translateX(-50%); }
+          100% { transform: translateX(-33.3333%); }
         }
         .mask-gradient-x {
           mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);

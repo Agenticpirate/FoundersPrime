@@ -353,7 +353,7 @@ h6 {
 
 /* Mobile hero brand icons marquee */
 .mobile-brand-marquee {
-  animation: mobileBrandMarquee 35s linear infinite;
+  animation: mobileBrandMarquee 15s linear infinite;
   width: max-content;
 }
 
@@ -365,6 +365,16 @@ h6 {
   100% {
     transform: translateX(-50%);
   }
+}
+
+@keyframes lockPulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+.animate-lock-pulse {
+  animation: lockPulse 2s ease-in-out infinite;
 }
 
 /* Mobile menu slide-down animation */

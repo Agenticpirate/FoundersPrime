@@ -6,7 +6,8 @@ export default function WorkflowProtocol() {
       title: "DISCOVER",
       headline: "See what’s available without digging.",
       description: "Explore verified credits, grants, and programs organized by category, relevance, and intent.",
-      hoverColor: "group-hover:text-accent-yellow"
+      hoverColor: "group-hover:text-accent-yellow",
+      bgColor: "bg-accent-yellow"
     },
     {
       number: "02",
@@ -14,7 +15,8 @@ export default function WorkflowProtocol() {
       title: "FILTER",
       headline: "Focus on what actually fits.",
       description: "Narrow opportunities by stage, region, category, and eligibility so time isn’t wasted.",
-      hoverColor: "group-hover:text-accent-orange"
+      hoverColor: "group-hover:text-accent-orange",
+      bgColor: "bg-accent-orange"
     },
     {
       number: "03",
@@ -22,7 +24,8 @@ export default function WorkflowProtocol() {
       title: "ACT",
       headline: "Move before windows close.",
       description: "Each opportunity includes context, links, and clarity on what to do next.",
-      hoverColor: "group-hover:text-primary"
+      hoverColor: "group-hover:text-primary",
+      bgColor: "bg-primary"
     }
   ]
 
@@ -46,7 +49,7 @@ export default function WorkflowProtocol() {
           {steps.map((step, index) => (
             <div key={index} className="relative p-3 md:p-6 group hover:bg-gray-50 flex flex-col h-full overflow-hidden">
               <span className={`absolute top-2 right-2 text-3xl md:text-6xl font-black font-mono transition-colors z-0 ${step.hoverColor.replace('group-hover:', '')} md:text-gray-100 md:${step.hoverColor}`}>{step.number}</span>
-              <div className="w-8 h-8 md:w-14 md:h-14 bg-black text-white neo-border flex items-center justify-center mb-2 md:mb-5 relative z-10">
+              <div className={`w-8 h-8 md:w-14 md:h-14 ${step.bgColor} text-black neo-border flex items-center justify-center mb-2 md:mb-5 relative z-10`}>
                 <span className="material-symbols-outlined text-base md:text-2xl">{step.icon}</span>
               </div>
               <h3 className="text-xs md:text-lg font-black mb-1 font-mono relative z-10">{step.title}</h3>

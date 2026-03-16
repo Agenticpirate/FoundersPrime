@@ -57,13 +57,13 @@ export default function DealCard({ deal, basePath = '/deals', overrideHref }: De
   return (
     <LinkComponent
       {...linkProps}
-      className="flex flex-col bg-white border-4 border-black rounded-lg shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all duration-200 overflow-hidden group relative h-full focus:outline-none focus:ring-4 focus:ring-accent-yellow focus:ring-offset-2"
+      className="flex flex-col bg-white border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all duration-200 overflow-hidden group relative h-full focus:outline-none focus:ring-4 focus:ring-accent-yellow focus:ring-offset-2"
       aria-label={`View details for ${title}`}
       tabIndex={0}
     >
       {/* Apply Now Badge - Shows on Hover */}
       <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10">
-        <span className="inline-block px-3 py-1.5 bg-yellow-400 text-black text-xs font-bold rounded border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] uppercase tracking-wide">
+        <span className="inline-block px-3 py-1.5 bg-yellow-400 text-black text-xs font-bold border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] uppercase tracking-wide">
           Apply Now
         </span>
       </div>
@@ -72,7 +72,7 @@ export default function DealCard({ deal, basePath = '/deals', overrideHref }: De
       {badge && (
         <div className="px-3 pt-2.5 pb-1.5 md:px-4 md:pt-3 md:pb-2">
           <span
-            className={`inline-block px-2 py-0.5 ${badgeColor || 'bg-orange-500'} text-white text-[9px] md:text-[10px] font-bold rounded uppercase tracking-wide`}
+            className={`inline-block px-2 py-0.5 ${badgeColor || 'bg-orange-500'} text-white text-[9px] md:text-[10px] font-bold uppercase tracking-wide border border-black shadow-[1px_1px_0px_0px_rgba(0,0,0,1)]`}
             role="status"
             aria-label={`Status: ${badge}`}
           >
@@ -85,7 +85,7 @@ export default function DealCard({ deal, basePath = '/deals', overrideHref }: De
       <div className={`px-3 md:px-4 ${badge ? 'pt-2' : 'pt-3'} pb-2 md:pb-3`}>
         <div className="flex items-center gap-2">
           {/* Logo Container */}
-          <div className={`w-10 h-10 md:w-16 md:h-16 bg-white border-2 border-black rounded flex items-center justify-center p-1.5 md:p-2.5 flex-shrink-0 transition-all duration-200 ${hasError || !logo ? 'group-hover:bg-yellow-50' : ''} ${!imageLoaded && logo && !hasError ? 'animate-pulse bg-gray-100' : ''}`}>
+          <div className={`w-10 h-10 md:w-16 md:h-16 bg-white border-2 border-black flex items-center justify-center p-1.5 md:p-2.5 flex-shrink-0 transition-all duration-200 ${hasError || !logo ? 'group-hover:bg-yellow-50' : ''} ${!imageLoaded && logo && !hasError ? 'animate-pulse bg-gray-100' : ''}`}>
             {logo && !hasError ? (
               <img
                 alt={`${title} logo`}

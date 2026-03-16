@@ -107,7 +107,7 @@ export default function StartupGrid() {
                             <button
                                 key={industry}
                                 onClick={() => setSelectedIndustry(industry)}
-                                className={`px-4 py-2 font-mono text-xs font-bold border-2 border-black rounded-sm whitespace-nowrap transition-all ${selectedIndustry === industry
+                                className={`px-4 py-2 font-mono text-xs font-bold border-2 border-black whitespace-nowrap transition-all ${selectedIndustry === industry
                                         ? 'bg-black text-white shadow-[2px_2px_0px_0px_rgba(0,0,0,0.3)]'
                                         : 'bg-white text-black hover:bg-gray-100'
                                     }`}
@@ -129,7 +129,7 @@ export default function StartupGrid() {
                 {hasActiveFilters && (
                     <button
                         onClick={handleClearFilters}
-                        className="px-3 py-1.5 font-mono text-xs font-bold bg-white border-2 border-black rounded-sm hover:bg-gray-100 transition-colors flex items-center gap-2 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]"
+                        className="px-3 py-1.5 font-mono text-xs font-bold bg-white border-2 border-black hover:bg-gray-100 transition-colors flex items-center gap-2 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]"
                     >
                         <span className="material-symbols-outlined text-sm">close</span>
                         Clear Filters
@@ -146,7 +146,7 @@ export default function StartupGrid() {
                 </div>
             ) : (
                 <div className="flex flex-col items-center justify-center py-20 text-center border-4 border-black bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
-                    <div className="rounded-full bg-gray-100 p-4 mb-4 border-2 border-black">
+                    <div className="bg-gray-100 p-4 mb-4 border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
                         <Search className="h-8 w-8 text-gray-400" />
                     </div>
                     <h3 className="text-xl font-bold text-gray-900">No startups found</h3>

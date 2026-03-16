@@ -152,7 +152,7 @@ export default function FounderLogs() {
               <button
                 key={idx}
                 onClick={() => goTo(idx)}
-                className={`h-1.5 rounded-full transition-all duration-300 ${activeIdx === idx ? 'w-5 bg-black' : 'w-1.5 bg-gray-300'}`}
+                className={`h-2 transition-all duration-300 border border-black ${activeIdx === idx ? 'w-6 bg-black' : 'w-2 bg-gray-300'}`}
               />
             ))}
           </div>
@@ -163,7 +163,7 @@ export default function FounderLogs() {
           {testimonials.map((testimonial, index) => (
             <div
               key={index}
-              className="group bg-white border-2 border-black p-6 hover:-translate-y-1 hover:shadow-[8px_8px_0px_#000] transition-all duration-300 rounded-sm"
+              className="group bg-white border-2 border-black p-6 hover:-translate-y-1 hover:shadow-[8px_8px_0px_#000] transition-all duration-300"
             >
               <div className="flex justify-between items-start mb-4">
                 <div className="flex gap-1">
@@ -202,9 +202,9 @@ export default function FounderLogs() {
 function FounderImage({ image }: { image: string }) {
   return (
     <div
-      className="w-9 h-9 border-2 border-black rounded-full overflow-hidden transition-all duration-300 relative flex-shrink-0"
+      className="w-10 h-10 border-2 border-black overflow-hidden transition-all duration-300 relative flex-shrink-0 bg-gray-100"
     >
-      <Image src={image} alt="Founder" fill className="object-cover" sizes="36px" />
+      <Image src={image} alt="Founder" fill className="object-cover" sizes="40px" />
     </div>
   )
 }

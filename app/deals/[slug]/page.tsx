@@ -426,7 +426,7 @@ export default async function SingleDealPage({ params }: PageProps) {
           <div className="w-full bg-white border-b-3 border-black">
             <div className="max-w-[1600px] mx-auto px-4 lg:px-6 py-4 lg:py-6">
               {/* Breadcrumbs */}
-              <nav aria-label="Breadcrumb" className="flex mb-8">
+              <nav aria-label="Breadcrumb" className="flex mb-4">
                 <ol className="inline-flex items-center space-x-1 md:space-x-3 font-mono text-sm font-medium">
                   <li className="inline-flex items-center">
                     <a className="text-gray-500 hover:text-black" href="/">Home</a>

@@ -112,19 +112,19 @@ export default function PricingPlans({ currency }: PricingPlansProps) {
             className="snap-start shrink-0 w-[82vw] group relative flex flex-col border-2 border-[#111111] shadow-[3px_3px_0px_0px_#111111] overflow-hidden"
           >
             {plan.popular && (
-              <div className="absolute top-0 left-1/2 -translate-x-1/2 bg-[#111111] text-white px-3 py-0.5 font-mono text-[9px] font-black uppercase tracking-widest z-20 rounded-b-sm">
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 bg-[#111111] text-white px-3 py-0.5 font-mono text-[9px] font-black uppercase tracking-widest z-20">
                 ★ Most Popular
               </div>
             )}
             {plan.special && (
-              <div className="absolute top-0 left-1/2 -translate-x-1/2 bg-[#111111] text-white px-3 py-0.5 font-mono text-[9px] font-black uppercase tracking-widest z-20 rounded-b-sm flex items-center gap-1">
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 bg-[#111111] text-white px-3 py-0.5 font-mono text-[9px] font-black uppercase tracking-widest z-20 flex items-center gap-1">
                 <span className="material-symbols-outlined text-[9px] text-amber-400">bolt</span>
                 Elite Status
               </div>
             )}
             <div className={`${plan.headerBg} px-4 pt-7 pb-3 text-left relative overflow-hidden border-b-2 border-[#111111]/15`}>
               <div className="flex items-center gap-2">
-                <div className={`w-6 h-6 ${plan.iconBg} border border-[#111111]/20 rounded-sm flex items-center justify-center`}>
+                <div className={`w-6 h-6 ${plan.iconBg} border border-[#111111]/20 flex items-center justify-center`}>
                   <span className="material-symbols-outlined text-xs text-[#111111]">{plan.icon}</span>
                 </div>
                 <h3 className={`font-mono text-sm font-black uppercase tracking-tight ${plan.textColor}`}>{plan.name}</h3>
@@ -163,7 +163,7 @@ export default function PricingPlans({ currency }: PricingPlansProps) {
       {/* Mobile dot indicator */}
       <div className="flex md:hidden justify-center gap-1.5 mt-2 mb-2">
         {plans.map((_, i) => (
-          <div key={i} className={`rounded-full transition-all ${i === 0 ? 'w-4 h-1.5 bg-black' : 'w-1.5 h-1.5 bg-gray-300'}`} />
+          <div key={i} className={`transition-all border border-black ${i === 0 ? 'w-5 h-2 bg-black' : 'w-2 h-2 bg-gray-300'}`} />
         ))}
       </div>
 
@@ -177,13 +177,13 @@ export default function PricingPlans({ currency }: PricingPlansProps) {
           >
             {/* Badges */}
             {plan.popular && (
-              <div className="absolute top-0 left-1/2 -translate-x-1/2 bg-[#111111] text-white px-3 py-1 font-mono text-[10px] font-black uppercase tracking-widest z-20 rounded-b-sm">
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 bg-[#111111] text-white px-3 py-1 font-mono text-[10px] font-black uppercase tracking-widest z-20">
                 ★ Most Popular
               </div>
             )}
 
             {plan.special && (
-              <div className="absolute top-0 left-1/2 -translate-x-1/2 bg-[#111111] text-white px-3 py-1 font-mono text-[10px] font-black uppercase tracking-widest z-20 rounded-b-sm flex items-center gap-1">
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 bg-[#111111] text-white px-3 py-1 font-mono text-[10px] font-black uppercase tracking-widest z-20 flex items-center gap-1">
                 <span className="material-symbols-outlined text-xs text-amber-400">bolt</span>
                 Elite Status
               </div>
@@ -198,7 +198,7 @@ export default function PricingPlans({ currency }: PricingPlansProps) {
 
               {/* Plan Icon + Name Row */}
               <div className="flex items-center gap-2">
-                <div className={`w-7 h-7 ${plan.iconBg} border border-[#111111]/20 rounded-sm flex items-center justify-center transition-all duration-500 group-hover:rotate-[-8deg] group-hover:scale-110 ${plan.name === 'Explorer' ? 'group-hover:animate-icon-spin' : ''} ${plan.name === 'Founder' ? 'group-hover:animate-icon-bounce' : ''} ${plan.name === 'Legend' ? 'group-hover:animate-icon-pulse' : ''}`}>
+                <div className={`w-7 h-7 ${plan.iconBg} border border-[#111111]/20 flex items-center justify-center transition-all duration-500 group-hover:rotate-[-8deg] group-hover:scale-110 ${plan.name === 'Explorer' ? 'group-hover:animate-icon-spin' : ''} ${plan.name === 'Founder' ? 'group-hover:animate-icon-bounce' : ''} ${plan.name === 'Legend' ? 'group-hover:animate-icon-pulse' : ''}`}>
                   <span className="material-symbols-outlined text-sm text-[#111111]">
                     {plan.icon}
                   </span>
@@ -228,7 +228,7 @@ export default function PricingPlans({ currency }: PricingPlansProps) {
               {/* Save Badge */}
               {plan.badge && (
                 <div className="mt-2">
-                  <span className={`inline-block text-[10px] font-black px-2 py-0.5 uppercase tracking-wider rounded-sm transition-transform duration-300 group-hover:-rotate-1 ${plan.special ? 'bg-[#ef4444] text-white' : 'bg-[#22c55e] text-white'}`}>
+                  <span className={`inline-block text-[10px] font-black px-2 py-0.5 uppercase tracking-wider transition-transform duration-300 group-hover:-rotate-1 ${plan.special ? 'bg-[#ef4444] text-white' : 'bg-[#22c55e] text-white'}`}>
                     {plan.badge}
                   </span>
                 </div>

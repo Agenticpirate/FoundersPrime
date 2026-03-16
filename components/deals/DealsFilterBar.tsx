@@ -87,14 +87,14 @@ export default function DealsFilterBar({ onFilterChange, currentFilters }: Deals
   const activeFiltersCount = Object.values(filters).filter(value => value && value !== 'relevance').length
 
   return (
-    <div className="bg-white border-2 border-gray-200 p-3 shadow-sm sticky top-14 md:top-20 z-30">
+    <div className="bg-white border-2 border-black p-3 shadow-[4px_4px_0px_#111111] sticky top-14 md:top-20 z-30">
       {/* Main Filter Row */}
       <div className="flex flex-col gap-2">
         {/* Search */}
         <div className="relative">
           <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-lg">search</span>
           <input
-            className="w-full h-9 md:h-10 pl-10 pr-4 border border-gray-300 focus:border-primary focus:ring-1 focus:ring-primary font-sans text-sm bg-white placeholder:text-gray-400 rounded"
+            className="w-full h-9 md:h-10 pl-10 pr-4 border-2 border-black focus:border-[#ffd700] focus:ring-0 font-sans text-sm bg-white placeholder:text-gray-400 shadow-[2px_2px_0px_#111111]"
             placeholder="Search deals..."
             type="text"
             value={filters.search}
@@ -105,7 +105,7 @@ export default function DealsFilterBar({ onFilterChange, currentFilters }: Deals
         {/* Dropdowns — 3-col on mobile */}
         <div className="grid grid-cols-3 md:flex gap-2">
           <select
-            className="h-9 md:h-10 border border-gray-300 bg-white px-2 md:px-3 py-1 text-xs md:text-sm focus:ring-1 focus:ring-primary focus:border-primary cursor-pointer rounded w-full"
+            className="h-9 md:h-10 border border-gray-300 bg-white px-2 md:px-3 py-1 text-xs md:text-sm focus:ring-0 focus:border-primary cursor-pointer w-full font-bold"
             value={filters.category}
             onChange={(e) => handleFilterChange('category', e.target.value)}
           >
@@ -146,7 +146,7 @@ export default function DealsFilterBar({ onFilterChange, currentFilters }: Deals
           {activeFiltersCount > 0 && (
             <button
               onClick={resetFilters}
-              className="hidden md:block h-10 px-3 bg-gray-100 text-gray-700 text-sm font-medium border border-gray-300 hover:bg-gray-200 transition-colors rounded whitespace-nowrap"
+              className="hidden md:block h-10 px-3 bg-gray-100 text-gray-700 text-sm font-bold border-2 border-black hover:bg-gray-200 transition-colors whitespace-nowrap shadow-[2px_2px_0px_#111111]"
             >
               Clear ({activeFiltersCount})
             </button>
@@ -158,21 +158,21 @@ export default function DealsFilterBar({ onFilterChange, currentFilters }: Deals
       <div className="flex gap-2 mt-2 md:mt-3 pt-2 md:pt-3 border-t border-gray-100 overflow-x-auto mobile-scroll-hide pb-0.5">
         <button
           onClick={() => resetFilters()}
-          className={`px-2.5 py-1 text-xs font-medium border rounded transition-colors whitespace-nowrap flex-shrink-0 ${activeFiltersCount === 0 ? 'bg-ink text-white border-ink' : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
+          className={`px-2.5 py-1 text-xs font-bold border-2 transition-colors whitespace-nowrap flex-shrink-0 ${activeFiltersCount === 0 ? 'bg-ink text-white border-ink shadow-[2px_2px_0px_#111111]' : 'bg-white text-gray-700 border-black hover:bg-gray-50'
             }`}
         >
           All
         </button>
         <button
           onClick={() => handleFilterChange('sort', 'newest')}
-          className={`px-2.5 py-1 text-xs font-medium border rounded transition-colors whitespace-nowrap flex-shrink-0 ${filters.sort === 'newest' ? 'bg-ink text-white border-ink' : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
+          className={`px-2.5 py-1 text-xs font-bold border-2 transition-colors whitespace-nowrap flex-shrink-0 ${filters.sort === 'newest' ? 'bg-ink text-white border-ink shadow-[2px_2px_0px_#111111]' : 'bg-white text-gray-700 border-black hover:bg-gray-50'
             }`}
         >
           New
         </button>
         <button
           onClick={() => handleFilterChange('category', 'ai')}
-          className={`px-2.5 py-1 text-xs font-medium border rounded transition-colors whitespace-nowrap flex-shrink-0 ${filters.category === 'ai' ? 'bg-ink text-white border-ink' : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
+          className={`px-2.5 py-1 text-xs font-bold border transition-colors whitespace-nowrap flex-shrink-0 ${filters.category === 'ai' ? 'bg-ink text-white border-ink' : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
             }`}
         >
           AI Tools

@@ -197,7 +197,7 @@ export default function SingleDealContent({ deal, freeAccess = false, basePath =
   const displayValue = deal.enhancedValue || deal.value
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8">
+    <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-8">
       {/* Sidebar — shown FIRST on mobile (Apply box top) */}
       <div className="lg:col-span-1 order-first lg:order-last">
         <div className="lg:sticky lg:top-24 space-y-4 md:space-y-6">
@@ -354,7 +354,7 @@ export default function SingleDealContent({ deal, freeAccess = false, basePath =
         </div>
 
         {/* Overview Section */}
-        <section className="rounded-sm border-2 md:border-4 border-black bg-white p-4 md:p-6 shadow-[4px_4px_0px_#111111] md:shadow-[6px_6px_0px_#111111]">
+        <section className="rounded-sm border-2 md:border-4 border-black bg-white p-4 md:p-6 pb-8 md:pb-12 shadow-[4px_4px_0px_#111111] md:shadow-[6px_6px_0px_#111111]">
           <h2 className="mb-3 md:mb-4 flex items-center gap-2 border-b-2 md:border-b-3 border-black pb-2 md:pb-3 font-mono text-lg md:text-2xl font-bold uppercase">
             <span className="material-symbols-outlined text-primary !text-[20px] md:!text-[24px]">info</span>
             About This Deal

@@ -36,9 +36,11 @@ export default function DealsCategorySidebar({
           const subCounts: Record<string, number> = {}
 
           deals.forEach(deal => {
-            catCounts[deal.category] = (catCounts[deal.category] || 0) + 1
+            const catId = deal.category.toLowerCase().replace(/\s+/g, '-')
+            catCounts[catId] = (catCounts[catId] || 0) + 1
             if (deal.subcategory) {
-              const subKey = `${deal.category}/${deal.subcategory}`
+              const subId = deal.subcategory.toLowerCase().replace(/\s+/g, '-')
+              const subKey = `${catId}/${subId}`
               subCounts[subKey] = (subCounts[subKey] || 0) + 1
             }
           })
@@ -92,7 +94,7 @@ export default function DealsCategorySidebar({
 
   return (
     <aside className="w-56 flex-shrink-0">
-      <div className="sticky top-20 max-h-[calc(100vh-6rem)] overflow-y-auto bg-white border border-gray-200 rounded-lg p-3">
+      <div className="sticky top-20 max-h-[calc(100vh-6rem)] overflow-y-auto bg-white border-2 border-black p-3 shadow-[4px_4px_0px_#111111]">
         {/* Categories Header */}
         <div className="mb-2">
           <h3 className="text-xs font-bold text-gray-600 uppercase tracking-wide px-2">Categories</h3>
@@ -101,8 +103,8 @@ export default function DealsCategorySidebar({
         {/* All Deals Option */}
         <button
           onClick={() => onCategorySelect?.('', '')}
-          className={`w-full flex items-center justify-between px-2 py-1.5 text-left transition-colors rounded text-sm ${!selectedCategory
-            ? 'bg-ink text-white font-medium'
+          className={`w-full flex items-center justify-between px-2 py-1.5 text-left transition-colors text-sm ${!selectedCategory
+            ? 'bg-ink text-white font-medium shadow-[2px_2px_0px_#111111]'
             : 'hover:bg-gray-50 text-gray-700'
             }`}
         >

@@ -71,6 +71,7 @@ export default function ProGateOverlay({
                         {/* Lock icon */}
                         <div className="flex justify-center mb-5">
                             <div
+                                className="animate-lock-pulse"
                                 style={{
                                     width: 52,
                                     height: 52,
