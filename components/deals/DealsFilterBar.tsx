@@ -87,7 +87,7 @@ export default function DealsFilterBar({ onFilterChange, currentFilters }: Deals
   const activeFiltersCount = Object.values(filters).filter(value => value && value !== 'relevance').length
 
   return (
-    <div className="bg-white border-2 border-gray-200 p-3 shadow-sm">
+    <div className="bg-white border-2 border-gray-200 p-3 shadow-sm sticky top-14 md:top-20 z-30">
       {/* Main Filter Row */}
       <div className="flex flex-col gap-2">
         {/* Search */}

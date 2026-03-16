@@ -205,8 +205,8 @@ export default function SingleDealContent({ deal, freeAccess = false, basePath =
           {/* Apply Box */}
           <div className="rounded-sm border-2 md:border-4 border-black bg-white shadow-[3px_3px_0px_#111111] md:shadow-[6px_6px_0px_#111111] p-4 md:p-6">
             <div className="mb-3 md:mb-4">
-              <div className="text-xs font-bold uppercase text-gray-500 mb-1 font-mono">Deal Value</div>
-              <div className="text-2xl md:text-3xl font-black text-black font-mono mb-3 md:mb-4">{displayValue}</div>
+              <div className="text-[10px] md:text-xs font-bold uppercase text-gray-500 mb-0.5 md:mb-1 font-mono">Deal Value</div>
+              <div className="text-xl md:text-3xl font-black text-black font-mono mb-2 md:mb-4">{displayValue}</div>
             </div>
 
             <div className="space-y-2 md:space-y-3 mb-4 pb-4 border-b-2 border-gray-200">
@@ -296,7 +296,7 @@ export default function SingleDealContent({ deal, freeAccess = false, basePath =
           </div>
 
           {/* Quick Links — hidden on mobile to save space */}
-          <div className="hidden md:block rounded-sm border-4 border-black bg-white shadow-[4px_4px_0px_#111111] p-5">
+          <div className="hidden md:block rounded-sm border-2 md:border-4 border-black bg-white shadow-[4px_4px_0px_#111111] p-5">
             <h4 className="font-mono text-sm font-bold uppercase mb-4 text-gray-700 border-b-2 border-gray-200 pb-2">Quick Links</h4>
             <ul className="space-y-3">
               <li>
@@ -315,7 +315,7 @@ export default function SingleDealContent({ deal, freeAccess = false, basePath =
           </div>
 
           {/* Help CTA — hidden on mobile */}
-          <div className="hidden md:block rounded-sm bg-black text-white p-6 shadow-[6px_6px_0px_#111111] text-center border-4 border-black">
+          <div className="hidden md:block rounded-sm bg-black text-white p-6 shadow-[6px_6px_0px_#111111] text-center border-2 md:border-4 border-black">
             <div className="inline-block p-3 rounded-full bg-yellow-400 border-3 border-white mb-4 text-black">
               <span className="material-symbols-outlined block !text-[28px]">rocket_launch</span>
             </div>
@@ -354,31 +354,31 @@ export default function SingleDealContent({ deal, freeAccess = false, basePath =
         </div>
 
         {/* Overview Section */}
-        <section className="rounded-sm border-4 border-black bg-white p-6 shadow-[6px_6px_0px_#111111]">
-          <h2 className="mb-4 flex items-center gap-2 border-b-3 border-black pb-3 font-mono text-2xl font-bold uppercase">
-            <span className="material-symbols-outlined text-primary">info</span>
+        <section className="rounded-sm border-2 md:border-4 border-black bg-white p-4 md:p-6 shadow-[4px_4px_0px_#111111] md:shadow-[6px_6px_0px_#111111]">
+          <h2 className="mb-3 md:mb-4 flex items-center gap-2 border-b-2 md:border-b-3 border-black pb-2 md:pb-3 font-mono text-lg md:text-2xl font-bold uppercase">
+            <span className="material-symbols-outlined text-primary !text-[20px] md:!text-[24px]">info</span>
             About This Deal
           </h2>
-          <p className="text-base leading-relaxed text-gray-800 whitespace-pre-line">{description}</p>
+          <p className="text-sm md:text-base leading-relaxed text-gray-800 whitespace-pre-line">{description}</p>
         </section>
 
         {/* What's Included / Benefits */}
-        <section className="rounded-sm border-4 border-black bg-white p-6 shadow-[6px_6px_0px_#111111]">
-          <h2 className="mb-4 flex items-center gap-2 border-b-3 border-black pb-3 font-mono text-2xl font-bold uppercase">
-            <span className="material-symbols-outlined text-primary">inventory_2</span>
+        <section className="rounded-sm border-2 md:border-4 border-black bg-white p-4 md:p-6 shadow-[4px_4px_0px_#111111] md:shadow-[6px_6px_0px_#111111]">
+          <h2 className="mb-3 md:mb-4 flex items-center gap-2 border-b-2 md:border-b-3 border-black pb-2 md:pb-3 font-mono text-lg md:text-2xl font-bold uppercase">
+            <span className="material-symbols-outlined text-primary !text-[20px] md:!text-[24px]">inventory_2</span>
             {deal.benefits ? 'Benefits & Features' : 'What\'s Included'}
           </h2>
-          <div className="grid md:grid-cols-2 gap-4">
+          <div className="grid md:grid-cols-2 gap-3 md:gap-4">
             {Array.isArray(benefits) && benefits.map((item, index) => (
-              <div key={index} className="flex items-start gap-3 p-4 bg-gray-50 rounded-sm border-2 border-gray-200">
+              <div key={index} className="flex items-start gap-2 md:gap-3 p-3 md:p-4 bg-gray-50 rounded-sm border-2 border-gray-200">
                 <span className="material-symbols-outlined text-green-600 mt-0.5 flex-shrink-0">check_circle</span>
                 <div>
                   {typeof item === 'string' ? (
                     <p className="text-base font-medium">{item}</p>
                   ) : (
                     <>
-                      <h3 className="font-bold font-mono text-base mb-1">{item.title}</h3>
-                      <p className="text-sm text-gray-600">{item.description}</p>
+                      <h3 className="font-bold font-mono text-sm md:text-base mb-1">{item.title}</h3>
+                      <p className="text-xs md:text-sm text-gray-600">{item.description}</p>
                     </>
                   )}
                 </div>
@@ -388,14 +388,14 @@ export default function SingleDealContent({ deal, freeAccess = false, basePath =
         </section>
 
         {/* Eligibility Requirements */}
-        <section className="rounded-sm border-4 border-black bg-white p-6 shadow-[6px_6px_0px_#111111]">
-          <h2 className="mb-4 flex items-center gap-2 border-b-3 border-black pb-3 font-mono text-2xl font-bold uppercase">
-            <span className="material-symbols-outlined text-primary">checklist</span>
+        <section className="rounded-sm border-2 md:border-4 border-black bg-white p-4 md:p-6 shadow-[4px_4px_0px_#111111] md:shadow-[6px_6px_0px_#111111]">
+          <h2 className="mb-3 md:mb-4 flex items-center gap-2 border-b-2 md:border-b-3 border-black pb-2 md:pb-3 font-mono text-lg md:text-2xl font-bold uppercase">
+            <span className="material-symbols-outlined text-primary !text-[20px] md:!text-[24px]">checklist</span>
             Eligibility Requirements
           </h2>
-          <ul className="space-y-3">
+          <ul className="space-y-2 md:space-y-3">
             {eligibility.map((requirement, index) => (
-              <li key={index} className="flex items-start gap-3 p-4 bg-yellow-50 rounded-sm border-l-4 border-black">
+              <li key={index} className="flex items-start gap-2 md:gap-3 p-3 md:p-4 bg-yellow-50 rounded-sm border-l-4 border-black">
                 <span className="material-symbols-outlined text-primary flex-shrink-0 mt-0.5">arrow_right</span>
                 <span className="text-base font-medium">{requirement}</span>
               </li>
@@ -404,12 +404,12 @@ export default function SingleDealContent({ deal, freeAccess = false, basePath =
         </section>
 
         {/* How to Apply */}
-        <section className="rounded-sm border-4 border-black bg-white p-6 shadow-[6px_6px_0px_#111111]">
-          <h2 className="mb-6 flex items-center gap-2 border-b-3 border-black pb-3 font-mono text-2xl font-bold uppercase">
-            <span className="material-symbols-outlined text-primary">directions_run</span>
+        <section className="rounded-sm border-2 md:border-4 border-black bg-white p-4 md:p-6 shadow-[4px_4px_0px_#111111] md:shadow-[6px_6px_0px_#111111]">
+          <h2 className="mb-3 md:mb-4 flex items-center gap-2 border-b-2 md:border-b-3 border-black pb-2 md:pb-3 font-mono text-lg md:text-2xl font-bold uppercase">
+            <span className="material-symbols-outlined text-primary !text-[20px] md:!text-[24px]">directions_run</span>
             How to Apply
           </h2>
-          <div className="space-y-6">
+          <div className="space-y-4 md:space-y-6">
             {instructions.map((step, index) => (
               <div key={index} className="flex gap-4">
                 <div className="flex-shrink-0">
@@ -423,8 +423,8 @@ export default function SingleDealContent({ deal, freeAccess = false, basePath =
                     <p className="text-base text-gray-700 leading-relaxed">{step}</p>
                   ) : (
                     <>
-                      <h3 className="font-bold text-lg font-mono mb-2">{step.title}</h3>
-                      <p className="text-base text-gray-700 leading-relaxed">{step.description}</p>
+                      <h3 className="font-bold text-base md:text-lg font-mono mb-1 md:mb-2">{step.title}</h3>
+                      <p className="text-sm md:text-base text-gray-700 leading-relaxed">{step.description}</p>
                     </>
                   )}
                 </div>
@@ -442,7 +442,7 @@ export default function SingleDealContent({ deal, freeAccess = false, basePath =
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={handleApplyClick}
-                className="inline-flex items-center gap-2 rounded-sm border-4 border-black bg-primary px-8 py-4 font-mono text-lg font-bold uppercase text-black shadow-[6px_6px_0px_#111111] hover:bg-yellow-300 hover:shadow-[8px_8px_0px_#111111] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all cursor-pointer"
+                className="inline-flex items-center gap-2 rounded-sm border-2 md:border-4 border-black bg-primary px-6 md:px-8 py-3 md:py-4 font-mono text-sm md:text-lg font-bold uppercase text-black shadow-[4px_4px_0px_#111111] md:shadow-[6px_6px_0px_#111111] hover:bg-yellow-300 transition-all cursor-pointer"
               >
                 {freeAccess ? 'Apply Now' : isPro ? 'Apply Now' : 'Apply Now (Pro Only)'}
                 <span className="material-symbols-outlined">{freeAccess || isPro ? 'arrow_forward' : 'lock'}</span>
@@ -456,12 +456,12 @@ export default function SingleDealContent({ deal, freeAccess = false, basePath =
         </section>
 
         {/* FAQ Section */}
-        <section className="rounded-sm border-4 border-black bg-white p-6 shadow-[6px_6px_0px_#111111]">
-          <h2 className="mb-6 flex items-center gap-2 border-b-3 border-black pb-3 font-mono text-2xl font-bold uppercase">
-            <span className="material-symbols-outlined text-primary">help</span>
-            Frequently Asked Questions
+        <section className="rounded-sm border-2 md:border-4 border-black bg-white p-4 md:p-6 shadow-[4px_4px_0px_#111111] md:shadow-[6px_6px_0px_#111111]">
+          <h2 className="mb-3 md:mb-4 flex items-center gap-2 border-b-2 md:border-b-3 border-black pb-2 md:pb-3 font-mono text-lg md:text-2xl font-bold uppercase">
+            <span className="material-symbols-outlined text-primary !text-[20px] md:!text-[24px]">help</span>
+            FAQ
           </h2>
-          <div className="space-y-3">
+          <div className="space-y-2 md:space-y-3">
             {faqs.map((faqItem, index) => (
               <div
                 key={index}
@@ -469,7 +469,7 @@ export default function SingleDealContent({ deal, freeAccess = false, basePath =
               >
                 <button
                   onClick={() => setOpenFaqIndex(openFaqIndex === index ? null : index)}
-                  className="flex cursor-pointer items-center justify-between p-4 font-bold font-mono w-full text-left hover:bg-gray-50 transition-colors"
+                  className="flex cursor-pointer items-center justify-between p-3 md:p-4 text-sm md:text-base font-bold font-mono w-full text-left hover:bg-gray-50 transition-colors"
                 >
                   <span className="pr-4">{faqItem.question}</span>
                   <span className={`material-symbols-outlined transition-transform flex-shrink-0 ${openFaqIndex === index ? 'rotate-180' : ''}`}>
@@ -477,7 +477,7 @@ export default function SingleDealContent({ deal, freeAccess = false, basePath =
                   </span>
                 </button>
                 {openFaqIndex === index && (
-                  <div className="border-t-3 border-gray-200 px-4 pb-4 pt-3 text-base text-gray-700 leading-relaxed bg-gray-50">
+                  <div className="border-t-2 md:border-t-3 border-gray-200 px-3 pb-3 pt-2 md:px-4 md:pb-4 md:pt-3 text-sm md:text-base text-gray-700 leading-relaxed bg-gray-50">
                     {faqItem.answer}
                   </div>
                 )}
@@ -498,7 +498,7 @@ export default function SingleDealContent({ deal, freeAccess = false, basePath =
                 <a
                   key={index}
                   href={similarDeal.slug ? `${basePath}/${similarDeal.slug}` : '#'}
-                  className="group rounded-sm border-4 border-black bg-white p-5 shadow-[4px_4px_0px_#111111] hover:shadow-[6px_6px_0px_#111111] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all"
+                  className="group rounded-sm border-2 md:border-4 border-black bg-white p-4 md:p-5 shadow-[3px_3px_0px_#111111] md:shadow-[4px_4px_0px_#111111] hover:shadow-[6px_6px_0px_#111111] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all"
                 >
                   <div className="flex items-start justify-between mb-3">
                     <span className="bg-primary text-black text-xs px-3 py-1.5 rounded-sm border-2 border-black font-bold uppercase font-mono">

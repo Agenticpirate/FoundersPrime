@@ -27,11 +27,11 @@ export default function FinalCTA() {
 
           {/* Left */}
           <div className="flex-1 min-w-0">
-            <h2 className="text-2xl md:text-3xl font-black font-mono tracking-tighter text-white uppercase leading-tight mb-1">
+            <h2 className="text-xl md:text-3xl font-black font-mono tracking-tighter text-white uppercase leading-tight mb-1">
               Stay Ahead. <span className="text-accent-yellow">Get Alerts.</span>
             </h2>
-            <p className="text-sm text-gray-400 font-mono leading-relaxed">
-              New deals, grants, accelerators & credits — straight to your inbox.
+            <p className="text-xs md:text-sm text-gray-400 font-mono leading-relaxed">
+              New deals, grants, accelerators &amp; credits — straight to your inbox.
             </p>
           </div>
 
@@ -44,9 +44,9 @@ export default function FinalCTA() {
               </div>
             ) : (
               <div>
-                <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-0 neo-shadow">
+                <form onSubmit={handleSubmit} className="flex flex-row gap-0 neo-shadow">
                   <input
-                    className="w-full sm:w-64 bg-white text-black text-sm p-3 focus:ring-0 focus:outline-none font-mono rounded-none placeholder-gray-500"
+                    className="flex-1 min-w-0 bg-white text-black text-sm p-3 focus:ring-0 focus:outline-none font-mono rounded-none placeholder-gray-500"
                     placeholder="YOUR EMAIL ADDRESS"
                     type="email"
                     required
@@ -55,9 +55,9 @@ export default function FinalCTA() {
                   />
                   <button
                     type="submit"
-                    className="bg-accent-yellow text-black text-sm font-black px-5 py-3 hover:bg-white transition-all whitespace-nowrap font-mono uppercase flex items-center justify-center gap-1.5 border-2 border-accent-yellow"
+                    className="bg-accent-yellow text-black text-sm font-black px-4 py-3 hover:bg-white transition-all whitespace-nowrap font-mono uppercase flex items-center justify-center gap-1.5 border-2 border-accent-yellow"
                   >
-                    Subscribe
+                    <span className="hidden sm:inline">Subscribe</span>
                     <span className="material-symbols-outlined text-sm">arrow_forward</span>
                   </button>
                 </form>

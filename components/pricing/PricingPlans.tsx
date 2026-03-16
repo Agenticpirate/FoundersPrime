@@ -98,13 +98,77 @@ export default function PricingPlans({ currency }: PricingPlansProps) {
   ]
 
   return (
-    <section className="mb-8">
+    <section className="mb-6 md:mb-8">
       {/* Section Heading */}
-      <h2 className="font-mono text-2xl md:text-3xl font-black uppercase text-center text-[#111111] tracking-tight mb-8">
+      <h2 className="font-mono text-xl md:text-3xl font-black uppercase text-center text-[#111111] tracking-tight mb-5 md:mb-8">
         Unlock More Value
       </h2>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 items-stretch max-w-5xl mx-auto px-4">
+      {/* Mobile carousel */}
+      <div className="md:hidden flex gap-4 overflow-x-auto snap-x snap-mandatory pb-4 px-4 mobile-scroll-hide">
+        {plans.map((plan, index) => (
+          <div
+            key={index}
+            className="snap-start shrink-0 w-[82vw] group relative flex flex-col border-2 border-[#111111] shadow-[3px_3px_0px_0px_#111111] overflow-hidden"
+          >
+            {plan.popular && (
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 bg-[#111111] text-white px-3 py-0.5 font-mono text-[9px] font-black uppercase tracking-widest z-20 rounded-b-sm">
+                ★ Most Popular
+              </div>
+            )}
+            {plan.special && (
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 bg-[#111111] text-white px-3 py-0.5 font-mono text-[9px] font-black uppercase tracking-widest z-20 rounded-b-sm flex items-center gap-1">
+                <span className="material-symbols-outlined text-[9px] text-amber-400">bolt</span>
+                Elite Status
+              </div>
+            )}
+            <div className={`${plan.headerBg} px-4 pt-7 pb-3 text-left relative overflow-hidden border-b-2 border-[#111111]/15`}>
+              <div className="flex items-center gap-2">
+                <div className={`w-6 h-6 ${plan.iconBg} border border-[#111111]/20 rounded-sm flex items-center justify-center`}>
+                  <span className="material-symbols-outlined text-xs text-[#111111]">{plan.icon}</span>
+                </div>
+                <h3 className={`font-mono text-sm font-black uppercase tracking-tight ${plan.textColor}`}>{plan.name}</h3>
+              </div>
+              <div className={`flex items-baseline ${plan.textColor} mt-2`}>
+                <span className="font-sans text-2xl font-black tracking-tight leading-none">{plan.price}</span>
+                <span className="font-mono text-[9px] font-bold uppercase ml-1 opacity-60">/{plan.period}</span>
+              </div>
+              {plan.description && (
+                <p className={`font-sans text-[10px] mt-1 opacity-60 ${plan.textColor}`}>{plan.description}</p>
+              )}
+            </div>
+            <div className={`px-4 py-3 flex-1 flex flex-col justify-between ${plan.cardBg}`}>
+              <ul className="space-y-1.5">
+                {plan.features.map((feature, idx) => (
+                  <li key={idx} className="flex items-center gap-2">
+                    <span className={`material-symbols-outlined text-base ${plan.featureIcon}`} style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
+                    <span className="font-sans text-xs text-[#111111]">{feature}</span>
+                  </li>
+                ))}
+              </ul>
+              <div className="mt-4">
+                <Link
+                  href={plan.href}
+                  className={`w-full py-2 font-mono font-bold uppercase tracking-wider text-[10px] border-2 border-[#111111] flex items-center justify-center gap-1.5 shadow-[2px_2px_0_0_#111111] transition-all duration-200 ${plan.buttonStyle}`}
+                >
+                  {plan.cta}
+                  <span className="material-symbols-outlined text-sm">arrow_forward</span>
+                </Link>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Mobile dot indicator */}
+      <div className="flex md:hidden justify-center gap-1.5 mt-2 mb-2">
+        {plans.map((_, i) => (
+          <div key={i} className={`rounded-full transition-all ${i === 0 ? 'w-4 h-1.5 bg-black' : 'w-1.5 h-1.5 bg-gray-300'}`} />
+        ))}
+      </div>
+
+      {/* Desktop grid */}
+      <div className="hidden md:grid md:grid-cols-3 gap-5 items-stretch max-w-5xl mx-auto px-4">
         {plans.map((plan, index) => (
           <div
             key={index}

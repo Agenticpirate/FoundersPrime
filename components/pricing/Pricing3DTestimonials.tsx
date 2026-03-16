@@ -1,5 +1,6 @@
 'use client';
 
+import React from 'react';
 import Image from 'next/image';
 
 type Testimonial = {
@@ -172,40 +173,79 @@ function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
 }
 
 export default function Pricing3DTestimonials() {
+    const scrollRef = React.useRef<HTMLDivElement>(null)
+    const [activeIdx, setActiveIdx] = React.useState(0)
+    const totalMobile = Math.min(8, testimonials.length)
+
+    React.useEffect(() => {
+        const el = scrollRef.current
+        if (!el) return
+        const cardWidth = el.scrollWidth / totalMobile
+        const timer = setInterval(() => {
+            setActiveIdx(prev => {
+                const next = (prev + 1) % totalMobile
+                el.scrollTo({ left: next * cardWidth, behavior: 'smooth' })
+                return next
+            })
+        }, 3000)
+        return () => clearInterval(timer)
+    }, [totalMobile])
+
     return (
-        <section className="w-full py-10 md:py-16 bg-[#F4F3EF] border-b-3 border-[#111111] overflow-hidden">
+        <section className="w-full py-8 md:py-16 bg-[#F4F3EF] border-b-3 border-[#111111] overflow-hidden">
             <div className="max-w-6xl mx-auto px-4 md:px-8 lg:px-12">
                 {/* Header */}
-                <div className="text-center mb-6 md:mb-12">
-                    <h2 className="text-2xl md:text-3xl lg:text-4xl font-black uppercase mb-2 md:mb-4 tracking-tighter text-[#111111]">
+                <div className="text-center mb-4 md:mb-12">
+                    <h2 className="text-xl md:text-3xl lg:text-4xl font-black uppercase mb-1.5 md:mb-4 tracking-tighter text-[#111111]">
                         Don&apos;t Take Our Word For It
                     </h2>
-                    <p className="text-sm md:text-base font-medium text-gray-500 max-w-2xl mx-auto">
+                    <p className="text-xs md:text-base font-medium text-gray-500 max-w-2xl mx-auto">
                         Real founders. Real results. See how FoundersPrime is helping startups save thousands.
                     </p>
                 </div>
 
-                {/* Mobile: Horizontal Snap Scroll */}
-                <div className="md:hidden flex gap-3 overflow-x-auto snap-x snap-mandatory pb-4 mobile-scroll-hide -mx-4 px-4">
-                    {testimonials.slice(0, 8).map((t) => (
-                        <div key={t.name} className="snap-start shrink-0 w-[80vw] bg-white border-2 border-[#e5e5e5] rounded-lg p-4">
-                            <div className="flex items-center gap-3 mb-3">
-                                <div className="w-8 h-8 rounded-full overflow-hidden border border-gray-200 flex-shrink-0">
+                {/* Mobile: Auto-sliding Carousel */}
+                <div
+                    ref={scrollRef}
+                    className="md:hidden flex gap-3 overflow-x-auto snap-x snap-mandatory pb-3 mobile-scroll-hide -mx-4 px-4"
+                >
+                    {testimonials.slice(0, totalMobile).map((t) => (
+                        <div key={t.name} className="snap-start shrink-0 w-[78vw] bg-white border-2 border-[#e5e5e5] rounded-sm p-3">
+                            <div className="flex items-center gap-2 mb-2">
+                                <div className="w-7 h-7 rounded-full overflow-hidden border border-gray-200 flex-shrink-0">
                                     <Image
                                         src={t.avatar}
                                         alt={t.name}
-                                        width={32}
-                                        height={32}
+                                        width={28}
+                                        height={28}
                                         className="object-cover w-full h-full"
                                     />
                                 </div>
                                 <div>
                                     <p className="font-bold text-xs text-[#111111] leading-tight">{t.name}</p>
-                                    <p className="text-[10px] text-gray-500 leading-tight">{t.designation}</p>
+                                    <p className="text-[9px] text-gray-500 leading-tight">{t.designation}</p>
                                 </div>
                             </div>
-                            <p className="text-xs leading-relaxed text-gray-700">&ldquo;{t.quote}&rdquo;</p>
+                            <p className="text-[11px] leading-relaxed text-gray-700">&ldquo;{t.quote}&rdquo;</p>
                         </div>
+                    ))}
+                </div>
+
+                {/* Mobile dot indicators */}
+                <div className="flex md:hidden justify-center gap-1 mt-2 mb-2">
+                    {Array.from({ length: totalMobile }).map((_, i) => (
+                        <button
+                            key={i}
+                            onClick={() => {
+                                setActiveIdx(i)
+                                const el = scrollRef.current
+                                if (el) {
+                                    const cardWidth = el.scrollWidth / totalMobile
+                                    el.scrollTo({ left: i * cardWidth, behavior: 'smooth' })
+                                }
+                            }}
+                            className={`rounded-full transition-all ${i === activeIdx ? 'w-4 h-1.5 bg-black' : 'w-1.5 h-1.5 bg-gray-300'}`}
+                        />
                     ))}
                 </div>
 

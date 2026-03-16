@@ -2,19 +2,19 @@ import Link from 'next/link'
 
 export default function ProblemSection() {
     return (
-        <section className="relative py-6 md:py-14 border-b-2 border-black grid-bg overflow-hidden">
+        <section className="relative pt-6 pb-2 md:pt-12 lg:pt-20 lg:pb-0 overflow-hidden grid-bg flex flex-col">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="flex flex-col items-center text-center max-w-4xl mx-auto">
+                <div className="flex flex-col items-start md:items-center text-left md:text-center max-w-4xl mx-auto">
                     {/* Label */}
-                    <div className="inline-block bg-black text-white text-xs font-mono font-bold px-3 py-1 mb-4 uppercase tracking-wider neo-shadow-sm transform -rotate-1">
+                    <div className="inline-block bg-black text-white text-xs font-mono font-bold px-3 py-1 mb-4 uppercase tracking-wider neo-shadow-sm transform -rotate-1 self-start md:self-center">
                         Why This Exists
                     </div>
 
                     {/* Headline */}
-                    <h2 className="text-xl sm:text-2xl md:text-4xl lg:text-5xl font-black text-black mb-4 leading-tight uppercase font-sans">
+                    <h2 className="text-xl sm:text-2xl md:text-4xl lg:text-5xl font-black text-black mb-4 leading-tight uppercase font-sans w-full">
                         The problem isn't <br className="hidden md:block" />
                         lack of opportunities.<br />
-                        <span className="bg-accent-red text-white px-2 mt-2 inline-block transform rotate-1">It's lack of visibility.</span>
+                        <span className="bg-accent-red text-white px-2 mt-2 inline-block transform rotate-1 md:origin-center origin-left">It's lack of visibility.</span>
                     </h2>
 
                     {/* Subheadline */}
@@ -25,36 +25,46 @@ export default function ProblemSection() {
                     </p>
 
                     {/* Insights — horizontal scroll on mobile, grid on md+ */}
-                    <div className="flex md:grid md:grid-cols-3 gap-4 w-full mb-6 md:mb-10 text-left overflow-x-auto snap-x snap-mandatory pb-2 mobile-scroll-hide">
+                    <div 
+                        className="flex md:grid md:grid-cols-3 gap-4 w-full mb-4 md:mb-10 text-left overflow-x-auto snap-x snap-mandatory pb-4 pt-2 -mx-4 px-4 scroll-smooth mobile-scroll-hide"
+                        style={{ scrollPaddingLeft: '16px' }}
+                    >
                         {/* Insight 1 */}
-                        <div className="border-2 border-black p-3 md:p-5 bg-accent-yellow neo-shadow hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all snap-start shrink-0 w-[80vw] md:w-auto">
+                        <div className="border-2 border-black p-4 md:p-5 bg-accent-yellow neo-shadow hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all snap-start shrink-0 w-[80vw] sm:w-[50vw] md:w-auto h-full flex flex-col justify-start">
                             <span className="material-symbols-outlined text-2xl mb-2 block">schedule</span>
-                            <p className="font-bold text-black text-xs md:text-sm font-mono">
+                            <p className="font-bold text-black text-xs md:text-sm font-mono leading-relaxed">
                                 Credits exist, but founders hear about them <span className="underline decoration-2">too late</span>.
                             </p>
                         </div>
 
                         {/* Insight 2 */}
-                        <div className="border-2 border-black p-3 md:p-5 bg-accent-cyan neo-shadow hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all snap-start shrink-0 w-[80vw] md:w-auto">
+                        <div className="border-2 border-black p-4 md:p-5 bg-accent-cyan neo-shadow hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all snap-start shrink-0 w-[80vw] sm:w-[50vw] md:w-auto h-full flex flex-col justify-start">
                             <span className="material-symbols-outlined text-2xl mb-2 block">search_off</span>
-                            <p className="font-bold text-black text-xs md:text-sm font-mono">
+                            <p className="font-bold text-black text-xs md:text-sm font-mono leading-relaxed">
                                 Grants are real, but eligibility and timelines are <span className="underline decoration-2">unclear</span>.
                             </p>
                         </div>
 
                         {/* Insight 3 */}
-                        <div className="border-2 border-black p-3 md:p-5 bg-primary text-white neo-shadow hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all snap-start shrink-0 w-[80vw] md:w-auto">
+                        <div className="border-2 border-black p-4 md:p-5 bg-primary text-white neo-shadow hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all snap-start shrink-0 w-[80vw] sm:w-[50vw] md:w-auto h-full flex flex-col justify-start">
                             <span className="material-symbols-outlined text-2xl mb-2 block">hourglass_empty</span>
-                            <p className="font-bold text-white text-xs md:text-sm font-mono">
+                            <p className="font-bold text-white text-xs md:text-sm font-mono leading-relaxed">
                                 Accelerators are competitive, and most applications are <span className="underline decoration-2">rushed</span>.
                             </p>
                         </div>
                     </div>
 
+                    {/* Scroll dots — mobile only */}
+                    <div className="flex md:hidden items-center gap-1.5 mb-4">
+                        <div className="w-4 h-1.5 bg-black rounded-full"></div>
+                        <div className="w-1.5 h-1.5 bg-gray-300 rounded-full"></div>
+                        <div className="w-1.5 h-1.5 bg-gray-300 rounded-full"></div>
+                    </div>
+
                     {/* Reframe Line */}
-                    <div className="relative mb-6 md:mb-10">
+                    <div className="relative mb-4 md:mb-10 w-full">
                         <div className="absolute -inset-1 bg-gray-200 transform rotate-1"></div>
-                        <p className="relative z-10 text-base md:text-xl lg:text-2xl font-black text-black bg-white border-2 border-black px-4 py-2 md:px-6 md:py-3 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+                        <p className="relative z-10 text-sm md:text-xl lg:text-2xl font-black text-black bg-white border-2 border-black px-3 py-2 md:px-6 md:py-3 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]">
                             FoundersPrime brings all of this into one structured platform.
                         </p>
                     </div>

@@ -27,7 +27,13 @@ export default function PricingPartnerLogos() {
         { name: 'Typeform', domain: 'typeform.com' },
         { name: 'ClickUp', domain: 'clickup.com' },
         { name: 'Monday', domain: 'monday.com' },
-        { name: 'Asana', domain: 'asana.com' }
+        { name: 'Asana', domain: 'asana.com' },
+        { name: 'Gusto', domain: 'gusto.com' },
+        { name: 'Rippling', domain: 'rippling.com' },
+        { name: 'Brex', domain: 'brex.com' },
+        { name: 'Ramp', domain: 'ramp.com' },
+        { name: 'Deel', domain: 'deel.com' },
+        { name: 'Attio', domain: 'attio.com' }
     ]
 
     // Duplicate partners to create seamless loop
@@ -41,13 +47,13 @@ export default function PricingPartnerLogos() {
                 </p>
 
                 <div className="relative w-full overflow-hidden mask-gradient-x">
-                    <div className="flex gap-12 animate-marquee whitespace-nowrap items-center">
+                    <div className="flex gap-8 md:gap-12 animate-marquee whitespace-nowrap items-center">
                         {seamlessPartners.map((partner, index) => (
-                            <div key={`${partner.name}-${index}`} className="flex items-center justify-center w-24 h-12 flex-shrink-0 transition-all duration-300 hover:scale-110">
+                            <div key={`${partner.name}-${index}`} className="flex items-center justify-center w-20 md:w-24 h-12 flex-shrink-0 transition-all duration-300 hover:scale-110">
                                 <img
                                     src={`https://www.google.com/s2/favicons?domain=${partner.domain}&sz=128`}
                                     alt={`${partner.name} logo`}
-                                    className="w-8 h-8 md:w-10 md:h-10 object-contain"
+                                    className="w-7 h-7 md:w-10 md:h-10 object-contain"
                                     loading="lazy"
                                     onError={(e) => {
                                         (e.target as HTMLImageElement).style.display = 'none';
@@ -60,7 +66,7 @@ export default function PricingPartnerLogos() {
             </div>
             <style jsx>{`
         .animate-marquee {
-          animation: marquee 40s linear infinite;
+          animation: marquee 15s linear infinite;
         }
         .animate-marquee:hover {
           animation-play-state: paused;

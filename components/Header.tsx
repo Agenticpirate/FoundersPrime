@@ -22,11 +22,66 @@ export default function Header() {
   }, [user])
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [expandedSection, setExpandedSection] = useState<string | null>(null)
 
   // Close mobile menu when route changes or user logs out
   useEffect(() => {
     setMobileMenuOpen(false)
+    setExpandedSection(null)
   }, [user])
+
+  const toggleSection = (section: string) => {
+    setExpandedSection(prev => prev === section ? null : section)
+  }
+
+  const mobileNavSections = [
+    {
+      id: 'deals',
+      label: 'Deals',
+      href: '/deals',
+      icon: 'local_offer',
+      children: [
+        { label: 'All Deals', href: '/deals', icon: 'grid_view' },
+        { label: 'Cloud Credits', href: '/deals/cloud-credits', icon: 'cloud' },
+        { label: 'SaaS Discounts', href: '/deals/saas-discounts', icon: 'apps' },
+        { label: 'Ad Credits', href: '/deals/ad-credits', icon: 'campaign' },
+      ]
+    },
+    {
+      id: 'programs',
+      label: 'Programs',
+      href: '/deals/accelerators',
+      icon: 'rocket_launch',
+      children: [
+        { label: 'Accelerators', href: '/deals/accelerators', icon: 'rocket_launch' },
+        { label: 'Incubators', href: '/deals/incubators', icon: 'lightbulb' },
+        { label: 'Grants', href: '/deals/grants', icon: 'payments' },
+        { label: 'Funding & Opps', href: '/resources/funding-opportunities', icon: 'monetization_on' },
+      ]
+    },
+    {
+      id: 'studentbenefits',
+      label: 'Student Benefits',
+      href: '#',
+      icon: 'school',
+      children: [
+        { label: 'Campus Edge', href: '/resources/free-access', icon: 'workspace_premium' },
+        { label: 'Credits & Savings', href: '/resources/credits-savings', icon: 'savings' },
+      ]
+    },
+    {
+      id: 'resources',
+      label: 'Resources',
+      href: '/resources',
+      icon: 'folder_open',
+      children: [
+        { label: 'Templates & Guides', href: '/resources', icon: 'description' },
+        { label: 'Verified Startups', href: '/startups', icon: 'verified' },
+        { label: 'Startup Ideas', href: '/ideas', icon: 'emoji_objects' },
+        { label: 'Contact', href: '/contact', icon: 'mail' },
+      ]
+    },
+  ]
 
   return (
     <header className="sticky top-0 z-50 bg-[#f6f8f8] border-b-2 border-black">
@@ -47,7 +102,7 @@ export default function Header() {
               <Link className="text-black font-bold hover:text-primary flex items-center gap-1 py-6" href="/deals">
                 Deals <span className="material-symbols-outlined text-sm">expand_more</span>
               </Link>
-              <div className="absolute left-0 top-full pt-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+              <div className="absolute left-0 top-full pt-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 ease-out z-50">
                 <div className="bg-white border-3 border-black shadow-[6px_6px_0px_#111111] min-w-[220px]">
                   <Link href="/deals" className="block px-4 py-3 text-sm font-bold hover:bg-primary/20 border-b border-black/10 flex items-center gap-2">
                     <span className="material-symbols-outlined text-lg">local_offer</span>
@@ -74,7 +129,7 @@ export default function Header() {
               <Link className="text-black font-bold hover:text-primary flex items-center gap-1 py-6" href="/deals/accelerators">
                 Programs <span className="material-symbols-outlined text-sm">expand_more</span>
               </Link>
-              <div className="absolute left-0 top-full pt-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+              <div className="absolute left-0 top-full pt-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 ease-out z-50">
                 <div className="bg-white border-3 border-black shadow-[6px_6px_0px_#111111] min-w-[220px]">
                   <Link href="/deals/accelerators" className="block px-4 py-3 text-sm font-bold hover:bg-primary/20 border-b border-black/10 flex items-center gap-2">
                     <span className="material-symbols-outlined text-lg">rocket_launch</span>
@@ -101,7 +156,7 @@ export default function Header() {
               <Link className="text-black font-bold hover:text-primary flex items-center gap-1 py-6" href="#">
                 Student Benefits <span className="material-symbols-outlined text-sm">expand_more</span>
               </Link>
-              <div className="absolute left-0 top-full pt-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+              <div className="absolute left-0 top-full pt-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 ease-out z-50">
                 <div className="bg-white border-3 border-black shadow-[6px_6px_0px_#111111] min-w-[240px]">
                   <Link href="/resources/free-access" className="block px-4 py-3 text-sm font-bold hover:bg-primary/20 border-b border-black/10 flex items-center gap-2">
                     <span className="material-symbols-outlined text-lg">workspace_premium</span>
@@ -120,7 +175,7 @@ export default function Header() {
               <Link className="text-black font-bold hover:text-primary flex items-center gap-1 py-6" href="/resources">
                 Resources <span className="material-symbols-outlined text-sm">expand_more</span>
               </Link>
-              <div className="absolute left-0 top-full pt-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+              <div className="absolute left-0 top-full pt-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 ease-out z-50">
                 <div className="bg-white border-3 border-black shadow-[6px_6px_0px_#111111] min-w-[220px]">
                   <Link href="/startups" className="block px-4 py-3 text-sm font-bold hover:bg-primary/20 border-b border-black/10 flex items-center gap-2">
                     <span className="material-symbols-outlined text-lg">verified</span>
@@ -132,7 +187,7 @@ export default function Header() {
                   </Link>
                   <Link href="/resources" className="block px-4 py-3 text-sm font-bold hover:bg-primary/20 border-b border-black/10 flex items-center gap-2">
                     <span className="material-symbols-outlined text-lg">folder_open</span>
-                    Templates & Guides
+                    Templates &amp; Guides
                   </Link>
                   <Link href="/contact" className="block px-4 py-3 text-sm font-bold hover:bg-primary/20 flex items-center gap-2">
                     <span className="material-symbols-outlined text-lg">mail</span>
@@ -168,7 +223,7 @@ export default function Header() {
                     )}
                     <span className="material-symbols-outlined text-sm">expand_more</span>
                   </button>
-                  <div className="absolute right-0 top-full pt-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                  <div className="absolute right-0 top-full pt-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 ease-out z-50">
                     <div className="bg-white border-3 border-black shadow-[6px_6px_0px_#111111] min-w-[180px]">
                       <Link href="/dashboard" className="block px-4 py-3 text-sm font-bold hover:bg-primary/20 border-b border-black/10 flex items-center gap-2">
                         <span className="material-symbols-outlined text-lg">dashboard</span>
@@ -216,59 +271,118 @@ export default function Header() {
           </div>
         </div>
 
-        {/* Mobile Menu — compact slide-down panel */}
+        {/* Mobile Menu — Accordion style with sub-menus */}
         {mobileMenuOpen && (
-          <div className="md:hidden absolute left-0 right-0 bg-white border-b-2 border-black shadow-[0_8px_32px_rgba(0,0,0,0.12)] z-40 animate-slideDown">
-            <div className="px-4 py-3">
+          <div className="md:hidden absolute left-0 right-0 bg-white border-b-2 border-black shadow-[0_8px_32px_rgba(0,0,0,0.12)] z-40 animate-slideDown max-h-[80vh] overflow-y-auto">
+            <div className="px-3 py-2">
 
-              {/* Nav links — 3-across compact pill grid */}
-              <div className="grid grid-cols-3 gap-1.5 mb-3">
-                {[
-                  { label: 'Deals', href: '/deals' },
-                  { label: 'Programs', href: '/deals/accelerators' },
-                  { label: 'Startups', href: '/startups' },
-                  { label: 'Resources', href: '/resources' },
-                  { label: 'Pricing', href: '/pricing' },
-                  { label: 'Ideas', href: '/ideas' },
-                ].map(({ label, href }) => (
-                  <Link
-                    key={href}
-                    href={href}
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="flex items-center justify-center py-2 px-2 text-[11px] font-mono font-bold uppercase bg-[#f6f8f8] border border-black/10 hover:bg-black hover:text-white hover:border-black transition-all duration-150 rounded-sm text-black"
-                  >
-                    {label}
-                  </Link>
+              {/* Accordion Nav Sections */}
+              <div className="flex flex-col divide-y divide-black/8">
+                {mobileNavSections.map((section) => (
+                  <div key={section.id}>
+                    {/* Section Header Row */}
+                    <div className="flex items-center">
+                      <Link
+                        href={section.children && section.children.length > 0 ? '#' : section.href}
+                        onClick={(e) => {
+                          if (section.children && section.children.length > 0) {
+                            e.preventDefault();
+                            toggleSection(section.id);
+                          } else {
+                            setMobileMenuOpen(false);
+                          }
+                        }}
+                        className="flex-1 flex items-center gap-2 py-3 text-xs font-mono font-black border-transparent border-b hover:border-black/5 uppercase text-black transition-colors"
+                      >
+                        <span className="material-symbols-outlined text-base text-gray-500">{section.icon}</span>
+                        {section.label}
+                      </Link>
+                      {section.children && section.children.length > 0 && (
+                        <button
+                          onClick={() => toggleSection(section.id)}
+                          className="p-3 text-black hover:bg-gray-50 rounded-sm"
+                          aria-label={`Expand ${section.label}`}
+                        >
+                          <span className="material-symbols-outlined text-sm transition-transform duration-300 ease-out" style={{ transform: expandedSection === section.id ? 'rotate(180deg)' : 'rotate(0deg)' }}>
+                            expand_more
+                          </span>
+                        </button>
+                      )}
+                    </div>
+
+                    {/* Sub-links */}
+                    {expandedSection === section.id && section.children && section.children.length > 0 && (
+                      <div className="ml-6 mb-2 flex flex-col gap-0.5 bg-gray-50 border border-black/8 rounded-sm overflow-hidden animate-slideDown">
+                        {section.children.map((child: any) => (
+                          <Link
+                            key={child.href}
+                            href={child.href}
+                            onClick={() => setMobileMenuOpen(false)}
+                            className="flex items-center gap-2 px-3 py-3 text-[11px] font-mono font-bold uppercase text-gray-700 hover:bg-primary/10 hover:text-black border-b border-black/5 last:border-0 transition-colors"
+                          >
+                            <span className="material-symbols-outlined text-sm text-gray-400">{child.icon}</span>
+                            {child.label}
+                          </Link>
+                        ))}
+                      </div>
+                    )}
+                  </div>
                 ))}
+
+                {/* Standalone links */}
+                <Link
+                  href="/pricing"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="flex items-center gap-2 py-3 text-xs font-mono font-black uppercase text-black hover:bg-gray-50"
+                >
+                  <span className="material-symbols-outlined text-base text-gray-500">sell</span>
+                  Pricing
+                </Link>
+                <Link
+                  href="/ideas"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="flex items-center gap-2 py-3 text-xs font-mono font-black uppercase text-black hover:bg-gray-50"
+                >
+                  <span className="material-symbols-outlined text-base text-gray-500">emoji_objects</span>
+                  Ideas
+                </Link>
+                <Link
+                  href="/startups"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="flex items-center gap-2 py-3 text-xs font-mono font-black uppercase text-black hover:bg-gray-50"
+                >
+                  <span className="material-symbols-outlined text-base text-gray-500">verified</span>
+                  Startups
+                </Link>
               </div>
 
-              <hr className="border-black/8 mb-3" />
-
-              {/* Auth row */}
-              {user ? (
-                <div className="flex items-center gap-2">
-                  <div className="flex items-center gap-1.5 flex-1 min-w-0">
-                    <span className="material-symbols-outlined text-base text-gray-500">account_circle</span>
-                    <span className="text-xs font-mono font-bold truncate">{user.user_metadata?.full_name?.split(' ')[0] || user.email?.split('@')[0]}</span>
-                    {isPro && <span className="bg-accent-yellow text-black text-[9px] px-1.5 py-0.5 font-bold uppercase border border-black">PRO</span>}
+              <div className="border-t border-black/10 mt-2 pt-2">
+                {/* Auth row */}
+                {user ? (
+                  <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-1.5 flex-1 min-w-0">
+                      <span className="material-symbols-outlined text-base text-gray-500">account_circle</span>
+                      <span className="text-xs font-mono font-bold truncate">{user.user_metadata?.full_name?.split(' ')[0] || user.email?.split('@')[0]}</span>
+                      {isPro && <span className="bg-accent-yellow text-black text-[9px] px-1.5 py-0.5 font-bold uppercase border border-black">PRO</span>}
+                    </div>
+                    <Link href="/dashboard" onClick={() => setMobileMenuOpen(false)} className="text-[11px] font-mono font-bold uppercase px-3 py-1.5 border border-black hover:bg-black hover:text-white transition-all">
+                      Dashboard
+                    </Link>
+                    <button onClick={() => { signOut(); setMobileMenuOpen(false); }} className="text-[11px] font-mono font-bold uppercase px-3 py-1.5 border border-red-400 text-red-500 hover:bg-red-500 hover:text-white transition-all">
+                      Out
+                    </button>
                   </div>
-                  <Link href="/dashboard" onClick={() => setMobileMenuOpen(false)} className="text-[11px] font-mono font-bold uppercase px-3 py-1.5 border border-black hover:bg-black hover:text-white transition-all">
-                    Dashboard
-                  </Link>
-                  <button onClick={() => { signOut(); setMobileMenuOpen(false); }} className="text-[11px] font-mono font-bold uppercase px-3 py-1.5 border border-red-400 text-red-500 hover:bg-red-500 hover:text-white transition-all">
-                    Out
-                  </button>
-                </div>
-              ) : (
-                <div className="flex gap-2">
-                  <Link href="/login" onClick={() => setMobileMenuOpen(false)} className="flex-1 text-center py-2 text-xs font-mono font-bold uppercase border-2 border-black hover:bg-black hover:text-white transition-all">
-                    Log In
-                  </Link>
-                  <Link href="/pricing" onClick={() => setMobileMenuOpen(false)} className="flex-1 text-center py-2 text-xs font-mono font-bold uppercase border-2 border-black bg-accent-yellow hover:bg-yellow-400 transition-all">
-                    Get Started
-                  </Link>
-                </div>
-              )}
+                ) : (
+                  <div className="flex gap-2">
+                    <Link href="/login" onClick={() => setMobileMenuOpen(false)} className="flex-1 text-center py-2 text-xs font-mono font-bold uppercase border-2 border-black hover:bg-black hover:text-white transition-all">
+                      Log In
+                    </Link>
+                    <Link href="/pricing" onClick={() => setMobileMenuOpen(false)} className="flex-1 text-center py-2 text-xs font-mono font-bold uppercase border-2 border-black bg-accent-yellow hover:bg-yellow-400 transition-all">
+                      Get Started
+                    </Link>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         )}

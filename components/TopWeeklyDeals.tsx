@@ -76,7 +76,8 @@ export default function TopWeeklyDeals() {
         <div
           ref={scrollRef}
           onScroll={handleScroll}
-          className="flex md:hidden gap-3 overflow-x-auto snap-x snap-mandatory pb-3 mobile-scroll-hide"
+          className="flex md:hidden gap-3 overflow-x-auto snap-x snap-mandatory pb-4 pt-2 -mx-4 px-4 scroll-smooth mobile-scroll-hide"
+          style={{ scrollPaddingLeft: '16px' }}
         >
           {deals.map((deal, index) => (
             <div key={deal.id || index} className="bg-white neo-border p-0 relative snap-start shrink-0 w-[78vw] shadow-[4px_4px_0px_0px_#101622]">

@@ -104,7 +104,7 @@ export default function SystemModules() {
           {modules.map((module) => (
             <div key={module.id} className="bg-white border-[3px] border-[#101622] p-4 shadow-[4px_4px_0px_0px_#101622] flex flex-col snap-start shrink-0 w-[78vw]">
               <div className="flex justify-between items-start mb-3">
-                <div className={`w-10 h-10 bg-[#f6f6f8] border-[3px] border-[#101622] flex items-center justify-center transition-colors duration-300`}>
+                <div className={`w-10 h-10 bg-[#f6f6f8] border-[3px] border-[#101622] flex items-center justify-center transition-colors duration-300 ${module.hoverColor.replace(/group-hover:/g, '')}`}>
                   <span className="material-symbols-outlined text-xl">{module.icon}</span>
                 </div>
                 <span className="font-mono text-[10px] font-bold border-[2px] border-[#101622] px-1.5 py-0.5 bg-white shadow-[2px_2px_0px_0px_#101622]">{module.id}</span>

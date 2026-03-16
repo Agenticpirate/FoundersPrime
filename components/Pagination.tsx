@@ -40,51 +40,79 @@ export default function Pagination({
     }
 
     return (
-        <div className={`flex justify-between items-center bg-white p-4 border-3 border-ink shadow-hard-sm mt-6 ${className}`}>
-            <button
-                onClick={() => onPageChange(currentPage - 1)}
-                disabled={currentPage === 1}
-                className={`flex items-center gap-2 px-4 py-2 border-2 border-ink font-mono text-sm font-bold transition-colors ${currentPage === 1
-                        ? 'text-gray-400 cursor-not-allowed'
-                        : 'hover:bg-ink hover:text-white'
-                    }`}
-            >
-                <span className="material-symbols-outlined text-sm">arrow_back</span>
-                Previous
-            </button>
+        <div className={`bg-white border-3 border-ink shadow-hard-sm mt-6 ${className}`}>
+            {/* Mobile: prev / page X of Y / next */}
+            <div className="flex md:hidden items-center justify-between p-3 gap-2">
+                <button
+                    onClick={() => onPageChange(currentPage - 1)}
+                    disabled={currentPage === 1}
+                    className={`flex items-center gap-1 px-3 py-2 border-2 border-ink font-mono text-xs font-bold transition-colors ${currentPage === 1 ? 'text-gray-400 cursor-not-allowed' : 'hover:bg-ink hover:text-white'}`}
+                >
+                    <span className="material-symbols-outlined text-sm">arrow_back</span>
+                    Prev
+                </button>
 
-            <div className="flex items-center gap-2">
-                {getPageNumbers().map((pageNum, idx) => (
-                    typeof pageNum === 'number' ? (
-                        <button
-                            key={idx}
-                            onClick={() => onPageChange(pageNum)}
-                            className={`w-8 h-8 text-sm font-mono font-bold border-2 border-ink transition-colors ${currentPage === pageNum
-                                    ? 'bg-primary text-white'
-                                    : 'bg-white text-ink hover:bg-gray-100'
-                                }`}
-                        >
-                            {pageNum}
-                        </button>
-                    ) : (
-                        <span key={idx} className="w-8 h-8 flex items-center justify-center font-mono font-bold text-black">
-                            ...
-                        </span>
-                    )
-                ))}
+                <span className="font-mono text-xs font-bold text-gray-600">
+                    Page {currentPage} / {totalPages}
+                </span>
+
+                <button
+                    onClick={() => onPageChange(currentPage + 1)}
+                    disabled={currentPage === totalPages}
+                    className={`flex items-center gap-1 px-3 py-2 border-2 border-ink font-mono text-xs font-bold transition-colors ${currentPage === totalPages ? 'text-gray-400 cursor-not-allowed' : 'bg-primary text-ink hover:shadow-hard-hover'}`}
+                >
+                    Next
+                    <span className="material-symbols-outlined text-sm">arrow_forward</span>
+                </button>
             </div>
 
-            <button
-                onClick={() => onPageChange(currentPage + 1)}
-                disabled={currentPage === totalPages}
-                className={`flex items-center gap-2 px-4 py-2 border-2 border-ink font-mono text-sm font-bold transition-colors ${currentPage === totalPages
-                    ? 'text-gray-400 cursor-not-allowed'
-                    : 'bg-primary text-ink hover:shadow-hard-hover hover:translate-x-[-2px] hover:translate-y-[-2px]'
-                    }`}
-            >
-                Next
-                <span className="material-symbols-outlined text-sm">arrow_forward</span>
-            </button>
+            {/* Desktop: full numbered pagination */}
+            <div className="hidden md:flex justify-between items-center p-4">
+                <button
+                    onClick={() => onPageChange(currentPage - 1)}
+                    disabled={currentPage === 1}
+                    className={`flex items-center gap-2 px-4 py-2 border-2 border-ink font-mono text-sm font-bold transition-colors ${currentPage === 1
+                        ? 'text-gray-400 cursor-not-allowed'
+                        : 'hover:bg-ink hover:text-white'
+                        }`}
+                >
+                    <span className="material-symbols-outlined text-sm">arrow_back</span>
+                    Previous
+                </button>
+
+                <div className="flex items-center gap-2">
+                    {getPageNumbers().map((pageNum, idx) => (
+                        typeof pageNum === 'number' ? (
+                            <button
+                                key={idx}
+                                onClick={() => onPageChange(pageNum)}
+                                className={`w-8 h-8 text-sm font-mono font-bold border-2 border-ink transition-colors ${currentPage === pageNum
+                                    ? 'bg-primary text-white'
+                                    : 'bg-white text-ink hover:bg-gray-100'
+                                    }`}
+                            >
+                                {pageNum}
+                            </button>
+                        ) : (
+                            <span key={idx} className="w-8 h-8 flex items-center justify-center font-mono font-bold text-black">
+                                ...
+                            </span>
+                        )
+                    ))}
+                </div>
+
+                <button
+                    onClick={() => onPageChange(currentPage + 1)}
+                    disabled={currentPage === totalPages}
+                    className={`flex items-center gap-2 px-4 py-2 border-2 border-ink font-mono text-sm font-bold transition-colors ${currentPage === totalPages
+                        ? 'text-gray-400 cursor-not-allowed'
+                        : 'bg-primary text-ink hover:shadow-hard-hover hover:translate-x-[-2px] hover:translate-y-[-2px]'
+                        }`}
+                >
+                    Next
+                    <span className="material-symbols-outlined text-sm">arrow_forward</span>
+                </button>
+            </div>
         </div>
     )
 }

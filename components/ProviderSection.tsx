@@ -12,10 +12,10 @@ export default function ProviderSection() {
 
   if (!mounted) {
     return (
-      <section className="py-20 border-b-2 border-black bg-white">
+      <section className="py-8 md:py-20 border-b-2 border-black bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="border-[3px] border-[#101622] shadow-[6px_6px_0px_0px_#101622] bg-[#f6f6f8] h-[600px] flex items-center justify-center">
-            <span className="font-mono animate-pulse">Loading Provider Network...</span>
+          <div className="border-[3px] border-[#101622] shadow-[6px_6px_0px_0px_#101622] bg-[#f6f6f8] h-[200px] md:h-[600px] flex items-center justify-center">
+            <span className="font-mono animate-pulse text-sm">Loading Provider Network...</span>
           </div>
         </div>
       </section>
@@ -23,34 +23,32 @@ export default function ProviderSection() {
   }
 
   return (
-    <section className="py-20 border-b-2 border-black bg-white">
+    <section className="py-8 md:py-20 border-b-2 border-black bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="border-[3px] border-[#101622] shadow-[6px_6px_0px_0px_#101622] bg-[#f6f6f8] grid grid-cols-1 lg:grid-cols-2">
-          <div className="p-8 md:p-12 lg:p-16 flex flex-col justify-center border-b-[3px] lg:border-b-0 lg:border-r-[3px] border-[#101622]">
-            <div className="flex items-center gap-3 mb-6">
-              <div className="w-10 h-10 bg-[#101622] text-white flex items-center justify-center border-[2px] border-[#101622]">
-                <span className="material-symbols-outlined text-xl">handshake</span>
+          <div className="p-5 md:p-12 lg:p-16 flex flex-col justify-center border-b-[3px] lg:border-b-0 lg:border-r-[3px] border-[#101622]">
+            <div className="flex items-center gap-2 mb-3 md:mb-6">
+              <div className="w-8 h-8 md:w-10 md:h-10 bg-[#101622] text-white flex items-center justify-center border-[2px] border-[#101622]">
+                <span className="material-symbols-outlined text-base md:text-xl">handshake</span>
               </div>
-              <span className="font-mono font-bold text-sm uppercase tracking-widest text-gray-500">For Providers</span>
+              <span className="font-mono font-bold text-xs uppercase tracking-widest text-gray-500">For Providers</span>
             </div>
-            <h2 className="text-3xl md:text-5xl font-bold text-[#101622] font-mono mb-6 uppercase tracking-tight leading-none">
+            <h2 className="text-xl md:text-5xl font-bold text-[#101622] font-mono mb-3 md:mb-6 uppercase tracking-tight leading-none">
               List Your Product.<br />
               <span className="bg-accent-yellow px-1 border-[2px] border-[#101622]">Zero Fees.</span>
             </h2>
-            <p className="text-base md:text-lg text-gray-700 font-mono mb-10 leading-relaxed">
+            <p className="text-sm md:text-lg text-gray-700 font-mono mb-5 md:mb-10 leading-relaxed">
               Get your SaaS or service in front of 12,000+ verified founders. We curate high-value deals and grants. No fluff. Direct exposure.
             </p>
-            <div className="flex flex-wrap gap-4">
-              <Link href="/submit-deal" className="bg-[#101622] text-white border-[3px] border-[#101622] px-8 py-4 font-mono font-bold uppercase text-sm flex items-center gap-2 hover:bg-white hover:text-[#101622] transition-colors shadow-[4px_4px_0px_0px_#888] hover:shadow-[2px_2px_0px_0px_#888] hover:translate-x-[2px] hover:translate-y-[2px]">
-                Submit Your Deal <span className="material-symbols-outlined">arrow_forward</span>
+            <div className="flex flex-wrap gap-3">
+              <Link href="/submit-deal" className="bg-[#101622] text-white border-[3px] border-[#101622] px-5 py-2.5 md:px-8 md:py-4 font-mono font-bold uppercase text-xs md:text-sm flex items-center gap-2 hover:bg-white hover:text-[#101622] transition-colors shadow-[3px_3px_0px_0px_#888]">
+                Submit Your Deal <span className="material-symbols-outlined text-base">arrow_forward</span>
               </Link>
-              <a className="px-8 py-4 font-mono font-bold uppercase text-sm flex items-center gap-2 border-[3px] border-transparent hover:border-[#101622] transition-all text-[#101622]" href="#">
-                View Guidelines
-              </a>
             </div>
           </div>
 
-          <div className="relative bg-[#fdfbf7] p-8 md:p-12 flex flex-col items-center justify-center overflow-hidden border-l-0 lg:border-l-[3px] border-[#101622] group">
+          {/* Decorative card — hidden on mobile */}
+          <div className="hidden lg:relative lg:flex bg-[#fdfbf7] p-8 md:p-12 flex-col items-center justify-center overflow-hidden border-l-0 lg:border-l-[3px] border-[#101622] group">
 
             {/* Background Decor */}
             <div className="absolute inset-0 grid-bg opacity-50"></div>

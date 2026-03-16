@@ -109,12 +109,12 @@ export default function FounderLogs() {
           <div
             ref={scrollRef}
             onScroll={handleScroll}
-            className="flex gap-3 overflow-x-auto snap-x snap-mandatory pb-3 mobile-scroll-hide"
+            className="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-4 pt-2 -mx-4 px-4 scroll-smooth mobile-scroll-hide"
           >
             {testimonials.map((testimonial, index) => (
               <div
                 key={index}
-                className="bg-white border-2 border-black p-3 snap-start shrink-0 w-[75vw] shadow-[2px_2px_0px_#000] flex flex-col"
+                className="bg-white border-[3px] border-[#101622] p-4 snap-center shrink-0 w-[85vw] sm:w-[50vw] shadow-[4px_4px_0px_#101622] flex flex-col"
               >
                 <div className="flex justify-between items-start mb-3">
                   <div className="flex gap-0.5">

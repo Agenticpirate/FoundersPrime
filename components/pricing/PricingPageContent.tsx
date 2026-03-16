@@ -26,11 +26,11 @@ export default function PricingPageContent() {
 
     return (
         <main className="bg-white min-h-screen pb-12">
-            <div className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center py-5">
+            <div className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center pt-4 pb-3 md:py-5">
 
                 <div className="relative z-10 flex flex-col items-center">
-                    {/* Currency Switcher - Positioned absolutely on desktop, relative flow on mobile if needed */}
-                    <div className="absolute right-0 top-1/2 -translate-y-1/2 hidden md:block z-50">
+                    {/* Currency Switcher desktop */}
+                    <div className="absolute right-0 top-0 hidden md:block z-50">
                         <div className="relative">
                             <button
                                 onClick={() => setIsCurrencyOpen(!isCurrencyOpen)}
@@ -58,30 +58,30 @@ export default function PricingPageContent() {
                         </div>
                     </div>
 
-                    <h1 className="font-mono text-2xl md:text-3xl font-black uppercase text-[#111111] mb-2 tracking-tight leading-none">
+                    <h1 className="font-mono text-xl md:text-3xl font-black uppercase text-[#111111] mb-1.5 tracking-tight leading-none">
                         Stop Overpaying For Software.
                     </h1>
-                    <p className="font-sans text-sm text-gray-500 max-w-md mx-auto">
+                    <p className="font-sans text-xs md:text-sm text-gray-500 max-w-md mx-auto">
                         Join the only founder community that pays for itself. Get instant access to $500k+ in deals, grants, and resources.
                     </p>
 
-                    {/* Mobile Currency Switcher (Visible only on small screens) */}
-                    <div className="md:hidden mt-6 relative z-50">
+                    {/* Mobile Currency Switcher */}
+                    <div className="md:hidden mt-3 relative z-50">
                         <button
                             onClick={() => setIsCurrencyOpen(!isCurrencyOpen)}
-                            className="flex items-center gap-2 bg-white border-2 border-[#111111] px-4 py-2 font-mono font-bold text-sm shadow-[3px_3px_0_0_#111111] uppercase"
+                            className="flex items-center gap-2 bg-white border-2 border-[#111111] px-3 py-1.5 font-mono font-bold text-xs shadow-[2px_2px_0_0_#111111] uppercase"
                         >
-                            <span className="material-symbols-outlined text-lg">language</span>
+                            <span className="material-symbols-outlined text-base">language</span>
                             {currency}
-                            <span className="material-symbols-outlined text-lg">expand_more</span>
+                            <span className="material-symbols-outlined text-base">expand_more</span>
                         </button>
                         {isCurrencyOpen && (
-                            <div className="absolute left-1/2 -translate-x-1/2 top-full mt-2 w-[140px] bg-white border-2 border-[#111111] shadow-[3px_3px_0_0_#111111] z-50">
+                            <div className="absolute left-1/2 -translate-x-1/2 top-full mt-1 w-[120px] bg-white border-2 border-[#111111] shadow-[2px_2px_0_0_#111111] z-50">
                                 {Object.values(CURRENCIES).map((c) => (
                                     <button
                                         key={c.code}
                                         onClick={() => handleCurrencyChange(c.code)}
-                                        className="w-full text-left px-4 py-2 font-mono text-sm font-bold hover:bg-gray-100 flex items-center justify-between"
+                                        className="w-full text-left px-3 py-1.5 font-mono text-xs font-bold hover:bg-gray-100 flex items-center justify-between"
                                     >
                                         <span>{c.code}</span>
                                         <span>{c.flag}</span>

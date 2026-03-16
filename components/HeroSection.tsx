@@ -57,13 +57,13 @@ export default function HeroSection() {
   }
 
   return (
-    <section className="relative pt-4 pb-0 md:pt-8 lg:pt-16 lg:pb-0 overflow-hidden grid-bg flex flex-col">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex-grow mb-6 md:mb-12 lg:mb-16">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 items-center h-full">
-          <div className="lg:col-span-7 flex flex-col justify-center items-start pt-2 lg:pt-0">
+    <section className="relative pt-0 pb-0 md:pt-2 lg:pt-4 lg:pb-0 overflow-hidden grid-bg flex flex-col">
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex-grow w-full mb-0 md:mb-2 lg:mb-4">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center h-full">
+          <div className="lg:col-span-7 flex flex-col justify-center items-start pt-0">
             <div className="inline-flex items-center gap-2 bg-white neo-border px-2 py-0.5 mb-3 neo-shadow-static">
               <span className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></span>
-              <span className="text-[9px] sm:text-xs font-mono font-bold text-black uppercase tracking-wide">VERIFIED SAVINGS OPPORTUNITIES IDENTIFIED THIS WEEK</span>
+              <span className="text-[9px] sm:text-xs font-mono font-bold text-black uppercase tracking-wide">VERIFIED CREDITS, GRANTS &amp; PROGRAMS UPDATED THIS WEEK</span>
             </div>
 
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold text-black tracking-tight mb-3 leading-none font-mono">
@@ -72,32 +72,43 @@ export default function HeroSection() {
               <span className="bg-accent-yellow px-2 mt-1 inline-block neo-border box-decoration-clone">ZERO DILUTION.</span>
             </h1>
 
-            <p className="mt-2 text-sm sm:text-base md:text-lg lg:text-xl text-black mb-4 font-medium max-w-lg border-l-4 border-black pl-3">
-              FoundersPrime is a founder intelligence platform.<br />
-              Discover verified startup credits, non-dilutive grants, and accelerator opportunities in one place.
+            <p className="mt-4 text-sm sm:text-base md:text-md lg:text-lg text-black mb-6 font-medium max-w-2xl border-l-4 border-black pl-4">
+              Discover startup credits, non-dilutive grants, accelerators, and founder resources in one place so you can build faster without burning cash. Students unlock free tools, credits, benefits, and curated programs.
             </p>
 
-            <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-6 mb-4 mt-1 w-full sm:w-auto">
-              <Link href="/deals" className="bg-black text-white text-sm md:text-base font-medium py-2.5 md:py-3 px-6 rounded-lg flex items-center justify-center gap-2 transition-all hover:bg-gray-800 shadow-md hover:shadow-lg hover:-translate-y-0.5 w-full sm:w-auto font-sans">
-                Access Deals <span className="material-symbols-outlined text-sm">arrow_forward</span>
+            <div className="flex flex-col gap-3 mb-6 mt-2 w-full max-w-2xl">
+              {/* Primary CTA */}
+              <Link href="/deals" className="bg-black text-white text-sm md:text-base font-bold py-3.5 md:py-4 px-6 flex items-center justify-center gap-2 transition-all hover:bg-gray-800 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.3)] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,0.3)] hover:translate-x-[2px] hover:translate-y-[2px] w-full font-mono uppercase tracking-wide">
+                Unlock Startup Deals
+                <span className="material-symbols-outlined text-sm">arrow_forward</span>
               </Link>
 
-              <div className="flex flex-row gap-4 sm:gap-6 w-full sm:w-auto justify-center sm:justify-start">
-                <Link href="/deals/grants" className="text-gray-600 font-medium hover:text-black transition-colors flex items-center justify-center sm:justify-start gap-1.5 text-sm font-sans">
-                  Find Grants <span className="material-symbols-outlined text-base leading-none">arrow_outward</span>
+              {/* Secondary CTAs */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full">
+                <Link
+                  href="/deals/grants"
+                  className="flex-1 flex items-center justify-center gap-1.5 border-2 border-black bg-white text-black font-mono font-bold text-xs py-2 px-3 hover:bg-black hover:text-white transition-all uppercase tracking-wide"
+                >
+                  <span className="material-symbols-outlined text-sm">payments</span>
+                  Find Grants
                 </Link>
-                <Link href="/deals/accelerators" className="text-gray-600 font-medium hover:text-black transition-colors flex items-center justify-center sm:justify-start gap-1.5 text-sm font-sans">
-                  View Accelerators <span className="material-symbols-outlined text-base leading-none">arrow_outward</span>
+                <Link
+                  href="/deals/accelerators"
+                  className="flex-1 flex items-center justify-center gap-1.5 border-2 border-black bg-white text-black font-mono font-bold text-xs py-2 px-3 hover:bg-black hover:text-white transition-all uppercase tracking-wide"
+                >
+                  <span className="material-symbols-outlined text-sm">rocket_launch</span>
+                  Explore Accelerators
                 </Link>
               </div>
             </div>
 
-            <div className="flex flex-wrap gap-x-4 sm:gap-x-8 gap-y-1 text-[9px] sm:text-xs font-mono font-bold text-black uppercase border-t-2 border-black pt-3 w-full pr-0 lg:pr-12">
+            {/* Stats badge bar — desktop only since ticker does this on mobile */}
+            <div className="hidden sm:flex flex-wrap gap-x-6 gap-y-2 text-[10px] sm:text-xs font-mono font-bold text-black uppercase border-t-2 border-black pt-4 mt-2 w-full max-w-2xl">
               <span>VERIFIED DEALS</span> • <span>NON-DILUTIVE GRANTS</span> • <span>TOP ACCELERATORS</span>
             </div>
 
             {/* ── Mobile-only Brand Icons Scroller ── */}
-            <div className="md:hidden mt-5 w-full">
+            <div className="md:hidden mt-3 w-full">
               <p className="text-[9px] font-mono font-bold uppercase tracking-widest text-gray-400 mb-2">Credits &amp; grants from</p>
               <div className="relative w-full overflow-hidden" style={{ maskImage: 'linear-gradient(to right,transparent,black 12%,black 88%,transparent)', WebkitMaskImage: 'linear-gradient(to right,transparent,black 12%,black 88%,transparent)' }}>
                 <div className="mobile-brand-marquee flex items-center gap-6 whitespace-nowrap">
@@ -229,44 +240,43 @@ export default function HeroSection() {
       </div>
 
       {/* Integrated Marquee Ticker */}
-      <div className="bg-black py-3 overflow-hidden border-t-2 border-b-2 border-black w-full relative z-20">
-        <div className="marquee flex items-center gap-12 whitespace-nowrap">
-          <span className="text-white font-mono text-sm font-bold flex items-center gap-2">
-            <span className="material-symbols-outlined text-accent-yellow">terminal</span> AWS ACTIVATE // $100K CREDITS
+      <div className="hidden md:block bg-black py-2 md:py-3 overflow-hidden border-t-2 border-b-2 border-black w-full relative z-20">
+        <div className="marquee flex items-center gap-8 md:gap-12 whitespace-nowrap">
+          <span className="text-white font-mono text-xs md:text-sm font-bold flex items-center gap-1.5 md:gap-2">
+            <span className="material-symbols-outlined text-accent-yellow text-sm md:text-base">terminal</span> AWS ACTIVATE // $100K CREDITS
           </span>
-          <span className="text-white font-mono text-sm font-bold flex items-center gap-2">
-            <span className="material-symbols-outlined text-accent-cyan">code</span> GITHUB // ENTERPRISE PACK
+          <span className="text-white font-mono text-xs md:text-sm font-bold flex items-center gap-1.5 md:gap-2">
+            <span className="material-symbols-outlined text-accent-cyan text-sm md:text-base">code</span> GITHUB // ENTERPRISE PACK
           </span>
-          <span className="text-white font-mono text-sm font-bold flex items-center gap-2">
-            <span className="material-symbols-outlined text-primary">dataset</span> NOTION // 6 MONTHS FREE
+          <span className="text-white font-mono text-xs md:text-sm font-bold flex items-center gap-1.5 md:gap-2">
+            <span className="material-symbols-outlined text-primary text-sm md:text-base">dataset</span> NOTION // 6 MONTHS FREE
           </span>
-          <span className="text-white font-mono text-sm font-bold flex items-center gap-2">
-            <span className="material-symbols-outlined text-accent-red">payments</span> STRIPE // ZERO FEES $20K
+          <span className="text-white font-mono text-xs md:text-sm font-bold flex items-center gap-1.5 md:gap-2">
+            <span className="material-symbols-outlined text-accent-red text-sm md:text-base">attach_money</span> STRIPE // ZERO FEES $20K
           </span>
-          <span className="text-white font-mono text-sm font-bold flex items-center gap-2">
-            <span className="material-symbols-outlined text-accent-yellow">hub</span> HUBSPOT // 90% OFF
+          <span className="text-white font-mono text-xs md:text-sm font-bold flex items-center gap-1.5 md:gap-2">
+            <span className="material-symbols-outlined text-accent-yellow text-sm md:text-base">hub</span> HUBSPOT // 90% OFF
           </span>
-          <span className="text-white font-mono text-sm font-bold flex items-center gap-2">
-            <span className="material-symbols-outlined text-accent-cyan">dns</span> DIGITALOCEAN // $500 CREDIT
+          <span className="text-white font-mono text-xs md:text-sm font-bold flex items-center gap-1.5 md:gap-2">
+            <span className="material-symbols-outlined text-accent-cyan text-sm md:text-base">dns</span> DIGITALOCEAN // $500 CREDIT
           </span>
-          {/* Duplicate for seamless loop */}
-          <span className="text-white font-mono text-sm font-bold flex items-center gap-2">
-            <span className="material-symbols-outlined text-accent-yellow">terminal</span> AWS ACTIVATE // $100K CREDITS
+          <span className="text-white font-mono text-xs md:text-sm font-bold flex items-center gap-1.5 md:gap-2">
+            <span className="material-symbols-outlined text-accent-yellow text-sm md:text-base">terminal</span> AWS ACTIVATE // $100K CREDITS
           </span>
-          <span className="text-white font-mono text-sm font-bold flex items-center gap-2">
-            <span className="material-symbols-outlined text-accent-cyan">code</span> GITHUB // ENTERPRISE PACK
+          <span className="text-white font-mono text-xs md:text-sm font-bold flex items-center gap-1.5 md:gap-2">
+            <span className="material-symbols-outlined text-accent-cyan text-sm md:text-base">code</span> GITHUB // ENTERPRISE PACK
           </span>
-          <span className="text-white font-mono text-sm font-bold flex items-center gap-2">
-            <span className="material-symbols-outlined text-primary">dataset</span> NOTION // 6 MONTHS FREE
+          <span className="text-white font-mono text-xs md:text-sm font-bold flex items-center gap-1.5 md:gap-2">
+            <span className="material-symbols-outlined text-primary text-sm md:text-base">dataset</span> NOTION // 6 MONTHS FREE
           </span>
-          <span className="text-white font-mono text-sm font-bold flex items-center gap-2">
-            <span className="material-symbols-outlined text-accent-red">payments</span> STRIPE // ZERO FEES $20K
+          <span className="text-white font-mono text-xs md:text-sm font-bold flex items-center gap-1.5 md:gap-2">
+            <span className="material-symbols-outlined text-accent-red text-sm md:text-base">attach_money</span> STRIPE // ZERO FEES $20K
           </span>
-          <span className="text-white font-mono text-sm font-bold flex items-center gap-2">
-            <span className="material-symbols-outlined text-accent-yellow">hub</span> HUBSPOT // 90% OFF
+          <span className="text-white font-mono text-xs md:text-sm font-bold flex items-center gap-1.5 md:gap-2">
+            <span className="material-symbols-outlined text-accent-yellow text-sm md:text-base">hub</span> HUBSPOT // 90% OFF
           </span>
-          <span className="text-white font-mono text-sm font-bold flex items-center gap-2">
-            <span className="material-symbols-outlined text-accent-cyan">dns</span> DIGITALOCEAN // $500 CREDIT
+          <span className="text-white font-mono text-xs md:text-sm font-bold flex items-center gap-1.5 md:gap-2">
+            <span className="material-symbols-outlined text-accent-cyan text-sm md:text-base">dns</span> DIGITALOCEAN // $500 CREDIT
           </span>
         </div>
       </div>

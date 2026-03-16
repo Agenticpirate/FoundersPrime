@@ -17,29 +17,29 @@ export default function DealsHero() {
             </div>
 
             {/* Stats - Horizontal Layout (Ultra Compact) */}
-            <div className="grid grid-cols-3 gap-2 md:gap-3">
-                <div className="bg-white border-2 border-black shadow-[2px_2px_0px_0px_#1a1a1a] p-3 flex flex-row items-center justify-between hover:translate-y-0.5 hover:shadow-none transition-all">
-                    <div className="flex flex-col">
-                        <p className="font-mono text-[10px] font-bold text-gray-500 uppercase tracking-wider">Active Deals</p>
-                        <p className="font-mono text-2xl font-black text-black leading-none mt-1">523</p>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 md:gap-4">
+                <div className="bg-white border-2 border-black shadow-[2px_2px_0px_0px_#1a1a1a] p-3 md:p-4 flex flex-row items-center justify-between hover:translate-y-0.5 hover:shadow-none transition-all">
+                    <div className="flex flex-col pr-2">
+                        <p className="font-mono text-[10px] md:text-xs font-bold text-gray-500 uppercase tracking-wider">Active Deals</p>
+                        <p className="font-mono text-2xl md:text-3xl font-black text-black leading-none mt-1">523</p>
                     </div>
-                    <span className="material-symbols-outlined text-2xl text-black bg-gray-100 p-1.5 rounded-full">local_offer</span>
+                    <span className="material-symbols-outlined text-xl md:text-2xl text-black bg-gray-100 p-1.5 md:p-2 rounded-full">local_offer</span>
                 </div>
 
-                <div className="bg-black text-white border-2 border-black shadow-[2px_2px_0px_0px_#1a1a1a] p-3 flex flex-row items-center justify-between hover:translate-y-0.5 hover:shadow-none transition-all">
-                    <div className="flex flex-col">
-                        <p className="font-mono text-[10px] font-bold text-gray-400 uppercase tracking-wider">Total Value</p>
-                        <p className="font-mono text-2xl font-black text-white leading-none mt-1">$2.4M+</p>
+                <div className="bg-black text-white border-2 border-black shadow-[2px_2px_0px_0px_#1a1a1a] p-3 md:p-4 flex flex-row items-center justify-between hover:translate-y-0.5 hover:shadow-none transition-all">
+                    <div className="flex flex-col pr-2">
+                        <p className="font-mono text-[10px] md:text-xs font-bold text-gray-400 uppercase tracking-wider">Total Value</p>
+                        <p className="font-mono text-2xl md:text-3xl font-black text-white leading-none mt-1">$2.4M+</p>
                     </div>
-                    <span className="material-symbols-outlined text-2xl text-primary bg-gray-800 p-1.5 rounded-full">payments</span>
+                    <span className="material-symbols-outlined text-xl md:text-2xl text-primary bg-gray-800 p-1.5 md:p-2 rounded-full">attach_money</span>
                 </div>
 
-                <div className="bg-white border-2 border-black shadow-[2px_2px_0px_0px_#1a1a1a] p-3 flex flex-row items-center justify-between hover:translate-y-0.5 hover:shadow-none transition-all">
-                    <div className="flex flex-col">
-                        <p className="font-mono text-[10px] font-bold text-gray-500 uppercase tracking-wider">New This Week</p>
-                        <p className="font-mono text-2xl font-black text-black leading-none mt-1">47</p>
+                <div className="bg-white border-2 border-black shadow-[2px_2px_0px_0px_#1a1a1a] p-3 md:p-4 flex flex-row items-center justify-between hover:translate-y-0.5 hover:shadow-none transition-all">
+                    <div className="flex flex-col pr-2">
+                        <p className="font-mono text-[10px] md:text-xs font-bold text-gray-500 uppercase tracking-wider">New This Week</p>
+                        <p className="font-mono text-2xl md:text-3xl font-black text-black leading-none mt-1">47</p>
                     </div>
-                    <span className="material-symbols-outlined text-2xl text-black bg-gray-100 p-1.5 rounded-full">new_releases</span>
+                    <span className="material-symbols-outlined text-xl md:text-2xl text-black bg-gray-100 p-1.5 md:p-2 rounded-full">new_releases</span>
                 </div>
             </div>
         </div>
