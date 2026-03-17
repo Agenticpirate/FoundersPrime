@@ -135,7 +135,7 @@ export default function SystemModules() {
           {modules.map((module) => (
             <div key={module.id} className="bg-white border-[3px] border-[#101622] p-6 shadow-[6px_6px_0px_0px_#101622] hover:-translate-y-1 hover:shadow-[8px_8px_0px_0px_#101622] transition-all duration-300 group flex flex-col h-full">
               <div className="flex justify-between items-start mb-6">
-                <div className={`w-14 h-14 bg-[#f6f6f8] border-[3px] border-[#101622] flex items-center justify-center ${module.hoverColor} transition-colors duration-300`}>
+                <div className={`w-14 h-14 bg-white border-[3px] border-[#101622] flex items-center justify-center ${module.hoverColor} transition-colors duration-300`}>
                   <span className="material-symbols-outlined text-2xl">{module.icon}</span>
                 </div>
                 <span className="font-mono text-xs font-bold border-[3px] border-[#101622] px-2 py-0.5 bg-white shadow-[2px_2px_0px_0px_#101622]">{module.id}</span>

@@ -58,12 +58,6 @@ export default function PricingPageContent() {
                         </div>
                     </div>
 
-                    <h1 className="font-mono text-xl md:text-3xl font-black uppercase text-[#111111] mb-1.5 tracking-tight leading-none">
-                        Stop Overpaying For Software.
-                    </h1>
-                    <p className="font-sans text-xs md:text-sm text-gray-500 max-w-md mx-auto">
-                        Join the only founder community that pays for itself. Get instant access to $500k+ in deals, grants, and resources.
-                    </p>
 
                     {/* Mobile Currency Switcher */}
                     <div className="md:hidden mt-3 relative z-50">

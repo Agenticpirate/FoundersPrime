@@ -415,7 +415,7 @@ export default async function SingleDealPage({ params }: PageProps) {
     }
 
     return (
-      <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden bg-[#F4F3EF]">
+      <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden bg-background-light">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

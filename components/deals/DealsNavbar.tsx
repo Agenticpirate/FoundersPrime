@@ -2,7 +2,7 @@ import Link from 'next/link'
 
 export default function DealsNavbar() {
   return (
-    <header className="sticky top-0 z-50 bg-[#f6f8f8] border-b-3 border-[#1a1a1a]">
+    <header className="sticky top-0 z-50 bg-background-light border-b-3 border-[#1a1a1a]">
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}

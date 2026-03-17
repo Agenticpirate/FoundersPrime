@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
-    <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden bg-[#F4F3EF]">
+    <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden bg-background-light">
       <Header />
       <main className="flex-1">
 
@@ -56,7 +56,7 @@ export default function AboutPage() {
         </section>
 
         {/* ── THE STORY ────────────────────────────────────────────── */}
-        <section className="py-5 md:py-6 md:py-5 md:py-6 md:py-14 bg-[#F4F3EF] border-b-3 border-black">
+        <section className="py-5 md:py-6 md:py-5 md:py-6 md:py-14 bg-background-light border-b-3 border-black">
           <div className="mx-auto max-w-4xl px-4 md:px-6 lg:px-12">
             <div className="flex items-center gap-2 md:gap-3 mb-6 md:mb-10">
               <span className="material-symbols-outlined text-2xl md:text-4xl">history_edu</span>
@@ -114,7 +114,7 @@ export default function AboutPage() {
         </section>
 
         {/* ── COMPARISON TABLE ─────────────────────────────────────── */}
-        <section className="py-5 md:py-6 md:py-5 md:py-6 md:py-14 bg-[#F4F3EF] border-b-3 border-black">
+        <section className="py-5 md:py-6 md:py-5 md:py-6 md:py-14 bg-background-light border-b-3 border-black">
           <div className="mx-auto max-w-[1600px] px-4 md:px-6 lg:px-12">
             <h2 className="font-mono text-xl md:text-3xl font-black uppercase mb-6 md:mb-6 md:mb-4 md:mb-6 text-center">What Makes Us Different</h2>
             <div className="neo-brutal-box p-0 overflow-x-auto">
@@ -159,7 +159,7 @@ export default function AboutPage() {
                 { icon: 'visibility', color: 'bg-green-100 text-green-700', label: '03', title: 'Radical Transparency', desc: "If we earn a commission on a tool, we say so. If a grant is hard to get, we say so. No surprises. Ever." },
                 { icon: 'block', color: 'bg-red-100 text-red-700', label: '04', title: 'No Bullshit', desc: 'Zero hype. Zero growth-hacking buzzwords. Just verified tools and money to build your company.' },
               ].map(({ icon, color, label, title, desc }, i) => (
-                <div key={i} className={`p-5 md:p-8 hover:bg-[#F4F3EF] transition-colors ${i < 2 ? 'border-b-3 md:border-b-3' : ''} ${i % 2 === 0 ? 'md:border-r-3' : ''} border-black`}>
+                <div key={i} className={`p-5 md:p-8 hover:bg-background-light transition-colors ${i < 2 ? 'border-b-3 md:border-b-3' : ''} ${i % 2 === 0 ? 'md:border-r-3' : ''} border-black`}>
                   <div className={`inline-flex items-center gap-2 mb-3 md:mb-4 px-2 py-0.5 md:px-3 md:py-1 ${color} border border-current/30`}>
                     <span className="material-symbols-outlined text-xs md:text-sm">{icon}</span>
                     <span className="font-mono text-[10px] md:text-xs font-bold uppercase">Principle {label}</span>
@@ -173,7 +173,7 @@ export default function AboutPage() {
         </section>
 
         {/* ── FOUNDER + CONTACT ─────────────────────────────────────── */}
-        <section className="py-5 md:py-6 md:py-5 md:py-6 md:py-14 bg-[#F4F3EF]">
+        <section className="py-5 md:py-6 md:py-5 md:py-6 md:py-14 bg-background-light">
           <div className="mx-auto max-w-[1600px] px-4 md:px-6 lg:px-12">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12">
 

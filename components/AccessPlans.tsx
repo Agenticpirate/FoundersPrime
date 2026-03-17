@@ -50,7 +50,7 @@ export default function AccessPlans() {
   ]
 
   return (
-    <section className="py-8 md:py-5 md:py-6 md:py-14 bg-[#f6f6f8] border-b-2 border-black">
+    <section className="py-8 md:py-5 md:py-6 md:py-14 bg-white border-b-2 border-black">
       <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-6 md:mb-4 md:mb-6 md:mb-6 md:mb-4 md:mb-6">
           <h2 className="text-xl md:text-4xl font-bold text-black mb-2 md:mb-4 font-mono">ACCESS_PLANS</h2>

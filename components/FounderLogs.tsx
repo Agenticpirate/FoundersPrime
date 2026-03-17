@@ -92,7 +92,7 @@ export default function FounderLogs() {
   }
 
   return (
-    <section className="py-6 md:py-8 lg:py-5 md:py-6 md:py-14 bg-[#f6f8f8] border-y-2 border-black">
+    <section className="py-6 md:py-8 lg:py-5 md:py-6 md:py-14 bg-background-light border-y-2 border-black">
       <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
         <h2 className="text-lg md:text-5xl font-bold text-black mb-4 md:mb-5 lg:mb-4 md:mb-6 md:mb-6 md:mb-4 md:mb-6 text-center font-mono uppercase">
           <span className="bg-accent-yellow px-2 md:px-4 py-0.5 md:py-1 border-2 border-black shadow-[3px_3px_0px_#000] md:shadow-[4px_4px_0px_#000]">Founder_Logs</span>
@@ -158,42 +158,77 @@ export default function FounderLogs() {
           </div>
         </div>
 
-        {/* Desktop: grid */}
-        <div className="hidden md:grid grid-cols-2 lg:grid-cols-4 gap-6">
-          {testimonials.map((testimonial, index) => (
+        {/* Desktop: Infinite Vertical Scrolling Marquee */}
+        <div className="hidden md:flex justify-center gap-6 h-[450px] overflow-hidden mask-vertical">
+          {[
+            testimonials.filter((_, i) => i % 4 === 0),
+            testimonials.filter((_, i) => i % 4 === 1),
+            testimonials.filter((_, i) => i % 4 === 2),
+            testimonials.filter((_, i) => i % 4 === 3),
+          ].map((col, colIdx) => (
             <div
-              key={index}
-              className="group bg-white border-2 border-black p-6 hover:-translate-y-1 hover:shadow-[8px_8px_0px_#000] transition-all duration-300"
+              key={colIdx}
+              className={`flex flex-col gap-6 flex-1 max-w-[320px] hover:[animation-play-state:paused] ${
+                colIdx % 2 === 0 ? 'animate-marquee-v' : 'animate-marquee-v-reverse'
+              } ${colIdx >= 2 ? 'hidden lg:flex' : ''}`}
             >
-              <div className="flex justify-between items-start mb-4">
-                <div className="flex gap-1">
-                  {[...Array(5)].map((_, i) => (
-                    <span
-                      key={i}
-                      className="material-symbols-outlined text-sm text-accent-yellow drop-shadow-sm"
-                      style={{ fontVariationSettings: "'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24" }}
-                    >
-                      star
-                    </span>
-                  ))}
+              {[...col, ...col, ...col].map((testimonial, i) => (
+                <div
+                  key={`${colIdx}-${i}`}
+                  className="group bg-white border-2 border-black p-6 hover:-translate-y-1 hover:shadow-[8px_8px_0px_#000] transition-all duration-300"
+                >
+                  <div className="flex justify-between items-start mb-4">
+                    <div className="flex gap-1">
+                      {[...Array(5)].map((_, i) => (
+                        <span
+                          key={i}
+                          className="material-symbols-outlined text-sm text-accent-yellow drop-shadow-sm"
+                          style={{ fontVariationSettings: "'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24" }}
+                        >
+                          star
+                        </span>
+                      ))}
+                    </div>
+                    <span className="material-symbols-outlined text-gray-300 group-hover:text-black transition-colors">format_quote</span>
+                  </div>
+    
+                  <p className="text-sm font-medium mb-6 font-mono leading-relaxed text-gray-700 group-hover:text-black transition-colors">
+                    &ldquo;{testimonial.quote}&rdquo;
+                  </p>
+    
+                  <div className="flex items-center gap-3 border-t-2 border-dashed border-gray-200 group-hover:border-black pt-4 transition-colors">
+                    <FounderImage image={testimonial.image} />
+                    <div className="text-xs">
+                      <div className="font-bold uppercase group-hover:text-primary transition-colors">{testimonial.name}</div>
+                      <div className="text-gray-500 font-mono group-hover:text-gray-800">{testimonial.title}</div>
+                    </div>
+                  </div>
                 </div>
-                <span className="material-symbols-outlined text-gray-300 group-hover:text-black transition-colors">format_quote</span>
-              </div>
-
-              <p className="text-sm font-medium mb-6 font-mono leading-relaxed text-gray-700 group-hover:text-black transition-colors">
-                &ldquo;{testimonial.quote}&rdquo;
-              </p>
-
-              <div className="flex items-center gap-3 border-t-2 border-dashed border-gray-200 group-hover:border-black pt-4 transition-colors">
-                <FounderImage image={testimonial.image} />
-                <div className="text-xs">
-                  <div className="font-bold uppercase group-hover:text-primary transition-colors">{testimonial.name}</div>
-                  <div className="text-gray-500 font-mono group-hover:text-gray-800">{testimonial.title}</div>
-                </div>
-              </div>
+              ))}
             </div>
           ))}
         </div>
+
+        <style jsx>{`
+            .mask-vertical {
+                mask-image: linear-gradient(to bottom, transparent, black 10%, black 90%, transparent);
+                -webkit-mask-image: linear-gradient(to bottom, transparent, black 10%, black 90%, transparent);
+            }
+            @keyframes marqueeV {
+                0% { transform: translateY(0); }
+                100% { transform: translateY(calc(-33.333% - 0.5rem)); }
+            }
+            @keyframes marqueeVReverse {
+                0% { transform: translateY(calc(-33.333% - 0.5rem)); }
+                100% { transform: translateY(0); }
+            }
+            .animate-marquee-v {
+                animation: marqueeV 35s linear infinite;
+            }
+            .animate-marquee-v-reverse {
+                animation: marqueeVReverse 35s linear infinite;
+            }
+        `}</style>
       </div>
     </section>
   )

@@ -80,7 +80,7 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden bg-[#F4F3EF]">
+    <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden bg-background-light">
       <Header />
       <main className="flex-1 flex items-center justify-center py-6 md:py-8 px-4">
         <div className="w-full max-w-md">

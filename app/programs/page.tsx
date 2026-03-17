@@ -14,7 +14,7 @@ export default function ProgramsPage() {
     }, [router])
 
     return (
-        <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden bg-[#F4F3EF]">
+        <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden bg-background-light">
             <Header />
             <main className="flex-1 flex items-center justify-center">
                 <div className="text-center">

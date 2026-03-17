@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 export default function MaintenancePage() {
   return (
-    <div className="min-h-screen flex flex-col bg-[#f6f8f8]">
+    <div className="min-h-screen flex flex-col bg-background-light">
       {/* Header */}
       <header className="w-full border-b-3 border-black bg-white px-6 py-4 md:px-10">
         <div className="max-w-[1600px] mx-auto flex items-center justify-between">
@@ -38,7 +38,7 @@ export default function MaintenancePage() {
             <div className="flex flex-col items-center text-center pt-4">
               {/* Icon */}
               <div className="mb-6 relative">
-                <div className="w-20 h-20 bg-[#f6f8f8] border-3 border-black rounded-full flex items-center justify-center shadow-[3px_3px_0px_#111111] z-10 relative">
+                <div className="w-20 h-20 bg-background-light border-3 border-black rounded-full flex items-center justify-center shadow-[3px_3px_0px_#111111] z-10 relative">
                   <span className="text-4xl">🔧</span>
                 </div>
                 {/* Decorative background circle */}

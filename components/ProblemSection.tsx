@@ -26,7 +26,7 @@ export default function ProblemSection() {
 
                     {/* Insights — horizontal scroll on mobile, grid on md+ */}
                     <div 
-                        className="flex md:grid md:grid-cols-3 gap-4 w-full mb-4 md:mb-10 text-left overflow-x-auto snap-x snap-mandatory pb-4 pt-2 -mx-4 px-4 scroll-smooth mobile-scroll-hide"
+                        className="flex md:grid md:grid-cols-2 lg:grid-cols-4 gap-4 w-full mb-4 md:mb-10 text-left overflow-x-auto snap-x snap-mandatory pb-4 pt-2 -mx-4 px-4 scroll-smooth mobile-scroll-hide"
                         style={{ scrollPaddingLeft: '16px' }}
                     >
                         {/* Insight 1 */}
@@ -52,11 +52,20 @@ export default function ProblemSection() {
                                 Accelerators are competitive, and most applications are <span className="underline decoration-2">rushed</span>.
                             </p>
                         </div>
+
+                        {/* Insight 4 */}
+                        <div className="border-2 border-black p-4 md:p-5 bg-accent-orange text-black neo-shadow hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all snap-start shrink-0 w-[80vw] sm:w-[50vw] md:w-auto h-full flex flex-col justify-start">
+                            <span className="material-symbols-outlined text-2xl mb-2 block">school</span>
+                            <p className="font-bold text-black text-xs md:text-sm font-mono leading-relaxed">
+                                <span className="underline decoration-2">Student Benefits:</span> Build for free with exclusive fellowships, SaaS deals, and cloud credits.
+                            </p>
+                        </div>
                     </div>
 
                     {/* Scroll dots — mobile only */}
                     <div className="flex sm:hidden items-center gap-1.5 mb-4">
                         <div className="w-4 h-1.5 bg-black"></div>
+                        <div className="w-1.5 h-1.5 bg-gray-300"></div>
                         <div className="w-1.5 h-1.5 bg-gray-300"></div>
                         <div className="w-1.5 h-1.5 bg-gray-300"></div>
                     </div>

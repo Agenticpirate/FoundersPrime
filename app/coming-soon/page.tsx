@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 export default function ComingSoonPage() {
   return (
-    <div className="min-h-screen flex flex-col bg-[#f6f8f8]">
+    <div className="min-h-screen flex flex-col bg-background-light">
       {/* Header */}
       <header className="w-full border-b-3 border-black bg-white px-6 py-4 flex items-center justify-between sticky top-0 z-50">
         <Link href="/" className="flex items-center gap-2 group cursor-pointer">

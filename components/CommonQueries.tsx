@@ -28,7 +28,7 @@ export default function CommonQueries() {
         <h2 className="text-3xl font-bold text-center mb-6 md:mb-4 md:mb-6 font-mono uppercase">Common_Queries</h2>
         <div className="space-y-4">
           {faqs.map((faq, index) => (
-            <div key={index} className="bg-[#f6f6f8] neo-border p-6 cursor-pointer hover:bg-gray-100 transition-colors">
+            <div key={index} className="bg-white neo-border p-6 cursor-pointer hover:bg-gray-100 transition-colors">
               <h4 className="font-bold text-lg mb-2 flex justify-between font-mono">
                 {faq.question} 
                 <span className="material-symbols-outlined">expand_more</span>

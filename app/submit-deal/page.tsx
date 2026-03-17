@@ -94,7 +94,7 @@ export default function SubmitDealPage() {
     }
 
     return (
-        <div className="min-h-screen bg-[#f6f8f8] flex flex-col font-mono">
+        <div className="min-h-screen bg-background-light flex flex-col font-mono">
             <Header />
 
             <main className="flex-grow py-6 md:py-8 px-4">
@@ -132,11 +132,11 @@ export default function SubmitDealPage() {
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <div>
                                         <label className="block text-xs font-bold uppercase mb-1">Company Name *</label>
-                                        <input type="text" placeholder="e.g. Acme Corp" className="w-full p-3 border-2 border-black focus:outline-none focus:shadow-[4px_4px_0px_0px_#000] transition-shadow bg-[#f6f8f8]" required />
+                                        <input type="text" placeholder="e.g. Acme Corp" className="w-full p-3 border-2 border-black focus:outline-none focus:shadow-[4px_4px_0px_0px_#000] transition-shadow bg-background-light" required />
                                     </div>
                                     <div>
                                         <label className="block text-xs font-bold uppercase mb-1">Website URL *</label>
-                                        <input type="url" placeholder="https://" className="w-full p-3 border-2 border-black focus:outline-none focus:shadow-[4px_4px_0px_0px_#000] transition-shadow bg-[#f6f8f8]" required />
+                                        <input type="url" placeholder="https://" className="w-full p-3 border-2 border-black focus:outline-none focus:shadow-[4px_4px_0px_0px_#000] transition-shadow bg-background-light" required />
                                     </div>
                                 </div>
 
@@ -165,7 +165,7 @@ export default function SubmitDealPage() {
                                             <input
                                                 type="url"
                                                 placeholder="https://domain.com/logo.png"
-                                                className="w-full p-3 border-2 border-black focus:outline-none focus:shadow-[4px_4px_0px_0px_#000] transition-shadow bg-[#f6f8f8]"
+                                                className="w-full p-3 border-2 border-black focus:outline-none focus:shadow-[4px_4px_0px_0px_#000] transition-shadow bg-background-light"
                                                 required={logoMethod === 'url'}
                                                 onChange={(e) => setPreviewUrl(e.target.value)}
                                             />
@@ -188,7 +188,7 @@ export default function SubmitDealPage() {
                                                     onChange={handleFileChange}
                                                     required={logoMethod === 'upload'}
                                                 />
-                                                <div className="w-full p-3 border-2 border-black bg-[#f6f8f8] flex items-center justify-between">
+                                                <div className="w-full p-3 border-2 border-black bg-background-light flex items-center justify-between">
                                                     <span className="text-gray-500 truncate">{fileInputRef.current?.files?.[0]?.name || "Click to select file..."}</span>
                                                     <span className="material-symbols-outlined">upload_file</span>
                                                 </div>
@@ -217,13 +217,13 @@ export default function SubmitDealPage() {
 
                                 <div>
                                     <label className="block text-xs font-bold uppercase mb-1">Benefit Description *</label>
-                                    <input type="text" placeholder="e.g. $5,000 in Credits for 12 months" className="w-full p-3 border-2 border-black focus:outline-none focus:shadow-[4px_4px_0px_0px_#000] transition-shadow bg-[#f6f8f8]" required />
+                                    <input type="text" placeholder="e.g. $5,000 in Credits for 12 months" className="w-full p-3 border-2 border-black focus:outline-none focus:shadow-[4px_4px_0px_0px_#000] transition-shadow bg-background-light" required />
                                 </div>
 
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <div>
                                         <label className="block text-xs font-bold uppercase mb-1">Category *</label>
-                                        <select className="w-full p-3 border-2 border-black focus:outline-none focus:shadow-[4px_4px_0px_0px_#000] transition-shadow bg-[#f6f8f8] appearance-none" required>
+                                        <select className="w-full p-3 border-2 border-black focus:outline-none focus:shadow-[4px_4px_0px_0px_#000] transition-shadow bg-background-light appearance-none" required>
                                             <option value="">Select Category...</option>
                                             <option value="cloud">Cloud Credits</option>
                                             <option value="saas">SaaS Discount</option>
@@ -235,7 +235,7 @@ export default function SubmitDealPage() {
                                     </div>
                                     <div>
                                         <label className="block text-xs font-bold uppercase mb-1">Deal Value ($) *</label>
-                                        <input type="number" placeholder="e.g. 5000" className="w-full p-3 border-2 border-black focus:outline-none focus:shadow-[4px_4px_0px_0px_#000] transition-shadow bg-[#f6f8f8]" required />
+                                        <input type="number" placeholder="e.g. 5000" className="w-full p-3 border-2 border-black focus:outline-none focus:shadow-[4px_4px_0px_0px_#000] transition-shadow bg-background-light" required />
                                     </div>
                                 </div>
 
@@ -255,7 +255,7 @@ export default function SubmitDealPage() {
 
                                 <div>
                                     <label className="block text-xs font-bold uppercase mb-1">Redemption Link / Code *</label>
-                                    <input type="text" placeholder="https://your-site.com/founders-prime OR Code: PRIME2025" className="w-full p-3 border-2 border-black focus:outline-none focus:shadow-[4px_4px_0px_0px_#000] transition-shadow bg-[#f6f8f8]" required />
+                                    <input type="text" placeholder="https://your-site.com/founders-prime OR Code: PRIME2025" className="w-full p-3 border-2 border-black focus:outline-none focus:shadow-[4px_4px_0px_0px_#000] transition-shadow bg-background-light" required />
                                 </div>
                             </div>
 

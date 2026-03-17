@@ -68,7 +68,7 @@ export default function AdminSubmissionDetail() {
     if (!submission) return <div className="p-8 font-mono">Submission not found.</div>
 
     return (
-        <div className="min-h-screen bg-[#f6f8f8] p-8 font-mono text-[#111]">
+        <div className="min-h-screen bg-background-light p-8 font-mono text-[#111]">
             <div className="max-w-4xl mx-auto">
                 <Link href="/admin/submissions" className="inline-flex items-center gap-2 text-sm font-bold uppercase mb-6 hover:underline text-gray-600">
                     <span className="material-symbols-outlined text-sm">arrow_back</span> Back to List

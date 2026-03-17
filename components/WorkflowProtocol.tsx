@@ -48,7 +48,7 @@ export default function WorkflowProtocol() {
         <div className="grid grid-cols-3 md:grid-cols-3 gap-0 border-2 border-black divide-x-2 md:divide-x-2 divide-black bg-white mb-4 md:mb-10">
           {steps.map((step, index) => (
             <div key={index} className="relative p-3 md:p-6 group hover:bg-gray-50 flex flex-col h-full overflow-hidden">
-              <span className={`absolute top-2 right-2 text-3xl md:text-6xl font-black font-mono transition-colors z-0 ${step.hoverColor.replace('group-hover:', '')} md:text-gray-100 md:${step.hoverColor}`}>{step.number}</span>
+              <span className={`absolute top-2 right-2 text-3xl md:text-6xl font-black font-mono transition-colors z-0 text-[#C0C0C0] ${step.hoverColor}`}>{step.number}</span>
               <div className={`w-8 h-8 md:w-14 md:h-14 ${step.bgColor} text-black neo-border flex items-center justify-center mb-2 md:mb-5 relative z-10`}>
                 <span className="material-symbols-outlined text-base md:text-2xl">{step.icon}</span>
               </div>

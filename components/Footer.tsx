@@ -50,7 +50,7 @@ export default function Footer() {
   ]
 
   return (
-    <footer className="bg-[#fafafa] border-t border-[#e5e5e5]">
+    <footer className="bg-background-light border-t border-[#e5e5e5]">
       {/* ── Main grid ── */}
       <div className="max-w-[1600px] mx-auto px-4 sm:px-8 pt-6 pb-4">
 
@@ -104,7 +104,7 @@ export default function Footer() {
       </div>
 
       {/* ── Bottom bar ── */}
-      <div className="border-t border-[#f0f0f0] bg-[#fafafa]">
+      <div className="border-t border-[#f0f0f0] bg-background-light">
         <div className="max-w-[1600px] mx-auto px-4 sm:px-8 py-2 md:py-3 flex flex-col sm:flex-row justify-between items-center gap-4">
           <span className="font-mono text-[10px] text-gray-400 text-center sm:text-left">
             © 2026 FoundersPrime. Built by founders, for founders.

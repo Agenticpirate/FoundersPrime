@@ -41,7 +41,7 @@ export default function PricingTestimonials() {
     const activeTestimonial = testimonials[activeIndex]
 
     return (
-        <section className="w-full py-5 md:py-6 md:py-14 px-4 bg-[#F4F3EF] border-b-3 border-[#111111]">
+        <section className="w-full py-5 md:py-6 md:py-14 px-4 bg-background-light border-b-3 border-[#111111]">
             <div className="max-w-4xl mx-auto text-center">
                 <div className="mb-6 md:mb-4 md:mb-6">
                     <h2 className="font-mono text-3xl font-black uppercase mb-4 text-[#111111] tracking-tight">

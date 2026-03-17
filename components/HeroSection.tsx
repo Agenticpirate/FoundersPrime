@@ -197,7 +197,7 @@ export default function HeroSection() {
                   VERIFIED
                 </span>
               </div>
-              <div className="p-4 bg-[#f6f6f8] flex flex-col gap-3">
+              <div className="p-4 bg-white flex flex-col gap-3">
 
                 {/* Savings Opportunity Block */}
                 <div className="bg-white neo-border p-4">

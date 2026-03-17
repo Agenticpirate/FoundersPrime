@@ -101,7 +101,7 @@ export default function SingleIdeaPage({ params }: PageProps) {
   }
 
   return (
-    <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden bg-[#F4F3EF]">
+    <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden bg-background-light">
       <Header />
       <main className="flex-1">
         <div className="mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-8 py-5 md:py-6">

@@ -192,7 +192,7 @@ export default function Pricing3DTestimonials() {
     }, [totalMobile])
 
     return (
-        <section className="w-full py-8 md:py-8 md:py-6 md:py-8 bg-[#F4F3EF] border-b-3 border-[#111111] overflow-hidden">
+        <section className="w-full py-8 md:py-8 md:py-6 md:py-8 bg-background-light border-b-3 border-[#111111] overflow-hidden">
             <div className="max-w-[1600px] mx-auto px-4 md:px-8 lg:px-12">
                 {/* Header */}
                 <div className="text-center mb-4 md:mb-6 md:mb-4 md:mb-6">
@@ -249,27 +249,48 @@ export default function Pricing3DTestimonials() {
                     ))}
                 </div>
 
-                {/* Desktop: Masonry Grid 3 Columns */}
-                <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {/* Desktop: Infinite Vertical Scrolling Marquee */}
+                <div className="hidden md:flex justify-center gap-4 h-[600px] overflow-hidden mask-vertical mt-8">
                     {/* Column 1 */}
-                    <div className="flex flex-col gap-4">
-                        {col1.map((t) => (
-                            <TestimonialCard key={t.name} testimonial={t} />
+                    <div className="flex flex-col gap-4 animate-marquee-v hover:[animation-play-state:paused] flex-1 max-w-[350px]">
+                        {[...col1, ...col1].map((t, i) => (
+                            <TestimonialCard key={`col1-${i}`} testimonial={t} />
                         ))}
                     </div>
                     {/* Column 2 */}
-                    <div className="flex flex-col gap-4">
-                        {col2.map((t) => (
-                            <TestimonialCard key={t.name} testimonial={t} />
+                    <div className="flex flex-col gap-4 animate-marquee-v-reverse hover:[animation-play-state:paused] flex-1 max-w-[350px]">
+                        {[...col2, ...col2].map((t, i) => (
+                            <TestimonialCard key={`col2-${i}`} testimonial={t} />
                         ))}
                     </div>
                     {/* Column 3 */}
-                    <div className="flex flex-col gap-4">
-                        {col3.map((t) => (
-                            <TestimonialCard key={t.name} testimonial={t} />
+                    <div className="hidden lg:flex flex-col gap-4 animate-marquee-v hover:[animation-play-state:paused] flex-1 max-w-[350px]">
+                        {[...col3, ...col3].map((t, i) => (
+                            <TestimonialCard key={`col3-${i}`} testimonial={t} />
                         ))}
                     </div>
                 </div>
+
+                <style jsx>{`
+                    .mask-vertical {
+                        mask-image: linear-gradient(to bottom, transparent, black 10%, black 90%, transparent);
+                        -webkit-mask-image: linear-gradient(to bottom, transparent, black 10%, black 90%, transparent);
+                    }
+                    @keyframes marqueeV {
+                        0% { transform: translateY(0); }
+                        100% { transform: translateY(calc(-50% - 0.5rem)); }
+                    }
+                    @keyframes marqueeVReverse {
+                        0% { transform: translateY(calc(-50% - 0.5rem)); }
+                        100% { transform: translateY(0); }
+                    }
+                    .animate-marquee-v {
+                        animation: marqueeV 40s linear infinite;
+                    }
+                    .animate-marquee-v-reverse {
+                        animation: marqueeVReverse 40s linear infinite;
+                    }
+                `}</style>
             </div>
         </section>
     );
