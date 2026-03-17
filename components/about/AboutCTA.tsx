@@ -1,16 +1,16 @@
 export default function AboutCTA() {
   return (
-    <div className="mb-20">
+    <div className="mb-10 md:mb-14">
       {/* Main CTA Section */}
-      <div className="bg-primary border-3 border-black shadow-[6px_6px_0px_0px_#1a1a1a] rounded-sm p-12 text-center mb-12">
+      <div className="bg-primary border-3 border-black shadow-[6px_6px_0px_0px_#1a1a1a] rounded-sm p-12 text-center mb-6 md:mb-4 md:mb-6">
         <h2 className="font-mono text-4xl font-bold text-black mb-6">
           Ready to Join 50,000+ Founders?
         </h2>
-        <p className="font-sans text-lg text-gray-800 mb-8 max-w-3xl mx-auto">
+        <p className="font-sans text-lg text-gray-800 mb-4 md:mb-6 max-w-3xl mx-auto">
           Stop wasting time searching for deals and resources. Join FoundersPrime today and get instant access to $500K+ in startup credits, exclusive deals, and a community of ambitious founders.
         </p>
         
-        <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
+        <div className="flex flex-col sm:flex-row gap-4 justify-center mb-4 md:mb-6">
           <button className="px-8 py-4 bg-black hover:bg-gray-800 text-white font-mono font-bold rounded-sm transition-all border-2 border-black">
             Start Free Trial
           </button>

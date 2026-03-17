@@ -433,7 +433,7 @@ export default function SingleDealContent({ deal, freeAccess = false, basePath =
           </div>
 
           {/* Apply button */}
-          <div className="mt-8 pt-6 border-t-3 border-gray-200">
+          <div className="mt-4 md:mt-6 pt-6 border-t-3 border-gray-200">
             {isLoadingPro ? (
               <div className="h-16 w-48 bg-gray-100 animate-pulse rounded-sm"></div>
             ) : (

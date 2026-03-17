@@ -26,14 +26,14 @@ export default function ComingSoonPage() {
       </header>
 
       {/* Main Content */}
-      <main className="flex-grow flex flex-col items-center justify-center px-4 py-12 md:py-20 relative overflow-hidden">
+      <main className="flex-grow flex flex-col items-center justify-center px-4 py-6 md:py-8 md:py-5 md:py-6 md:py-14 relative overflow-hidden">
         {/* Abstract Background Elements */}
         <div className="absolute top-20 left-10 w-16 h-16 border-3 border-black bg-amber-400 rotate-12 -z-10 hidden md:block"></div>
         <div className="absolute bottom-20 right-10 w-24 h-24 border-3 border-black bg-primary rounded-full -z-10 hidden md:block"></div>
         
         <div className="max-w-3xl w-full">
           {/* Hero Card */}
-          <div className="bg-white border-3 border-black shadow-[6px_6px_0px_#111111] p-8 md:p-12 mb-12 relative">
+          <div className="bg-white border-3 border-black shadow-[6px_6px_0px_#111111] p-8 md:p-12 mb-6 md:mb-4 md:mb-6 relative">
             {/* Decorative Label */}
             <div className="absolute -top-4 left-6 bg-primary border-3 border-black px-3 py-1 shadow-[3px_3px_0px_#111111]">
               <span className="font-mono font-bold text-xs uppercase tracking-wider">Announcement</span>
@@ -75,7 +75,7 @@ export default function ComingSoonPage() {
           </div>
 
           {/* What's Coming Section */}
-          <div className="mb-12">
+          <div className="mb-6 md:mb-4 md:mb-6">
             <div className="flex items-center gap-4 mb-6">
               <h2 className="font-mono font-bold text-2xl border-b-3 border-black pb-1 inline-block">What's Coming</h2>
               <div className="h-1 flex-1 bg-black/10 border-b border-dashed border-black"></div>
@@ -139,7 +139,7 @@ export default function ComingSoonPage() {
 
       {/* Footer */}
       <footer className="w-full border-t-3 border-black bg-white py-8 px-6 mt-auto">
-        <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+        <div className="max-w-[1600px] mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
           <div className="text-sm font-mono font-medium">
             © 2025 FoundersPrime. All rights reserved.
           </div>

@@ -49,16 +49,16 @@ export default async function DashboardPage({
     <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden">
       <Header />
       <main className="flex-1 bg-[#f8f9fa]">
-        <div className="max-w-[1400px] mx-auto px-4 md:px-8 py-8 md:py-12">
+        <div className="max-w-[1400px] mx-auto px-4 md:px-8 py-8 md:py-6 md:py-8">
           {/* Breadcrumbs */}
-          <div className="flex flex-wrap gap-2 text-sm font-bold uppercase tracking-wide mb-8">
+          <div className="flex flex-wrap gap-2 text-sm font-bold uppercase tracking-wide mb-4 md:mb-6">
             <Link className="text-black/60 hover:text-primary hover:underline decoration-2" href="/">Home</Link>
             <span className="text-black/60">/</span>
             <span className="text-black">Dashboard</span>
           </div>
 
           {/* Welcome Header */}
-          <div className="border-3 border-black bg-white shadow-[6px_6px_0px_#111111] p-8 mb-8">
+          <div className="border-3 border-black bg-white shadow-[6px_6px_0px_#111111] p-8 mb-4 md:mb-6">
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
               <div>
                 <h1 className="text-3xl md:text-4xl font-black uppercase mb-2">Welcome, {userName}!</h1>
@@ -73,7 +73,7 @@ export default async function DashboardPage({
           </div>
 
           {/* Quick Stats */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-4 md:mb-6">
             <div className="border-3 border-black bg-white shadow-[4px_4px_0px_#111111] p-4 md:p-6">
               <div className="text-[10px] md:text-xs font-bold uppercase text-gray-500 mb-1">Deals Applied</div>
               <div className="text-2xl md:text-3xl font-black">0</div>
@@ -94,7 +94,7 @@ export default async function DashboardPage({
 
           {/* Upgrade Banner - Only show for free members */}
           {!isPro && (
-            <div className="border-3 border-black bg-gradient-to-r from-primary to-cyan-400 shadow-[6px_6px_0px_#111111] p-5 md:p-6 mb-8">
+            <div className="border-3 border-black bg-gradient-to-r from-primary to-cyan-400 shadow-[6px_6px_0px_#111111] p-5 md:p-6 mb-4 md:mb-6">
               <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                 <div>
                   <h2 className="text-xl font-black uppercase text-black mb-1">Unlock Premium Deals</h2>

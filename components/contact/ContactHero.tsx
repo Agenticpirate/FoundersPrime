@@ -1,6 +1,6 @@
 export default function ContactHero() {
   return (
-    <div className="mb-8">
+    <div className="mb-4 md:mb-6">
       {/* Prominent Email Contact Card */}
       <div className="bg-white border-4 border-black shadow-[6px_6px_0px_0px_#1a1a1a] p-8 hover:shadow-[8px_8px_0px_0px_#1a1a1a] hover:-translate-x-px hover:-translate-y-px transition-all">
         <div className="flex items-start gap-6">

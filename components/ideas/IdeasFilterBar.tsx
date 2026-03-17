@@ -1,6 +1,6 @@
 export default function IdeasFilterBar() {
   return (
-    <div className="bg-white border-3 border-black shadow-[6px_6px_0px_0px_#1a1a1a] p-6 mb-8">
+    <div className="bg-white border-3 border-black shadow-[6px_6px_0px_0px_#1a1a1a] p-6 mb-4 md:mb-6">
       <div className="flex flex-col lg:flex-row gap-4 items-start lg:items-center">
         <div className="flex items-center gap-3">
           <span className="material-symbols-outlined text-black text-xl">filter_list</span>

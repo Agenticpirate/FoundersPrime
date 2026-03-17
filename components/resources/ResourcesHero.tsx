@@ -1,6 +1,6 @@
 export default function ResourcesHero() {
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 md:gap-12 mb-6 md:mb-16">
+    <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 md:gap-12 mb-6 md:mb-4 md:mb-6 md:mb-6 md:mb-4 md:mb-6">
       <div className="lg:col-span-8 flex flex-col justify-center">
         <div className="inline-block w-fit border-2 border-black bg-accent-yellow px-2 py-0.5 md:px-3 md:py-1 font-mono text-xs font-bold uppercase tracking-wide rounded-sm mb-2 md:mb-4">
           FREE RESOURCES
@@ -13,7 +13,7 @@ export default function ResourcesHero() {
         </p>
 
         {/* Search Bar */}
-        <div className="mt-4 md:mt-8 flex flex-col sm:flex-row gap-2">
+        <div className="mt-4 md:mt-4 md:mt-6 flex flex-col sm:flex-row gap-2">
           <div className="flex-1 relative">
             <span className="material-symbols-outlined absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 text-lg md:text-xl">search</span>
             <input

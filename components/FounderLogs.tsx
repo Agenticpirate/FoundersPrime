@@ -92,9 +92,9 @@ export default function FounderLogs() {
   }
 
   return (
-    <section className="py-6 md:py-8 lg:py-20 bg-[#f6f8f8] border-y-2 border-black">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-lg md:text-5xl font-bold text-black mb-4 md:mb-5 lg:mb-16 text-center font-mono uppercase">
+    <section className="py-6 md:py-8 lg:py-5 md:py-6 md:py-14 bg-[#f6f8f8] border-y-2 border-black">
+      <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 className="text-lg md:text-5xl font-bold text-black mb-4 md:mb-5 lg:mb-4 md:mb-6 md:mb-6 md:mb-4 md:mb-6 text-center font-mono uppercase">
           <span className="bg-accent-yellow px-2 md:px-4 py-0.5 md:py-1 border-2 border-black shadow-[3px_3px_0px_#000] md:shadow-[4px_4px_0px_#000]">Founder_Logs</span>
         </h2>
 

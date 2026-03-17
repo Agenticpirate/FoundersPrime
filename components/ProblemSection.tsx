@@ -2,8 +2,8 @@ import Link from 'next/link'
 
 export default function ProblemSection() {
     return (
-        <section className="relative pt-6 pb-2 md:pt-12 lg:pt-20 lg:pb-0 overflow-hidden grid-bg flex flex-col">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <section className="relative pt-6 pb-2 md:pt-12 lg:pt-16 lg:pb-0 overflow-hidden grid-bg flex flex-col">
+            <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex flex-col items-start md:items-center text-left md:text-center max-w-4xl mx-auto">
                     {/* Label */}
                     <div className="inline-block bg-black text-white text-xs font-mono font-bold px-3 py-1 mb-4 uppercase tracking-wider neo-shadow-sm transform -rotate-1 self-start md:self-center">
@@ -55,10 +55,10 @@ export default function ProblemSection() {
                     </div>
 
                     {/* Scroll dots — mobile only */}
-                    <div className="flex md:hidden items-center gap-1.5 mb-4">
-                        <div className="w-4 h-1.5 bg-black rounded-full"></div>
-                        <div className="w-1.5 h-1.5 bg-gray-300 rounded-full"></div>
-                        <div className="w-1.5 h-1.5 bg-gray-300 rounded-full"></div>
+                    <div className="flex sm:hidden items-center gap-1.5 mb-4">
+                        <div className="w-4 h-1.5 bg-black"></div>
+                        <div className="w-1.5 h-1.5 bg-gray-300"></div>
+                        <div className="w-1.5 h-1.5 bg-gray-300"></div>
                     </div>
 
                     {/* Reframe Line */}

@@ -123,7 +123,7 @@ export default function AcceleratorsPage() {
 // Loading Skeletons
 function HeroSkeleton() {
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-20 animate-pulse">
+    <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-10 md:mb-14 animate-pulse">
       <div className="lg:col-span-7 space-y-4">
         <div className="h-8 w-48 bg-gray-300 rounded" />
         <div className="h-16 w-full bg-gray-300 rounded" />
@@ -140,7 +140,7 @@ function HeroSkeleton() {
 
 function StrategySkeleton() {
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-20 animate-pulse">
+    <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-10 md:mb-14 animate-pulse">
       <div className="lg:col-span-8">
         <div className="h-96 bg-gray-300 rounded" />
       </div>

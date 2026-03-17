@@ -6,13 +6,13 @@ export default function AcceleratorsHero() {
   const activeProgramsCount = accelerators2026.length
 
   return (
-    <div className="mb-8">
+    <div className="mb-4 md:mb-6">
       {/* Compact Header */}
-      <div className="mb-4">
+      <div className="mb-2 md:mb-3">
         <div className="inline-block border-2 border-black bg-accent-yellow px-2 py-0.5 font-mono text-[10px] font-bold uppercase tracking-wide rounded-sm mb-2">
           FUNDING + MENTORSHIP
         </div>
-        <h1 className="font-mono text-3xl md:text-4xl font-bold tracking-tight text-black mb-2 leading-tight">
+        <h1 className="font-mono text-3xl md:text-4xl font-bold tracking-tight text-black mb-1 leading-tight">
           Startup Accelerators
         </h1>
         <p className="font-sans text-sm md:text-base text-gray-700 leading-relaxed max-w-3xl">

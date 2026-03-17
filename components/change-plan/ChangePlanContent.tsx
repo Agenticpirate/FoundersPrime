@@ -13,7 +13,7 @@ export default function ChangePlanContent() {
           BILLING_CYCLE
         </h2>
         
-        <div className="flex items-center justify-center mb-8">
+        <div className="flex items-center justify-center mb-4 md:mb-6">
           <div className="bg-gray-100 border-3 border-black p-2 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] flex">
             <button className="bg-white border-3 border-black px-6 py-3 font-bold shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]">
               Monthly

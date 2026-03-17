@@ -1,6 +1,6 @@
 export default function StartupsHero() {
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-16">
+    <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-4 md:mb-6 md:mb-6 md:mb-4 md:mb-6">
       <div className="lg:col-span-8 flex flex-col justify-center">
         <div className="inline-block w-fit border-2 border-black bg-accent-yellow px-3 py-1 font-mono text-xs font-bold uppercase tracking-wide rounded-sm mb-4">
           VERIFIED DATABASE
@@ -13,7 +13,7 @@ export default function StartupsHero() {
         </p>
         
         {/* Search Bar */}
-        <div className="mt-8 flex gap-3">
+        <div className="mt-4 md:mt-6 flex gap-3">
           <div className="flex-1 relative">
             <span className="material-symbols-outlined absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 text-xl">search</span>
             <input 

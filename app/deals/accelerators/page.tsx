@@ -98,7 +98,7 @@ export default function AcceleratorsPage() {
       <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden bg-[#F4F3EF]">
         <Header />
         <main className="flex-1">
-          <div className="max-w-[1600px] mx-auto px-4 lg:px-6 py-4 lg:py-6">
+          <div className="max-w-[1600px] mx-auto px-4 lg:px-6 py-2 lg:py-4">
             <AcceleratorsHeader />
 
             <Suspense fallback={<HeroSkeleton />}>
@@ -123,7 +123,7 @@ export default function AcceleratorsPage() {
 // Loading Skeletons
 function HeroSkeleton() {
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-20 animate-pulse">
+    <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-10 md:mb-14 animate-pulse">
       <div className="lg:col-span-7 space-y-4">
         <div className="h-8 w-48 bg-gray-300 rounded" />
         <div className="h-16 w-full bg-gray-300 rounded" />
@@ -140,7 +140,7 @@ function HeroSkeleton() {
 
 function StrategySkeleton() {
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-20 animate-pulse">
+    <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-10 md:mb-14 animate-pulse">
       <div className="lg:col-span-8">
         <div className="h-96 bg-gray-300 rounded" />
       </div>

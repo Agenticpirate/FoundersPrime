@@ -35,7 +35,7 @@ export default function DirectImport({ onImportComplete, onClose }: DirectImport
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-      <div className="bg-white border-3 border-black shadow-hard max-w-6xl w-full max-h-[90vh] overflow-y-auto">
+      <div className="bg-white border-3 border-black shadow-hard max-w-[1600px] w-full max-h-[90vh] overflow-y-auto">
         <div className="p-6">
           <div className="flex justify-between items-center mb-6">
             <div>

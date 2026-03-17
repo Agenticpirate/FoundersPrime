@@ -98,7 +98,7 @@ export default function StartupGrid() {
                 </div>
 
                 {/* Industry Filters (Pill Buttons) */}
-                <div className="mb-8">
+                <div className="mb-4 md:mb-6">
                     <label className="font-mono text-xs font-bold text-gray-600 uppercase mb-3 block">
                         Filter by Industry
                     </label>
@@ -120,7 +120,7 @@ export default function StartupGrid() {
             </div>
 
             {/* Results Count and Clear Filters */}
-            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8 pb-4 border-b-2 border-dashed border-gray-300 gap-4">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 md:mb-6 pb-4 border-b-2 border-dashed border-gray-300 gap-4">
                 <div className="font-mono text-sm text-gray-600">
                     Showing <span className="font-bold text-black">{currentStartups.length > 0 ? startIndex + 1 : 0}-{Math.min(endIndex, filteredStartups.length)}</span> of{' '}
                     <span className="font-bold text-black">{filteredStartups.length}</span> startups
@@ -145,7 +145,7 @@ export default function StartupGrid() {
                     ))}
                 </div>
             ) : (
-                <div className="flex flex-col items-center justify-center py-20 text-center border-4 border-black bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+                <div className="flex flex-col items-center justify-center py-5 md:py-6 md:py-14 text-center border-4 border-black bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
                     <div className="bg-gray-100 p-4 mb-4 border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
                         <Search className="h-8 w-8 text-gray-400" />
                     </div>

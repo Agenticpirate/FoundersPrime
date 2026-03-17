@@ -2,7 +2,7 @@ import Link from 'next/link'
 
 export default function GrantsHeader() {
   return (
-    <nav aria-label="Breadcrumb" className="flex mb-8">
+    <nav aria-label="Breadcrumb" className="flex mb-3 md:mb-5">
       <ol className="inline-flex items-center space-x-1 md:space-x-3 font-mono text-sm font-medium">
         <li className="inline-flex items-center">
           <Link className="text-gray-500 hover:text-black" href="/">Home</Link>

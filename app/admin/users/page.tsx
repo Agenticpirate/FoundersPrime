@@ -103,13 +103,13 @@ export default function AdminUsersPage() {
           <AdminHeader />
           <div className="p-6">
             {/* Header */}
-            <div className="mb-8">
+            <div className="mb-4 md:mb-6">
               <h1 className="text-3xl font-bold text-gray-900 mb-2">User Management</h1>
               <p className="text-gray-600">Manage platform users, roles, and permissions</p>
             </div>
 
             {/* Stats Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-4 md:mb-6">
               <div className="bg-white border-3 border-black shadow-hard p-6">
                 <div className="flex items-center justify-between">
                   <div>
@@ -149,7 +149,7 @@ export default function AdminUsersPage() {
             </div>
 
             {/* Filters */}
-            <div className="bg-white border-3 border-black shadow-hard p-6 mb-8">
+            <div className="bg-white border-3 border-black shadow-hard p-6 mb-4 md:mb-6">
               <div className="flex flex-col md:flex-row gap-4 items-start md:items-center justify-between">
                 <div className="flex flex-col md:flex-row gap-4 flex-1">
                   <div className="relative flex-1 max-w-md">

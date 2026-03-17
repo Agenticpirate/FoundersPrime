@@ -13,7 +13,7 @@ export default function FinalCTA() {
   }
 
   return (
-    <section className="py-8 md:py-10 bg-black text-white border-t-2 border-black border-b-4 border-b-accent-yellow relative overflow-hidden">
+    <section className="py-8 md:py-5 md:py-6 bg-black text-white border-t-2 border-black border-b-4 border-b-accent-yellow relative overflow-hidden">
       <div
         className="absolute inset-0 z-0 opacity-10 pointer-events-none"
         style={{
@@ -22,7 +22,7 @@ export default function FinalCTA() {
         }}
       />
 
-      <div className="max-w-6xl mx-auto px-6 relative z-10">
+      <div className="max-w-[1600px] mx-auto px-6 relative z-10">
         <div className="flex flex-col lg:flex-row items-center justify-between gap-6 lg:gap-12">
 
           {/* Left */}

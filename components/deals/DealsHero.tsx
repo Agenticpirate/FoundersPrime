@@ -2,13 +2,13 @@
 
 export default function DealsHero() {
     return (
-        <div className="mb-4 md:mb-8">
+        <div className="mb-3 md:mb-5">
             {/* Neo-Brutalist Header Block */}
-            <div className="mb-3 md:mb-6 relative">
+            <div className="mb-2 md:mb-4 relative">
                 <div className="inline-block border-2 border-black bg-accent-yellow px-2 py-0.5 font-mono text-xs font-bold uppercase tracking-wide rounded-sm mb-2 shadow-[2px_2px_0px_0px_#1a1a1a]">
                     Verified Opportunities
                 </div>
-                <h1 className="font-mono text-2xl md:text-4xl lg:text-5xl font-black tracking-tight text-black mb-2 md:mb-4 leading-none">
+                <h1 className="font-mono text-2xl md:text-4xl lg:text-5xl font-black tracking-tight text-black mb-1 md:mb-2 leading-none">
                     Startup Deals &amp; Credits
                 </h1>
                 <p className="font-sans text-sm md:text-lg text-gray-700 leading-relaxed max-w-3xl border-l-4 border-black pl-3">

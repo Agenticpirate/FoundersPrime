@@ -15,9 +15,9 @@ interface SingleStartupHeaderProps {
 
 export default function SingleStartupHeader({ startup }: SingleStartupHeaderProps) {
   return (
-    <div className="mb-8">
+    <div className="mb-4 md:mb-6">
       {/* Breadcrumb */}
-      <nav aria-label="Breadcrumb" className="flex mb-8">
+      <nav aria-label="Breadcrumb" className="flex mb-4 md:mb-6">
         <ol className="inline-flex items-center space-x-1 md:space-x-3 font-mono text-sm font-medium">
           <li className="inline-flex items-center">
             <Link className="text-gray-500 hover:text-black" href="/">Home</Link>

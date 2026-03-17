@@ -44,7 +44,7 @@ export default function UserProfileHeader({ user }: UserProfileHeaderProps) {
   }
 
   return (
-    <div className="mb-8">
+    <div className="mb-4 md:mb-6">
       {/* Back Button */}
       <div className="mb-6">
         <Link
@@ -161,7 +161,7 @@ export default function UserProfileHeader({ user }: UserProfileHeaderProps) {
         </div>
 
         {/* Stats Grid */}
-        <div className="mt-8 pt-8 border-t-3 border-gray-200">
+        <div className="mt-4 md:mt-6 pt-8 border-t-3 border-gray-200">
           <h3 className="text-lg font-bold font-mono text-black mb-4">
             COMMUNITY_STATS
           </h3>

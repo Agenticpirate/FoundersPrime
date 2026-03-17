@@ -6,7 +6,7 @@ interface ResourcesHeaderProps {
 
 export default function ResourcesHeader({ currentSection }: ResourcesHeaderProps) {
   return (
-    <nav aria-label="Breadcrumb" className="flex mb-8">
+    <nav aria-label="Breadcrumb" className="flex mb-4 md:mb-6">
       <ol className="inline-flex items-center space-x-1 md:space-x-3 font-mono text-sm font-medium">
         <li className="inline-flex items-center">
           <Link className="text-gray-500 hover:text-black" href="/">Home</Link>

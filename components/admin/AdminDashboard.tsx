@@ -307,7 +307,7 @@ export default function AdminDashboard() {
               </div>
             </div>
             
-            <div className="mt-8 pt-6 border-t border-white/20">
+            <div className="mt-4 md:mt-6 pt-6 border-t border-white/20">
               <Link 
                 href="/admin/logs"
                 className="block w-full text-center py-2 bg-white/10 hover:bg-white/20 border border-white/30 text-xs font-mono uppercase tracking-wider transition-colors"

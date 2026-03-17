@@ -11,7 +11,7 @@ interface StartupDetailsProps {
 
 export default function StartupDetails({ company }: StartupDetailsProps) {
     return (
-        <div className="mx-auto max-w-[1200px] px-4 md:px-6 py-6 md:py-10">
+        <div className="mx-auto max-w-[1200px] px-4 md:px-6 py-6 md:py-5 md:py-6">
             {/* Breadcrumbs */}
             <div className="flex flex-wrap gap-2 text-xs md:text-sm font-bold uppercase tracking-wide mb-6">
                 <Link className="text-black/60 hover:text-orange-600 hover:underline decoration-2" href="/">Home</Link>

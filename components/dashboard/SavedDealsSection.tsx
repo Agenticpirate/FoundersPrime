@@ -64,7 +64,7 @@ export default function SavedDealsSection({ savedDealSlugs }: SavedDealsSectionP
 
   if (loading) {
     return (
-      <div className="mb-8">
+      <div className="mb-4 md:mb-6">
         <h2 className="text-2xl font-black uppercase mb-4 flex items-center gap-2">
           <span className="material-symbols-outlined text-primary">bookmark</span>
           Saved Deals
@@ -81,7 +81,7 @@ export default function SavedDealsSection({ savedDealSlugs }: SavedDealsSectionP
   }
 
   return (
-    <div className="mb-8">
+    <div className="mb-4 md:mb-6">
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-2xl font-black uppercase flex items-center gap-2">
           <span className="material-symbols-outlined text-primary">bookmark</span>

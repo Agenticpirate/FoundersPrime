@@ -34,7 +34,7 @@ export default function PricingComparisonTable() {
     ]
 
     return (
-        <section className="w-full py-16 bg-white">
+        <section className="w-full py-8 md:py-6 md:py-8 bg-white">
             <div className="max-w-4xl mx-auto px-4">
                 <div className="text-center mb-10">
                     <h2 className="font-mono text-2xl font-black text-[#111111] mb-2 uppercase tracking-tight">

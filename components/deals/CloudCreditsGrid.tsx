@@ -77,7 +77,7 @@ export default function CloudCreditsGrid() {
 
   return (
     <div className="w-full">
-      <div className="flex items-center gap-4 mb-8 border-b-3 border-black pb-4">
+      <div className="flex items-center gap-4 mb-4 md:mb-5 border-b-3 border-black pb-2">
         <h2 className="font-mono text-3xl font-bold text-black">Verified Programs</h2>
         <span className="font-mono text-sm bg-gray-200 px-2 py-1 rounded-sm border border-black font-bold">
           {deals.length} Active
@@ -90,12 +90,12 @@ export default function CloudCreditsGrid() {
       </div>
 
       {loading ? (
-        <div className="text-center py-12">
+        <div className="text-center py-6">
           <div className="animate-spin rounded-full h-12 w-12 border-4 border-primary border-t-transparent mx-auto mb-4"></div>
           <p className="text-gray-500 font-mono">Loading cloud deals...</p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {deals.map((deal) => (
             <DealCard key={deal.id} deal={convertDealToCardFormat(deal)} />
           ))}

@@ -5,7 +5,7 @@ export default function PricingCTA() {
         <h2 className="font-mono text-4xl font-bold text-primary mb-6">
           Ready to Accelerate Your Startup?
         </h2>
-        <p className="font-sans text-xl text-gray-300 mb-8 leading-relaxed">
+        <p className="font-sans text-xl text-gray-300 mb-4 md:mb-6 leading-relaxed">
           Join 50,000+ founders who use FoundersPrime to discover deals, validate ideas, and build successful startups. Start your free trial today.
         </p>
         
@@ -26,7 +26,7 @@ export default function PricingCTA() {
         </div>
         
         {/* CTA Buttons */}
-        <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
+        <div className="flex flex-col sm:flex-row gap-4 justify-center mb-4 md:mb-6">
           <button className="px-8 py-4 bg-primary hover:bg-white hover:text-black border-3 border-white text-black font-mono font-bold text-lg rounded-sm shadow-[4px_4px_0px_0px_#888] hover:shadow-[2px_2px_0px_0px_#888] hover:translate-x-[2px] hover:translate-y-[2px] transition-all">
             Start Free Trial
           </button>

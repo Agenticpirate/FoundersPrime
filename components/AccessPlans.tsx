@@ -50,9 +50,9 @@ export default function AccessPlans() {
   ]
 
   return (
-    <section className="py-8 md:py-20 bg-[#f6f6f8] border-b-2 border-black">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-6 md:mb-16">
+    <section className="py-8 md:py-5 md:py-6 md:py-14 bg-[#f6f6f8] border-b-2 border-black">
+      <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-6 md:mb-4 md:mb-6 md:mb-6 md:mb-4 md:mb-6">
           <h2 className="text-xl md:text-4xl font-bold text-black mb-2 md:mb-4 font-mono">ACCESS_PLANS</h2>
           <p className="text-gray-600 font-mono text-sm uppercase">Positive ROI in &lt;48 Hours</p>
         </div>
@@ -68,8 +68,8 @@ export default function AccessPlans() {
                 <div className={`text-4xl font-bold mb-6 font-mono ${plan.priceColor || ''}`}>
                   {plan.price}<span className="text-base font-normal text-gray-500 text-black">{plan.period}</span>
                 </div>
-                <p className="text-sm text-gray-600 mb-8 pb-8 border-b-2 border-black">{plan.description}</p>
-                <ul className="space-y-4 mb-8 text-sm font-mono">
+                <p className="text-sm text-gray-600 mb-4 md:mb-6 pb-8 border-b-2 border-black">{plan.description}</p>
+                <ul className="space-y-4 mb-4 md:mb-6 text-sm font-mono">
                   {plan.features.map((feature, featureIndex) => (
                     <li key={featureIndex} className={`flex gap-3 items-center ${!feature.included ? 'text-gray-400' : ''}`}>
                       <span className={`material-symbols-outlined text-base ${feature.included ? (plan.recommended ? 'text-primary' : 'text-black') : 'text-base'}`}>

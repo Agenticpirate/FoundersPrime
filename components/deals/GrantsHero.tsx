@@ -7,7 +7,7 @@ export default function GrantsHero() {
   const activeGrants = grants2026.filter(g => g.applicationStatus === 'Active' || g.applicationStatus === 'Rolling').length
 
   return (
-    <div className="mb-6 md:mb-12">
+    <div className="mb-6 md:mb-6 md:mb-4 md:mb-6">
       {/* Compact Header */}
       <div className="mb-4 md:mb-6">
         <div className="inline-block border-2 border-black bg-accent-yellow px-2 py-1 font-mono text-[10px] font-bold uppercase tracking-wide rounded-sm mb-3">

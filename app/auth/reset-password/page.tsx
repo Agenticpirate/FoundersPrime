@@ -52,10 +52,10 @@ export default function ResetPasswordPage() {
   return (
     <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden">
       <Header />
-      <main className="flex-1 bg-[#f8f9fa] flex items-center justify-center py-12 px-4">
+      <main className="flex-1 bg-[#f8f9fa] flex items-center justify-center py-6 md:py-8 px-4">
         <div className="w-full max-w-md">
           <div className="border-3 border-black bg-white shadow-[6px_6px_0px_#111111] p-8">
-            <div className="text-center mb-8">
+            <div className="text-center mb-4 md:mb-6">
               <div className="w-12 h-12 bg-green-500 text-white flex items-center justify-center mx-auto mb-4 border-2 border-black">
                 <span className="material-symbols-outlined">lock</span>
               </div>

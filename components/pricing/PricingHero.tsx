@@ -1,18 +1,18 @@
 export default function PricingHero() {
   return (
-    <div className="text-center mb-16">
+    <div className="text-center mb-4 md:mb-6 md:mb-6 md:mb-4 md:mb-6">
       <div className="inline-block border-2 border-black bg-accent-yellow px-3 py-1 font-mono text-xs font-bold uppercase tracking-wide rounded-sm mb-6">
         SIMPLE PRICING
       </div>
       <h1 className="font-mono text-5xl md:text-6xl font-bold tracking-tight text-black mb-6 leading-[1.1]">
         Choose Your Plan
       </h1>
-      <p className="font-sans text-lg md:text-xl text-gray-700 leading-relaxed max-w-3xl mx-auto mb-8">
+      <p className="font-sans text-lg md:text-xl text-gray-700 leading-relaxed max-w-3xl mx-auto mb-4 md:mb-6">
         Start free and upgrade as you grow. All plans include access to our core database of deals, startups, and ideas. Premium features unlock advanced insights and exclusive content.
       </p>
       
       {/* Billing Toggle */}
-      <div className="flex items-center justify-center gap-4 mb-8">
+      <div className="flex items-center justify-center gap-4 mb-4 md:mb-6">
         <span className="font-mono text-sm font-bold">Monthly</span>
         <div className="relative">
           <input type="checkbox" id="billing-toggle" className="sr-only" />

@@ -15,7 +15,7 @@ export default function SaasDiscountsGrid() {
 
   return (
     <div>
-      <div className="flex items-center gap-4 mb-8 border-b-3 border-black pb-4">
+      <div className="flex items-center gap-4 mb-4 md:mb-5 border-b-3 border-black pb-2">
         <h2 className="font-mono text-3xl font-bold text-black">All SaaS Discounts</h2>
         <span className="font-mono text-sm bg-gray-200 px-2 py-1 rounded-sm border border-black font-bold">240</span>
         <div className="ml-auto hidden md:flex gap-2">

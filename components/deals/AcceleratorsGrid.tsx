@@ -118,7 +118,7 @@ export default function AcceleratorsGrid() {
   return (
     <div className="w-full">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center gap-2 md:gap-4 mb-4 md:mb-6 border-b-2 md:border-b-3 border-black pb-3 md:pb-4">
+      <div className="flex flex-col sm:flex-row sm:items-center gap-2 md:gap-4 mb-4 md:mb-6 border-b-2 md:border-b-3 border-black pb-3 md:pb-2">
         <div className="flex-1">
           <h2 className="font-mono text-xl md:text-3xl font-bold text-black">Top Programs 2026</h2>
           <span className="font-mono text-xs md:text-sm text-gray-500 mt-0.5 block">
@@ -168,7 +168,7 @@ export default function AcceleratorsGrid() {
       </div>
 
       {/* Results Count and Clear Filters */}
-      <div className="flex items-center justify-between mb-6 pb-4 border-b-2 border-dashed border-gray-300">
+      <div className="flex items-center justify-between mb-6 pb-2 border-b-2 border-dashed border-gray-300">
         <div className="font-mono text-sm text-gray-600">
           Showing <span className="font-bold text-black">{filteredAndSearchedDeals.length}</span> of{' '}
           <span className="font-bold text-black">{accelerators2026.length}</span> programs
@@ -192,7 +192,7 @@ export default function AcceleratorsGrid() {
           <div
             className={
               viewMode === 'grid'
-                ? 'grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6'
+                ? 'grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4'
                 : 'flex flex-col gap-4'
             }
           >
@@ -212,7 +212,7 @@ export default function AcceleratorsGrid() {
               visibleCount={3}
               label="Accelerators"
             >
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {filteredAndSearchedDeals.slice(3, 9).map((acc) => (
                   <DealCard key={acc.id} deal={convertToCard(acc)} />
                 ))}
@@ -221,7 +221,7 @@ export default function AcceleratorsGrid() {
           )}
         </div>
       ) : (
-        <div className="text-center py-16 bg-white border-3 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] rounded-sm">
+        <div className="text-center py-8 md:py-6 md:py-8 bg-white border-3 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] rounded-sm">
           <span className="material-symbols-outlined text-6xl text-gray-300 mb-4 block">
             search_off
           </span>

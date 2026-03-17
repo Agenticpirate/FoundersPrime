@@ -55,7 +55,7 @@ export default function IncubatorsGrid() {
 
   return (
     <div className="w-full">
-      <div className="flex flex-col md:flex-row md:items-center gap-4 mb-8 border-b-3 border-black pb-4">
+      <div className="flex flex-col md:flex-row md:items-center gap-4 mb-4 md:mb-5 border-b-3 border-black pb-2">
         <div>
           <h2 className="font-mono text-3xl font-bold text-black">Top Programs 2026</h2>
           <span className="font-mono text-sm text-gray-500 mt-1 block">
@@ -79,7 +79,7 @@ export default function IncubatorsGrid() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {(isPro ? filteredDeals : filteredDeals.slice(0, 3)).map((inc) => (
           <DealCard
             key={inc.id}
@@ -95,7 +95,7 @@ export default function IncubatorsGrid() {
           visibleCount={3}
           label="Incubators"
         >
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {filteredDeals.slice(3, 9).map((inc) => (
               <DealCard key={inc.id} deal={convertToCard(inc)} />
             ))}
@@ -104,7 +104,7 @@ export default function IncubatorsGrid() {
       )}
 
       {filteredDeals.length === 0 && (
-        <div className="text-center py-12 bg-gray-50 border-2 border-dashed border-gray-300 rounded-lg">
+        <div className="text-center py-6 bg-gray-50 border-2 border-dashed border-gray-300 rounded-lg">
           <p className="font-mono text-gray-500">No programs found for this region.</p>
         </div>
       )}

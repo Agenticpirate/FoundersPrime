@@ -31,7 +31,7 @@ export default function WorkflowProtocol() {
 
   return (
     <section className="relative py-6 md:py-14 border-b-2 border-black grid-bg">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-6 md:mb-10">
           <div className="inline-block bg-black text-white text-xs md:text-sm font-mono font-bold px-4 py-1.5 mb-4 uppercase tracking-wider transform -rotate-1 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.2)]">
             WORKFLOW

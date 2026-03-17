@@ -49,10 +49,10 @@ export default function PendingVerificationPage() {
   return (
     <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden">
       <Header />
-      <main className="flex-1 bg-[#f8f9fa] flex items-center justify-center py-12 px-4">
+      <main className="flex-1 bg-[#f8f9fa] flex items-center justify-center py-6 md:py-8 px-4">
         <div className="w-full max-w-md">
           <div className="border-3 border-black bg-white shadow-[6px_6px_0px_#111111] p-8">
-            <div className="text-center mb-8">
+            <div className="text-center mb-4 md:mb-6">
               <div className="w-16 h-16 bg-amber-400 text-black flex items-center justify-center mx-auto mb-6 border-2 border-black">
                 <span className="material-symbols-outlined text-3xl">mail</span>
               </div>
@@ -63,7 +63,7 @@ export default function PendingVerificationPage() {
               </p>
             </div>
 
-            <div className="space-y-4 mb-8">
+            <div className="space-y-4 mb-4 md:mb-6">
               <div className="p-4 bg-amber-50 border-2 border-amber-400 text-amber-900 text-sm">
                 <div className="flex items-start gap-2">
                   <span className="material-symbols-outlined text-lg mt-0.5">info</span>
@@ -139,7 +139,7 @@ export default function PendingVerificationPage() {
               </Link>
             </div>
 
-            <div className="mt-8 pt-6 border-t-2 border-gray-200 text-center">
+            <div className="mt-4 md:mt-6 pt-6 border-t-2 border-gray-200 text-center">
               <p className="text-sm text-gray-600">
                 Need help?{' '}
                 <Link href="/contact" className="font-bold text-primary hover:underline">

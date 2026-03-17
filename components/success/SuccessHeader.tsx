@@ -3,7 +3,7 @@ import Link from 'next/link'
 
 export default function SuccessHeader() {
   return (
-    <div className="mb-8">
+    <div className="mb-4 md:mb-6">
       {/* Breadcrumb */}
       <div className="flex items-center gap-2 text-sm text-gray-600 mb-6">
         <Link href="/" className="hover:text-[#13b6ec] transition-colors">
@@ -22,7 +22,7 @@ export default function SuccessHeader() {
       </div>
 
       {/* Success Header */}
-      <div className="bg-gradient-to-r from-green-50 to-blue-50 border-3 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] p-8 mb-8 relative overflow-hidden">
+      <div className="bg-gradient-to-r from-green-50 to-blue-50 border-3 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] p-8 mb-4 md:mb-6 relative overflow-hidden">
         {/* Decorative Elements */}
         <div className="absolute top-4 right-4">
           <Sparkles className="w-8 h-8 text-yellow-500" />
@@ -35,7 +35,7 @@ export default function SuccessHeader() {
         </div>
 
         <div className="relative z-10">
-          <div className="text-center mb-8">
+          <div className="text-center mb-4 md:mb-6">
             <div className="bg-green-500 border-3 border-black p-4 w-fit mx-auto mb-6 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
               <CheckCircle className="w-12 h-12 text-white" />
             </div>

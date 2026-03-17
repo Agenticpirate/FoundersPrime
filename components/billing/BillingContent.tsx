@@ -35,7 +35,7 @@ export default function BillingContent() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center py-24">
+      <div className="flex items-center justify-center py-6 md:py-8 md:py-8 md:py-6 md:py-8">
         <div className="animate-spin h-10 w-10 border-b-3 border-black" />
       </div>
     )

@@ -7,7 +7,7 @@ import { useCookieConsent } from '@/context/CookieConsentContext'
 export default function CookieHeader() {
   const { openModal } = useCookieConsent()
   return (
-    <div className="mb-8">
+    <div className="mb-4 md:mb-6">
       {/* Breadcrumb */}
       <div className="flex items-center gap-2 text-xs font-mono text-gray-500 mb-6">
         <Link href="/" className="hover:text-black transition-colors uppercase">
@@ -18,7 +18,7 @@ export default function CookieHeader() {
       </div>
 
       {/* Header */}
-      <div className="bg-white border-2 border-black shadow-[3px_3px_0px_0px_#1a1a1a] rounded-sm p-6 mb-8">
+      <div className="bg-white border-2 border-black shadow-[3px_3px_0px_0px_#1a1a1a] rounded-sm p-6 mb-4 md:mb-6">
         <div className="flex items-start gap-4 mb-6">
           <div className="bg-accent-yellow border-2 border-black p-2 shadow-[2px_2px_0px_0px_#1a1a1a] rounded-sm hidden sm:block">
             <Cookie className="w-6 h-6 text-black" />

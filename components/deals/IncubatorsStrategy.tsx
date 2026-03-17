@@ -1,6 +1,6 @@
 export default function IncubatorsStrategy() {
   return (
-    <div className="bg-white border-2 border-black p-6 mb-12 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+    <div className="bg-white border-2 border-black p-6 mb-6 md:mb-4 md:mb-6 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
       <div className="flex items-center gap-3 mb-6">
         <div className="w-2 h-2 bg-primary border-2 border-black"></div>
         <h2 className="font-mono text-2xl font-bold">Incubator vs Accelerator: What's the Difference?</h2>

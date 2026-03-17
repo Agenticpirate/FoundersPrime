@@ -12,8 +12,8 @@ export default function ProviderSection() {
 
   if (!mounted) {
     return (
-      <section className="py-8 md:py-20 border-b-2 border-black bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-8 md:py-5 md:py-6 md:py-14 border-b-2 border-black bg-white">
+        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="border-[3px] border-[#101622] shadow-[6px_6px_0px_0px_#101622] bg-[#f6f6f8] h-[200px] md:h-[600px] flex items-center justify-center">
             <span className="font-mono animate-pulse text-sm">Loading Provider Network...</span>
           </div>
@@ -23,8 +23,8 @@ export default function ProviderSection() {
   }
 
   return (
-    <section className="py-8 md:py-20 border-b-2 border-black bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="py-8 md:py-5 md:py-6 md:py-14 border-b-2 border-black bg-white">
+      <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="border-[3px] border-[#101622] shadow-[6px_6px_0px_0px_#101622] bg-[#f6f6f8] grid grid-cols-1 lg:grid-cols-2">
           <div className="p-5 md:p-12 lg:p-16 flex flex-col justify-center border-b-[3px] lg:border-b-0 lg:border-r-[3px] border-[#101622]">
             <div className="flex items-center gap-2 mb-3 md:mb-6">
@@ -53,7 +53,7 @@ export default function ProviderSection() {
             {/* Background Decor */}
             <div className="absolute inset-0 grid-bg opacity-50"></div>
             <div className="absolute top-0 right-0 w-64 h-64 bg-accent-yellow/30 rounded-full blur-3xl -mr-20 -mt-20"></div>
-            <div className="absolute bottom-0 left-0 w-64 h-64 bg-accent-cyan/20 rounded-full blur-3xl -ml-20 -mb-20"></div>
+            <div className="absolute bottom-0 left-0 w-64 h-64 bg-accent-cyan/20 rounded-full blur-3xl -ml-20 -mb-10 md:mb-14"></div>
 
             {/* The "Hero" Card */}
             <div className="relative z-10 w-full max-w-sm transform group-hover:-translate-y-2 transition-transform duration-500">
@@ -95,7 +95,7 @@ export default function ProviderSection() {
               </div>
             </div>
 
-            <div className="mt-8 text-center relative z-10">
+            <div className="mt-4 md:mt-6 text-center relative z-10">
               <p className="font-mono text-xs font-bold text-gray-400 uppercase tracking-widest">
                 Join 150+ Top Tier Providers
               </p>

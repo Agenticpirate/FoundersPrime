@@ -52,15 +52,15 @@ export default function Footer() {
   return (
     <footer className="bg-[#fafafa] border-t border-[#e5e5e5]">
       {/* ── Main grid ── */}
-      <div className="max-w-6xl mx-auto px-4 sm:px-8 pt-8 md:pt-12 pb-6 md:pb-10">
+      <div className="max-w-[1600px] mx-auto px-4 sm:px-8 pt-6 pb-4">
 
         {/* Brand row and Full link grid combined for better desktop flow */}
-        <div className="flex flex-col lg:flex-row lg:justify-between gap-8 md:gap-12">
+        <div className="flex flex-col lg:flex-row gap-6 lg:gap-8">
           
           {/* Brand Column */}
-          <div className="flex flex-col gap-3 lg:max-w-[240px]">
+          <div className="flex flex-col gap-2 lg:max-w-[240px]">
             <Link href="/" className="inline-flex items-center gap-2 no-underline w-fit">
-              <div className="w-[18px] h-[18px] relative flex-shrink-0">
+              <div className="w-[16px] h-[16px] relative flex-shrink-0">
                 <Image
                   src="/logo.svg"
                   alt="FoundersPrime Logo"
@@ -79,13 +79,13 @@ export default function Footer() {
           </div>
 
           {/* Link Grid */}
-          <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-x-4 gap-y-8 flex-1 lg:justify-items-end">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-x-6 gap-y-6 lg:ml-auto w-full lg:w-auto">
             {footerSections.map((section, index) => (
-              <div key={index} className="flex flex-col gap-3 min-w-[120px]">
-                <p className="font-mono text-[10px] font-bold tracking-[0.1em] uppercase text-gray-500">
+              <div key={index} className="flex flex-col gap-2">
+                <p className="font-mono text-[10px] font-bold tracking-[0.1em] uppercase text-gray-500 mb-0.5">
                   {section.title}
                 </p>
-                <ul className="flex flex-col gap-[6px] list-none p-0 m-0">
+                <ul className="flex flex-col gap-1 list-none p-0 m-0">
                   {section.links.map((link, linkIndex) => (
                     <li key={linkIndex}>
                       <Link
@@ -105,7 +105,7 @@ export default function Footer() {
 
       {/* ── Bottom bar ── */}
       <div className="border-t border-[#f0f0f0] bg-[#fafafa]">
-        <div className="max-w-6xl mx-auto px-4 sm:px-8 py-4 flex flex-col sm:flex-row justify-between items-center gap-4">
+        <div className="max-w-[1600px] mx-auto px-4 sm:px-8 py-2 md:py-3 flex flex-col sm:flex-row justify-between items-center gap-4">
           <span className="font-mono text-[10px] text-gray-400 text-center sm:text-left">
             © 2026 FoundersPrime. Built by founders, for founders.
           </span>

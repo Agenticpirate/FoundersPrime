@@ -77,14 +77,14 @@ export default function SaasGrid() {
     ]
 
     return (
-        <div className="mb-8">
+        <div className="mb-4 md:mb-5">
             <div className="flex items-center gap-4 mb-6">
                 <h2 className="font-mono text-2xl font-bold text-black border-b-3 border-black pb-1">
                     Browse by Category
                 </h2>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                 {categories.map((cat) => (
                     <Link key={cat.slug} className="group block" href={`/deals/${cat.slug}`}>
                         <div className={`h-full ${cat.bgBase} border-2 border-black p-5 shadow-[4px_4px_0px_0px_#1a1a1a] transition-all duration-200 group-hover:shadow-[6px_6px_0px_0px_#1a1a1a] group-hover:-translate-y-0.5 group-hover:-translate-x-0.5 relative`}>

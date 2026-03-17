@@ -32,7 +32,7 @@ export default function StudentBenefitsPage() {
                         currentSection="Student Benefits"
                     />
 
-                    <div className="mb-8">
+                    <div className="mb-4 md:mb-6">
                         <h1 className="text-4xl md:text-5xl font-black mb-4 font-display uppercase tracking-tight">
                             Student Benefits 2026
                         </h1>

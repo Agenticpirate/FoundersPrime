@@ -1,6 +1,6 @@
 export default function DealsFooter() {
   return (
-    <footer className="bg-ink text-white py-12 border-t-4 border-ink">
+    <footer className="bg-ink text-white py-6 md:py-8 border-t-4 border-ink">
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid md:grid-cols-4 gap-8">
           <div className="col-span-1 md:col-span-1">

@@ -119,7 +119,7 @@ export default function StartupsGrid({ filters }: StartupsGridProps) {
 
   if (loading) {
     return (
-      <div className="text-center py-12">
+      <div className="text-center py-6 md:py-8">
         <div className="inline-block animate-spin rounded-full h-12 w-12 border-4 border-black border-t-primary"></div>
         <p className="mt-4 font-mono text-lg">Loading verified startups...</p>
       </div>
@@ -128,7 +128,7 @@ export default function StartupsGrid({ filters }: StartupsGridProps) {
 
   if (startups.length === 0) {
     return (
-      <div className="text-center py-12 bg-white border-3 border-black p-8">
+      <div className="text-center py-6 md:py-8 bg-white border-3 border-black p-8">
         <span className="material-symbols-outlined text-6xl text-gray-400 mb-4">search_off</span>
         <h3 className="font-mono text-xl font-bold mb-2">No startups found</h3>
         <p className="font-mono text-gray-600">Try adjusting your filters</p>

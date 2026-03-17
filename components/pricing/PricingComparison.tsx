@@ -53,8 +53,8 @@ export default function PricingComparison() {
   }
 
   return (
-    <div className="mb-20">
-      <div className="text-center mb-12">
+    <div className="mb-10 md:mb-14">
+      <div className="text-center mb-6 md:mb-4 md:mb-6">
         <h2 className="font-mono text-4xl font-bold text-black mb-4">
           Feature Comparison
         </h2>
@@ -98,8 +98,8 @@ export default function PricingComparison() {
       </div>
 
       {/* Value Calculator */}
-      <div className="mt-8 md:mt-12 bg-black text-white border-3 border-black shadow-[6px_6px_0px_0px_#1a1a1a] rounded-sm p-6 md:p-8">
-        <div className="text-center mb-6 md:mb-8">
+      <div className="mt-4 md:mt-6 md:mt-12 bg-black text-white border-3 border-black shadow-[6px_6px_0px_0px_#1a1a1a] rounded-sm p-6 md:p-8">
+        <div className="text-center mb-6 md:mb-4 md:mb-6">
           <h3 className="font-mono text-xl md:text-2xl font-bold text-primary mb-3 md:mb-4">
             Calculate Your Savings
           </h3>

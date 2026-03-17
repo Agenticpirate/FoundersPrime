@@ -424,7 +424,7 @@ export default async function SingleDealPage({ params }: PageProps) {
         <main className="flex-1">
           {/* Full-width header section */}
           <div className="w-full bg-white border-b-3 border-black">
-            <div className="max-w-[1600px] mx-auto px-4 lg:px-6 py-4 lg:py-6">
+            <div className="max-w-[1600px] mx-auto px-4 lg:px-6 py-2 lg:py-4">
               {/* Breadcrumbs */}
               <nav aria-label="Breadcrumb" className="flex mb-4">
                 <ol className="inline-flex items-center space-x-1 md:space-x-3 font-mono text-sm font-medium">
@@ -535,7 +535,7 @@ export default async function SingleDealPage({ params }: PageProps) {
           </div>
 
           {/* Main content - full width */}
-          <div className="max-w-[1600px] mx-auto px-4 lg:px-6 py-4 lg:py-6">
+          <div className="max-w-[1600px] mx-auto px-4 lg:px-6 py-2 lg:py-4">
             <SingleDealContent deal={deal} />
           </div>
         </main>

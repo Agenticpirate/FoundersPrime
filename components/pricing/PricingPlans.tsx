@@ -30,14 +30,11 @@ export default function PricingPlans({ currency }: PricingPlansProps) {
       cta: 'Start Exploring',
       href: '/checkout?plan=explorer',
       popular: false,
-      buttonStyle: 'bg-white hover:bg-gray-50 text-[#111111]',
-      badge: null,
+      buttonStyle: 'bg-white hover:bg-gray-50 text-black',
       special: false,
-      headerBg: 'bg-gray-50',
+      headerBg: 'bg-white',
       cardBg: 'bg-white',
-      textColor: 'text-[#111111]',
-      featureIcon: 'text-[#111111]',
-      iconBg: 'bg-gray-100',
+      accentColor: 'text-gray-400',
       delay: 0,
     },
     {
@@ -59,14 +56,11 @@ export default function PricingPlans({ currency }: PricingPlansProps) {
       cta: 'Become a Founder',
       href: '/checkout?plan=founder',
       popular: true,
-      buttonStyle: 'bg-[#111111] text-white hover:bg-[#333]',
-      badge: null,
+      buttonStyle: 'bg-[#38bdf8] text-black hover:bg-[#0ea5e9]',
       special: false,
-      headerBg: 'bg-[#38bdf8]',
-      cardBg: 'bg-[#e0f2fe]',
-      textColor: 'text-[#111111]',
-      featureIcon: 'text-[#0284c7]',
-      iconBg: 'bg-white/30',
+      headerBg: 'bg-white',
+      cardBg: 'bg-white',
+      accentColor: 'text-[#38bdf8]',
       delay: 100,
     },
     {
@@ -85,71 +79,61 @@ export default function PricingPlans({ currency }: PricingPlansProps) {
       cta: 'Get Legend Status',
       href: '/checkout?plan=legend',
       popular: false,
-      buttonStyle: 'bg-[#111111] text-white hover:bg-[#333]',
-      badge: null,
+      buttonStyle: 'bg-accent-yellow text-black hover:bg-yellow-400',
       special: true,
-      headerBg: 'bg-[#fde047]',
-      cardBg: 'bg-[#fefce8]',
-      textColor: 'text-[#111111]',
-      featureIcon: 'text-[#ca8a04]',
-      iconBg: 'bg-white/30',
+      headerBg: 'bg-white',
+      cardBg: 'bg-white',
+      accentColor: 'text-accent-yellow',
       delay: 200,
     }
   ]
 
   return (
-    <section className="mb-6 md:mb-8">
-      {/* Section Heading */}
-      <h2 className="font-mono text-xl md:text-3xl font-black uppercase text-center text-[#111111] tracking-tight mb-5 md:mb-8">
-        Unlock More Value
-      </h2>
-
+    <section className="mb-4">
       {/* Mobile carousel */}
       <div className="md:hidden flex gap-4 overflow-x-auto snap-x snap-mandatory pb-4 px-4 mobile-scroll-hide">
         {plans.map((plan, index) => (
           <div
             key={index}
-            className="snap-start shrink-0 w-[82vw] group relative flex flex-col border-2 border-[#111111] shadow-[3px_3px_0px_0px_#111111] overflow-hidden"
+            className={`snap-start shrink-0 w-[82vw] relative flex flex-col border-2 border-black bg-white overflow-hidden shadow-[2px_2px_0px_0px_#111]`}
           >
             {plan.popular && (
-              <div className="absolute top-0 left-1/2 -translate-x-1/2 bg-[#111111] text-white px-3 py-0.5 font-mono text-[9px] font-black uppercase tracking-widest z-20">
-                ★ Most Popular
+              <div className="absolute top-0 right-0 bg-[#38bdf8] text-black px-2 py-0.5 border-b-2 border-l-2 border-black font-mono text-[9px] font-black uppercase tracking-widest z-20">
+                ★ Popular
               </div>
             )}
             {plan.special && (
-              <div className="absolute top-0 left-1/2 -translate-x-1/2 bg-[#111111] text-white px-3 py-0.5 font-mono text-[9px] font-black uppercase tracking-widest z-20 flex items-center gap-1">
-                <span className="material-symbols-outlined text-[9px] text-amber-400">bolt</span>
-                Elite Status
+              <div className="absolute top-0 right-0 bg-accent-yellow text-black px-2 py-0.5 border-b-2 border-l-2 border-black font-mono text-[9px] font-black uppercase tracking-widest z-20 flex items-center gap-1">
+                <span className="material-symbols-outlined text-[10px]">bolt</span>
+                Lifetime
               </div>
             )}
-            <div className={`${plan.headerBg} px-4 pt-7 pb-3 text-left relative overflow-hidden border-b-2 border-[#111111]/15`}>
-              <div className="flex items-center gap-2">
-                <div className={`w-6 h-6 ${plan.iconBg} border border-[#111111]/20 flex items-center justify-center`}>
-                  <span className="material-symbols-outlined text-xs text-[#111111]">{plan.icon}</span>
-                </div>
-                <h3 className={`font-mono text-sm font-black uppercase tracking-tight ${plan.textColor}`}>{plan.name}</h3>
+            
+            <div className="px-4 pt-6 pb-3 text-left border-b-2 border-black">
+              <div className="flex items-center gap-2 mb-2">
+                <span className={`material-symbols-outlined text-sm ${plan.accentColor}`}>{plan.icon}</span>
+                <h3 className="font-mono text-sm font-black text-black uppercase">{plan.name}</h3>
               </div>
-              <div className={`flex items-baseline ${plan.textColor} mt-2`}>
-                <span className="font-sans text-2xl font-black tracking-tight leading-none">{plan.price}</span>
-                <span className="font-mono text-[9px] font-bold uppercase ml-1 opacity-60">/{plan.period}</span>
+              <div className="flex items-baseline text-black">
+                <span className="font-sans text-3xl font-black tracking-tight">{plan.price}</span>
+                <span className="font-mono text-[10px] font-bold uppercase ml-1 opacity-60">/{plan.period}</span>
               </div>
-              {plan.description && (
-                <p className={`font-sans text-[10px] mt-1 opacity-60 ${plan.textColor}`}>{plan.description}</p>
-              )}
+              <p className="font-sans text-[11px] mt-1 text-gray-500">{plan.description}</p>
             </div>
-            <div className={`px-4 py-3 flex-1 flex flex-col justify-between ${plan.cardBg}`}>
-              <ul className="space-y-1.5">
+            
+            <div className="px-4 py-4 flex-1 flex flex-col justify-between">
+              <ul className="space-y-2">
                 {plan.features.map((feature, idx) => (
                   <li key={idx} className="flex items-center gap-2">
-                    <span className={`material-symbols-outlined text-base ${plan.featureIcon}`} style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
-                    <span className="font-sans text-xs text-[#111111]">{feature}</span>
+                    <span className={`material-symbols-outlined text-base ${plan.accentColor}`} style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
+                    <span className="font-sans text-xs text-black">{feature}</span>
                   </li>
                 ))}
               </ul>
-              <div className="mt-4">
+              <div className="mt-5">
                 <Link
                   href={plan.href}
-                  className={`w-full py-2 font-mono font-bold uppercase tracking-wider text-[10px] border-2 border-[#111111] flex items-center justify-center gap-1.5 shadow-[2px_2px_0_0_#111111] transition-all duration-200 ${plan.buttonStyle}`}
+                  className={`w-full py-2 font-mono font-bold uppercase tracking-wider text-[10px] border-2 border-black flex items-center justify-center gap-1.5 transition-all shadow-[2px_2px_0_0_#111] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[1px_1px_0_0_#111] ${plan.buttonStyle}`}
                 >
                   {plan.cta}
                   <span className="material-symbols-outlined text-sm">arrow_forward</span>
@@ -168,110 +152,63 @@ export default function PricingPlans({ currency }: PricingPlansProps) {
       </div>
 
       {/* Desktop grid */}
-      <div className="hidden md:grid md:grid-cols-3 gap-5 items-stretch max-w-5xl mx-auto px-4">
+      <div className="hidden md:grid md:grid-cols-3 gap-6 items-start max-w-[1600px] mx-auto px-4">
         {plans.map((plan, index) => (
           <div
             key={index}
-            className="group relative flex flex-col border-2 border-[#111111] shadow-[4px_4px_0px_0px_#111111] overflow-hidden transition-all duration-500 ease-out hover:shadow-[6px_6px_0px_0px_#111111] hover:-translate-y-1 animate-fade-in-up"
+            className="group relative flex flex-col border-2 border-black bg-white shadow-[4px_4px_0px_0px_#111111] overflow-hidden transition-all duration-300 ease-out hover:shadow-[6px_6px_0px_0px_#111111] hover:-translate-y-1 animate-fade-in-up"
             style={{ animationDelay: `${plan.delay}ms`, animationFillMode: 'both' }}
           >
             {/* Badges */}
             {plan.popular && (
-              <div className="absolute top-0 left-1/2 -translate-x-1/2 bg-[#111111] text-white px-3 py-1 font-mono text-[10px] font-black uppercase tracking-widest z-20">
-                ★ Most Popular
+              <div className="absolute top-0 right-0 bg-[#38bdf8] text-black px-2.5 py-1 border-b-2 border-l-2 border-black font-mono text-[9px] font-black uppercase tracking-widest z-20">
+                ★ Popular
               </div>
             )}
-
             {plan.special && (
-              <div className="absolute top-0 left-1/2 -translate-x-1/2 bg-[#111111] text-white px-3 py-1 font-mono text-[10px] font-black uppercase tracking-widest z-20 flex items-center gap-1">
-                <span className="material-symbols-outlined text-xs text-amber-400">bolt</span>
-                Elite Status
+              <div className="absolute top-0 right-0 bg-accent-yellow text-black px-2.5 py-1 border-b-2 border-l-2 border-black font-mono text-[9px] font-black uppercase tracking-widest z-20 flex items-center gap-1">
+                <span className="material-symbols-outlined text-[10px]">bolt</span>
+                Lifetime
               </div>
             )}
 
-            {/* Header / Pricing Area */}
-            <div className={`${plan.headerBg} px-5 pt-9 pb-4 text-left relative overflow-hidden border-b-2 border-[#111111]/15`}>
-              {/* Decorative floating icon (top-right, subtle) */}
-              <span className="material-symbols-outlined absolute top-2 right-3 text-4xl opacity-[0.07] transition-all duration-700 group-hover:opacity-[0.12] group-hover:rotate-12 group-hover:scale-110">
-                {plan.icon}
-              </span>
-
-              {/* Plan Icon + Name Row */}
-              <div className="flex items-center gap-2">
-                <div className={`w-7 h-7 ${plan.iconBg} border border-[#111111]/20 flex items-center justify-center transition-all duration-500 group-hover:rotate-[-8deg] group-hover:scale-110 ${plan.name === 'Explorer' ? 'group-hover:animate-icon-spin' : ''} ${plan.name === 'Founder' ? 'group-hover:animate-icon-bounce' : ''} ${plan.name === 'Legend' ? 'group-hover:animate-icon-pulse' : ''}`}>
-                  <span className="material-symbols-outlined text-sm text-[#111111]">
-                    {plan.icon}
-                  </span>
-                </div>
-                <h3 className={`font-mono text-base font-black uppercase tracking-tight ${plan.textColor}`}>
-                  {plan.name}
-                </h3>
+            {/* Header Area */}
+            <div className={`px-5 pt-8 pb-4 text-left border-b-2 border-black`}>
+              <div className="flex items-center gap-2 mb-2 transition-transform duration-300 group-hover:translate-x-1">
+                <span className={`material-symbols-outlined text-lg ${plan.accentColor}`}>{plan.icon}</span>
+                <h3 className="font-mono text-sm font-black text-black uppercase tracking-tight">{plan.name}</h3>
               </div>
-
-              {/* Original Price (strikethrough) */}
-              {plan.originalPrice && (
-                <span className={`text-xs font-bold line-through opacity-50 ${plan.textColor} block mt-2`}>
-                  {plan.originalPrice}
-                </span>
-              )}
-
-              {/* Main Price */}
-              <div className={`flex items-baseline ${plan.textColor} ${plan.originalPrice ? 'mt-0.5' : 'mt-2'}`}>
-                <span className="font-sans text-3xl md:text-4xl font-black tracking-tight leading-none transition-transform duration-300 group-hover:scale-[1.02] origin-left">
-                  {plan.price}
-                </span>
-                <span className="font-mono text-[10px] font-bold uppercase ml-1 opacity-60">
-                  /{plan.period}
-                </span>
+              <div className="flex items-baseline text-black transition-transform duration-300 group-hover:scale-[1.02] origin-left">
+                <span className="font-sans text-4xl font-black tracking-tighter leading-none">{plan.price}</span>
+                <span className="font-mono text-[10px] font-bold uppercase ml-1 text-gray-400">/{plan.period}</span>
               </div>
-
-              {/* Save Badge */}
-              {plan.badge && (
-                <div className="mt-2">
-                  <span className={`inline-block text-[10px] font-black px-2 py-0.5 uppercase tracking-wider transition-transform duration-300 group-hover:-rotate-1 ${plan.special ? 'bg-[#ef4444] text-white' : 'bg-[#22c55e] text-white'}`}>
-                    {plan.badge}
-                  </span>
-                </div>
-              )}
-
-              {/* Description */}
-              {plan.description && (
-                <p className={`font-sans text-xs mt-2 opacity-60 ${plan.textColor}`}>
-                  {plan.description}
-                </p>
-              )}
+              <p className="font-sans text-[12px] mt-2 text-gray-500 line-clamp-1">{plan.description}</p>
             </div>
 
-            {/* Features — clean section, no extra dividers */}
-            <div className={`px-5 py-4 flex-1 flex flex-col justify-between ${plan.cardBg}`}>
-              <ul className="space-y-2.5">
+            {/* Features Area */}
+            <div className="px-5 py-5 flex-1 flex flex-col justify-between bg-white">
+              <ul className="space-y-3">
                 {plan.features.map((feature, idx) => (
                   <li
                     key={idx}
-                    className="flex items-center gap-2.5 transition-transform duration-300 ease-out group-hover:translate-x-0.5"
+                    className="flex items-start gap-2.5 transition-transform duration-300 ease-out group-hover:translate-x-1"
                     style={{ transitionDelay: `${idx * 40}ms` }}
                   >
-                    <span className={`material-symbols-outlined text-lg ${plan.featureIcon} transition-transform duration-300 group-hover:scale-110`} style={{ fontVariationSettings: "'FILL' 1" }}>
-                      check_circle
-                    </span>
-                    <span className="font-sans text-sm text-[#111111]">
-                      {feature}
-                    </span>
+                    <span className={`material-symbols-outlined text-base mt-0.5 ${plan.accentColor}`} style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
+                    <span className="font-sans text-[13px] text-gray-800 leading-tight">{feature}</span>
                   </li>
                 ))}
               </ul>
 
               {/* CTA Button */}
-              <div className="mt-5">
+              <div className="mt-6">
                 <Link
                   href={plan.href}
-                  className={`w-full py-2.5 font-mono font-bold uppercase tracking-wider text-xs border-2 border-[#111111] flex items-center justify-center gap-2 shadow-[3px_3px_0_0_#111111] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[1px_1px_0_0_#111111] transition-all duration-200 ${plan.buttonStyle}`}
+                  className={`w-full py-2.5 font-mono font-bold uppercase tracking-wider text-[11px] border-2 border-black flex items-center justify-center gap-2 shadow-[2px_2px_0_0_#111] transition-all hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none ${plan.buttonStyle}`}
                 >
                   {plan.cta}
-                  <span className="material-symbols-outlined text-base transition-transform duration-300 group-hover:translate-x-0.5">arrow_forward</span>
+                  <span className="material-symbols-outlined text-base transition-transform duration-300 group-hover:translate-x-1">arrow_forward</span>
                 </Link>
-
-
               </div>
             </div>
           </div>

@@ -54,9 +54,9 @@ export default function PricingPartnerLogos() {
     const seamlessPartners = [...partners, ...partners, ...partners]
 
     return (
-        <section className="w-full py-6 bg-white border-b-3 border-[#111111] overflow-hidden">
-            <div className="max-w-7xl mx-auto text-center">
-                <p className="text-[10px] font-black uppercase tracking-widest text-gray-400 mb-6">
+        <section className="w-full py-4 bg-white border-b-2 border-black overflow-hidden relative">
+            <div className="max-w-[1600px] mx-auto text-center">
+                <p className="text-[10px] font-black uppercase tracking-widest text-gray-400 mb-3">
                     Get instant access to $500k+ in deals from
                 </p>
 

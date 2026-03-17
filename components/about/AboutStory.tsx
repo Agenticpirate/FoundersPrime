@@ -1,9 +1,9 @@
 export default function AboutStory() {
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-20">
+    <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-10 md:mb-14">
       <div className="lg:col-span-8">
         <div className="bg-white border-3 border-black shadow-[6px_6px_0px_0px_#1a1a1a] rounded-sm p-8 md:p-10">
-          <h2 className="font-mono text-3xl font-bold text-black mb-8 flex items-center gap-3">
+          <h2 className="font-mono text-3xl font-bold text-black mb-4 md:mb-6 flex items-center gap-3">
             <span className="material-symbols-outlined text-3xl">auto_stories</span>
             Our Story
           </h2>

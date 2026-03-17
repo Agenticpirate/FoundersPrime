@@ -58,7 +58,7 @@ export default function SearchFilters() {
   }
 
   return (
-    <div className="mb-8">
+    <div className="mb-4 md:mb-6">
       {/* Filter Bar */}
       <div className="bg-white border-3 border-black shadow-[4px_4px_0px_0px_#1a1a1a] rounded-sm p-6 mb-6">
         <div className="flex flex-col lg:flex-row gap-6 items-start lg:items-center justify-between">

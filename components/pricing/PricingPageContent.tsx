@@ -26,7 +26,7 @@ export default function PricingPageContent() {
 
     return (
         <main className="bg-white min-h-screen pb-12">
-            <div className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center pt-4 pb-3 md:py-5">
+            <div className="relative w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 text-center pt-4 pb-3 md:py-5">
 
                 <div className="relative z-10 flex flex-col items-center">
                     {/* Currency Switcher desktop */}
@@ -95,7 +95,7 @@ export default function PricingPageContent() {
 
             <PricingPartnerLogos />
 
-            <div className="my-10">
+            <div className="my-6 md:my-8">
                 <PricingPlans currency={currency} />
             </div>
 

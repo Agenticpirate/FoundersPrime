@@ -131,10 +131,10 @@ export default function SignupPage() {
   return (
     <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden bg-[#F4F3EF]">
       <Header />
-      <main className="flex-1 flex items-center justify-center py-12 px-4">
+      <main className="flex-1 flex items-center justify-center py-6 md:py-8 px-4">
         <div className="w-full max-w-md">
           <div className="border-3 border-black bg-white shadow-[6px_6px_0px_#111111] p-8">
-            <div className="text-center mb-8">
+            <div className="text-center mb-4 md:mb-6">
               <div className="w-12 h-12 bg-primary text-black flex items-center justify-center mx-auto mb-4 border-2 border-black">
                 <span className="material-symbols-outlined">rocket_launch</span>
               </div>
@@ -229,7 +229,7 @@ export default function SignupPage() {
               </p>
             </div>
 
-            <div className="mt-8 pt-6 border-t-2 border-gray-200">
+            <div className="mt-4 md:mt-6 pt-6 border-t-2 border-gray-200">
               <p className="text-xs text-center text-gray-500 uppercase font-bold mb-4">Or sign up with</p>
               <div className="grid grid-cols-3 gap-3">
                 <button

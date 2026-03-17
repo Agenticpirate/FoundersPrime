@@ -1,13 +1,13 @@
 export default function AboutHero() {
   return (
-    <div className="text-center mb-20">
+    <div className="text-center mb-10 md:mb-14">
       <div className="inline-block border-2 border-black bg-accent-yellow px-3 py-1 font-mono text-xs font-bold uppercase tracking-wide rounded-sm mb-6">
         OUR STORY
       </div>
       <h1 className="font-mono text-5xl md:text-6xl font-bold tracking-tight text-black mb-6 leading-[1.1]">
         Empowering Every <br className="hidden md:block"/> Founder's Journey
       </h1>
-      <p className="font-sans text-lg md:text-xl text-gray-700 leading-relaxed max-w-4xl mx-auto mb-12">
+      <p className="font-sans text-lg md:text-xl text-gray-700 leading-relaxed max-w-4xl mx-auto mb-6 md:mb-4 md:mb-6">
         We believe every great startup begins with access to the right resources, connections, and opportunities. FoundersPrime was built to democratize startup success by making essential deals, insights, and knowledge accessible to founders everywhere.
       </p>
       

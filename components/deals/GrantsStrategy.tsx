@@ -1,6 +1,6 @@
 export default function GrantsStrategy() {
   return (
-    <div className="neo-card bg-white border-2 border-black p-4 md:p-8 mb-4 md:mb-12">
+    <div className="neo-card bg-white border-2 border-black p-4 md:p-8 mb-4 md:mb-6 md:mb-4 md:mb-6">
       <div className="flex items-start gap-3 mb-4 md:mb-6">
         <div className="p-2 md:p-3 bg-accent-yellow border-2 border-black rounded-sm flex-shrink-0">
           <span className="material-symbols-outlined text-xl md:text-3xl text-black">lightbulb</span>

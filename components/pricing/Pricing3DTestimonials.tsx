@@ -192,10 +192,10 @@ export default function Pricing3DTestimonials() {
     }, [totalMobile])
 
     return (
-        <section className="w-full py-8 md:py-16 bg-[#F4F3EF] border-b-3 border-[#111111] overflow-hidden">
-            <div className="max-w-6xl mx-auto px-4 md:px-8 lg:px-12">
+        <section className="w-full py-8 md:py-8 md:py-6 md:py-8 bg-[#F4F3EF] border-b-3 border-[#111111] overflow-hidden">
+            <div className="max-w-[1600px] mx-auto px-4 md:px-8 lg:px-12">
                 {/* Header */}
-                <div className="text-center mb-4 md:mb-12">
+                <div className="text-center mb-4 md:mb-6 md:mb-4 md:mb-6">
                     <h2 className="text-xl md:text-3xl lg:text-4xl font-black uppercase mb-1.5 md:mb-4 tracking-tighter text-[#111111]">
                         Don&apos;t Take Our Word For It
                     </h2>

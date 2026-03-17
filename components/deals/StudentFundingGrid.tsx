@@ -163,7 +163,7 @@ export default function StudentFundingGrid() {
             </div>
 
             {/* Results Count */}
-            <div className="flex items-center justify-between mb-3 md:mb-6 pb-2 md:pb-4 border-b-2 border-dashed border-gray-300">
+            <div className="flex items-center justify-between mb-3 md:mb-6 pb-2 md:pb-2 border-b-2 border-dashed border-gray-300">
                 <div className="font-mono text-xs md:text-sm text-gray-600">
                     <span className="font-bold text-black">{filteredDeals.length}</span> opportunities
                 </div>
@@ -181,7 +181,7 @@ export default function StudentFundingGrid() {
             {/* Grid */}
             {paginatedDeals.length > 0 ? (
                 <>
-                    <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6">
+                    <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
                         {paginatedDeals.map((benefit, idx) => (
                             <DealCard key={`${benefit.company}-${idx}`} deal={convertToCard(benefit, idx)} />
                         ))}
@@ -237,7 +237,7 @@ export default function StudentFundingGrid() {
                     )}
                 </>
             ) : (
-                <div className="text-center py-16 bg-white border-3 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] rounded-sm">
+                <div className="text-center py-8 md:py-6 md:py-8 bg-white border-3 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] rounded-sm">
                     <span className="material-symbols-outlined text-6xl text-gray-300 mb-4 block">search_off</span>
                     <p className="font-mono text-lg font-bold text-gray-700 mb-2">No opportunities found</p>
                     <button

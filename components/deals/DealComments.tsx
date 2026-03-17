@@ -327,7 +327,7 @@ export default function DealComments({ dealId, dealTitle }: DealCommentsProps) {
   )
 
   return (
-    <section id="comments" className="scroll-mt-8">
+    <section id="comments" className="scroll-mt-4 md:mt-6">
       {/* Comments Header */}
       <div className="bg-white border-3 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] p-6 mb-6">
         <div className="flex items-center justify-between mb-4">
@@ -437,7 +437,7 @@ export default function DealComments({ dealId, dealTitle }: DealCommentsProps) {
 
       {/* Load More */}
       {comments.length > 0 && (
-        <div className="mt-8 text-center">
+        <div className="mt-4 md:mt-6 text-center">
           <button className="bg-gray-200 hover:bg-gray-100 text-black font-bold py-3 px-6 border-3 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all duration-200">
             Load More Comments
           </button>

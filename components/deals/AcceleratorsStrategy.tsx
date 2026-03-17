@@ -7,7 +7,7 @@ export default function AcceleratorsStrategy() {
   ]
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 md:gap-6 mb-4 md:mb-12">
+    <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 md:gap-6 mb-4 md:mb-6 md:mb-4 md:mb-6">
       <div className="lg:col-span-8">
         <div className="bg-white border-2 border-black shadow-[3px_3px_0px_0px_#1a1a1a] md:shadow-[4px_4px_0px_0px_#1a1a1a] rounded-sm p-4 md:p-8 relative overflow-hidden">
           {/* Decorative background pattern */}

@@ -4,7 +4,7 @@ export default function NotFound() {
   return (
     <div className="min-h-screen bg-white flex items-center justify-center px-4">
       <div className="text-center max-w-md">
-        <div className="mb-8">
+        <div className="mb-4 md:mb-6">
           <div className="w-24 h-24 bg-black text-white flex items-center justify-center rounded-sm mx-auto mb-4">
             <span className="material-symbols-outlined text-4xl">search_off</span>
           </div>

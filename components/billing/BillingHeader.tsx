@@ -3,7 +3,7 @@ import Link from 'next/link'
 
 export default function BillingHeader() {
   return (
-    <div className="mb-8">
+    <div className="mb-4 md:mb-6">
       {/* Breadcrumb */}
       <div className="flex items-center gap-2 text-sm text-gray-600 mb-6">
         <Link href="/" className="hover:text-[#13b6ec] transition-colors">
@@ -18,7 +18,7 @@ export default function BillingHeader() {
       </div>
 
       {/* Header */}
-      <div className="bg-white border-3 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] p-5 md:p-8 mb-8">
+      <div className="bg-white border-3 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] p-5 md:p-8 mb-4 md:mb-6">
         <div className="flex flex-col md:flex-row items-start gap-4 mb-6">
           <div className="bg-[#13b6ec] border-3 border-black p-3 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
             <CreditCard className="w-8 h-8 text-white" />

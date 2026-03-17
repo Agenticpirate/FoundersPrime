@@ -271,7 +271,7 @@ export default function DealsGrid({ filters }: DealsGridProps) {
 
       {/* No Results */}
       {!loading && filteredDeals.length === 0 && (
-        <div className="text-center py-12 bg-white border-3 border-ink shadow-hard-sm">
+        <div className="text-center py-6 bg-white border-3 border-ink shadow-hard-sm">
           <span className="material-symbols-outlined text-6xl text-gray-300 mb-4 block">search_off</span>
           <h3 className="text-xl font-bold text-gray-700 mb-2">No deals found</h3>
           <p className="text-gray-500 mb-4">
@@ -291,7 +291,7 @@ export default function DealsGrid({ filters }: DealsGridProps) {
 
       {/* Loading State */}
       {loading && (
-        <div className="text-center py-12 bg-white border-3 border-ink shadow-hard-sm">
+        <div className="text-center py-6 bg-white border-3 border-ink shadow-hard-sm">
           <div className="animate-spin rounded-full h-12 w-12 border-4 border-primary border-t-transparent mx-auto mb-4"></div>
           <h3 className="text-xl font-bold text-gray-700 mb-2">Loading deals...</h3>
           <p className="text-gray-500">Please wait while we fetch your deals</p>
@@ -301,7 +301,7 @@ export default function DealsGrid({ filters }: DealsGridProps) {
       {/* Deals Grid or Lock CTA */}
       {!loading && filteredDeals.length > 0 && (
         (!isPro && currentPage > 3) ? (
-          <div className="mt-6 mb-4 md:mt-12 md:mb-8 bg-gray-50 border-4 border-black p-4 md:p-8 text-center neo-shadow">
+          <div className="mt-6 mb-4 md:mt-12 md:mb-4 md:mb-5 bg-gray-50 border-4 border-black p-4 md:p-8 text-center neo-shadow">
             <span className="material-symbols-outlined text-3xl md:text-4xl mb-2 md:mb-4">lock</span>
             <h3 className="text-lg md:text-2xl font-bold font-mono uppercase mb-2">Unlock {filteredDeals.length - (3 * dealsPerPage)}+ More Deals</h3>
             <p className="text-xs md:text-sm text-gray-600 mb-4 md:mb-6 max-w-xl mx-auto">
@@ -312,7 +312,7 @@ export default function DealsGrid({ filters }: DealsGridProps) {
             </a>
           </div>
         ) : (
-          <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6 mb-8">
+          <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4 mb-4 md:mb-5">
             {currentDeals.map((deal) => (
               <DealCard key={deal.id} deal={convertDealToCardFormat(deal)} />
             ))}

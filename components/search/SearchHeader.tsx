@@ -1,6 +1,6 @@
 export default function SearchHeader() {
   return (
-    <div className="mb-8">
+    <div className="mb-4 md:mb-6">
       {/* Breadcrumb */}
       <nav className="flex items-center gap-2 text-sm font-mono mb-6">
         <a href="/" className="text-gray-500 hover:text-black transition-colors">

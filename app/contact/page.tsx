@@ -11,7 +11,7 @@ export default function ContactPage() {
     <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden bg-[#F4F3EF]">
       <Header />
       <main className="flex-1">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-8">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-8 py-8">
           <ContactHeader />
           <ContactHero />
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-4">

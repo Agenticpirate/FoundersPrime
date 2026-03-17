@@ -1,6 +1,6 @@
 export default function SaasDiscountsHero() {
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-20">
+    <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-10 md:mb-14">
       <div className="lg:col-span-7 flex flex-col justify-center">
         <div className="inline-block w-fit border-2 border-black bg-accent-yellow px-3 py-1 font-mono text-xs font-bold uppercase tracking-wide rounded-sm mb-4">
           VERIFIED DEALS

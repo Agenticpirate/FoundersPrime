@@ -1,7 +1,7 @@
 export default function AboutMission() {
   return (
-    <div className="mb-20">
-      <div className="text-center mb-12">
+    <div className="mb-10 md:mb-14">
+      <div className="text-center mb-6 md:mb-4 md:mb-6">
         <h2 className="font-mono text-4xl font-bold text-black mb-6">
           Our Mission & Vision
         </h2>

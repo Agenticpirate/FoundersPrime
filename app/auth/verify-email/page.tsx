@@ -54,7 +54,7 @@ export default function VerifyEmailPage() {
   return (
     <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden">
       <Header />
-      <main className="flex-1 bg-[#f8f9fa] flex items-center justify-center py-12 px-4">
+      <main className="flex-1 bg-[#f8f9fa] flex items-center justify-center py-6 md:py-8 px-4">
         <div className="w-full max-w-md">
           <div className="border-3 border-black bg-white shadow-[6px_6px_0px_#111111] p-8 text-center">
             {status === 'verifying' && (

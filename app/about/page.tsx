@@ -16,7 +16,7 @@ export default function AboutPage() {
 
         {/* ── HERO ─────────────────────────────────────────────────── */}
         <section className="bg-white border-b-3 border-black pattern-grid-lg">
-          <div className="mx-auto max-w-7xl px-4 md:px-6 lg:px-12 py-10 md:py-28">
+          <div className="mx-auto max-w-[1600px] px-4 md:px-6 lg:px-12 py-5 md:py-6 md:py-28">
             <div className="flex flex-col md:flex-row gap-8 md:gap-14 items-center">
               <div className="flex-1">
                 <div className="inline-flex items-center gap-2 bg-accent-yellow border-2 border-black px-3 py-1 mb-4 md:mb-6 shadow-neo-sm">
@@ -56,7 +56,7 @@ export default function AboutPage() {
         </section>
 
         {/* ── THE STORY ────────────────────────────────────────────── */}
-        <section className="py-10 md:py-20 bg-[#F4F3EF] border-b-3 border-black">
+        <section className="py-5 md:py-6 md:py-5 md:py-6 md:py-14 bg-[#F4F3EF] border-b-3 border-black">
           <div className="mx-auto max-w-4xl px-4 md:px-6 lg:px-12">
             <div className="flex items-center gap-2 md:gap-3 mb-6 md:mb-10">
               <span className="material-symbols-outlined text-2xl md:text-4xl">history_edu</span>
@@ -80,9 +80,9 @@ export default function AboutPage() {
         </section>
 
         {/* ── HOW WE MAINTAIN QUALITY ──────────────────────────────── */}
-        <section className="py-10 md:py-20 bg-white border-b-3 border-black">
-          <div className="mx-auto max-w-7xl px-4 md:px-6 lg:px-12">
-            <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 md:mb-14 gap-3 md:gap-6">
+        <section className="py-5 md:py-6 md:py-5 md:py-6 md:py-14 bg-white border-b-3 border-black">
+          <div className="mx-auto max-w-[1600px] px-4 md:px-6 lg:px-12">
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-4 md:mb-6 md:mb-14 gap-3 md:gap-6">
               <h2 className="font-mono text-2xl md:text-4xl lg:text-5xl font-black uppercase tracking-tight max-w-xl">
                 How We Maintain Quality
               </h2>
@@ -114,9 +114,9 @@ export default function AboutPage() {
         </section>
 
         {/* ── COMPARISON TABLE ─────────────────────────────────────── */}
-        <section className="py-10 md:py-20 bg-[#F4F3EF] border-b-3 border-black">
-          <div className="mx-auto max-w-5xl px-4 md:px-6 lg:px-12">
-            <h2 className="font-mono text-xl md:text-3xl font-black uppercase mb-6 md:mb-12 text-center">What Makes Us Different</h2>
+        <section className="py-5 md:py-6 md:py-5 md:py-6 md:py-14 bg-[#F4F3EF] border-b-3 border-black">
+          <div className="mx-auto max-w-[1600px] px-4 md:px-6 lg:px-12">
+            <h2 className="font-mono text-xl md:text-3xl font-black uppercase mb-6 md:mb-6 md:mb-4 md:mb-6 text-center">What Makes Us Different</h2>
             <div className="neo-brutal-box p-0 overflow-x-auto">
               <table className="w-full text-left border-collapse">
                 <thead>
@@ -149,9 +149,9 @@ export default function AboutPage() {
         </section>
 
         {/* ── PRINCIPLES ───────────────────────────────────────────── */}
-        <section className="py-10 md:py-20 bg-white border-b-3 border-black">
-          <div className="mx-auto max-w-7xl px-4 md:px-6 lg:px-12">
-            <h2 className="font-mono text-xl md:text-3xl font-black uppercase mb-6 md:mb-12">Our Principles</h2>
+        <section className="py-5 md:py-6 md:py-5 md:py-6 md:py-14 bg-white border-b-3 border-black">
+          <div className="mx-auto max-w-[1600px] px-4 md:px-6 lg:px-12">
+            <h2 className="font-mono text-xl md:text-3xl font-black uppercase mb-6 md:mb-6 md:mb-4 md:mb-6">Our Principles</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 border-3 border-black">
               {[
                 { icon: 'target', color: 'bg-primary/15 text-primary', label: '01', title: 'Accuracy Over Quantity', desc: "We'd rather list 50 grants that actually pay out than 5,000 that are expired or scams. Quality is our single metric." },
@@ -173,13 +173,13 @@ export default function AboutPage() {
         </section>
 
         {/* ── FOUNDER + CONTACT ─────────────────────────────────────── */}
-        <section className="py-10 md:py-20 bg-[#F4F3EF]">
-          <div className="mx-auto max-w-7xl px-4 md:px-6 lg:px-12">
+        <section className="py-5 md:py-6 md:py-5 md:py-6 md:py-14 bg-[#F4F3EF]">
+          <div className="mx-auto max-w-[1600px] px-4 md:px-6 lg:px-12">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12">
 
               {/* Founder card */}
               <div className="lg:col-span-4">
-                <h2 className="font-mono text-2xl font-black uppercase mb-8 flex items-center gap-2">
+                <h2 className="font-mono text-2xl font-black uppercase mb-4 md:mb-6 flex items-center gap-2">
                   <span className="material-symbols-outlined">groups</span>
                   The Team
                 </h2>
@@ -216,7 +216,7 @@ export default function AboutPage() {
 
               {/* Contact */}
               <div className="lg:col-span-8">
-                <h2 className="font-mono text-2xl font-black uppercase mb-8 flex items-center gap-2">
+                <h2 className="font-mono text-2xl font-black uppercase mb-4 md:mb-6 flex items-center gap-2">
                   <span className="material-symbols-outlined">contact_support</span>
                   Reach Out
                 </h2>

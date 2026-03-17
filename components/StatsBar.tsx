@@ -1,7 +1,7 @@
 export default function StatsBar() {
   return (
     <section className="border-b-2 border-black bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 divide-y-2 lg:divide-y-0 divide-black font-mono">
           {/* Left Block (Stats 1-3) matching Hero text width (7 cols) */}
           <div className="lg:col-span-7 grid grid-cols-1 md:grid-cols-3 divide-y-2 md:divide-y-0 md:divide-x-2 divide-black lg:border-r-2 border-black">

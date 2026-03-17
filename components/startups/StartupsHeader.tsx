@@ -14,9 +14,9 @@ export default function StartupsHeader() {
   ];
 
   return (
-    <div className="mb-12">
+    <div className="mb-6 md:mb-4 md:mb-6">
       {/* Compact Header */}
-      <div className="mb-6 md:mb-8">
+      <div className="mb-6 md:mb-4 md:mb-6">
         <div className="inline-block border-2 border-black bg-accent-yellow px-2 py-0.5 font-mono text-[10px] font-bold uppercase tracking-wide rounded-sm mb-2">
           DISCOVER + INVEST
         </div>
@@ -29,7 +29,7 @@ export default function StartupsHeader() {
       </div>
 
       {/* Stats Bar */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4 md:mb-6">
         <div className="bg-white border-2 border-black shadow-[3px_3px_0px_0px_#1a1a1a] rounded-sm p-4 flex items-center justify-between hover:shadow-[4px_4px_0px_0px_#1a1a1a] hover:-translate-x-px hover:-translate-y-px transition-all">
           <div>
             <p className="font-mono text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-1">Verified Companies</p>

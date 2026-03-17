@@ -7,15 +7,15 @@ export default function CloudCreditsStrategy() {
   ]
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-20">
+    <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 md:gap-6 mb-4 md:mb-6 md:mb-10">
       <div className="lg:col-span-8">
-        <div className="bg-white border-2 border-black shadow-[4px_4px_0px_0px_#1a1a1a] rounded-sm p-6 md:p-8 relative overflow-hidden">
+        <div className="bg-white border-2 border-black shadow-[4px_4px_0px_0px_#1a1a1a] rounded-sm p-4 md:p-6 relative overflow-hidden">
           {/* Decorative background pattern */}
           <div className="absolute top-0 right-0 p-4 opacity-5 pointer-events-none">
             <span className="material-symbols-outlined text-[200px]">strategy</span>
           </div>
 
-          <h2 className="font-mono text-xl md:text-3xl font-bold text-black mb-8 flex items-center gap-3">
+          <h2 className="font-mono text-xl md:text-3xl font-bold text-black mb-4 flex items-center gap-3">
             <span className="bg-black text-white size-10 flex items-center justify-center text-xl rounded-sm">1</span>
             How to Maximize Credits
           </h2>
@@ -28,7 +28,7 @@ export default function CloudCreditsStrategy() {
               Most cloud providers do not require exclusivity. You can (and should) apply for credits across multiple platforms to diversify your infrastructure and extend your runway.
             </p>
 
-            <div className="bg-gray-100 border-2 border-dashed border-gray-400 p-6 rounded-sm mb-8">
+            <div className="bg-gray-100 border-2 border-dashed border-gray-400 p-6 rounded-sm mb-4 md:mb-6">
               <p className="font-mono text-xs font-bold text-gray-500 uppercase mb-3">Example Stack</p>
               <ul className="space-y-3 font-mono text-sm md:text-base">
                 {stackingExample.map((item, index) => (

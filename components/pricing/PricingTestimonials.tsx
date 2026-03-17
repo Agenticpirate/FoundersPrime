@@ -41,9 +41,9 @@ export default function PricingTestimonials() {
     const activeTestimonial = testimonials[activeIndex]
 
     return (
-        <section className="w-full py-20 px-4 bg-[#F4F3EF] border-b-3 border-[#111111]">
+        <section className="w-full py-5 md:py-6 md:py-14 px-4 bg-[#F4F3EF] border-b-3 border-[#111111]">
             <div className="max-w-4xl mx-auto text-center">
-                <div className="mb-12">
+                <div className="mb-6 md:mb-4 md:mb-6">
                     <h2 className="font-mono text-3xl font-black uppercase mb-4 text-[#111111] tracking-tight">
                         Don't Take Our Word For It
                     </h2>
@@ -59,11 +59,11 @@ export default function PricingTestimonials() {
                         ))}
                     </div>
 
-                    <h3 className="font-mono text-2xl md:text-3xl font-bold leading-relaxed mb-8 text-[#111111]">
+                    <h3 className="font-mono text-2xl md:text-3xl font-bold leading-relaxed mb-4 md:mb-6 text-[#111111]">
                         "{activeTestimonial.quote}"
                     </h3>
 
-                    <div className="flex items-center justify-center gap-4 mb-8">
+                    <div className="flex items-center justify-center gap-4 mb-4 md:mb-6">
                         <div className="w-12 h-12 bg-gray-200 rounded-full border-2 border-[#111111] overflow-hidden">
                             <Image
                                 src={activeTestimonial.avatar}
@@ -79,7 +79,7 @@ export default function PricingTestimonials() {
                     </div>
 
                     {/* Navigation Buttons */}
-                    <div className="flex justify-center gap-4 mt-8">
+                    <div className="flex justify-center gap-4 mt-4 md:mt-6">
                         <button
                             onClick={prevTestimonial}
                             className="w-10 h-10 flex items-center justify-center bg-white border-2 border-[#111111] shadow-[4px_4px_0_0_#111111] hover:shadow-[2px_2px_0_0_#111111] hover:translate-y-[2px] hover:translate-x-[2px] transition-all rounded-full"

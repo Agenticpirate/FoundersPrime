@@ -320,7 +320,7 @@ export default function SmartDealImporter({ onClose, onImport }: SmartDealImport
 
   return (
     <div className="fixed inset-0 bg-black/70 flex items-center justify-center p-4 z-[9999]">
-      <div className="bg-white border-4 border-black shadow-[8px_8px_0_0_#000] w-full max-w-5xl max-h-[90vh] overflow-hidden flex flex-col">
+      <div className="bg-white border-4 border-black shadow-[8px_8px_0_0_#000] w-full max-w-[1600px] max-h-[90vh] overflow-hidden flex flex-col">
         {/* Header */}
         <div className="bg-gradient-to-r from-cyan-500 to-purple-500 p-4 border-b-4 border-black flex justify-between items-center">
           <div>
@@ -552,7 +552,7 @@ URL: https://aws.amazon.com`}
 
           {/* Step 4: Importing */}
           {step === 'importing' && (
-            <div className="text-center py-12">
+            <div className="text-center py-6 md:py-8">
               {importing ? (
                 <>
                   <div className="text-6xl mb-6 animate-bounce">⚡</div>

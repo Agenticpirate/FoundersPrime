@@ -14,7 +14,7 @@ export default function NotFound() {
             </div>
             
             <h1 className="font-mono text-4xl font-bold text-black mb-4">Startup Not Found</h1>
-            <p className="font-sans text-lg text-gray-600 mb-8">
+            <p className="font-sans text-lg text-gray-600 mb-4 md:mb-6">
               The startup you're looking for doesn't exist in our database or may have been removed.
             </p>
             

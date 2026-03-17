@@ -23,9 +23,9 @@ export default function CommonQueries() {
   ]
 
   return (
-    <section className="py-20 bg-white">
+    <section className="py-5 md:py-6 md:py-14 bg-white">
       <div className="max-w-3xl mx-auto px-4">
-        <h2 className="text-3xl font-bold text-center mb-12 font-mono uppercase">Common_Queries</h2>
+        <h2 className="text-3xl font-bold text-center mb-6 md:mb-4 md:mb-6 font-mono uppercase">Common_Queries</h2>
         <div className="space-y-4">
           {faqs.map((faq, index) => (
             <div key={index} className="bg-[#f6f6f8] neo-border p-6 cursor-pointer hover:bg-gray-100 transition-colors">

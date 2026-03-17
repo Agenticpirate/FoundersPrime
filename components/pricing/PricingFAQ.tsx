@@ -49,7 +49,7 @@ export default function PricingFAQ() {
   ]
 
   return (
-    <div className="mb-20">
+    <div className="mb-10 md:mb-14">
       <div className="text-center mb-10">
         <h2 className="font-mono text-3xl font-black text-black mb-3 uppercase tracking-tight">
           Common Questions

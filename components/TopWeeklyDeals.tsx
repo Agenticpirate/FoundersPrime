@@ -51,8 +51,8 @@ export default function TopWeeklyDeals() {
 
   if (loading) {
     return (
-      <section className="py-8 md:py-20 bg-accent-yellow border-y-2 border-black bg-opacity-90">
-        <div className="max-w-7xl mx-auto px-4 text-center">
+      <section className="py-8 md:py-5 md:py-6 md:py-14 bg-accent-yellow border-y-2 border-black bg-opacity-90">
+        <div className="max-w-[1600px] mx-auto px-4 text-center">
           <div className="animate-pulse font-mono">Loading deals...</div>
         </div>
       </section>
@@ -60,9 +60,9 @@ export default function TopWeeklyDeals() {
   }
 
   return (
-    <section className="py-8 md:py-20 bg-accent-yellow border-y-2 border-black bg-opacity-90 relative">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-5 md:mb-12 gap-3 md:gap-4">
+    <section className="py-8 md:py-5 md:py-6 md:py-14 bg-accent-yellow border-y-2 border-black bg-opacity-90 relative">
+      <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-5 md:mb-6 md:mb-4 md:mb-6 gap-3 md:gap-4">
           <div>
             <h2 className="text-xl md:text-4xl font-bold text-black mb-1.5 md:mb-2 font-mono">TOP_WEEKLY_DEALS</h2>
             <p className="text-sm text-black font-medium border-l-4 border-black pl-3 ml-1">Hand-picked savings for modern founders.</p>

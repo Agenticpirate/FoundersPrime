@@ -97,9 +97,9 @@ export default function SubmitDealPage() {
         <div className="min-h-screen bg-[#f6f8f8] flex flex-col font-mono">
             <Header />
 
-            <main className="flex-grow py-12 px-4">
+            <main className="flex-grow py-6 md:py-8 px-4">
                 <div className="max-w-3xl mx-auto">
-                    <div className="mb-8 text-center">
+                    <div className="mb-4 md:mb-6 text-center">
                         <h1 className="text-3xl md:text-4xl font-bold mb-4 uppercase">Submit Your Deal</h1>
                         <p className="text-gray-600 max-w-xl mx-auto">
                             Reach 12,000+ verified founders. We only list high-value, exclusive deals.

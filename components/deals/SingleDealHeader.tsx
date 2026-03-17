@@ -3,7 +3,7 @@ import Link from 'next/link'
 export default function SingleDealHeader() {
   return (
     <header className="sticky top-0 z-50 w-full border-b-3 border-black bg-white px-4 py-3 md:px-6 md:py-4">
-      <div className="mx-auto flex max-w-7xl items-center justify-between">
+      <div className="mx-auto flex max-w-[1600px] items-center justify-between">
         <div className="flex items-center gap-8">
           <Link className="flex items-center gap-3 text-black group" href="/">
             <div className="h-8 w-8 bg-black text-white flex items-center justify-center rounded-sm">

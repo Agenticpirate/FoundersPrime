@@ -173,7 +173,7 @@ export default function StudentBenefitsContent({ benefits, title, description }:
                         <div className="mb-2 text-[10px] md:text-xs font-medium text-gray-500 uppercase tracking-wide">
                             {Math.min(filteredBenefits.length, (currentPage - 1) * itemsPerPage + 1)}–{Math.min(filteredBenefits.length, currentPage * itemsPerPage)} of {filteredBenefits.length} benefits
                         </div>
-                        <div className="grid grid-cols-2 md:grid-cols-2 xl:grid-cols-3 gap-3 md:gap-6 mb-8 md:mb-12">
+                        <div className="grid grid-cols-2 md:grid-cols-2 xl:grid-cols-3 gap-3 md:gap-6 mb-4 md:mb-6 md:mb-6 md:mb-4 md:mb-6">
                             {paginatedBenefits.map((benefit, idx) => {
                                 // Map to DealCard props
                                 const dealProps = {
@@ -199,7 +199,7 @@ export default function StudentBenefitsContent({ benefits, title, description }:
                     </>
                 ) : (
                     /* Empty State */
-                    <div className="text-center py-16 bg-white border border-dashed border-gray-300 rounded-lg">
+                    <div className="text-center py-8 md:py-6 md:py-8 bg-white border border-dashed border-gray-300 rounded-lg">
                         <span className="material-symbols-outlined text-4xl text-gray-300 mb-2">search_off</span>
                         <p className="text-gray-500 font-medium">No benefits found matching your criteria.</p>
                         <button onClick={() => { setSearch(''); setSelectedCategory(''); }} className="mt-4 text-black font-bold hover:underline">Clear Filters</button>
@@ -212,7 +212,7 @@ export default function StudentBenefitsContent({ benefits, title, description }:
                     currentPage={currentPage}
                     totalPages={totalPages}
                     onPageChange={handlePageChange}
-                    className="mb-10 mt-8"
+                    className="mb-10 mt-4 md:mt-6"
                 />
             </div>
         </div>

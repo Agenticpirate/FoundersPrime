@@ -11,9 +11,9 @@ export default function GlobalError({
         <html>
             <body>
                 <div className="flex min-h-screen flex-col items-center justify-center bg-white p-4 text-center font-mono">
-                    <div className="mb-8">
+                    <div className="mb-4 md:mb-6">
                         <h1 className="text-6xl font-black text-black mb-4">CRITICAL ERROR</h1>
-                        <p className="text-gray-600 mb-8 max-w-md mx-auto">
+                        <p className="text-gray-600 mb-4 md:mb-6 max-w-md mx-auto">
                             A critical system error occurred that prevented the application from loading.
                         </p>
                         <button

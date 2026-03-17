@@ -1,6 +1,6 @@
 export default function PrivacyHeader() {
   return (
-    <div className="mb-8">
+    <div className="mb-4 md:mb-6">
       {/* Breadcrumb */}
       <nav className="flex items-center gap-2 text-sm font-mono mb-6">
         <a href="/" className="text-gray-500 hover:text-black transition-colors">
@@ -11,7 +11,7 @@ export default function PrivacyHeader() {
       </nav>
       
       {/* Page Header */}
-      <div className="bg-white border-3 border-black shadow-[6px_6px_0px_0px_#1a1a1a] rounded-sm p-8 mb-8">
+      <div className="bg-white border-3 border-black shadow-[6px_6px_0px_0px_#1a1a1a] rounded-sm p-8 mb-4 md:mb-6">
         <div className="flex items-start justify-between">
           <div className="flex-1">
             <h1 className="font-mono text-4xl font-bold text-black mb-4">

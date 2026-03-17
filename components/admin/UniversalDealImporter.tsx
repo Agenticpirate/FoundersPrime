@@ -353,7 +353,7 @@ export default function UniversalDealImporter({ onClose, onImport }: UniversalDe
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
-      <div className="bg-white border-3 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] max-w-5xl w-full max-h-[90vh] overflow-y-auto">
+      <div className="bg-white border-3 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] max-w-[1600px] w-full max-h-[90vh] overflow-y-auto">
         {/* Header */}
         <div className="sticky top-0 bg-white border-b-3 border-black p-4 flex justify-between items-center z-10">
           <h2 className="text-xl font-bold flex items-center gap-2">

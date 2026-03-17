@@ -74,7 +74,7 @@ export default function AdminSubmissionDetail() {
                     <span className="material-symbols-outlined text-sm">arrow_back</span> Back to List
                 </Link>
 
-                <div className="flex justify-between items-start mb-8">
+                <div className="flex justify-between items-start mb-4 md:mb-6">
                     <div>
                         <h1 className="text-3xl font-black uppercase tracking-tight mb-2">{submission.company_name}</h1>
                         <div className="flex gap-2">

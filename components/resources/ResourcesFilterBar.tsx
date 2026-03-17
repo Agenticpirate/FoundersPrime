@@ -1,6 +1,6 @@
 export default function ResourcesFilterBar() {
   return (
-    <div className="bg-white border-2 md:border-3 border-black shadow-sm md:shadow-[6px_6px_0px_0px_#1a1a1a] rounded-sm p-3 md:p-6 mb-4 md:mb-8">
+    <div className="bg-white border-2 md:border-3 border-black shadow-sm md:shadow-[6px_6px_0px_0px_#1a1a1a] rounded-sm p-3 md:p-6 mb-4 md:mb-4 md:mb-6">
       <div className="flex flex-col gap-3">
         <div className="flex items-center gap-2">
           <span className="material-symbols-outlined text-black text-lg md:text-xl">filter_list</span>

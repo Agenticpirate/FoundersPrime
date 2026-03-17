@@ -27,9 +27,9 @@ export default function SearchHero() {
   }
 
   return (
-    <div className="mb-12">
+    <div className="mb-6 md:mb-4 md:mb-6">
       {/* Main Search */}
-      <div className="bg-white border-3 border-black shadow-[6px_6px_0px_0px_#1a1a1a] rounded-sm p-8 mb-8">
+      <div className="bg-white border-3 border-black shadow-[6px_6px_0px_0px_#1a1a1a] rounded-sm p-8 mb-4 md:mb-6">
         <form onSubmit={handleSearch} className="space-y-6">
           {/* Search Input */}
           <div className="relative">
@@ -91,7 +91,7 @@ export default function SearchHero() {
       </div>
       
       {/* Search Stats */}
-      <div className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div className="mt-4 md:mt-6 grid grid-cols-2 md:grid-cols-4 gap-4">
         <div className="bg-white border-2 border-black rounded-sm p-4 text-center">
           <div className="font-mono text-xl font-bold text-primary mb-1">15,247</div>
           <div className="font-sans text-sm text-gray-600">Total Items</div>

@@ -85,7 +85,7 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-50 bg-[#f6f8f8] border-b-2 border-black">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-14 md:h-20 gap-4">
           <div className="flex-shrink-0 flex items-center">
             <Link className="text-xl md:text-2xl font-bold tracking-tighter text-black flex items-center gap-2 font-mono" href="/">
@@ -154,7 +154,13 @@ export default function Header() {
             {/* Student Benefits Dropdown */}
             <div className="relative group">
               <Link className="text-black font-bold hover:text-primary flex items-center gap-1 py-6" href="#">
-                Student Benefits <span className="material-symbols-outlined text-sm">expand_more</span>
+                <span className="relative inline-block">
+                  Student Benefits 
+                  <span className="absolute -top-3 -right-6 rotate-[12deg] bg-[#FF90E8] text-black text-[9px] px-1.5 py-0.5 border border-black font-black uppercase shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] leading-none z-10">
+                    FREE
+                  </span>
+                </span>
+                <span className="material-symbols-outlined text-sm ml-1">expand_more</span>
               </Link>
               <div className="absolute left-0 top-full pt-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 ease-out z-50">
                 <div className="bg-white border-3 border-black shadow-[6px_6px_0px_#111111] min-w-[240px]">
@@ -292,10 +298,17 @@ export default function Header() {
                             setMobileMenuOpen(false);
                           }
                         }}
-                        className="flex-1 flex items-center gap-2 py-3 text-xs font-mono font-black border-transparent border-b hover:border-black/5 uppercase text-black transition-colors"
+                        className="flex-1 flex items-center gap-2 py-3 text-xs font-mono font-black border-transparent border-b hover:border-black/5 uppercase text-black transition-colors relative"
                       >
                         <span className="material-symbols-outlined text-base text-gray-500">{section.icon}</span>
-                        {section.label}
+                        <span className="relative inline-block pr-6">
+                          {section.label}
+                          {section.id === 'studentbenefits' && (
+                            <span className="absolute -top-2 right-0 rotate-[12deg] bg-[#FF90E8] text-black text-[8px] px-1 py-0.5 border border-black font-black uppercase shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] leading-none z-10 w-fit h-fit">
+                              FREE
+                            </span>
+                          )}
+                        </span>
                       </Link>
                       {section.children && section.children.length > 0 && (
                         <button

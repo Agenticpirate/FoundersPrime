@@ -11,7 +11,7 @@ export default function MaintenancePage() {
     <div className="min-h-screen flex flex-col bg-[#f6f8f8]">
       {/* Header */}
       <header className="w-full border-b-3 border-black bg-white px-6 py-4 md:px-10">
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
+        <div className="max-w-[1600px] mx-auto flex items-center justify-between">
           <Link href="/" className="flex items-center gap-3">
             <div className="w-8 h-8 bg-primary border-3 border-black flex items-center justify-center">
               <span className="material-symbols-outlined text-black font-bold text-lg">terminal</span>
@@ -28,7 +28,7 @@ export default function MaintenancePage() {
       </header>
 
       {/* Main Content */}
-      <main className="flex-grow flex items-center justify-center p-6 py-12 md:py-20">
+      <main className="flex-grow flex items-center justify-center p-6 py-6 md:py-8 md:py-5 md:py-6 md:py-14">
         <div className="w-full max-w-[640px]">
           {/* Maintenance Card */}
           <div className="bg-white border-3 border-black shadow-[6px_6px_0px_#111111] w-full p-8 md:p-12 relative overflow-hidden">
@@ -51,12 +51,12 @@ export default function MaintenancePage() {
               </h1>
 
               {/* Body Text */}
-              <p className="text-lg text-black/80 font-medium leading-relaxed max-w-md mx-auto mb-8">
+              <p className="text-lg text-black/80 font-medium leading-relaxed max-w-md mx-auto mb-4 md:mb-6">
                 FoundersPrime is currently undergoing scheduled maintenance. We'll be back shortly with improvements.
               </p>
 
               {/* Stats Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full mb-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full mb-4 md:mb-6">
                 {/* Started At */}
                 <div className="border-3 border-black bg-white p-4 text-left shadow-[4px_4px_0px_#111111]">
                   <div className="flex items-center gap-2 mb-2 text-red-500 font-bold font-mono text-sm uppercase">
@@ -95,7 +95,7 @@ export default function MaintenancePage() {
           </div>
 
           {/* Bottom Note */}
-          <div className="mt-8 text-center">
+          <div className="mt-4 md:mt-6 text-center">
             <p className="font-mono text-sm text-black/60">
               Need urgent help?{' '}
               <a 
@@ -111,7 +111,7 @@ export default function MaintenancePage() {
 
       {/* Footer */}
       <footer className="w-full border-t-3 border-black bg-white px-6 py-6 md:px-10 mt-auto">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+        <div className="max-w-[1600px] mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="font-mono text-xs md:text-sm font-medium text-black">
             © 2025 FoundersPrime. All rights reserved.
           </p>

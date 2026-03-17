@@ -3,7 +3,7 @@ import Link from 'next/link'
 
 export default function CancelHeader() {
   return (
-    <div className="mb-8">
+    <div className="mb-4 md:mb-6">
       {/* Back Button */}
       <div className="mb-6">
         <Link 
@@ -33,7 +33,7 @@ export default function CancelHeader() {
       </div>
 
       {/* Header */}
-      <div className="bg-white border-3 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] p-8 mb-8">
+      <div className="bg-white border-3 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] p-8 mb-4 md:mb-6">
         <div className="flex items-start gap-4 mb-6">
           <div className="bg-red-500 border-3 border-black p-3 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
             <XCircle className="w-8 h-8 text-white" />

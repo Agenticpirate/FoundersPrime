@@ -57,8 +57,8 @@ export default function HeroSection() {
   }
 
   return (
-    <section className="relative pt-0 pb-0 md:pt-2 lg:pt-4 lg:pb-0 overflow-hidden grid-bg flex flex-col">
-      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex-grow w-full mb-0 md:mb-2 lg:mb-4">
+    <section className="relative min-h-[calc(85vh-80px)] pt-6 pb-0 md:pt-10 lg:pt-12 lg:pb-0 overflow-hidden grid-bg flex flex-col">
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex-grow w-full mb-4 md:mb-5 flex flex-col justify-center">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center h-full">
           <div className="lg:col-span-7 flex flex-col justify-center items-start pt-0">
             <div className="inline-flex items-center gap-2 bg-white neo-border px-2 py-0.5 mb-3 neo-shadow-static">
@@ -72,8 +72,11 @@ export default function HeroSection() {
               <span className="bg-accent-yellow px-2 mt-1 inline-block neo-border box-decoration-clone">ZERO DILUTION.</span>
             </h1>
 
-            <p className="mt-4 text-sm sm:text-base md:text-md lg:text-lg text-black mb-6 font-medium max-w-2xl border-l-4 border-black pl-4">
-              Discover startup credits, non-dilutive grants, accelerators, and founder resources in one place so you can build faster without burning cash. Students unlock free tools, credits, benefits, and curated programs.
+            <p className="mt-4 text-sm sm:text-base md:text-md lg:text-lg text-black mb-6 font-medium max-w-2xl border-l-4 border-black pl-4 leading-relaxed">
+              Discover startup credits, non-dilutive grants, accelerators, and founder resources in one place so you can build faster without burning cash.{' '}
+              <span className="font-bold border-b-[3px] border-accent-yellow inline-block mt-1 sm:mt-0">
+                Students unlock free tools, credits, benefits, and curated programs.
+              </span>
             </p>
 
             <div className="flex flex-col gap-3 mb-6 mt-2 w-full max-w-2xl">
@@ -103,8 +106,8 @@ export default function HeroSection() {
             </div>
 
             {/* Stats badge bar — desktop only since ticker does this on mobile */}
-            <div className="hidden sm:flex flex-wrap gap-x-6 gap-y-2 text-[10px] sm:text-xs font-mono font-bold text-black uppercase border-t-2 border-black pt-4 mt-2 w-full max-w-2xl">
-              <span>VERIFIED DEALS</span> • <span>NON-DILUTIVE GRANTS</span> • <span>TOP ACCELERATORS</span>
+            <div className="hidden sm:flex flex-wrap justify-center items-center gap-x-8 lg:gap-x-12 gap-y-2 text-[10px] sm:text-xs font-mono font-bold text-black uppercase border-t-2 border-black/10 pt-3 mt-1 w-full max-w-2xl px-2">
+              <span>VERIFIED DEALS</span> <span className="text-black/30">•</span> <span>NON-DILUTIVE GRANTS</span> <span className="text-black/30">•</span> <span>TOP ACCELERATORS</span>
             </div>
 
             {/* ── Mobile-only Brand Icons Scroller ── */}
@@ -244,7 +247,7 @@ export default function HeroSection() {
       </div>
 
       {/* Integrated Marquee Ticker */}
-      <div className="hidden md:block bg-black py-2 md:py-3 overflow-hidden border-t-2 border-b-2 border-black w-full relative z-20">
+      <div className="hidden md:block bg-black py-2 md:py-3 overflow-hidden border-t-2 border-b-2 border-black w-full relative z-20 mt-auto">
         <div className="marquee flex items-center gap-8 md:gap-12 whitespace-nowrap">
           <span className="text-white font-mono text-xs md:text-sm font-bold flex items-center gap-1.5 md:gap-2">
             <span className="material-symbols-outlined text-accent-yellow text-sm md:text-base">terminal</span> AWS ACTIVATE // $100K CREDITS

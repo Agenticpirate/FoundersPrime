@@ -43,7 +43,7 @@ export default function AdminAnalyticsPage() {
           <AdminHeader />
           <div className="p-6">
             {/* Header */}
-            <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-4 md:mb-6 gap-4">
               <div>
                 <h1 className="text-3xl font-bold text-gray-900 mb-2">Analytics Dashboard</h1>
                 <p className="text-gray-600">Track platform performance and user engagement</p>
@@ -66,7 +66,7 @@ export default function AdminAnalyticsPage() {
             </div>
 
             {/* Traffic Stats */}
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-4 md:mb-6">
               <div className="bg-white border-3 border-black shadow-hard p-6">
                 <div className="flex items-center justify-between mb-2">
                   <span className="material-symbols-outlined text-blue-600 text-2xl">visibility</span>
@@ -102,7 +102,7 @@ export default function AdminAnalyticsPage() {
             </div>
 
             {/* Conversion Stats */}
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-4 md:mb-6">
               <div className="bg-white border-3 border-black shadow-hard p-6">
                 <div className="flex items-center justify-between mb-2">
                   <span className="material-symbols-outlined text-primary text-2xl">local_offer</span>
@@ -182,7 +182,7 @@ export default function AdminAnalyticsPage() {
             </div>
 
             {/* Activity Chart Placeholder */}
-            <div className="mt-8 bg-white border-3 border-black shadow-hard p-6">
+            <div className="mt-4 md:mt-6 bg-white border-3 border-black shadow-hard p-6">
               <h3 className="text-lg font-bold mb-4 flex items-center gap-2">
                 <span className="material-symbols-outlined">show_chart</span>
                 Activity Over Time

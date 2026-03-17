@@ -7,9 +7,9 @@ export default function NotFound() {
     <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden">
       <Header />
       <main className="flex-1 flex items-center justify-center bg-background-light">
-        <div className="mx-auto max-w-2xl px-4 py-20 text-center">
+        <div className="mx-auto max-w-2xl px-4 py-5 md:py-6 md:py-14 text-center">
           {/* Error Code */}
-          <div className="mb-8">
+          <div className="mb-4 md:mb-6">
             <div className="inline-block border-3 border-black bg-accent-yellow px-6 py-3 shadow-[6px_6px_0px_#111111] mb-6">
               <span className="font-mono text-sm font-bold uppercase">Error Code</span>
             </div>
@@ -19,7 +19,7 @@ export default function NotFound() {
           </div>
 
           {/* Message */}
-          <div className="border-3 border-black bg-white p-8 shadow-[6px_6px_0px_#111111] mb-8">
+          <div className="border-3 border-black bg-white p-8 shadow-[6px_6px_0px_#111111] mb-4 md:mb-6">
             <div className="flex items-center justify-center gap-3 mb-4">
               <span className="material-symbols-outlined text-4xl text-accent-red">error</span>
               <h2 className="font-mono text-2xl font-bold uppercase">Page Not Found</h2>
@@ -34,7 +34,7 @@ export default function NotFound() {
           </div>
 
           {/* Suggestions */}
-          <div className="border-3 border-black bg-white p-6 shadow-[6px_6px_0px_#111111] mb-8">
+          <div className="border-3 border-black bg-white p-6 shadow-[6px_6px_0px_#111111] mb-4 md:mb-6">
             <h3 className="font-mono text-lg font-bold uppercase mb-4 flex items-center justify-center gap-2">
               <span className="material-symbols-outlined">lightbulb</span>
               Suggestions

@@ -173,7 +173,7 @@ export default function GrantsGrid() {
       </div>
 
       {/* Grants Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {(isPro ? currentGrants : currentGrants.slice(0, 3)).map((grant) => (
           <Link
             key={grant.id}
@@ -238,7 +238,7 @@ export default function GrantsGrid() {
             </div>
 
             {/* Tags */}
-            <div className="px-4 pb-4 flex flex-wrap gap-2">
+            <div className="px-4 pb-2 flex flex-wrap gap-2">
               <span className={`text-[10px] font-bold px-2 py-1 rounded uppercase ${getTypeColor(grant.type)}`}>
                 {grant.type}
               </span>
@@ -257,7 +257,7 @@ export default function GrantsGrid() {
           visibleCount={3}
           label="Grants"
         >
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {filteredGrants.slice(3, 9).map((grant) => (
               <Link
                 key={grant.id}
