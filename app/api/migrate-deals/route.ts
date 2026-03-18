@@ -50,7 +50,16 @@ import { createClient } from '@supabase/supabase-js';
 
 // ... (skipping up to the GET function)
 
-export async function GET() {
+export async function GET(request: Request) {
+  // 🔒 SECURITY VULNERABILITY PATCH: Prevent unauthorized access to destructive migration endpoints
+  if (process.env.NODE_ENV === 'production') {
+    const authHeader = request.headers.get('authorization')
+    // We check against the service role key as a secure secret (do NOT pass this in URL query params)
+    if (!authHeader || authHeader !== `Bearer ${process.env.SUPABASE_SERVICE_ROLE_KEY}`) {
+      return NextResponse.json({ error: 'Forbidden: Migration endpoint is locked in production.' }, { status: 403 })
+    }
+  }
+
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
   const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
   const supabase = createClient(supabaseUrl, supabaseServiceKey);
