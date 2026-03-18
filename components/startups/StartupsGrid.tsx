@@ -180,68 +180,72 @@ export default function StartupsGrid({ filters }: StartupsGridProps) {
 
       {/* Pagination — always show so users know how many pages exist */}
       {totalPages > 1 && (
-        <div className="flex items-center justify-center gap-2 mt-12">
+        <div className="flex flex-wrap items-center justify-center gap-1.5 sm:gap-2 mt-12 bg-white p-2">
           <button
             onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
             disabled={currentPage === 1}
-            className="px-4 py-2 bg-white border-2 border-black font-mono text-sm rounded-sm hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="px-2 sm:px-4 py-2 border-2 border-black font-mono text-xs sm:text-sm rounded-sm hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-1 bg-white"
           >
-            Previous
+            <span className="material-symbols-outlined text-sm sm:text-base">arrow_back</span>
+            <span className="hidden sm:inline">Previous</span>
           </button>
 
-          {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
-            let pageNum: number
-            if (totalPages <= 5) {
-              pageNum = i + 1
-            } else if (currentPage <= 3) {
-              pageNum = i + 1
-            } else if (currentPage >= totalPages - 2) {
-              pageNum = totalPages - 4 + i
-            } else {
-              pageNum = currentPage - 2 + i
-            }
+          <div className="flex flex-wrap items-center justify-center gap-1.5 sm:gap-2 flex-1">
+            {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
+              let pageNum: number
+              if (totalPages <= 5) {
+                pageNum = i + 1
+              } else if (currentPage <= 3) {
+                pageNum = i + 1
+              } else if (currentPage >= totalPages - 2) {
+                pageNum = totalPages - 4 + i
+              } else {
+                pageNum = currentPage - 2 + i
+              }
 
-            const locked = !isPro && pageNum > FREE_PAGE_LIMIT
+              const locked = !isPro && pageNum > FREE_PAGE_LIMIT
 
-            return (
-              <button
-                key={pageNum}
-                onClick={() => setCurrentPage(pageNum)}
-                className={`px-4 py-2 border-2 border-black font-mono text-sm rounded-sm transition-colors flex items-center gap-1 ${currentPage === pageNum
-                    ? 'bg-black text-white'
-                    : locked
-                      ? 'bg-gray-100 text-gray-400 hover:bg-primary/20'
-                      : 'bg-white hover:bg-gray-100'
-                  }`}
-              >
-                {locked && (
-                  <span className="material-symbols-outlined text-xs" style={{ fontSize: 12 }}>lock</span>
-                )}
-                {pageNum}
-              </button>
-            )
-          })}
+              return (
+                <button
+                  key={pageNum}
+                  onClick={() => setCurrentPage(pageNum)}
+                  className={`w-8 h-8 sm:w-auto sm:px-4 sm:py-2 flex items-center justify-center border-2 border-black font-mono text-xs sm:text-sm rounded-sm transition-colors ${currentPage === pageNum
+                      ? 'bg-black text-white'
+                      : locked
+                        ? 'bg-gray-100 text-gray-400 hover:bg-primary/20'
+                        : 'bg-white hover:bg-gray-100'
+                    }`}
+                >
+                  {locked && (
+                    <span className="material-symbols-outlined text-[10px] sm:text-xs mr-0.5 sm:mr-1">lock</span>
+                  )}
+                  {pageNum}
+                </button>
+              )
+            })}
 
-          {totalPages > 5 && currentPage < totalPages - 2 && (
-            <>
-              <span className="px-2 font-mono text-sm">...</span>
-              <button
-                onClick={() => setCurrentPage(totalPages)}
-                className={`px-4 py-2 border-2 border-black font-mono text-sm rounded-sm transition-colors flex items-center gap-1 ${!isPro ? 'bg-gray-100 text-gray-400 hover:bg-primary/20' : 'bg-white hover:bg-gray-100'
-                  }`}
-              >
-                {!isPro && <span className="material-symbols-outlined" style={{ fontSize: 12 }}>lock</span>}
-                {totalPages}
-              </button>
-            </>
-          )}
+            {totalPages > 5 && currentPage < totalPages - 2 && (
+              <>
+                <span className="px-1 sm:px-2 font-mono text-xs sm:text-sm">...</span>
+                <button
+                  onClick={() => setCurrentPage(totalPages)}
+                  className={`w-8 h-8 sm:w-auto sm:px-4 sm:py-2 flex items-center justify-center border-2 border-black font-mono text-xs sm:text-sm rounded-sm transition-colors ${!isPro ? 'bg-gray-100 text-gray-400 hover:bg-primary/20' : 'bg-white hover:bg-gray-100'
+                    }`}
+                >
+                  {!isPro && <span className="material-symbols-outlined text-[10px] sm:text-xs mr-0.5 sm:mr-1">lock</span>}
+                  {totalPages}
+                </button>
+              </>
+            )}
+          </div>
 
           <button
             onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
             disabled={currentPage === totalPages}
-            className="px-4 py-2 bg-white border-2 border-black font-mono text-sm rounded-sm hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="px-2 sm:px-4 py-2 border-2 border-black font-mono text-xs sm:text-sm rounded-sm hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-1 bg-white"
           >
-            Next
+            <span className="hidden sm:inline">Next</span>
+            <span className="material-symbols-outlined text-sm sm:text-base">arrow_forward</span>
           </button>
         </div>
       )}

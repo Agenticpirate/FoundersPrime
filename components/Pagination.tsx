@@ -41,60 +41,35 @@ export default function Pagination({
 
     return (
         <div className={`bg-white border-3 border-ink shadow-hard-sm mt-6 ${className}`}>
-            {/* Mobile: prev / page X of Y / next */}
-            <div className="flex md:hidden items-center justify-between p-3 gap-2">
+            <div className="flex flex-wrap justify-between items-center p-2 sm:p-4 gap-2 sm:gap-4">
                 <button
                     onClick={() => onPageChange(currentPage - 1)}
                     disabled={currentPage === 1}
-                    className={`flex items-center gap-1 px-3 py-2 border-2 border-ink font-mono text-xs font-bold transition-colors ${currentPage === 1 ? 'text-gray-400 cursor-not-allowed' : 'hover:bg-ink hover:text-white'}`}
-                >
-                    <span className="material-symbols-outlined text-sm">arrow_back</span>
-                    Prev
-                </button>
-
-                <span className="font-mono text-xs font-bold text-gray-600">
-                    Page {currentPage} / {totalPages}
-                </span>
-
-                <button
-                    onClick={() => onPageChange(currentPage + 1)}
-                    disabled={currentPage === totalPages}
-                    className={`flex items-center gap-1 px-3 py-2 border-2 border-ink font-mono text-xs font-bold transition-colors ${currentPage === totalPages ? 'text-gray-400 cursor-not-allowed' : 'bg-primary text-ink hover:shadow-hard-hover'}`}
-                >
-                    Next
-                    <span className="material-symbols-outlined text-sm">arrow_forward</span>
-                </button>
-            </div>
-
-            {/* Desktop: full numbered pagination */}
-            <div className="hidden md:flex justify-between items-center p-4">
-                <button
-                    onClick={() => onPageChange(currentPage - 1)}
-                    disabled={currentPage === 1}
-                    className={`flex items-center gap-2 px-4 py-2 border-2 border-ink font-mono text-sm font-bold transition-colors ${currentPage === 1
+                    className={`flex items-center justify-center gap-1 sm:gap-2 px-2 sm:px-4 py-2 border-2 border-ink font-mono text-xs sm:text-sm font-bold transition-colors ${currentPage === 1
                         ? 'text-gray-400 cursor-not-allowed'
                         : 'hover:bg-ink hover:text-white'
                         }`}
                 >
                     <span className="material-symbols-outlined text-sm">arrow_back</span>
-                    Previous
+                    <span className="hidden sm:inline">Previous</span>
+                    <span className="sm:hidden">Prev</span>
                 </button>
 
-                <div className="flex items-center gap-2">
+                <div className="flex flex-wrap items-center justify-center gap-1.5 sm:gap-2 flex-1">
                     {getPageNumbers().map((pageNum, idx) => (
                         typeof pageNum === 'number' ? (
                             <button
                                 key={idx}
                                 onClick={() => onPageChange(pageNum)}
-                                className={`w-8 h-8 text-sm font-mono font-bold border-2 border-ink transition-colors ${currentPage === pageNum
-                                    ? 'bg-primary text-white'
+                                className={`w-7 h-8 sm:w-8 sm:h-8 flex items-center justify-center text-xs sm:text-sm font-mono font-bold border-2 border-ink transition-colors ${currentPage === pageNum
+                                    ? 'bg-primary text-ink'
                                     : 'bg-white text-ink hover:bg-gray-100'
                                     }`}
                             >
                                 {pageNum}
                             </button>
                         ) : (
-                            <span key={idx} className="w-8 h-8 flex items-center justify-center font-mono font-bold text-black">
+                            <span key={idx} className="w-5 h-8 sm:w-8 sm:h-8 flex items-center justify-center font-mono font-bold text-black text-xs sm:text-sm tracking-widest">
                                 ...
                             </span>
                         )
@@ -104,12 +79,13 @@ export default function Pagination({
                 <button
                     onClick={() => onPageChange(currentPage + 1)}
                     disabled={currentPage === totalPages}
-                    className={`flex items-center gap-2 px-4 py-2 border-2 border-ink font-mono text-sm font-bold transition-colors ${currentPage === totalPages
+                    className={`flex items-center justify-center gap-1 sm:gap-2 px-2 sm:px-4 py-2 border-2 border-ink font-mono text-xs sm:text-sm font-bold transition-colors ${currentPage === totalPages
                         ? 'text-gray-400 cursor-not-allowed'
-                        : 'bg-primary text-ink hover:shadow-hard-hover hover:translate-x-[-2px] hover:translate-y-[-2px]'
+                        : 'bg-primary text-ink sm:hover:shadow-[3px_3px_0px_#111111] hover:translate-x-[-1px] hover:translate-y-[-1px]'
                         }`}
                 >
-                    Next
+                    <span className="hidden sm:inline">Next</span>
+                    <span className="sm:hidden">Next</span>
                     <span className="material-symbols-outlined text-sm">arrow_forward</span>
                 </button>
             </div>

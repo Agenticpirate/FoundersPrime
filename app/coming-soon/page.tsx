@@ -59,7 +59,7 @@ export default function ComingSoonPage() {
                 <form className="flex flex-col sm:flex-row gap-3">
                   <input 
                     type="email" 
-                    placeholder="founder@startup.com"
+                    placeholder="founder@foundersprime.com"
                     className="flex-1 h-12 px-4 border-3 border-black bg-[#f8f9fa] font-mono text-sm placeholder:text-gray-500 focus:bg-amber-50 focus:shadow-[4px_4px_0px_#111111] focus:-translate-x-[2px] focus:-translate-y-[2px] outline-none transition-all"
                   />
                   <button 

@@ -75,7 +75,7 @@ export default function CloudCreditsStrategy() {
           <div className="flex flex-col gap-3">
             <input
               className="w-full bg-gray-800 border-2 border-gray-700 text-white px-4 py-2 font-mono text-sm focus:outline-none focus:border-primary focus:ring-0 placeholder:text-gray-500 rounded-sm"
-              placeholder="founder@startup.com"
+              placeholder="founder@foundersprime.com"
               type="email"
             />
             <button className="w-full py-2 text-sm uppercase bg-primary hover:bg-white border-3 border-white text-black font-mono font-bold rounded-sm shadow-[4px_4px_0px_0px_#888] hover:shadow-[2px_2px_0px_0px_#888] hover:translate-x-[2px] hover:translate-y-[2px] transition-all">

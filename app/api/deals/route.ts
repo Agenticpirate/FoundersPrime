@@ -233,16 +233,24 @@ export async function DELETE(request: NextRequest) {
 // Data Formatting Helpers (Mapping between Frontend CamelCase and DB SnakeCase+CamelCase mixture)
 // -------------------------------------------------------------------------------------------------
 
+function cleanText(text: string | null | undefined): string {
+  if (!text) return '';
+  return text.replace(/\b(in|for\s+)?(Q[1-4]|Quarter [1-4])\s*202\d\b/gi, '')
+             .replace(/\b(in|for\s+)?202\d\b/gi, '')
+             .replace(/\s+/g, ' ')
+             .trim();
+}
+
 function formatDealFromDB(d: any): Deal {
   return {
     id: d.id,
     slug: d.slug,
-    title: d.title,
-    provider: d.provider,
+    title: cleanText(d.title),
+    provider: cleanText(d.provider),
     category: d.category,
     subcategory: d.subcategory,
-    description: d.description,
-    shortDescription: d.shortDescription || d.short_description || '',
+    description: cleanText(d.description),
+    shortDescription: cleanText(d.shortDescription || d.short_description || ''),
     value: d.value,
     originalPrice: d.originalPrice || d.original_price || '',
     discountedPrice: d.discountedPrice || d.discounted_price || '',

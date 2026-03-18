@@ -189,25 +189,26 @@ export default function StudentFundingGrid() {
 
                     {/* Pagination (Neo-Brutalist) */}
                     {totalPages > 1 && (
-                        <div className="w-full border-2 border-black p-2 flex justify-between items-center bg-white mb-10 mt-10 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+                        <div className="w-full border-2 border-black p-2 md:p-4 flex flex-wrap justify-between items-center gap-2 bg-white mb-10 mt-10 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
                             {/* Previous */}
                             <button
                                 disabled={currentPage === 1}
                                 onClick={() => handlePageChange(currentPage - 1)}
-                                className="px-4 py-2 border-2 border-black font-mono text-sm font-bold flex items-center gap-2 hover:bg-gray-100 disabled:opacity-50 disabled:hover:bg-white transition-colors"
+                                className="px-2 sm:px-4 py-2 border-2 border-black font-mono text-xs sm:text-sm font-bold flex items-center justify-center gap-1 sm:gap-2 hover:bg-gray-100 disabled:opacity-50 disabled:hover:bg-white transition-colors"
                             >
-                                <span className="material-symbols-outlined text-base">arrow_back</span>
-                                Previous
+                                <span className="material-symbols-outlined text-sm sm:text-base">arrow_back</span>
+                                <span className="hidden sm:inline">Previous</span>
+                                <span className="sm:hidden">Prev</span>
                             </button>
 
                             {/* Page Numbers */}
-                            <div className="hidden sm:flex gap-2">
+                            <div className="flex flex-wrap items-center justify-center gap-1.5 sm:gap-2 flex-1">
                                 {getPaginationRange(currentPage, totalPages).map((p, i) => (
                                     typeof p === 'number' ? (
                                         <button
                                             key={i}
                                             onClick={() => handlePageChange(p)}
-                                            className={`w-10 h-10 border-2 border-black font-mono text-sm font-bold flex items-center justify-center transition-all ${currentPage === p
+                                            className={`w-7 h-8 sm:w-10 sm:h-10 border-2 border-black font-mono text-xs sm:text-sm font-bold flex items-center justify-center transition-all ${currentPage === p
                                                 ? 'bg-[#00D4FF] text-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]'
                                                 : 'bg-white hover:bg-gray-50 text-black'
                                                 }`}
@@ -215,23 +216,20 @@ export default function StudentFundingGrid() {
                                             {p}
                                         </button>
                                     ) : (
-                                        <span key={i} className="w-10 h-10 flex items-center justify-center font-mono font-bold text-black">...</span>
+                                        <span key={i} className="w-5 h-8 sm:w-10 sm:h-10 flex items-center justify-center font-mono font-bold text-black text-xs sm:text-sm">...</span>
                                     )
                                 ))}
-                            </div>
-                            {/* Mobile Page Display */}
-                            <div className="sm:hidden font-mono text-sm font-bold">
-                                {currentPage} / {totalPages}
                             </div>
 
                             {/* Next */}
                             <button
                                 disabled={currentPage === totalPages}
                                 onClick={() => handlePageChange(currentPage + 1)}
-                                className="px-4 py-2 border-2 border-black bg-[#00D4FF] text-black font-mono text-sm font-bold flex items-center gap-2 hover:bg-[#00B8E6] disabled:opacity-50 disabled:bg-gray-300 transition-colors shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] active:translate-x-[2px] active:translate-y-[2px] active:shadow-none"
+                                className="px-2 sm:px-4 py-2 border-2 border-black bg-[#00D4FF] text-black font-mono text-xs sm:text-sm font-bold flex items-center justify-center gap-1 sm:gap-2 hover:bg-[#00B8E6] disabled:opacity-50 disabled:bg-gray-300 transition-colors shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] active:translate-x-[2px] active:translate-y-[2px] active:shadow-none"
                             >
-                                Next
-                                <span className="material-symbols-outlined text-base">arrow_forward</span>
+                                <span className="hidden sm:inline">Next</span>
+                                <span className="sm:hidden">Next</span>
+                                <span className="material-symbols-outlined text-sm sm:text-base">arrow_forward</span>
                             </button>
                         </div>
                     )}

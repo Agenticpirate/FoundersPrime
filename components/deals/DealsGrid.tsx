@@ -107,6 +107,15 @@ export default function DealsGrid({ filters }: DealsGridProps) {
           const otherDeals = result.filter(deal => !deal.recommended)
           result = [...recommendedDeals.slice(0, 6), ...otherDeals]
         }
+      } else {
+        // Exclude accelerators and incubators if no category is selected (All Deals)
+        result = result.filter(deal => 
+          deal.category !== 'startup-programs' && 
+          deal.subcategory !== 'accelerators' && 
+          deal.subcategory !== 'incubators' &&
+          deal.category !== 'accelerators' &&
+          deal.category !== 'incubators'
+        )
       }
 
       // Value filter
@@ -166,6 +175,9 @@ export default function DealsGrid({ filters }: DealsGridProps) {
           // For "All Deals" (no category filter), use sortOrder from curated sequence
           if (!filters?.category) {
             result.sort((a, b) => {
+              const aHasOriginalLogo = a.logoUrl && !a.logoUrl.includes('rocket') && !a.logoUrl.includes('ui-avatars') ? 1 : 0;
+              const bHasOriginalLogo = b.logoUrl && !b.logoUrl.includes('rocket') && !b.logoUrl.includes('ui-avatars') ? 1 : 0;
+              if (aHasOriginalLogo !== bHasOriginalLogo) return bHasOriginalLogo - aHasOriginalLogo;
               const aOrder = (a as any).sortOrder ?? 9999
               const bOrder = (b as any).sortOrder ?? 9999
               if (aOrder !== bOrder) return aOrder - bOrder
