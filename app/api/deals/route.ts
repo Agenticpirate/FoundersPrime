@@ -1,11 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
-import fs from 'fs'
-import path from 'path'
-import { accelerators2026 } from '@/data/accelerators-2026'
-import { grants2026 } from '@/data/grants-2026'
-import { incubators2026 } from '@/data/incubators-2026'
-import { Deal } from '@/lib/deals-database'
 import { createClient } from '@/lib/supabase/server'
+import { Deal } from '@/lib/deals-database'
 
 // Helper: verify caller is an active admin
 async function assertAdmin(): Promise<NextResponse | null> {
@@ -27,285 +22,71 @@ async function assertAdmin(): Promise<NextResponse | null> {
   return null // authorised
 }
 
-const PUBLIC_DEALS_PATH = path.join(process.cwd(), 'public', 'data', 'all-deals.json')
-const PROCESSED_DEALS_PATH = path.join(process.cwd(), 'data', 'processed-deals', 'all-deals.json')
-
-// Helper to ensure directory exists
-function ensureDirectoryExists() {
-  const dir = path.dirname(PUBLIC_DEALS_PATH)
-  if (!fs.existsSync(dir)) {
-    fs.mkdirSync(dir, { recursive: true })
-  }
-}
-
-// Convert specific types to generic Deal type
-function normalizeAccelerator(acc: any): Deal {
-  return {
-    id: acc.id,
-    slug: acc.slug,
-    title: acc.name,
-    provider: acc.name,
-    category: 'startup-programs',
-    subcategory: 'accelerators',
-    description: acc.description,
-    shortDescription: acc.description.substring(0, 150) + '...',
-    value: acc.investment || 'Varies',
-    eligibility: [acc.founderStage, acc.focusArea],
-    requirements: [],
-    applicationProcess: ['Visit website to apply'],
-    tags: ['accelerator', ...acc.features || []],
-    status: acc.applicationStatus === 'Active' ? 'active' : 'expired',
-    applicationUrl: acc.applicationLink || acc.website,
-    providerWebsite: acc.website,
-    logoUrl: acc.logo,
-    featured: false,
-    recommended: false,
-    verified: true,
-    difficulty: 'medium',
-    timeToApply: 'Varies',
-    lastUpdated: new Date().toISOString(),
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
-    sourceVerified: true,
-    dataSource: 'import'
-  }
-}
-
-function normalizeGrant(grant: any): Deal {
-  return {
-    id: grant.id,
-    slug: grant.slug,
-    title: grant.name,
-    provider: grant.organization,
-    category: 'startup-programs',
-    subcategory: 'grants',
-    description: grant.description,
-    shortDescription: grant.description.substring(0, 150) + '...',
-    value: grant.fundingAmount || 'Varies',
-    eligibility: [grant.eligibility],
-    requirements: [],
-    applicationProcess: ['Visit website to apply'],
-    tags: ['grant', grant.type, ...grant.features || []],
-    status: grant.applicationStatus === 'Active' ? 'active' : 'expired',
-    applicationUrl: grant.applicationLink || grant.website,
-    providerWebsite: grant.website,
-    logoUrl: grant.logo,
-    featured: false,
-    recommended: false,
-    verified: true,
-    difficulty: 'medium',
-    timeToApply: 'Varies',
-    lastUpdated: new Date().toISOString(),
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
-    sourceVerified: true,
-    dataSource: 'import'
-  }
-}
-
-function normalizeIncubator(inc: any): Deal {
-  return {
-    id: inc.id,
-    slug: inc.slug,
-    title: inc.name,
-    provider: inc.name,
-    category: 'startup-programs',
-    subcategory: 'incubators',
-    description: inc.description,
-    shortDescription: inc.description.substring(0, 150) + '...',
-    value: inc.support || 'Varies',
-    eligibility: [inc.founderStage, inc.focusArea],
-    requirements: [],
-    applicationProcess: ['Visit website to apply'],
-    tags: ['incubator', ...inc.features || []],
-    status: inc.applicationStatus === 'Active' ? 'active' : 'expired',
-    applicationUrl: inc.applicationLink || inc.website,
-    providerWebsite: inc.website,
-    logoUrl: inc.logo,
-    featured: false,
-    recommended: false,
-    verified: true,
-    difficulty: 'medium',
-    timeToApply: 'Varies',
-    lastUpdated: new Date().toISOString(),
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
-    sourceVerified: true,
-    dataSource: 'import'
-  }
-}
-
-// Global cache for API route
-let cachedDealsAPI: Deal[] | null = null;
-let lastCacheTimeAPI = 0;
-const CACHE_TTL_API = 1000 * 60 * 5; // 5 minutes
-
-// Helper to read deals from file (checks multiple locations)
-function readDeals(): Deal[] {
-  const now = Date.now();
-  if (cachedDealsAPI && (now - lastCacheTimeAPI < CACHE_TTL_API)) {
-    return cachedDealsAPI;
-  }
-
-  let allDeals: Deal[] = []
-
-  try {
-    // 1. Get manually added deals from JSON
-    if (fs.existsSync(PUBLIC_DEALS_PATH)) {
-      const data = fs.readFileSync(PUBLIC_DEALS_PATH, 'utf8')
-      try {
-        const jsonDeals = JSON.parse(data)
-        if (Array.isArray(jsonDeals)) {
-          allDeals = [...allDeals, ...jsonDeals]
-        }
-      } catch (e) {
-        console.error('Error parsing public deals JSON:', e)
-      }
-    } else if (fs.existsSync(PROCESSED_DEALS_PATH)) {
-      const data = fs.readFileSync(PROCESSED_DEALS_PATH, 'utf8')
-      try {
-        const jsonDeals = JSON.parse(data)
-        if (Array.isArray(jsonDeals)) {
-          allDeals = [...allDeals, ...jsonDeals]
-        }
-      } catch (e) {
-        console.error('Error parsing processed deals JSON:', e)
-      }
-    }
-
-    // 2. Aggregate from TypeScript data files
-    const acceleratedDeals = accelerators2026.map(normalizeAccelerator)
-    const grantDeals = grants2026.map(normalizeGrant)
-    const incubatorDeals = incubators2026.map(normalizeIncubator)
-
-    // Merge, preventing duplicates by slug
-    const existingSlugs = new Set(allDeals.map(d => d.slug))
-
-    const newDeals = [
-      ...acceleratedDeals,
-      ...grantDeals,
-      ...incubatorDeals
-    ].filter(d => !existingSlugs.has(d.slug))
-
-    allDeals = [...allDeals, ...newDeals]
-    cachedDealsAPI = allDeals
-    lastCacheTimeAPI = now
-
-  } catch (error) {
-    console.error('Error reading deals:', error)
-  }
-  return allDeals || []
-}
-
-// Helper: Get only JSON deals (for writing)
-function getJsonDealsOnly(): any[] {
-  if (fs.existsSync(PUBLIC_DEALS_PATH)) {
-    const data = fs.readFileSync(PUBLIC_DEALS_PATH, 'utf8')
-    try {
-      return JSON.parse(data)
-    } catch (e) {
-      return []
-    }
-  }
-  // Fallback to processed if public missing
-  if (fs.existsSync(PROCESSED_DEALS_PATH)) {
-    try {
-      return JSON.parse(fs.readFileSync(PROCESSED_DEALS_PATH, 'utf8'))
-    } catch (e) { return [] }
-  }
-  return []
-}
-
-// Helper to write deals to file (only writes the manual/JSON portion)
-function writeDeals(deals: any[]): void {
-  ensureDirectoryExists()
-  // We will ONLY write deals that are NOT from the TS imports to the JSON file
-  const dealsPersist = deals.filter(d => d.dataSource !== 'import')
-  fs.writeFileSync(PUBLIC_DEALS_PATH, JSON.stringify(dealsPersist, null, 2))
-  // Bust cache
-  cachedDealsAPI = null;
-}
-
-// GET - Fetch all deals or filter by query params
+// GET - Fetch all deals or filter by query params from Supabase
 export async function GET(request: NextRequest) {
   try {
-    const { searchParams } = new URL(request.url)
-    const category = searchParams.get('category')
-    const status = searchParams.get('status')
-    const search = searchParams.get('search')
-    const slug = searchParams.get('slug')
-    const id = searchParams.get('id')
-    const featured = searchParams.get('featured')
-    const recommended = searchParams.get('recommended')
-    const limit = searchParams.get('limit')
+    const supabase = createClient();
+    const { searchParams } = new URL(request.url);
+    const category = searchParams.get('category');
+    const status = searchParams.get('status');
+    const search = searchParams.get('search');
+    const slug = searchParams.get('slug');
+    const id = searchParams.get('id');
+    const featured = searchParams.get('featured');
+    const recommended = searchParams.get('recommended');
+    const limit = searchParams.get('limit');
 
-    let deals = readDeals()
+    let query = supabase.from('deals').select('*');
 
-    // Filter by single deal lookup
-    if (slug) {
-      const deal = deals.find(d => d.slug === slug)
-      if (deal) {
-        return NextResponse.json({ success: true, deal })
-      }
-      return NextResponse.json({ success: false, error: 'Deal not found' }, { status: 404 })
-    }
+    if (slug) query = query.eq('slug', slug);
+    if (id) query = query.eq('id', id);
+    if (status && status !== 'all') query = query.eq('status', status);
+    if (featured === 'true') query = query.eq('featured', true);
+    if (recommended === 'true') query = query.eq('recommended', true);
 
-    if (id) {
-      const deal = deals.find(d => d.id === id)
-      if (deal) {
-        return NextResponse.json({ success: true, deal })
-      }
-      return NextResponse.json({ success: false, error: 'Deal not found' }, { status: 404 })
-    }
-
-    // Apply filters
     if (category && category !== 'all') {
-      // Filter by category OR subcategory (for AI subcategories)
-      deals = deals.filter(d =>
-        d.category === category ||
-        d.subcategory === category ||
-        (category === 'ai' && d.category === 'ai')
-      )
+      if (category === 'ai') {
+        query = query.eq('category', 'ai');
+      } else {
+        query = query.or(`category.eq.${category},subcategory.eq.${category}`);
+      }
     }
 
-    if (status && status !== 'all') {
-      deals = deals.filter(d => d.status === status)
-    }
+    if (limit) query = query.limit(parseInt(limit));
 
-    if (featured === 'true') {
-      deals = deals.filter(d => d.featured === true)
-    }
+    const { data: rawDeals, error } = await query;
 
-    if (recommended === 'true') {
-      deals = deals.filter(d => d.recommended === true)
-    }
+    if (error) throw error;
+
+    // Filter search manually to mimic previous multi-field behavior
+    let deals: Deal[] = (rawDeals || []).map(formatDealFromDB);
 
     if (search) {
-      const searchLower = search.toLowerCase()
+      const searchLower = search.toLowerCase();
       deals = deals.filter(d =>
         d.title?.toLowerCase().includes(searchLower) ||
         d.provider?.toLowerCase().includes(searchLower) ||
         d.description?.toLowerCase().includes(searchLower) ||
         d.tags?.some((tag: string) => tag.toLowerCase().includes(searchLower))
-      )
+      );
     }
 
-    // Apply limit
-    if (limit) {
-      deals = deals.slice(0, parseInt(limit))
+    // Single deal lookup return
+    if (slug || id) {
+      if (deals.length > 0) return NextResponse.json({ success: true, deal: deals[0] });
+      return NextResponse.json({ success: false, error: 'Deal not found' }, { status: 404 });
     }
 
-    // Calculate stats
-    const allDeals = readDeals()
+    // Stats
     const stats = {
-      total: allDeals.length,
-      active: allDeals.filter(d => d.status === 'active').length,
-      expired: allDeals.filter(d => d.status === 'expired').length,
-      featured: allDeals.filter(d => d.featured).length,
-      recommended: allDeals.filter(d => d.recommended).length,
-      byCategory: allDeals.reduce((acc: Record<string, number>, d) => {
-        acc[d.category] = (acc[d.category] || 0) + 1
-        return acc
+      total: deals.length,
+      active: deals.filter(d => d.status === 'active').length,
+      expired: deals.filter(d => d.status === 'expired').length,
+      featured: deals.filter(d => d.featured).length,
+      recommended: deals.filter(d => d.recommended).length,
+      byCategory: deals.reduce((acc: Record<string, number>, d) => {
+        acc[d.category] = (acc[d.category] || 0) + 1;
+        return acc;
       }, {})
     }
 
@@ -314,283 +95,282 @@ export async function GET(request: NextRequest) {
       deals,
       count: deals.length,
       stats
-    })
+    });
   } catch (error) {
-    console.error('Error fetching deals:', error)
+    console.error('Error fetching deals:', error);
     return NextResponse.json({
       success: false,
       error: 'Failed to load deals'
-    }, { status: 500 })
+    }, { status: 500 });
   }
 }
 
 // POST - Create new deal(s)
 export async function POST(request: NextRequest) {
-  const authError = await assertAdmin()
-  if (authError) return authError
+  const authError = await assertAdmin();
+  if (authError) return authError;
+
+  const supabase = createClient();
 
   try {
-    const body = await request.json()
+    const body = await request.json();
 
-    // Handle bulk import
     if (body.deals && Array.isArray(body.deals)) {
-      const newDeals = body.deals.map((deal: any) => normalizeDeal(deal, 'import'))
-
-      // See Note in PUT: we only modify the JSON part
-      const jsonDeals = getJsonDealsOnly()
-      const allDeals = [...jsonDeals] // Copy
-      let added = 0
-      let updated = 0
-
-      for (const newDeal of newDeals) {
-        const existingIndex = allDeals.findIndex(d => d.slug === newDeal.slug)
-        if (existingIndex >= 0) {
-          allDeals[existingIndex] = { ...allDeals[existingIndex], ...newDeal, updatedAt: new Date().toISOString() }
-          updated++
-        } else {
-          allDeals.push(newDeal)
-          added++
-        }
-      }
-
-      writeDeals(allDeals)
+      const newDeals = body.deals.map((deal: any) => formatDealToDB(normalizeDeal(deal, 'import')));
+      
+      const { error, data } = await supabase.from('deals').upsert(newDeals, { onConflict: 'slug' }).select();
+      if (error) throw error;
 
       return NextResponse.json({
         success: true,
-        message: `Added ${added} new deals, updated ${updated} existing deals`,
-        totalDeals: allDeals.length,
-        added,
-        updated
-      })
+        message: `Processed bulk import of ${newDeals.length} deals`,
+        totalDeals: data?.length || 0,
+        added: newDeals.length,
+      });
     }
 
-    // Handle single deal creation
-    const deal = body
-    const jsonDeals = getJsonDealsOnly()
-    const newDeal = normalizeDeal(deal, 'manual')
+    // Single deal
+    const deal = normalizeDeal(body, 'manual');
+    const { data, error } = await supabase.from('deals').insert(formatDealToDB(deal)).select().single();
 
-    // Check for duplicate slug in JSON
-    if (jsonDeals.some(d => d.slug === newDeal.slug)) {
-      newDeal.slug = `${newDeal.slug}-${Date.now()}`
+    if (error) {
+      if (error.code === '23505') { // unique violation
+        return NextResponse.json({ success: false, error: 'Deal slug already exists' }, { status: 400 });
+      }
+      throw error;
     }
-    // Note: We don't check TS files for slug collision here, but maybe we should to avoid confusing UI.
-    // However, if we add it to JSON, it will override or coexist depending on readDeals logic.
-    // Current readDeals filters TS deals if slug exists in JSON/allDeals (which starts with JSON).
-    // So usually JSON overrides TS if same slug.
-
-    jsonDeals.push(newDeal)
-    writeDeals(jsonDeals)
 
     return NextResponse.json({
       success: true,
-      deal: newDeal,
+      deal: formatDealFromDB(data),
       message: 'Deal created successfully'
-    })
-  } catch (error) {
-    console.error('Error creating deal:', error)
+    });
+  } catch (error: any) {
+    console.error('Error creating deal:', error);
     return NextResponse.json({
       success: false,
-      error: 'Failed to create deal'
-    }, { status: 500 })
+      error: error.message || 'Failed to create deal'
+    }, { status: 500 });
   }
 }
 
 // PUT - Update existing deal
 export async function PUT(request: NextRequest) {
-  const authError = await assertAdmin()
-  if (authError) return authError
+  const authError = await assertAdmin();
+  if (authError) return authError;
+
+  const supabase = createClient();
 
   try {
-    const body = await request.json()
-    const { id, slug, ...updates } = body
+    const body = await request.json();
+    const { id, slug, ...updates } = body;
 
     if (!id && !slug) {
-      return NextResponse.json({
-        success: false,
-        error: 'Deal ID or slug is required'
-      }, { status: 400 })
+      return NextResponse.json({ success: false, error: 'Deal ID or slug is required' }, { status: 400 });
     }
 
-    const deals = getJsonDealsOnly()
-    const dealIndex = deals.findIndex(d => d.id === id || d.slug === slug)
+    const dbUpdates = formatDealToDB({ ...updates, updatedAt: new Date().toISOString() }, true);
+    
+    let query = supabase.from('deals').update(dbUpdates);
+    if (id) query = query.eq('id', id);
+    else if (slug) query = query.eq('slug', slug);
 
-    if (dealIndex === -1) {
-      return NextResponse.json({
-        success: false,
-        error: 'Deal not found in editable database (might be a static import)'
-      }, { status: 404 })
-    }
+    const { data: updatedDeal, error } = await query.select().single();
 
-    // Update the deal
-    deals[dealIndex] = {
-      ...deals[dealIndex],
-      ...updates,
-      updatedAt: new Date().toISOString()
-    }
-
-    writeDeals(deals)
+    if (error) throw error;
 
     return NextResponse.json({
       success: true,
-      deal: deals[dealIndex],
+      deal: formatDealFromDB(updatedDeal),
       message: 'Deal updated successfully'
-    })
-  } catch (error) {
-    console.error('Error updating deal:', error)
-    return NextResponse.json({
-      success: false,
-      error: 'Failed to update deal'
-    }, { status: 500 })
+    });
+  } catch (error: any) {
+    console.error('Error updating deal:', error);
+    return NextResponse.json({ success: false, error: error.message || 'Failed to update deal' }, { status: 500 });
   }
 }
 
 // DELETE - Delete deal(s)
 export async function DELETE(request: NextRequest) {
-  const authError = await assertAdmin()
-  if (authError) return authError
+  const authError = await assertAdmin();
+  if (authError) return authError;
+
+  const supabase = createClient();
 
   try {
-    const { searchParams } = new URL(request.url)
-    const id = searchParams.get('id')
-    const slug = searchParams.get('slug')
-    const ids = searchParams.get('ids') // For bulk delete
-
-    const deals = getJsonDealsOnly()
+    const { searchParams } = new URL(request.url);
+    const id = searchParams.get('id');
+    const slug = searchParams.get('slug');
+    const ids = searchParams.get('ids'); 
 
     if (ids) {
-      // Bulk delete
-      const idsToDelete = ids.split(',')
-      const remainingDeals = deals.filter(d => !idsToDelete.includes(d.id))
-      const deletedCount = deals.length - remainingDeals.length
+      const idsToDelete = ids.split(',');
+      const { error } = await supabase.from('deals').delete().in('id', idsToDelete);
+      if (error) throw error;
 
-      writeDeals(remainingDeals)
-
-      return NextResponse.json({
-        success: true,
-        message: `Deleted ${deletedCount} deals`,
-        deletedCount
-      })
+      return NextResponse.json({ success: true, message: `Deleted ${idsToDelete.length} deals` });
     }
 
     if (!id && !slug) {
-      return NextResponse.json({
-        success: false,
-        error: 'Deal ID or slug is required'
-      }, { status: 400 })
+      return NextResponse.json({ success: false, error: 'Deal ID or slug is required' }, { status: 400 });
     }
 
-    const dealIndex = deals.findIndex(d => d.id === id || d.slug === slug)
+    let query = supabase.from('deals').delete();
+    if (id) query = query.eq('id', id);
+    else if (slug) query = query.eq('slug', slug);
 
-    if (dealIndex === -1) {
-      return NextResponse.json({
-        success: false,
-        error: 'Deal not found in editable database'
-      }, { status: 404 })
-    }
+    const { error } = await query;
+    if (error) throw error;
 
-    const deletedDeal = deals.splice(dealIndex, 1)[0]
-    writeDeals(deals)
-
-    return NextResponse.json({
-      success: true,
-      message: 'Deal deleted successfully',
-      deal: deletedDeal
-    })
-  } catch (error) {
-    console.error('Error deleting deal:', error)
-    return NextResponse.json({
-      success: false,
-      error: 'Failed to delete deal'
-    }, { status: 500 })
+    return NextResponse.json({ success: true, message: 'Deal deleted successfully' });
+  } catch (error: any) {
+    console.error('Error deleting deal:', error);
+    return NextResponse.json({ success: false, error: error.message || 'Failed to delete deal' }, { status: 500 });
   }
 }
 
-// Helper function to generate slug
-function generateSlug(title: string): string {
-  return title
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '')
-    .substring(0, 100)
+// -------------------------------------------------------------------------------------------------
+// Data Formatting Helpers (Mapping between Frontend CamelCase and DB SnakeCase+CamelCase mixture)
+// -------------------------------------------------------------------------------------------------
+
+function formatDealFromDB(d: any): Deal {
+  return {
+    id: d.id,
+    slug: d.slug,
+    title: d.title,
+    provider: d.provider,
+    category: d.category,
+    subcategory: d.subcategory,
+    description: d.description,
+    shortDescription: d.shortDescription || d.short_description || '',
+    value: d.value,
+    originalPrice: d.originalPrice || d.original_price || '',
+    discountedPrice: d.discountedPrice || d.discounted_price || '',
+    savings: d.savings || '',
+    eligibility: d.eligibility || [],
+    requirements: d.requirements || [],
+    applicationProcess: d.applicationProcess || d.application_process || [],
+    proTips: d.proTips || d.pro_tips || [],
+    tags: d.tags || [],
+    status: d.status,
+    expiryDate: d.expiryDate || d.expiry_date || '',
+    applicationUrl: d.applicationUrl || d.application_url || '',
+    providerWebsite: d.providerWebsite || d.provider_website || '',
+    logoUrl: d.logoUrl || d.logo_url || '',
+    featured: d.featured,
+    recommended: d.recommended,
+    verified: d.verified,
+    difficulty: d.difficulty,
+    timeToApply: d.timeToApply || d.time_to_apply || '',
+    successRate: d.successRate || d.success_rate || '',
+    lastUpdated: d.lastUpdated || d.last_updated || d.updated_at || '',
+    createdAt: d.createdAt || d.created_at || '',
+    updatedAt: d.updatedAt || d.updated_at || '',
+    sourceVerified: d.sourceVerified || d.source_verified || true,
+    dataSource: d.dataSource || d.data_source || 'supabase'
+  } as Deal;
 }
 
-// Helper function to normalize and fill in missing deal fields
+function formatDealToDB(d: Partial<Deal>, isPartial = false): any {
+  const dbData: any = {};
+  
+  // Safely map values back to their expected database column names 
+  // (both the old snake_case ones and the newly added ones)
+  if (d.id !== undefined) dbData.id = d.id;
+  if (d.slug !== undefined) dbData.slug = d.slug;
+  if (d.title !== undefined) dbData.title = d.title;
+  if (d.provider !== undefined) dbData.provider = d.provider;
+  if (d.category !== undefined) dbData.category = d.category || '';
+  if (d.subcategory !== undefined) dbData.subcategory = d.subcategory || '';
+  if (d.description !== undefined) dbData.description = d.description || '';
+  if (d.shortDescription !== undefined) {
+    dbData.short_description = d.shortDescription || '';
+    dbData.shortDescription = d.shortDescription || '';
+  }
+  if (d.value !== undefined) dbData.value = d.value || '';
+  if (d.originalPrice !== undefined) {
+    dbData.original_price = d.originalPrice || '';
+    dbData.originalPrice = d.originalPrice || '';
+  }
+  if (d.discountedPrice !== undefined) dbData.discountedPrice = d.discountedPrice || '';
+  if (d.savings !== undefined) dbData.savings = d.savings || '';
+  if (d.eligibility !== undefined) dbData.eligibility = d.eligibility || [];
+  if (d.requirements !== undefined) dbData.requirements = d.requirements || [];
+  if (d.applicationProcess !== undefined) {
+    dbData.application_process = d.applicationProcess || [];
+    dbData.applicationProcess = d.applicationProcess || [];
+  }
+  if (d.proTips !== undefined) {
+    dbData.pro_tips = d.proTips || [];
+    dbData.proTips = d.proTips || [];
+  }
+  if (d.tags !== undefined) dbData.tags = d.tags || [];
+  if (d.status !== undefined) dbData.status = d.status || 'active';
+  if (d.expiryDate !== undefined) {
+    dbData.expiry_date = d.expiryDate || '';
+    dbData.expiryDate = d.expiryDate || '';
+  }
+  if (d.applicationUrl !== undefined) {
+    dbData.application_url = d.applicationUrl || '';
+    dbData.applicationUrl = d.applicationUrl || '';
+  }
+  if (d.providerWebsite !== undefined) {
+    dbData.provider_website = d.providerWebsite || '';
+    dbData.providerWebsite = d.providerWebsite || '';
+  }
+  if (d.logoUrl !== undefined) {
+    dbData.logo_url = d.logoUrl || '';
+    dbData.logoUrl = d.logoUrl || '';
+  }
+  if (d.featured !== undefined) dbData.featured = d.featured || false;
+  if (d.recommended !== undefined) dbData.recommended = d.recommended || false;
+  if (d.verified !== undefined) dbData.verified = d.verified !== false;
+  if (d.difficulty !== undefined) dbData.difficulty = d.difficulty || 'medium';
+  if (d.timeToApply !== undefined) {
+    dbData.time_to_apply = d.timeToApply || '15 minutes';
+    dbData.timeToApply = d.timeToApply || '15 minutes';
+  }
+  if (d.successRate !== undefined) {
+    dbData.success_rate = d.successRate || '';
+    dbData.successRate = d.successRate || '';
+  }
+  if (d.lastUpdated !== undefined) dbData.lastUpdated = d.lastUpdated;
+  if (d.createdAt !== undefined) dbData.created_at = d.createdAt;
+  if (d.updatedAt !== undefined) dbData.updated_at = d.updatedAt;
+  if (d.sourceVerified !== undefined) {
+    dbData.sourceVerified = d.sourceVerified !== false;
+  }
+  if (d.dataSource !== undefined) {
+    dbData.data_source = d.dataSource || 'supabase';
+    dbData.dataSource = d.dataSource || 'supabase';
+  }
+
+  // Remove ID if empty on creation so postgres can generate it
+  if (!isPartial && !dbData.id) {
+    delete dbData.id;
+  }
+
+  return dbData;
+}
+
+// Helper to normalize deal missing fields
 function normalizeDeal(deal: any, source: string): any {
   const now = new Date().toISOString()
   const title = deal.title || deal.name || deal.dealName || 'Untitled Deal'
-  const provider = deal.provider || deal.company || deal.vendor || deal.brand || 'Unknown Provider'
   const description = deal.description || deal.details || deal.about || deal.summary || ''
-  const value = deal.value || deal.discount || deal.amount || deal.savings || deal.credits || ''
   const url = deal.applicationUrl || deal.url || deal.link || deal.applyUrl || deal.website || ''
-
-  // Auto-detect category from content
-  const category = deal.category || detectCategory(JSON.stringify(deal))
-
+  
   return {
-    id: deal.id || `deal-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
-    slug: deal.slug || generateSlug(title),
+    ...deal,
+    slug: deal.slug || title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').substring(0, 100),
     title,
-    provider,
-    category,
-    subcategory: deal.subcategory || '',
+    provider: deal.provider || deal.company || deal.vendor || deal.brand || 'Unknown Provider',
     description,
-    shortDescription: deal.shortDescription || description.substring(0, 150) + (description.length > 150 ? '...' : ''),
-    value,
-    originalPrice: deal.originalPrice || '',
-    discountedPrice: deal.discountedPrice || '',
-    savings: deal.savings || '',
-    eligibility: normalizeArray(deal.eligibility || deal.requirements || deal.criteria || []),
-    requirements: normalizeArray(deal.requirements || deal.eligibility || []),
-    applicationProcess: normalizeArray(deal.applicationProcess || deal.howToApply || ['Visit provider website', 'Complete application', 'Await approval']),
-    proTips: normalizeArray(deal.proTips || deal.tips || []),
-    tags: normalizeArray(deal.tags || deal.keywords || deal.labels || []),
-    status: deal.status || 'active',
-    expiryDate: deal.expiryDate || deal.expires || deal.expiry || '',
+    shortDescription: deal.shortDescription || description.substring(0, 150),
     applicationUrl: url,
     providerWebsite: deal.providerWebsite || url,
-    logoUrl: deal.logoUrl || deal.logo || deal.image || '',
-    featured: deal.featured || false,
-    recommended: deal.recommended || false,
-    verified: deal.verified || true,
-    difficulty: deal.difficulty || 'medium',
-    timeToApply: deal.timeToApply || '15 minutes',
-    successRate: deal.successRate || '',
-    lastUpdated: now,
-    createdAt: deal.createdAt || now,
-    updatedAt: now,
-    sourceVerified: true,
-    dataSource: source
+    category: deal.category || 'saas-discounts',
+    status: deal.status || 'active',
+    dataSource: source,
   }
-}
-
-// Helper to normalize arrays from various formats
-function normalizeArray(input: any): string[] {
-  if (!input) return []
-  if (Array.isArray(input)) return input.filter(Boolean).map(String)
-  if (typeof input === 'string') {
-    return input.split(/[,\n]/).map(s => s.trim()).filter(Boolean)
-  }
-  return []
-}
-
-// Auto-detect category from deal content
-function detectCategory(text: string): string {
-  const lower = text.toLowerCase()
-  const keywords: Record<string, string[]> = {
-    'cloud-credits': ['aws', 'azure', 'gcp', 'google cloud', 'cloud credits', 'infrastructure', 'digitalocean', 'heroku'],
-    'ai': ['ai', 'artificial intelligence', 'machine learning', 'gpt', 'llm', 'openai', 'anthropic', 'claude'],
-    'grants': ['grant', 'funding', 'non-dilutive', 'award', 'fellowship'],
-    'accelerators': ['accelerator', 'yc', 'y combinator', 'techstars', 'batch', '500 startups'],
-    'incubators': ['incubator', 'incubation'],
-    'ad-credits': ['ad credits', 'advertising', 'google ads', 'facebook ads', 'meta ads', 'linkedin ads'],
-    'marketing': ['marketing', 'seo', 'email marketing', 'social media', 'hubspot', 'mailchimp'],
-    'development': ['developer', 'api', 'sdk', 'github', 'coding', 'vercel', 'netlify'],
-    'finance': ['payment', 'banking', 'fintech', 'stripe', 'accounting', 'quickbooks'],
-    'human-resources': ['hr', 'hiring', 'recruitment', 'payroll', 'employee'],
-  }
-
-  for (const [cat, kws] of Object.entries(keywords)) {
-    if (kws.some(kw => lower.includes(kw))) return cat
-  }
-  return 'saas-discounts'
 }

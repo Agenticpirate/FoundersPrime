@@ -11,11 +11,11 @@ const client = DODO_API_KEY ? new DodoPayments({
   environment: DODO_ENV,
 }) : null;
 
-// Actual Product IDs provided by user
+// Product IDs from Dodo Payments Dashboard (via env vars)
 const PRODUCTS: Record<string, string> = {
-  monthly: "pdt_0NXSovAmBrXoKozax8uOu",
-  annual: "pdt_0NXSpHzkJ3MjXA2DgiCov",
-  lifetime: "pdt_0NXSpKlBKeUhNzCWJ4Pxd"
+  explorer: process.env.DODO_PRODUCT_EXPLORER_MONTHLY || 'pdt_0NYGgiPYXbfSQSTu2YZVA',
+  founder:  process.env.DODO_PRODUCT_FOUNDER_YEARLY  || 'pdt_0NYGhiHbaHo141y9EXBl7',
+  legend:   process.env.DODO_PRODUCT_LEGEND_LIFETIME || 'pdt_0NYGi3cj7tCz581sqfnWw',
 };
 
 export async function POST(request: Request) {

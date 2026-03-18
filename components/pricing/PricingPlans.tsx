@@ -1,6 +1,7 @@
 'use client'
 
-import Link from 'next/link'
+import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { Currency } from '@/utils/currency'
 import { getPricing, formatPrice } from '@/utils/pricing'
 
@@ -9,26 +10,54 @@ interface PricingPlansProps {
 }
 
 export default function PricingPlans({ currency }: PricingPlansProps) {
+  const router = useRouter()
   const explorerPricing = getPricing('explorer', currency)
   const founderPricing = getPricing('founder', currency)
   const legendPricing = getPricing('legend', currency)
 
+  const [loadingPlan, setLoadingPlan] = useState<string | null>(null)
+
+  const handleCheckout = async (plan: string) => {
+    setLoadingPlan(plan)
+    try {
+      const res = await fetch('/api/payment/create-link', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ plan }),
+      })
+      const data = await res.json()
+      if (res.ok && data.url) {
+        window.location.href = data.url // redirect to Dodo hosted page
+      } else if (res.status === 401) {
+        // Not logged in — send to login first
+        router.push('/login?redirect=/pricing')
+      } else {
+        alert(data.error || 'Something went wrong. Please try again.')
+      }
+    } catch (err) {
+      alert('Network error. Please try again.')
+    } finally {
+      setLoadingPlan(null)
+    }
+  }
+
   const plans = [
     {
       name: 'Explorer',
+      planKey: 'explorer',
       icon: 'explore',
       price: formatPrice(explorerPricing.actual || explorerPricing.discounted, currency),
       originalPrice: null,
       period: explorerPricing.period,
-      description: 'All deals & credits. Billed annually.',
+      description: 'Access the platform with usage limits.',
       features: [
-        'Access to all SaaS deals',
-        'Cloud credits (AWS, GCP, Azure)',
-        'Ad credits (Google, Meta)',
+        'All SaaS deals & cloud credits',
+        'Up to 10 Deal Claims / month',
+        'View up to Page 10 of Deals',
+        'View 1 Page of Accelerators',
         'Cancel anytime',
       ],
       cta: 'Start Exploring',
-      href: '/checkout?plan=explorer',
       popular: false,
       buttonStyle: 'bg-white hover:bg-gray-50 text-[#111111]',
       badge: null,
@@ -42,14 +71,15 @@ export default function PricingPlans({ currency }: PricingPlansProps) {
     },
     {
       name: 'Founder',
+      planKey: 'founder',
       icon: 'rocket_launch',
       price: formatPrice(founderPricing.actual || founderPricing.discounted, currency),
       originalPrice: null,
       period: founderPricing.period,
-      description: 'Everything — billed annually.',
+      description: 'Everything — unlimited access.',
       features: [
-        'Everything in Explorer',
-        'Cloud, SaaS & Ad credits',
+        'Unlimited Deal Claims',
+        'Unlimited Pagination (All Deals)',
         'Investor & Grants database',
         'Accelerators, Incubators & Programs',
         'Verified Startups full database',
@@ -57,7 +87,6 @@ export default function PricingPlans({ currency }: PricingPlansProps) {
         'Priority support',
       ],
       cta: 'Become a Founder',
-      href: '/checkout?plan=founder',
       popular: true,
       buttonStyle: 'bg-[#111111] text-white hover:bg-[#333]',
       badge: null,
@@ -71,6 +100,7 @@ export default function PricingPlans({ currency }: PricingPlansProps) {
     },
     {
       name: 'Legend',
+      planKey: 'legend',
       icon: 'diamond',
       price: formatPrice(legendPricing.actual || legendPricing.discounted, currency),
       originalPrice: null,
@@ -83,7 +113,6 @@ export default function PricingPlans({ currency }: PricingPlansProps) {
         'Priority support'
       ],
       cta: 'Get Legend Status',
-      href: '/checkout?plan=legend',
       popular: false,
       buttonStyle: 'bg-[#111111] text-white hover:bg-[#333]',
       badge: null,
@@ -104,66 +133,57 @@ export default function PricingPlans({ currency }: PricingPlansProps) {
         Unlock More Value
       </h2>
 
-      {/* Mobile carousel */}
-      <div className="md:hidden flex gap-4 overflow-x-auto snap-x snap-mandatory pb-4 px-4 mobile-scroll-hide">
+      {/* Mobile Stacked View */}
+      <div className="md:hidden flex flex-col gap-3 px-4 pb-2">
         {plans.map((plan, index) => (
           <div
             key={index}
-            className="snap-start shrink-0 w-[82vw] group relative flex flex-col border-2 border-[#111111] shadow-[3px_3px_0px_0px_#111111] overflow-hidden"
+            className="group relative flex flex-col border-2 border-[#111111] shadow-[2px_2px_0px_0px_#111111] overflow-hidden bg-white"
           >
             {plan.popular && (
-              <div className="absolute top-0 left-1/2 -translate-x-1/2 bg-[#111111] text-white px-3 py-0.5 font-mono text-[9px] font-black uppercase tracking-widest z-20">
-                ★ Most Popular
+              <div className="absolute top-0 right-0 bg-[#111111] text-white px-2 py-0.5 font-mono text-[8px] font-black uppercase tracking-widest z-20 border-b-2 border-l-2 border-[#111111]">
+                ★ Popular
               </div>
             )}
             {plan.special && (
-              <div className="absolute top-0 left-1/2 -translate-x-1/2 bg-[#111111] text-white px-3 py-0.5 font-mono text-[9px] font-black uppercase tracking-widest z-20 flex items-center gap-1">
-                <span className="material-symbols-outlined text-[9px] text-amber-400">bolt</span>
-                Elite Status
+              <div className="absolute top-0 right-0 bg-[#111111] text-white px-2 py-0.5 font-mono text-[8px] font-black uppercase tracking-widest z-20 flex items-center gap-1 border-b-2 border-l-2 border-[#111111]">
+                <span className="material-symbols-outlined text-[8px] text-amber-400">bolt</span>
+                Elite
               </div>
             )}
-            <div className={`${plan.headerBg} px-4 pt-7 pb-3 text-left relative overflow-hidden border-b-2 border-[#111111]/15`}>
-              <div className="flex items-center gap-2">
-                <div className={`w-6 h-6 ${plan.iconBg} border border-[#111111]/20 flex items-center justify-center`}>
-                  <span className="material-symbols-outlined text-xs text-[#111111]">{plan.icon}</span>
+            <div className={`${plan.headerBg} px-3 py-3 text-left relative overflow-hidden border-b-2 border-[#111111]/15 flex items-center justify-between`}>
+              <div className="flex flex-col">
+                <div className="flex items-center gap-2 mb-1">
+                  <div className={`w-5 h-5 ${plan.iconBg} border border-[#111111]/20 flex items-center justify-center`}>
+                    <span className="material-symbols-outlined text-[10px] text-[#111111]">{plan.icon}</span>
+                  </div>
+                  <h3 className={`font-mono text-sm font-black uppercase tracking-tight ${plan.textColor}`}>{plan.name}</h3>
                 </div>
-                <h3 className={`font-mono text-sm font-black uppercase tracking-tight ${plan.textColor}`}>{plan.name}</h3>
+                <div className={`flex items-baseline ${plan.textColor}`}>
+                  <span className="font-sans text-xl font-black tracking-tight leading-none">{plan.price}</span>
+                  <span className="font-mono text-[9px] font-bold uppercase ml-1 opacity-60">/{plan.period}</span>
+                </div>
               </div>
-              <div className={`flex items-baseline ${plan.textColor} mt-2`}>
-                <span className="font-sans text-2xl font-black tracking-tight leading-none">{plan.price}</span>
-                <span className="font-mono text-[9px] font-bold uppercase ml-1 opacity-60">/{plan.period}</span>
-              </div>
-              {plan.description && (
-                <p className={`font-sans text-[10px] mt-1 opacity-60 ${plan.textColor}`}>{plan.description}</p>
-              )}
+              <button
+                onClick={() => handleCheckout(plan.planKey)}
+                disabled={loadingPlan === plan.planKey}
+                className={`py-1.5 px-3 font-mono font-bold uppercase tracking-wider text-[9px] border-2 border-[#111111] flex items-center justify-center gap-1 shadow-[2px_2px_0_0_#111111] ${plan.buttonStyle} disabled:opacity-60`}
+              >
+                {loadingPlan === plan.planKey ? '...' : (plan.name === 'Explorer' ? 'Explore' : plan.name === 'Founder' ? 'Join Pro' : 'Get Legend')}
+              </button>
             </div>
-            <div className={`px-4 py-3 flex-1 flex flex-col justify-between ${plan.cardBg}`}>
-              <ul className="space-y-1.5">
-                {plan.features.map((feature, idx) => (
-                  <li key={idx} className="flex items-center gap-2">
-                    <span className={`material-symbols-outlined text-base ${plan.featureIcon}`} style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
-                    <span className="font-sans text-xs text-[#111111]">{feature}</span>
-                  </li>
+            <div className={`px-3 py-2 flex flex-col ${plan.cardBg}`}>
+              <p className={`font-sans text-[10px] opacity-80 ${plan.textColor} mb-1.5 font-bold`}>{plan.description}</p>
+              <div className="grid grid-cols-2 gap-x-2 gap-y-1">
+                {plan.features.slice(0, 4).map((feature, idx) => (
+                  <div key={idx} className="flex items-start gap-1">
+                    <span className={`material-symbols-outlined text-[10px] mt-0.5 ${plan.featureIcon}`} style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
+                    <span className="font-sans text-[9px] text-[#111111] leading-tight">{feature}</span>
+                  </div>
                 ))}
-              </ul>
-              <div className="mt-4">
-                <Link
-                  href={plan.href}
-                  className={`w-full py-2 font-mono font-bold uppercase tracking-wider text-[10px] border-2 border-[#111111] flex items-center justify-center gap-1.5 shadow-[2px_2px_0_0_#111111] transition-all duration-200 ${plan.buttonStyle}`}
-                >
-                  {plan.cta}
-                  <span className="material-symbols-outlined text-sm">arrow_forward</span>
-                </Link>
               </div>
             </div>
           </div>
-        ))}
-      </div>
-
-      {/* Mobile dot indicator */}
-      <div className="flex md:hidden justify-center gap-1.5 mt-2 mb-2">
-        {plans.map((_, i) => (
-          <div key={i} className={`transition-all border border-black ${i === 0 ? 'w-5 h-2 bg-black' : 'w-2 h-2 bg-gray-300'}`} />
         ))}
       </div>
 
@@ -263,13 +283,16 @@ export default function PricingPlans({ currency }: PricingPlansProps) {
 
               {/* CTA Button */}
               <div className="mt-5">
-                <Link
-                  href={plan.href}
-                  className={`w-full py-2.5 font-mono font-bold uppercase tracking-wider text-xs border-2 border-[#111111] flex items-center justify-center gap-2 shadow-[3px_3px_0_0_#111111] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[1px_1px_0_0_#111111] transition-all duration-200 ${plan.buttonStyle}`}
+                <button
+                  onClick={() => handleCheckout(plan.planKey)}
+                  disabled={loadingPlan === plan.planKey}
+                  className={`w-full py-2.5 font-mono font-bold uppercase tracking-wider text-xs border-2 border-[#111111] flex items-center justify-center gap-2 shadow-[3px_3px_0_0_#111111] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[1px_1px_0_0_#111111] transition-all duration-200 ${plan.buttonStyle} disabled:opacity-60`}
                 >
-                  {plan.cta}
-                  <span className="material-symbols-outlined text-base transition-transform duration-300 group-hover:translate-x-0.5">arrow_forward</span>
-                </Link>
+                  {loadingPlan === plan.planKey ? 'Redirecting...' : plan.cta}
+                  <span className="material-symbols-outlined text-base transition-transform duration-300 group-hover:translate-x-0.5">
+                    {loadingPlan === plan.planKey ? 'hourglass_empty' : 'arrow_forward'}
+                  </span>
+                </button>
 
 
               </div>

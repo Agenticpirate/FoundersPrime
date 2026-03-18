@@ -5,10 +5,12 @@ export interface UserProfile {
   id: string
   email: string
   name?: string
-  isPro: boolean
+  isPro: boolean      // True for Founder, Legend, Admin (Full Access)
+  isExplorer: boolean // True for Explorer plan ($1.99/mo)
   isAdmin: boolean
+  plan: 'free' | 'explorer' | 'founder' | 'legend'
   subscription?: {
-    plan: 'free' | 'pro' | 'pro-plus'
+    plan: 'free' | 'explorer' | 'founder' | 'legend' | 'pro' | 'pro-plus'
     status: 'active' | 'cancelled' | 'expired'
     expiresAt?: string
   }
@@ -43,7 +45,7 @@ export async function checkProStatus(): Promise<{
     }
 
     // Check if user is in Pro users list
-    const isPro = PRO_USERS.includes(user.email || '')
+    const isHardcodedPro = PRO_USERS.includes(user.email || '')
     
     // Check if user is admin
     const { data: adminData } = await supabase
@@ -55,28 +57,46 @@ export async function checkProStatus(): Promise<{
 
     const isAdmin = !!adminData
 
-    // If admin or in pro list, grant pro access
-    const hasProAccess = isPro || isAdmin
+    // Check actual subscriptions
+    const { data: subData } = await supabase
+      .from('user_subscriptions')
+      .select('*')
+      .eq('user_id', user.id)
+      .eq('status', 'active')
+      .order('created_at', { ascending: false })
+      .limit(1)
+      .maybeSingle()
+
+    let computedPlan: 'free' | 'explorer' | 'founder' | 'legend' = 'free'
+    
+    if (isAdmin || isHardcodedPro) {
+      computedPlan = 'legend'
+    } else if (subData) {
+      computedPlan = subData.plan as any
+    }
+
+    const isPro = ['founder', 'legend'].includes(computedPlan) || isAdmin
+    const isExplorer = computedPlan === 'explorer'
 
     const userProfile: UserProfile = {
       id: user.id,
       email: user.email || '',
       name: user.user_metadata?.name || user.email?.split('@')[0],
-      isPro: hasProAccess,
-      isAdmin: isAdmin,
-      subscription: hasProAccess ? {
-        plan: isAdmin ? 'pro-plus' : 'pro',
-        status: 'active'
-      } : {
-        plan: 'free',
-        status: 'active'
+      isPro,
+      isExplorer,
+      isAdmin,
+      plan: computedPlan,
+      subscription: {
+        plan: computedPlan,
+        status: 'active',
+        expiresAt: subData?.period_end
       }
     }
 
     return {
       isAuthenticated: true,
-      isPro: hasProAccess,
-      isAdmin: isAdmin,
+      isPro,
+      isAdmin,
       user: userProfile
     }
   } catch (error) {
@@ -94,6 +114,12 @@ export async function checkProStatus(): Promise<{
 export async function isProUser(): Promise<boolean> {
   const { isPro } = await checkProStatus()
   return isPro
+}
+
+// Quick check for Explorer status (client-side)
+export async function isExplorerUser(): Promise<boolean> {
+  const { user } = await checkProStatus()
+  return !!user?.isExplorer
 }
 
 // Quick check for Admin status (client-side)

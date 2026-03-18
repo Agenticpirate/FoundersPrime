@@ -28,14 +28,17 @@ export default function DealsGrid({ filters }: DealsGridProps) {
 
   const { user } = useAuth()
   const [isPro, setIsPro] = useState(false)
+  const [isExplorer, setIsExplorer] = useState(false)
 
   useEffect(() => {
     const checkAccess = async () => {
       if (user) {
-        const { isPro: hasProAccess } = await checkProStatus()
+        const { isPro: hasProAccess, user: userProfile } = await checkProStatus()
         setIsPro(hasProAccess)
+        setIsExplorer(!!userProfile?.isExplorer)
       } else {
         setIsPro(false)
+        setIsExplorer(false)
       }
     }
     checkAccess()
@@ -299,26 +302,59 @@ export default function DealsGrid({ filters }: DealsGridProps) {
       )}
 
       {/* Deals Grid or Lock CTA */}
-      {!loading && filteredDeals.length > 0 && (
-        (!isPro && currentPage > 3) ? (
-          <div className="mt-6 mb-4 md:mt-12 md:mb-4 md:mb-5 bg-gray-50 border-4 border-black p-4 md:p-8 text-center neo-shadow">
-            <span className="material-symbols-outlined text-3xl md:text-4xl mb-2 md:mb-4">lock</span>
-            <h3 className="text-lg md:text-2xl font-bold font-mono uppercase mb-2">Unlock {filteredDeals.length - (3 * dealsPerPage)}+ More Deals</h3>
-            <p className="text-xs md:text-sm text-gray-600 mb-4 md:mb-6 max-w-xl mx-auto">
-              Upgrade to Premium to instantly access our entire database of active software credits and grants.
-            </p>
-            <a href="/pricing" className="inline-block bg-primary text-black font-bold font-mono px-5 py-3 md:px-8 md:py-4 border-2 border-black hover:bg-yellow-400 neo-shadow transition-all text-sm">
-              UPGRADE TO ACCESS ALL DEALS
-            </a>
-          </div>
-        ) : (
+      {!loading && filteredDeals.length > 0 && (() => {
+        // Enforce pagination limits based on plan and category
+        let isLocked = false;
+        let lockTitle = "Unlock More Deals";
+        let lockMessage = "Upgrade to Premium to instantly access our entire database.";
+        
+        const isAcceleratorOrIncubator = filters?.category === 'accelerators' || filters?.category === 'incubators';
+
+        if (!isPro) {
+          if (isExplorer) {
+            // Explorer plan limits
+             if (isAcceleratorOrIncubator && currentPage > 1) {
+                isLocked = true;
+                lockTitle = "Upgrade to Founder";
+                lockMessage = "Explorer users can view 1 page of Accelerators & Incubators. Upgrade to Founder to unlock the rest.";
+             } else if (currentPage > 10) {
+                isLocked = true;
+                lockTitle = "Upgrade to Founder";
+                lockMessage = "Explorer users are limited to 10 pages of deals. Upgrade to Founder to view everything.";
+             }
+          } else {
+             // Free plan limits
+             if (currentPage > 3) {
+                 isLocked = true;
+                 lockTitle = `Unlock ${filteredDeals.length - (3 * dealsPerPage)}+ More Deals`;
+                 lockMessage = "Upgrade to instantly access our entire database of active software credits and grants.";
+             }
+          }
+        }
+
+        if (isLocked) {
+          return (
+            <div className="mt-6 mb-4 md:mt-12 md:mb-4 md:mb-5 bg-gray-50 border-4 border-black p-4 md:p-8 text-center neo-shadow">
+              <span className="material-symbols-outlined text-3xl md:text-4xl mb-2 md:mb-4">lock</span>
+              <h3 className="text-lg md:text-2xl font-bold font-mono uppercase mb-2">{lockTitle}</h3>
+              <p className="text-xs md:text-sm text-gray-600 mb-4 md:mb-6 max-w-xl mx-auto">
+                {lockMessage}
+              </p>
+              <a href="/pricing" className="inline-block bg-primary text-black font-bold font-mono px-5 py-3 md:px-8 md:py-4 border-2 border-black hover:bg-yellow-400 neo-shadow transition-all text-sm">
+                VIEW PRICING PLANS
+              </a>
+            </div>
+          );
+        }
+
+        return (
           <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4 mb-4 md:mb-5">
             {currentDeals.map((deal) => (
               <DealCard key={deal.id} deal={convertDealToCardFormat(deal)} />
             ))}
           </div>
-        )
-      )}
+        );
+      })()}
 
       {/* Pagination */}
       <Pagination

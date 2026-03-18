@@ -24,9 +24,9 @@ export default function DealLogo({ logoUrl, brandIcon, provider, size = 'md' }: 
     lg: 'text-5xl'
   }
 
-  const fallbackUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(provider)}&background=f3f4f6&color=1f2937&size=80&bold=true`
+  const fallbackUrl = `/logos/${provider.toLowerCase().replace(/\s+/g, '-')}.png`
   const imageUrl = logoUrl || brandIcon || fallbackUrl
-  const hasValidLogo = imageUrl && !imageUrl.includes('ui-avatars.com') && !hasError
+  const hasValidLogo = imageUrl && !hasError
 
   return (
     <div className={`${sizeClasses[size]} bg-white border-3 border-black rounded-lg flex items-center justify-center flex-shrink-0 shadow-[4px_4px_0px_#111111] transition-colors ${!hasValidLogo ? 'group-hover:bg-yellow-50' : ''}`}>

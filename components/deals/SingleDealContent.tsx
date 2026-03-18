@@ -3,8 +3,9 @@
 import { useState, useEffect } from 'react'
 import { getStartupProgramUrl } from '@/lib/comprehensive-startup-urls'
 import { useRouter } from 'next/navigation'
-import { isProUser } from '@/lib/auth/user-context'
+import { isProUser, isExplorerUser } from '@/lib/auth/user-context'
 import ProUpgradeModal from '@/components/ProUpgradeModal'
+import { claimDeal } from '@/app/actions/deal-actions'
 
 interface Deal {
   id: string
@@ -71,8 +72,11 @@ export default function SingleDealContent({ deal, freeAccess = false, basePath =
 
   // Pro Access State
   const [isPro, setIsPro] = useState(false)
+  const [isExplorer, setIsExplorer] = useState(false)
   const [isLoadingPro, setIsLoadingPro] = useState(true)
   const [showUpgradeModal, setShowUpgradeModal] = useState(false)
+  const [isClaiming, setIsClaiming] = useState(false)
+  const [claimError, setClaimError] = useState<string | null>(null)
 
   const router = useRouter()
 
@@ -88,6 +92,8 @@ export default function SingleDealContent({ deal, freeAccess = false, basePath =
       try {
         const proStatus = await isProUser()
         setIsPro(proStatus)
+        const explorerStatus = await isExplorerUser()
+        setIsExplorer(explorerStatus)
       } catch (error) {
         console.error('Error checking pro status:', error)
       } finally {
@@ -171,23 +177,6 @@ export default function SingleDealContent({ deal, freeAccess = false, basePath =
     setShowShareMenu(false)
   }
 
-  // Handle Application Click
-  const handleApplyClick = (e: React.MouseEvent) => {
-    if (isLoadingPro) {
-      e.preventDefault()
-      return
-    }
-
-    if (!isPro) {
-      e.preventDefault()
-      setShowUpgradeModal(true)
-    }
-    // If Pro, let the link work as normal (opening in new tab)
-  }
-
-  // Use the deal's application URL directly, fallback to provider URL mapping only if not set
-  const applicationUrl = deal.applicationUrl || deal.actualDealUrl || getStartupProgramUrl(deal.provider)
-
   // Use enhanced data if available
   const description = deal.detailedDescription || deal.overview
   const benefits = deal.benefits || deal.included
@@ -195,6 +184,48 @@ export default function SingleDealContent({ deal, freeAccess = false, basePath =
   const eligibility = deal.eligibilityDetails || deal.eligibility
   const faqs = deal.faqs || deal.faq
   const displayValue = deal.enhancedValue || deal.value
+
+  // Use the deal's application URL directly, fallback to provider URL mapping only if not set
+  const applicationUrl = deal.applicationUrl || deal.actualDealUrl || getStartupProgramUrl(deal.provider)
+
+  // Handle Application Click
+  const handleApplyClick = async (e: React.MouseEvent) => {
+    e.preventDefault()
+
+    if (isLoadingPro || isClaiming) {
+      return
+    }
+
+    setClaimError(null)
+
+    if (freeAccess) {
+      window.open(applicationUrl, '_blank')
+      return
+    }
+
+    if (!isPro && !isExplorer) {
+      setShowUpgradeModal(true)
+      return
+    }
+
+    setIsClaiming(true)
+    try {
+        const result = await claimDeal(deal.id, applicationUrl)
+        if (result.success && result.url) {
+            window.open(result.url, '_blank')
+        } else {
+            setClaimError(result.error || 'Failed to apply.')
+            if (result.limitReached) {
+                // Prompt an upgrade if they hit the 10 limit
+                setShowUpgradeModal(true)
+            }
+        }
+    } catch (err) {
+        setClaimError('An unexpected error occurred.')
+    } finally {
+        setIsClaiming(false)
+    }
+  }
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-8">
@@ -204,6 +235,13 @@ export default function SingleDealContent({ deal, freeAccess = false, basePath =
 
           {/* Apply Box */}
           <div className="rounded-sm border-2 md:border-4 border-black bg-white shadow-[3px_3px_0px_#111111] md:shadow-[6px_6px_0px_#111111] p-4 md:p-6">
+            
+            {claimError && (
+              <div className="mb-4 p-3 bg-red-50 text-red-700 text-xs md:text-sm font-bold border-2 border-red-500 rounded-sm">
+                ⚠️ {claimError}
+              </div>
+            )}
+            
             <div className="mb-3 md:mb-4">
               <div className="text-[10px] md:text-xs font-bold uppercase text-gray-500 mb-0.5 md:mb-1 font-mono">Deal Value</div>
               <div className="text-xl md:text-3xl font-black text-black font-mono mb-2 md:mb-4">{displayValue}</div>
@@ -227,16 +265,20 @@ export default function SingleDealContent({ deal, freeAccess = false, basePath =
             {isLoadingPro ? (
               <div className="w-full h-12 bg-gray-100 animate-pulse rounded-sm mb-3"></div>
             ) : (
-              <a
-                href={applicationUrl}
-                target="_blank"
-                rel="noopener noreferrer"
+              <button
                 onClick={handleApplyClick}
-                className="w-full rounded-sm border-2 md:border-4 border-black bg-primary py-3 md:py-4 font-mono text-sm md:text-base font-bold uppercase tracking-wide text-black shadow-[3px_3px_0px_#111111] hover:bg-yellow-300 transition-all mb-3 flex items-center justify-center gap-2 cursor-pointer"
+                disabled={isClaiming}
+                className="w-full rounded-sm border-2 md:border-4 border-black bg-primary py-3 md:py-4 font-mono text-sm md:text-base font-bold uppercase tracking-wide text-black shadow-[3px_3px_0px_#111111] hover:bg-yellow-300 transition-all mb-3 flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
               >
-                {freeAccess ? 'Apply Now' : isPro ? 'Apply Now' : 'Apply Now (Pro)'}
-                <span className="material-symbols-outlined !text-[18px]">{freeAccess || isPro ? 'arrow_forward' : 'lock'}</span>
-              </a>
+                {isClaiming ? (
+                    'Claiming...'
+                ) : (
+                    freeAccess ? 'Apply Now' : (isPro || isExplorer) ? 'Apply Now' : 'Apply Now (Premium)'
+                )}
+                <span className="material-symbols-outlined !text-[18px]">
+                    {isClaiming ? 'hourglass_empty' : (freeAccess || isPro || isExplorer ? 'arrow_forward' : 'lock')}
+                </span>
+              </button>
             )}
 
             <div className="grid grid-cols-2 gap-2">
@@ -300,10 +342,10 @@ export default function SingleDealContent({ deal, freeAccess = false, basePath =
             <h4 className="font-mono text-sm font-bold uppercase mb-4 text-gray-700 border-b-2 border-gray-200 pb-2">Quick Links</h4>
             <ul className="space-y-3">
               <li>
-                <a href={applicationUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm font-bold hover:text-primary hover:underline">
+                <button onClick={handleApplyClick} className="flex items-center gap-2 text-sm font-bold hover:text-primary hover:underline">
                   <span className="material-symbols-outlined !text-[18px]">open_in_new</span>
                   Apply for Deal
-                </a>
+                </button>
               </li>
               <li>
                 <a href={`https://www.${deal.provider.toLowerCase().replace(/\s+/g, '')}.com`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm font-bold hover:text-primary hover:underline">
@@ -388,43 +430,43 @@ export default function SingleDealContent({ deal, freeAccess = false, basePath =
         </section>
 
         {/* Eligibility Requirements */}
-        <section className="rounded-sm border-2 md:border-4 border-black bg-white p-4 md:p-6 shadow-[4px_4px_0px_#111111] md:shadow-[6px_6px_0px_#111111]">
-          <h2 className="mb-3 md:mb-4 flex items-center gap-2 border-b-2 md:border-b-3 border-black pb-2 md:pb-3 font-mono text-lg md:text-2xl font-bold uppercase">
-            <span className="material-symbols-outlined text-primary !text-[20px] md:!text-[24px]">checklist</span>
+        <section className="rounded-sm border-2 md:border-4 border-black bg-white p-3 md:p-6 shadow-[4px_4px_0px_#111111] md:shadow-[6px_6px_0px_#111111]">
+          <h2 className="mb-2 md:mb-4 flex items-center gap-2 border-b-2 md:border-b-3 border-black pb-2 md:pb-3 font-mono text-base md:text-2xl font-bold uppercase">
+            <span className="material-symbols-outlined text-primary !text-[18px] md:!text-[24px]">checklist</span>
             Eligibility Requirements
           </h2>
-          <ul className="space-y-2 md:space-y-3">
+          <ul className="space-y-1.5 md:space-y-3">
             {eligibility.map((requirement, index) => (
-              <li key={index} className="flex items-start gap-2 md:gap-3 p-3 md:p-4 bg-yellow-50 rounded-sm border-l-4 border-black">
-                <span className="material-symbols-outlined text-primary flex-shrink-0 mt-0.5">arrow_right</span>
-                <span className="text-base font-medium">{requirement}</span>
+              <li key={index} className="flex items-start gap-2 p-2 md:p-4 bg-yellow-50 rounded-sm border-l-4 border-black">
+                <span className="material-symbols-outlined text-primary flex-shrink-0 text-sm md:text-base mt-0.5">arrow_right</span>
+                <span className="text-sm md:text-base font-medium leading-snug">{requirement}</span>
               </li>
             ))}
           </ul>
         </section>
 
         {/* How to Apply */}
-        <section className="rounded-sm border-2 md:border-4 border-black bg-white p-4 md:p-6 shadow-[4px_4px_0px_#111111] md:shadow-[6px_6px_0px_#111111]">
-          <h2 className="mb-3 md:mb-4 flex items-center gap-2 border-b-2 md:border-b-3 border-black pb-2 md:pb-3 font-mono text-lg md:text-2xl font-bold uppercase">
-            <span className="material-symbols-outlined text-primary !text-[20px] md:!text-[24px]">directions_run</span>
+        <section className="rounded-sm border-2 md:border-4 border-black bg-white p-3 md:p-6 shadow-[4px_4px_0px_#111111] md:shadow-[6px_6px_0px_#111111]">
+          <h2 className="mb-2 md:mb-4 flex items-center gap-2 border-b-2 md:border-b-3 border-black pb-2 md:pb-3 font-mono text-base md:text-2xl font-bold uppercase">
+            <span className="material-symbols-outlined text-primary !text-[18px] md:!text-[24px]">directions_run</span>
             How to Apply
           </h2>
-          <div className="space-y-4 md:space-y-6">
+          <div className="space-y-3 md:space-y-6">
             {instructions.map((step, index) => (
-              <div key={index} className="flex gap-4">
+              <div key={index} className="flex gap-3 md:gap-4">
                 <div className="flex-shrink-0">
-                  <div className={`h-12 w-12 rounded-full border-4 border-black flex items-center justify-center font-bold font-mono text-lg shadow-[3px_3px_0px_#111111] ${index === 0 ? 'bg-yellow-400' : 'bg-white'
+                  <div className={`h-8 w-8 md:h-12 md:w-12 rounded-full border-2 md:border-4 border-black flex items-center justify-center font-bold font-mono text-sm md:text-lg shadow-[2px_2px_0px_#111111] md:shadow-[3px_3px_0px_#111111] ${index === 0 ? 'bg-yellow-400' : 'bg-white'
                     }`}>
                     {index + 1}
                   </div>
                 </div>
-                <div className="flex-1 pt-1">
+                <div className="flex-1 pt-0 md:pt-1">
                   {typeof step === 'string' ? (
-                    <p className="text-base text-gray-700 leading-relaxed">{step}</p>
+                    <p className="text-sm md:text-base text-gray-700 leading-snug md:leading-relaxed">{step}</p>
                   ) : (
                     <>
-                      <h3 className="font-bold text-base md:text-lg font-mono mb-1 md:mb-2">{step.title}</h3>
-                      <p className="text-sm md:text-base text-gray-700 leading-relaxed">{step.description}</p>
+                      <h3 className="font-bold text-sm md:text-lg font-mono mb-0.5 md:mb-2">{step.title}</h3>
+                      <p className="text-xs md:text-base text-gray-700 leading-snug md:leading-relaxed">{step.description}</p>
                     </>
                   )}
                 </div>
@@ -437,16 +479,16 @@ export default function SingleDealContent({ deal, freeAccess = false, basePath =
             {isLoadingPro ? (
               <div className="h-16 w-48 bg-gray-100 animate-pulse rounded-sm"></div>
             ) : (
-              <a
-                href={applicationUrl}
-                target="_blank"
-                rel="noopener noreferrer"
+              <button
                 onClick={handleApplyClick}
-                className="inline-flex items-center gap-2 rounded-sm border-2 md:border-4 border-black bg-primary px-6 md:px-8 py-3 md:py-4 font-mono text-sm md:text-lg font-bold uppercase text-black shadow-[4px_4px_0px_#111111] md:shadow-[6px_6px_0px_#111111] hover:bg-yellow-300 transition-all cursor-pointer"
+                disabled={isClaiming}
+                className="inline-flex items-center gap-2 rounded-sm border-2 md:border-4 border-black bg-primary px-6 md:px-8 py-3 md:py-4 font-mono text-sm md:text-lg font-bold uppercase text-black shadow-[4px_4px_0px_#111111] md:shadow-[6px_6px_0px_#111111] hover:bg-yellow-300 transition-all cursor-pointer disabled:opacity-50"
               >
-                {freeAccess ? 'Apply Now' : isPro ? 'Apply Now' : 'Apply Now (Pro Only)'}
-                <span className="material-symbols-outlined">{freeAccess || isPro ? 'arrow_forward' : 'lock'}</span>
-              </a>
+                {isClaiming ? 'Claiming...' : (freeAccess ? 'Apply Now' : (isPro || isExplorer) ? 'Apply Now' : 'Apply Now (Premium)')}
+                <span className="material-symbols-outlined">
+                    {isClaiming ? 'hourglass_empty' : (freeAccess || isPro || isExplorer ? 'arrow_forward' : 'lock')}
+                </span>
+              </button>
             )}
             <p className="mt-3 text-sm text-gray-600 font-mono flex items-center gap-1">
               <span className="material-symbols-outlined !text-[16px] text-green-600">verified</span>

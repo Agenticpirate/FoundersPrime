@@ -4,20 +4,19 @@ import Link from 'next/link'
 export default function PricingComparisonTable() {
     const features = [
         {
-            category: "Core Access",
+            category: "Core Access & Usage Limits",
             items: [
-                { name: "All Deals & SaaS Credits", explorer: "✓", founder: "✓", legend: "✓" },
-                { name: "Cloud Credits (AWS, Google, Azure)", explorer: "✓", founder: "✓", legend: "✓" },
-                { name: "Ad Credits (Google, Meta)", explorer: "✓", founder: "✓", legend: "✓" },
+                { name: "SaaS Deals & Cloud Credits", explorer: "Up to Page 10", founder: "Unlimited Pages", legend: "Unlimited Pages" },
+                { name: "Monthly Deal Applications", explorer: "10 per month", founder: "Unlimited", legend: "Unlimited" },
                 { name: "Update Frequency", explorer: "Daily", founder: "Daily", legend: "Daily" },
             ]
         },
         {
             category: "Programs & Databases",
             items: [
-                { name: "Grants Database", explorer: "—", founder: "✓", legend: "✓" },
-                { name: "Accelerator Programs", explorer: "—", founder: "✓", legend: "✓" },
-                { name: "Incubator Programs", explorer: "—", founder: "✓", legend: "✓" },
+                { name: "Grants Database", explorer: "View 1 Page", founder: "✓ All Pages", legend: "✓ All Pages" },
+                { name: "Accelerator Programs", explorer: "View 1 Page", founder: "✓ All Pages", legend: "✓ All Pages" },
+                { name: "Incubator Programs", explorer: "View 1 Page", founder: "✓ All Pages", legend: "✓ All Pages" },
                 { name: "Verified Startups Database", explorer: "—", founder: "✓", legend: "✓" },
                 { name: "Investor Database", explorer: "—", founder: "✓", legend: "✓" },
             ]

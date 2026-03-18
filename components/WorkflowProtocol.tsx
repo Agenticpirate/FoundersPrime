@@ -30,13 +30,13 @@ export default function WorkflowProtocol() {
   ]
 
   return (
-    <section className="relative py-6 md:py-14 border-b-2 border-black grid-bg">
+    <section className="relative py-8 md:py-10 border-b-2 border-black grid-bg">
       <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-6 md:mb-10">
-          <div className="inline-block bg-black text-white text-xs md:text-sm font-mono font-bold px-4 py-1.5 mb-4 uppercase tracking-wider transform -rotate-1 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.2)]">
+        <div className="text-center mb-4 md:mb-6">
+          <div className="inline-block bg-black text-white text-xs md:text-sm font-mono font-bold px-4 py-1.5 mb-3 uppercase tracking-wider transform -rotate-1 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.2)]">
             WORKFLOW
           </div>
-          <h2 className="text-xl sm:text-2xl md:text-4xl lg:text-5xl font-black text-black mb-3 leading-tight font-sans">
+          <h2 className="text-xl sm:text-2xl md:text-4xl lg:text-5xl font-black text-black mb-2 leading-tight font-sans">
             From discovery to action<br />in minutes.
           </h2>
           <p className="text-sm md:text-lg text-gray-600 font-medium max-w-2xl mx-auto font-mono">
@@ -45,7 +45,7 @@ export default function WorkflowProtocol() {
           </p>
         </div>
 
-        <div className="grid grid-cols-3 md:grid-cols-3 gap-0 border-2 border-black divide-x-2 md:divide-x-2 divide-black bg-white mb-4 md:mb-10">
+        <div className="grid grid-cols-3 gap-0 border-2 border-black divide-x-2 divide-black bg-white">
           {steps.map((step, index) => (
             <div key={index} className="relative p-3 md:p-6 group hover:bg-gray-50 flex flex-col h-full overflow-hidden">
               <span className={`absolute top-2 right-2 text-3xl md:text-6xl font-black font-mono transition-colors z-0 text-[#C0C0C0] ${step.hoverColor}`}>{step.number}</span>
@@ -57,12 +57,6 @@ export default function WorkflowProtocol() {
               <p className="text-gray-600 text-[10px] md:text-sm leading-relaxed relative z-10 hidden md:block">{step.description}</p>
             </div>
           ))}
-        </div>
-
-        <div className="text-center">
-          <p className="text-xs font-mono font-bold text-gray-500 uppercase tracking-wide">
-            No paywalls on discovery. No dead links. No guesswork.
-          </p>
         </div>
       </div>
     </section>

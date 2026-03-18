@@ -31,38 +31,38 @@ export const PRICING_CONFIG: PricingConfig = {
     explorer: {
         INR: {
             actual: null,
-            discounted: 599,
+            discounted: 199,
             savings: null,
             symbol: '₹',
-            period: '/yr'
+            period: '/mo'
         },
         USD: {
             actual: null,
-            discounted: 9.99,
+            discounted: 1.99,
             savings: null,
             symbol: '$',
-            period: '/yr'
+            period: '/mo'
         },
         EUR: {
             actual: null,
-            discounted: 9.99,
+            discounted: 1.99,
             savings: null,
             symbol: '€',
-            period: '/yr'
+            period: '/mo'
         },
         GBP: {
             actual: null,
-            discounted: 8.99,
+            discounted: 1.99,
             savings: null,
             symbol: '£',
-            period: '/yr'
+            period: '/mo'
         },
         AUD: {
             actual: null,
-            discounted: 14.99,
+            discounted: 2.99,
             savings: null,
             symbol: 'A$',
-            period: '/yr'
+            period: '/mo'
         }
     },
 

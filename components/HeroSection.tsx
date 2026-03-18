@@ -63,7 +63,7 @@ export default function HeroSection() {
           <div className="lg:col-span-7 flex flex-col justify-center items-start pt-0">
             <div className="inline-flex items-center gap-2 bg-white neo-border px-2 py-0.5 mb-3 neo-shadow-static">
               <span className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></span>
-              <span className="text-[9px] sm:text-xs font-mono font-bold text-black uppercase tracking-wide">VERIFIED CREDITS, GRANTS &amp; PROGRAMS UPDATED THIS WEEK</span>
+              <span className="text-[9px] sm:text-xs font-mono font-bold text-black uppercase tracking-wide">VERIFIED GRANTS, CREDITS &amp; FOUNDER PROGRAMS</span>
             </div>
 
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold text-black tracking-tight mb-3 leading-none font-mono">

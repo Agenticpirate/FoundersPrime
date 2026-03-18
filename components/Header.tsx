@@ -351,6 +351,7 @@ export default function Header() {
                   <span className="material-symbols-outlined text-base text-gray-500">sell</span>
                   Pricing
                 </Link>
+                {/* 
                 <Link
                   href="/ideas"
                   onClick={() => setMobileMenuOpen(false)}
@@ -367,6 +368,7 @@ export default function Header() {
                   <span className="material-symbols-outlined text-base text-gray-500">verified</span>
                   Startups
                 </Link>
+                */}
               </div>
 
               <div className="border-t border-black/10 mt-2 pt-2">
