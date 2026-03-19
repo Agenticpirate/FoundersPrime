@@ -79,20 +79,6 @@ export default function SingleDealSidebar({ deal }: SingleDealSidebarProps) {
         </div>
       </div>
 
-      {/* Verified Badge */}
-      <div className="rounded-sm border-3 border-black bg-green-50 p-4 border-dashed">
-        <div className="flex items-start gap-3">
-          <div className="h-8 w-8 rounded-full bg-green-200 border-2 border-black flex items-center justify-center shrink-0">
-            <span className="material-symbols-outlined text-green-800 !text-[18px]">verified_user</span>
-          </div>
-          <div>
-            <h4 className="font-bold font-mono text-sm uppercase mb-1">Verified Deal</h4>
-            <p className="text-xs text-green-800 mb-1">Last verified: {deal.verification.lastVerified}</p>
-            <p className="text-xs text-green-800"><strong>{deal.verification.appliedCount}</strong> founders applied via FoundersPrime</p>
-          </div>
-        </div>
-      </div>
-
       {/* Quick Links */}
       <div className="rounded-sm border-3 border-black bg-white shadow-[6px_6px_0px_#111111] p-5">
         <h4 className="font-mono text-sm font-bold uppercase mb-3 text-gray-500">Quick Links</h4>

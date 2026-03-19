@@ -31,12 +31,10 @@ export default function DealLogo({ logoUrl, brandIcon, provider, size = 'md' }: 
   return (
     <div className={`${sizeClasses[size]} bg-white border-3 border-black rounded-lg flex items-center justify-center flex-shrink-0 shadow-[4px_4px_0px_#111111] transition-colors overflow-hidden`}>
       <div className="relative w-full h-full p-2 text-center rounded">
-        <Image
+        <img
           alt={`${provider} Logo`}
-          className="object-contain"
+          className="object-contain w-full h-full"
           src={imageUrl}
-          fill
-          sizes="(max-width: 768px) 48px, 80px"
           onError={() => setHasError(true)}
         />
       </div>

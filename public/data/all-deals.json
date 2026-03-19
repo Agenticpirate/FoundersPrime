@@ -8279,51 +8279,6 @@
     "sortOrder": 9999
   },
   {
-    "id": "deal-1768908348526-siaz4e29e",
-    "slug": "google-calendar",
-    "title": "Google Calendar",
-    "provider": "Google Calendar",
-    "category": "saas-discounts",
-    "subcategory": "ai-tools",
-    "description": "Stay organized, stay on schedule with Google Calendar",
-    "shortDescription": "Stay organized, stay on schedule with Google Calendar",
-    "value": "20% off Plus plans for 1 year",
-    "originalPrice": "",
-    "savings": "Save up to $518",
-    "savingsAmount": 518,
-    "eligibility": [
-      "Startups",
-      "Early-stage companies"
-    ],
-    "requirements": [
-      "Valid business email",
-      "Active startup"
-    ],
-    "applicationProcess": [
-      "Visit provider website",
-      "Complete application form",
-      "Await approval"
-    ],
-    "proTips": [],
-    "tags": [
-      "ai",
-      "Google Calendar"
-    ],
-    "status": "active",
-    "applicationUrl": "https://google.com/search?q=Google%20Calendar%20startup%20program",
-    "logoUrl": "https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png",
-    "featured": false,
-    "verified": true,
-    "difficulty": "medium",
-    "timeToApply": "15 minutes",
-    "lastUpdated": "2026-01-20",
-    "createdAt": "2026-01-20",
-    "updatedAt": "2026-01-20",
-    "sourceVerified": true,
-    "icon": "⏱️",
-    "sortOrder": 9999
-  },
-  {
     "id": "deal-1768908348526-t5o045i29",
     "slug": "google-docs",
     "title": "Google Docs",

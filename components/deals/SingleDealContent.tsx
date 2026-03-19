@@ -319,24 +319,6 @@ export default function SingleDealContent({ deal, freeAccess = false, basePath =
             </div>
           </div>
 
-          {/* Verified Badge */}
-          <div className="rounded-sm border-2 md:border-4 border-black bg-green-50 p-4 md:p-5 shadow-[3px_3px_0px_#111111] md:shadow-[4px_4px_0px_#111111]">
-            <div className="flex items-start gap-3">
-              <div className="h-8 w-8 md:h-10 md:w-10 rounded-full bg-green-400 border-2 border-black flex items-center justify-center shrink-0">
-                <span className="material-symbols-outlined text-black !text-[16px] md:!text-[20px]">verified</span>
-              </div>
-              <div>
-                <h4 className="font-bold font-mono text-sm md:text-base uppercase mb-1">Verified Deal</h4>
-                <p className="text-xs md:text-sm text-green-900 mb-1 font-mono">
-                  <strong>Last verified:</strong> {deal.verification.lastVerified}
-                </p>
-                <p className="text-xs md:text-sm text-green-900 font-mono">
-                  <strong>{deal.verification.appliedCount}+</strong> founders applied
-                </p>
-              </div>
-            </div>
-          </div>
-
           {/* Quick Links — hidden on mobile to save space */}
           <div className="hidden md:block rounded-sm border-2 md:border-4 border-black bg-white shadow-[4px_4px_0px_#111111] p-5">
             <h4 className="font-mono text-sm font-bold uppercase mb-4 text-gray-700 border-b-2 border-gray-200 pb-2">Quick Links</h4>
@@ -490,10 +472,6 @@ export default function SingleDealContent({ deal, freeAccess = false, basePath =
                 </span>
               </button>
             )}
-            <p className="mt-3 text-sm text-gray-600 font-mono flex items-center gap-1">
-              <span className="material-symbols-outlined !text-[16px] text-green-600">verified</span>
-              Verified deal application
-            </p>
           </div>
         </section>
 
