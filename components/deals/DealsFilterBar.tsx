@@ -178,11 +178,11 @@ export default function DealsFilterBar({ onFilterChange, currentFilters }: Deals
           AI Tools
         </button>
         <button
-          onClick={() => handleFilterChange('value', 'over-100k')}
-          className={`px-2.5 py-1 text-xs font-medium border rounded transition-colors whitespace-nowrap flex-shrink-0 ${filters.value === 'over-100k' ? 'bg-ink text-white border-ink' : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
+          onClick={() => handleFilterChange('sort', 'relevance')}
+          className={`px-2.5 py-1 text-xs font-medium border rounded transition-colors whitespace-nowrap flex-shrink-0 ${filters.sort === 'relevance' && filters.category === '' ? 'bg-ink text-white border-ink' : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
             }`}
         >
-          High Value
+          Popular
         </button>
       </div>
     </div>

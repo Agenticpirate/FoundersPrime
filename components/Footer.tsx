@@ -79,7 +79,7 @@ export default function Footer() {
           </div>
 
           {/* Link Grid */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-x-6 gap-y-6 lg:ml-auto w-full lg:w-auto">
+          <div className="hidden md:grid grid-cols-3 lg:grid-cols-5 gap-x-6 gap-y-6 lg:ml-auto w-full lg:w-auto">
             {footerSections.map((section, index) => (
               <div key={index} className="flex flex-col gap-2">
                 <p className="font-mono text-[10px] font-bold tracking-[0.1em] uppercase text-gray-500 mb-0.5">
@@ -98,6 +98,30 @@ export default function Footer() {
                   ))}
                 </ul>
               </div>
+            ))}
+          </div>
+
+          {/* Mobile Accordion Links */}
+          <div className="md:hidden flex flex-col w-full gap-2 mt-4 lg:ml-auto">
+            {footerSections.map(section => (
+              <details key={section.title} className="group border-b border-gray-200 pb-2">
+                <summary className="flex justify-between items-center font-mono text-[11px] font-bold tracking-[0.1em] uppercase text-gray-700 cursor-pointer list-none py-2 outline-none">
+                  {section.title}
+                  <span className="material-symbols-outlined text-sm transition-transform group-open:rotate-180">expand_more</span>
+                </summary>
+                <ul className="flex flex-col gap-3 pt-2 pb-2 pl-1 list-none m-0">
+                  {section.links.map((link, linkIndex) => (
+                    <li key={linkIndex}>
+                      <Link
+                        href={link.href}
+                        className="font-mono text-[12px] text-gray-500 no-underline"
+                      >
+                        {link.text}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </details>
             ))}
           </div>
         </div>

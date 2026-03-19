@@ -24,7 +24,7 @@ export async function sendVerificationEmail(email: string): Promise<EmailVerific
       type: 'signup',
       email: email,
       options: {
-        emailRedirectTo: `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/auth/verify-email`
+        emailRedirectTo: `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3001'}/auth/verify-email`
       }
     })
 

@@ -172,9 +172,14 @@ export default function DealsGrid({ filters }: DealsGridProps) {
           result.sort((a, b) => a.title.localeCompare(b.title))
           break
         default:
-          // For "All Deals" (no category filter), use sortOrder from curated sequence
+          // For "All Deals" (no category filter), use popular brands then sortOrder from curated sequence
           if (!filters?.category) {
             result.sort((a, b) => {
+              const popularBrands = ['aws', 'amazon', 'google', 'webflow', 'openai', 'microsoft', 'stripe', 'notion', 'github', 'figma', 'linear', 'airtable'];
+              const aPop = popularBrands.some(brand => a.title.toLowerCase().includes(brand) || a.provider.toLowerCase().includes(brand)) ? 1 : 0;
+              const bPop = popularBrands.some(brand => b.title.toLowerCase().includes(brand) || b.provider.toLowerCase().includes(brand)) ? 1 : 0;
+              if (aPop !== bPop) return bPop - aPop;
+
               const aHasOriginalLogo = a.logoUrl && !a.logoUrl.includes('rocket') && !a.logoUrl.includes('ui-avatars') ? 1 : 0;
               const bHasOriginalLogo = b.logoUrl && !b.logoUrl.includes('rocket') && !b.logoUrl.includes('ui-avatars') ? 1 : 0;
               if (aHasOriginalLogo !== bHasOriginalLogo) return bHasOriginalLogo - aHasOriginalLogo;

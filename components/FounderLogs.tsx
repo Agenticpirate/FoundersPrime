@@ -98,68 +98,8 @@ export default function FounderLogs() {
           <span className="bg-accent-yellow px-2 md:px-4 py-0.5 md:py-1 border-2 border-black shadow-[3px_3px_0px_#000] md:shadow-[4px_4px_0px_#000]">Founder_Logs</span>
         </h2>
 
-        {/* Mobile: auto-playing smooth carousel */}
-        <div
-          className="md:hidden relative"
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={() => setIsHovered(false)}
-          onTouchStart={() => setIsHovered(true)}
-          onTouchEnd={() => setIsHovered(false)}
-        >
-          <div
-            ref={scrollRef}
-            onScroll={handleScroll}
-            className="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-4 pt-2 -mx-4 px-4 scroll-smooth mobile-scroll-hide"
-          >
-            {testimonials.map((testimonial, index) => (
-              <div
-                key={index}
-                className="bg-white border-[3px] border-[#101622] p-4 snap-center shrink-0 w-[85vw] sm:w-[50vw] shadow-[4px_4px_0px_#101622] flex flex-col"
-              >
-                <div className="flex justify-between items-start mb-3">
-                  <div className="flex gap-0.5">
-                    {[...Array(5)].map((_, i) => (
-                      <span
-                        key={i}
-                        className="material-symbols-outlined text-xs text-accent-yellow"
-                        style={{ fontVariationSettings: "'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24" }}
-                      >
-                        star
-                      </span>
-                    ))}
-                  </div>
-                  <span className="material-symbols-outlined text-gray-200 text-lg">format_quote</span>
-                </div>
-
-                <p className="text-xs font-medium font-mono leading-relaxed text-gray-700 flex-grow">
-                  &ldquo;{testimonial.quote}&rdquo;
-                </p>
-
-                <div className="flex items-center gap-2 border-t-2 border-dashed border-gray-200 pt-3 mt-3">
-                  <FounderImage image={testimonial.image} />
-                  <div className="text-xs">
-                    <div className="font-bold uppercase">{testimonial.name}</div>
-                    <div className="text-gray-500 font-mono">{testimonial.title}</div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* Dots */}
-          <div className="flex justify-center gap-1.5 mt-3">
-            {testimonials.map((_, idx) => (
-              <button
-                key={idx}
-                onClick={() => goTo(idx)}
-                className={`h-2 transition-all duration-300 border border-black ${activeIdx === idx ? 'w-6 bg-black' : 'w-2 bg-gray-300'}`}
-              />
-            ))}
-          </div>
-        </div>
-
-        {/* Desktop: Infinite Vertical Scrolling Marquee */}
-        <div className="hidden md:flex justify-center gap-6 h-[450px] overflow-hidden mask-vertical">
+        {/* Infinite Vertical Scrolling Marquee */}
+        <div className="flex justify-center gap-4 md:gap-6 h-[400px] md:h-[450px] overflow-hidden mask-vertical">
           {[
             testimonials.filter((_, i) => i % 4 === 0),
             testimonials.filter((_, i) => i % 4 === 1),
@@ -168,9 +108,9 @@ export default function FounderLogs() {
           ].map((col, colIdx) => (
             <div
               key={colIdx}
-              className={`flex flex-col gap-6 flex-1 max-w-[320px] hover:[animation-play-state:paused] ${
+              className={`flex flex-col gap-4 md:gap-6 flex-1 max-w-[320px] hover:[animation-play-state:paused] ${
                 colIdx % 2 === 0 ? 'animate-marquee-v' : 'animate-marquee-v-reverse'
-              } ${colIdx >= 2 ? 'hidden lg:flex' : ''}`}
+              } ${colIdx >= 2 ? 'hidden md:flex' : ''}`}
             >
               {[...col, ...col, ...col].map((testimonial, i) => (
                 <div
