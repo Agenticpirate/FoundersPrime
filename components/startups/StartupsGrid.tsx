@@ -180,17 +180,19 @@ export default function StartupsGrid({ filters }: StartupsGridProps) {
 
       {/* Pagination — always show so users know how many pages exist */}
       {totalPages > 1 && (
-        <div className="flex flex-wrap items-center justify-center gap-1.5 sm:gap-2 mt-12 bg-white p-2">
+        <div className="flex flex-col sm:flex-row justify-between items-center p-3 sm:p-0 gap-3 sm:gap-4 mt-12 w-full bg-white">
+          {/* Previous Desktop */}
           <button
             onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
             disabled={currentPage === 1}
-            className="px-2 sm:px-4 py-2 border-2 border-black font-mono text-xs sm:text-sm rounded-sm hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-1 bg-white"
+            className="hidden sm:flex px-4 py-2 border-2 border-black font-mono text-sm rounded-sm hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed items-center justify-center gap-1 bg-white"
           >
-            <span className="material-symbols-outlined text-sm sm:text-base">arrow_back</span>
-            <span className="hidden sm:inline">Previous</span>
+            <span className="material-symbols-outlined text-base">arrow_back</span>
+            <span>Previous</span>
           </button>
 
-          <div className="flex flex-wrap items-center justify-center gap-1.5 sm:gap-2 flex-1">
+          {/* Page Numbers */}
+          <div className="order-1 sm:order-none flex flex-wrap items-center justify-center gap-1.5 md:gap-2 flex-1 w-full sm:w-auto">
             {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
               let pageNum: number
               if (totalPages <= 5) {
@@ -209,8 +211,8 @@ export default function StartupsGrid({ filters }: StartupsGridProps) {
                 <button
                   key={pageNum}
                   onClick={() => setCurrentPage(pageNum)}
-                  className={`w-8 h-8 sm:w-auto sm:px-4 sm:py-2 flex items-center justify-center border-2 border-black font-mono text-xs sm:text-sm rounded-sm transition-colors ${currentPage === pageNum
-                      ? 'bg-black text-white'
+                  className={`min-w-[32px] h-[32px] md:min-w-[40px] md:h-[40px] px-1 flex items-center justify-center border-2 border-black font-mono text-xs sm:text-sm rounded-sm transition-colors ${currentPage === pageNum
+                      ? 'bg-black text-white shadow-[2px_2px_0px_#111111]'
                       : locked
                         ? 'bg-gray-100 text-gray-400 hover:bg-primary/20'
                         : 'bg-white hover:bg-gray-100'
@@ -226,10 +228,10 @@ export default function StartupsGrid({ filters }: StartupsGridProps) {
 
             {totalPages > 5 && currentPage < totalPages - 2 && (
               <>
-                <span className="px-1 sm:px-2 font-mono text-xs sm:text-sm">...</span>
+                <span className="min-w-[24px] h-[32px] md:min-w-[32px] md:h-[40px] flex items-center justify-center font-mono text-xs sm:text-sm">...</span>
                 <button
                   onClick={() => setCurrentPage(totalPages)}
-                  className={`w-8 h-8 sm:w-auto sm:px-4 sm:py-2 flex items-center justify-center border-2 border-black font-mono text-xs sm:text-sm rounded-sm transition-colors ${!isPro ? 'bg-gray-100 text-gray-400 hover:bg-primary/20' : 'bg-white hover:bg-gray-100'
+                  className={`min-w-[32px] h-[32px] md:min-w-[40px] md:h-[40px] px-1 flex items-center justify-center border-2 border-black font-mono text-xs sm:text-sm rounded-sm transition-colors ${!isPro ? 'bg-gray-100 text-gray-400 hover:bg-primary/20' : 'bg-white hover:bg-gray-100'
                     }`}
                 >
                   {!isPro && <span className="material-symbols-outlined text-[10px] sm:text-xs mr-0.5 sm:mr-1">lock</span>}
@@ -239,14 +241,35 @@ export default function StartupsGrid({ filters }: StartupsGridProps) {
             )}
           </div>
 
+          {/* Next Desktop */}
           <button
             onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
             disabled={currentPage === totalPages}
-            className="px-2 sm:px-4 py-2 border-2 border-black font-mono text-xs sm:text-sm rounded-sm hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-1 bg-white"
+            className="hidden sm:flex px-4 py-2 border-2 border-black font-mono text-sm rounded-sm hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed items-center justify-center gap-1 bg-white"
           >
-            <span className="hidden sm:inline">Next</span>
-            <span className="material-symbols-outlined text-sm sm:text-base">arrow_forward</span>
+            <span>Next</span>
+            <span className="material-symbols-outlined text-base">arrow_forward</span>
           </button>
+
+          {/* Prev/Next Mobile */}
+          <div className="grid grid-cols-2 gap-3 w-full sm:hidden order-2">
+              <button
+                  onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
+                  disabled={currentPage === 1}
+                  className="flex items-center justify-center gap-1 px-3 py-2.5 border-2 border-black font-mono text-xs font-bold uppercase transition-colors bg-white hover:bg-gray-100 disabled:opacity-50"
+              >
+                  <span className="material-symbols-outlined text-sm">arrow_back</span>
+                  Prev
+              </button>
+              <button
+                  onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
+                  disabled={currentPage === totalPages}
+                  className="flex items-center justify-center gap-1 px-3 py-2.5 border-2 border-black bg-white text-black font-mono text-xs font-bold uppercase transition-colors disabled:opacity-50 hover:bg-gray-100"
+              >
+                  Next
+                  <span className="material-symbols-outlined text-sm">arrow_forward</span>
+              </button>
+          </div>
         </div>
       )}
     </div>

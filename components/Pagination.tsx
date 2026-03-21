@@ -40,54 +40,83 @@ export default function Pagination({
     }
 
     return (
-        <div className={`bg-white border-3 border-ink shadow-hard-sm mt-6 ${className}`}>
-            <div className="flex justify-between items-center p-2 sm:p-4 gap-2 sm:gap-4">
+        <div className={`bg-white border-2 md:border-3 border-ink shadow-hard-sm mt-6 ${className}`}>
+            <div className="flex flex-col sm:flex-row justify-between items-center p-3 sm:p-4 gap-3 sm:gap-4">
+                
+                {/* Previous Button (Desktop) */}
                 <button
                     onClick={() => onPageChange(currentPage - 1)}
                     disabled={currentPage === 1}
-                    className={`flex flex-1 sm:flex-none items-center justify-center gap-1 sm:gap-2 px-2 sm:px-4 py-2 border-2 border-ink font-mono text-xs sm:text-sm font-bold transition-colors ${currentPage === 1
+                    className={`hidden sm:flex items-center justify-center gap-2 px-4 py-2 border-2 border-ink font-mono text-sm font-bold transition-colors ${currentPage === 1
                         ? 'text-gray-400 cursor-not-allowed'
                         : 'hover:bg-ink hover:text-white'
                         }`}
                 >
                     <span className="material-symbols-outlined text-sm">arrow_back</span>
-                    <span className="hidden sm:inline">Previous</span>
-                    <span className="sm:hidden">Prev</span>
+                    <span>Previous</span>
                 </button>
 
-                <div className="flex flex-wrap items-center justify-center gap-1 sm:gap-2 flex-1">
+                {/* Page Numbers (All screens) - Top on mobile, center on desktop */}
+                <div className="flex flex-wrap items-center justify-center gap-1.5 md:gap-2 order-1 sm:order-none flex-1 w-full sm:w-auto">
                     {getPageNumbers().map((pageNum, idx) => (
                         typeof pageNum === 'number' ? (
                             <button
                                 key={idx}
                                 onClick={() => onPageChange(pageNum)}
-                                className={`w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center text-xs sm:text-sm font-mono font-bold border-1 sm:border-2 border-ink transition-colors ${currentPage === pageNum
-                                    ? 'bg-primary text-ink'
+                                className={`min-w-[32px] h-[32px] md:min-w-[40px] md:h-[40px] px-1 flex items-center justify-center text-xs sm:text-sm font-mono font-bold border-2 border-ink transition-colors ${currentPage === pageNum
+                                    ? 'bg-primary text-ink shadow-[2px_2px_0px_#111111]'
                                     : 'bg-white text-ink hover:bg-gray-100'
                                     }`}
                             >
                                 {pageNum}
                             </button>
                         ) : (
-                            <span key={idx} className="w-6 h-6 sm:w-8 sm:h-8 flex items-center justify-center font-mono font-bold text-black text-xs sm:text-sm tracking-widest">
+                            <span key={idx} className="min-w-[24px] h-[32px] md:min-w-[32px] md:h-[40px] flex items-center justify-center font-mono font-bold text-black text-xs sm:text-sm tracking-widest">
                                 ...
                             </span>
                         )
                     ))}
                 </div>
 
+                {/* Next Button (Desktop) */}
                 <button
                     onClick={() => onPageChange(currentPage + 1)}
                     disabled={currentPage === totalPages}
-                    className={`flex flex-1 sm:flex-none items-center justify-center gap-1 sm:gap-2 px-2 sm:px-4 py-2 border-2 border-ink font-mono text-xs sm:text-sm font-bold transition-colors ${currentPage === totalPages
+                    className={`hidden sm:flex items-center justify-center gap-2 px-4 py-2 border-2 border-ink font-mono text-sm font-bold transition-colors ${currentPage === totalPages
                         ? 'text-gray-400 cursor-not-allowed'
-                        : 'bg-primary text-ink sm:hover:shadow-[3px_3px_0px_#111111] hover:translate-x-[-1px] hover:translate-y-[-1px]'
+                        : 'bg-primary text-ink hover:shadow-[3px_3px_0px_#111111] hover:translate-x-[-1px] hover:translate-y-[-1px]'
                         }`}
                 >
-                    <span className="hidden sm:inline">Next</span>
-                    <span className="sm:hidden">Next</span>
+                    <span>Next</span>
                     <span className="material-symbols-outlined text-sm">arrow_forward</span>
                 </button>
+
+                {/* Mobile Prev/Next Container - Bottom row on mobile */}
+                <div className="grid grid-cols-2 gap-3 w-full sm:hidden order-2">
+                    <button
+                        onClick={() => onPageChange(currentPage - 1)}
+                        disabled={currentPage === 1}
+                        className={`flex items-center justify-center gap-1 px-3 py-2.5 border-2 border-ink font-mono text-xs font-bold uppercase transition-colors ${currentPage === 1
+                            ? 'text-gray-400 bg-gray-50 cursor-not-allowed'
+                            : 'bg-white text-ink hover:bg-gray-100'
+                            }`}
+                    >
+                        <span className="material-symbols-outlined text-sm">arrow_back</span>
+                        Prev
+                    </button>
+                    <button
+                        onClick={() => onPageChange(currentPage + 1)}
+                        disabled={currentPage === totalPages}
+                        className={`flex items-center justify-center gap-1 px-3 py-2.5 border-2 border-ink font-mono text-xs font-bold uppercase transition-colors ${currentPage === totalPages
+                            ? 'text-gray-400 bg-gray-50 cursor-not-allowed'
+                            : 'bg-primary text-ink shadow-[2px_2px_0px_#111111]'
+                            }`}
+                    >
+                        Next
+                        <span className="material-symbols-outlined text-sm">arrow_forward</span>
+                    </button>
+                </div>
+
             </div>
         </div>
     )
