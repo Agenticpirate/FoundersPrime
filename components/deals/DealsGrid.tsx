@@ -245,19 +245,21 @@ export default function DealsGrid({ filters }: DealsGridProps) {
       deal.verified
 
     const providerUrl = deal.providerWebsite || getStartupProgramUrl(deal.provider);
-    let logoFallback = `https://ui-avatars.com/api/?name=${encodeURIComponent(deal.provider)}&background=f3f4f6&color=1f2937&size=48`;
+    let logoFallback: string | null = null;
     if (providerUrl) {
       try {
         const domain = new URL(providerUrl).hostname;
+        // Google's favicon service — fast, reliable, no external rate limits
         logoFallback = `https://www.google.com/s2/favicons?domain=${domain}&sz=128`;
       } catch (e) {
-        // Ignore invalid URL
+        // Ignore invalid URL — logoFallback stays null, card shows initials
       }
     }
 
     return {
       id: deal.slug,
-      logo: deal.logoUrl || logoFallback,
+      logo: deal.logoUrl || logoFallback || '',
+
       category: category?.name || deal.category,
       badge,
       badgeColor,

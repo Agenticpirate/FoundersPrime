@@ -1,7 +1,8 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
+
 
 type Testimonial = {
     quote: string;
@@ -144,19 +145,42 @@ const col1 = testimonials.filter((_, i) => i % 3 === 0);
 const col2 = testimonials.filter((_, i) => i % 3 === 1);
 const col3 = testimonials.filter((_, i) => i % 3 === 2);
 
+function AvatarImage({ src, name }: { src: string; name: string }) {
+    const [imgError, setImgError] = useState(false)
+    const initials = name.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase()
+    const colors = ['#f5d000','#13b6ec','#ff6b35','#6c63ff','#00c896']
+    const bg = colors[name.charCodeAt(0) % colors.length]
+
+    if (imgError) {
+        return (
+            <div
+                className="w-full h-full flex items-center justify-center font-black font-mono text-xs text-black"
+                style={{ backgroundColor: bg }}
+            >
+                {initials}
+            </div>
+        )
+    }
+
+    return (
+        <Image
+            src={src}
+            alt={name}
+            width={40}
+            height={40}
+            className="object-cover w-full h-full"
+            onError={() => setImgError(true)}
+        />
+    )
+}
+
 function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
     return (
         <div className="bg-white border-2 border-[#e5e5e5] rounded-lg p-5 hover:border-[#38bdf8] hover:shadow-md transition-all duration-300">
             {/* Author Info */}
             <div className="flex items-center gap-3 mb-4">
                 <div className="w-10 h-10 rounded-full overflow-hidden border border-gray-200 flex-shrink-0">
-                    <Image
-                        src={testimonial.avatar}
-                        alt={testimonial.name}
-                        width={40}
-                        height={40}
-                        className="object-cover w-full h-full"
-                    />
+                    <AvatarImage src={testimonial.avatar} name={testimonial.name} />
                 </div>
                 <div>
                     <p className="font-bold text-sm text-[#111111] leading-tight">{testimonial.name}</p>
@@ -171,6 +195,7 @@ function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
         </div>
     );
 }
+
 
 export default function Pricing3DTestimonials() {
     const scrollRef = React.useRef<HTMLDivElement>(null)
@@ -218,13 +243,7 @@ export default function Pricing3DTestimonials() {
                             <p className="text-[11px] leading-relaxed text-gray-800 font-medium mb-3">&ldquo;{t.quote}&rdquo;</p>
                             <div className="flex items-center gap-2 border-t border-gray-100 pt-2.5">
                                 <div className="w-8 h-8 rounded-full overflow-hidden border border-gray-200 flex-shrink-0">
-                                    <Image
-                                        src={t.avatar}
-                                        alt={t.name}
-                                        width={28}
-                                        height={28}
-                                        className="object-cover w-full h-full"
-                                    />
+                                    <AvatarImage src={t.avatar} name={t.name} />
                                 </div>
                                 <div>
                                     <p className="font-bold text-xs text-[#111111] leading-tight">{t.name}</p>
@@ -233,6 +252,7 @@ export default function Pricing3DTestimonials() {
                             </div>
                         </div>
                     ))}
+
                 </div>
 
                 {/* Mobile dot indicators */}
@@ -253,8 +273,8 @@ export default function Pricing3DTestimonials() {
                     ))}
                 </div>
 
-                {/* Desktop: Infinite Vertical Scrolling Marquee */}
-                <div className="hidden md:flex justify-center gap-4 h-[600px] overflow-hidden mask-vertical mt-8">
+                {/* Desktop: Infinite Vertical Scrolling Marquee — uses globals.css keyframes */}
+                <div className="hidden md:flex justify-center gap-4 h-[600px] overflow-hidden mask-fade-v mt-8">
                     {/* Column 1 */}
                     <div className="flex flex-col gap-4 animate-marquee-v hover:[animation-play-state:paused] flex-1 max-w-[350px]">
                         {[...col1, ...col1].map((t, i) => (
@@ -274,28 +294,8 @@ export default function Pricing3DTestimonials() {
                         ))}
                     </div>
                 </div>
-
-                <style jsx>{`
-                    .mask-vertical {
-                        mask-image: linear-gradient(to bottom, transparent, black 10%, black 90%, transparent);
-                        -webkit-mask-image: linear-gradient(to bottom, transparent, black 10%, black 90%, transparent);
-                    }
-                    @keyframes marqueeV {
-                        0% { transform: translateY(0); }
-                        100% { transform: translateY(calc(-50% - 0.5rem)); }
-                    }
-                    @keyframes marqueeVReverse {
-                        0% { transform: translateY(calc(-50% - 0.5rem)); }
-                        100% { transform: translateY(0); }
-                    }
-                    .animate-marquee-v {
-                        animation: marqueeV 40s linear infinite;
-                    }
-                    .animate-marquee-v-reverse {
-                        animation: marqueeVReverse 40s linear infinite;
-                    }
-                `}</style>
             </div>
         </section>
     );
 }
+
