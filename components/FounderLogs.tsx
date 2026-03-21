@@ -92,14 +92,14 @@ export default function FounderLogs() {
   }
 
   return (
-    <section className="py-6 md:py-8 lg:py-5 md:py-6 md:py-14 bg-background-light border-y-2 border-black">
+    <section className="py-4 md:py-8 lg:py-5 md:py-6 md:py-14 bg-background-light border-y-2 border-black">
       <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-lg md:text-5xl font-bold text-black mb-4 md:mb-5 lg:mb-4 md:mb-6 md:mb-6 md:mb-4 md:mb-6 text-center font-mono uppercase">
+        <h2 className="text-base md:text-5xl font-bold text-black mb-3 md:mb-6 text-center font-mono uppercase">
           <span className="bg-accent-yellow px-2 md:px-4 py-0.5 md:py-1 border-2 border-black shadow-[3px_3px_0px_#000] md:shadow-[4px_4px_0px_#000]">Founder_Logs</span>
         </h2>
 
         {/* Infinite Vertical Scrolling Marquee */}
-        <div className="flex justify-center gap-4 md:gap-6 h-[280px] md:h-[450px] overflow-hidden mask-vertical">
+        <div className="flex justify-center gap-2 md:gap-6 h-[220px] md:h-[450px] overflow-hidden mask-vertical">
           {[
             testimonials.filter((_, i) => i % 4 === 0),
             testimonials.filter((_, i) => i % 4 === 1),
@@ -108,39 +108,39 @@ export default function FounderLogs() {
           ].map((col, colIdx) => (
             <div
               key={colIdx}
-              className={`flex flex-col gap-4 md:gap-6 flex-1 max-w-[280px] md:max-w-[320px] hover:[animation-play-state:paused] ${
+              className={`flex flex-col gap-2 md:gap-6 flex-1 max-w-[160px] md:max-w-[320px] hover:[animation-play-state:paused] ${
                 colIdx % 2 === 0 ? 'animate-marquee-v' : 'animate-marquee-v-reverse'
               } ${colIdx >= 2 ? 'hidden md:flex' : ''}`}
             >
               {[...col, ...col, ...col].map((testimonial, i) => (
                 <div
                   key={`${colIdx}-${i}`}
-                  className="group bg-white border-2 border-black p-6 hover:-translate-y-1 hover:shadow-[8px_8px_0px_#000] transition-all duration-300"
+                  className="group bg-white border-2 border-black p-2.5 md:p-6 hover:-translate-y-0.5 hover:shadow-[4px_4px_0px_#000] md:hover:shadow-[8px_8px_0px_#000] transition-all duration-300"
                 >
-                  <div className="flex justify-between items-start mb-4">
-                    <div className="flex gap-1">
+                  <div className="flex justify-between items-start mb-2 md:mb-4">
+                    <div className="flex gap-0.5 md:gap-1">
                       {[...Array(5)].map((_, i) => (
                         <span
                           key={i}
-                          className="material-symbols-outlined text-sm text-accent-yellow drop-shadow-sm"
+                          className="material-symbols-outlined text-[10px] md:text-sm text-accent-yellow drop-shadow-sm"
                           style={{ fontVariationSettings: "'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24" }}
                         >
                           star
                         </span>
                       ))}
                     </div>
-                    <span className="material-symbols-outlined text-gray-300 group-hover:text-black transition-colors">format_quote</span>
+                    <span className="material-symbols-outlined text-gray-300 group-hover:text-black transition-colors text-xs md:text-base">format_quote</span>
                   </div>
-    
-                  <p className="text-sm font-medium mb-6 font-mono leading-relaxed text-gray-700 group-hover:text-black transition-colors">
+
+                  <p className="text-[9px] md:text-sm font-medium mb-2 md:mb-6 font-mono leading-snug md:leading-relaxed text-gray-700 group-hover:text-black transition-colors line-clamp-3 md:line-clamp-none">
                     &ldquo;{testimonial.quote}&rdquo;
                   </p>
-    
-                  <div className="flex items-center gap-3 border-t-2 border-dashed border-gray-200 group-hover:border-black pt-4 transition-colors">
+
+                  <div className="flex items-center gap-1.5 md:gap-3 border-t border-dashed border-gray-200 group-hover:border-black pt-2 md:pt-4 transition-colors">
                     <FounderImage image={testimonial.image} />
-                    <div className="text-xs">
-                      <div className="font-bold uppercase group-hover:text-primary transition-colors">{testimonial.name}</div>
-                      <div className="text-gray-500 font-mono group-hover:text-gray-800">{testimonial.title}</div>
+                    <div className="text-[8px] md:text-xs overflow-hidden">
+                      <div className="font-bold uppercase group-hover:text-primary transition-colors truncate">{testimonial.name}</div>
+                      <div className="text-gray-500 font-mono truncate">{testimonial.title}</div>
                     </div>
                   </div>
                 </div>
@@ -177,7 +177,7 @@ export default function FounderLogs() {
 function FounderImage({ image }: { image: string }) {
   return (
     <div
-      className="w-10 h-10 border-2 border-black overflow-hidden transition-all duration-300 relative flex-shrink-0 bg-gray-100"
+      className="w-6 h-6 md:w-10 md:h-10 border-2 border-black overflow-hidden transition-all duration-300 relative flex-shrink-0 bg-gray-100"
     >
       <Image src={image} alt="Founder" fill className="object-cover" sizes="40px" />
     </div>

@@ -32,19 +32,22 @@ export default function StudentBenefitsPage() {
                         currentSection="Student Benefits"
                     />
 
-                    <div className="mb-4 md:mb-6">
-                        <h1 className="text-4xl md:text-5xl font-black mb-4 font-display uppercase tracking-tight">
+                    <div className="mb-3 md:mb-6">
+                        <div className="inline-block border-2 border-black bg-accent-yellow px-2 py-0.5 font-mono text-[10px] font-bold uppercase tracking-wide rounded-sm mb-2">
+                            STUDENT BENEFITS
+                        </div>
+                        <h1 className="text-xl md:text-4xl lg:text-5xl font-black mb-1.5 md:mb-3 font-display uppercase tracking-tight leading-tight">
                             Student Benefits 2026
                         </h1>
-                        <p className="text-xl text-gray-600 mb-6 max-w-3xl font-medium">
-                            Over $200k in free software, cloud credits, and funding opportunities for verified students.
+                        <p className="text-xs md:text-base text-gray-600 mb-2 md:mb-4 max-w-3xl font-medium">
+                            Over <span className="font-bold text-black">$200k+</span> in free software, cloud credits, and funding opportunities for verified students.
                         </p>
 
-                        <div className="flex flex-wrap gap-4 text-sm font-bold font-mono">
-                            <div className="bg-white border-2 border-black px-3 py-1 shadow-[2px_2px_0_0_#000]">
+                        <div className="flex flex-wrap gap-2 text-[10px] md:text-sm font-bold font-mono">
+                            <div className="bg-white border-2 border-black px-2 md:px-3 py-0.5 md:py-1 shadow-[2px_2px_0_0_#000]">
                                 LAST UPDATED: Q1 2026
                             </div>
-                            <div className="bg-cyan-100 border-2 border-black px-3 py-1 shadow-[2px_2px_0_0_#000]">
+                            <div className="bg-cyan-100 border-2 border-black px-2 md:px-3 py-0.5 md:py-1 shadow-[2px_2px_0_0_#000]">
                                 {studentBenefits2026.length} VERIFIED DEALS
                             </div>
                         </div>

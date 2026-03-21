@@ -209,9 +209,15 @@ export default function Pricing3DTestimonials() {
                     className="md:hidden flex gap-3 overflow-x-auto snap-x snap-mandatory pb-3 mobile-scroll-hide -mx-4 px-4 items-stretch"
                 >
                     {testimonials.slice(0, totalMobile).map((t) => (
-                        <div key={t.name} className="snap-center shrink-0 w-[85vw] bg-white border-2 border-[#e5e5e5] rounded-sm p-3">
-                            <div className="flex items-center gap-2 mb-2">
-                                <div className="w-7 h-7 rounded-full overflow-hidden border border-gray-200 flex-shrink-0">
+                        <div key={t.name} className="snap-center shrink-0 w-[85vw] bg-white border-2 border-[#111111] shadow-[2px_2px_0_0_#111111] p-3.5">
+                            <div className="flex gap-0.5 mb-2">
+                                {[...Array(5)].map((_, i) => (
+                                    <span key={i} className="material-symbols-outlined text-xs text-[#ffd700]" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
+                                ))}
+                            </div>
+                            <p className="text-[11px] leading-relaxed text-gray-800 font-medium mb-3">&ldquo;{t.quote}&rdquo;</p>
+                            <div className="flex items-center gap-2 border-t border-gray-100 pt-2.5">
+                                <div className="w-8 h-8 rounded-full overflow-hidden border border-gray-200 flex-shrink-0">
                                     <Image
                                         src={t.avatar}
                                         alt={t.name}
@@ -225,13 +231,12 @@ export default function Pricing3DTestimonials() {
                                     <p className="text-[9px] text-gray-500 leading-tight">{t.designation}</p>
                                 </div>
                             </div>
-                            <p className="text-[11px] leading-relaxed text-gray-700">&ldquo;{t.quote}&rdquo;</p>
                         </div>
                     ))}
                 </div>
 
                 {/* Mobile dot indicators */}
-                <div className="flex md:hidden justify-center gap-1 mt-2 mb-2">
+                <div className="flex md:hidden justify-center gap-1.5 mt-3 mb-2">
                     {Array.from({ length: totalMobile }).map((_, i) => (
                         <button
                             key={i}
@@ -243,7 +248,7 @@ export default function Pricing3DTestimonials() {
                                     el.scrollTo({ left: i * cardWidth, behavior: 'smooth' })
                                 }
                             }}
-                            className={`rounded-full transition-all ${i === activeIdx ? 'w-4 h-1.5 bg-black' : 'w-1.5 h-1.5 bg-gray-300'}`}
+                            className={`rounded-full transition-all duration-300 ${i === activeIdx ? 'w-5 h-2 bg-[#111111] shadow-sm' : 'w-2 h-2 bg-gray-200 hover:bg-gray-400'}`}
                         />
                     ))}
                 </div>

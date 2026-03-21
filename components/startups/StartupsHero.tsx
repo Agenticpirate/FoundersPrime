@@ -1,57 +1,42 @@
 export default function StartupsHero() {
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-4 md:mb-6 md:mb-6 md:mb-4 md:mb-6">
-      <div className="lg:col-span-8 flex flex-col justify-center">
-        <div className="inline-block w-fit border-2 border-black bg-accent-yellow px-3 py-1 font-mono text-xs font-bold uppercase tracking-wide rounded-sm mb-4">
-          VERIFIED DATABASE
+    <div className="mb-4 md:mb-6">
+      <div className="mb-2 md:mb-3">
+        <div className="inline-block border-2 border-black bg-accent-yellow px-2 py-0.5 font-mono text-[10px] font-bold uppercase tracking-wide rounded-sm mb-2">
+          DISCOVER + INVEST
         </div>
-        <h1 className="font-mono text-5xl md:text-6xl font-bold tracking-tight text-black mb-6 leading-[1.1]">
-          Funded Startups <br className="hidden md:block"/> Database
+        <h1 className="font-mono text-2xl md:text-4xl lg:text-6xl font-bold tracking-tight text-black mb-1.5 md:mb-3 leading-tight">
+          Verified Startups
         </h1>
-        <p className="font-sans text-lg md:text-xl text-gray-700 leading-relaxed max-w-3xl border-l-4 border-primary pl-6 py-1">
-          Explore <span className="font-bold text-black bg-primary/20 px-1">12,847</span> funded startups with detailed funding history, revenue data, and growth metrics. Research competitors, validate markets, and discover successful business models across every industry.
+        <p className="font-sans text-xs md:text-base text-gray-700 leading-relaxed max-w-3xl">
+          Access <span className="font-bold text-black bg-primary/20 px-1">1368+</span> verified high-potential startups. Direct data from Y Combinator and top accelerators. Real metrics, vetted founders, and breakout opportunities.
         </p>
-        
-        {/* Search Bar */}
-        <div className="mt-4 md:mt-6 flex gap-3">
-          <div className="flex-1 relative">
-            <span className="material-symbols-outlined absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 text-xl">search</span>
-            <input 
-              className="w-full bg-white border-3 border-black text-black px-12 py-4 font-mono text-base focus:outline-none focus:border-primary focus:ring-0 placeholder:text-gray-500 rounded-sm shadow-[4px_4px_0px_0px_#1a1a1a]" 
-              placeholder="Search startups, founders, or industries..." 
-              type="text"
-            />
-          </div>
-          <button className="px-8 py-4 bg-primary hover:bg-black hover:text-white border-3 border-black text-black font-mono font-bold rounded-sm shadow-[4px_4px_0px_0px_#1a1a1a] hover:shadow-[2px_2px_0px_0px_#1a1a1a] hover:translate-x-[2px] hover:translate-y-[2px] transition-all">
-            Search
-          </button>
-        </div>
       </div>
-      
-      {/* Stats */}
-      <div className="lg:col-span-4 flex flex-col gap-5">
-        <div className="bg-white border-3 border-black shadow-[6px_6px_0px_0px_#1a1a1a] rounded-sm p-6 flex items-center justify-between">
+
+      {/* Compact Stats - 3-col horizontal layout on all sizes */}
+      <div className="grid grid-cols-3 gap-2 md:gap-4">
+        <div className="bg-white border-2 border-black shadow-[2px_2px_0px_0px_#1a1a1a] md:shadow-[3px_3px_0px_0px_#1a1a1a] p-2.5 md:p-4 flex items-center justify-between">
           <div>
-            <p className="font-mono text-sm font-bold text-gray-500 uppercase tracking-wider mb-1">Total Startups</p>
-            <p className="font-mono text-4xl font-bold text-black">12,847</p>
+            <p className="font-mono text-[9px] md:text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-0.5 md:mb-1">Verified Companies</p>
+            <p className="font-mono text-lg md:text-2xl font-bold text-black">1368</p>
           </div>
-          <span className="material-symbols-outlined text-4xl text-black">business</span>
+          <span className="material-symbols-outlined text-xl md:text-2xl text-black">verified</span>
         </div>
-        
-        <div className="bg-black text-white border-3 border-black shadow-[6px_6px_0px_0px_#1a1a1a] rounded-sm p-6 flex items-center justify-between">
+
+        <div className="bg-black text-white border-2 border-black shadow-[2px_2px_0px_0px_#1a1a1a] md:shadow-[3px_3px_0px_0px_#1a1a1a] p-2.5 md:p-4 flex items-center justify-between">
           <div>
-            <p className="font-mono text-sm font-bold text-gray-400 uppercase tracking-wider mb-1">Total Funding</p>
-            <p className="font-mono text-4xl font-bold text-white">$2.8T</p>
+            <p className="font-mono text-[9px] md:text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-0.5 md:mb-1">Total Valuation</p>
+            <p className="font-mono text-lg md:text-2xl font-bold text-white">$4.2B+</p>
           </div>
-          <span className="material-symbols-outlined text-4xl text-primary">trending_up</span>
+          <span className="material-symbols-outlined text-xl md:text-2xl text-primary">trending_up</span>
         </div>
-        
-        <div className="bg-white border-3 border-black shadow-[6px_6px_0px_0px_#1a1a1a] rounded-sm p-6 flex items-center justify-between">
+
+        <div className="bg-white border-2 border-black shadow-[2px_2px_0px_0px_#1a1a1a] md:shadow-[3px_3px_0px_0px_#1a1a1a] p-2.5 md:p-4 flex items-center justify-between">
           <div>
-            <p className="font-mono text-sm font-bold text-gray-500 uppercase tracking-wider mb-1">Industries</p>
-            <p className="font-mono text-4xl font-bold text-black">47</p>
+            <p className="font-mono text-[9px] md:text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-0.5 md:mb-1">Avg Seed Round</p>
+            <p className="font-mono text-lg md:text-2xl font-bold text-black">$3.5M</p>
           </div>
-          <span className="material-symbols-outlined text-4xl text-black">category</span>
+          <span className="material-symbols-outlined text-xl md:text-2xl text-black">paid</span>
         </div>
       </div>
     </div>
