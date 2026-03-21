@@ -383,7 +383,7 @@ export default function SingleDealContent({ deal, freeAccess = false, basePath =
             <span className="material-symbols-outlined text-primary !text-[20px] md:!text-[24px]">info</span>
             About This Deal
           </h2>
-          <p className="text-sm md:text-base leading-relaxed text-gray-800 whitespace-pre-line">{description}</p>
+          <p className="text-sm md:text-base leading-relaxed text-gray-800 whitespace-pre-line break-words">{description}</p>
         </section>
 
         {/* What's Included / Benefits */}

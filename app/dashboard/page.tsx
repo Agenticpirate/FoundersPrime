@@ -73,7 +73,7 @@ export default async function DashboardPage({
           </div>
 
           {/* Quick Stats */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-4 md:mb-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-4 md:mb-6">
             <div className="border-3 border-black bg-white shadow-[4px_4px_0px_#111111] p-4 md:p-6">
               <div className="text-[10px] md:text-xs font-bold uppercase text-gray-500 mb-1">Deals Applied</div>
               <div className="text-2xl md:text-3xl font-black">0</div>
@@ -85,10 +85,6 @@ export default async function DashboardPage({
             <div className="border-3 border-black bg-white shadow-[4px_4px_0px_#111111] p-4 md:p-6">
               <div className="text-[10px] md:text-xs font-bold uppercase text-gray-500 mb-1">Saved Deals</div>
               <div className="text-2xl md:text-3xl font-black">{savedDeals.length}</div>
-            </div>
-            <div className="border-3 border-black bg-white shadow-[4px_4px_0px_#111111] p-4 md:p-6">
-              <div className="text-[10px] md:text-xs font-bold uppercase text-gray-500 mb-1">Community Posts</div>
-              <div className="text-2xl md:text-3xl font-black">0</div>
             </div>
           </div>
 
@@ -128,25 +124,7 @@ export default async function DashboardPage({
               <p className="text-gray-600 text-sm">Explore cloud credits, SaaS discounts, grants, and more.</p>
             </Link>
 
-            <Link href="/billing" className="border-3 border-black bg-white shadow-[6px_6px_0px_#111111] p-6 hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[4px_4px_0px_#111111] transition-all group">
-              <div className="flex items-center gap-4 mb-4">
-                <div className="w-12 h-12 bg-amber-400 border-2 border-black flex items-center justify-center">
-                  <span className="material-symbols-outlined text-black">credit_card</span>
-                </div>
-                <h3 className="text-xl font-bold uppercase group-hover:text-primary">Billing</h3>
-              </div>
-              <p className="text-gray-600 text-sm">Manage your subscription, payment methods, and invoices.</p>
-            </Link>
 
-            <Link href="/community" className="border-3 border-black bg-white shadow-[6px_6px_0px_#111111] p-6 hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[4px_4px_0px_#111111] transition-all group">
-              <div className="flex items-center gap-4 mb-4">
-                <div className="w-12 h-12 bg-purple-400 border-2 border-black flex items-center justify-center">
-                  <span className="material-symbols-outlined text-black">groups</span>
-                </div>
-                <h3 className="text-xl font-bold uppercase group-hover:text-primary">Community</h3>
-              </div>
-              <p className="text-gray-600 text-sm">Connect with other founders and share insights.</p>
-            </Link>
 
             <Link href="/startups" className="border-3 border-black bg-white shadow-[6px_6px_0px_#111111] p-6 hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[4px_4px_0px_#111111] transition-all group">
               <div className="flex items-center gap-4 mb-4">

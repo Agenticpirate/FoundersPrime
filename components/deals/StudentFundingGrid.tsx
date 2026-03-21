@@ -202,13 +202,13 @@ export default function StudentFundingGrid() {
                             </button>
 
                             {/* Page Numbers */}
-                            <div className="flex flex-wrap items-center justify-center gap-1.5 sm:gap-2 flex-1">
+                            <div className="flex flex-wrap items-center justify-center gap-1 sm:gap-2 flex-1">
                                 {getPaginationRange(currentPage, totalPages).map((p, i) => (
                                     typeof p === 'number' ? (
                                         <button
                                             key={i}
                                             onClick={() => handlePageChange(p)}
-                                            className={`w-7 h-8 sm:w-10 sm:h-10 border-2 border-black font-mono text-xs sm:text-sm font-bold flex items-center justify-center transition-all ${currentPage === p
+                                            className={`w-7 h-7 sm:w-10 sm:h-10 border-1 sm:border-2 border-black font-mono text-xs sm:text-sm font-bold flex items-center justify-center transition-all ${currentPage === p
                                                 ? 'bg-[#00D4FF] text-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]'
                                                 : 'bg-white hover:bg-gray-50 text-black'
                                                 }`}
@@ -216,7 +216,7 @@ export default function StudentFundingGrid() {
                                             {p}
                                         </button>
                                     ) : (
-                                        <span key={i} className="w-5 h-8 sm:w-10 sm:h-10 flex items-center justify-center font-mono font-bold text-black text-xs sm:text-sm">...</span>
+                                        <span key={i} className="w-5 h-7 sm:w-10 sm:h-10 flex items-center justify-center font-mono font-bold text-black text-xs sm:text-sm">...</span>
                                     )
                                 ))}
                             </div>

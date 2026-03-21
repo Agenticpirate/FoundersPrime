@@ -204,13 +204,12 @@ export default function Pricing3DTestimonials() {
                     </p>
                 </div>
 
-                {/* Mobile: Auto-sliding Carousel */}
                 <div
                     ref={scrollRef}
-                    className="md:hidden flex gap-3 overflow-x-auto snap-x snap-mandatory pb-3 mobile-scroll-hide -mx-4 px-4"
+                    className="md:hidden flex gap-3 overflow-x-auto snap-x snap-mandatory pb-3 mobile-scroll-hide -mx-4 px-4 items-stretch"
                 >
                     {testimonials.slice(0, totalMobile).map((t) => (
-                        <div key={t.name} className="snap-start shrink-0 w-[78vw] bg-white border-2 border-[#e5e5e5] rounded-sm p-3">
+                        <div key={t.name} className="snap-center shrink-0 w-[85vw] bg-white border-2 border-[#e5e5e5] rounded-sm p-3">
                             <div className="flex items-center gap-2 mb-2">
                                 <div className="w-7 h-7 rounded-full overflow-hidden border border-gray-200 flex-shrink-0">
                                     <Image

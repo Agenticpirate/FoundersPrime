@@ -55,13 +55,13 @@ export default function Pagination({
                     <span className="sm:hidden">Prev</span>
                 </button>
 
-                <div className="hidden sm:flex flex-wrap items-center justify-center gap-1.5 sm:gap-2 flex-1">
+                <div className="flex flex-wrap items-center justify-center gap-1 sm:gap-2 flex-1">
                     {getPageNumbers().map((pageNum, idx) => (
                         typeof pageNum === 'number' ? (
                             <button
                                 key={idx}
                                 onClick={() => onPageChange(pageNum)}
-                                className={`w-8 h-8 flex items-center justify-center text-sm font-mono font-bold border-2 border-ink transition-colors ${currentPage === pageNum
+                                className={`w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center text-xs sm:text-sm font-mono font-bold border-1 sm:border-2 border-ink transition-colors ${currentPage === pageNum
                                     ? 'bg-primary text-ink'
                                     : 'bg-white text-ink hover:bg-gray-100'
                                     }`}
@@ -69,15 +69,11 @@ export default function Pagination({
                                 {pageNum}
                             </button>
                         ) : (
-                            <span key={idx} className="w-8 h-8 flex items-center justify-center font-mono font-bold text-black text-sm tracking-widest">
+                            <span key={idx} className="w-6 h-6 sm:w-8 sm:h-8 flex items-center justify-center font-mono font-bold text-black text-xs sm:text-sm tracking-widest">
                                 ...
                             </span>
                         )
                     ))}
-                </div>
-
-                <div className="sm:hidden flex flex-1 items-center justify-center font-mono text-xs font-bold text-gray-600 px-2 whitespace-nowrap">
-                    Page {currentPage} / {totalPages}
                 </div>
 
                 <button

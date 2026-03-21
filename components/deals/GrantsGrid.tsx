@@ -50,21 +50,31 @@ export default function GrantsGrid() {
     })
   }, [selectedRegion, selectedType, searchQuery])
 
-  // Pagination Logic
+  // Local Fast Pagination Logic
+  const [localPage, setLocalPage] = useState(1)
+
+  useEffect(() => {
+    const pageParam = searchParams.get('page')
+    if (pageParam && selectedRegion === 'All' && selectedType === 'All' && searchQuery === '') {
+      setLocalPage(Number(pageParam) || 1)
+    } else {
+      setLocalPage(1)
+    }
+  }, [selectedRegion, selectedType, searchQuery, searchParams])
+
   const itemsPerPage = 9
-  const pageParam = searchParams.get('page')
-  const rawPage = Number(pageParam) || 1
   const totalPages = Math.ceil(filteredGrants.length / itemsPerPage) || 1
-  const currentPage = Math.min(Math.max(1, rawPage), totalPages)
+  const currentPage = Math.min(Math.max(1, localPage), totalPages)
 
   const startIndex = (currentPage - 1) * itemsPerPage
   const endIndex = startIndex + itemsPerPage
   const currentGrants = filteredGrants.slice(startIndex, endIndex)
 
   const handlePageChange = (page: number) => {
+    setLocalPage(page)
     const params = new URLSearchParams(searchParams)
     params.set('page', page.toString())
-    router.push(pathname + '?' + params.toString(), { scroll: false })
+    window.history.replaceState(null, '', pathname + '?' + params.toString())
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 

@@ -94,7 +94,7 @@ export default function DealsFilterBar({ onFilterChange, currentFilters }: Deals
         <div className="relative">
           <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-lg">search</span>
           <input
-            className="w-full h-9 md:h-10 pl-10 pr-4 border-2 border-black focus:border-[#ffd700] focus:ring-0 font-sans text-sm bg-white placeholder:text-gray-400 shadow-[2px_2px_0px_#111111]"
+            className="w-full h-9 md:h-10 pl-10 pr-4 border-2 border-black focus:border-[#ffd700] focus:ring-0 font-sans text-base md:text-sm bg-white placeholder:text-gray-400 shadow-[2px_2px_0px_#111111]"
             placeholder="Search deals..."
             type="text"
             value={filters.search}
@@ -105,7 +105,7 @@ export default function DealsFilterBar({ onFilterChange, currentFilters }: Deals
         {/* Dropdowns — 3-col on mobile */}
         <div className="grid grid-cols-3 md:flex gap-2">
           <select
-            className="h-9 md:h-10 border border-gray-300 bg-white px-2 md:px-3 py-1 text-xs md:text-sm focus:ring-0 focus:border-primary cursor-pointer w-full font-bold"
+            className="h-10 md:h-10 border border-gray-300 bg-white px-2 md:px-3 py-1 text-base md:text-sm focus:ring-0 focus:border-primary cursor-pointer w-full font-bold"
             value={filters.category}
             onChange={(e) => handleFilterChange('category', e.target.value)}
           >
@@ -118,7 +118,7 @@ export default function DealsFilterBar({ onFilterChange, currentFilters }: Deals
           </select>
 
           <select
-            className="h-9 md:h-10 border border-gray-300 bg-white px-2 md:px-3 py-1 text-xs md:text-sm focus:ring-1 focus:ring-primary focus:border-primary cursor-pointer rounded w-full"
+            className="h-10 md:h-10 border border-gray-300 bg-white px-2 md:px-3 py-1 text-base md:text-sm focus:ring-1 focus:ring-primary focus:border-primary cursor-pointer rounded w-full"
             value={filters.value}
             onChange={(e) => handleFilterChange('value', e.target.value)}
           >
@@ -131,7 +131,7 @@ export default function DealsFilterBar({ onFilterChange, currentFilters }: Deals
           </select>
 
           <select
-            className="h-9 md:h-10 border border-gray-300 bg-white px-2 md:px-3 py-1 text-xs md:text-sm focus:ring-1 focus:ring-primary focus:border-primary cursor-pointer rounded w-full"
+            className="h-10 md:h-10 border border-gray-300 bg-white px-2 md:px-3 py-1 text-base md:text-sm focus:ring-1 focus:ring-primary focus:border-primary cursor-pointer rounded w-full"
             value={filters.sort}
             onChange={(e) => handleFilterChange('sort', e.target.value)}
           >

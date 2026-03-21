@@ -9,6 +9,9 @@ import Pagination from '@/components/Pagination'
 import { useAuth } from '@/lib/auth/hooks'
 import { checkProStatus } from '@/lib/auth/user-context'
 
+let globalDealsCache: Deal[] | null = null;
+let globalDealsPromise: Promise<Deal[]> | null = null;
+
 interface FilterState {
   search: string
   category: string
@@ -44,32 +47,42 @@ export default function DealsGrid({ filters }: DealsGridProps) {
     checkAccess()
   }, [user])
 
-  const [deals, setDeals] = useState<Deal[]>([])
+  const [deals, setDeals] = useState<Deal[]>(globalDealsCache || [])
   const [filteredDeals, setFilteredDeals] = useState<Deal[]>([])
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(!globalDealsCache)
   const dealsPerPage = 12
 
   const categories = getAllCategories()
 
-  // Load deals from API
+  // Load deals from API or cache
   useEffect(() => {
-    const loadDeals = async () => {
-      try {
-        const response = await fetch('/api/deals')
-        const data = await response.json()
+    if (globalDealsCache) return
 
-        if (data.success) {
-          setDeals(data.deals)
-        } else {
-          console.error('Failed to load deals:', data.error)
-          setDeals([])
-        }
-      } catch (error) {
-        console.error('Error loading deals:', error)
-        setDeals([])
-      } finally {
+    const loadDeals = async () => {
+      if (globalDealsPromise) {
+        const result = await globalDealsPromise
+        setDeals(result)
         setLoading(false)
+        return
       }
+
+      globalDealsPromise = fetch('/api/deals')
+        .then(res => res.json())
+        .then(data => {
+          if (data.success) {
+            globalDealsCache = data.deals
+            return data.deals
+          }
+          return []
+        })
+        .catch(err => {
+          console.error('Error loading deals:', err)
+          return []
+        })
+
+      const finalDeals = await globalDealsPromise
+      setDeals(finalDeals)
+      setLoading(false)
     }
 
     loadDeals()
@@ -256,20 +269,30 @@ export default function DealsGrid({ filters }: DealsGridProps) {
     }
   }
 
-  // Pagination Logic using URL Params
-  const pageParam = searchParams.get('page')
-  const rawPage = Number(pageParam) || 1
+  // Pagination Logic using fast local state to skip slow server payload fetch
+  const [localPage, setLocalPage] = useState(1)
+
+  useEffect(() => {
+    const pageParam = searchParams.get('page')
+    if (pageParam && !filters?.category && !filters?.search) {
+      setLocalPage(Number(pageParam) || 1)
+    } else {
+      setLocalPage(1)
+    }
+  }, [filters, searchParams])
+
   const totalPages = Math.ceil(filteredDeals.length / dealsPerPage) || 1
-  const currentPage = Math.min(Math.max(1, rawPage), totalPages)
+  const currentPage = Math.min(Math.max(1, localPage), totalPages)
 
   const startIndex = (currentPage - 1) * dealsPerPage
   const endIndex = startIndex + dealsPerPage
   const currentDeals = filteredDeals.slice(startIndex, endIndex)
 
   const handlePageChange = (page: number) => {
+    setLocalPage(page)
     const params = new URLSearchParams(searchParams)
     params.set('page', page.toString())
-    router.push(pathname + '?' + params.toString(), { scroll: false })
+    window.history.replaceState(null, '', pathname + '?' + params.toString())
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 

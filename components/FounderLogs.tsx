@@ -99,7 +99,7 @@ export default function FounderLogs() {
         </h2>
 
         {/* Infinite Vertical Scrolling Marquee */}
-        <div className="flex justify-center gap-4 md:gap-6 h-[400px] md:h-[450px] overflow-hidden mask-vertical">
+        <div className="flex justify-center gap-4 md:gap-6 h-[280px] md:h-[450px] overflow-hidden mask-vertical">
           {[
             testimonials.filter((_, i) => i % 4 === 0),
             testimonials.filter((_, i) => i % 4 === 1),
@@ -108,7 +108,7 @@ export default function FounderLogs() {
           ].map((col, colIdx) => (
             <div
               key={colIdx}
-              className={`flex flex-col gap-4 md:gap-6 flex-1 max-w-[320px] hover:[animation-play-state:paused] ${
+              className={`flex flex-col gap-4 md:gap-6 flex-1 max-w-[280px] md:max-w-[320px] hover:[animation-play-state:paused] ${
                 colIdx % 2 === 0 ? 'animate-marquee-v' : 'animate-marquee-v-reverse'
               } ${colIdx >= 2 ? 'hidden md:flex' : ''}`}
             >

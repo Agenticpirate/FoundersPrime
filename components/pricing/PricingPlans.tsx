@@ -52,9 +52,7 @@ export default function PricingPlans({ currency }: PricingPlansProps) {
       description: 'Access the platform with usage limits.',
       features: [
         'All SaaS deals & cloud credits',
-        'Up to 10 Deal Claims / month',
-        'View up to Page 10 of Deals',
-        'View 1 Page of Accelerators',
+        'Limited claims per month',
         'Cancel anytime',
       ],
       cta: 'Start Exploring',
@@ -78,15 +76,15 @@ export default function PricingPlans({ currency }: PricingPlansProps) {
       period: founderPricing.period,
       description: 'Everything — unlimited access.',
       features: [
-        'Unlimited Deal Claims',
-        'Unlimited Pagination (All Deals)',
-        'Investor & Grants database',
-        'Accelerators, Incubators & Programs',
-        'Verified Startups full database',
-        'Resources, templates & guides',
+        'Unlimited Deal Claims (All Deals)',
+        'Funding Opportunities',
+        'Incubators, Accelerators & Programs',
+        'Verified Startups Full Database',
+        'Startup Ideas Database',
+        'Master Resources Library',
         'Priority support',
       ],
-      cta: 'Become a Founder',
+      cta: 'Join Founder (Pro)',
       popular: true,
       buttonStyle: 'bg-[#111111] text-white hover:bg-[#333]',
       badge: null,
@@ -169,7 +167,7 @@ export default function PricingPlans({ currency }: PricingPlansProps) {
                 disabled={loadingPlan === plan.planKey}
                 className={`py-1.5 px-3 font-mono font-bold uppercase tracking-wider text-[9px] border-2 border-[#111111] flex items-center justify-center gap-1 shadow-[2px_2px_0_0_#111111] ${plan.buttonStyle} disabled:opacity-60`}
               >
-                {loadingPlan === plan.planKey ? '...' : (plan.name === 'Explorer' ? 'Explore' : plan.name === 'Founder' ? 'Join Pro' : 'Get Legend')}
+                {loadingPlan === plan.planKey ? '...' : (plan.name === 'Explorer' ? 'Explore' : plan.name === 'Founder' ? 'Join Founder (Pro)' : 'Get Legend')}
               </button>
             </div>
             <div className={`px-3 py-2 flex flex-col ${plan.cardBg}`}>
