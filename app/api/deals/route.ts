@@ -36,7 +36,14 @@ export async function GET(request: NextRequest) {
     const recommended = searchParams.get('recommended');
     const limit = searchParams.get('limit');
 
-    let query = supabase.from('deals').select('*');
+    // For single deal lookups, only select essential fields
+    const isSingleLookup = !!(slug || id);
+
+    let query = supabase.from('deals').select(
+      isSingleLookup
+        ? '*'
+        : 'id,slug,title,provider,category,subcategory,shortDescription,short_description,value,status,featured,recommended,verified,difficulty,timeToApply,time_to_apply,tags,logoUrl,logo_url,applicationUrl,application_url,expiryDate,expiry_date'
+    );
 
     if (slug) query = query.eq('slug', slug);
     if (id) query = query.eq('id', id);
@@ -73,7 +80,12 @@ export async function GET(request: NextRequest) {
 
     // Single deal lookup return
     if (slug || id) {
-      if (deals.length > 0) return NextResponse.json({ success: true, deal: deals[0] });
+      if (deals.length > 0) {
+        return NextResponse.json(
+          { success: true, deal: deals[0] },
+          { headers: { 'Cache-Control': 'public, s-maxage=300, stale-while-revalidate=600' } }
+        );
+      }
       return NextResponse.json({ success: false, error: 'Deal not found' }, { status: 404 });
     }
 
@@ -90,12 +102,16 @@ export async function GET(request: NextRequest) {
       }, {})
     }
 
-    return NextResponse.json({
-      success: true,
-      deals,
-      count: deals.length,
-      stats
-    });
+    // Cache: CDN serves for 120s, revalidates in background for up to 600s
+    return NextResponse.json(
+      { success: true, deals, count: deals.length, stats },
+      {
+        headers: {
+          'Cache-Control': 'public, s-maxage=120, stale-while-revalidate=600',
+          'Vary': 'Accept-Encoding',
+        }
+      }
+    );
   } catch (error) {
     console.error('Error fetching deals:', error);
     return NextResponse.json({
@@ -104,6 +120,7 @@ export async function GET(request: NextRequest) {
     }, { status: 500 });
   }
 }
+
 
 // POST - Create new deal(s)
 export async function POST(request: NextRequest) {

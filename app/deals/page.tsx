@@ -1,11 +1,11 @@
-'use client'
-
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import DealsHeader from '@/components/deals/DealsHeader'
 import DealsHero from '@/components/deals/DealsHero'
 import DealsContent from '@/components/deals/DealsContent'
 
+// Server Component page shell — no 'use client' needed here.
+// Only the interactive DealsContent/DealsGrid inside are client components.
 export default function DealsPage() {
   return (
     <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden bg-background-light">
@@ -15,10 +15,14 @@ export default function DealsPage() {
           <DealsHeader />
           <DealsHero />
           <DealsContent />
-
         </div>
       </main>
       <Footer />
     </div>
   )
+}
+
+export const metadata = {
+  title: 'All Deals — FoundersPrime',
+  description: 'Browse 1000+ verified startup deals, cloud credits, grants, SaaS discounts and accelerator programs.',
 }
