@@ -90,7 +90,7 @@ export default function SystemModules() {
   }
 
   return (
-    <section className="relative py-6 md:py-6 md:py-8 grid-bg overflow-hidden border-b-2 border-black">
+    <section className="relative py-4 md:py-8 grid-bg overflow-hidden border-b-2 border-black">
       <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row justify-between items-end mb-5 md:mb-10 border-b-[3px] border-[#101622] pb-3 md:pb-4">
           <div>

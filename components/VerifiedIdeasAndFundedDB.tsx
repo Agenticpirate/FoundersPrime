@@ -26,11 +26,11 @@ export default function VerifiedIdeasAndFundedDB() {
   ]
 
   return (
-    <section className="py-8 md:py-5 md:py-6 md:py-14 bg-white">
+    <section className="py-4 md:py-10 bg-white">
       <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-12">
           {/* Verified Ideas */}
-          <div className="bg-white neo-border p-4 md:p-8">
+          <div className="bg-white neo-border p-3 md:p-8">
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-6 md:mb-4 md:mb-6 border-b-2 border-black pb-4 gap-4 sm:gap-0">
               <div>
                 <h3 className="text-xl md:text-2xl font-bold mb-1 font-mono flex items-center gap-2">
@@ -54,7 +54,7 @@ export default function VerifiedIdeasAndFundedDB() {
           </div>
 
           {/* Funded Database */}
-          <div className="bg-black text-white neo-border p-4 md:p-8 mt-6 lg:mt-0">
+          <div className="bg-black text-white neo-border p-3 md:p-8 mt-4 lg:mt-0">
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-6 md:mb-4 md:mb-6 border-b border-gray-700 pb-4 gap-4 sm:gap-0">
               <div>
                 <h3 className="text-xl md:text-2xl font-bold mb-1 font-mono flex items-center gap-2">

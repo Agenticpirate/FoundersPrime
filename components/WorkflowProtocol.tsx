@@ -30,13 +30,13 @@ export default function WorkflowProtocol() {
   ]
 
   return (
-    <section className="relative py-8 md:py-10 border-b-2 border-black grid-bg">
+    <section className="relative py-4 md:py-10 border-b-2 border-black grid-bg">
       <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-4 md:mb-6">
           <div className="inline-block bg-black text-white text-xs md:text-sm font-mono font-bold px-4 py-1.5 mb-3 uppercase tracking-wider transform -rotate-1 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.2)]">
             WORKFLOW
           </div>
-          <h2 className="text-xl sm:text-2xl md:text-4xl lg:text-5xl font-black text-black mb-2 leading-tight font-sans">
+          <h2 className="text-lg sm:text-2xl md:text-4xl lg:text-5xl font-black text-black mb-1.5 leading-tight font-sans">
             From discovery to action<br />in minutes.
           </h2>
           <p className="text-sm md:text-lg text-gray-600 font-medium max-w-2xl mx-auto font-mono">

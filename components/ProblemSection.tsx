@@ -2,7 +2,7 @@ import Link from 'next/link'
 
 export default function ProblemSection() {
     return (
-        <section className="relative py-6 md:py-8 lg:py-10 overflow-hidden grid-bg flex flex-col border-b-2 border-black">
+        <section className="relative py-4 md:py-8 lg:py-10 overflow-hidden grid-bg flex flex-col border-b-2 border-black">
             <div className="max-w-[1400px] w-full mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex flex-col lg:flex-row gap-10 lg:gap-16 items-start lg:items-center w-full">
                     
@@ -14,14 +14,14 @@ export default function ProblemSection() {
                         </div>
 
                         {/* Headline */}
-                        <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-black text-black mb-6 leading-[1.1] uppercase font-sans w-full">
+                        <h2 className="text-2xl sm:text-4xl lg:text-5xl xl:text-6xl font-black text-black mb-3 leading-[1.1] uppercase font-sans w-full">
                             The problem isn't <br className="hidden sm:block" />
                             lack of opportunities.<br />
                             <span className="bg-accent-red text-white px-3 mt-2 inline-block transform rotate-1 origin-left border-2 border-black neo-shadow-sm">It's lack of visibility.</span>
                         </h2>
 
                         {/* Subheadline */}
-                        <p className="text-base sm:text-lg lg:text-xl text-gray-800 font-medium leading-relaxed max-w-xl mb-8 font-mono bg-white/70 p-2 sm:p-0 sm:bg-transparent border-2 border-black sm:border-none shadow-[2px_2px_0_0_rgba(0,0,0,1)] sm:shadow-none">
+                        <p className="text-xs sm:text-lg lg:text-xl text-gray-800 font-medium leading-relaxed max-w-xl mb-4 font-mono bg-white/70 p-2 sm:p-0 sm:bg-transparent border-2 border-black sm:border-none shadow-[2px_2px_0_0_rgba(0,0,0,1)] sm:shadow-none">
                             Startup credits, grants, and accelerator programs already exist.
                             But they're scattered across dozens of sites, buried in PDFs,
                             or discovered only after founders have already overspent.

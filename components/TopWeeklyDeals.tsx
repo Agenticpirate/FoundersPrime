@@ -60,7 +60,7 @@ export default function TopWeeklyDeals() {
   }
 
   return (
-    <section className="py-8 md:py-5 md:py-6 md:py-14 bg-accent-yellow border-y-2 border-black bg-opacity-90 relative">
+    <section className="py-4 md:py-10 bg-accent-yellow border-y-2 border-black bg-opacity-90 relative">
       <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-5 md:mb-6 md:mb-4 md:mb-6 gap-3 md:gap-4">
           <div>

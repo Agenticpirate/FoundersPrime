@@ -23,12 +23,12 @@ export default function ProviderSection() {
   }
 
   return (
-    <section className="py-6 md:py-10 border-b-2 border-black bg-white">
+    <section className="py-4 md:py-10 border-b-2 border-black bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="border-[3px] border-[#101622] shadow-[4px_4px_0px_0px_#101622] bg-[#fdfbf7] grid grid-cols-1 lg:grid-cols-2">
           
           {/* Left Content Area */}
-          <div className="p-6 md:p-10 lg:p-12 flex flex-col justify-center border-b-[3px] lg:border-b-0 lg:border-r-[3px] border-[#101622]">
+          <div className="p-4 md:p-10 lg:p-12 flex flex-col justify-center border-b-[3px] lg:border-b-0 lg:border-r-[3px] border-[#101622]">
             <div className="flex items-center gap-2 mb-4">
               <div className="w-8 h-8 bg-[#101622] text-white flex items-center justify-center border-[2px] border-[#101622]">
                 <span className="material-symbols-outlined text-sm">handshake</span>
@@ -36,7 +36,7 @@ export default function ProviderSection() {
               <span className="font-mono font-bold text-[10px] uppercase tracking-widest text-gray-500">For Providers</span>
             </div>
             
-            <h2 className="text-2xl md:text-4xl font-bold text-[#101622] font-mono mb-4 uppercase tracking-tight leading-none">
+            <h2 className="text-xl md:text-4xl font-bold text-[#101622] font-mono mb-3 uppercase tracking-tight leading-none">
               List Your Product.<br />
               <span className="bg-accent-yellow px-1.5 border-[2px] border-[#101622] inline-block mt-2">Zero Fees.</span>
             </h2>

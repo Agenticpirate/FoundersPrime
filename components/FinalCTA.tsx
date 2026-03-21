@@ -13,7 +13,7 @@ export default function FinalCTA() {
   }
 
   return (
-    <section className="py-8 md:py-5 md:py-6 bg-black text-white border-t-2 border-black border-b-4 border-b-accent-yellow relative overflow-hidden">
+    <section className="py-4 md:py-8 bg-black text-white border-t-2 border-black border-b-4 border-b-accent-yellow relative overflow-hidden">
       <div
         className="absolute inset-0 z-0 opacity-10 pointer-events-none"
         style={{

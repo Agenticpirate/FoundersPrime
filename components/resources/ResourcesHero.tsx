@@ -1,19 +1,19 @@
 export default function ResourcesHero() {
   return (
-    <div className="mb-6 md:mb-4 md:mb-6">
+    <div className="mb-3 md:mb-6">
       <div className="flex flex-col justify-center max-w-4xl">
-        <div className="inline-block w-fit border-2 border-black bg-accent-yellow px-2 py-0.5 md:px-3 md:py-1 font-mono text-xs font-bold uppercase tracking-wide rounded-sm mb-2 md:mb-4">
+        <div className="inline-block w-fit border-2 border-black bg-accent-yellow px-2 py-0.5 font-mono text-[10px] font-bold uppercase tracking-wide rounded-sm mb-1.5 md:mb-4">
           FREE RESOURCES
         </div>
-        <h1 className="font-mono text-2xl md:text-5xl lg:text-6xl font-bold tracking-tight text-black mb-3 md:mb-6 leading-[1.1]">
+        <h1 className="font-mono text-xl md:text-5xl lg:text-6xl font-bold tracking-tight text-black mb-1.5 md:mb-4 leading-tight">
           Startup Resources Library
         </h1>
-        <p className="font-sans text-sm md:text-xl text-gray-700 leading-relaxed max-w-3xl border-l-4 border-primary pl-3 md:pl-6 py-1">
+        <p className="font-sans text-xs md:text-xl text-gray-700 leading-relaxed max-w-3xl border-l-4 border-primary pl-3 md:pl-6">
           Access curated resources including guides, templates, tools, and courses.
         </p>
 
-        {/* Search Bar */}
-        <div className="mt-4 md:mt-4 md:mt-6 flex flex-col sm:flex-row gap-2">
+        {/* Search Bar — hidden on mobile for compactness */}
+        <div className="hidden sm:flex mt-4 md:mt-6 flex-col sm:flex-row gap-2">
           <div className="flex-1 relative">
             <span className="material-symbols-outlined absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 text-lg md:text-xl">search</span>
             <input
@@ -27,8 +27,8 @@ export default function ResourcesHero() {
           </button>
         </div>
 
-        {/* Popular Searches */}
-        <div className="mt-3 md:mt-6 flex flex-wrap gap-1.5 md:gap-2">
+        {/* Popular Searches — hidden on mobile */}
+        <div className="hidden sm:flex mt-3 md:mt-6 flex-wrap gap-1.5 md:gap-2">
           <span className="font-mono text-xs md:text-sm text-gray-500">Popular:</span>
           {['Pitch Deck', 'Business Plan', 'Legal Docs', 'Marketing'].map((term, index) => (
             <button key={index} className="px-2 py-0.5 md:px-3 md:py-1 bg-gray-100 hover:bg-gray-200 border border-black text-black font-mono text-xs rounded-sm transition-colors">
@@ -40,3 +40,4 @@ export default function ResourcesHero() {
     </div>
   )
 }
+
