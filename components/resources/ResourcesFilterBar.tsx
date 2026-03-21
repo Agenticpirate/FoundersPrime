@@ -1,14 +1,14 @@
 export default function ResourcesFilterBar() {
   return (
-    <div className="bg-white border-2 md:border-3 border-black shadow-sm md:shadow-[6px_6px_0px_0px_#1a1a1a] rounded-sm p-3 md:p-6 mb-4 md:mb-4 md:mb-6">
-      <div className="flex flex-col gap-3">
-        <div className="flex items-center gap-2">
-          <span className="material-symbols-outlined text-black text-lg md:text-xl">filter_list</span>
-          <span className="font-mono text-xs md:text-sm font-bold uppercase">Filters</span>
+    <div className="bg-white border-2 md:border-3 border-black shadow-sm md:shadow-[6px_6px_0px_0px_#1a1a1a] rounded-sm p-2 md:p-6 mb-3 md:mb-6">
+      <div className="flex flex-col gap-2 md:gap-3">
+        <div className="flex items-center gap-1.5 md:gap-2">
+          <span className="material-symbols-outlined text-black text-base md:text-xl">filter_list</span>
+          <span className="font-mono text-[10px] md:text-sm font-bold uppercase">Filters</span>
         </div>
 
-        <div className="grid grid-cols-2 sm:flex flex-wrap gap-2">
-          <select className="bg-white border-2 border-black px-2 md:px-3 py-1.5 md:py-2 font-mono text-xs md:text-sm rounded-sm focus:outline-none focus:border-primary">
+        <div className="grid grid-cols-2 sm:flex flex-wrap gap-1.5 md:gap-2">
+          <select className="bg-white border-2 border-black px-1.5 md:px-3 py-1 md:py-2 font-mono text-[10px] md:text-sm rounded-sm focus:outline-none focus:border-primary">
             <option>All Categories</option>
             <option>Business Planning</option>
             <option>Legal &amp; Compliance</option>
@@ -24,7 +24,7 @@ export default function ResourcesFilterBar() {
             <option>Industry Reports</option>
           </select>
 
-          <select className="bg-white border-2 border-black px-2 md:px-3 py-1.5 md:py-2 font-mono text-xs md:text-sm rounded-sm focus:outline-none focus:border-primary">
+          <select className="bg-white border-2 border-black px-1.5 md:px-3 py-1 md:py-2 font-mono text-[10px] md:text-sm rounded-sm focus:outline-none focus:border-primary">
             <option>All Types</option>
             <option>Templates</option>
             <option>Guides</option>
@@ -36,7 +36,7 @@ export default function ResourcesFilterBar() {
             <option>Podcasts</option>
           </select>
 
-          <select className="bg-white border-2 border-black px-2 md:px-3 py-1.5 md:py-2 font-mono text-xs md:text-sm rounded-sm focus:outline-none focus:border-primary">
+          <select className="bg-white border-2 border-black px-1.5 md:px-3 py-1 md:py-2 font-mono text-[10px] md:text-sm rounded-sm focus:outline-none focus:border-primary">
             <option>All Formats</option>
             <option>PDF</option>
             <option>Google Docs</option>
@@ -47,7 +47,7 @@ export default function ResourcesFilterBar() {
             <option>Web Tool</option>
           </select>
 
-          <select className="bg-white border-2 border-black px-2 md:px-3 py-1.5 md:py-2 font-mono text-xs md:text-sm rounded-sm focus:outline-none focus:border-primary">
+          <select className="bg-white border-2 border-black px-1.5 md:px-3 py-1 md:py-2 font-mono text-[10px] md:text-sm rounded-sm focus:outline-none focus:border-primary">
             <option>All Prices</option>
             <option>Free</option>
             <option>Under $50</option>
@@ -55,7 +55,7 @@ export default function ResourcesFilterBar() {
             <option>$200+</option>
           </select>
 
-          <select className="bg-gray-100 border-2 border-black px-2 md:px-3 py-1.5 md:py-2 font-mono text-xs md:text-sm rounded-sm focus:outline-none focus:border-primary">
+          <select className="bg-gray-100 border-2 border-black px-1.5 md:px-3 py-1 md:py-2 font-mono text-[10px] md:text-sm rounded-sm focus:outline-none focus:border-primary">
             <option>Sort by Popular</option>
             <option>Sort by Recent</option>
             <option>Sort by Rating</option>
@@ -63,7 +63,7 @@ export default function ResourcesFilterBar() {
             <option>Sort by Price</option>
           </select>
 
-          <button className="px-3 py-1.5 md:py-2 bg-white hover:bg-gray-100 border-2 border-black text-black font-mono text-xs md:text-sm rounded-sm transition-colors">
+          <button className="px-1.5 md:px-3 py-1 md:py-2 bg-white hover:bg-gray-100 border-2 border-black text-black font-mono text-[10px] md:text-sm rounded-sm transition-colors">
             Clear
           </button>
         </div>

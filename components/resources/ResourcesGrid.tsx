@@ -1,6 +1,13 @@
+'use client'
+
 import ResourceCard from './ResourceCard'
+import Pagination from '@/components/Pagination'
+import { useState } from 'react'
 
 export default function ResourcesGrid() {
+  const [currentPage, setCurrentPage] = useState(1);
+  const totalPages = 21; // Example hardcoded value keeping it consistent
+
   const resources = [
     {
       id: 'pitch-deck-template',
@@ -111,9 +118,9 @@ export default function ResourcesGrid() {
       {/* Results Header */}
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-3">
-          <h2 className="font-mono text-2xl font-bold">Showing 247 resources</h2>
-          <span className="bg-gray-200 px-2 py-1 font-mono text-xs rounded-sm border border-black">
-            Page 1 of 21
+          <h2 className="font-mono text-2xl md:text-2xl font-bold">Showing 1,247 resources</h2>
+          <span className="bg-gray-200 px-2 py-1 font-mono text-[10px] md:text-xs rounded-sm border border-black whitespace-nowrap">
+            Page {currentPage} of {totalPages}
           </span>
         </div>
         <div className="hidden md:flex gap-2">
@@ -133,28 +140,12 @@ export default function ResourcesGrid() {
         ))}
       </div>
 
-      {/* Pagination */}
-      <div className="flex items-center justify-center gap-2 mt-12">
-        <button className="px-4 py-2 bg-white border-2 border-black font-mono text-sm rounded-sm hover:bg-gray-100 disabled:opacity-50" disabled>
-          Previous
-        </button>
-        <button className="px-4 py-2 bg-black text-white border-2 border-black font-mono text-sm rounded-sm">
-          1
-        </button>
-        <button className="px-4 py-2 bg-white border-2 border-black font-mono text-sm rounded-sm hover:bg-gray-100">
-          2
-        </button>
-        <button className="px-4 py-2 bg-white border-2 border-black font-mono text-sm rounded-sm hover:bg-gray-100">
-          3
-        </button>
-        <span className="px-2 font-mono text-sm">...</span>
-        <button className="px-4 py-2 bg-white border-2 border-black font-mono text-sm rounded-sm hover:bg-gray-100">
-          21
-        </button>
-        <button className="px-4 py-2 bg-white border-2 border-black font-mono text-sm rounded-sm hover:bg-gray-100">
-          Next
-        </button>
-      </div>
+      {/* Pagination component */}
+      <Pagination 
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={setCurrentPage}
+      />
     </div>
   )
 }

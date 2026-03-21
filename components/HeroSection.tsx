@@ -135,6 +135,14 @@ export default function HeroSection() {
                     { name: 'Deel', domain: 'deel.com' },
                     { name: 'Brex', domain: 'brex.com' },
                     { name: 'Ramp', domain: 'ramp.com' },
+                    { name: 'Y Combinator', domain: 'ycombinator.com' },
+                    { name: 'Microsoft', domain: 'microsoft.com' },
+                    { name: 'MongoDB', domain: 'mongodb.com' },
+                    { name: 'Cloudflare', domain: 'cloudflare.com' },
+                    { name: 'Zendesk', domain: 'zendesk.com' },
+                    { name: 'PostHog', domain: 'posthog.com' },
+                    { name: 'Segment', domain: 'segment.com' },
+                    { name: 'Mixpanel', domain: 'mixpanel.com' },
                   ].map((b, i) => (
                     <div key={`set1-${i}`} className="flex flex-col items-center gap-1 flex-shrink-0">
                       <div className="w-9 h-9 bg-white border-2 border-black flex items-center justify-center shadow-[1px_1px_0px_0px_rgba(0,0,0,1)]">
@@ -169,6 +177,14 @@ export default function HeroSection() {
                     { name: 'Deel', domain: 'deel.com' },
                     { name: 'Brex', domain: 'brex.com' },
                     { name: 'Ramp', domain: 'ramp.com' },
+                    { name: 'Y Combinator', domain: 'ycombinator.com' },
+                    { name: 'Microsoft', domain: 'microsoft.com' },
+                    { name: 'MongoDB', domain: 'mongodb.com' },
+                    { name: 'Cloudflare', domain: 'cloudflare.com' },
+                    { name: 'Zendesk', domain: 'zendesk.com' },
+                    { name: 'PostHog', domain: 'posthog.com' },
+                    { name: 'Segment', domain: 'segment.com' },
+                    { name: 'Mixpanel', domain: 'mixpanel.com' },
                   ].map((b, i) => (
                     <div key={`set2-${i}`} className="flex flex-col items-center gap-1 flex-shrink-0">
                       <div className="w-9 h-9 bg-white border-2 border-black flex items-center justify-center shadow-[1px_1px_0px_0px_rgba(0,0,0,1)]">

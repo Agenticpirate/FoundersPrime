@@ -29,9 +29,10 @@ export default function DealsGrid({ filters }: DealsGridProps) {
   const searchParams = useSearchParams()
   const pathname = usePathname()
 
-  const { user } = useAuth()
+  const { user, loading: authLoading } = useAuth()
   const [isPro, setIsPro] = useState(false)
   const [isExplorer, setIsExplorer] = useState(false)
+  const [checkingAccess, setCheckingAccess] = useState(true)
 
   useEffect(() => {
     const checkAccess = async () => {
@@ -43,9 +44,13 @@ export default function DealsGrid({ filters }: DealsGridProps) {
         setIsPro(false)
         setIsExplorer(false)
       }
+      setCheckingAccess(false)
     }
-    checkAccess()
-  }, [user])
+
+    if (!authLoading) {
+      checkAccess()
+    }
+  }, [user, authLoading])
 
   const [deals, setDeals] = useState<Deal[]>(globalDealsCache || [])
   const [filteredDeals, setFilteredDeals] = useState<Deal[]>([])
@@ -250,9 +255,20 @@ export default function DealsGrid({ filters }: DealsGridProps) {
       deal.timeToApply !== 'Varies' &&
       deal.verified
 
+    const providerUrl = deal.providerWebsite || getStartupProgramUrl(deal.provider);
+    let logoFallback = `https://ui-avatars.com/api/?name=${encodeURIComponent(deal.provider)}&background=f3f4f6&color=1f2937&size=48`;
+    if (providerUrl) {
+      try {
+        const domain = new URL(providerUrl).hostname;
+        logoFallback = `https://www.google.com/s2/favicons?domain=${domain}&sz=128`;
+      } catch (e) {
+        // Ignore invalid URL
+      }
+    }
+
     return {
       id: deal.slug,
-      logo: deal.logoUrl || `https://ui-avatars.com/api/?name=${encodeURIComponent(deal.provider)}&background=f3f4f6&color=1f2937&size=48`,
+      logo: deal.logoUrl || logoFallback,
       category: category?.name || deal.category,
       badge,
       badgeColor,
@@ -313,7 +329,7 @@ export default function DealsGrid({ filters }: DealsGridProps) {
       </div>
 
       {/* No Results */}
-      {!loading && filteredDeals.length === 0 && (
+      {!loading && !authLoading && !checkingAccess && filteredDeals.length === 0 && (
         <div className="text-center py-6 bg-white border-3 border-ink shadow-hard-sm">
           <span className="material-symbols-outlined text-6xl text-gray-300 mb-4 block">search_off</span>
           <h3 className="text-xl font-bold text-gray-700 mb-2">No deals found</h3>
@@ -333,7 +349,7 @@ export default function DealsGrid({ filters }: DealsGridProps) {
       )}
 
       {/* Loading State */}
-      {loading && (
+      {(loading || authLoading || checkingAccess) && (
         <div className="text-center py-6 bg-white border-3 border-ink shadow-hard-sm">
           <div className="animate-spin rounded-full h-12 w-12 border-4 border-primary border-t-transparent mx-auto mb-4"></div>
           <h3 className="text-xl font-bold text-gray-700 mb-2">Loading deals...</h3>
@@ -342,7 +358,7 @@ export default function DealsGrid({ filters }: DealsGridProps) {
       )}
 
       {/* Deals Grid or Lock CTA */}
-      {!loading && filteredDeals.length > 0 && (() => {
+      {!loading && !authLoading && !checkingAccess && filteredDeals.length > 0 && (() => {
         // Enforce pagination limits based on plan and category
         let isLocked = false;
         let lockTitle = "Unlock More Deals";

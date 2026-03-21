@@ -46,18 +46,22 @@ export default function DealCard({ deal, basePath = '/deals', overrideHref }: De
 
   // Use overrideHref if provided (e.g. redirect non-Pro users to /pricing)
   const href = overrideHref ?? `${basePath}/${id}`
-  const isExternal = false
+  const isExternal = href.startsWith('http')
 
-  const linkProps = {
+  const linkProps = isExternal ? {
+    href,
+    target: "_blank",
+    rel: "noopener noreferrer"
+  } : {
     href
   }
 
   const LinkComponent = isExternal ? 'a' : Link
 
   return (
-    <LinkComponent
+      <LinkComponent
       {...linkProps}
-      className="flex flex-col bg-white border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all duration-200 overflow-hidden group relative h-full focus:outline-none focus:ring-4 focus:ring-accent-yellow focus:ring-offset-2"
+      className="flex flex-col bg-white border-2 md:border-4 border-black shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] md:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] md:hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all duration-200 overflow-hidden group relative h-full focus:outline-none focus:ring-4 focus:ring-accent-yellow focus:ring-offset-2"
       aria-label={`View details for ${title}`}
       tabIndex={0}
     >
