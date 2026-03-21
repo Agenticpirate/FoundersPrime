@@ -14,15 +14,25 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'en_US',
     url: 'https://www.foundersprime.com',
-    title: 'FoundersPrime | The Intelligence Terminal for Startups',
-    description: 'Access 500+ verified deals, non-dilutive grants, and startup credits worth $500k+.',
+    title: 'FoundersPrime | Free Credits. Real Grants. Zero Dilution.',
+    description: 'Access 1000+ verified deals, non-dilutive grants, and startup credits worth $500K+. Built for modern founders.',
     siteName: 'FoundersPrime',
+    images: [
+      {
+        url: '/og-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'FoundersPrime — Free Credits. Real Grants. Zero Dilution.',
+        type: 'image/png',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'FoundersPrime | The Intelligence Terminal for Startups',
-    description: 'Access 500+ verified deals, non-dilutive grants, and startup credits worth $500k+.',
+    title: 'FoundersPrime | Free Credits. Real Grants. Zero Dilution.',
+    description: 'Access 1000+ verified deals, non-dilutive grants, and startup credits worth $500K+.',
     creator: '@foundersprime',
+    images: ['/og-image.png'],
   },
   icons: {
     icon: '/icon.svg',
@@ -34,6 +44,7 @@ export const metadata: Metadata = {
     },
   },
 }
+
 
 const jsonLd = {
   '@context': 'https://schema.org',
