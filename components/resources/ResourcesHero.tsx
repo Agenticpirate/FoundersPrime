@@ -2,14 +2,14 @@ export default function ResourcesHero() {
   return (
     <div className="mb-3 md:mb-6">
       <div className="flex flex-col justify-center max-w-4xl">
-        <div className="inline-block w-fit border-2 border-black bg-accent-yellow px-2 py-0.5 font-mono text-[10px] font-bold uppercase tracking-wide rounded-sm mb-1.5 md:mb-4">
-          FREE RESOURCES
+        <div className="inline-block w-fit border-2 border-black bg-black text-white px-2 py-0.5 font-mono text-[10px] font-bold uppercase tracking-wide rounded-sm mb-1.5 md:mb-4">
+          Coming Soon
         </div>
         <h1 className="font-mono text-xl md:text-5xl lg:text-6xl font-bold tracking-tight text-black mb-1.5 md:mb-4 leading-tight">
           Startup Resources Library
         </h1>
-        <p className="font-sans text-xs md:text-xl text-gray-700 leading-relaxed max-w-3xl border-l-4 border-primary pl-3 md:pl-6">
-          Access curated resources including guides, templates, tools, and courses.
+        <p className="font-sans text-xs md:text-xl text-gray-700 leading-relaxed max-w-3xl border-l-4 border-black pl-3 md:pl-6">
+          We&apos;re building something great here. Premium startup resources are on the way &mdash; guides, templates, tools and more.
         </p>
 
         {/* Search Bar — hidden on mobile for compactness */}
