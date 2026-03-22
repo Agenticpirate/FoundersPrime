@@ -1,4 +1,3 @@
-import ContactHeader from '@/components/contact/ContactHeader'
 import ContactHero from '@/components/contact/ContactHero'
 import ContactForm from '@/components/contact/ContactForm'
 import ContactInfo from '@/components/contact/ContactInfo'
@@ -12,7 +11,6 @@ export default function ContactPage() {
       <Header />
       <main className="flex-1">
         <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-8 py-8">
-          <ContactHeader />
           <ContactHero />
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-4">
             <div className="lg:col-span-2">

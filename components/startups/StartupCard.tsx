@@ -34,27 +34,40 @@ const FounderAvatar = ({ founder }: { founder: { name: string, avatar?: string }
 };
 
 export default function StartupCard({ company }: StartupCardProps) {
-  const [imgSrc, setImgSrc] = useState<string | null>(company.small_logo_thumb_url || null);
-  const [hasError, setHasError] = useState(false);
+  const getInitialLogoSrc = () => {
+    // Priority: small_logo_thumb_url → Clearbit from website → null
+    if (company.small_logo_thumb_url) return company.small_logo_thumb_url
+    if (company.website) {
+      try {
+        const domain = new URL(company.website).hostname
+        return `https://logo.clearbit.com/${domain}`
+      } catch { return null }
+    }
+    return null
+  }
+
+  const [imgSrc, setImgSrc] = useState<string | null>(getInitialLogoSrc())
+  const [triedFallback, setTriedFallback] = useState(false)
 
   useEffect(() => {
-    setImgSrc(company.small_logo_thumb_url || null);
-    setHasError(false);
-  }, [company.small_logo_thumb_url]);
+    setImgSrc(getInitialLogoSrc())
+    setTriedFallback(false)
+  }, [company.small_logo_thumb_url, company.website])
 
   const handleImageError = () => {
-    if (!hasError && company.website) {
+    if (!triedFallback && company.website) {
        try {
-           const domain = new URL(company.website).hostname;
-           setImgSrc(`https://www.google.com/s2/favicons?domain=${domain}&sz=128`);
-           setHasError(true); // Prevent infinite loop if fallback also fails
-       } catch (e) {
-           setImgSrc(null);
+           const domain = new URL(company.website).hostname
+           // Try Google Favicon (sz=128 for higher quality) as second fallback
+           setImgSrc(`https://www.google.com/s2/favicons?domain=${domain}&sz=128`)
+           setTriedFallback(true)
+       } catch {
+           setImgSrc(null)
        }
     } else {
-       setImgSrc(null);
+       setImgSrc(null)
     }
-  };
+  }
 
   return (
     <motion.div

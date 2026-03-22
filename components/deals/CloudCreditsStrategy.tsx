@@ -7,81 +7,63 @@ export default function CloudCreditsStrategy() {
   ]
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 md:gap-6 mb-4 md:mb-6 md:mb-10">
+    <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 mb-4 md:mb-6">
       <div className="lg:col-span-8">
         <div className="bg-white border-2 border-black shadow-[4px_4px_0px_0px_#1a1a1a] rounded-sm p-4 md:p-6 relative overflow-hidden">
-          {/* Decorative background pattern */}
+          {/* Decorative bg */}
           <div className="absolute top-0 right-0 p-4 opacity-5 pointer-events-none">
-            <span className="material-symbols-outlined text-[200px]">strategy</span>
+            <span className="material-symbols-outlined text-[120px]">strategy</span>
           </div>
 
-          <h2 className="font-mono text-xl md:text-3xl font-bold text-black mb-4 flex items-center gap-3">
-            <span className="bg-black text-white size-10 flex items-center justify-center text-xl rounded-sm">1</span>
+          <h2 className="font-mono text-lg md:text-2xl font-bold text-black mb-3 flex items-center gap-2">
+            <span className="bg-black text-white size-7 md:size-8 flex items-center justify-center text-sm rounded-sm">1</span>
             How to Maximize Credits
           </h2>
 
           <div className="prose prose-neutral max-w-none">
-            <h3 className="font-mono text-xl font-bold uppercase mb-4 text-primary bg-black inline-block px-2 text-white">
+            <h3 className="font-mono text-sm font-bold uppercase mb-2 text-primary bg-black inline-block px-2 text-white">
               The Stacking Strategy
             </h3>
-            <p className="font-sans text-gray-700 mb-6 text-lg">
+            <p className="font-sans text-gray-700 mb-3 text-sm">
               Most cloud providers do not require exclusivity. You can (and should) apply for credits across multiple platforms to diversify your infrastructure and extend your runway.
             </p>
 
-            <div className="bg-gray-100 border-2 border-dashed border-gray-400 p-6 rounded-sm mb-4 md:mb-6">
-              <p className="font-mono text-xs font-bold text-gray-500 uppercase mb-3">Example Stack</p>
-              <ul className="space-y-3 font-mono text-sm md:text-base">
+            <div className="bg-gray-100 border-2 border-dashed border-gray-400 p-3 md:p-4 rounded-sm mb-3">
+              <p className="font-mono text-xs font-bold text-gray-500 uppercase mb-2">Example Stack</p>
+              <ul className="space-y-2 font-mono text-xs md:text-sm">
                 {stackingExample.map((item, index) => (
-                  <li key={index} className="flex justify-between items-center border-b border-gray-300 pb-2">
+                  <li key={index} className="flex justify-between items-center border-b border-gray-300 pb-1.5 last:border-b-0">
                     <span>{item.name}</span>
                     <span className="font-bold">{item.value}</span>
                   </li>
                 ))}
-                <li className="flex justify-between items-center pt-2 text-primary font-bold text-lg">
+                <li className="flex justify-between items-center pt-1.5 text-primary font-bold text-sm">
                   <span>TOTAL POTENTIAL</span>
                   <span>$460,000+</span>
                 </li>
               </ul>
             </div>
 
-            <h3 className="font-mono text-xl font-bold uppercase mb-4 text-primary bg-black inline-block px-2 text-white">
+            <h3 className="font-mono text-sm font-bold uppercase mb-2 text-primary bg-black inline-block px-2 text-white">
               When to Apply
             </h3>
-            <p className="font-sans text-gray-700 text-lg">
-              Timing is critical. Most credits expire after 12 or 24 months. Do not apply until you are ready to deploy infrastructure, or you will burn validity time while developing locally.
+            <p className="font-sans text-gray-700 text-sm">
+              Timing is critical. Most credits expire after 12–24 months. Do not apply until you are ready to deploy infrastructure.
             </p>
           </div>
         </div>
       </div>
 
-      <div className="lg:col-span-4 space-y-6">
-        {/* Pro Tip Card */}
-        <div className="bg-accent-yellow border-2 border-black shadow-[4px_4px_0px_0px_#1a1a1a] rounded-sm p-6 relative overflow-hidden">
-          <div className="absolute -right-6 -top-6 bg-white border-2 border-black rounded-full p-2 size-20 flex items-end justify-center">
-            <span className="material-symbols-outlined text-4xl mb-1">lightbulb</span>
+      <div className="lg:col-span-4">
+        {/* Pro Tip Card — compact */}
+        <div className="bg-accent-yellow border-2 border-black shadow-[4px_4px_0px_0px_#1a1a1a] rounded-sm p-4 relative overflow-hidden">
+          <div className="absolute -right-4 -top-4 bg-white border-2 border-black rounded-full p-1 size-12 flex items-end justify-center">
+            <span className="material-symbols-outlined text-xl mb-0.5">lightbulb</span>
           </div>
-          <h3 className="font-mono text-2xl font-bold mb-4 uppercase">Pro Tip</h3>
-          <p className="font-mono text-sm leading-relaxed font-medium">
-            Check if your VC firm, Accelerator (Y Combinator, Techstars), or Incubator has a specific partnership code. These often bypass the standard application queue and offer higher tier credits (e.g., jumping straight to $100k tier).
+          <h3 className="font-mono text-base font-bold mb-2 uppercase">Pro Tip</h3>
+          <p className="font-mono text-xs leading-relaxed font-medium">
+            Check if your VC firm or Accelerator (YC, Techstars) has a partnership code. These often bypass the standard queue and offer higher tier credits (e.g., jumping straight to $100k tier).
           </p>
-        </div>
-
-        {/* Newsletter / CTA Card */}
-        <div className="bg-black text-white border-2 border-black shadow-[4px_4px_0px_0px_#1a1a1a] rounded-sm p-6">
-          <h3 className="font-mono text-xl font-bold mb-3 text-primary">Don't Miss New Deals</h3>
-          <p className="font-sans text-gray-300 mb-6 text-sm">
-            We add ~3 new credit programs every week. Get the weekly digest.
-          </p>
-          <div className="flex flex-col gap-3">
-            <input
-              className="w-full bg-gray-800 border-2 border-gray-700 text-white px-4 py-2 font-mono text-sm focus:outline-none focus:border-primary focus:ring-0 placeholder:text-gray-500 rounded-sm"
-              placeholder="founder@foundersprime.com"
-              type="email"
-            />
-            <button className="w-full py-2 text-sm uppercase bg-primary hover:bg-white border-3 border-white text-black font-mono font-bold rounded-sm shadow-[4px_4px_0px_0px_#888] hover:shadow-[2px_2px_0px_0px_#888] hover:translate-x-[2px] hover:translate-y-[2px] transition-all">
-              Subscribe
-            </button>
-          </div>
         </div>
       </div>
     </div>

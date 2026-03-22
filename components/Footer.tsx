@@ -1,5 +1,4 @@
 import Link from 'next/link'
-import Image from 'next/image'
 import GoogleTranslate from './GoogleTranslate'
 
 export default function Footer() {
@@ -61,12 +60,12 @@ export default function Footer() {
           <div className="flex flex-col gap-2 lg:max-w-[240px]">
             <Link href="/" className="inline-flex items-center gap-2 no-underline w-fit">
               <div className="w-[16px] h-[16px] relative flex-shrink-0">
-                <Image
+                <img
                   src="/logo.svg"
                   alt="FoundersPrime Logo"
-                  fill
-                  className="object-contain"
-                  sizes="18px"
+                  width={16}
+                  height={16}
+                  className="object-contain w-full h-full"
                 />
               </div>
               <span className="font-mono font-bold text-[13px] tracking-widest text-[#0a0a0a] uppercase">

@@ -1,5 +1,6 @@
 "use client";
 
+import Link from 'next/link';
 import { useMemo } from 'react';
 import startupsData from "@/data/yc_companies_2024_2026.json";
 
@@ -14,7 +15,27 @@ export default function StartupsHeader() {
   ];
 
   return (
-    <div className="mb-6 md:mb-4 md:mb-6">
+    <div className="mb-4 md:mb-6">
+      {/* Breadcrumb */}
+      <nav aria-label="Breadcrumb" className="flex mb-3">
+        <ol className="inline-flex items-center space-x-1 font-mono text-sm font-medium">
+          <li className="inline-flex items-center">
+            <Link className="text-gray-500 hover:text-black" href="/">Home</Link>
+          </li>
+          <li>
+            <div className="flex items-center">
+              <span className="material-symbols-outlined text-gray-400 text-base mx-1">chevron_right</span>
+              <Link className="text-gray-500 hover:text-black" href="/resources">Resources</Link>
+            </div>
+          </li>
+          <li aria-current="page">
+            <div className="flex items-center">
+              <span className="material-symbols-outlined text-gray-400 text-base mx-1">chevron_right</span>
+              <span className="text-black bg-primary/20 px-2 py-0.5 rounded-sm border border-black">Verified Startups</span>
+            </div>
+          </li>
+        </ol>
+      </nav>
       {/* Compact Header */}
       <div className="mb-6 md:mb-4 md:mb-6">
         <div className="inline-block border-2 border-black bg-accent-yellow px-2 py-0.5 font-mono text-[10px] font-bold uppercase tracking-wide rounded-sm mb-2">
@@ -28,30 +49,30 @@ export default function StartupsHeader() {
         </p>
       </div>
 
-      {/* Stats Bar */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4 md:mb-6">
-        <div className="bg-white border-2 border-black shadow-[3px_3px_0px_0px_#1a1a1a] rounded-sm p-4 flex items-center justify-between hover:shadow-[4px_4px_0px_0px_#1a1a1a] hover:-translate-x-px hover:-translate-y-px transition-all">
+      {/* Stats Bar — always 3-col on mobile */}
+      <div className="grid grid-cols-3 gap-2 md:gap-4 mb-4">
+        <div className="bg-white border-2 border-black shadow-[3px_3px_0px_0px_#1a1a1a] rounded-sm p-2 md:p-4 flex items-center justify-between hover:shadow-[4px_4px_0px_0px_#1a1a1a] transition-all">
           <div>
-            <p className="font-mono text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-1">Verified Companies</p>
-            <p className="font-mono text-2xl font-bold text-black">{activeStartupsCount}</p>
+            <p className="font-mono text-[9px] md:text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-0.5">Verified</p>
+            <p className="font-mono text-xl md:text-2xl font-bold text-black">{activeStartupsCount}</p>
           </div>
-          <span className="material-symbols-outlined text-2xl text-black">verified</span>
+          <span className="material-symbols-outlined text-xl text-black hidden sm:block">verified</span>
         </div>
 
-        <div className="bg-black text-white border-2 border-black shadow-[3px_3px_0px_0px_#1a1a1a] rounded-sm p-4 flex items-center justify-between hover:shadow-[4px_4px_0px_0px_#1a1a1a] hover:-translate-x-px hover:-translate-y-px transition-all">
+        <div className="bg-black text-white border-2 border-black shadow-[3px_3px_0px_0px_#1a1a1a] rounded-sm p-2 md:p-4 flex items-center justify-between hover:shadow-[4px_4px_0px_0px_#1a1a1a] transition-all">
           <div>
-            <p className="font-mono text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">Total Valuation</p>
-            <p className="font-mono text-2xl font-bold text-white">$4.2B+</p>
+            <p className="font-mono text-[9px] md:text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-0.5">Valuation</p>
+            <p className="font-mono text-xl md:text-2xl font-bold text-white">$4.2B+</p>
           </div>
-          <span className="material-symbols-outlined text-2xl text-primary">trending_up</span>
+          <span className="material-symbols-outlined text-xl text-primary hidden sm:block">trending_up</span>
         </div>
 
-        <div className="bg-white border-2 border-black shadow-[3px_3px_0px_0px_#1a1a1a] rounded-sm p-4 flex items-center justify-between hover:shadow-[4px_4px_0px_0px_#1a1a1a] hover:-translate-x-px hover:-translate-y-px transition-all">
+        <div className="bg-white border-2 border-black shadow-[3px_3px_0px_0px_#1a1a1a] rounded-sm p-2 md:p-4 flex items-center justify-between hover:shadow-[4px_4px_0px_0px_#1a1a1a] transition-all">
           <div>
-            <p className="font-mono text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-1">Avg Seed Round</p>
-            <p className="font-mono text-2xl font-bold text-black">$3.5M</p>
+            <p className="font-mono text-[9px] md:text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-0.5">Avg Seed</p>
+            <p className="font-mono text-xl md:text-2xl font-bold text-black">$3.5M</p>
           </div>
-          <span className="material-symbols-outlined text-2xl text-black">paid</span>
+          <span className="material-symbols-outlined text-xl text-black hidden sm:block">paid</span>
         </div>
       </div>
 

@@ -256,7 +256,7 @@ export default function Pricing3DTestimonials() {
                 </div>
 
                 {/* Mobile dot indicators */}
-                <div className="flex md:hidden justify-center gap-1.5 mt-3 mb-2">
+                <div className="flex md:hidden justify-center items-center gap-1.5 mt-3 mb-2">
                     {Array.from({ length: totalMobile }).map((_, i) => (
                         <button
                             key={i}
@@ -268,7 +268,7 @@ export default function Pricing3DTestimonials() {
                                     el.scrollTo({ left: i * cardWidth, behavior: 'smooth' })
                                 }
                             }}
-                            className={`rounded-full transition-all duration-300 ${i === activeIdx ? 'w-5 h-2 bg-[#111111] shadow-sm' : 'w-2 h-2 bg-gray-200 hover:bg-gray-400'}`}
+                            className={`rounded-full transition-all duration-300 ${i === activeIdx ? 'w-4 h-1.5 bg-[#111111]' : 'w-1.5 h-1.5 bg-gray-300 hover:bg-gray-500'}`}
                         />
                     ))}
                 </div>

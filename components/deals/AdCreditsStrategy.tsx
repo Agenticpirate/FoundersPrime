@@ -7,112 +7,94 @@ export default function AdCreditsStrategy() {
   ]
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 md:gap-6 mb-4 md:mb-6 md:mb-10">
+    <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 mb-4 md:mb-6">
       <div className="lg:col-span-8">
         <div className="bg-white border-2 border-black shadow-[4px_4px_0px_0px_#1a1a1a] rounded-sm p-4 md:p-6 relative overflow-hidden">
-          {/* Decorative background pattern */}
+          {/* Decorative bg */}
           <div className="absolute top-0 right-0 p-4 opacity-5 pointer-events-none">
-            <span className="material-symbols-outlined text-[200px]">campaign</span>
+            <span className="material-symbols-outlined text-[120px]">campaign</span>
           </div>
 
-          <h2 className="font-mono text-xl md:text-3xl font-bold text-black mb-4 flex items-center gap-3">
-            <span className="bg-black text-white size-10 flex items-center justify-center text-xl rounded-sm">1</span>
+          <h2 className="font-mono text-lg md:text-2xl font-bold text-black mb-3 flex items-center gap-2">
+            <span className="bg-black text-white size-7 md:size-8 flex items-center justify-center text-sm rounded-sm">1</span>
             Ad Credit Allocation Strategy
           </h2>
 
           <div className="prose prose-neutral max-w-none">
-            <h3 className="font-mono text-xl font-bold uppercase mb-4 text-primary bg-black inline-block px-2 text-white">
+            <h3 className="font-mono text-sm font-bold uppercase mb-2 text-primary bg-black inline-block px-2 text-white">
               Smart Budget Distribution
             </h3>
-            <p className="font-sans text-gray-700 mb-6 text-lg">
-              Don't spread your ad credits too thin. Focus on 2-3 platforms where your target customers spend time. Start with high-intent channels like Google Ads, then expand to broader awareness platforms like Meta and LinkedIn.
+            <p className="font-sans text-gray-700 mb-3 text-sm">
+              Don't spread your ad credits too thin. Focus on 2–3 platforms where your target customers spend time. Start with high-intent channels like Google Ads, then expand to broader awareness platforms.
             </p>
 
-            <div className="bg-gray-100 border-2 border-dashed border-gray-400 p-6 rounded-sm mb-4 md:mb-6">
-              <p className="font-mono text-xs font-bold text-gray-500 uppercase mb-4">Recommended Allocation</p>
-              <div className="space-y-4">
+            <div className="bg-gray-100 border-2 border-dashed border-gray-400 p-3 rounded-sm mb-3">
+              <p className="font-mono text-xs font-bold text-gray-500 uppercase mb-2">Recommended Allocation</p>
+              <div className="space-y-2">
                 {adSpendStrategy.map((item, index) => (
-                  <div key={index} className="flex items-center gap-4 border-b border-gray-300 pb-3 last:border-b-0">
-                    <div className="bg-primary text-black size-8 flex items-center justify-center text-sm font-bold rounded-sm flex-shrink-0">
+                  <div key={index} className="flex items-center gap-3 border-b border-gray-300 pb-2 last:border-b-0">
+                    <div className="bg-primary text-black size-7 flex items-center justify-center text-xs font-bold rounded-sm flex-shrink-0">
                       {item.allocation}
                     </div>
                     <div className="flex-1">
-                      <div className="flex justify-between items-center mb-1">
-                        <span className="font-mono font-bold text-sm">{item.platform}</span>
+                      <div className="flex justify-between items-center">
+                        <span className="font-mono font-bold text-xs">{item.platform}</span>
                       </div>
-                      <p className="font-sans text-sm text-gray-600">{item.reason}</p>
+                      <p className="font-sans text-xs text-gray-600">{item.reason}</p>
                     </div>
                   </div>
                 ))}
               </div>
             </div>
 
-            <h3 className="font-mono text-xl font-bold uppercase mb-4 text-primary bg-black inline-block px-2 text-white">
+            <h3 className="font-mono text-sm font-bold uppercase mb-2 text-primary bg-black inline-block px-2 text-white">
               Credit Expiration Management
             </h3>
-            <p className="font-sans text-gray-700 text-lg">
-              Most ad credits expire within 30-90 days of activation. Plan your campaigns in advance and have creative assets ready. Don't activate credits until you're prepared to spend them effectively.
+            <p className="font-sans text-gray-700 text-sm">
+              Most ad credits expire within 30–90 days of activation. Plan your campaigns in advance and have creative assets ready before activating.
             </p>
           </div>
         </div>
       </div>
 
-      <div className="lg:col-span-4 space-y-6">
-        {/* Pro Tip Card */}
-        <div className="bg-accent-yellow border-2 border-black shadow-[4px_4px_0px_0px_#1a1a1a] rounded-sm p-6 relative overflow-hidden">
-          <div className="absolute -right-6 -top-6 bg-white border-2 border-black rounded-full p-2 size-20 flex items-end justify-center">
-            <span className="material-symbols-outlined text-4xl mb-1">target</span>
+      <div className="lg:col-span-4 space-y-3">
+        {/* Pro Tip Card — compact */}
+        <div className="bg-accent-yellow border-2 border-black shadow-[4px_4px_0px_0px_#1a1a1a] rounded-sm p-4 relative overflow-hidden">
+          <div className="absolute -right-4 -top-4 bg-white border-2 border-black rounded-full p-1 size-12 flex items-end justify-center">
+            <span className="material-symbols-outlined text-xl mb-0.5">target</span>
           </div>
-          <h3 className="font-mono text-2xl font-bold mb-4 uppercase">Pro Tip</h3>
-          <p className="font-mono text-sm leading-relaxed font-medium">
-            Set up conversion tracking BEFORE activating credits. Without proper attribution, you'll waste money on campaigns that don't convert. Most platforms require 7-14 days of data to optimize effectively.
+          <h3 className="font-mono text-base font-bold mb-2 uppercase">Pro Tip</h3>
+          <p className="font-mono text-xs leading-relaxed font-medium">
+            Set up conversion tracking BEFORE activating credits. Without proper attribution, you'll waste money. Most platforms require 7–14 days of data to optimize effectively.
           </p>
         </div>
 
-        {/* Platform Types Card */}
-        <div className="bg-black text-white border-2 border-black shadow-[4px_4px_0px_0px_#1a1a1a] rounded-sm p-6">
-          <h3 className="font-mono text-xl font-bold mb-3 text-primary">Platform Categories</h3>
-          <div className="space-y-3 text-sm">
-            <div className="flex justify-between">
-              <span className="text-gray-300">Search Ads</span>
-              <span className="font-bold">8 platforms</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-gray-300">Social Media</span>
-              <span className="font-bold">12 platforms</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-gray-300">Display/Video</span>
-              <span className="font-bold">9 platforms</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-gray-300">B2B Focused</span>
-              <span className="font-bold">6 platforms</span>
-            </div>
+        {/* Platform Types — compact, no deal counts */}
+        <div className="bg-black text-white border-2 border-black shadow-[4px_4px_0px_0px_#1a1a1a] rounded-sm p-4">
+          <h3 className="font-mono text-sm font-bold mb-2 text-primary uppercase">Platform Categories</h3>
+          <div className="space-y-1.5 text-xs">
+            {['Search Ads', 'Social Media', 'Display / Video', 'B2B Focused'].map(cat => (
+              <div key={cat} className="flex items-center gap-2 py-1 border-b border-gray-800 last:border-b-0">
+                <span className="material-symbols-outlined text-xs text-primary">arrow_right</span>
+                <span className="text-gray-200">{cat}</span>
+              </div>
+            ))}
           </div>
-          <div className="mt-6 pt-4 border-t border-gray-700">
-            <p className="text-xs text-gray-400 font-mono">
-              💡 Search ads typically have the highest conversion rates
-            </p>
-          </div>
+          <p className="text-xs text-gray-400 font-mono mt-3 pt-2 border-t border-gray-700">
+            💡 Search ads typically have the highest conversion rates
+          </p>
         </div>
 
-        {/* Credit Terms Card */}
-        <div className="bg-white border-2 border-black shadow-[4px_4px_0px_0px_#1a1a1a] rounded-sm p-6">
-          <h3 className="font-mono text-xl font-bold mb-3">Typical Terms</h3>
-          <div className="space-y-3 text-sm">
-            <div className="flex justify-between">
-              <span className="text-gray-600">Credit Range</span>
-              <span className="font-bold">$500-$20K</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-gray-600">Expiration</span>
-              <span className="font-bold">30-90 days</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-gray-600">Min Spend</span>
-              <span className="font-bold">Usually $25-100</span>
-            </div>
+        {/* Typical Terms — compact */}
+        <div className="bg-white border-2 border-black shadow-[4px_4px_0px_0px_#1a1a1a] rounded-sm p-4">
+          <h3 className="font-mono text-sm font-bold mb-2">Typical Terms</h3>
+          <div className="space-y-1.5 text-xs">
+            {[['Credit Range', '$500–$20K'], ['Expiration', '30–90 days'], ['Min Spend', '$25–$100']].map(([label, val]) => (
+              <div key={label} className="flex justify-between py-1 border-b border-gray-100 last:border-b-0">
+                <span className="text-gray-600">{label}</span>
+                <span className="font-bold">{val}</span>
+              </div>
+            ))}
           </div>
         </div>
       </div>

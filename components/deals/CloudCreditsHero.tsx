@@ -21,7 +21,7 @@ export default function CloudCreditsHero() {
             <p className="font-mono text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-1">Total Value</p>
             <p className="font-mono text-2xl font-bold text-black">$2.4M+</p>
           </div>
-          <span className="material-symbols-outlined text-2xl text-black">payments</span>
+          <span className="material-symbols-outlined text-2xl text-black hidden sm:block">payments</span>
         </div>
 
         <div className="bg-black text-white border-2 border-black shadow-[3px_3px_0px_0px_#1a1a1a] rounded-sm p-2 md:p-4 flex items-center justify-between hover:shadow-[4px_4px_0px_0px_#1a1a1a] hover:-translate-x-px hover:-translate-y-px transition-all">
@@ -29,7 +29,7 @@ export default function CloudCreditsHero() {
             <p className="font-mono text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">Programs</p>
             <p className="font-mono text-2xl font-bold text-white">15+</p>
           </div>
-          <span className="material-symbols-outlined text-2xl text-primary">inventory_2</span>
+          <span className="material-symbols-outlined text-2xl text-primary hidden sm:block">inventory_2</span>
         </div>
 
         <div className="bg-white border-2 border-black shadow-[3px_3px_0px_0px_#1a1a1a] rounded-sm p-2 md:p-4 flex items-center justify-between hover:shadow-[4px_4px_0px_0px_#1a1a1a] hover:-translate-x-px hover:-translate-y-px transition-all">
@@ -37,7 +37,7 @@ export default function CloudCreditsHero() {
             <p className="font-mono text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-1">Providers</p>
             <p className="font-mono text-2xl font-bold text-black">40+</p>
           </div>
-          <span className="material-symbols-outlined text-2xl text-black">public</span>
+          <span className="material-symbols-outlined text-2xl text-black hidden sm:block">public</span>
         </div>
       </div>
     </div>

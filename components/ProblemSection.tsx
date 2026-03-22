@@ -1,6 +1,38 @@
+'use client'
+
 import Link from 'next/link'
+import { useRef, useState, useEffect } from 'react'
 
 export default function ProblemSection() {
+    const scrollRef = useRef<HTMLDivElement>(null)
+    const [activeIdx, setActiveIdx] = useState(0)
+    const isTouch = useRef(false)
+    const CARD_COUNT = 4
+
+    // Auto-advance every 3 seconds on mobile
+    useEffect(() => {
+        const interval = setInterval(() => {
+            if (isTouch.current) return
+            const container = scrollRef.current
+            if (!container) return
+            const next = (activeIdx + 1) % CARD_COUNT
+            const card = container.children[next] as HTMLElement
+            if (card) {
+                container.scrollTo({ left: card.offsetLeft - 16, behavior: 'smooth' })
+                setActiveIdx(next)
+            }
+        }, 3000)
+        return () => clearInterval(interval)
+    }, [activeIdx])
+
+    const handleScroll = () => {
+        const container = scrollRef.current
+        if (!container) return
+        const cardWidth = (container.children[0] as HTMLElement)?.offsetWidth || 0
+        const idx = Math.round(container.scrollLeft / (cardWidth + 16))
+        setActiveIdx(Math.min(idx, CARD_COUNT - 1))
+    }
+
     return (
         <section className="relative py-4 md:py-8 lg:py-10 overflow-hidden grid-bg flex flex-col border-b-2 border-black">
             <div className="max-w-[1400px] w-full mx-auto px-4 sm:px-6 lg:px-8">
@@ -39,8 +71,14 @@ export default function ProblemSection() {
 
                     {/* Right side: Cards */}
                     <div className="flex-1 w-full lg:max-w-[45%]">
-                        {/* Insights — horizontal scroll on mobile, 2x2 grid on sm+ */}
-                        <div className="flex sm:grid sm:grid-cols-2 gap-4 sm:gap-5 w-full text-left overflow-x-auto snap-x snap-mandatory pb-4 pt-2 -mx-4 px-4 sm:mx-0 sm:px-0 sm:pb-0 sm:pt-0 scroll-smooth mobile-scroll-hide">
+                        {/* Insights — horizontal auto-scroll on mobile, 2x2 grid on sm+ */}
+                        <div
+                            ref={scrollRef}
+                            onScroll={handleScroll}
+                            onTouchStart={() => { isTouch.current = true }}
+                            onTouchEnd={() => { setTimeout(() => { isTouch.current = false }, 2000) }}
+                            className="flex sm:grid sm:grid-cols-2 gap-4 sm:gap-5 w-full text-left overflow-x-auto snap-x snap-mandatory pb-4 pt-2 -mx-4 px-4 sm:mx-0 sm:px-0 sm:pb-0 sm:pt-0 scroll-smooth mobile-scroll-hide"
+                        >
                             
                             {/* Insight 1 */}
                             <div className="border-2 border-black p-5 lg:p-6 bg-accent-yellow neo-shadow hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all snap-start shrink-0 w-[85vw] sm:w-auto h-full flex flex-col justify-start relative group">
@@ -88,12 +126,21 @@ export default function ProblemSection() {
 
                         </div>
 
-                        {/* Scroll dots — mobile only */}
+                        {/* Animated scroll dots — mobile only */}
                         <div className="flex sm:hidden items-center justify-center gap-2 mt-4">
-                            <div className="w-6 h-2 bg-black border-2 border-black"></div>
-                            <div className="w-2.5 h-2.5 bg-gray-200 border-2 border-black rounded-full"></div>
-                            <div className="w-2.5 h-2.5 bg-gray-200 border-2 border-black rounded-full"></div>
-                            <div className="w-2.5 h-2.5 bg-gray-200 border-2 border-black rounded-full"></div>
+                            {[0, 1, 2, 3].map((idx) => (
+                                <button
+                                    key={idx}
+                                    onClick={() => {
+                                        const container = scrollRef.current
+                                        if (!container) return
+                                        const card = container.children[idx] as HTMLElement
+                                        if (card) { container.scrollTo({ left: card.offsetLeft - 16, behavior: 'smooth' }) }
+                                        setActiveIdx(idx)
+                                    }}
+                                    className={`h-2 transition-all duration-300 border border-black ${activeIdx === idx ? 'w-6 bg-black' : 'w-2 bg-gray-300'}`}
+                                />
+                            ))}
                         </div>
                     </div>
                 </div>
@@ -101,3 +148,4 @@ export default function ProblemSection() {
         </section>
     )
 }
+

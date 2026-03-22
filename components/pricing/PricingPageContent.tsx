@@ -107,25 +107,24 @@ export default function PricingPageContent() {
                 </div>
             </div>
 
-            {/* Mobile Currency Switcher */}
-            <div className="md:hidden flex items-center justify-between px-4 py-2 border-b border-gray-100">
-                <p className="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Pick a plan</p>
+            {/* Mobile Currency Switcher — compact pill */}
+            <div className="md:hidden flex items-center justify-between px-4 py-1.5 border-b border-gray-100">
+                <p className="text-[10px] font-bold text-gray-500 uppercase tracking-wider font-mono">Pick a plan</p>
                 <div className="relative z-50">
                     <button
                         onClick={() => setIsCurrencyOpen(!isCurrencyOpen)}
-                        className="flex items-center gap-1.5 bg-white border-2 border-[#111111] px-2.5 py-1 font-mono font-bold text-xs shadow-[2px_2px_0_0_#111111] uppercase"
+                        className="flex items-center gap-1 bg-white border border-[#111111] px-2 py-0.5 font-mono font-bold text-[10px] shadow-[1px_1px_0_0_#111111] uppercase rounded-sm"
                     >
-                        <span className="material-symbols-outlined text-sm">language</span>
                         {currency}
-                        <span className="material-symbols-outlined text-sm">expand_more</span>
+                        <span className="material-symbols-outlined text-xs leading-none">expand_more</span>
                     </button>
                     {isCurrencyOpen && (
-                        <div className="absolute right-0 top-full mt-1 w-[120px] bg-white border-2 border-[#111111] shadow-[2px_2px_0_0_#111111] z-50">
+                        <div className="absolute right-0 top-full mt-1 w-[90px] bg-white border-2 border-[#111111] shadow-[2px_2px_0_0_#111111] z-50">
                             {Object.values(CURRENCIES).map((c) => (
                                 <button
                                     key={c.code}
                                     onClick={() => handleCurrencyChange(c.code)}
-                                    className="w-full text-left px-3 py-1.5 font-mono text-xs font-bold hover:bg-gray-100 flex items-center justify-between"
+                                    className="w-full text-left px-2 py-1.5 font-mono text-[10px] font-bold hover:bg-gray-100 flex items-center justify-between"
                                 >
                                     <span>{c.code}</span>
                                     <span>{c.flag}</span>

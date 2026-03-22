@@ -97,7 +97,7 @@ export default function Header() {
           <div className="flex-shrink-0 flex items-center">
             <Link className="text-xl md:text-2xl font-bold tracking-tighter text-black flex items-center gap-2 font-mono" href="/">
               <div className="w-8 h-8 relative">
-                <img src="/logo.svg" alt="FoundersPrime Logo" className="w-full h-full object-contain" />
+                <img src="/logo.svg" alt="FoundersPrime Logo" className="w-full h-full object-contain" onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }} />
               </div>
               <span>FOUNDERS<span className="text-blue-600">[</span>PRIME<span className="text-blue-600">]</span></span>
             </Link>

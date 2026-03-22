@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { useRef, useState } from 'react'
+import { useRef, useState, useEffect } from 'react'
 
 export default function SystemModules() {
   const modules = [
@@ -89,6 +89,18 @@ export default function SystemModules() {
     setActiveIdx(Math.min(idx, modules.length - 1))
   }
 
+  const isTouch = useRef(false)
+
+  // Auto-advance every 3 seconds on mobile
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (isTouch.current) return
+      const next = (activeIdx + 1) % modules.length
+      scrollTo(next)
+    }, 3000)
+    return () => clearInterval(interval)
+  }, [activeIdx])
+
   return (
     <section className="relative py-4 md:py-8 grid-bg overflow-hidden border-b-2 border-black">
       <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
@@ -104,6 +116,8 @@ export default function SystemModules() {
         <div
           ref={scrollRef}
           onScroll={handleScroll}
+          onTouchStart={() => { isTouch.current = true }}
+          onTouchEnd={() => { setTimeout(() => { isTouch.current = false }, 2000) }}
           className="flex md:hidden gap-4 overflow-x-auto snap-x snap-mandatory pb-3 mobile-scroll-hide"
           style={{ scrollPaddingLeft: '16px' }}
         >

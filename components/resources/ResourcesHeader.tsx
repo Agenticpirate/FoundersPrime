@@ -18,7 +18,11 @@ export default function ResourcesHeader({
         <li>
           <div className="flex items-center">
             <span className="material-symbols-outlined text-gray-400 text-base mx-1">chevron_right</span>
-            <Link className="text-gray-500 hover:text-black" href={parentSection.href}>{parentSection.name}</Link>
+            {currentSection ? (
+              <Link className="text-gray-500 hover:text-black" href={parentSection.href}>{parentSection.name}</Link>
+            ) : (
+              <span className="text-black bg-primary/20 px-2 py-0.5 rounded-sm border border-black" aria-current="page">{parentSection.name}</span>
+            )}
           </div>
         </li>
         {currentSection && (
