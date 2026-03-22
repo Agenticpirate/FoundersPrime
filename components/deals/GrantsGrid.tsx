@@ -200,14 +200,25 @@ export default function GrantsGrid() {
             {/* Header with Logo and Title */}
             <div className="px-4 pt-2 pb-3">
               <div className="flex items-center gap-3">
-                <div className="w-16 h-16 bg-white border-2 border-black rounded flex items-center justify-center p-2.5 flex-shrink-0">
-                  {grant.logo ? (
-                    <div className="relative w-full h-full">
-                      <Image src={grant.logo} alt={grant.organization} fill sizes="44px" className="object-contain" />
-                    </div>
-                  ) : (
-                    <span className="material-symbols-outlined text-4xl text-gray-400">workspace_premium</span>
-                  )}
+                <div className="w-16 h-16 bg-white border-2 border-black rounded flex items-center justify-center p-2 flex-shrink-0 overflow-hidden">
+                  <img
+                    src={grant.logo || `https://logo.clearbit.com/${new URL(grant.website).hostname}`}
+                    alt={grant.organization}
+                    className="w-full h-full object-contain"
+                    onError={(e) => {
+                      const img = e.target as HTMLImageElement
+                      const domain = (() => { try { return new URL(grant.website).hostname } catch { return '' } })()
+                      if (img.src.includes('logo.clearbit.com')) {
+                        img.src = `https://www.google.com/s2/favicons?domain=${domain}&sz=128`
+                      } else {
+                        img.style.display = 'none'
+                        const parent = img.parentElement
+                        if (parent) {
+                          parent.innerHTML = `<span class="text-sm font-black font-mono text-gray-700">${grant.organization.substring(0, 3).toUpperCase()}</span>`
+                        }
+                      }
+                    }}
+                  />
                 </div>
                 <div className="flex-1 min-w-0">
                   <h3 className="text-sm font-bold text-gray-900 leading-snug group-hover:text-primary transition-colors line-clamp-2">

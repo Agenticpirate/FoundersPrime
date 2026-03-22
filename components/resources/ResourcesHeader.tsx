@@ -2,9 +2,13 @@ import Link from 'next/link'
 
 interface ResourcesHeaderProps {
   currentSection?: string
+  parentSection?: { name: string; href: string }
 }
 
-export default function ResourcesHeader({ currentSection }: ResourcesHeaderProps) {
+export default function ResourcesHeader({
+  currentSection,
+  parentSection = { name: 'Student Benefits', href: '/student-benefits' }
+}: ResourcesHeaderProps) {
   return (
     <nav aria-label="Breadcrumb" className="flex mb-4 md:mb-6">
       <ol className="inline-flex items-center space-x-1 md:space-x-3 font-mono text-sm font-medium">
@@ -14,7 +18,7 @@ export default function ResourcesHeader({ currentSection }: ResourcesHeaderProps
         <li>
           <div className="flex items-center">
             <span className="material-symbols-outlined text-gray-400 text-base mx-1">chevron_right</span>
-            <Link className="text-gray-500 hover:text-black" href="/resources">Resources</Link>
+            <Link className="text-gray-500 hover:text-black" href={parentSection.href}>{parentSection.name}</Link>
           </div>
         </li>
         {currentSection && (

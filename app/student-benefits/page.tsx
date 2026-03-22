@@ -28,7 +28,6 @@ export default function StudentBenefitsPage() {
             <main className="flex-1">
                 <div className="max-w-[1600px] mx-auto px-4 lg:px-6 py-4 lg:py-6">
                     <DealsHeader
-                        parentSection={{ name: "Resources", href: "/resources" }}
                         currentSection="Student Benefits"
                     />
 

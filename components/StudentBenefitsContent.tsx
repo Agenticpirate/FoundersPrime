@@ -122,9 +122,9 @@ export default function StudentBenefitsContent({ benefits, title, description }:
             {/* Main Content */}
             <div className="flex-1 min-w-0 w-full">
                 {/* Pro Tip Alert */}
-                <div className="mb-3 md:mb-6 bg-blue-50 border border-blue-200 p-3 rounded-lg flex items-start gap-2">
-                    <span className="material-symbols-outlined text-blue-600 mt-0.5 text-base">school</span>
-                    <p className="text-xs md:text-sm text-blue-800 font-medium">
+                <div className="mb-3 bg-blue-50 border border-blue-200 px-3 py-2 rounded-lg flex items-center gap-2">
+                    <span className="material-symbols-outlined text-blue-600 text-base flex-shrink-0">school</span>
+                    <p className="text-xs text-blue-800 font-medium">
                         <span className="font-bold">Student Tip:</span> Use your .edu email to unlock all benefits.
                     </p>
                 </div>
@@ -173,7 +173,7 @@ export default function StudentBenefitsContent({ benefits, title, description }:
                         <div className="mb-2 text-[10px] md:text-xs font-medium text-gray-500 uppercase tracking-wide">
                             {Math.min(filteredBenefits.length, (currentPage - 1) * itemsPerPage + 1)}–{Math.min(filteredBenefits.length, currentPage * itemsPerPage)} of {filteredBenefits.length} benefits
                         </div>
-                        <div className="grid grid-cols-2 md:grid-cols-2 xl:grid-cols-3 gap-3 md:gap-6 mb-4 md:mb-6 md:mb-6 md:mb-4 md:mb-6">
+                        <div className="grid grid-cols-2 md:grid-cols-2 xl:grid-cols-3 gap-2 md:gap-4 mb-4">
                             {paginatedBenefits.map((benefit, idx) => {
                                 // Map to DealCard props
                                 const dealProps = {

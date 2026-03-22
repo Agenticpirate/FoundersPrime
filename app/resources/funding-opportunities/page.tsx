@@ -17,7 +17,10 @@ export default function FundingOpportunitiesPage() {
  <main className="flex-1">
  <div className="max-w-[1600px] mx-auto px-4 lg:px-6 py-4 lg:py-6">
  {/* Breadcrumb - Matching Accelerator Style */}
- <ResourcesHeader currentSection="Funding & Opportunities" />
+  <ResourcesHeader
+   currentSection="Funding & Opportunities"
+   parentSection={{ name: 'Student Benefits', href: '/student-benefits' }}
+  />
 
  <StudentFundingHero />
  <StudentFundingGrid />
