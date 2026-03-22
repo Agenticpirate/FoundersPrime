@@ -38,11 +38,14 @@ const securityHeaders = [
 ]
 
 const nextConfig = {
+  compress: true,
   images: {
     remotePatterns: [
       // Allow all HTTPS images (logos from external deal providers, etc.)
       { protocol: 'https', hostname: '**' },
     ],
+    formats: ['image/avif', 'image/webp'],
+    minimumCacheTTL: 60,
     dangerouslyAllowSVG: true,
     contentDispositionType: 'attachment',
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",

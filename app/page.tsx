@@ -1,19 +1,19 @@
 import type { Metadata } from 'next'
+import dynamic from 'next/dynamic'
 import AnnouncementBar from '@/components/AnnouncementBar'
 import Header from '@/components/Header'
 import HeroSection from '@/components/HeroSection'
 import ProblemSection from '@/components/ProblemSection'
-import MarqueeTicker from '@/components/MarqueeTicker'
 import SystemModules from '@/components/SystemModules'
-import TopWeeklyDeals from '@/components/TopWeeklyDeals'
 import WorkflowProtocol from '@/components/WorkflowProtocol'
-import VerifiedIdeasAndFundedDB from '@/components/VerifiedIdeasAndFundedDB'
-import FounderLogs from '@/components/FounderLogs'
-
-import ProviderSection from '@/components/ProviderSection'
-
 import FinalCTA from '@/components/FinalCTA'
 import Footer from '@/components/Footer'
+
+/* ─── Below-fold: lazy-loaded to reduce initial JS parse cost ─── */
+const TopWeeklyDeals = dynamic(() => import('@/components/TopWeeklyDeals'))
+const VerifiedIdeasAndFundedDB = dynamic(() => import('@/components/VerifiedIdeasAndFundedDB'))
+const FounderLogs = dynamic(() => import('@/components/FounderLogs'))
+const ProviderSection = dynamic(() => import('@/components/ProviderSection'))
 
 export const metadata: Metadata = {
   title: 'FoundersPrime | Verified Startup Deals & Grants',

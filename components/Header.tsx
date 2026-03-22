@@ -2,20 +2,27 @@
 
 import Link from 'next/link'
 import { useAuth } from '@/lib/auth/hooks'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { checkProStatus } from '@/lib/auth/user-context'
 
 export default function Header() {
   const { user, loading, signOut } = useAuth()
   const [isPro, setIsPro] = useState(false)
   const [isAdmin, setIsAdmin] = useState(false)
+  /* ─── Guard: prevent duplicate Supabase round-trips during hydration flicker ─── */
+  const hasCheckedRef = useRef<string | null>(null)
 
   useEffect(() => {
     const checkAccess = async () => {
-      if (user) {
+      if (user && hasCheckedRef.current !== user.id) {
+        hasCheckedRef.current = user.id
         const { isPro: hasProAccess, isAdmin: hasAdminAccess } = await checkProStatus()
         setIsPro(hasProAccess)
         setIsAdmin(hasAdminAccess)
+      } else if (!user) {
+        hasCheckedRef.current = null
+        setIsPro(false)
+        setIsAdmin(false)
       }
     }
     checkAccess()

@@ -44,6 +44,12 @@ export default function PricingComparisonTable() {
                     </p>
                 </div>
 
+                {/* Mobile scroll hint */}
+                <div className="flex items-center gap-2 mb-2 md:hidden text-xs font-mono text-gray-500">
+                    <span className="material-symbols-outlined text-sm">swipe</span>
+                    Swipe left to see all plans
+                </div>
+
                 <div className="overflow-x-auto border-2 border-[#111111] shadow-[4px_4px_0_0_#111111] rounded-sm">
                     <table className="w-full min-w-[600px] border-collapse text-left text-sm">
                         <thead>

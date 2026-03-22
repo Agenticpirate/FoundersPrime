@@ -1,60 +1,58 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
+import CountUp from 'react-countup'
+
+/* ─── Module-level constant: created once, never re-created on render ─── */
+const BRANDS = [
+  { name: 'AWS', domain: 'aws.amazon.com' },
+  { name: 'Google Cloud', domain: 'cloud.google.com' },
+  { name: 'Stripe', domain: 'stripe.com' },
+  { name: 'Notion', domain: 'notion.so' },
+  { name: 'OpenAI', domain: 'openai.com' },
+  { name: 'Slack', domain: 'slack.com' },
+  { name: 'HubSpot', domain: 'hubspot.com' },
+  { name: 'Airtable', domain: 'airtable.com' },
+  { name: 'Figma', domain: 'figma.com' },
+  { name: 'Vercel', domain: 'vercel.com' },
+  { name: 'Linear', domain: 'linear.app' },
+  { name: 'Supabase', domain: 'supabase.com' },
+  { name: 'Discord', domain: 'discord.com' },
+  { name: 'Intercom', domain: 'intercom.com' },
+  { name: 'Canva', domain: 'canva.com' },
+  { name: 'Deel', domain: 'deel.com' },
+  { name: 'Brex', domain: 'brex.com' },
+  { name: 'Ramp', domain: 'ramp.com' },
+  { name: 'Y Combinator', domain: 'ycombinator.com' },
+  { name: 'Microsoft', domain: 'microsoft.com' },
+  { name: 'MongoDB', domain: 'mongodb.com' },
+  { name: 'Cloudflare', domain: 'cloudflare.com' },
+  { name: 'Zendesk', domain: 'zendesk.com' },
+  { name: 'PostHog', domain: 'posthog.com' },
+  { name: 'Segment', domain: 'segment.com' },
+  { name: 'Mixpanel', domain: 'mixpanel.com' },
+]
+
+/* Duplicated set for seamless marquee loop */
+const BRANDS_LOOP = [...BRANDS, ...BRANDS]
 
 export default function HeroSection() {
-  const [totalSavings, setTotalSavings] = useState(125400)
-  const [displaySavings, setDisplaySavings] = useState(125400)
+  /* ─── Savings counter: react-countup replaces two setInterval loops ─── */
+  const [savingsEnd, setSavingsEnd] = useState(125400)
+  const savingsStartRef = useRef(125400)
 
-  // Animate savings increase every 5 seconds
   useEffect(() => {
     const interval = setInterval(() => {
-      // Add random amount between $5 and $50
       const increase = Math.floor(Math.random() * 46) + 5
-      setTotalSavings(prev => {
-        const newValue = prev + increase
-        // Reset if it goes over 1 billion
-        if (newValue >= 1000000000) {
-          return 125400
-        }
-        return newValue
+      setSavingsEnd(prev => {
+        const next = prev + increase >= 1_000_000_000 ? 125400 : prev + increase
+        savingsStartRef.current = prev
+        return next
       })
     }, 5000)
-
     return () => clearInterval(interval)
   }, [])
-
-  // Smooth animation for display value
-  useEffect(() => {
-    const animationDuration = 1000 // 1 second
-    const steps = 20
-    const stepDuration = animationDuration / steps
-    const difference = totalSavings - displaySavings
-    const stepValue = difference / steps
-
-    let currentStep = 0
-    const animationInterval = setInterval(() => {
-      currentStep++
-      if (currentStep >= steps) {
-        setDisplaySavings(totalSavings)
-        clearInterval(animationInterval)
-      } else {
-        setDisplaySavings(prev => prev + stepValue)
-      }
-    }, stepDuration)
-
-    return () => clearInterval(animationInterval)
-  }, [totalSavings])
-
-  const formatCurrency = (value: number) => {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD',
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2
-    }).format(value)
-  }
 
   return (
     <section className="relative min-h-[calc(75vh-80px)] md:min-h-[calc(85vh-80px)] pt-4 pb-0 md:pt-10 lg:pt-12 lg:pb-0 overflow-hidden grid-bg flex flex-col">
@@ -115,78 +113,8 @@ export default function HeroSection() {
               <p className="text-[9px] font-mono font-bold uppercase tracking-widest text-gray-400 mb-2">Credits &amp; grants from</p>
               <div className="relative w-full overflow-hidden" style={{ maskImage: 'linear-gradient(to right,transparent,black 12%,black 88%,transparent)', WebkitMaskImage: 'linear-gradient(to right,transparent,black 12%,black 88%,transparent)' }}>
                 <div className="mobile-brand-marquee flex items-center gap-6 whitespace-nowrap">
-                  {[
-                    // Row 1
-                    { name: 'AWS', domain: 'aws.amazon.com' },
-                    { name: 'Google Cloud', domain: 'cloud.google.com' },
-                    { name: 'Stripe', domain: 'stripe.com' },
-                    { name: 'Notion', domain: 'notion.so' },
-                    { name: 'OpenAI', domain: 'openai.com' },
-                    { name: 'Slack', domain: 'slack.com' },
-                    { name: 'HubSpot', domain: 'hubspot.com' },
-                    { name: 'Airtable', domain: 'airtable.com' },
-                    { name: 'Figma', domain: 'figma.com' },
-                    { name: 'Vercel', domain: 'vercel.com' },
-                    { name: 'Linear', domain: 'linear.app' },
-                    { name: 'Supabase', domain: 'supabase.com' },
-                    { name: 'Discord', domain: 'discord.com' },
-                    { name: 'Intercom', domain: 'intercom.com' },
-                    { name: 'Canva', domain: 'canva.com' },
-                    { name: 'Deel', domain: 'deel.com' },
-                    { name: 'Brex', domain: 'brex.com' },
-                    { name: 'Ramp', domain: 'ramp.com' },
-                    { name: 'Y Combinator', domain: 'ycombinator.com' },
-                    { name: 'Microsoft', domain: 'microsoft.com' },
-                    { name: 'MongoDB', domain: 'mongodb.com' },
-                    { name: 'Cloudflare', domain: 'cloudflare.com' },
-                    { name: 'Zendesk', domain: 'zendesk.com' },
-                    { name: 'PostHog', domain: 'posthog.com' },
-                    { name: 'Segment', domain: 'segment.com' },
-                    { name: 'Mixpanel', domain: 'mixpanel.com' },
-                  ].map((b, i) => (
-                    <div key={`set1-${i}`} className="flex flex-col items-center gap-1 flex-shrink-0">
-                      <div className="w-9 h-9 bg-white border-2 border-black flex items-center justify-center shadow-[1px_1px_0px_0px_rgba(0,0,0,1)]">
-                        <img
-                          src={`https://www.google.com/s2/favicons?domain=${b.domain}&sz=64`}
-                          alt={b.name}
-                          className="w-5 h-5 object-contain"
-                          loading="lazy"
-                          onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
-                        />
-                      </div>
-                      <span className="text-[8px] font-mono text-gray-500 font-bold uppercase truncate max-w-[36px] text-center">{b.name.split(' ')[0]}</span>
-                    </div>
-                  ))}
-                  {/* Duplicated for loop */}
-                  {[
-                    { name: 'AWS', domain: 'aws.amazon.com' },
-                    { name: 'Google Cloud', domain: 'cloud.google.com' },
-                    { name: 'Stripe', domain: 'stripe.com' },
-                    { name: 'Notion', domain: 'notion.so' },
-                    { name: 'OpenAI', domain: 'openai.com' },
-                    { name: 'Slack', domain: 'slack.com' },
-                    { name: 'HubSpot', domain: 'hubspot.com' },
-                    { name: 'Airtable', domain: 'airtable.com' },
-                    { name: 'Figma', domain: 'figma.com' },
-                    { name: 'Vercel', domain: 'vercel.com' },
-                    { name: 'Linear', domain: 'linear.app' },
-                    { name: 'Supabase', domain: 'supabase.com' },
-                    { name: 'Discord', domain: 'discord.com' },
-                    { name: 'Intercom', domain: 'intercom.com' },
-                    { name: 'Canva', domain: 'canva.com' },
-                    { name: 'Deel', domain: 'deel.com' },
-                    { name: 'Brex', domain: 'brex.com' },
-                    { name: 'Ramp', domain: 'ramp.com' },
-                    { name: 'Y Combinator', domain: 'ycombinator.com' },
-                    { name: 'Microsoft', domain: 'microsoft.com' },
-                    { name: 'MongoDB', domain: 'mongodb.com' },
-                    { name: 'Cloudflare', domain: 'cloudflare.com' },
-                    { name: 'Zendesk', domain: 'zendesk.com' },
-                    { name: 'PostHog', domain: 'posthog.com' },
-                    { name: 'Segment', domain: 'segment.com' },
-                    { name: 'Mixpanel', domain: 'mixpanel.com' },
-                  ].map((b, i) => (
-                    <div key={`set2-${i}`} className="flex flex-col items-center gap-1 flex-shrink-0">
+                  {BRANDS_LOOP.map((b, i) => (
+                    <div key={`brand-${i}`} className="flex flex-col items-center gap-1 flex-shrink-0">
                       <div className="w-9 h-9 bg-white border-2 border-black flex items-center justify-center shadow-[1px_1px_0px_0px_rgba(0,0,0,1)]">
                         <img
                           src={`https://www.google.com/s2/favicons?domain=${b.domain}&sz=64`}
@@ -215,10 +143,19 @@ export default function HeroSection() {
               </div>
               <div className="p-4 bg-white flex flex-col gap-3">
 
-                {/* Savings Opportunity Block */}
+                {/* Savings Opportunity Block — CountUp drives smooth animation via RAF */}
                 <div className="bg-white neo-border p-4">
                   <div className="text-[10px] md:text-xs font-mono text-gray-500 mb-1">SAVINGS OPPORTUNITY</div>
-                  <div className="text-2xl md:text-3xl font-mono font-bold text-black">$847,293.00</div>
+                  <div className="text-2xl md:text-3xl font-mono font-bold text-black">
+                    $<CountUp
+                      start={savingsStartRef.current}
+                      end={savingsEnd}
+                      duration={1}
+                      separator=","
+                      decimals={2}
+                      decimal="."
+                    />
+                  </div>
                   <div className="text-[10px] md:text-xs font-mono text-green-600 mt-1 flex items-center gap-1">
                     <span className="material-symbols-outlined text-sm">trending_up</span>
                     tracked this week

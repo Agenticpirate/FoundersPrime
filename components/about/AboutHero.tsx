@@ -4,16 +4,17 @@ export default function AboutHero() {
       <div className="inline-block border-2 border-black bg-accent-yellow px-3 py-1 font-mono text-xs font-bold uppercase tracking-wide rounded-sm mb-6">
         OUR STORY
       </div>
-      <h1 className="font-mono text-5xl md:text-6xl font-bold tracking-tight text-black mb-6 leading-[1.1]">
-        Empowering Every <br className="hidden md:block"/> Founder's Journey
+      {/* Fixed: was text-5xl on mobile (48px, too large). Now text-3xl → md:text-5xl → lg:text-6xl */}
+      <h1 className="font-mono text-3xl md:text-5xl lg:text-6xl font-bold tracking-tight text-black mb-6 leading-[1.1]">
+        Empowering Every <br className="hidden md:block"/> Founder&apos;s Journey
       </h1>
-      <p className="font-sans text-lg md:text-xl text-gray-700 leading-relaxed max-w-4xl mx-auto mb-6 md:mb-4 md:mb-6">
+      <p className="font-sans text-base md:text-lg lg:text-xl text-gray-700 leading-relaxed max-w-4xl mx-auto mb-6">
         We believe every great startup begins with access to the right resources, connections, and opportunities. FoundersPrime was built to democratize startup success by making essential deals, insights, and knowledge accessible to founders everywhere.
       </p>
       
       {/* Hero Visual */}
       <div className="relative max-w-4xl mx-auto">
-        <div className="bg-white border-3 border-black shadow-[6px_6px_0px_0px_#1a1a1a] rounded-sm p-12 relative overflow-hidden">
+        <div className="bg-white border-3 border-black shadow-[6px_6px_0px_0px_#1a1a1a] rounded-sm p-6 md:p-12 relative overflow-hidden">
           {/* Background Pattern */}
           <div className="absolute inset-0 opacity-5">
             <div className="grid grid-cols-8 gap-4 h-full">
@@ -25,28 +26,28 @@ export default function AboutHero() {
           
           {/* Content */}
           <div className="relative z-10">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
               <div className="text-center">
-                <div className="size-20 bg-primary border-2 border-black rounded-sm flex items-center justify-center mx-auto mb-4">
-                  <span className="material-symbols-outlined text-3xl text-black">lightbulb</span>
+                <div className="size-16 md:size-20 bg-primary border-2 border-black rounded-sm flex items-center justify-center mx-auto mb-4">
+                  <span className="material-symbols-outlined text-2xl md:text-3xl text-black">lightbulb</span>
                 </div>
-                <h3 className="font-mono text-lg font-bold mb-2">Discover</h3>
+                <h3 className="font-mono text-base md:text-lg font-bold mb-2">Discover</h3>
                 <p className="font-sans text-sm text-gray-600">Find the perfect deals, ideas, and opportunities for your startup</p>
               </div>
               
               <div className="text-center">
-                <div className="size-20 bg-primary border-2 border-black rounded-sm flex items-center justify-center mx-auto mb-4">
-                  <span className="material-symbols-outlined text-3xl text-black">analytics</span>
+                <div className="size-16 md:size-20 bg-primary border-2 border-black rounded-sm flex items-center justify-center mx-auto mb-4">
+                  <span className="material-symbols-outlined text-2xl md:text-3xl text-black">analytics</span>
                 </div>
-                <h3 className="font-mono text-lg font-bold mb-2">Validate</h3>
+                <h3 className="font-mono text-base md:text-lg font-bold mb-2">Validate</h3>
                 <p className="font-sans text-sm text-gray-600">Access data-driven insights and market research to make informed decisions</p>
               </div>
               
               <div className="text-center">
-                <div className="size-20 bg-primary border-2 border-black rounded-sm flex items-center justify-center mx-auto mb-4">
-                  <span className="material-symbols-outlined text-3xl text-black">rocket_launch</span>
+                <div className="size-16 md:size-20 bg-primary border-2 border-black rounded-sm flex items-center justify-center mx-auto mb-4">
+                  <span className="material-symbols-outlined text-2xl md:text-3xl text-black">rocket_launch</span>
                 </div>
-                <h3 className="font-mono text-lg font-bold mb-2">Execute</h3>
+                <h3 className="font-mono text-base md:text-lg font-bold mb-2">Execute</h3>
                 <p className="font-sans text-sm text-gray-600">Launch faster with templates, tools, and resources from successful founders</p>
               </div>
             </div>

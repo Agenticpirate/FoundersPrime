@@ -22,6 +22,7 @@ module.exports = {
         "surface": "#ffffff",
         "paper": "#F4F3EF",
         "accent-yellow": "#ffd700",
+        "accent-cyan": "#13b6ec",
         "accent-red": "#ff4d4d",
         "accent-orange": "#ff9900",
         "accent-blue": "#3b82f6",
@@ -31,7 +32,6 @@ module.exports = {
         "status-green": "#22c55e",
         "danger": "#e74c3c",
         "dark": "#1a1a1a",
-        "light": "#f8f9fa",
         "light": "#f8f9fa",
       },
       fontFamily: {

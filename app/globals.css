@@ -73,8 +73,7 @@ body {
 }
 
 
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=Noto+Sans:wght@400;500;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap');
+/* Fonts loaded via <link> in app/layout.tsx — no @import needed here */
 
 body {
   font-family: "IBM Plex Sans", sans-serif;
@@ -240,26 +239,8 @@ h6 {
   transition: all 0.2s ease-in-out;
 }
 
-.neo-button {
-  border: 3px solid #0d181b;
-  box-shadow: 4px 4px 0px 0px #0d181b;
-  transition: all 0.1s;
-}
+/* .neo-button and .neo-input canonical definitions below in pricing section */
 
-.neo-button:active {
-  transform: translate(4px, 4px);
-  box-shadow: 0px 0px 0px 0px #0d181b;
-}
-
-.neo-input {
-  border: 3px solid #0d181b;
-  background: #fff;
-}
-
-.neo-input:focus {
-  outline: none;
-  background: #eefbff;
-}
 
 .pattern-grid-lg {
   background-size: 40px 40px;
@@ -418,4 +399,77 @@ h6 {
 .mask-fade-v {
   -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 12%, black 88%, transparent 100%);
   mask-image: linear-gradient(to bottom, transparent 0%, black 12%, black 88%, transparent 100%);
+}
+/* ─── Mobile Scrollbar Utility: defined above ─── */
+
+/* ─── Reduced Motion ─── */
+/* Disable animations for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .marquee {
+    animation: none !important;
+  }
+
+  .animate-marquee-v,
+  .animate-marquee-v-reverse {
+    animation: none !important;
+  }
+
+  .animate-slideDown {
+    animation: none !important;
+    opacity: 1;
+    transform: none;
+  }
+
+  .animate-lock-pulse {
+    animation: none !important;
+  }
+
+  .cursor-blink {
+    animation: none !important;
+  }
+
+  .neo-shadow:hover {
+    transform: none !important;
+  }
+}
+
+/* ─── Global overflow protection ─── */
+/* Scoped to body (not html) to avoid clipping position:fixed overlays & popups */
+body {
+  overflow-x: hidden;
+}
+
+/* ─── Minimum tap target size for all interactive elements ─── */
+button, a, [role="button"] {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
+
+/* Exception: purely decorative inline links in paragraphs don't need 44px */
+p > a, li > a, span > a {
+  min-height: unset;
+  display: inline;
+}
+
+/* ─── Touch-safe Neo-shadow Hover ─── */
+/* Disable translate-on-hover for touch-only devices (e.g. iOS tap-hold artifact) */
+@media (hover: none) {
+  /* Suppress translate effects that trigger on iOS tap-hold */
+  .neo-shadow:hover,
+  .neo-border:hover,
+  a[class*="hover:translate"],
+  button[class*="hover:translate"] {
+    transform: none !important;
+    box-shadow: inherit;
+  }
 }
