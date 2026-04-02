@@ -53,9 +53,17 @@ const nextConfig = {
   async headers() {
     return [
       {
-        // Apply security headers to all routes
         source: '/(.*)',
         headers: securityHeaders,
+      },
+    ]
+  },
+  async redirects() {
+    return [
+      {
+        source: '/.well-known/llms.txt',
+        destination: '/llms.txt',
+        permanent: true,
       },
     ]
   },

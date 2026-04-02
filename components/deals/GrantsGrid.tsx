@@ -188,84 +188,41 @@ export default function GrantsGrid() {
           <Link
             key={grant.id}
             href={isPro ? `/deals/${grant.slug}` : '/pricing'}
-            className="flex flex-col bg-white border-4 border-black rounded-lg shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all duration-200 overflow-hidden group relative h-full"
+            className="flex flex-col bg-white border-2 border-black shadow-[3px_3px_0px_#111] hover:shadow-[5px_5px_0px_#111] hover:-translate-x-px hover:-translate-y-px transition-all duration-200 overflow-hidden group h-full"
           >
-            {/* Status Badge */}
-            <div className="px-4 pt-3 pb-2">
-              <span className={`inline-block px-2.5 py-1 ${getStatusColor(grant.applicationStatus)} text-[10px] font-bold rounded uppercase tracking-wide`}>
+            {/* Status */}
+            <div className="px-4 pt-3">
+              <span className={`inline-block px-2 py-0.5 ${getStatusColor(grant.applicationStatus)} text-[9px] font-bold uppercase tracking-wider`}>
                 {grant.applicationStatus}
               </span>
             </div>
 
-            {/* Header with Logo and Title */}
-            <div className="px-4 pt-2 pb-3">
-              <div className="flex items-center gap-3">
-                <div className="w-16 h-16 bg-white border-2 border-black rounded flex items-center justify-center p-2 flex-shrink-0 overflow-hidden">
-                  <img
-                    src={grant.logo || `https://logo.clearbit.com/${new URL(grant.website).hostname}`}
-                    alt={grant.organization}
-                    className="w-full h-full object-contain"
-                    onError={(e) => {
-                      const img = e.target as HTMLImageElement
-                      const domain = (() => { try { return new URL(grant.website).hostname } catch { return '' } })()
-                      if (img.src.includes('logo.clearbit.com')) {
-                        img.src = `https://www.google.com/s2/favicons?domain=${domain}&sz=128`
-                      } else {
-                        img.style.display = 'none'
-                        const parent = img.parentElement
-                        if (parent) {
-                          parent.innerHTML = `<span class="text-sm font-black font-mono text-gray-700">${grant.organization.substring(0, 3).toUpperCase()}</span>`
-                        }
-                      }
-                    }}
-                  />
-                </div>
-                <div className="flex-1 min-w-0">
-                  <h3 className="text-sm font-bold text-gray-900 leading-snug group-hover:text-primary transition-colors line-clamp-2">
-                    {grant.name}
-                  </h3>
-                </div>
+            {/* Logo + Title */}
+            <div className="flex items-center gap-3 px-4 pt-3 pb-3">
+              <div className="w-12 h-12 bg-white border-2 border-gray-200 flex items-center justify-center p-1.5 flex-shrink-0 rounded-sm overflow-hidden">
+                <img
+                  src={grant.logo || `https://www.google.com/s2/favicons?domain=${(() => { try { return new URL(grant.website).hostname } catch { return '' } })()}&sz=64`}
+                  alt="" className="w-full h-full object-contain"
+                  onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; const p = (e.target as HTMLImageElement).parentElement; if (p) p.innerHTML = `<span class="text-xs font-black font-mono text-gray-400">${grant.organization.substring(0, 2).toUpperCase()}</span>` }}
+                />
               </div>
-            </div>
-
-            {/* Organization */}
-            <div className="px-4 pb-2">
-              <p className="text-xs text-gray-600 font-mono">{grant.organization}</p>
+              <div className="flex-1 min-w-0">
+                <h3 className="text-sm font-bold text-gray-900 leading-snug group-hover:text-black transition-colors line-clamp-2">
+                  {grant.name.length > 45 ? grant.name.substring(0, 45) + '…' : grant.name}
+                </h3>
+                <p className="text-[11px] text-gray-400 font-mono truncate mt-0.5">{grant.organization}</p>
+              </div>
             </div>
 
             {/* Description */}
             <div className="px-4 pb-3 flex-grow">
-              <p className="text-xs text-gray-600 leading-relaxed line-clamp-3">{grant.description}</p>
+              <p className="text-xs text-gray-500 leading-relaxed line-clamp-3">{grant.description}</p>
             </div>
 
-            {/* Funding Amount */}
-            <div className="px-4 pb-3">
-              <p className="text-base font-bold text-green-600 leading-tight">{grant.fundingAmount}</p>
-              <p className="text-[11px] text-gray-500 leading-tight">{grant.equity}</p>
-            </div>
-
-            {/* Meta Info */}
-            <div className="px-4 pb-3 space-y-1">
-              <div className="flex items-center gap-2 text-xs text-gray-600">
-                <span className="material-symbols-outlined text-sm">public</span>
-                <span>{grant.location}</span>
-              </div>
-              {grant.deadline && (
-                <div className="flex items-center gap-2 text-xs text-gray-600">
-                  <span className="material-symbols-outlined text-sm">schedule</span>
-                  <span>{grant.deadline}</span>
-                </div>
-              )}
-            </div>
-
-            {/* Tags */}
-            <div className="px-4 pb-2 flex flex-wrap gap-2">
-              <span className={`text-[10px] font-bold px-2 py-1 rounded uppercase ${getTypeColor(grant.type)}`}>
-                {grant.type}
-              </span>
-              <span className="text-[10px] font-bold px-2 py-1 rounded uppercase bg-gray-600 text-white">
-                {grant.category}
-              </span>
+            {/* Value — pinned bottom */}
+            <div className="px-4 pb-4 mt-auto border-t border-gray-100 pt-3">
+              <p className="text-base font-bold text-green-600 font-mono">{grant.fundingAmount}</p>
+              <p className="text-[11px] text-gray-400 mt-0.5">{grant.equity}</p>
             </div>
           </Link>
         ))}
@@ -280,28 +237,23 @@ export default function GrantsGrid() {
         >
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {filteredGrants.slice(3, 9).map((grant) => (
-              <Link
-                key={grant.id}
-                href={`/deals/${grant.slug}`}
-                className="flex flex-col bg-white border-4 border-black rounded-lg overflow-hidden h-64 p-4 gap-3"
-                tabIndex={-1}
-              >
+              <div key={grant.id} className="flex flex-col bg-white border-2 border-black overflow-hidden p-4 gap-2" tabIndex={-1}>
                 <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 bg-gray-100 border-2 border-gray-200 rounded flex items-center justify-center flex-shrink-0">
+                  <div className="w-12 h-12 bg-gray-50 border-2 border-gray-200 flex items-center justify-center flex-shrink-0 rounded-sm">
                     {grant.logo ? (
-                      <img src={grant.logo} alt={grant.organization} className="w-full h-full object-contain" />
+                      <img src={grant.logo} alt="" className="w-full h-full object-contain p-1.5" />
                     ) : (
-                      <span className="material-symbols-outlined text-2xl text-gray-400">workspace_premium</span>
+                      <span className="material-symbols-outlined text-xl text-gray-400">workspace_premium</span>
                     )}
                   </div>
-                  <div>
+                  <div className="min-w-0">
                     <p className="text-sm font-bold text-gray-900 line-clamp-2">{grant.name}</p>
-                    <p className="text-xs text-gray-500">{grant.organization}</p>
+                    <p className="text-[11px] text-gray-400">{grant.organization}</p>
                   </div>
                 </div>
-                <p className="text-xs text-gray-600 line-clamp-3">{grant.description}</p>
-                <p className="text-sm font-bold text-green-700">{grant.fundingAmount}</p>
-              </Link>
+                <p className="text-xs text-gray-500 line-clamp-3">{grant.description}</p>
+                <p className="text-base font-bold text-green-600 font-mono mt-auto">{grant.fundingAmount}</p>
+              </div>
             ))}
           </div>
         </ProGateOverlay>

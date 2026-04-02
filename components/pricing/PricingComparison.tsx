@@ -5,7 +5,7 @@ export default function PricingComparison() {
     {
       category: 'Core Access',
       items: [
-        { feature: 'Deals Database', free: '500 deals', pro: '2,800+ deals', proPlus: '2,800+ deals' },
+        { feature: 'Deals Database', free: '500 deals', pro: 'All deals', proPlus: 'All deals' },
         { feature: 'Startup Database', free: '1,000 startups', pro: '12,847 startups', proPlus: '12,847 startups' },
         { feature: 'Startup Ideas', free: '100 ideas', pro: '2,847 ideas', proPlus: '2,847 ideas' },
         { feature: 'Master Resources Library', free: 'Basic access', pro: 'Full access', proPlus: 'Full access' }

@@ -42,7 +42,7 @@ export default function ProviderSection() {
             </h2>
             
             <p className="text-sm md:text-base text-gray-700 font-mono mb-6 leading-relaxed max-w-lg">
-              Get your SaaS or service in front of 12,000+ verified founders. We curate high-value deals and grants. No fluff. Direct exposure.
+              Get your SaaS or service in front of verified founders. We curate high-value deals and grants. No fluff. Direct exposure.
             </p>
             
             <div className="flex flex-wrap gap-3">
@@ -106,7 +106,7 @@ export default function ProviderSection() {
             {/* Bottom Trusted By Row */}
             <div className="mt-8 text-center relative z-10">
               <p className="font-mono text-[9px] font-bold text-gray-400 uppercase tracking-widest mb-3">
-                Join 150+ Top Tier Providers
+                Join Top Tier Providers
               </p>
               <div className="flex justify-center -space-x-2">
                 {[

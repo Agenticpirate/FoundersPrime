@@ -27,9 +27,11 @@ export default function TopWeeklyDeals() {
       try {
         const response = await fetch('/data/all-deals.json')
         const allDeals = await response.json()
-        const topDeals = allDeals
-          .filter((d: Deal) => d.provider && d.value && d.logoUrl)
-          .slice(0, 6)
+        const priorityProviders = ['github', 'airtable', 'aws', 'google', 'microsoft', 'linear', 'stripe', 'notion', 'webflow', 'cloudflare', 'datadog', 'intercom'];
+        const withLogos = allDeals.filter((d: Deal) => d.provider && d.value && d.logoUrl);
+        const priority = withLogos.filter((d: Deal) => priorityProviders.some(p => d.provider.toLowerCase().includes(p)));
+        const rest = withLogos.filter((d: Deal) => !priorityProviders.some(p => d.provider.toLowerCase().includes(p)));
+        const topDeals = [...priority, ...rest].slice(0, 6);
         setDeals(topDeals)
       } catch (error) {
         console.error('Failed to load deals:', error)
@@ -68,7 +70,7 @@ export default function TopWeeklyDeals() {
             <p className="text-sm text-black font-medium border-l-4 border-black pl-3 ml-1">Hand-picked savings for modern founders.</p>
           </div>
           <Link href="/deals" className="bg-black text-white px-4 py-2 md:px-6 md:py-3 text-sm font-mono font-bold rounded-none neo-shadow hover:bg-gray-900 transition-all flex items-center justify-center gap-2 w-full md:w-auto">
-            VIEW_ALL_1000+_DEALS <span className="material-symbols-outlined text-sm">arrow_forward</span>
+            VIEW_ALL_DEALS <span className="material-symbols-outlined text-sm">arrow_forward</span>
           </Link>
         </div>
 

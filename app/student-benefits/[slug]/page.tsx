@@ -26,12 +26,12 @@ export async function generateMetadata(
 
     if (!benefit) {
         return {
-            title: 'Student Benefit Not Found | FoundersPrime',
+            title: 'Student Benefit Not Found',
         }
     }
 
     return {
-        title: `${benefit.title} - ${benefit.value} for Students | FoundersPrime`,
+        title: `${benefit.title} - ${benefit.value} for Students`,
         description: `${benefit.offerSummary} Get ${benefit.title} as a student. ${benefit.description?.substring(0, 150) || ''}`,
     }
 }

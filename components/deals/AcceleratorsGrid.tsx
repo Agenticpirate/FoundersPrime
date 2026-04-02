@@ -170,8 +170,7 @@ export default function AcceleratorsGrid() {
  {/* Results Count and Clear Filters */}
  <div className="flex items-center justify-between mb-6 pb-2 border-b-2 border-dashed border-gray-300">
  <div className="font-mono text-sm text-gray-600">
- Showing <span className="font-bold text-black">{filteredAndSearchedDeals.length}</span> of{' '}
- <span className="font-bold text-black">{accelerators2026.length}</span> programs
+ Showing <span className="font-bold text-black">{filteredAndSearchedDeals.length}</span> programs
  </div>
  {hasActiveFilters && (
  <button

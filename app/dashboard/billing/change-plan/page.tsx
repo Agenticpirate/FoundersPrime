@@ -6,7 +6,7 @@ import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 
 export const metadata: Metadata = {
-  title: 'Change Plan | FoundersPrime',
+  title: 'Change Plan',
   description: 'Change your FoundersPrime subscription plan.',
 }
 

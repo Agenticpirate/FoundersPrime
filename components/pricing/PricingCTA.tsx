@@ -6,7 +6,7 @@ export default function PricingCTA() {
           Ready to Accelerate Your Startup?
         </h2>
         <p className="font-sans text-xl text-gray-300 mb-4 md:mb-6 leading-relaxed">
-          Join 50,000+ founders who use FoundersPrime to discover deals, validate ideas, and build successful startups. Start your free trial today.
+          Join thousands of founders who use FoundersPrime to discover deals, validate ideas, and build successful startups.
         </p>
         
         {/* Stats */}

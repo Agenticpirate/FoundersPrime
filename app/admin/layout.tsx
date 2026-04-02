@@ -3,7 +3,7 @@ import AdminSidebar from '../../components/admin/AdminSidebar'
 import AdminAuthGuard from '../../components/admin/AdminAuthGuard'
 
 export const metadata: Metadata = {
-  title: 'Admin Panel | FoundersPrime',
+  title: 'Admin Panel',
   description: 'Administrative interface for managing FoundersPrime platform.',
 }
 

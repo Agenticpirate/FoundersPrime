@@ -7,8 +7,8 @@ import SaasStrategy from '@/components/deals/SaasStrategy'
 import SaasGrid from '@/components/deals/SaasGrid'
 
 export const metadata: Metadata = {
-  title: 'SaaS Discounts - FoundersPrime | FoundersPrime',
-  description: 'Access 200+ SaaS tools for free or at massive discounts. From productivity to marketing to customer support — we\'ve got your entire stack covered.',
+  title: 'SaaS Discounts',
+  description: 'Access verified SaaS tools for free or at massive discounts. From productivity to marketing to customer support — we\'ve got your entire stack covered.',
 }
 
 export default function SaasDiscountsPage() {

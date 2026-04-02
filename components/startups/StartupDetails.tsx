@@ -13,7 +13,7 @@ interface StartupDetailsProps {
 const FounderAvatar = ({ founder }: { founder: { name: string, avatar?: string } }) => {
     const [error, setError] = useState(false);
     return (
-        <div className="w-12 h-12 md:w-16 md:h-16 rounded-full border-2 border-black overflow-hidden flex-shrink-0 bg-gray-100 flex items-center justify-center">
+        <div className="w-12 h-12 md:w-16 md:h-16 rounded-full border-2 border-black overflow-hidden flex-shrink-0 bg-gray-100 flex items-center justify-center relative">
             {founder.avatar && !error ? (
                 <Image 
                     src={founder.avatar} 
@@ -32,17 +32,35 @@ const FounderAvatar = ({ founder }: { founder: { name: string, avatar?: string }
 
 export default function StartupDetails({ company }: StartupDetailsProps) {
     return (
-        <div className="mx-auto max-w-[1200px] px-3 md:px-6 py-4 md:py-5 md:py-6">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-8 pt-4 md:pt-6 pb-6 md:pb-10">
             {/* Breadcrumbs */}
-            <div className="flex flex-wrap gap-2 text-[10px] md:text-sm font-bold uppercase tracking-wide mb-4 md:mb-6">
-                <Link className="text-black/60 hover:text-orange-600 hover:underline decoration-2" href="/">Home</Link>
-                <span className="text-black/60">/</span>
-                <Link className="text-black/60 hover:text-orange-600 hover:underline decoration-2" href="/startups">Startups</Link>
-                <span className="text-black/60">/</span>
-                <span className="text-black">{company.name}</span>
-            </div>
+            <nav className="flex mb-3" aria-label="Breadcrumb">
+                <ol className="inline-flex items-center space-x-1 font-mono text-sm font-medium">
+                    <li className="inline-flex items-center">
+                        <Link className="text-gray-500 hover:text-black" href="/">Home</Link>
+                    </li>
+                    <li>
+                        <div className="flex items-center">
+                            <span className="material-symbols-outlined text-gray-400 text-base mx-1">chevron_right</span>
+                            <Link className="text-gray-500 hover:text-black" href="/resources">Resources</Link>
+                        </div>
+                    </li>
+                    <li>
+                        <div className="flex items-center">
+                            <span className="material-symbols-outlined text-gray-400 text-base mx-1">chevron_right</span>
+                            <Link className="text-gray-500 hover:text-black" href="/startups">Verified Startups</Link>
+                        </div>
+                    </li>
+                    <li aria-current="page">
+                        <div className="flex items-center">
+                            <span className="material-symbols-outlined text-gray-400 text-base mx-1">chevron_right</span>
+                            <span className="text-black bg-primary/20 px-2 py-0.5 rounded-sm border border-black">{company.name}</span>
+                        </div>
+                    </li>
+                </ol>
+            </nav>
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 md:gap-8">
                 {/* Left Column: Main Content */}
                 <div className="lg:col-span-2 space-y-4 md:space-y-6">
                     {/* Header Card */}

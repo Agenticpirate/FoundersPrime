@@ -10,7 +10,7 @@ export default function SaasDiscountsHero() {
           SaaS Discounts for Startups
         </h1>
         <p className="font-sans text-sm md:text-base text-gray-700 leading-relaxed max-w-3xl">
-          Cut your software costs by up to <span className="font-bold text-black bg-primary/20 px-1">90%</span> with exclusive startup discounts. Access Notion, Figma, Slack, and 200+ other platforms.
+          Cut your software costs by up to <span className="font-bold text-black bg-primary/20 px-1">90%</span> with exclusive startup discounts. Access Notion, Figma, Slack, and hundreds of other platforms.
         </p>
       </div>
 

@@ -191,13 +191,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   
   if (!user) {
     return {
-      title: 'User Not Found | FoundersPrime',
+      title: 'User Not Found',
       description: 'The requested user profile could not be found.',
     }
   }
 
   return {
-    title: `${user.displayName} (@${user.username}) | FoundersPrime`,
+    title: `${user.displayName} (@${user.username})`,
     description: `View ${user.displayName}'s profile on FoundersPrime. ${user.bio}`,
   }
 }

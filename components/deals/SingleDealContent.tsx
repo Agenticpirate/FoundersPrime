@@ -213,10 +213,18 @@ export default function SingleDealContent({ deal, freeAccess = false, basePath =
         const result = await claimDeal(deal.id, applicationUrl)
         if (result.success && result.url) {
             window.open(result.url, '_blank')
+            // Show usage alert for Explorer users
+            if (result.usage) {
+                const { weeklyUsed, weeklyLimit, monthlyUsed, monthlyLimit } = result.usage
+                const weeklyLeft = weeklyLimit - weeklyUsed
+                const monthlyLeft = monthlyLimit - monthlyUsed
+                if (weeklyLeft <= 2 || monthlyLeft <= 5) {
+                    setClaimError(`⚡ ${weeklyLeft} claims left this week · ${monthlyLeft} left this month`)
+                }
+            }
         } else {
             setClaimError(result.error || 'Failed to apply.')
             if (result.limitReached) {
-                // Prompt an upgrade if they hit the 10 limit
                 setShowUpgradeModal(true)
             }
         }
@@ -234,11 +242,11 @@ export default function SingleDealContent({ deal, freeAccess = false, basePath =
         <div className="lg:sticky lg:top-24 space-y-4 md:space-y-6">
 
           {/* Apply Box */}
-          <div className="rounded-sm border-2 md:border-4 border-black bg-white shadow-[3px_3px_0px_#111111] md:shadow-[6px_6px_0px_#111111] p-4 md:p-6">
+          <div className="rounded-sm border-2 border-black bg-white shadow-[3px_3px_0px_#111] p-4 md:p-5">
             
             {claimError && (
-              <div className="mb-4 p-3 bg-red-50 text-red-700 text-xs md:text-sm font-bold border-2 border-red-500 rounded-sm">
-                ⚠️ {claimError}
+              <div className={`mb-4 p-3 text-xs md:text-sm font-bold border-2 rounded-sm ${claimError.startsWith('⚡') ? 'bg-amber-50 text-amber-700 border-amber-300' : 'bg-red-50 text-red-700 border-red-500'}`}>
+                {claimError.startsWith('⚡') ? claimError : `⚠️ ${claimError}`}
               </div>
             )}
             
@@ -339,7 +347,7 @@ export default function SingleDealContent({ deal, freeAccess = false, basePath =
           </div>
 
           {/* Help CTA — hidden on mobile */}
-          <div className="hidden md:block rounded-sm bg-black text-white p-6 shadow-[6px_6px_0px_#111111] text-center border-2 md:border-4 border-black">
+          <div className="hidden md:block rounded-sm bg-black text-white p-5 shadow-[3px_3px_0px_#111] text-center border-2 border-black">
             <div className="inline-block p-3 rounded-full bg-yellow-400 border-3 border-white mb-4 text-black">
               <span className="material-symbols-outlined block !text-[28px]">rocket_launch</span>
             </div>
@@ -358,51 +366,54 @@ export default function SingleDealContent({ deal, freeAccess = false, basePath =
       <div className="lg:col-span-2 space-y-4 md:space-y-6 order-last lg:order-first">
 
         {/* Quick Stats Bar */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-3">
-          <div className="rounded-sm border-2 md:border-3 border-black bg-white p-3 shadow-[2px_2px_0px_#111111] md:shadow-[3px_3px_0px_#111111]">
-            <div className="text-[10px] md:text-xs font-bold uppercase text-gray-500 mb-0.5 font-mono">Time</div>
-            <div className="text-base md:text-lg font-bold text-black font-mono">{deal.stats.appTime}</div>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+          <div className="rounded-sm border-2 border-black bg-white p-2.5 shadow-[2px_2px_0px_#111]">
+            <div className="text-[9px] md:text-[10px] font-bold uppercase text-gray-500 mb-0.5 font-mono">Time</div>
+            <div className="text-sm md:text-base font-bold text-black font-mono">{deal.stats.appTime}</div>
           </div>
-          <div className="rounded-sm border-2 md:border-3 border-black bg-white p-3 shadow-[2px_2px_0px_#111111] md:shadow-[3px_3px_0px_#111111]">
-            <div className="text-[10px] md:text-xs font-bold uppercase text-gray-500 mb-0.5 font-mono">Approval</div>
-            <div className="text-base md:text-lg font-bold text-black font-mono">{deal.stats.approval}</div>
+          <div className="rounded-sm border-2 border-black bg-white p-2.5 shadow-[2px_2px_0px_#111]">
+            <div className="text-[9px] md:text-[10px] font-bold uppercase text-gray-500 mb-0.5 font-mono">Approval</div>
+            <div className="text-sm md:text-base font-bold text-black font-mono">{deal.stats.approval}</div>
           </div>
-          <div className="rounded-sm border-2 md:border-3 border-black bg-white p-3 shadow-[2px_2px_0px_#111111] md:shadow-[3px_3px_0px_#111111]">
-            <div className="text-[10px] md:text-xs font-bold uppercase text-gray-500 mb-0.5 font-mono">Difficulty</div>
-            <div className="text-base md:text-lg font-bold text-green-600 font-mono">{deal.stats.difficulty}</div>
+          <div className="rounded-sm border-2 border-black bg-white p-2.5 shadow-[2px_2px_0px_#111]">
+            <div className="text-[9px] md:text-[10px] font-bold uppercase text-gray-500 mb-0.5 font-mono">Difficulty</div>
+            <div className="text-sm md:text-base font-bold text-green-600 font-mono">{deal.stats.difficulty}</div>
           </div>
-          <div className="rounded-sm border-2 md:border-3 border-black bg-white p-3 shadow-[2px_2px_0px_#111111] md:shadow-[3px_3px_0px_#111111]">
-            <div className="text-[10px] md:text-xs font-bold uppercase text-gray-500 mb-0.5 font-mono">Success</div>
-            <div className="text-base md:text-lg font-bold text-blue-600 font-mono">{deal.stats.successRate}</div>
+          <div className="rounded-sm border-2 border-black bg-white p-2.5 shadow-[2px_2px_0px_#111]">
+            <div className="text-[9px] md:text-[10px] font-bold uppercase text-gray-500 mb-0.5 font-mono">Success</div>
+            <div className="text-sm md:text-base font-bold text-blue-600 font-mono">{deal.stats.successRate}</div>
           </div>
         </div>
 
         {/* Overview Section */}
-        <section className="rounded-sm border-2 md:border-4 border-black bg-white p-4 md:p-6 pb-8 md:pb-12 shadow-[4px_4px_0px_#111111] md:shadow-[6px_6px_0px_#111111]">
-          <h2 className="mb-3 md:mb-4 flex items-center gap-2 border-b-2 md:border-b-3 border-black pb-2 md:pb-3 font-mono text-lg md:text-2xl font-bold uppercase">
-            <span className="material-symbols-outlined text-primary !text-[20px] md:!text-[24px]">info</span>
+        {description && description.length > 10 && (
+        <section className="rounded-sm border-2 border-black bg-white p-4 md:p-6 shadow-[3px_3px_0px_#111]">
+          <h2 className="mb-3 flex items-center gap-2 border-b-2 border-black pb-2 font-mono text-base md:text-xl font-bold uppercase">
+            <span className="material-symbols-outlined text-primary text-lg md:text-xl">info</span>
             About This Deal
           </h2>
           <p className="text-sm md:text-base leading-relaxed text-gray-800 whitespace-pre-line break-words">{description}</p>
         </section>
+        )}
 
         {/* What's Included / Benefits */}
-        <section className="rounded-sm border-2 md:border-4 border-black bg-white p-4 md:p-6 shadow-[4px_4px_0px_#111111] md:shadow-[6px_6px_0px_#111111]">
-          <h2 className="mb-3 md:mb-4 flex items-center gap-2 border-b-2 md:border-b-3 border-black pb-2 md:pb-3 font-mono text-lg md:text-2xl font-bold uppercase">
-            <span className="material-symbols-outlined text-primary !text-[20px] md:!text-[24px]">inventory_2</span>
+        {Array.isArray(benefits) && benefits.length > 0 && (
+        <section className="rounded-sm border-2 border-black bg-white p-4 md:p-6 shadow-[3px_3px_0px_#111]">
+          <h2 className="mb-3 flex items-center gap-2 border-b-2 border-black pb-2 font-mono text-base md:text-xl font-bold uppercase">
+            <span className="material-symbols-outlined text-primary text-lg md:text-xl">inventory_2</span>
             {deal.benefits ? 'Benefits & Features' : 'What\'s Included'}
           </h2>
-          <div className="grid md:grid-cols-2 gap-3 md:gap-4">
-            {Array.isArray(benefits) && benefits.map((item, index) => (
-              <div key={index} className="flex items-start gap-2 md:gap-3 p-3 md:p-4 bg-gray-50 rounded-sm border-2 border-gray-200">
-                <span className="material-symbols-outlined text-green-600 mt-0.5 flex-shrink-0">check_circle</span>
+          <div className="grid md:grid-cols-2 gap-2 md:gap-3">
+            {benefits.map((item, index) => (
+              <div key={index} className="flex items-start gap-2 p-3 bg-gray-50 rounded-sm border border-gray-200">
+                <span className="material-symbols-outlined text-green-600 mt-0.5 flex-shrink-0 text-base">check_circle</span>
                 <div>
                   {typeof item === 'string' ? (
-                    <p className="text-base font-medium">{item}</p>
+                    <p className="text-sm font-medium">{item}</p>
                   ) : (
                     <>
-                      <h3 className="font-bold font-mono text-sm md:text-base mb-1">{item.title}</h3>
-                      <p className="text-xs md:text-sm text-gray-600">{item.description}</p>
+                      <h3 className="font-bold font-mono text-sm mb-0.5">{item.title}</h3>
+                      <p className="text-xs text-gray-600">{item.description}</p>
                     </>
                   )}
                 </div>
@@ -410,45 +421,48 @@ export default function SingleDealContent({ deal, freeAccess = false, basePath =
             ))}
           </div>
         </section>
+        )}
 
         {/* Eligibility Requirements */}
-        <section className="rounded-sm border-2 md:border-4 border-black bg-white p-3 md:p-6 shadow-[4px_4px_0px_#111111] md:shadow-[6px_6px_0px_#111111]">
-          <h2 className="mb-2 md:mb-4 flex items-center gap-2 border-b-2 md:border-b-3 border-black pb-2 md:pb-3 font-mono text-base md:text-2xl font-bold uppercase">
-            <span className="material-symbols-outlined text-primary !text-[18px] md:!text-[24px]">checklist</span>
-            Eligibility Requirements
+        {eligibility && eligibility.length > 0 && (
+        <section className="rounded-sm border-2 border-black bg-white p-3 md:p-5 shadow-[3px_3px_0px_#111]">
+          <h2 className="mb-2 flex items-center gap-2 border-b-2 border-black pb-2 font-mono text-base md:text-xl font-bold uppercase">
+            <span className="material-symbols-outlined text-primary text-lg">checklist</span>
+            Eligibility
           </h2>
-          <ul className="space-y-1.5 md:space-y-3">
+          <ul className="space-y-1.5">
             {eligibility.map((requirement, index) => (
-              <li key={index} className="flex items-start gap-2 p-2 md:p-4 bg-yellow-50 rounded-sm border-l-4 border-black">
-                <span className="material-symbols-outlined text-primary flex-shrink-0 text-sm md:text-base mt-0.5">arrow_right</span>
-                <span className="text-sm md:text-base font-medium leading-snug">{requirement}</span>
+              <li key={index} className="flex items-start gap-2 p-2 bg-yellow-50 rounded-sm border-l-4 border-black">
+                <span className="material-symbols-outlined text-primary flex-shrink-0 text-sm mt-0.5">arrow_right</span>
+                <span className="text-sm font-medium leading-snug">{requirement}</span>
               </li>
             ))}
           </ul>
         </section>
+        )}
 
         {/* How to Apply */}
-        <section className="rounded-sm border-2 md:border-4 border-black bg-white p-3 md:p-6 shadow-[4px_4px_0px_#111111] md:shadow-[6px_6px_0px_#111111]">
-          <h2 className="mb-2 md:mb-4 flex items-center gap-2 border-b-2 md:border-b-3 border-black pb-2 md:pb-3 font-mono text-base md:text-2xl font-bold uppercase">
-            <span className="material-symbols-outlined text-primary !text-[18px] md:!text-[24px]">directions_run</span>
+        {instructions && instructions.length > 0 && (
+        <section className="rounded-sm border-2 border-black bg-white p-3 md:p-5 shadow-[3px_3px_0px_#111]">
+          <h2 className="mb-2 flex items-center gap-2 border-b-2 border-black pb-2 font-mono text-base md:text-xl font-bold uppercase">
+            <span className="material-symbols-outlined text-primary text-lg">directions_run</span>
             How to Apply
           </h2>
-          <div className="space-y-3 md:space-y-6">
+          <div className="space-y-3">
             {instructions.map((step, index) => (
-              <div key={index} className="flex gap-3 md:gap-4">
+              <div key={index} className="flex gap-3">
                 <div className="flex-shrink-0">
-                  <div className={`h-8 w-8 md:h-12 md:w-12 rounded-full border-2 md:border-4 border-black flex items-center justify-center font-bold font-mono text-sm md:text-lg shadow-[2px_2px_0px_#111111] md:shadow-[3px_3px_0px_#111111] ${index === 0 ? 'bg-yellow-400' : 'bg-white'
-                    }`}>
+                  <div className={`h-7 w-7 md:h-9 md:w-9 rounded-full border-2 border-black flex items-center justify-center font-bold font-mono text-xs md:text-sm shadow-[2px_2px_0px_#111] ${index === 0 ? 'bg-yellow-400' : 'bg-white'}`}>
                     {index + 1}
                   </div>
                 </div>
-                <div className="flex-1 pt-0 md:pt-1">
+                <div className="flex-1 pt-0.5">
                   {typeof step === 'string' ? (
-                    <p className="text-sm md:text-base text-gray-700 leading-snug md:leading-relaxed">{step}</p>
+                    <p className="text-sm text-gray-700 leading-snug">{step}</p>
                   ) : (
                     <>
-                      <h3 className="font-bold text-sm md:text-lg font-mono mb-0.5 md:mb-2">{step.title}</h3>
-                      <p className="text-xs md:text-base text-gray-700 leading-snug md:leading-relaxed">{step.description}</p>
+                      <h3 className="font-bold text-sm font-mono mb-0.5">{step.title}</h3>
+                      <p className="text-xs text-gray-700 leading-snug">{step.description}</p>
                     </>
                   )}
                 </div>
@@ -457,47 +471,46 @@ export default function SingleDealContent({ deal, freeAccess = false, basePath =
           </div>
 
           {/* Apply button */}
-          <div className="mt-4 md:mt-6 pt-6 border-t-3 border-gray-200">
+          <div className="mt-4 pt-4 border-t-2 border-gray-200">
             {isLoadingPro ? (
-              <div className="h-16 w-48 bg-gray-100 animate-pulse rounded-sm"></div>
+              <div className="h-12 w-40 bg-gray-100 animate-pulse rounded-sm"></div>
             ) : (
               <button
                 onClick={handleApplyClick}
                 disabled={isClaiming}
-                className="inline-flex items-center gap-2 rounded-sm border-2 md:border-4 border-black bg-primary px-6 md:px-8 py-3 md:py-4 font-mono text-sm md:text-lg font-bold uppercase text-black shadow-[4px_4px_0px_#111111] md:shadow-[6px_6px_0px_#111111] hover:bg-yellow-300 transition-all cursor-pointer disabled:opacity-50"
+                className="inline-flex items-center gap-2 rounded-sm border-2 border-black bg-primary px-6 py-3 font-mono text-sm font-bold uppercase text-black shadow-[3px_3px_0px_#111] hover:bg-yellow-300 transition-all cursor-pointer disabled:opacity-50"
               >
                 {isClaiming ? 'Claiming...' : (freeAccess ? 'Apply Now' : (isPro || isExplorer) ? 'Apply Now' : 'Apply Now (Premium)')}
-                <span className="material-symbols-outlined">
+                <span className="material-symbols-outlined text-base">
                     {isClaiming ? 'hourglass_empty' : (freeAccess || isPro || isExplorer ? 'arrow_forward' : 'lock')}
                 </span>
               </button>
             )}
           </div>
         </section>
+        )}
 
         {/* FAQ Section */}
-        <section className="rounded-sm border-2 md:border-4 border-black bg-white p-4 md:p-6 shadow-[4px_4px_0px_#111111] md:shadow-[6px_6px_0px_#111111]">
-          <h2 className="mb-3 md:mb-4 flex items-center gap-2 border-b-2 md:border-b-3 border-black pb-2 md:pb-3 font-mono text-lg md:text-2xl font-bold uppercase">
-            <span className="material-symbols-outlined text-primary !text-[20px] md:!text-[24px]">help</span>
+        {faqs && faqs.length > 0 && (
+        <section className="rounded-sm border-2 border-black bg-white p-4 md:p-5 shadow-[3px_3px_0px_#111]">
+          <h2 className="mb-3 flex items-center gap-2 border-b-2 border-black pb-2 font-mono text-base md:text-xl font-bold uppercase">
+            <span className="material-symbols-outlined text-primary text-lg">help</span>
             FAQ
           </h2>
-          <div className="space-y-2 md:space-y-3">
+          <div className="space-y-2">
             {faqs.map((faqItem, index) => (
-              <div
-                key={index}
-                className="rounded-sm border-3 border-black bg-white shadow-[3px_3px_0px_#111111] overflow-hidden"
-              >
+              <div key={index} className="rounded-sm border-2 border-black bg-white shadow-[2px_2px_0px_#111] overflow-hidden">
                 <button
                   onClick={() => setOpenFaqIndex(openFaqIndex === index ? null : index)}
-                  className="flex cursor-pointer items-center justify-between p-3 md:p-4 text-sm md:text-base font-bold font-mono w-full text-left hover:bg-gray-50 transition-colors"
+                  className="flex cursor-pointer items-center justify-between p-3 text-sm font-bold font-mono w-full text-left hover:bg-gray-50 transition-colors"
                 >
                   <span className="pr-4">{faqItem.question}</span>
-                  <span className={`material-symbols-outlined transition-transform flex-shrink-0 ${openFaqIndex === index ? 'rotate-180' : ''}`}>
+                  <span className={`material-symbols-outlined text-sm transition-transform flex-shrink-0 ${openFaqIndex === index ? 'rotate-180' : ''}`}>
                     expand_more
                   </span>
                 </button>
                 {openFaqIndex === index && (
-                  <div className="border-t-2 md:border-t-3 border-gray-200 px-3 pb-3 pt-2 md:px-4 md:pb-4 md:pt-3 text-sm md:text-base text-gray-700 leading-relaxed bg-gray-50">
+                  <div className="border-t-2 border-gray-200 px-3 pb-3 pt-2 text-sm text-gray-700 leading-relaxed bg-gray-50">
                     {faqItem.answer}
                   </div>
                 )}
@@ -505,36 +518,9 @@ export default function SingleDealContent({ deal, freeAccess = false, basePath =
             ))}
           </div>
         </section>
-
-        {/* Similar Deals */}
-        {deal.similarDeals.length > 0 && (
-          <section>
-            <h2 className="mb-4 font-mono text-2xl font-bold uppercase text-black flex items-center gap-2">
-              <span className="material-symbols-outlined text-primary">recommend</span>
-              {freeAccess ? 'Related Benefits' : 'Similar Deals'}
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {deal.similarDeals.slice(0, 4).map((similarDeal, index) => (
-                <a
-                  key={index}
-                  href={similarDeal.slug ? `${basePath}/${similarDeal.slug}` : '#'}
-                  className="group rounded-sm border-2 md:border-4 border-black bg-white p-4 md:p-5 shadow-[3px_3px_0px_#111111] md:shadow-[4px_4px_0px_#111111] hover:shadow-[6px_6px_0px_#111111] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all"
-                >
-                  <div className="flex items-start justify-between mb-3">
-                    <span className="bg-primary text-black text-xs px-3 py-1.5 rounded-sm border-2 border-black font-bold uppercase font-mono">
-                      {similarDeal.value}
-                    </span>
-                    <span className="material-symbols-outlined text-gray-400 group-hover:text-primary transition-colors">
-                      arrow_forward
-                    </span>
-                  </div>
-                  <h3 className="font-bold font-mono text-base mb-2 group-hover:text-primary transition-colors">{similarDeal.title}</h3>
-                  <p className="text-sm text-gray-600 line-clamp-2">{similarDeal.description}</p>
-                </a>
-              ))}
-            </div>
-          </section>
         )}
+
+        {/* Similar Deals - removed for cleaner layout */}
       </div>
 
       <ProUpgradeModal

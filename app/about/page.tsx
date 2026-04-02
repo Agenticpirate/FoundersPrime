@@ -39,8 +39,8 @@ export default function AboutPage() {
                   <div className="grid grid-cols-2 md:grid-cols-1 gap-0 md:space-y-5">
                     {[
                       { value: '$4.2M+', label: 'Tracked in savings' },
-                      { value: '1,200+', label: 'Startups in network' },
-                      { value: '500+', label: 'Verified deals listed' },
+                      { value: '—', label: 'Startups in network' },
+                      { value: '—', label: 'Verified deals listed' },
                       { value: '43+', label: 'Countries reached' },
                     ].map(({ value, label }) => (
                       <div key={label} className="flex flex-col md:flex-row md:items-baseline md:justify-between border-b border-white/10 pb-3 md:pb-5 last:border-0 last:pb-0 pt-3 md:pt-0 first:pt-0">

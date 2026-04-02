@@ -44,7 +44,7 @@ export default function ProUpgradeModal({ isOpen, onClose }: ProUpgradeModalProp
 
                         <h3 className="text-base md:text-xl font-black uppercase text-center mb-1.5 md:mb-2">This is a Founder Plan Deal</h3>
                         <p className="text-center text-gray-600 leading-relaxed text-xs md:text-sm max-w-xs">
-                            Upgrade to access this verified deal along with 2,800+ more credits, grants, and opportunities.
+                            Upgrade to access this verified deal along with hundreds of credits, grants, and opportunities.
                         </p>
                     </div>
 

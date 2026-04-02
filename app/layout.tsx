@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     locale: 'en_US',
     url: 'https://www.foundersprime.com',
     title: 'FoundersPrime | Free Credits. Real Grants. Zero Dilution.',
-    description: 'Access 1000+ verified deals, non-dilutive grants, and startup credits worth $500K+. Built for modern founders.',
+    description: 'Access verified deals, non-dilutive grants, and startup credits worth $500K+. Built for modern founders.',
     siteName: 'FoundersPrime',
     images: [
       {
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'FoundersPrime | Free Credits. Real Grants. Zero Dilution.',
-    description: 'Access 1000+ verified deals, non-dilutive grants, and startup credits worth $500K+.',
+    description: 'Access verified deals, non-dilutive grants, and startup credits worth $500K+.',
     creator: '@foundersprime',
     images: ['/og-image.png'],
   },
@@ -57,7 +57,7 @@ const jsonLd = {
     'https://twitter.com/foundersprime',
     'https://linkedin.com/company/foundersprime'
   ],
-  description: 'The intelligence terminal for 500+ verified deals, non-dilutive grants, and startup credits.',
+  description: 'The intelligence terminal for verified deals, non-dilutive grants, and startup credits.',
   slogan: 'The Intelligence Terminal for Startups'
 }
 

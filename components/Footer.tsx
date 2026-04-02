@@ -9,10 +9,10 @@ export default function Footer() {
         { text: "All Deals", href: "/deals" },
         { text: "Cloud Credits", href: "/deals/cloud-credits" },
         { text: "SaaS Discounts", href: "/deals/saas-discounts" },
-        { text: "Grants", href: "/programs/grants" },
+        { text: "Grants", href: "/deals/grants" },
         { text: "Ad Credits", href: "/deals/ad-credits" },
-        { text: "Accelerators", href: "/programs/accelerators" },
-        { text: "Incubators", href: "/programs/incubators" }
+        { text: "Accelerators", href: "/deals/accelerators" },
+        { text: "Incubators", href: "/deals/incubators" }
       ]
     },
     {

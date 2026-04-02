@@ -4,8 +4,8 @@ import Footer from '@/components/Footer'
 import StartupsContent from '@/components/startups/StartupsContent'
 
 export const metadata: Metadata = {
-  title: 'Verified Startups Database - FoundersPrime',
-  description: 'Browse 1,150+ verified startups for acquisition. Real revenue, real metrics, real opportunities from TrustMRR and Acquire.com.',
+  title: 'Verified Startups Database',
+  description: 'Browse verified startups for acquisition. Real revenue, real metrics, real opportunities from TrustMRR and Acquire.com.',
 }
 
 export default function StartupsPage() {

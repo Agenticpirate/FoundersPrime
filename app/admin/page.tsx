@@ -3,7 +3,7 @@ import AdminHeader from '../../components/admin/AdminHeader'
 import AdminDashboard from '../../components/admin/AdminDashboard'
 
 export const metadata: Metadata = {
-  title: 'Admin Dashboard | FoundersPrime',
+  title: 'Admin Dashboard',
   description: 'Administrative dashboard for managing FoundersPrime platform content, users, and analytics.',
 }
 

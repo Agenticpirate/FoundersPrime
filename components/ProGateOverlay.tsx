@@ -65,7 +65,7 @@ export default function ProGateOverlay({
                         {/* Top accent stripe */}
                         <div
                             className="absolute top-0 left-0 right-0 h-[5px]"
-                            style={{ background: '#13b6ec' }}
+                            style={{ background: '#38bdf8' }}
                         />
 
                         {/* Lock icon */}
@@ -108,7 +108,7 @@ export default function ProGateOverlay({
                                     boxShadow: '2px 2px 0px #111111',
                                 }}
                             >
-                                ✦ Pro Exclusive
+                                ✦ Founder Plan — Full Access
                             </span>
                         </div>
 
@@ -126,7 +126,7 @@ export default function ProGateOverlay({
                                 lineHeight: 1.15,
                             }}
                         >
-                            {hiddenCount}+ More {label}
+                            More {label} Available
                         </h3>
 
                         <p
@@ -138,9 +138,7 @@ export default function ProGateOverlay({
                                 marginBottom: 0,
                             }}
                         >
-                            You're seeing{' '}
-                            <strong style={{ color: '#111111' }}>{visibleCount}</strong> of{' '}
-                            <strong style={{ color: '#111111' }}>{totalCount}</strong> verified programs
+                            You&apos;re seeing a preview — unlock the full collection
                         </p>
 
                         {/* Divider */}
@@ -155,10 +153,10 @@ export default function ProGateOverlay({
                         {/* Feature list */}
                         <ul style={{ margin: '0 0 24px', padding: 0, listStyle: 'none' }}>
                             {[
-                                `Full access to all ${totalCount} verified ${label.toLowerCase()}`,
+                                `Unlimited access to all verified ${label.toLowerCase()}`,
                                 'Direct application links & verified deadlines',
                                 'Full funding amounts & equity terms',
-                                'Priority alerts when new programs open',
+                                'New deals added weekly — never miss an opportunity',
                             ].map((item) => (
                                 <li
                                     key={item}
@@ -177,7 +175,7 @@ export default function ProGateOverlay({
                                         className="material-symbols-outlined"
                                         style={{
                                             fontSize: 17,
-                                            color: '#13b6ec',
+                                            color: '#38bdf8',
                                             flexShrink: 0,
                                             marginTop: 1,
                                             fontVariationSettings: "'FILL' 1",
@@ -226,7 +224,7 @@ export default function ProGateOverlay({
                             <span className="material-symbols-outlined" style={{ fontSize: 18, fontVariationSettings: "'FILL' 1" }}>
                                 workspace_premium
                             </span>
-                            Unlock All {label}
+                            Unlock All {label} — Join Founder Plan
                         </Link>
 
                         {/* Fine print */}
@@ -241,7 +239,7 @@ export default function ProGateOverlay({
                             }}
                         >
                             Starts from{' '}
-                            <strong style={{ color: '#111111' }}>$9/month</strong> · Cancel anytime
+                            <strong style={{ color: '#111111' }}>$89.99/year</strong> — that&apos;s less than $7.50/mo
                         </p>
                     </div>
                 </div>

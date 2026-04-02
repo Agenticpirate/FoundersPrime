@@ -1,8 +1,14 @@
+import { Metadata } from 'next'
 import TermsHeader from '@/components/terms/TermsHeader'
 import TermsContent from '@/components/terms/TermsContent'
 import TermsSidebar from '@/components/terms/TermsSidebar'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
+
+export const metadata: Metadata = {
+  title: 'Terms of Service',
+  description: 'FoundersPrime terms of service. Read our terms and conditions for using the platform.',
+}
 
 export default function TermsPage() {
   return (

@@ -1,9 +1,50 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { Deal } from '@/lib/deals-database'
+import fs from 'fs'
+import path from 'path'
+
+// Check if Supabase is properly configured (not placeholder values)
+function isSupabaseConfigured(): boolean {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL
+  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  return !!(
+    url && key &&
+    url !== 'http://localhost:54321' &&
+    key !== 'placeholder-anon-key' &&
+    key.length > 20
+  )
+}
+
+// Load deals from local JSON file
+let jsonDealsCache: any[] | null = null
+let jsonCacheTime = 0
+const JSON_CACHE_TTL = 1000 * 60 * 5 // 5 minutes
+
+function loadLocalDeals(): any[] {
+  const now = Date.now()
+  if (jsonDealsCache && (now - jsonCacheTime < JSON_CACHE_TTL)) {
+    return jsonDealsCache
+  }
+  try {
+    const filePath = path.join(process.cwd(), 'public', 'data', 'all-deals.json')
+    if (fs.existsSync(filePath)) {
+      const content = fs.readFileSync(filePath, 'utf8')
+      jsonDealsCache = JSON.parse(content)
+      jsonCacheTime = now
+      return jsonDealsCache || []
+    }
+  } catch (error) {
+    console.error('Error loading local deals:', error)
+  }
+  return []
+}
 
 // Helper: verify caller is an active admin
 async function assertAdmin(): Promise<NextResponse | null> {
+  if (!isSupabaseConfigured()) {
+    return NextResponse.json({ success: false, error: 'Admin not available in local mode' }, { status: 403 })
+  }
   const supabase = createClient()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) {
@@ -22,10 +63,9 @@ async function assertAdmin(): Promise<NextResponse | null> {
   return null // authorised
 }
 
-// GET - Fetch all deals or filter by query params from Supabase
+// GET - Fetch all deals (from Supabase if configured, otherwise from local JSON)
 export async function GET(request: NextRequest) {
   try {
-    const supabase = createClient();
     const { searchParams } = new URL(request.url);
     const category = searchParams.get('category');
     const status = searchParams.get('status');
@@ -36,38 +76,73 @@ export async function GET(request: NextRequest) {
     const recommended = searchParams.get('recommended');
     const limit = searchParams.get('limit');
 
-    // For single deal lookups, only select essential fields
-    const isSingleLookup = !!(slug || id);
+    let deals: Deal[];
 
-    let query = supabase.from('deals').select(
-      isSingleLookup
-        ? '*'
-        : 'id,slug,title,provider,category,subcategory,shortDescription,short_description,value,status,featured,recommended,verified,difficulty,timeToApply,time_to_apply,tags,logoUrl,logo_url,applicationUrl,application_url,expiryDate,expiry_date'
-    );
+    if (isSupabaseConfigured()) {
+      // Use Supabase
+      const supabase = createClient();
+      const isSingleLookup = !!(slug || id);
 
-    if (slug) query = query.eq('slug', slug);
-    if (id) query = query.eq('id', id);
-    if (status && status !== 'all') query = query.eq('status', status);
-    if (featured === 'true') query = query.eq('featured', true);
-    if (recommended === 'true') query = query.eq('recommended', true);
+      let query = supabase.from('deals').select(
+        isSingleLookup
+          ? '*'
+          : 'id,slug,title,provider,category,subcategory,shortDescription,short_description,value,status,featured,recommended,verified,difficulty,timeToApply,time_to_apply,tags,logoUrl,logo_url,applicationUrl,application_url,expiryDate,expiry_date'
+      );
 
-    if (category && category !== 'all') {
-      if (category === 'ai') {
-        query = query.eq('category', 'ai');
-      } else {
-        query = query.or(`category.eq.${category},subcategory.eq.${category}`);
+      if (slug) query = query.eq('slug', slug);
+      if (id) query = query.eq('id', id);
+      if (status && status !== 'all') query = query.eq('status', status);
+      if (featured === 'true') query = query.eq('featured', true);
+      if (recommended === 'true') query = query.eq('recommended', true);
+
+      if (category && category !== 'all') {
+        if (category === 'ai') {
+          query = query.eq('category', 'ai');
+        } else {
+          query = query.or(`category.eq.${category},subcategory.eq.${category}`);
+        }
       }
+
+      if (limit) query = query.limit(parseInt(limit));
+
+      const { data: rawDeals, error } = await query;
+      if (error) throw error;
+      deals = (rawDeals || []).map(formatDealFromDB);
+    } else {
+      // Use local JSON fallback
+      let allDeals = loadLocalDeals();
+
+      // Apply filters on local data
+      if (slug) {
+        allDeals = allDeals.filter((d: any) => d.slug === slug);
+      }
+      if (id) {
+        allDeals = allDeals.filter((d: any) => d.id === id);
+      }
+      if (status && status !== 'all') {
+        allDeals = allDeals.filter((d: any) => d.status === status);
+      }
+      if (featured === 'true') {
+        allDeals = allDeals.filter((d: any) => d.featured === true);
+      }
+      if (recommended === 'true') {
+        allDeals = allDeals.filter((d: any) => d.recommended === true);
+      }
+      if (category && category !== 'all') {
+        if (category === 'ai') {
+          allDeals = allDeals.filter((d: any) => d.category === 'ai');
+        } else {
+          allDeals = allDeals.filter((d: any) => d.category === category || d.subcategory === category);
+        }
+      }
+      if (limit) {
+        allDeals = allDeals.slice(0, parseInt(limit));
+      }
+
+      deals = allDeals as Deal[];
     }
 
-    if (limit) query = query.limit(parseInt(limit));
-
-    const { data: rawDeals, error } = await query;
-
-    if (error) throw error;
-
-    // Filter search manually to mimic previous multi-field behavior
-    let deals: Deal[] = (rawDeals || []).map(formatDealFromDB);
-
+    // Apply search filter (works for both sources)
     if (search) {
       const searchLower = search.toLowerCase();
       deals = deals.filter(d =>
@@ -77,6 +152,21 @@ export async function GET(request: NextRequest) {
         d.tags?.some((tag: string) => tag.toLowerCase().includes(searchLower))
       );
     }
+
+    // Override: no deals are featured, mark priority deals as recommended
+    const recommendedKeywords = [
+      'github', 'airtable', 'aws', 'google for startups', 'microsoft for startups',
+      'microsoft founders hub', 'linear', 'stripe', 'notion', 'webflow',
+      'alibaba', 'algolia', 'auth0', 'cloudflare', 'customer.io', 'datadog',
+      'databricks', 'devrev', 'digitalocean', 'document360', 'elevenlabs', 'eleven labs',
+      'flippa', 'framer', 'gitlab', 'heroku', 'instatus', 'intercom', 'linkedin ads'
+    ];
+    deals = deals.map(d => {
+      const titleLower = (d.title || '').toLowerCase();
+      const providerLower = (d.provider || '').toLowerCase();
+      const isRecommended = recommendedKeywords.some(kw => titleLower.includes(kw) || providerLower.includes(kw));
+      return { ...d, featured: false, recommended: isRecommended } as Deal;
+    });
 
     // Single deal lookup return
     if (slug || id) {
@@ -95,14 +185,13 @@ export async function GET(request: NextRequest) {
       active: deals.filter(d => d.status === 'active').length,
       expired: deals.filter(d => d.status === 'expired').length,
       featured: deals.filter(d => d.featured).length,
-      recommended: deals.filter(d => d.recommended).length,
+      recommended: deals.filter((d: any) => d.recommended).length,
       byCategory: deals.reduce((acc: Record<string, number>, d) => {
         acc[d.category] = (acc[d.category] || 0) + 1;
         return acc;
       }, {})
     }
 
-    // Cache: CDN serves for 120s, revalidates in background for up to 600s
     return NextResponse.json(
       { success: true, deals, count: deals.length, stats },
       {

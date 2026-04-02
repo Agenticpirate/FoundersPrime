@@ -25,30 +25,30 @@ export async function generateMetadata(
   const allDeals = getAllDeals()
   let deal = allDeals.find((d: any) => d.slug === params.slug)
 
-  let title = 'Deal Not Found | FoundersPrime'
+  let title = 'Deal Not Found'
   let description = ''
   let image = 'https://www.foundersprime.com/og-image.jpg'
 
   if (deal) {
-    title = `${deal.title} Deal - ${deal.value} Value | FoundersPrime`
+    title = `${deal.title} Deal - ${deal.value} Value`
     description = `Get ${deal.title} credits and save ${deal.value}. ${deal.description.substring(0, 150)}... Verified startup deal.`
     image = deal.logoUrl || image
   } else {
     const accelerator = accelerators2026.find(a => a.slug === params.slug)
     if (accelerator) {
-      title = `${accelerator.name} - Accelerator Program | FoundersPrime`
+      title = `${accelerator.name} - Accelerator Program`
       description = `Apply to ${accelerator.name}. ${accelerator.investment} funding, ${accelerator.equity} equity. ${accelerator.description.substring(0, 150)}`
       image = accelerator.logo || image
     } else {
       const incubator = incubators2026.find(i => i.slug === params.slug)
       if (incubator) {
-        title = `${incubator.name} - Incubator Program | FoundersPrime`
+        title = `${incubator.name} - Incubator Program`
         description = `Apply to ${incubator.name}. ${incubator.support} support. ${incubator.description.substring(0, 150)}`
         image = incubator.logo || image
       } else {
         const grant = grants2026.find(g => g.slug === params.slug)
         if (grant) {
-          title = `${grant.name} - Grant Program | FoundersPrime`
+          title = `${grant.name} - Grant Program`
           description = `Apply to ${grant.name}. ${grant.fundingAmount} funding. ${grant.description.substring(0, 150)}`
           image = grant.logo || image
         } else {
@@ -431,33 +431,44 @@ export default async function SingleDealPage({ params }: PageProps) {
                   <li className="inline-flex items-center">
                     <a className="text-gray-500 hover:text-black" href="/">Home</a>
                   </li>
-                  <li>
-                    <div className="flex items-center">
-                      <span className="material-symbols-outlined text-gray-400 text-base mx-1">chevron_right</span>
-                      <a className="text-gray-500 hover:text-black" href="/programs">Programs</a>
-                    </div>
-                  </li>
-                  {dealData.category === 'accelerators' && (
+                  {(dealData.category === 'accelerators' || dealData.category === 'incubators' || dealData.category === 'grants') ? (
+                    <>
+                      <li>
+                        <div className="flex items-center">
+                          <span className="material-symbols-outlined text-gray-400 text-base mx-1">chevron_right</span>
+                          <a className="text-gray-500 hover:text-black" href="/programs">Programs</a>
+                        </div>
+                      </li>
+                      {dealData.category === 'accelerators' && (
+                        <li>
+                          <div className="flex items-center">
+                            <span className="material-symbols-outlined text-gray-400 text-base mx-1">chevron_right</span>
+                            <a className="text-gray-500 hover:text-black" href="/deals/accelerators">Accelerators</a>
+                          </div>
+                        </li>
+                      )}
+                      {dealData.category === 'incubators' && (
+                        <li>
+                          <div className="flex items-center">
+                            <span className="material-symbols-outlined text-gray-400 text-base mx-1">chevron_right</span>
+                            <a className="text-gray-500 hover:text-black" href="/deals/incubators">Incubators</a>
+                          </div>
+                        </li>
+                      )}
+                      {dealData.category === 'grants' && (
+                        <li>
+                          <div className="flex items-center">
+                            <span className="material-symbols-outlined text-gray-400 text-base mx-1">chevron_right</span>
+                            <a className="text-gray-500 hover:text-black" href="/deals/grants">Grants</a>
+                          </div>
+                        </li>
+                      )}
+                    </>
+                  ) : (
                     <li>
                       <div className="flex items-center">
                         <span className="material-symbols-outlined text-gray-400 text-base mx-1">chevron_right</span>
-                        <a className="text-gray-500 hover:text-black" href="/programs/accelerators">Accelerators</a>
-                      </div>
-                    </li>
-                  )}
-                  {dealData.category === 'incubators' && (
-                    <li>
-                      <div className="flex items-center">
-                        <span className="material-symbols-outlined text-gray-400 text-base mx-1">chevron_right</span>
-                        <a className="text-gray-500 hover:text-black" href="/programs/incubators">Incubators</a>
-                      </div>
-                    </li>
-                  )}
-                  {dealData.category === 'grants' && (
-                    <li>
-                      <div className="flex items-center">
-                        <span className="material-symbols-outlined text-gray-400 text-base mx-1">chevron_right</span>
-                        <a className="text-gray-500 hover:text-black" href="/programs/grants">Grants</a>
+                        <a className="text-gray-500 hover:text-black" href="/deals">Deals</a>
                       </div>
                     </li>
                   )}

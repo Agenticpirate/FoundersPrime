@@ -6,7 +6,7 @@ import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 
 export const metadata: Metadata = {
-  title: 'Cookie Policy | FoundersPrime',
+  title: 'Cookie Policy',
   description: 'FoundersPrime cookie policy. What cookies we use, why, and how to control them.',
 }
 

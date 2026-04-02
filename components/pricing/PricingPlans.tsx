@@ -82,6 +82,7 @@ export default function PricingPlans({ currency }: PricingPlansProps) {
         'Verified Startups Full Database',
         'Startup Ideas Database',
         'Master Resources Library',
+        'Private Founder Community (Discord)',
         'Priority support',
       ],
       cta: 'Join Founder (Pro)',
@@ -108,6 +109,7 @@ export default function PricingPlans({ currency }: PricingPlansProps) {
         'Everything in Founder',
         'Lifetime access forever',
         'All future updates included',
+        'Private Founder Community (Discord)',
         'Priority support'
       ],
       cta: 'Get Legend Status',

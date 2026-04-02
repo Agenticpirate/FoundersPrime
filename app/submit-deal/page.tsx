@@ -102,7 +102,7 @@ export default function SubmitDealPage() {
                     <div className="mb-4 md:mb-6 text-center">
                         <h1 className="text-2xl md:text-4xl font-bold mb-3 md:mb-4 uppercase">Submit Your Deal</h1>
                         <p className="text-sm md:text-base text-gray-600 max-w-xl mx-auto">
-                            Reach 12,000+ verified founders. We only list high-value, exclusive deals.
+                            Reach thousands of verified founders. We only list high-value, exclusive deals.
                             <div className="bg-accent-yellow px-2 py-0.5 mt-2 md:mt-0 md:inline-block border border-black font-bold text-black border-2 text-sm">Zero fees.</div>
                         </p>
                     </div>

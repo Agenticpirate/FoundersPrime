@@ -1,8 +1,14 @@
+import { Metadata } from 'next'
 import IdeasHeader from '@/components/ideas/IdeasHeader'
 import IdeasFilterBar from '@/components/ideas/IdeasFilterBar'
 import IdeasContent from '@/components/ideas/IdeasContent'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
+
+export const metadata: Metadata = {
+  title: 'Startup Ideas',
+  description: 'Validated startup ideas with market analysis, competition landscape, and revenue potential. Find your next venture.',
+}
 
 export default function IdeasPage() {
   return (

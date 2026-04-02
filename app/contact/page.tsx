@@ -1,9 +1,15 @@
+import { Metadata } from 'next'
 import ContactHero from '@/components/contact/ContactHero'
 import ContactForm from '@/components/contact/ContactForm'
 import ContactInfo from '@/components/contact/ContactInfo'
 import ContactFAQ from '@/components/contact/ContactFAQ'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
+
+export const metadata: Metadata = {
+  title: 'Contact Us',
+  description: 'Get in touch with the FoundersPrime team. Questions about deals, partnerships, or your account — we respond within 24 hours.',
+}
 
 export default function ContactPage() {
   return (

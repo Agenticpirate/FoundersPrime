@@ -12,7 +12,7 @@ export default function DealsHero() {
                     Startup Deals &amp; Credits
                 </h1>
                 <p className="font-sans text-sm md:text-lg text-gray-700 leading-relaxed max-w-3xl border-l-4 border-black pl-3">
-                    500+ verified opportunities to save money and grow faster. Access <span className="font-bold text-black bg-primary/20 px-1">$2.4M+</span> in cloud credits, SaaS discounts, grants, and more.
+                    Verified opportunities to save money and grow faster. Access <span className="font-bold text-black bg-primary/20 px-1">$2.4M+</span> in cloud credits, SaaS discounts, grants, and more.
                 </p>
             </div>
 

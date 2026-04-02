@@ -5,7 +5,7 @@ import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 
 export const metadata = {
-    title: 'Student Benefits 2026 | FoundersPrime',
+    title: 'Student Benefits 2026',
     description: 'The definitive list of free tools, credits, and funding for student founders.',
 }
 
@@ -47,7 +47,7 @@ export default function StudentBenefitsPage() {
                                 LAST UPDATED: Q1 2026
                             </div>
                             <div className="bg-cyan-100 border-2 border-black px-2 md:px-3 py-0.5 md:py-1 shadow-[2px_2px_0_0_#000]">
-                                {studentBenefits2026.length} VERIFIED DEALS
+                                VERIFIED DEALS
                             </div>
                         </div>
                     </div>

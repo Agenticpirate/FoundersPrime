@@ -84,7 +84,7 @@ export default function BillingContent() {
           <div className="mt-6 border-3 border-black bg-gradient-to-r from-primary to-cyan-300 p-5 flex flex-col sm:flex-row justify-between items-center gap-4">
             <div>
               <p className="font-mono font-black text-black text-lg uppercase">Upgrade to Pro</p>
-              <p className="text-sm text-black/70">Unlock 500+ exclusive deals, grants, and accelerators.</p>
+              <p className="text-sm text-black/70">Unlock exclusive deals, grants, and accelerators.</p>
             </div>
             <Link
               href="/pricing"

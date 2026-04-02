@@ -7,7 +7,7 @@ import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 
 export const metadata: Metadata = {
-  title: 'FoundersPrime - Ad Credits',
+  title: 'Ad Credits',
   description: 'Paid acquisition without the paid part. Access free ad credits from Google, Meta, TikTok, LinkedIn, and more.',
 }
 

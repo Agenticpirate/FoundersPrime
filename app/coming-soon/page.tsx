@@ -2,7 +2,7 @@ import { Metadata } from 'next'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
-  title: 'Coming Soon | FoundersPrime',
+  title: 'Coming Soon',
   description: 'Something big is coming. Be the first to know when we launch new features.',
 }
 

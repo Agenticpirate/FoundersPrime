@@ -7,7 +7,7 @@ export default function AboutStats() {
       icon: 'group'
     },
     {
-      number: '2,800+',
+      number: 'Hundreds',
       label: 'Verified Deals',
       description: 'Curated and verified opportunities',
       icon: 'verified'
@@ -74,7 +74,7 @@ export default function AboutStats() {
           Growing Every Day
         </h3>
         <p className="font-sans text-gray-700 max-w-2xl mx-auto">
-          We add an average of 15 new deals, 50 startup profiles, and 5 validated ideas to our platform every week. Our community grows by 500+ founders monthly, creating a network effect that benefits everyone.
+          We add new deals, startup profiles, and validated ideas to our platform every week. Our community grows steadily, creating a network effect that benefits everyone.
         </p>
       </div>
     </div>

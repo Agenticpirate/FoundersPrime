@@ -11,8 +11,8 @@ import Footer from '@/components/Footer'
 
 export default function AcceleratorsPage() {
  // SEO and Structured Data
- const pageTitle = "Startup Accelerators | 280+ Programs | FoundersPrime"
- const pageDescription = "Discover 280+ top startup accelerators2026worldwide. Get $250K+ in funding, mentorship, and connections. Y Combinator, Techstars, 500 Global & more. Updated recently."
+ const pageTitle = "Startup Accelerators | Top Programs"
+ const pageDescription = "Discover top startup accelerators worldwide. Get $250K+ in funding, mentorship, and connections. Y Combinator, Techstars, 500 Global & more. Updated recently."
  const pageUrl = "https://foundersprime.com/deals/accelerators"
  const ogImage = "https://foundersprime.com/og-accelerators.jpg"
 

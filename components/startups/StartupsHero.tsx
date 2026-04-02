@@ -9,7 +9,7 @@ export default function StartupsHero() {
           Verified Startups
         </h1>
         <p className="font-sans text-xs md:text-base text-gray-700 leading-relaxed max-w-3xl">
-          Access <span className="font-bold text-black bg-primary/20 px-1">1368+</span> verified high-potential startups. Direct data from Y Combinator and top accelerators. Real metrics, vetted founders, and breakout opportunities.
+          Access <span className="font-bold text-black bg-primary/20 px-1">verified</span> high-potential startups. Direct data from Y Combinator and top accelerators. Real metrics, vetted founders, and breakout opportunities.
         </p>
       </div>
 
@@ -18,7 +18,7 @@ export default function StartupsHero() {
         <div className="bg-white border-2 border-black shadow-[2px_2px_0px_0px_#1a1a1a] md:shadow-[3px_3px_0px_0px_#1a1a1a] p-2.5 md:p-4 flex items-center justify-between">
           <div>
             <p className="font-mono text-[9px] md:text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-0.5 md:mb-1">Verified Companies</p>
-            <p className="font-mono text-lg md:text-2xl font-bold text-black">1368</p>
+            <p className="font-mono text-lg md:text-2xl font-bold text-black">—</p>
           </div>
           <span className="material-symbols-outlined text-xl md:text-2xl text-black">verified</span>
         </div>

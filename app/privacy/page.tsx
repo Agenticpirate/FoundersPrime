@@ -1,8 +1,14 @@
+import { Metadata } from 'next'
 import PrivacyHeader from '@/components/privacy/PrivacyHeader'
 import PrivacyContent from '@/components/privacy/PrivacyContent'
 import PrivacySidebar from '@/components/privacy/PrivacySidebar'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
+
+export const metadata: Metadata = {
+  title: 'Privacy Policy',
+  description: 'FoundersPrime privacy policy. How we collect, use, and protect your data.',
+}
 
 export default function PrivacyPage() {
   return (

@@ -179,13 +179,26 @@ export default function DealsGrid({ filters }: DealsGridProps) {
           result.sort((a, b) => a.title.localeCompare(b.title))
           break
         default:
-          // For "All Deals" (no category filter), use popular brands then sortOrder from curated sequence
+          // For "All Deals" (no category filter), show recommended first, then popular brands
           if (!filters?.category) {
             result.sort((a, b) => {
-              const popularBrands = ['aws', 'amazon', 'google', 'webflow', 'openai', 'microsoft', 'stripe', 'notion', 'github', 'figma', 'linear', 'airtable'];
-              const aPop = popularBrands.some(brand => a.title.toLowerCase().includes(brand) || a.provider.toLowerCase().includes(brand)) ? 1 : 0;
-              const bPop = popularBrands.some(brand => b.title.toLowerCase().includes(brand) || b.provider.toLowerCase().includes(brand)) ? 1 : 0;
-              if (aPop !== bPop) return bPop - aPop;
+              // Recommended deals always first
+              const aRec = a.recommended ? 1 : 0;
+              const bRec = b.recommended ? 1 : 0;
+              if (aRec !== bRec) return bRec - aRec;
+
+              const priorityBrands = [
+                'github', 'airtable', 'aws', 'google for startups', 'microsoft for startups',
+                'linear', 'stripe', 'notion', 'webflow', 'alibaba', 'algolia', 'auth0',
+                'cloudflare', 'customer.io', 'datadog', 'databricks', 'devrev', 'digitalocean',
+                'document360', 'elevenlabs', 'flippa', 'framer', 'gitlab', 'heroku',
+                'instatus', 'intercom', 'linkedin'
+              ];
+              const aIdx = priorityBrands.findIndex(brand => a.title.toLowerCase().includes(brand) || a.provider.toLowerCase().includes(brand));
+              const bIdx = priorityBrands.findIndex(brand => b.title.toLowerCase().includes(brand) || b.provider.toLowerCase().includes(brand));
+              const aPriority = aIdx >= 0 ? aIdx : 9999;
+              const bPriority = bIdx >= 0 ? bIdx : 9999;
+              if (aPriority !== bPriority) return aPriority - bPriority;
 
               const aHasOriginalLogo = a.logoUrl && !a.logoUrl.includes('rocket') && !a.logoUrl.includes('ui-avatars') ? 1 : 0;
               const bHasOriginalLogo = b.logoUrl && !b.logoUrl.includes('rocket') && !b.logoUrl.includes('ui-avatars') ? 1 : 0;
@@ -392,8 +405,8 @@ export default function DealsGrid({ filters }: DealsGridProps) {
              // Free plan limits
              if (currentPage > 3) {
                  isLocked = true;
-                 lockTitle = `Unlock ${filteredDeals.length - (3 * dealsPerPage)}+ More Deals`;
-                 lockMessage = "Upgrade to instantly access our entire database of active software credits and grants.";
+                 lockTitle = `Unlock More Deals`;
+                 lockMessage = "Upgrade to instantly access our full database of verified software credits and grants.";
              }
           }
         }

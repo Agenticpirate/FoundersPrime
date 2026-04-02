@@ -12,7 +12,7 @@ export default function SaasHero() {
                     Free & Discounted SaaS
                 </h1>
                 <p className="font-sans text-sm md:text-base text-gray-700 leading-relaxed max-w-3xl">
-                    Stop paying full price for software. Access <span className="font-bold text-black bg-primary/20 px-1">200+</span> SaaS tools for free or at massive discounts. From productivity to marketing to customer support — we&apos;ve got your entire stack covered.
+                    Stop paying full price for software. Access <span className="font-bold text-black bg-primary/20 px-1">hundreds of</span> SaaS tools for free or at massive discounts. From productivity to marketing to customer support — we&apos;ve got your entire stack covered.
                 </p>
             </div>
 

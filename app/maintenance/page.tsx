@@ -2,7 +2,7 @@ import { Metadata } from 'next'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
-  title: 'Maintenance | FoundersPrime',
+  title: 'Maintenance',
   description: 'FoundersPrime is currently undergoing scheduled maintenance. We\'ll be back shortly.',
 }
 

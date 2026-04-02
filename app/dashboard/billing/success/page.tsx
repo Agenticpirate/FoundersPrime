@@ -6,7 +6,7 @@ import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 
 export const metadata: Metadata = {
-  title: 'Subscription Success | FoundersPrime',
+  title: 'Subscription Success',
   description: 'Your FoundersPrime subscription has been activated successfully.',
 }
 

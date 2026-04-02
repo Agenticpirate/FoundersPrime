@@ -1,3 +1,4 @@
+import { Metadata } from 'next'
 import SearchHeader from '@/components/search/SearchHeader'
 import SearchHero from '@/components/search/SearchHero'
 import SearchFilters from '@/components/search/SearchFilters'
@@ -5,6 +6,11 @@ import SearchResults from '@/components/search/SearchResults'
 import SearchSidebar from '@/components/search/SearchSidebar'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
+
+export const metadata: Metadata = {
+  title: 'Search Deals & Programs',
+  description: 'Search verified startup deals, cloud credits, grants, accelerators, and SaaS discounts. Find the right opportunity for your startup.',
+}
 
 export default function SearchPage() {
   return (

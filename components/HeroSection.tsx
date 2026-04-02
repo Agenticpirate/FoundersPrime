@@ -55,9 +55,9 @@ export default function HeroSection() {
   }, [])
 
   return (
-    <section className="relative min-h-[calc(75vh-80px)] md:min-h-[calc(85vh-80px)] pt-4 pb-0 md:pt-10 lg:pt-12 lg:pb-0 overflow-hidden grid-bg flex flex-col">
-      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex-grow w-full mb-4 md:mb-5 flex flex-col justify-center">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center h-full">
+    <section className="relative min-h-[calc(100vh-120px)] pt-6 pb-0 md:pt-10 lg:pt-14 overflow-hidden grid-bg flex flex-col">
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full mb-6 md:mb-8">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center">
           <div className="lg:col-span-7 flex flex-col justify-center items-start pt-0">
             <div className="inline-flex items-center gap-2 bg-white neo-border px-2 py-0.5 mb-3 neo-shadow-static">
               <span className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></span>
@@ -77,7 +77,7 @@ export default function HeroSection() {
               </span>
             </p>
 
-            <div className="flex flex-col gap-3 mb-6 mt-2 w-full max-w-2xl">
+            <div className="flex flex-col gap-3 mb-4 mt-2 w-full max-w-2xl">
               {/* Primary CTA */}
               <Link href="/deals" className="bg-black text-white text-sm md:text-base font-bold py-3 md:py-4 px-6 flex items-center justify-center gap-2 transition-all hover:bg-gray-800 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.3)] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,0.3)] hover:translate-x-[2px] hover:translate-y-[2px] w-full font-mono uppercase tracking-wide">
                 Unlock Startup Deals
@@ -200,7 +200,7 @@ export default function HeroSection() {
       </div>
 
       {/* Integrated Marquee Ticker */}
-      <div className="hidden md:block bg-black py-2 md:py-3 overflow-hidden border-t-2 border-b-2 border-black w-full relative z-20 mt-auto">
+      <div className="hidden md:block bg-black py-3 overflow-hidden border-t-2 border-b-2 border-black w-full relative z-20">
         <div className="marquee flex items-center gap-8 md:gap-12 whitespace-nowrap">
           <span className="text-white font-mono text-xs md:text-sm font-bold flex items-center gap-1.5 md:gap-2">
             <span className="material-symbols-outlined text-accent-yellow text-sm md:text-base">terminal</span> AWS ACTIVATE // $100K CREDITS
@@ -240,6 +240,8 @@ export default function HeroSection() {
           </span>
         </div>
       </div>
+      {/* Spacer: ensures "Why This Exists" never peeks into the hero viewport */}
+      <div className="hidden md:block flex-1 min-h-[2vh]" aria-hidden="true" />
     </section>
   )
 }

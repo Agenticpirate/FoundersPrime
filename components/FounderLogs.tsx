@@ -131,9 +131,6 @@ export default function FounderLogs() {
               Founder_Logs
             </span>
           </h2>
-          <p className="font-mono text-[9px] md:text-sm text-gray-500 mt-2 uppercase tracking-widest">
-            Real founders · Real results
-          </p>
         </div>
 
         {/* Vertical scrolling columns */}

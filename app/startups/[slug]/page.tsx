@@ -20,11 +20,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   if (!startup) {
     return {
-      title: 'Startup Not Found | FoundersPrime',
+      title: 'Startup Not Found',
     }
   }
 
-  const title = `${startup.name} | Verified Startups | FoundersPrime`
+  const title = `${startup.name} | Verified Startups`
   const description = startup.one_liner || (startup.long_description ? startup.long_description.substring(0, 160) : '')
   const image = startup.small_logo_thumb_url || 'https://www.foundersprime.com/og-image.jpg'
 

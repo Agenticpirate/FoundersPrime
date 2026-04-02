@@ -45,7 +45,7 @@ export default function StartupsHeader() {
           Verified Startups
         </h1>
         <p className="font-sans text-sm md:text-lg text-gray-700 leading-relaxed max-w-3xl">
-          Access <span className="font-bold text-black bg-primary/20 px-1">{activeStartupsCount}+</span> verified high-potential startups. Direct data from Y Combinator and top accelerators. Real metrics, vetted founders, and breakout opportunities.
+          Access <span className="font-bold text-black bg-primary/20 px-1">verified</span> high-potential startups. Direct data from Y Combinator and top accelerators. Real metrics, vetted founders, and breakout opportunities.
         </p>
       </div>
 
@@ -54,7 +54,7 @@ export default function StartupsHeader() {
         <div className="bg-white border-2 border-black shadow-[3px_3px_0px_0px_#1a1a1a] rounded-sm p-2 md:p-4 flex items-center justify-between hover:shadow-[4px_4px_0px_0px_#1a1a1a] transition-all">
           <div>
             <p className="font-mono text-[9px] md:text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-0.5">Verified</p>
-            <p className="font-mono text-xl md:text-2xl font-bold text-black">{activeStartupsCount}</p>
+            <p className="font-mono text-xl md:text-2xl font-bold text-black">—</p>
           </div>
           <span className="material-symbols-outlined text-xl text-black hidden sm:block">verified</span>
         </div>

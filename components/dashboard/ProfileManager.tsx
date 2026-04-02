@@ -1,0 +1,197 @@
+'use client'
+
+import { useState, useRef } from 'react'
+import { createClient } from '@/lib/supabase/client'
+import { useRouter } from 'next/navigation'
+
+interface ProfileManagerProps {
+  initialName: string
+  initialEmail: string
+  initialAvatar: string | null
+  memberSince: string
+}
+
+export default function ProfileManager({ initialName, initialEmail, initialAvatar, memberSince }: ProfileManagerProps) {
+  const [name, setName] = useState(initialName)
+  const [avatar, setAvatar] = useState(initialAvatar)
+  const [avatarError, setAvatarError] = useState(false)
+  const [isEditing, setIsEditing] = useState(false)
+  const [saving, setSaving] = useState(false)
+  const [uploading, setUploading] = useState(false)
+  const [message, setMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null)
+  const fileRef = useRef<HTMLInputElement>(null)
+  const router = useRouter()
+
+  const showMessage = (type: 'success' | 'error', text: string) => {
+    setMessage({ type, text })
+    setTimeout(() => setMessage(null), 3000)
+  }
+
+  const handleSave = async () => {
+    if (!name.trim() || name.trim().length < 2) {
+      showMessage('error', 'Name must be at least 2 characters')
+      return
+    }
+    setSaving(true)
+    try {
+      const supabase = createClient()
+      const { error } = await supabase.auth.updateUser({
+        data: { full_name: name.trim() }
+      })
+      if (error) throw error
+      showMessage('success', 'Name updated successfully')
+      setIsEditing(false)
+      router.refresh()
+    } catch (err: any) {
+      showMessage('error', err.message || 'Failed to update')
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  const handleAvatarUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+    if (file.size > 2 * 1024 * 1024) {
+      showMessage('error', 'Image must be under 2MB')
+      return
+    }
+    if (!file.type.startsWith('image/')) {
+      showMessage('error', 'Please upload an image file')
+      return
+    }
+    setUploading(true)
+    try {
+      const supabase = createClient()
+      const { data: { user } } = await supabase.auth.getUser()
+      if (!user) throw new Error('Not authenticated')
+
+      const ext = file.name.split('.').pop() || 'jpg'
+      const filePath = `avatars/${user.id}.${ext}`
+
+      const { error: uploadError } = await supabase.storage
+        .from('avatars')
+        .upload(filePath, file, { upsert: true, contentType: file.type })
+
+      if (uploadError) throw uploadError
+
+      const { data: { publicUrl } } = supabase.storage
+        .from('avatars')
+        .getPublicUrl(filePath)
+
+      const avatarUrl = publicUrl + '?v=' + Date.now()
+
+      const { error: updateError } = await supabase.auth.updateUser({
+        data: { avatar_url: avatarUrl }
+      })
+      if (updateError) throw updateError
+
+      setAvatar(avatarUrl)
+      setAvatarError(false)
+      showMessage('success', 'Photo updated')
+      router.refresh()
+    } catch (err: any) {
+      showMessage('error', err.message || 'Upload failed. Make sure the avatars bucket exists in Supabase Storage.')
+    } finally {
+      setUploading(false)
+      if (fileRef.current) fileRef.current.value = ''
+    }
+  }
+
+  const hasValidAvatar = avatar && !avatarError
+
+  return (
+    <div className="bg-white border-2 border-black shadow-[3px_3px_0px_#111] p-5 md:p-6">
+      <div className="flex items-center justify-between mb-5">
+        <h2 className="font-mono font-bold text-sm uppercase text-gray-400">Profile</h2>
+        {!isEditing ? (
+          <button onClick={() => setIsEditing(true)} className="text-xs font-mono font-bold text-primary hover:underline uppercase flex items-center gap-1">
+            <span className="material-symbols-outlined text-sm">edit</span> Edit
+          </button>
+        ) : (
+          <div className="flex items-center gap-2">
+            <button onClick={() => { setIsEditing(false); setName(initialName) }}
+              className="text-xs font-mono font-bold text-gray-400 hover:text-black uppercase px-2 py-1">
+              Cancel
+            </button>
+            <button onClick={handleSave} disabled={saving}
+              className="text-xs font-mono font-bold bg-black text-white px-3 py-1 uppercase hover:bg-gray-800 disabled:opacity-50 flex items-center gap-1">
+              {saving ? <><span className="material-symbols-outlined text-xs animate-spin">progress_activity</span> Saving</> : 'Save'}
+            </button>
+          </div>
+        )}
+      </div>
+
+      {message && (
+        <div className={`mb-4 px-3 py-2 text-xs font-mono font-bold flex items-center gap-2 ${message.type === 'success' ? 'bg-green-50 text-green-700 border border-green-200' : 'bg-red-50 text-red-700 border border-red-200'}`}>
+          <span className="material-symbols-outlined text-sm">{message.type === 'success' ? 'check_circle' : 'error'}</span>
+          {message.text}
+        </div>
+      )}
+
+      <div className="flex items-start gap-5">
+        {/* Avatar */}
+        <div className="flex-shrink-0">
+          <button
+            type="button"
+            onClick={() => fileRef.current?.click()}
+            disabled={uploading}
+            className="relative group cursor-pointer disabled:cursor-wait focus:outline-none focus:ring-2 focus:ring-primary"
+          >
+            <div className="w-16 h-16 md:w-20 md:h-20 bg-gray-100 flex items-center justify-center overflow-hidden border-2 border-black">
+              {hasValidAvatar ? (
+                <img
+                  src={avatar!}
+                  alt="Profile"
+                  className="w-full h-full object-cover"
+                  onError={() => setAvatarError(true)}
+                />
+              ) : (
+                <span className="material-symbols-outlined text-3xl md:text-4xl text-gray-400">account_circle</span>
+              )}
+            </div>
+            <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity border-2 border-black">
+              {uploading ? (
+                <span className="material-symbols-outlined text-white text-lg animate-spin">progress_activity</span>
+              ) : (
+                <span className="material-symbols-outlined text-white text-lg">photo_camera</span>
+              )}
+            </div>
+          </button>
+          <input ref={fileRef} type="file" accept="image/png,image/jpeg,image/webp" className="hidden" onChange={handleAvatarUpload} />
+          <p className="text-[9px] text-gray-400 text-center mt-1.5 font-mono">
+            {uploading ? 'Uploading...' : 'Upload photo'}
+          </p>
+        </div>
+
+        {/* Details */}
+        <div className="flex-1 space-y-3 min-w-0">
+          <div>
+            <label className="text-[10px] font-mono font-bold text-gray-400 uppercase block mb-1">Display Name</label>
+            {isEditing ? (
+              <input
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                maxLength={50}
+                className="w-full px-3 py-2 border-2 border-black text-sm font-medium bg-gray-50 focus:bg-white focus:shadow-[2px_2px_0px_#111] outline-none transition-all font-mono"
+                placeholder="Your name"
+                autoFocus
+              />
+            ) : (
+              <p className="text-sm font-bold">{name}</p>
+            )}
+          </div>
+          <div>
+            <label className="text-[10px] font-mono font-bold text-gray-400 uppercase block mb-1">Email</label>
+            <p className="text-sm font-mono text-gray-600 truncate">{initialEmail}</p>
+          </div>
+          <div>
+            <label className="text-[10px] font-mono font-bold text-gray-400 uppercase block mb-1">Member Since</label>
+            <p className="text-sm text-gray-600">{memberSince}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
