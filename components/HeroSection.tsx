@@ -55,29 +55,29 @@ export default function HeroSection() {
   }, [])
 
   return (
-    <section className="relative min-h-[calc(100vh-120px)] pt-6 pb-0 md:pt-10 lg:pt-14 overflow-hidden grid-bg flex flex-col">
-      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full mb-6 md:mb-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center">
+    <section className="relative min-h-0 md:min-h-[calc(100vh-120px)] pt-4 pb-0 md:pt-10 lg:pt-14 overflow-hidden grid-bg flex flex-col">
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full mb-4 md:mb-8">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-16 items-center">
           <div className="lg:col-span-7 flex flex-col justify-center items-start pt-0">
-            <div className="inline-flex items-center gap-2 bg-white neo-border px-2 py-0.5 mb-3 neo-shadow-static">
+            <div className="inline-flex items-center gap-2 bg-white neo-border px-2 py-0.5 mb-2 md:mb-3 neo-shadow-static">
               <span className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></span>
               <span className="text-[9px] sm:text-xs font-mono font-bold text-black uppercase tracking-wide">VERIFIED GRANTS, CREDITS &amp; FOUNDER PROGRAMS</span>
             </div>
 
-            <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-7xl font-bold text-black tracking-tight mb-2 leading-none font-mono">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold text-black tracking-tight mb-2 leading-none font-mono">
               FREE CREDITS.<br />
               REAL GRANTS.<br />
               <span className="bg-accent-yellow px-2 mt-1 inline-block neo-border box-decoration-clone">ZERO DILUTION.</span>
             </h1>
 
-            <p className="mt-2 text-xs sm:text-sm md:text-md lg:text-lg text-black mb-4 font-medium max-w-2xl border-l-4 border-black pl-3 leading-relaxed">
+            <p className="mt-2 text-sm sm:text-sm md:text-md lg:text-lg text-black mb-3 md:mb-4 font-medium max-w-2xl border-l-4 border-black pl-3 leading-relaxed">
               Discover startup credits, non-dilutive grants, accelerators, and founder resources in one place.{' '}
               <span className="font-bold border-b-[3px] border-accent-yellow inline-block mt-1 sm:mt-0">
                 Students unlock free tools &amp; more.
               </span>
             </p>
 
-            <div className="flex flex-col gap-3 mb-4 mt-2 w-full max-w-2xl">
+            <div className="flex flex-col gap-2 md:gap-3 mb-3 md:mb-4 mt-1 md:mt-2 w-full max-w-2xl">
               {/* Primary CTA */}
               <Link href="/deals" className="bg-black text-white text-sm md:text-base font-bold py-3 md:py-4 px-6 flex items-center justify-center gap-2 transition-all hover:bg-gray-800 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.3)] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,0.3)] hover:translate-x-[2px] hover:translate-y-[2px] w-full font-mono uppercase tracking-wide">
                 Unlock Startup Deals
@@ -109,8 +109,8 @@ export default function HeroSection() {
             </div>
 
             {/* ── Mobile-only Brand Icons Scroller ── */}
-            <div className="md:hidden mt-3 w-full">
-              <p className="text-[9px] font-mono font-bold uppercase tracking-widest text-gray-400 mb-2">Credits &amp; grants from</p>
+            <div className="md:hidden mt-2 w-full">
+              <p className="text-[9px] font-mono font-bold uppercase tracking-widest text-gray-400 mb-1.5">Credits &amp; grants from</p>
               <div className="relative w-full overflow-hidden" style={{ maskImage: 'linear-gradient(to right,transparent,black 12%,black 88%,transparent)', WebkitMaskImage: 'linear-gradient(to right,transparent,black 12%,black 88%,transparent)' }}>
                 <div className="mobile-brand-marquee flex items-center gap-6 whitespace-nowrap">
                   {BRANDS_LOOP.map((b, i) => (
