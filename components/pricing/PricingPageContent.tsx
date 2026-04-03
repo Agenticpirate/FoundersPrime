@@ -4,6 +4,7 @@ import React from 'react'
 import PricingPlans from '@/components/pricing/PricingPlans'
 import PricingPartnerLogos from '@/components/pricing/PricingPartnerLogos'
 import Pricing3DTestimonials from '@/components/pricing/Pricing3DTestimonials'
+import { GlowingEffect } from '@/components/ui/GlowingEffect'
 import { Currency } from '@/utils/currency'
 
 export default function PricingPageContent() {
@@ -27,19 +28,18 @@ export default function PricingPageContent() {
                         leaving money on the table.
                     </p>
                     {/* Stats row */}
-                    <div className="grid grid-cols-3 gap-3 md:gap-4 max-w-2xl mx-auto">
-                        <div className="bg-white/10 border border-white/20 p-3 md:p-4">
-                            <p className="font-mono text-xl md:text-2xl font-black text-accent-yellow">$500K+</p>
-                            <p className="text-[10px] md:text-xs text-gray-400 font-bold uppercase mt-1">Avg Savings</p>
-                        </div>
-                        <div className="bg-white/10 border border-white/20 p-3 md:p-4">
-                            <p className="font-mono text-xl md:text-2xl font-black text-accent-yellow">5,000+</p>
-                            <p className="text-[10px] md:text-xs text-gray-400 font-bold uppercase mt-1">Active Founders</p>
-                        </div>
-                        <div className="bg-white/10 border border-white/20 p-3 md:p-4">
-                            <p className="font-mono text-xl md:text-2xl font-black text-green-400">Weekly</p>
-                            <p className="text-[10px] md:text-xs text-gray-400 font-bold uppercase mt-1">New Deals Added</p>
-                        </div>
+                    <div className="grid grid-cols-3 gap-2 md:gap-4 max-w-2xl mx-auto">
+                        {[
+                            { value: '$500K+', label: 'Avg Savings', color: 'text-accent-yellow' },
+                            { value: '5,000+', label: 'Active Founders', color: 'text-accent-yellow' },
+                            { value: 'Weekly', label: 'New Deals Added', color: 'text-green-400' },
+                        ].map((stat) => (
+                            <div key={stat.label} className="relative rounded-sm bg-white/10 border border-white/20 p-2.5 md:p-4">
+                                <GlowingEffect spread={20} glow={false} disabled={false} proximity={48} inactiveZone={0.01} borderWidth={1} />
+                                <p className={`font-mono text-lg md:text-2xl font-black ${stat.color}`}>{stat.value}</p>
+                                <p className="text-[9px] md:text-xs text-gray-400 font-bold uppercase mt-0.5">{stat.label}</p>
+                            </div>
+                        ))}
                     </div>
                 </div>
             </div>
@@ -58,7 +58,7 @@ export default function PricingPageContent() {
                     <p className="text-gray-600 text-sm md:text-base">Your membership pays for itself with a single deal.</p>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="border-2 border-gray-200 bg-gray-50 p-5 md:p-6 relative">
+                    <div className="relative rounded-sm border-2 border-gray-200 bg-gray-50 p-5 md:p-6">
                         <div className="absolute top-3 right-3 text-xs font-mono font-bold text-gray-400 uppercase">Without us</div>
                         <h3 className="font-mono font-black text-lg mb-4 text-gray-500">Searching Alone</h3>
                         <ul className="space-y-3 text-sm text-gray-500">
@@ -68,7 +68,8 @@ export default function PricingPageContent() {
                             <li className="flex items-start gap-2"><span className="material-symbols-outlined text-red-400 text-base mt-0.5">close</span>Paying full price for tools competitors get free</li>
                         </ul>
                     </div>
-                    <div className="border-3 border-black bg-white p-5 md:p-6 shadow-[4px_4px_0px_#111] relative">
+                    <div className="relative rounded-sm border-3 border-black bg-white p-5 md:p-6 shadow-[4px_4px_0px_#111]">
+                        <GlowingEffect spread={30} glow={false} disabled={false} proximity={64} inactiveZone={0.01} borderWidth={2} />
                         <div className="absolute top-3 right-3 text-xs font-mono font-bold text-accent-yellow uppercase bg-black px-2 py-0.5">Recommended</div>
                         <h3 className="font-mono font-black text-lg mb-4">With FoundersPrime</h3>
                         <ul className="space-y-3 text-sm">
@@ -96,7 +97,8 @@ export default function PricingPageContent() {
                             { icon: 'verified', label: 'Verified Startups', sub: 'Funded companies database' },
                             { icon: 'school', label: 'Student Benefits', sub: 'Free tools & resources' },
                         ].map((item) => (
-                            <div key={item.label} className="bg-white border-2 border-black p-3 md:p-4 shadow-[2px_2px_0px_#111] hover:-translate-y-0.5 hover:shadow-[3px_3px_0px_#111] transition-all">
+                            <div key={item.label} className="relative rounded-sm bg-white border-2 border-black p-3 md:p-4 shadow-[2px_2px_0px_#111] hover:-translate-y-0.5 hover:shadow-[3px_3px_0px_#111] transition-all">
+                                <GlowingEffect spread={20} glow={false} disabled={false} proximity={48} inactiveZone={0.01} borderWidth={1} />
                                 <span className="material-symbols-outlined text-xl md:text-2xl mb-2 block">{item.icon}</span>
                                 <p className="font-mono font-bold text-xs md:text-sm uppercase">{item.label}</p>
                                 <p className="text-[10px] md:text-xs text-gray-500 mt-0.5">{item.sub}</p>
@@ -138,10 +140,13 @@ export default function PricingPageContent() {
                     <p className="text-gray-400 text-sm md:text-base mb-6 max-w-lg mx-auto">
                         Deals expire. Windows close. Credits run out. The founders who move first save the most.
                     </p>
-                    <a href="#" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }) }}
-                        className="inline-flex items-center gap-2 bg-accent-yellow text-black font-mono font-black text-sm md:text-base uppercase px-8 py-3 border-2 border-accent-yellow hover:bg-white hover:border-black transition-all shadow-[4px_4px_0px_rgba(255,255,255,0.2)]">
-                        Get Started Now <span className="material-symbols-outlined text-base">arrow_upward</span>
-                    </a>
+                    <div className="inline-block relative rounded-sm">
+                        <GlowingEffect spread={40} glow disabled={false} proximity={64} inactiveZone={0.01} borderWidth={2} />
+                        <a href="#" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }) }}
+                            className="pricing-cta-btn relative inline-flex items-center gap-2 bg-accent-yellow text-black font-mono font-black text-sm md:text-base uppercase px-8 py-3 border-2 border-accent-yellow hover:bg-white hover:border-black transition-all shadow-[4px_4px_0px_rgba(255,255,255,0.2)]">
+                            Get Started Now <span className="material-symbols-outlined text-base pricing-cta-arrow">arrow_upward</span>
+                        </a>
+                    </div>
                 </div>
             </section>
         </main>

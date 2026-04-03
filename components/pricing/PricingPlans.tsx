@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { Currency } from '@/utils/currency'
 import { getPricing, formatPrice } from '@/utils/pricing'
+import { GlowingEffect } from '@/components/ui/GlowingEffect'
 
 interface PricingPlansProps {
   currency: Currency
@@ -27,9 +28,8 @@ export default function PricingPlans({ currency }: PricingPlansProps) {
       })
       const data = await res.json()
       if (res.ok && data.url) {
-        window.location.href = data.url // redirect to Dodo hosted page
+        window.location.href = data.url
       } else if (res.status === 401) {
-        // Not logged in — send to login first
         router.push('/login?redirect=/pricing')
       } else {
         alert(data.error || 'Something went wrong. Please try again.')
@@ -66,6 +66,12 @@ export default function PricingPlans({ currency }: PricingPlansProps) {
       featureIcon: 'text-[#111111]',
       iconBg: 'bg-gray-100',
       delay: 0,
+      glowColors: {
+        gradient: `radial-gradient(circle, #a3a3a3 10%, #a3a3a300 20%),
+          radial-gradient(circle at 40% 40%, #d4d4d4 5%, #d4d4d400 15%),
+          radial-gradient(circle at 60% 60%, #737373 10%, #73737300 20%),
+          repeating-conic-gradient(from 236.84deg at 50% 50%, #a3a3a3 0%, #d4d4d4 calc(25% / 5), #737373 calc(50% / 5), #a3a3a3 calc(75% / 5), #d4d4d4 calc(100% / 5))`,
+      },
     },
     {
       name: 'Founder',
@@ -96,6 +102,12 @@ export default function PricingPlans({ currency }: PricingPlansProps) {
       featureIcon: 'text-[#0284c7]',
       iconBg: 'bg-white/30',
       delay: 100,
+      glowColors: {
+        gradient: `radial-gradient(circle, #38bdf8 10%, #38bdf800 20%),
+          radial-gradient(circle at 40% 40%, #0ea5e9 5%, #0ea5e900 15%),
+          radial-gradient(circle at 60% 60%, #0284c7 10%, #0284c700 20%),
+          repeating-conic-gradient(from 236.84deg at 50% 50%, #38bdf8 0%, #0ea5e9 calc(25% / 5), #0284c7 calc(50% / 5), #38bdf8 calc(75% / 5), #0ea5e9 calc(100% / 5))`,
+      },
     },
     {
       name: 'Legend',
@@ -123,6 +135,12 @@ export default function PricingPlans({ currency }: PricingPlansProps) {
       featureIcon: 'text-[#ca8a04]',
       iconBg: 'bg-white/30',
       delay: 200,
+      glowColors: {
+        gradient: `radial-gradient(circle, #fde047 10%, #fde04700 20%),
+          radial-gradient(circle at 40% 40%, #fbbf24 5%, #fbbf2400 15%),
+          radial-gradient(circle at 60% 60%, #f59e0b 10%, #f59e0b00 20%),
+          repeating-conic-gradient(from 236.84deg at 50% 50%, #fde047 0%, #fbbf24 calc(25% / 5), #f59e0b calc(50% / 5), #fde047 calc(75% / 5), #fbbf24 calc(100% / 5))`,
+      },
     }
   ]
 
@@ -133,90 +151,116 @@ export default function PricingPlans({ currency }: PricingPlansProps) {
         Unlock More Value
       </h2>
 
-      {/* Mobile Stacked View */}
+      {/* ═══ Mobile Stacked View ═══ */}
       <div className="md:hidden flex flex-col gap-3 px-4 pb-2">
         {plans.map((plan, index) => (
           <div
             key={index}
-            className="group relative flex flex-col border-2 border-[#111111] shadow-[2px_2px_0px_0px_#111111] overflow-hidden bg-white"
+            className="group relative rounded-sm animate-fade-in-up"
+            style={{ animationDelay: `${index * 80}ms`, animationFillMode: 'both' }}
           >
-            {plan.popular && (
-              <div className="absolute top-0 right-0 bg-[#111111] text-white px-2 py-0.5 font-mono text-[8px] font-black uppercase tracking-widest z-20 border-b-2 border-l-2 border-[#111111]">
-                ★ Popular
-              </div>
-            )}
-            {plan.special && (
-              <div className="absolute top-0 right-0 bg-[#111111] text-white px-2 py-0.5 font-mono text-[8px] font-black uppercase tracking-widest z-20 flex items-center gap-1 border-b-2 border-l-2 border-[#111111]">
-                <span className="material-symbols-outlined text-[8px] text-amber-400">bolt</span>
-                Elite
-              </div>
-            )}
-            <div className={`${plan.headerBg} px-3 py-3 text-left relative overflow-hidden border-b-2 border-[#111111]/15 flex items-center justify-between`}>
-              <div className="flex flex-col">
-                <div className="flex items-center gap-2 mb-1">
-                  <div className={`w-5 h-5 ${plan.iconBg} border border-[#111111]/20 flex items-center justify-center`}>
-                    <span className="material-symbols-outlined text-[10px] text-[#111111]">{plan.icon}</span>
-                  </div>
-                  <h3 className={`font-mono text-sm font-black uppercase tracking-tight ${plan.textColor}`}>{plan.name}</h3>
+            <GlowingEffect
+              spread={40}
+              glow={plan.popular}
+              disabled={false}
+              proximity={64}
+              inactiveZone={0.01}
+              borderWidth={2}
+            />
+
+            <div className={`relative flex flex-col border-2 border-[#111111] shadow-[2px_2px_0px_0px_#111111] overflow-hidden`}>
+              {/* Header row: icon + name + badge + price all in one line */}
+              <div className={`${plan.headerBg} px-3 py-2.5 flex items-center justify-between`}>
+                <div className="flex items-center gap-1.5">
+                  <span className="material-symbols-outlined text-sm text-[#111111]">{plan.icon}</span>
+                  <h3 className={`font-mono text-[11px] font-black uppercase ${plan.textColor}`}>{plan.name}</h3>
+                  {plan.popular && (
+                    <span className="bg-[#111111] text-white px-1.5 py-px font-mono text-[7px] font-black uppercase tracking-wider ml-1">★ Popular</span>
+                  )}
+                  {plan.special && (
+                    <span className="bg-[#111111] text-white px-1.5 py-px font-mono text-[7px] font-black uppercase tracking-wider ml-1 flex items-center gap-0.5">
+                      <span className="material-symbols-outlined text-[7px] text-amber-400">bolt</span>Elite
+                    </span>
+                  )}
                 </div>
                 <div className={`flex items-baseline ${plan.textColor}`}>
-                  <span className="font-sans text-xl font-black tracking-tight leading-none">{plan.price}</span>
-                  <span className="font-mono text-[9px] font-bold uppercase ml-1 opacity-60">/{plan.period}</span>
+                  <span className="font-sans text-lg font-black tracking-tight leading-none">{plan.price}</span>
+                  <span className="font-mono text-[7px] font-bold uppercase ml-0.5 opacity-50">/{plan.period}</span>
                 </div>
               </div>
-              <button
-                onClick={() => handleCheckout(plan.planKey)}
-                disabled={loadingPlan === plan.planKey}
-                className={`py-1.5 px-3 font-mono font-bold uppercase tracking-wider text-[9px] border-2 border-[#111111] flex items-center justify-center gap-1 shadow-[2px_2px_0_0_#111111] ${plan.buttonStyle} disabled:opacity-60`}
-              >
-                {loadingPlan === plan.planKey ? '...' : (plan.name === 'Explorer' ? 'Explore' : plan.name === 'Founder' ? 'Join Founder (Pro)' : 'Get Legend')}
-              </button>
-            </div>
-            <div className={`px-3 py-2 flex flex-col ${plan.cardBg}`}>
-              <p className={`font-sans text-[10px] opacity-80 ${plan.textColor} mb-1.5 font-bold`}>{plan.description}</p>
-              <div className="grid grid-cols-2 gap-x-2 gap-y-1">
-                {plan.features.slice(0, 4).map((feature, idx) => (
-                  <div key={idx} className="flex items-start gap-1">
-                    <span className={`material-symbols-outlined text-[10px] mt-0.5 ${plan.featureIcon}`} style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
-                    <span className="font-sans text-[9px] text-[#111111] leading-tight">{feature}</span>
-                  </div>
-                ))}
+
+              {/* Features + CTA */}
+              <div className={`px-3 py-2 ${plan.cardBg}`}>
+                <ul className="space-y-1">
+                  {plan.features.map((feature, idx) => (
+                    <li key={idx} className="flex items-center gap-1.5 min-h-[18px]">
+                      <span className={`material-symbols-outlined text-[13px] leading-none shrink-0 ${plan.featureIcon}`} style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
+                      <span className="font-sans text-[11px] text-[#111111]/80 leading-none">{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                <button
+                  onClick={() => handleCheckout(plan.planKey)}
+                  disabled={loadingPlan === plan.planKey}
+                  className={`pricing-cta-btn w-full mt-2.5 py-2 font-mono font-bold uppercase tracking-wider text-[10px] border-2 border-[#111111] flex items-center justify-center gap-1.5 shadow-[2px_2px_0_0_#111111] active:translate-x-[1px] active:translate-y-[1px] active:shadow-[1px_1px_0_0_#111111] transition-all ${plan.buttonStyle} disabled:opacity-60`}
+                >
+                  {loadingPlan === plan.planKey ? 'Redirecting...' : plan.cta}
+                  <span className="material-symbols-outlined text-xs pricing-cta-arrow">
+                    {loadingPlan === plan.planKey ? 'hourglass_empty' : 'arrow_forward'}
+                  </span>
+                </button>
               </div>
             </div>
           </div>
         ))}
       </div>
 
-      {/* Desktop grid */}
+      {/* ═══ Desktop Grid ═══ */}
       <div className="hidden md:grid md:grid-cols-3 gap-5 items-stretch max-w-5xl mx-auto px-4">
         {plans.map((plan, index) => (
           <div
             key={index}
-            className="group relative flex flex-col border-2 border-[#111111] shadow-[4px_4px_0px_0px_#111111] overflow-hidden transition-all duration-500 ease-out hover:shadow-[6px_6px_0px_0px_#111111] hover:-translate-y-1 animate-fade-in-up"
+            className="relative rounded-sm"
             style={{ animationDelay: `${plan.delay}ms`, animationFillMode: 'both' }}
           >
+            <GlowingEffect
+              spread={40}
+              glow={false}
+              disabled={false}
+              proximity={64}
+              inactiveZone={0.01}
+              borderWidth={2}
+            />
+            <div
+              className="group relative flex flex-col border-2 border-[#111111] shadow-[4px_4px_0px_0px_#111111] overflow-hidden transition-all duration-500 ease-out hover:shadow-[6px_6px_0px_0px_#111111] hover:-translate-y-1 animate-fade-in-up h-full"
+            >
             {/* Badges */}
             {plan.popular && (
-              <div className="absolute top-0 left-1/2 -translate-x-1/2 bg-[#111111] text-white px-3 py-1 font-mono text-[10px] font-black uppercase tracking-widest z-20">
-                ★ Most Popular
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 z-20 rounded-sm overflow-hidden">
+                <GlowingEffect spread={20} glow disabled={false} proximity={32} inactiveZone={0.01} borderWidth={1} />
+                <div className="relative bg-[#111111] text-white px-3 py-1 font-mono text-[10px] font-black uppercase tracking-widest">
+                  ★ Most Popular
+                </div>
               </div>
             )}
 
             {plan.special && (
-              <div className="absolute top-0 left-1/2 -translate-x-1/2 bg-[#111111] text-white px-3 py-1 font-mono text-[10px] font-black uppercase tracking-widest z-20 flex items-center gap-1">
-                <span className="material-symbols-outlined text-xs text-amber-400">bolt</span>
-                Elite Status
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 z-20 rounded-sm overflow-hidden">
+                <GlowingEffect spread={20} glow disabled={false} proximity={32} inactiveZone={0.01} borderWidth={1} />
+                <div className="relative bg-[#111111] text-white px-3 py-1 font-mono text-[10px] font-black uppercase tracking-widest flex items-center gap-1">
+                  <span className="material-symbols-outlined text-xs text-amber-400">bolt</span>
+                  Elite Status
+                </div>
               </div>
             )}
 
             {/* Header / Pricing Area */}
             <div className={`${plan.headerBg} px-5 pt-9 pb-4 text-left relative overflow-hidden border-b-2 border-[#111111]/15`}>
-              {/* Decorative floating icon (top-right, subtle) */}
               <span className="material-symbols-outlined absolute top-2 right-3 text-4xl opacity-[0.07] transition-all duration-700 group-hover:opacity-[0.12] group-hover:rotate-12 group-hover:scale-110">
                 {plan.icon}
               </span>
 
-              {/* Plan Icon + Name Row */}
               <div className="flex items-center gap-2">
                 <div className={`w-7 h-7 ${plan.iconBg} border border-[#111111]/20 flex items-center justify-center transition-all duration-500 group-hover:rotate-[-8deg] group-hover:scale-110 ${plan.name === 'Explorer' ? 'group-hover:animate-icon-spin' : ''} ${plan.name === 'Founder' ? 'group-hover:animate-icon-bounce' : ''} ${plan.name === 'Legend' ? 'group-hover:animate-icon-pulse' : ''}`}>
                   <span className="material-symbols-outlined text-sm text-[#111111]">
@@ -228,14 +272,12 @@ export default function PricingPlans({ currency }: PricingPlansProps) {
                 </h3>
               </div>
 
-              {/* Original Price (strikethrough) */}
               {plan.originalPrice && (
                 <span className={`text-xs font-bold line-through opacity-50 ${plan.textColor} block mt-2`}>
                   {plan.originalPrice}
                 </span>
               )}
 
-              {/* Main Price */}
               <div className={`flex items-baseline ${plan.textColor} ${plan.originalPrice ? 'mt-0.5' : 'mt-2'}`}>
                 <span className="font-sans text-3xl md:text-4xl font-black tracking-tight leading-none transition-transform duration-300 group-hover:scale-[1.02] origin-left">
                   {plan.price}
@@ -245,7 +287,6 @@ export default function PricingPlans({ currency }: PricingPlansProps) {
                 </span>
               </div>
 
-              {/* Save Badge */}
               {plan.badge && (
                 <div className="mt-2">
                   <span className={`inline-block text-[10px] font-black px-2 py-0.5 uppercase tracking-wider transition-transform duration-300 group-hover:-rotate-1 ${plan.special ? 'bg-[#ef4444] text-white' : 'bg-[#22c55e] text-white'}`}>
@@ -254,7 +295,6 @@ export default function PricingPlans({ currency }: PricingPlansProps) {
                 </div>
               )}
 
-              {/* Description */}
               {plan.description && (
                 <p className={`font-sans text-xs mt-2 opacity-60 ${plan.textColor}`}>
                   {plan.description}
@@ -262,7 +302,7 @@ export default function PricingPlans({ currency }: PricingPlansProps) {
               )}
             </div>
 
-            {/* Features — clean section, no extra dividers */}
+            {/* Features */}
             <div className={`px-5 py-4 flex-1 flex flex-col justify-between ${plan.cardBg}`}>
               <ul className="space-y-2.5">
                 {plan.features.map((feature, idx) => (
@@ -282,26 +322,31 @@ export default function PricingPlans({ currency }: PricingPlansProps) {
               </ul>
 
               {/* CTA Button */}
-              <div className="mt-5">
+              <div className="mt-5 relative rounded-sm">
+                <GlowingEffect
+                  spread={40}
+                  glow={false}
+                  disabled={false}
+                  proximity={48}
+                  inactiveZone={0.01}
+                  borderWidth={2}
+                />
                 <button
                   onClick={() => handleCheckout(plan.planKey)}
                   disabled={loadingPlan === plan.planKey}
-                  className={`w-full py-2.5 font-mono font-bold uppercase tracking-wider text-xs border-2 border-[#111111] flex items-center justify-center gap-2 shadow-[3px_3px_0_0_#111111] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[1px_1px_0_0_#111111] transition-all duration-200 ${plan.buttonStyle} disabled:opacity-60`}
+                  className={`pricing-cta-btn relative w-full py-2.5 font-mono font-bold uppercase tracking-wider text-xs border-2 border-[#111111] flex items-center justify-center gap-2 shadow-[3px_3px_0_0_#111111] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[1px_1px_0_0_#111111] transition-all duration-200 ${plan.buttonStyle} disabled:opacity-60`}
                 >
                   {loadingPlan === plan.planKey ? 'Redirecting...' : plan.cta}
-                  <span className="material-symbols-outlined text-base transition-transform duration-300 group-hover:translate-x-0.5">
+                  <span className="material-symbols-outlined text-base transition-transform duration-300 group-hover:translate-x-0.5 pricing-cta-arrow">
                     {loadingPlan === plan.planKey ? 'hourglass_empty' : 'arrow_forward'}
                   </span>
                 </button>
-
-
               </div>
             </div>
           </div>
+          </div>
         ))}
       </div>
-
-
 
       {/* Animations */}
       <style jsx>{`
@@ -331,14 +376,28 @@ export default function PricingPlans({ currency }: PricingPlansProps) {
           0%, 100% { transform: scale(1.1) rotate(-8deg); }
           50% { transform: scale(1.2) rotate(-8deg); }
         }
-        .group:hover .group-hover\:animate-icon-spin {
+        .group:hover .group-hover\\:animate-icon-spin {
           animation: iconSpin 0.6s ease-in-out;
         }
-        .group:hover .group-hover\:animate-icon-bounce {
+        .group:hover .group-hover\\:animate-icon-bounce {
           animation: iconBounce 0.5s ease-in-out infinite;
         }
-        .group:hover .group-hover\:animate-icon-pulse {
+        .group:hover .group-hover\\:animate-icon-pulse {
           animation: iconPulse 0.8s ease-in-out infinite;
+        }
+        @keyframes ctaArrowBounce {
+          0%, 100% { transform: translateX(0); }
+          50% { transform: translateX(4px); }
+        }
+        .pricing-cta-btn .pricing-cta-arrow {
+          animation: ctaArrowBounce 1.5s ease-in-out infinite;
+        }
+        @keyframes ctaShimmer {
+          0% { background-position: -200% center; }
+          100% { background-position: 200% center; }
+        }
+        .pricing-cta-btn {
+          background-size: 200% 100%;
         }
       `}</style>
     </section>

@@ -126,22 +126,7 @@ export default function ProblemSection() {
 
                         </div>
 
-                        {/* Animated scroll dots — mobile only */}
-                        <div className="flex sm:hidden items-center justify-center gap-2 mt-4">
-                            {[0, 1, 2, 3].map((idx) => (
-                                <button
-                                    key={idx}
-                                    onClick={() => {
-                                        const container = scrollRef.current
-                                        if (!container) return
-                                        const card = container.children[idx] as HTMLElement
-                                        if (card) { container.scrollTo({ left: card.offsetLeft - 16, behavior: 'smooth' }) }
-                                        setActiveIdx(idx)
-                                    }}
-                                    style={{ width: activeIdx === idx ? 16 : 6, height: 6, backgroundColor: activeIdx === idx ? '#000' : '#d1d5db', transition: 'all 0.3s' }}
-                                />
-                            ))}
-                        </div>
+
                     </div>
                 </div>
             </div>

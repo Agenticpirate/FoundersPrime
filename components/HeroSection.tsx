@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import CountUp from 'react-countup'
+import { GlowingEffect } from '@/components/ui/GlowingEffect'
 
 /* ─── Module-level constant: created once, never re-created on render ─── */
 const BRANDS = [
@@ -55,51 +56,64 @@ export default function HeroSection() {
   }, [])
 
   return (
-    <section className="relative min-h-0 md:min-h-[calc(100vh-120px)] pt-3 pb-8 md:pt-10 md:pb-0 lg:pt-14 overflow-hidden grid-bg flex flex-col">
-      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full mb-4 md:mb-8">
+    <section className="relative min-h-[calc(100dvh-80px)] md:min-h-[calc(100vh-120px)] pt-2 pb-0 md:pt-10 md:pb-0 lg:pt-14 overflow-hidden grid-bg flex flex-col justify-between">
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full mb-0 md:mb-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-16 items-center">
           <div className="lg:col-span-7 flex flex-col justify-center items-start pt-0">
-            <div className="inline-flex items-center gap-2 bg-white neo-border px-2 py-0.5 mb-2 md:mb-3 neo-shadow-static">
+            <div className="inline-flex items-center gap-2 bg-white neo-border px-2 py-0.5 mb-3 md:mb-3 neo-shadow-static hero-mobile-fade hero-mobile-fade-1">
               <span className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></span>
               <span className="text-[9px] sm:text-xs font-mono font-bold text-black uppercase tracking-wide">VERIFIED GRANTS, CREDITS &amp; FOUNDER PROGRAMS</span>
             </div>
 
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold text-black tracking-tight mb-2 leading-none font-mono">
+            <h1 className="text-[2.5rem] sm:text-4xl md:text-5xl lg:text-7xl font-bold text-black tracking-tight mb-2 leading-[1.05] font-mono hero-mobile-fade hero-mobile-fade-2">
               FREE CREDITS.<br />
               REAL GRANTS.<br />
-              <span className="bg-accent-yellow px-2 mt-1 inline-block neo-border box-decoration-clone">ZERO DILUTION.</span>
+              <span className="bg-accent-yellow px-2 mt-2 inline-block neo-border box-decoration-clone hero-highlight-glow text-[2.5rem] sm:text-4xl md:text-5xl lg:text-7xl">ZERO DILUTION.</span>
             </h1>
 
-            <p className="mt-2 text-sm sm:text-sm md:text-md lg:text-lg text-black mb-3 md:mb-4 font-medium max-w-2xl border-l-4 border-black pl-3 leading-relaxed">
+            <p className="mt-3 text-[15px] sm:text-sm md:text-md lg:text-lg text-black mb-3 md:mb-4 font-medium max-w-2xl border-l-4 border-black pl-3 leading-relaxed hero-mobile-fade hero-mobile-fade-3">
               Discover startup credits, non-dilutive grants, accelerators, and founder resources in one place.{' '}
               <span className="font-bold border-b-[3px] border-accent-yellow inline-block mt-1 sm:mt-0">
                 Students unlock free tools &amp; more.
               </span>
             </p>
 
-            <div className="flex flex-col gap-2 md:gap-3 mb-3 md:mb-4 mt-1 md:mt-2 w-full max-w-2xl">
-              {/* Primary CTA */}
-              <Link href="/deals" className="bg-black text-white text-sm md:text-base font-bold py-3 md:py-4 px-6 flex items-center justify-center gap-2 transition-all hover:bg-gray-800 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.3)] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,0.3)] hover:translate-x-[2px] hover:translate-y-[2px] w-full font-mono uppercase tracking-wide">
-                Unlock Startup Deals
-                <span className="material-symbols-outlined text-sm">arrow_forward</span>
-              </Link>
+            <div className="flex flex-col gap-1.5 md:gap-3 mb-3 md:mb-4 mt-1 md:mt-2 w-full max-w-2xl hero-mobile-fade hero-mobile-fade-4">
+              {/* Primary CTA — enhanced with shimmer on mobile */}
+              <div className="relative">
+                <GlowingEffect spread={40} glow={false} disabled={false} proximity={64} inactiveZone={0.01} borderWidth={2} />
+                <Link href="/deals" className="hero-cta-primary bg-black text-white text-sm md:text-base font-bold py-3 md:py-4 px-6 flex items-center justify-center gap-2 transition-all hover:bg-gray-800 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.3)] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,0.3)] hover:translate-x-[2px] hover:translate-y-[2px] w-full font-mono uppercase tracking-wide relative overflow-hidden neo-border">
+                  <span className="relative z-10 flex items-center gap-2">
+                    Unlock Startup Deals
+                    <span className="material-symbols-outlined text-sm hero-arrow-bounce">arrow_forward</span>
+                  </span>
+                </Link>
+              </div>
 
-              {/* Secondary CTAs */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full">
-                <Link
-                  href="/deals/grants"
-                  className="flex-1 flex items-center justify-center gap-1.5 border-2 border-black bg-white text-black font-mono font-bold text-xs py-2 px-3 hover:bg-black hover:text-white transition-all uppercase tracking-wide"
-                >
-                  <span className="material-symbols-outlined text-sm">payments</span>
-                  Find Grants
-                </Link>
-                <Link
-                  href="/deals/accelerators"
-                  className="flex-1 flex items-center justify-center gap-1.5 border-2 border-black bg-white text-black font-mono font-bold text-xs py-2 px-3 hover:bg-black hover:text-white transition-all uppercase tracking-wide"
-                >
-                  <span className="material-symbols-outlined text-sm">rocket_launch</span>
-                  Explore Accelerators
-                </Link>
+              {/* Secondary CTAs — enhanced with accent left-border on mobile */}
+              <div className="grid grid-cols-2 gap-1.5 sm:gap-3 w-full">
+                <div className="relative">
+                  <GlowingEffect spread={30} glow={false} disabled={false} proximity={48} inactiveZone={0.01} borderWidth={1} />
+                  <Link
+                    href="/deals/grants"
+                    className="hero-cta-secondary flex items-center justify-center gap-1.5 border-2 border-black bg-white text-black font-mono font-bold text-[10px] sm:text-xs py-2 px-2 sm:px-3 hover:bg-black hover:text-white transition-all uppercase tracking-wide relative overflow-hidden"
+                  >
+                    <span className="hero-cta-accent-bar md:hidden"></span>
+                    <span className="material-symbols-outlined text-sm">payments</span>
+                    Find Grants
+                  </Link>
+                </div>
+                <div className="relative">
+                  <GlowingEffect spread={30} glow={false} disabled={false} proximity={48} inactiveZone={0.01} borderWidth={1} />
+                  <Link
+                    href="/deals/accelerators"
+                    className="hero-cta-secondary flex items-center justify-center gap-1.5 border-2 border-black bg-white text-black font-mono font-bold text-[10px] sm:text-xs py-2 px-2 sm:px-3 hover:bg-black hover:text-white transition-all uppercase tracking-wide relative overflow-hidden"
+                  >
+                    <span className="hero-cta-accent-bar md:hidden"></span>
+                    <span className="material-symbols-outlined text-sm">rocket_launch</span>
+                    Accelerators
+                  </Link>
+                </div>
               </div>
             </div>
 
@@ -108,32 +122,26 @@ export default function HeroSection() {
               <span>VERIFIED DEALS</span> <span className="text-black/30">•</span> <span>NON-DILUTIVE GRANTS</span> <span className="text-black/30">•</span> <span>TOP ACCELERATORS</span>
             </div>
 
-            {/* ── Mobile-only Brand Icons Scroller ── */}
-            <div className="md:hidden mt-2 w-full">
-              <p className="text-[9px] font-mono font-bold uppercase tracking-widest text-gray-400 mb-1.5">Credits &amp; grants from</p>
-              <div className="relative w-full overflow-hidden" style={{ maskImage: 'linear-gradient(to right,transparent,black 12%,black 88%,transparent)', WebkitMaskImage: 'linear-gradient(to right,transparent,black 12%,black 88%,transparent)' }}>
-                <div className="mobile-brand-marquee flex items-center gap-6 whitespace-nowrap">
-                  {BRANDS_LOOP.map((b, i) => (
-                    <div key={`brand-${i}`} className="flex flex-col items-center gap-1 flex-shrink-0">
-                      <div className="w-9 h-9 bg-white border-2 border-black flex items-center justify-center shadow-[1px_1px_0px_0px_rgba(0,0,0,1)]">
-                        <img
-                          src={`https://www.google.com/s2/favicons?domain=${b.domain}&sz=64`}
-                          alt={b.name}
-                          className="w-5 h-5 object-contain"
-                          loading="lazy"
-                          onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
-                        />
-                      </div>
-                      <span className="text-[8px] font-mono text-gray-500 font-bold uppercase truncate max-w-[36px] text-center">{b.name.split(' ')[0]}</span>
-                    </div>
-                  ))}
-                </div>
+            {/* ── Mobile-only: mini highlight cards ── */}
+            <div className="md:hidden grid grid-cols-3 gap-1.5 mt-3 w-full hero-mobile-fade hero-mobile-fade-5">
+              <div className="bg-[#ff9900] border-2 border-black p-2 text-center shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+                <div className="text-[7px] font-mono font-bold uppercase leading-tight">Cloud Credits</div>
+                <div className="text-sm font-mono font-black leading-tight">$100K</div>
+              </div>
+              <div className="bg-accent-yellow border-2 border-black p-2 text-center shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+                <div className="text-[7px] font-mono font-bold uppercase leading-tight">Grant Spotlight</div>
+                <div className="text-sm font-mono font-black leading-tight">$250K</div>
+              </div>
+              <div className="bg-[#7ed6e0] border-2 border-black p-2 text-center shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+                <div className="text-[7px] font-mono font-bold uppercase leading-tight">Fee Waivers</div>
+                <div className="text-sm font-mono font-black leading-tight">$50K</div>
               </div>
             </div>
           </div>
 
           <div className="lg:col-span-5 relative mt-4 lg:mt-0 hidden md:block">
             <div className="bg-white neo-border neo-shadow p-2 relative z-10 mx-auto max-w-md lg:max-w-none">
+              <GlowingEffect spread={40} glow={false} disabled={false} proximity={80} inactiveZone={0.01} borderWidth={2} />
               <div className="bg-black text-white p-2 text-[10px] md:text-xs font-mono flex justify-between border-b-2 border-black mb-0">
                 <span>FOUNDERSPRIME INDEX</span>
                 <span className="flex items-center gap-1">
@@ -242,6 +250,40 @@ export default function HeroSection() {
       </div>
       {/* Spacer: ensures "Why This Exists" never peeks into the hero viewport */}
       <div className="hidden md:block flex-1 min-h-[2vh]" aria-hidden="true" />
+
+      {/* ── Mobile-only bottom-anchored trust bar ── */}
+      <div className="md:hidden w-full px-4 pb-3 mt-auto hero-mobile-fade hero-mobile-fade-5">
+        {/* Brand logos scroller */}
+        <p className="text-[8px] font-mono font-bold uppercase tracking-widest text-gray-400 mb-1 mt-4">Credits &amp; grants from</p>
+        <div className="relative w-full overflow-hidden mb-2" style={{ maskImage: 'linear-gradient(to right,transparent,black 12%,black 88%,transparent)', WebkitMaskImage: 'linear-gradient(to right,transparent,black 12%,black 88%,transparent)' }}>
+          <div className="mobile-brand-marquee flex items-center gap-5 whitespace-nowrap">
+            {BRANDS_LOOP.map((b, i) => (
+              <div key={`brand-${i}`} className="flex flex-col items-center gap-0.5 flex-shrink-0">
+                <div className="w-8 h-8 bg-white border-2 border-black flex items-center justify-center shadow-[1px_1px_0px_0px_rgba(0,0,0,1)]">
+                  <img
+                    src={`https://www.google.com/s2/favicons?domain=${b.domain}&sz=64`}
+                    alt={b.name}
+                    className="w-4 h-4 object-contain"
+                    loading="lazy"
+                    onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
+                  />
+                </div>
+                <span className="text-[7px] font-mono text-gray-500 font-bold uppercase truncate max-w-[32px] text-center">{b.name.split(' ')[0]}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Scroll hint */}
+        <div className="flex justify-center mt-2">
+          <span className="material-symbols-outlined text-black/20 text-lg animate-bounce">expand_more</span>
+        </div>
+      </div>
+
+      {/* Mobile-only bottom divider — hard visual break from next section */}
+      <div className="md:hidden w-full" aria-hidden="true">
+        <div className="h-[3px] bg-black/10 w-full"></div>
+      </div>
     </section>
   )
 }

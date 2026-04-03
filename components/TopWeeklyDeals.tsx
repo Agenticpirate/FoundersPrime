@@ -1,8 +1,8 @@
 'use client'
 
 import Link from 'next/link'
-import Image from 'next/image'
 import { useEffect, useRef, useState } from 'react'
+import { GlowingEffect } from '@/components/ui/GlowingEffect'
 
 interface Deal {
   id: string
@@ -69,9 +69,12 @@ export default function TopWeeklyDeals() {
             <h2 className="text-xl md:text-4xl font-bold text-black mb-1.5 md:mb-2 font-mono">TOP_WEEKLY_DEALS</h2>
             <p className="text-sm text-black font-medium border-l-4 border-black pl-3 ml-1">Hand-picked savings for modern founders.</p>
           </div>
-          <Link href="/deals" className="bg-black text-white px-4 py-2 md:px-6 md:py-3 text-sm font-mono font-bold rounded-none neo-shadow hover:bg-gray-900 transition-all flex items-center justify-center gap-2 w-full md:w-auto">
-            VIEW_ALL_DEALS <span className="material-symbols-outlined text-sm">arrow_forward</span>
-          </Link>
+          <div className="relative">
+            <Link href="/deals" className="bg-black text-white px-4 py-2 md:px-6 md:py-3 text-sm font-mono font-bold rounded-none neo-shadow hover:bg-gray-900 transition-all flex items-center justify-center gap-2 w-full md:w-auto">
+              VIEW_ALL_DEALS <span className="material-symbols-outlined text-sm">arrow_forward</span>
+            </Link>
+            <GlowingEffect spread={30} glow={false} disabled={false} proximity={48} inactiveZone={0.01} borderWidth={2} />
+          </div>
         </div>
 
         {/* Mobile: horizontal snap scroll */}
@@ -87,7 +90,7 @@ export default function TopWeeklyDeals() {
                 <div className="flex items-center gap-2">
                   <div className="w-8 h-8 bg-white border border-gray-200 flex items-center justify-center overflow-hidden">
                     {deal.logoUrl ? (
-                      <Image
+                      <img
                         src={deal.logoUrl}
                         alt={deal.provider}
                         width={24}
@@ -138,12 +141,13 @@ export default function TopWeeklyDeals() {
         {/* Desktop: grid */}
         <div className="hidden md:grid grid-cols-2 lg:grid-cols-3 gap-8">
           {deals.map((deal, index) => (
-            <div key={deal.id || index} className="bg-white neo-border p-0 relative group neo-shadow">
+            <div key={deal.id || index} className="relative bg-white neo-border p-0 group neo-shadow">
+              <GlowingEffect spread={30} glow={false} disabled={false} proximity={64} inactiveZone={0.01} borderWidth={2} />
               <div className="p-4 border-b-2 border-black flex justify-between items-center bg-gray-50">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 bg-white border border-gray-200 flex items-center justify-center overflow-hidden">
                     {deal.logoUrl ? (
-                      <Image
+                      <img
                         src={deal.logoUrl}
                         alt={deal.provider}
                         width={32}

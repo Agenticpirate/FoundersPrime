@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { useRef, useState, useEffect } from 'react'
+import { GlowingEffect } from '@/components/ui/GlowingEffect'
 
 export default function SystemModules() {
   const modules = [
@@ -139,21 +140,13 @@ export default function SystemModules() {
           ))}
         </div>
 
-        {/* Mobile dots indicator */}
-        <div className="flex md:hidden justify-center gap-1.5 mt-3">
-          {modules.map((_, idx) => (
-            <button
-              key={idx}
-              onClick={() => scrollTo(idx)}
-              style={{ width: activeIdx === idx ? 16 : 6, height: 6, backgroundColor: activeIdx === idx ? '#000' : '#d1d5db', transition: 'all 0.3s' }}
-            />
-          ))}
-        </div>
+
 
         {/* Desktop: grid */}
         <div className="hidden md:grid grid-cols-2 lg:grid-cols-3 gap-6">
           {modules.map((module) => (
-            <div key={module.id} className="bg-white border-[3px] border-[#101622] p-6 shadow-[6px_6px_0px_0px_#101622] hover:-translate-y-1 hover:shadow-[8px_8px_0px_0px_#101622] transition-all duration-300 group flex flex-col h-full">
+            <div key={module.id} className="relative bg-white border-[3px] border-[#101622] p-6 shadow-[6px_6px_0px_0px_#101622] hover:-translate-y-1 hover:shadow-[8px_8px_0px_0px_#101622] transition-all duration-300 group flex flex-col h-full">
+              <GlowingEffect spread={30} glow={false} disabled={false} proximity={64} inactiveZone={0.01} borderWidth={2} />
               <div className="flex justify-between items-start mb-6">
                 <div className={`w-14 h-14 ${module.iconColor} border-[3px] border-[#101622] flex items-center justify-center transition-colors duration-300`}>
                   <span className="material-symbols-outlined text-2xl">{module.icon}</span>

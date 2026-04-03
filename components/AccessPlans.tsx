@@ -1,3 +1,5 @@
+import { GlowingEffect } from '@/components/ui/GlowingEffect'
+
 export default function AccessPlans() {
   const plans = [
     {
@@ -59,7 +61,16 @@ export default function AccessPlans() {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8 items-start">
           {plans.map((plan, index) => (
-            <div key={index} className={`bg-white neo-border p-0 ${plan.recommended ? 'relative transform md:-translate-y-4 neo-shadow' : ''} ${plan.borderColor}`}>
+            <div key={index} className="relative">
+              <GlowingEffect
+                spread={40}
+                glow={false}
+                disabled={false}
+                proximity={64}
+                inactiveZone={0.01}
+                borderWidth={2}
+              />
+              <div className={`relative bg-white neo-border p-0 h-full ${plan.recommended ? 'relative transform md:-translate-y-4 neo-shadow' : ''} ${plan.borderColor}`}>
               {plan.recommended && (
                 <div className="bg-black text-white text-center py-3 font-bold text-xs font-mono uppercase tracking-widest border-b-2 border-black">Recommended</div>
               )}
@@ -81,6 +92,7 @@ export default function AccessPlans() {
                 </ul>
                 <button className={plan.buttonStyle}>{plan.buttonText}</button>
               </div>
+            </div>
             </div>
           ))}
         </div>

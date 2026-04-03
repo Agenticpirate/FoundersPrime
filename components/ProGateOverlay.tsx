@@ -2,6 +2,7 @@
 
 import React from 'react'
 import Link from 'next/link'
+import { GlowingEffect } from '@/components/ui/GlowingEffect'
 
 interface ProGateOverlayProps {
     totalCount: number
@@ -189,43 +190,54 @@ export default function ProGateOverlay({
                         </ul>
 
                         {/* CTA Button */}
-                        <Link
-                            href="/pricing"
-                            style={{
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                gap: 8,
-                                width: '100%',
-                                background: '#111111',
-                                color: '#ffd700',
-                                fontFamily: 'IBM Plex Mono, monospace',
-                                fontWeight: 800,
-                                fontSize: 13,
-                                textTransform: 'uppercase',
-                                letterSpacing: '0.08em',
-                                padding: '14px 24px',
-                                textDecoration: 'none',
-                                border: '2px solid #111111',
-                                boxShadow: '4px 4px 0px #ffd700',
-                                transition: 'all 0.15s ease',
-                            }}
-                            onMouseEnter={(e) => {
-                                const el = e.currentTarget as HTMLAnchorElement
-                                el.style.transform = 'translate(-2px, -2px)'
-                                el.style.boxShadow = '6px 6px 0px #ffd700'
-                            }}
-                            onMouseLeave={(e) => {
-                                const el = e.currentTarget as HTMLAnchorElement
-                                el.style.transform = 'translate(0, 0)'
-                                el.style.boxShadow = '4px 4px 0px #ffd700'
-                            }}
-                        >
-                            <span className="material-symbols-outlined" style={{ fontSize: 18, fontVariationSettings: "'FILL' 1" }}>
-                                workspace_premium
-                            </span>
-                            Unlock All {label} — Join Founder Plan
-                        </Link>
+                        <div className="relative">
+                            <GlowingEffect
+                                spread={40}
+                                glow={false}
+                                disabled={false}
+                                proximity={48}
+                                inactiveZone={0.01}
+                                borderWidth={2}
+                            />
+                            <Link
+                                href="/pricing"
+                                style={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    gap: 8,
+                                    width: '100%',
+                                    background: '#111111',
+                                    color: '#ffd700',
+                                    fontFamily: 'IBM Plex Mono, monospace',
+                                    fontWeight: 800,
+                                    fontSize: 13,
+                                    textTransform: 'uppercase',
+                                    letterSpacing: '0.08em',
+                                    padding: '14px 24px',
+                                    textDecoration: 'none',
+                                    border: '2px solid #111111',
+                                    boxShadow: '4px 4px 0px #ffd700',
+                                    transition: 'all 0.15s ease',
+                                    position: 'relative',
+                                }}
+                                onMouseEnter={(e) => {
+                                    const el = e.currentTarget as HTMLAnchorElement
+                                    el.style.transform = 'translate(-2px, -2px)'
+                                    el.style.boxShadow = '6px 6px 0px #ffd700'
+                                }}
+                                onMouseLeave={(e) => {
+                                    const el = e.currentTarget as HTMLAnchorElement
+                                    el.style.transform = 'translate(0, 0)'
+                                    el.style.boxShadow = '4px 4px 0px #ffd700'
+                                }}
+                            >
+                                <span className="material-symbols-outlined" style={{ fontSize: 18, fontVariationSettings: "'FILL' 1" }}>
+                                    workspace_premium
+                                </span>
+                                Unlock All {label} — Join Founder Plan
+                            </Link>
+                        </div>
 
                         {/* Fine print */}
                         <p

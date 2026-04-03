@@ -2,6 +2,7 @@
 
 import React from 'react'
 import Link from 'next/link'
+import { GlowingEffect } from '@/components/ui/GlowingEffect'
 
 interface ProUpgradeModalProps {
     isOpen: boolean
@@ -65,12 +66,22 @@ export default function ProUpgradeModal({ isOpen, onClose }: ProUpgradeModalProp
                         </ul>
                     </div>
 
-                    <Link
+                    <div className="relative">
+                      <GlowingEffect
+                        spread={40}
+                        glow={false}
+                        disabled={false}
+                        proximity={48}
+                        inactiveZone={0.01}
+                        borderWidth={2}
+                      />
+                      <Link
                         href="/pricing"
-                        className="flex items-center justify-center w-full bg-black text-white font-mono font-bold text-sm md:text-base uppercase py-3 md:py-4 border-2 border-transparent shadow-[3px_3px_0px_#666] hover:shadow-[1px_1px_0px_#666] hover:translate-x-[2px] hover:translate-y-[2px] transition-all gap-2"
-                    >
+                        className="relative flex items-center justify-center w-full bg-black text-white font-mono font-bold text-sm md:text-base uppercase py-3 md:py-4 border-2 border-transparent shadow-[3px_3px_0px_#666] hover:shadow-[1px_1px_0px_#666] hover:translate-x-[2px] hover:translate-y-[2px] transition-all gap-2"
+                      >
                         View Pricing Plans <span className="material-symbols-outlined text-base md:text-lg">arrow_forward</span>
-                    </Link>
+                      </Link>
+                    </div>
 
                     <button
                         onClick={onClose}

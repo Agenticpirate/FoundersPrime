@@ -199,19 +199,16 @@ function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
 
 export default function Pricing3DTestimonials() {
     const scrollRef = React.useRef<HTMLDivElement>(null)
-    const [activeIdx, setActiveIdx] = React.useState(0)
     const totalMobile = Math.min(8, testimonials.length)
 
     React.useEffect(() => {
         const el = scrollRef.current
         if (!el) return
-        const cardWidth = el.scrollWidth / totalMobile
+        let idx = 0
         const timer = setInterval(() => {
-            setActiveIdx(prev => {
-                const next = (prev + 1) % totalMobile
-                el.scrollTo({ left: next * cardWidth, behavior: 'smooth' })
-                return next
-            })
+            idx = (idx + 1) % totalMobile
+            const cardWidth = el.scrollWidth / totalMobile
+            el.scrollTo({ left: idx * cardWidth, behavior: 'smooth' })
         }, 3000)
         return () => clearInterval(timer)
     }, [totalMobile])
@@ -255,23 +252,7 @@ export default function Pricing3DTestimonials() {
 
                 </div>
 
-                {/* Mobile dot indicators */}
-                <div className="flex md:hidden justify-center items-center gap-1.5 mt-3 mb-2">
-                    {Array.from({ length: totalMobile }).map((_, i) => (
-                        <button
-                            key={i}
-                            onClick={() => {
-                                setActiveIdx(i)
-                                const el = scrollRef.current
-                                if (el) {
-                                    const cardWidth = el.scrollWidth / totalMobile
-                                    el.scrollTo({ left: i * cardWidth, behavior: 'smooth' })
-                                }
-                            }}
-                            style={{ width: i === activeIdx ? 16 : 6, height: 6, backgroundColor: i === activeIdx ? '#000' : '#d1d5db', transition: 'all 0.3s' }}
-                        />
-                    ))}
-                </div>
+
 
                 {/* Desktop: Infinite Vertical Scrolling Marquee — uses globals.css keyframes */}
                 <div className="hidden md:flex justify-center gap-4 h-[600px] overflow-hidden mask-fade-v mt-8">

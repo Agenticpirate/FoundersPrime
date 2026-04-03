@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { GlowingEffect } from '@/components/ui/GlowingEffect'
 
 export default function FinalCTA() {
   const [email, setEmail] = useState('')
@@ -44,7 +45,15 @@ export default function FinalCTA() {
               </div>
             ) : (
               <div>
-                <form onSubmit={handleSubmit} className="flex flex-row gap-0 neo-shadow">
+                <form onSubmit={handleSubmit} className="relative flex flex-row gap-0 neo-shadow">
+                  <GlowingEffect
+                    spread={40}
+                    glow={false}
+                    disabled={false}
+                    proximity={48}
+                    inactiveZone={0.01}
+                    borderWidth={2}
+                  />
                   <input
                     className="flex-1 min-w-0 bg-white text-black text-sm p-3 focus:ring-0 focus:outline-none font-mono rounded-none placeholder-gray-500"
                     placeholder="YOUR EMAIL ADDRESS"
