@@ -138,7 +138,7 @@ export default function ProblemSection() {
                                         if (card) { container.scrollTo({ left: card.offsetLeft - 16, behavior: 'smooth' }) }
                                         setActiveIdx(idx)
                                     }}
-                                    className={`transition-all duration-300 ${activeIdx === idx ? 'w-4 h-1.5 bg-black rounded-sm' : 'w-1.5 h-1.5 bg-gray-300 rounded-full'}`}
+                                    style={{ width: activeIdx === idx ? 16 : 6, height: 6, backgroundColor: activeIdx === idx ? '#000' : '#d1d5db', transition: 'all 0.3s' }}
                                 />
                             ))}
                         </div>

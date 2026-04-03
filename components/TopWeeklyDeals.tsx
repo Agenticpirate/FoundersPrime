@@ -131,7 +131,7 @@ export default function TopWeeklyDeals() {
         {/* Mobile dots */}
         <div className="flex md:hidden justify-center gap-1.5 mt-3">
           {deals.map((_, idx) => (
-            <div key={idx} className={`transition-all duration-300 ${activeIdx === idx ? 'w-4 h-1.5 bg-black rounded-sm' : 'w-1.5 h-1.5 bg-gray-300 rounded-full'}`} />
+            <div key={idx} style={{ width: activeIdx === idx ? 16 : 6, height: 6, backgroundColor: activeIdx === idx ? '#000' : '#d1d5db', transition: 'all 0.3s' }} />
           ))}
         </div>
 
