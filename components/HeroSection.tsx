@@ -55,7 +55,7 @@ export default function HeroSection() {
   }, [])
 
   return (
-    <section className="relative min-h-0 md:min-h-[calc(100vh-120px)] pt-4 pb-0 md:pt-10 lg:pt-14 overflow-hidden grid-bg flex flex-col">
+    <section className="relative min-h-0 md:min-h-[calc(100vh-120px)] pt-3 pb-8 md:pt-10 md:pb-0 lg:pt-14 overflow-hidden grid-bg flex flex-col">
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full mb-4 md:mb-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-16 items-center">
           <div className="lg:col-span-7 flex flex-col justify-center items-start pt-0">
