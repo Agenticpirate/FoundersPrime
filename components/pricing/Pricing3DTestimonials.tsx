@@ -268,7 +268,7 @@ export default function Pricing3DTestimonials() {
                                     el.scrollTo({ left: i * cardWidth, behavior: 'smooth' })
                                 }
                             }}
-                            className={`rounded-full transition-all duration-300 ${i === activeIdx ? 'w-4 h-1.5 bg-[#111111]' : 'w-1.5 h-1.5 bg-gray-300 hover:bg-gray-500'}`}
+                            className={`transition-all duration-300 ${i === activeIdx ? 'w-5 h-2 bg-black' : 'w-2 h-2 bg-gray-300'}`}
                         />
                     ))}
                 </div>

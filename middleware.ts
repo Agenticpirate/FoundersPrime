@@ -16,12 +16,12 @@ export async function middleware(request: NextRequest) {
         !supabaseUrl ||
         !supabaseAnonKey ||
         supabaseUrl === 'http://localhost:54321' ||
-        supabaseAnonKey === 'placeholder-anon-key' ||
-        supabaseAnonKey.length < 20
+        supabaseAnonKey === 'placeholder-anon-key'
     ) {
         return response
     }
 
+    try {
     const supabase = createServerClient(
         supabaseUrl,
         supabaseAnonKey,
@@ -69,6 +69,9 @@ export async function middleware(request: NextRequest) {
     )
 
     await supabase.auth.getSession()
+    } catch (e) {
+        // Supabase auth failed — continue without session
+    }
 
     return response
 }
