@@ -145,7 +145,7 @@ export default function SystemModules() {
             <button
               key={idx}
               onClick={() => scrollTo(idx)}
-              className={`h-2 transition-all duration-300 ${activeIdx === idx ? 'w-5 bg-black' : 'w-2 bg-gray-300'}`}
+              className={`transition-all duration-300 ${activeIdx === idx ? 'w-4 h-1.5 bg-black rounded-sm' : 'w-1.5 h-1.5 bg-gray-300 rounded-full'}`}
             />
           ))}
         </div>

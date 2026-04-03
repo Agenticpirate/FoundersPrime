@@ -35,12 +35,12 @@ const FounderAvatar = ({ founder }: { founder: { name: string, avatar?: string }
 
 export default function StartupCard({ company }: StartupCardProps) {
   const getInitialLogoSrc = () => {
-    // Priority: small_logo_thumb_url → Clearbit from website → null
+    // Priority: small_logo_thumb_url → Google Favicon from website → null
     if (company.small_logo_thumb_url) return company.small_logo_thumb_url
     if (company.website) {
       try {
         const domain = new URL(company.website).hostname
-        return `https://logo.clearbit.com/${domain}`
+        return `https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://${domain}&size=128`
       } catch { return null }
     }
     return null

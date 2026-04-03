@@ -11,7 +11,7 @@ const getLogo = (benefit: StudentBenefit) => {
     }
     try {
         const domain = new URL(benefit.url).hostname;
-        return `https://logo.clearbit.com/${domain}`;
+        return `https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://${domain}&size=128`;
     } catch (e) {
         return `https://ui-avatars.com/api/?name=${encodeURIComponent(benefit.company)}&background=random`;
     }

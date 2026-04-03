@@ -97,14 +97,14 @@ export default function StudentBenefitsContent({ benefits, title, description }:
         router.push(`${pathname}?${params.toString()}`, { scroll: false })
     }
 
-    // Logo helper - use logo from data if available, otherwise fallback to Clearbit
+    // Logo helper - use logo from data if available, otherwise fallback to Google Favicon
     const getLogo = (benefit: StudentBenefit) => {
         if (benefit.logo) {
             return benefit.logo;
         }
         try {
             const domain = new URL(benefit.url).hostname;
-            return `https://logo.clearbit.com/${domain}`;
+            return `https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://${domain}&size=128`;
         } catch (e) {
             return `https://ui-avatars.com/api/?name=${encodeURIComponent(benefit.company)}&background=random`;
         }

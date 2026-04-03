@@ -1407,7 +1407,7 @@
     "status": "active",
     "applicationUrl": "https://customer.io/startup-program-application",
     "logoUrl": "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https%3A%2F%2Fcustomer.io%2Fstartup-program-application&size=128",
-    "brandIcon": "https://logo.clearbit.com/customer.io",
+    "brandIcon": "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://customer.io&size=128",
     "featured": true,
     "verified": true,
     "recommended": true,
