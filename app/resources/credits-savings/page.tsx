@@ -27,7 +27,7 @@ export default function CreditsSavingsPage() {
  <div className="max-w-[1600px] mx-auto px-4 lg:px-6 py-4 lg:py-6">
   <ResourcesHeader
    currentSection="Credits & Savings"
-   parentSection={{ name: 'Student Benefits', href: '/student-benefits' }}
+   parentSection={{ name: 'Students', href: '/student-benefits' }}
   />
  <div className="mb-3 md:mb-6">
   <div className="inline-block border-2 border-black bg-accent-yellow px-2 py-0.5 font-mono text-[10px] font-bold uppercase tracking-wide rounded-sm mb-2">

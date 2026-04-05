@@ -1,61 +1,39 @@
 export default function SaasStrategy() {
     return (
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-6 md:mb-6 md:mb-4 md:mb-6">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-2 md:gap-4 mb-3 md:mb-5">
             <div className="lg:col-span-8">
-                <div className="bg-white border-2 border-black shadow-[4px_4px_0px_0px_#1a1a1a] rounded-sm p-4 md:p-6 relative overflow-hidden">
-                    {/* Decorative background pattern */}
-                    <div className="absolute top-0 right-0 p-4 opacity-5 pointer-events-none">
-                        <span className="material-symbols-outlined text-[150px]">layers</span>
-                    </div>
-
-                    <h2 className="font-mono text-2xl font-bold text-black mb-6 flex items-center gap-3">
-                        <span className="bg-black text-white size-8 flex items-center justify-center text-lg rounded-sm">1</span>
+                <div className="bg-white border-2 border-black shadow-[2px_2px_0px_#111] p-3 md:p-5">
+                    <h2 className="font-mono text-sm md:text-lg font-bold text-black mb-2 flex items-center gap-2">
+                        <span className="bg-black text-white w-6 h-6 flex items-center justify-center text-xs rounded-sm">1</span>
                         The Lean Stack Strategy
                     </h2>
-
-                    <div className="prose prose-neutral max-w-none">
-                        <h3 className="font-mono text-lg font-bold uppercase mb-3 text-primary bg-black inline-block px-2 text-white">
-                            Don't Pay Until Scale
-                        </h3>
-                        <p className="font-sans text-gray-700 mb-4 text-base">
-                            The modern startup stack is expensive. By leveraging startup programs, you can delay major SaaS costs for 12-24 months.
-                            Smart founders stack free tiers (Notion, Linear, GitHub) with startup credits (AWS, Stripe, Segment) to keep burn near zero.
-                        </p>
-
-                        <div className="bg-gray-100 border-2 border-dashed border-gray-400 p-4 rounded-sm mb-6">
-                            <p className="font-mono text-xs font-bold text-gray-500 uppercase mb-3">Essential Free Tiers</p>
-                            <ul className="space-y-2 font-mono text-sm">
-                                <li className="flex items-center gap-2">
-                                    <span className="material-symbols-outlined text-green-600 text-sm">check_circle</span>
-                                    <span>CRM: HubSpot for Startups (90% off)</span>
-                                </li>
-                                <li className="flex items-center gap-2">
-                                    <span className="material-symbols-outlined text-green-600 text-sm">check_circle</span>
-                                    <span>Design: Figma (Free for students/educators)</span>
-                                </li>
-                                <li className="flex items-center gap-2">
-                                    <span className="material-symbols-outlined text-green-600 text-sm">check_circle</span>
-                                    <span>Docs: Notion (6 months free)</span>
-                                </li>
-                            </ul>
+                    <p className="text-xs text-gray-600 mb-2">
+                        Stack free tiers with startup credits to keep burn near zero for 12-24 months.
+                    </p>
+                    <div className="bg-gray-50 border border-dashed border-gray-300 p-2 md:p-3 rounded-sm">
+                        <p className="font-mono text-[9px] font-bold text-gray-400 uppercase mb-1.5">Essential Free Tiers</p>
+                        <div className="space-y-1 font-mono text-[11px] md:text-xs">
+                            {[
+                                'CRM: HubSpot for Startups (90% off)',
+                                'Design: Figma (Free for students)',
+                                'Docs: Notion (6 months free)',
+                            ].map((item, i) => (
+                                <div key={i} className="flex items-center gap-1.5">
+                                    <span className="w-1 h-1 bg-black rounded-full flex-shrink-0" />
+                                    <span>{item}</span>
+                                </div>
+                            ))}
                         </div>
                     </div>
                 </div>
             </div>
-
-            <div className="lg:col-span-4 space-y-4">
-                {/* Pro Tip Card */}
-                <div className="bg-accent-yellow border-2 border-black shadow-[4px_4px_0px_0px_#1a1a1a] rounded-sm p-6 relative overflow-hidden">
-                    <div className="absolute -right-4 -top-4 bg-white border-2 border-black rounded-full p-2 size-16 flex items-end justify-center">
-                        <span className="material-symbols-outlined text-3xl mb-1">lightbulb</span>
-                    </div>
-                    <h3 className="font-mono text-xl font-bold mb-3 uppercase">Secret Credits</h3>
-                    <p className="font-mono text-xs leading-relaxed font-medium">
-                        Many SaaS providers don&apos;t advertise their startup programs publicly. If you don&apos;t see a deal here, email their support mentioning you are a "Seed stage startup backed by [Accelerator/VC]" - it works 60% of the time.
+            <div className="lg:col-span-4">
+                <div className="bg-accent-yellow border-2 border-black shadow-[2px_2px_0px_#111] p-3">
+                    <h3 className="font-mono text-xs font-bold mb-1.5 uppercase">Secret Credits</h3>
+                    <p className="font-mono text-[11px] leading-relaxed">
+                        Many SaaS providers don&apos;t advertise startup programs. Email support mentioning you&apos;re a seed-stage startup — it works 60% of the time.
                     </p>
                 </div>
-
-                {/* Removed deal alerts per requirement */}
             </div>
         </div>
     )

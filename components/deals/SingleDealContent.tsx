@@ -243,38 +243,39 @@ export default function SingleDealContent({ deal, freeAccess = false, basePath =
         <div className="lg:sticky lg:top-24 space-y-4 md:space-y-6">
 
           {/* Apply Box */}
-          <div className="rounded-sm border-2 border-black bg-white shadow-[3px_3px_0px_#111] p-4 md:p-5">
+          <div className="rounded-sm border-2 border-black bg-white shadow-[3px_3px_0px_#111] p-3 md:p-5">
             
             {claimError && (
-              <div className={`mb-4 p-3 text-xs md:text-sm font-bold border-2 rounded-sm ${claimError.startsWith('⚡') ? 'bg-amber-50 text-amber-700 border-amber-300' : 'bg-red-50 text-red-700 border-red-500'}`}>
+              <div className={`mb-3 p-2 text-xs font-bold border-2 rounded-sm ${claimError.startsWith('⚡') ? 'bg-amber-50 text-amber-700 border-amber-300' : 'bg-red-50 text-red-700 border-red-500'}`}>
                 {claimError.startsWith('⚡') ? claimError : `⚠️ ${claimError}`}
               </div>
             )}
             
-            <div className="mb-3 md:mb-4">
-              <div className="text-[10px] md:text-xs font-bold uppercase text-gray-500 mb-0.5 md:mb-1 font-mono">Deal Value</div>
-              <div className="text-xl md:text-3xl font-black text-black font-mono mb-2 md:mb-4">{displayValue}</div>
+            {/* Compact value + stats row on mobile */}
+            <div className="flex items-baseline justify-between mb-2 md:mb-4">
+              <div>
+                <div className="text-[9px] md:text-xs font-bold uppercase text-gray-500 font-mono">Deal Value</div>
+                <div className="text-lg md:text-3xl font-black text-black font-mono">{displayValue}</div>
+              </div>
             </div>
 
-            <div className="space-y-2 md:space-y-3 mb-4 pb-4 border-b-2 border-gray-200">
-              <div className="flex justify-between text-sm">
-                <span className="text-gray-600 font-medium">Time Required</span>
+            <div className="space-y-1.5 md:space-y-3 mb-3 pb-3 border-b border-gray-200 text-xs md:text-sm">
+              <div className="flex justify-between">
+                <span className="text-gray-500">Time</span>
                 <span className="font-bold font-mono">{deal.stats.appTime}</span>
               </div>
-              <div className="flex justify-between text-sm">
-                <span className="text-gray-600 font-medium">Approval Time</span>
+              <div className="flex justify-between">
+                <span className="text-gray-500">Approval</span>
                 <span className="font-bold font-mono">{deal.stats.approval}</span>
               </div>
-              <div className="flex justify-between text-sm">
-                <span className="text-gray-600 font-medium">Deadline</span>
+              <div className="flex justify-between">
+                <span className="text-gray-500">Deadline</span>
                 <span className="font-bold text-green-600 font-mono">Rolling</span>
               </div>
             </div>
 
-            {isLoadingPro ? (
-              <div className="w-full h-12 bg-gray-100 animate-pulse rounded-sm mb-3"></div>
-            ) : (
-              <div className="relative rounded-sm mb-3">
+            {/* Apply button — always visible, Pro check happens on click */}
+              <div className="relative rounded-sm mb-2">
                 <GlowingEffect
                   spread={40}
                   glow={false}
@@ -286,7 +287,7 @@ export default function SingleDealContent({ deal, freeAccess = false, basePath =
                 <button
                   onClick={handleApplyClick}
                   disabled={isClaiming}
-                  className="relative w-full rounded-sm border-2 md:border-4 border-black bg-primary py-3 md:py-4 font-mono text-sm md:text-base font-bold uppercase tracking-wide text-black shadow-[3px_3px_0px_#111111] hover:bg-yellow-300 hover:shadow-[5px_5px_0px_#111111] hover:-translate-x-px hover:-translate-y-px transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+                  className="relative w-full rounded-sm border-2 border-black bg-primary py-2.5 md:py-4 font-mono text-xs md:text-base font-bold uppercase tracking-wide text-black shadow-[3px_3px_0px_#111111] hover:bg-yellow-300 hover:shadow-[5px_5px_0px_#111111] hover:-translate-x-px hover:-translate-y-px transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
                 >
                   {isClaiming ? (
                       'Claiming...'
@@ -298,7 +299,6 @@ export default function SingleDealContent({ deal, freeAccess = false, basePath =
                   </span>
                 </button>
               </div>
-            )}
 
             <div className="grid grid-cols-2 gap-2">
               <button
@@ -376,55 +376,55 @@ export default function SingleDealContent({ deal, freeAccess = false, basePath =
       {/* Main Content */}
       <div className="lg:col-span-2 space-y-4 md:space-y-6 order-last lg:order-first">
 
-        {/* Quick Stats Bar */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
-          <div className="rounded-sm border-2 border-black bg-white p-2.5 shadow-[2px_2px_0px_#111]">
-            <div className="text-[9px] md:text-[10px] font-bold uppercase text-gray-500 mb-0.5 font-mono">Time</div>
-            <div className="text-sm md:text-base font-bold text-black font-mono">{deal.stats.appTime}</div>
+        {/* Quick Stats Bar — compact on mobile */}
+        <div className="grid grid-cols-4 gap-1.5 md:gap-2">
+          <div className="rounded-sm border border-black bg-white p-1.5 md:p-2.5 shadow-[1px_1px_0px_#111] md:shadow-[2px_2px_0px_#111]">
+            <div className="text-[8px] md:text-[10px] font-bold uppercase text-gray-500 font-mono">Time</div>
+            <div className="text-[11px] md:text-base font-bold text-black font-mono">{deal.stats.appTime}</div>
           </div>
-          <div className="rounded-sm border-2 border-black bg-white p-2.5 shadow-[2px_2px_0px_#111]">
-            <div className="text-[9px] md:text-[10px] font-bold uppercase text-gray-500 mb-0.5 font-mono">Approval</div>
-            <div className="text-sm md:text-base font-bold text-black font-mono">{deal.stats.approval}</div>
+          <div className="rounded-sm border border-black bg-white p-1.5 md:p-2.5 shadow-[1px_1px_0px_#111] md:shadow-[2px_2px_0px_#111]">
+            <div className="text-[8px] md:text-[10px] font-bold uppercase text-gray-500 font-mono">Approval</div>
+            <div className="text-[11px] md:text-base font-bold text-black font-mono">{deal.stats.approval}</div>
           </div>
-          <div className="rounded-sm border-2 border-black bg-white p-2.5 shadow-[2px_2px_0px_#111]">
-            <div className="text-[9px] md:text-[10px] font-bold uppercase text-gray-500 mb-0.5 font-mono">Difficulty</div>
-            <div className="text-sm md:text-base font-bold text-green-600 font-mono">{deal.stats.difficulty}</div>
+          <div className="rounded-sm border border-black bg-white p-1.5 md:p-2.5 shadow-[1px_1px_0px_#111] md:shadow-[2px_2px_0px_#111]">
+            <div className="text-[8px] md:text-[10px] font-bold uppercase text-gray-500 font-mono">Difficulty</div>
+            <div className="text-[11px] md:text-base font-bold text-green-600 font-mono">{deal.stats.difficulty}</div>
           </div>
-          <div className="rounded-sm border-2 border-black bg-white p-2.5 shadow-[2px_2px_0px_#111]">
-            <div className="text-[9px] md:text-[10px] font-bold uppercase text-gray-500 mb-0.5 font-mono">Success</div>
-            <div className="text-sm md:text-base font-bold text-blue-600 font-mono">{deal.stats.successRate}</div>
+          <div className="rounded-sm border border-black bg-white p-1.5 md:p-2.5 shadow-[1px_1px_0px_#111] md:shadow-[2px_2px_0px_#111]">
+            <div className="text-[8px] md:text-[10px] font-bold uppercase text-gray-500 font-mono">Success</div>
+            <div className="text-[11px] md:text-base font-bold text-blue-600 font-mono">{deal.stats.successRate}</div>
           </div>
         </div>
 
         {/* Overview Section */}
         {description && description.length > 10 && (
-        <section className="rounded-sm border-2 border-black bg-white p-4 md:p-6 shadow-[3px_3px_0px_#111]">
-          <h2 className="mb-3 flex items-center gap-2 border-b-2 border-black pb-2 font-mono text-base md:text-xl font-bold uppercase">
-            <span className="material-symbols-outlined text-primary text-lg md:text-xl">info</span>
+        <section className="rounded-sm border border-black bg-white p-3 md:p-6 shadow-[2px_2px_0px_#111]">
+          <h2 className="mb-2 flex items-center gap-1.5 border-b border-black pb-1.5 font-mono text-sm md:text-xl font-bold uppercase">
+            <span className="material-symbols-outlined text-primary text-base md:text-xl">info</span>
             About This Deal
           </h2>
-          <p className="text-sm md:text-base leading-relaxed text-gray-800 whitespace-pre-line break-words">{description}</p>
+          <p className="text-xs md:text-base leading-relaxed text-gray-800 whitespace-pre-line break-words">{description}</p>
         </section>
         )}
 
         {/* What's Included / Benefits */}
         {Array.isArray(benefits) && benefits.length > 0 && (
-        <section className="rounded-sm border-2 border-black bg-white p-4 md:p-6 shadow-[3px_3px_0px_#111]">
-          <h2 className="mb-3 flex items-center gap-2 border-b-2 border-black pb-2 font-mono text-base md:text-xl font-bold uppercase">
-            <span className="material-symbols-outlined text-primary text-lg md:text-xl">inventory_2</span>
+        <section className="rounded-sm border border-black bg-white p-3 md:p-6 shadow-[2px_2px_0px_#111]">
+          <h2 className="mb-2 flex items-center gap-1.5 border-b border-black pb-1.5 font-mono text-sm md:text-xl font-bold uppercase">
+            <span className="material-symbols-outlined text-primary text-base md:text-xl">inventory_2</span>
             {deal.benefits ? 'Benefits & Features' : 'What\'s Included'}
           </h2>
-          <div className="grid md:grid-cols-2 gap-2 md:gap-3">
+          <div className="grid md:grid-cols-2 gap-1.5 md:gap-3">
             {benefits.map((item, index) => (
-              <div key={index} className="flex items-start gap-2 p-3 bg-gray-50 rounded-sm border border-gray-200">
-                <span className="material-symbols-outlined text-green-600 mt-0.5 flex-shrink-0 text-base">check_circle</span>
+              <div key={index} className="flex items-start gap-1.5 p-2 bg-gray-50 rounded-sm border border-gray-200">
+                <span className="material-symbols-outlined text-green-600 flex-shrink-0 text-sm">check_circle</span>
                 <div>
                   {typeof item === 'string' ? (
-                    <p className="text-sm font-medium">{item}</p>
+                    <p className="text-xs md:text-sm font-medium">{item}</p>
                   ) : (
                     <>
-                      <h3 className="font-bold font-mono text-sm mb-0.5">{item.title}</h3>
-                      <p className="text-xs text-gray-600">{item.description}</p>
+                      <h3 className="font-bold font-mono text-xs mb-0.5">{item.title}</h3>
+                      <p className="text-[11px] md:text-xs text-gray-600">{item.description}</p>
                     </>
                   )}
                 </div>
@@ -436,16 +436,16 @@ export default function SingleDealContent({ deal, freeAccess = false, basePath =
 
         {/* Eligibility Requirements */}
         {eligibility && eligibility.length > 0 && (
-        <section className="rounded-sm border-2 border-black bg-white p-3 md:p-5 shadow-[3px_3px_0px_#111]">
-          <h2 className="mb-2 flex items-center gap-2 border-b-2 border-black pb-2 font-mono text-base md:text-xl font-bold uppercase">
-            <span className="material-symbols-outlined text-primary text-lg">checklist</span>
+        <section className="rounded-sm border border-black bg-white p-3 md:p-5 shadow-[2px_2px_0px_#111]">
+          <h2 className="mb-2 flex items-center gap-1.5 border-b border-black pb-1.5 font-mono text-sm md:text-xl font-bold uppercase">
+            <span className="material-symbols-outlined text-primary text-base">checklist</span>
             Eligibility
           </h2>
-          <ul className="space-y-1.5">
+          <ul className="space-y-1">
             {eligibility.map((requirement, index) => (
-              <li key={index} className="flex items-start gap-2 p-2 bg-yellow-50 rounded-sm border-l-4 border-black">
-                <span className="material-symbols-outlined text-primary flex-shrink-0 text-sm mt-0.5">arrow_right</span>
-                <span className="text-sm font-medium leading-snug">{requirement}</span>
+              <li key={index} className="flex items-start gap-1.5 p-1.5 md:p-2 bg-yellow-50 rounded-sm border-l-3 border-black">
+                <span className="material-symbols-outlined text-primary flex-shrink-0 text-xs mt-0.5">arrow_right</span>
+                <span className="text-xs md:text-sm font-medium leading-snug">{requirement}</span>
               </li>
             ))}
           </ul>
@@ -454,12 +454,12 @@ export default function SingleDealContent({ deal, freeAccess = false, basePath =
 
         {/* How to Apply */}
         {instructions && instructions.length > 0 && (
-        <section className="rounded-sm border-2 border-black bg-white p-3 md:p-5 shadow-[3px_3px_0px_#111]">
-          <h2 className="mb-2 flex items-center gap-2 border-b-2 border-black pb-2 font-mono text-base md:text-xl font-bold uppercase">
-            <span className="material-symbols-outlined text-primary text-lg">directions_run</span>
+        <section className="rounded-sm border border-black bg-white p-3 md:p-5 shadow-[2px_2px_0px_#111]">
+          <h2 className="mb-2 flex items-center gap-1.5 border-b border-black pb-1.5 font-mono text-sm md:text-xl font-bold uppercase">
+            <span className="material-symbols-outlined text-primary text-base">directions_run</span>
             How to Apply
           </h2>
-          <div className="space-y-3">
+          <div className="space-y-2 md:space-y-3">
             {instructions.map((step, index) => (
               <div key={index} className="flex gap-3">
                 <div className="flex-shrink-0">
@@ -483,9 +483,6 @@ export default function SingleDealContent({ deal, freeAccess = false, basePath =
 
           {/* Apply button */}
           <div className="mt-4 pt-4 border-t-2 border-gray-200">
-            {isLoadingPro ? (
-              <div className="h-12 w-40 bg-gray-100 animate-pulse rounded-sm"></div>
-            ) : (
               <div className="relative inline-block rounded-sm">
                 <GlowingEffect
                   spread={40}
@@ -500,30 +497,29 @@ export default function SingleDealContent({ deal, freeAccess = false, basePath =
                   disabled={isClaiming}
                   className="relative inline-flex items-center gap-2 rounded-sm border-2 border-black bg-primary px-6 py-3 font-mono text-sm font-bold uppercase text-black shadow-[3px_3px_0px_#111] hover:bg-yellow-300 hover:shadow-[5px_5px_0px_#111] hover:-translate-x-px hover:-translate-y-px transition-all cursor-pointer disabled:opacity-50"
                 >
-                  {isClaiming ? 'Claiming...' : (freeAccess ? 'Apply Now' : (isPro || isExplorer) ? 'Apply Now' : 'Apply Now (Premium)')}
+                  {isClaiming ? 'Claiming...' : 'Apply Now'}
                   <span className="material-symbols-outlined text-base">
-                      {isClaiming ? 'hourglass_empty' : (freeAccess || isPro || isExplorer ? 'arrow_forward' : 'lock')}
+                      {isClaiming ? 'hourglass_empty' : 'arrow_forward'}
                   </span>
                 </button>
               </div>
-            )}
           </div>
         </section>
         )}
 
         {/* FAQ Section */}
         {faqs && faqs.length > 0 && (
-        <section className="rounded-sm border-2 border-black bg-white p-4 md:p-5 shadow-[3px_3px_0px_#111]">
-          <h2 className="mb-3 flex items-center gap-2 border-b-2 border-black pb-2 font-mono text-base md:text-xl font-bold uppercase">
-            <span className="material-symbols-outlined text-primary text-lg">help</span>
+        <section className="rounded-sm border border-black bg-white p-3 md:p-5 shadow-[2px_2px_0px_#111]">
+          <h2 className="mb-2 flex items-center gap-1.5 border-b border-black pb-1.5 font-mono text-sm md:text-xl font-bold uppercase">
+            <span className="material-symbols-outlined text-primary text-base">help</span>
             FAQ
           </h2>
-          <div className="space-y-2">
+          <div className="space-y-1.5">
             {faqs.map((faqItem, index) => (
-              <div key={index} className="rounded-sm border-2 border-black bg-white shadow-[2px_2px_0px_#111] overflow-hidden">
+              <div key={index} className="rounded-sm border border-black bg-white shadow-[1px_1px_0px_#111] overflow-hidden">
                 <button
                   onClick={() => setOpenFaqIndex(openFaqIndex === index ? null : index)}
-                  className="flex cursor-pointer items-center justify-between p-3 text-sm font-bold font-mono w-full text-left hover:bg-gray-50 transition-colors"
+                  className="flex cursor-pointer items-center justify-between p-2 md:p-3 text-xs md:text-sm font-bold font-mono w-full text-left hover:bg-gray-50 transition-colors"
                 >
                   <span className="pr-4">{faqItem.question}</span>
                   <span className={`material-symbols-outlined text-sm transition-transform flex-shrink-0 ${openFaqIndex === index ? 'rotate-180' : ''}`}>

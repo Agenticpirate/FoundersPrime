@@ -122,144 +122,73 @@ export default function AdminDealsPage() {
   }
 
   return (
-    <div className="p-6 md:p-10 space-y-8 bg-gray-50 min-h-full">
+    <div className="p-3 md:p-6 space-y-4 bg-gray-50 min-h-full">
       {/* Header Actions */}
-      <div className="flex flex-wrap items-center justify-between gap-4">
+      <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
-          <h1 className="text-3xl font-black text-black font-display uppercase">Deal Management</h1>
-          <p className="text-gray-600 font-mono text-sm">Manage all deals in your database</p>
+          <h1 className="text-lg md:text-xl font-black text-black font-mono uppercase">Deals</h1>
+          <p className="text-gray-500 font-mono text-[10px]">{stats.total} deals in database</p>
         </div>
-        <div className="flex gap-3">
-          <button
-            onClick={() => setShowAddModal(true)}
-            className="bg-cyan-500 text-white px-4 py-2 border-2 border-black font-bold hover:bg-cyan-600 shadow-[4px_4px_0_0_#000] hover:shadow-[2px_2px_0_0_#000] transition-all font-mono uppercase text-sm"
-          >
-            + Add Deal
-          </button>
-          <button
-            onClick={() => setShowImportModal(true)}
-            className="bg-purple-500 text-white px-4 py-2 border-2 border-black font-bold hover:bg-purple-600 shadow-[4px_4px_0_0_#000] hover:shadow-[2px_2px_0_0_#000] transition-all font-mono uppercase text-sm"
-          >
-            📥 Smart Import
-          </button>
-          <button
-            onClick={exportDeals}
-            className="bg-green-500 text-white px-4 py-2 border-2 border-black font-bold hover:bg-green-600 shadow-[4px_4px_0_0_#000] hover:shadow-[2px_2px_0_0_#000] transition-all font-mono uppercase text-sm"
-          >
-            📤 Export
-          </button>
-        </div>
-      </div>
-      {/* Stats Cards */}
-      <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-        <div className="bg-white border-4 border-black p-4 shadow-[6px_6px_0_0_#000]">
-          <div className="text-4xl font-black text-cyan-500">{stats.total}</div>
-          <div className="text-gray-600 font-bold">Total Deals</div>
-        </div>
-        <div className="bg-white border-4 border-black p-4 shadow-[6px_6px_0_0_#000]">
-          <div className="text-4xl font-black text-green-500">{stats.active}</div>
-          <div className="text-gray-600 font-bold">Active</div>
-        </div>
-        <div className="bg-white border-4 border-black p-4 shadow-[6px_6px_0_0_#000]">
-          <div className="text-4xl font-black text-red-500">{stats.expired}</div>
-          <div className="text-gray-600 font-bold">Expired</div>
-        </div>
-        <div className="bg-white border-4 border-black p-4 shadow-[6px_6px_0_0_#000]">
-          <div className="text-4xl font-black text-purple-500">{stats.categories}</div>
-          <div className="text-gray-600 font-bold">Categories</div>
-        </div>
-        <div
-          className="bg-white border-4 border-black p-4 shadow-[6px_6px_0_0_#000] cursor-pointer hover:bg-yellow-50 transition-colors"
-          onClick={() => setShowDuplicatesOnly(!showDuplicatesOnly)}
-        >
-          <div className="text-4xl font-black text-orange-500">{duplicateDeals.length}</div>
-          <div className="text-gray-600 font-bold">Duplicates</div>
-          {showDuplicatesOnly && <div className="text-xs text-orange-600 mt-1">Filtering...</div>}
+        <div className="flex gap-2">
+          <button onClick={() => setShowAddModal(true)} className="bg-cyan-500 text-white px-3 py-1.5 border-2 border-black font-bold hover:bg-cyan-600 shadow-[2px_2px_0_0_#000] transition-all font-mono uppercase text-[10px]">+ Add</button>
+          <button onClick={() => setShowImportModal(true)} className="bg-purple-500 text-white px-3 py-1.5 border-2 border-black font-bold hover:bg-purple-600 shadow-[2px_2px_0_0_#000] transition-all font-mono uppercase text-[10px]">Import</button>
+          <button onClick={exportDeals} className="bg-green-500 text-white px-3 py-1.5 border-2 border-black font-bold hover:bg-green-600 shadow-[2px_2px_0_0_#000] transition-all font-mono uppercase text-[10px]">Export</button>
         </div>
       </div>
 
-      {/* Filters & Search */}
-      <div className="bg-white border-4 border-black p-4 shadow-[6px_6px_0_0_#000]">
-        <div className="flex flex-wrap gap-4 items-center justify-between">
-          <div className="flex flex-wrap gap-3 items-center">
-            <div className="relative">
-              <input
-                type="text"
-                placeholder="Search deals..."
-                value={searchQuery}
-                onChange={e => setSearchQuery(e.target.value)}
-                className="px-4 py-2 pl-10 border-2 border-black w-64"
-              />
-              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">🔍</span>
-            </div>
-            <select
-              value={selectedCategory}
-              onChange={e => setSelectedCategory(e.target.value)}
-              className="px-4 py-2 border-2 border-black bg-white"
-            >
-              <option value="all">All Categories ({deals.length})</option>
-              {dealCategories.map(c => {
-                const count = deals.filter(d => d.category === c.id).length
-                return <option key={c.id} value={c.id}>{c.name} ({count})</option>
-              })}
-            </select>
-            <select
-              value={`${sortBy}-${sortOrder}`}
-              onChange={e => {
-                const [field, order] = e.target.value.split('-')
-                setSortBy(field as any)
-                setSortOrder(order as any)
-              }}
-              className="px-4 py-2 border-2 border-black bg-white"
-            >
-              <option value="createdAt-desc">Newest First</option>
-              <option value="createdAt-asc">Oldest First</option>
-              <option value="title-asc">Title A-Z</option>
-              <option value="title-desc">Title Z-A</option>
-              <option value="provider-asc">Provider A-Z</option>
-            </select>
-            <button
-              onClick={() => setShowDuplicatesOnly(!showDuplicatesOnly)}
-              className={`px-4 py-2 border-2 border-black font-bold transition-colors ${showDuplicatesOnly ? 'bg-orange-500 text-white' : 'bg-white text-black hover:bg-gray-50'
-                }`}
-            >
-              {showDuplicatesOnly ? '⚠️ Showing Duplicates' : '🔍 Show Duplicates'}
-            </button>
+      {/* Stats */}
+      <div className="grid grid-cols-5 gap-2">
+        {[
+          { label: 'Total', value: stats.total, color: 'text-cyan-500' },
+          { label: 'Active', value: stats.active, color: 'text-green-500' },
+          { label: 'Expired', value: stats.expired, color: 'text-red-500' },
+          { label: 'Categories', value: stats.categories, color: 'text-purple-500' },
+          { label: 'Duplicates', value: duplicateDeals.length, color: 'text-orange-500', clickable: true },
+        ].map(s => (
+          <div key={s.label} className={`bg-white border-2 border-black p-2 shadow-[2px_2px_0_0_#000] ${s.clickable ? 'cursor-pointer hover:bg-yellow-50' : ''}`} onClick={s.clickable ? () => setShowDuplicatesOnly(!showDuplicatesOnly) : undefined}>
+            <div className={`text-xl md:text-2xl font-black ${s.color}`}>{s.value}</div>
+            <div className="text-gray-500 font-bold text-[9px] uppercase">{s.label}</div>
           </div>
-          <div className="flex gap-2">
-            <button
-              onClick={() => setViewMode('table')}
-              className={`p-2 border-2 border-black ${viewMode === 'table' ? 'bg-cyan-500 text-white' : 'bg-white'}`}
-            >
-              ☰
-            </button>
-            <button
-              onClick={() => setViewMode('grid')}
-              className={`p-2 border-2 border-black ${viewMode === 'grid' ? 'bg-cyan-500 text-white' : 'bg-white'}`}
-            >
-              ⊞
-            </button>
+        ))}
+      </div>
+
+      {/* Filters */}
+      <div className="bg-white border-2 border-black p-2 shadow-[2px_2px_0_0_#000]">
+        <div className="flex flex-wrap gap-2 items-center">
+          <input type="text" placeholder="Search..." value={searchQuery} onChange={e => setSearchQuery(e.target.value)} className="px-3 py-1.5 border-2 border-black w-48 font-mono text-xs" />
+          <select value={selectedCategory} onChange={e => setSelectedCategory(e.target.value)} className="px-2 py-1.5 border-2 border-black bg-white font-mono text-xs">
+            <option value="all">All ({deals.length})</option>
+            {dealCategories.map(c => <option key={c.id} value={c.id}>{c.name} ({deals.filter(d => d.category === c.id).length})</option>)}
+          </select>
+          <select value={`${sortBy}-${sortOrder}`} onChange={e => { const [f, o] = e.target.value.split('-'); setSortBy(f as any); setSortOrder(o as any) }} className="px-2 py-1.5 border-2 border-black bg-white font-mono text-xs">
+            <option value="createdAt-desc">Newest</option>
+            <option value="createdAt-asc">Oldest</option>
+            <option value="title-asc">A-Z</option>
+            <option value="provider-asc">Provider</option>
+          </select>
+          <button onClick={() => setShowDuplicatesOnly(!showDuplicatesOnly)} className={`px-2 py-1.5 border-2 border-black font-bold text-[10px] font-mono ${showDuplicatesOnly ? 'bg-orange-500 text-white' : 'bg-white'}`}>
+            {showDuplicatesOnly ? 'Dupes ✓' : 'Dupes'}
+          </button>
+          <div className="ml-auto flex gap-1">
+            <button onClick={() => setViewMode('table')} className={`p-1.5 border-2 border-black text-xs ${viewMode === 'table' ? 'bg-cyan-500 text-white' : 'bg-white'}`}>☰</button>
+            <button onClick={() => setViewMode('grid')} className={`p-1.5 border-2 border-black text-xs ${viewMode === 'grid' ? 'bg-cyan-500 text-white' : 'bg-white'}`}>⊞</button>
           </div>
         </div>
       </div>
 
       {/* Bulk Actions */}
       {selectedDeals.size > 0 && (
-        <div className="bg-yellow-100 border-4 border-black p-4 shadow-[6px_6px_0_0_#000]">
-          <div className="flex items-center gap-4">
+        <div className="bg-yellow-100 border-2 border-black p-2 shadow-[2px_2px_0_0_#000]">
+          <div className="flex items-center gap-3 text-xs font-mono">
             <span className="font-bold">{selectedDeals.size} selected</span>
-            <button onClick={bulkDelete} className="bg-red-500 text-white px-4 py-2 border-2 border-black font-bold hover:bg-red-600">
-              🗑️ Delete Selected
-            </button>
-            <button onClick={() => setSelectedDeals(new Set())} className="bg-gray-300 px-4 py-2 border-2 border-black font-bold hover:bg-gray-400">
-              Clear Selection
-            </button>
+            <button onClick={bulkDelete} className="bg-red-500 text-white px-3 py-1 border border-black font-bold hover:bg-red-600 text-[10px]">Delete</button>
+            <button onClick={() => setSelectedDeals(new Set())} className="bg-gray-300 px-3 py-1 border border-black font-bold text-[10px]">Clear</button>
           </div>
         </div>
       )}
 
       {/* Deals Display */}
-      <div className="bg-white border-4 border-black shadow-[6px_6px_0_0_#000] overflow-hidden">
+      <div className="bg-white border-2 border-black shadow-[2px_2px_0_0_#000] overflow-hidden">
         {loading ? (
           <div className="p-12 text-center">
             <div className="text-4xl animate-spin inline-block">⚡</div>
@@ -279,98 +208,54 @@ export default function AdminDealsPage() {
           </div>
         ) : viewMode === 'table' ? (
           <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead className="bg-gray-200 border-b-4 border-black">
+            <table className="w-full font-mono text-[11px] md:text-xs">
+              <thead className="bg-gray-100 border-b-2 border-black">
                 <tr>
-                  <th className="p-3 text-left w-12">
-                    <input
-                      type="checkbox"
-                      checked={selectedDeals.size === filtered.length && filtered.length > 0}
-                      onChange={toggleSelectAll}
-                      className="w-5 h-5 cursor-pointer accent-cyan-500"
-                    />
+                  <th className="p-2 text-left w-8">
+                    <input type="checkbox" checked={selectedDeals.size === filtered.length && filtered.length > 0} onChange={toggleSelectAll} className="w-4 h-4 cursor-pointer accent-cyan-500" />
                   </th>
-                  <th className="p-3 text-left font-bold">Deal</th>
-                  <th className="p-3 text-left font-bold">Category</th>
-                  <th className="p-3 text-left font-bold">Value</th>
-                  <th className="p-3 text-left font-bold">Status</th>
-                  <th className="p-3 text-left font-bold">Actions</th>
+                  <th className="p-2 text-left font-bold uppercase">Deal</th>
+                  <th className="p-2 text-left font-bold uppercase hidden sm:table-cell">Category</th>
+                  <th className="p-2 text-left font-bold uppercase">Value</th>
+                  <th className="p-2 text-left font-bold uppercase hidden md:table-cell">Status</th>
+                  <th className="p-2 text-left font-bold uppercase">Actions</th>
                 </tr>
               </thead>
               <tbody>
                 {filtered.slice(0, 100).map(deal => {
                   const isDuplicate = duplicateIds.has(deal.id)
                   return (
-                    <tr key={deal.id} className={`border-b border-gray-200 hover:bg-gray-50 transition-colors ${isDuplicate ? 'bg-orange-50' : ''}`}>
-                      <td className="p-3">
-                        <input
-                          type="checkbox"
-                          checked={selectedDeals.has(deal.id)}
-                          onChange={() => toggleSelect(deal.id)}
-                          className="w-5 h-5 cursor-pointer accent-cyan-500"
-                        />
+                    <tr key={deal.id} className={`border-b border-gray-100 hover:bg-gray-50 ${isDuplicate ? 'bg-orange-50' : ''}`}>
+                      <td className="p-2">
+                        <input type="checkbox" checked={selectedDeals.has(deal.id)} onChange={() => toggleSelect(deal.id)} className="w-4 h-4 cursor-pointer accent-cyan-500" />
                       </td>
-                      <td className="p-3">
-                        <div className="flex items-center gap-2">
-                          <div>
-                            <div className="font-bold text-lg">{deal.title}</div>
-                            <div className="text-sm text-gray-500">{deal.provider}</div>
-                          </div>
-                          {isDuplicate && (
-                            <span className="bg-orange-500 text-white text-xs px-2 py-1 rounded-sm font-bold">
-                              DUPLICATE
-                            </span>
-                          )}
-                        </div>
+                      <td className="p-2">
+                        <div className="font-bold truncate max-w-[200px]">{deal.title}</div>
+                        <div className="text-[10px] text-gray-400">{deal.provider}</div>
                       </td>
-                      <td className="p-3">
-                        <span className="bg-gray-100 px-3 py-1 text-xs font-bold border-2 border-black">
+                      <td className="p-2 hidden sm:table-cell">
+                        <span className="bg-gray-100 px-1.5 py-0.5 text-[9px] font-bold border border-black">
                           {dealCategories.find(c => c.id === deal.category)?.name || deal.category}
                         </span>
                       </td>
-                      <td className="p-3">
-                        <span className="font-bold text-green-600">{deal.value}</span>
-                      </td>
-                      <td className="p-3">
-                        <select
-                          value={deal.status || 'active'}
-                          onChange={e => updateStatus(deal.id, e.target.value)}
-                          className={`px-3 py-1 border-2 border-black text-xs font-bold cursor-pointer ${deal.status === 'active' ? 'bg-green-200' :
-                            deal.status === 'expired' ? 'bg-red-200' : 'bg-yellow-200'
-                            }`}
-                        >
+                      <td className="p-2 font-bold text-green-600">{deal.value}</td>
+                      <td className="p-2 hidden md:table-cell">
+                        <select value={deal.status || 'active'} onChange={e => updateStatus(deal.id, e.target.value)} className={`px-1.5 py-0.5 border border-black text-[9px] font-bold cursor-pointer ${deal.status === 'active' ? 'bg-green-200' : deal.status === 'expired' ? 'bg-red-200' : 'bg-yellow-200'}`}>
                           <option value="active">Active</option>
                           <option value="expired">Expired</option>
-                          <option value="coming-soon">Coming Soon</option>
+                          <option value="coming-soon">Soon</option>
                         </select>
                       </td>
-                      <td className="p-3">
-                        <div className="flex gap-2">
-                          <button
-                            onClick={() => setEditingDeal(deal)}
-                            className="bg-blue-500 text-white px-3 py-1 text-sm font-bold border-2 border-black hover:bg-blue-600"
-                          >
-                            Edit
-                          </button>
-                          <a
-                            href={`/deals/${deal.slug}`}
-                            target="_blank"
-                            className="bg-green-500 text-white px-3 py-1 text-sm font-bold border-2 border-black hover:bg-green-600"
-                          >
-                            View
-                          </a>
-                          <button
-                            onClick={() => deleteDeal(deal.id, deal.title)}
-                            className="bg-red-500 text-white px-3 py-1 text-sm font-bold border-2 border-black hover:bg-red-600"
-                          >
-                            Delete
-                          </button>
+                      <td className="p-2">
+                        <div className="flex gap-1">
+                          <button onClick={() => setEditingDeal(deal)} className="bg-blue-500 text-white px-2 py-0.5 text-[10px] font-bold border border-black">Edit</button>
+                          <a href={`/deals/${deal.slug}`} target="_blank" className="bg-green-500 text-white px-2 py-0.5 text-[10px] font-bold border border-black">View</a>
+                          <button onClick={() => deleteDeal(deal.id, deal.title)} className="bg-red-500 text-white px-2 py-0.5 text-[10px] font-bold border border-black">Del</button>
                         </div>
                       </td>
                     </tr>
                   )
-                }
-                )}
+                })}
               </tbody>
             </table>
             {filtered.length > 100 && (

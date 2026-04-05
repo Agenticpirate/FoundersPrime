@@ -137,8 +137,8 @@ function ProviderAvatar({ brand }: { brand: { name: string, domain: string } }) 
   const [failed, setFailed] = useState(false)
 
   const fallbackChain = [
-    `https://logo.clearbit.com/${brand.domain}`,
     `https://www.google.com/s2/favicons?domain=${brand.domain}&sz=128`,
+    `https://logo.clearbit.com/${brand.domain}`,
   ]
 
   const handleError = () => {

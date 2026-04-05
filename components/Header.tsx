@@ -47,11 +47,13 @@ export default function Header() {
       label: 'Deals',
       href: '/deals',
       icon: 'local_offer',
+      iconBg: 'bg-accent-yellow',
+      iconColor: 'text-black',
       children: [
-        { label: 'All Deals', href: '/deals', icon: 'grid_view' },
-        { label: 'Cloud Credits', href: '/deals/cloud-credits', icon: 'cloud' },
-        { label: 'SaaS Discounts', href: '/deals/saas-discounts', icon: 'apps' },
-        { label: 'Ad Credits', href: '/deals/ad-credits', icon: 'campaign' },
+        { label: 'All Deals', href: '/deals', icon: 'grid_view', iconColor: 'text-black' },
+        { label: 'Cloud Credits', href: '/deals/cloud-credits', icon: 'cloud', iconColor: 'text-blue-600' },
+        { label: 'SaaS Discounts', href: '/deals/saas-discounts', icon: 'apps', iconColor: 'text-purple-600' },
+        { label: 'Ad Credits', href: '/deals/ad-credits', icon: 'campaign', iconColor: 'text-orange-500' },
       ]
     },
     {
@@ -59,11 +61,13 @@ export default function Header() {
       label: 'Programs',
       href: '/deals/accelerators',
       icon: 'rocket_launch',
+      iconBg: 'bg-orange-400',
+      iconColor: 'text-white',
       children: [
-        { label: 'Accelerators', href: '/deals/accelerators', icon: 'rocket_launch' },
-        { label: 'Incubators', href: '/deals/incubators', icon: 'lightbulb' },
-        { label: 'Grants', href: '/deals/grants', icon: 'payments' },
-        { label: 'Funding & Opps', href: '/resources/funding-opportunities', icon: 'monetization_on' },
+        { label: 'Accelerators', href: '/deals/accelerators', icon: 'rocket_launch', iconColor: 'text-orange-500' },
+        { label: 'Incubators', href: '/deals/incubators', icon: 'lightbulb', iconColor: 'text-yellow-500' },
+        { label: 'Grants', href: '/deals/grants', icon: 'payments', iconColor: 'text-green-600' },
+        { label: 'Funding & Opps', href: '/resources/funding-opportunities', icon: 'monetization_on', iconColor: 'text-emerald-500' },
       ]
     },
     {
@@ -71,9 +75,11 @@ export default function Header() {
       label: 'Student Benefits',
       href: '#',
       icon: 'school',
+      iconBg: 'bg-[#FF90E8]',
+      iconColor: 'text-black',
       children: [
-        { label: 'Campus Edge', href: '/resources/free-access', icon: 'workspace_premium' },
-        { label: 'Credits & Savings', href: '/resources/credits-savings', icon: 'savings' },
+        { label: 'Campus Edge', href: '/resources/free-access', icon: 'workspace_premium', iconColor: 'text-pink-500' },
+        { label: 'Credits & Savings', href: '/resources/credits-savings', icon: 'savings', iconColor: 'text-green-500' },
       ]
     },
     {
@@ -81,11 +87,13 @@ export default function Header() {
       label: 'Resources',
       href: '/resources',
       icon: 'folder_open',
+      iconBg: 'bg-[#7ed6e0]',
+      iconColor: 'text-black',
       children: [
-        { label: 'Templates & Guides', href: '/resources', icon: 'description' },
-        { label: 'Verified Startups', href: '/startups', icon: 'verified' },
-        { label: 'Startup Ideas', href: '/ideas', icon: 'emoji_objects' },
-        { label: 'Contact', href: '/contact', icon: 'mail' },
+        { label: 'Templates & Guides', href: '/resources', icon: 'description', iconColor: 'text-cyan-600' },
+        { label: 'Verified Startups', href: '/startups', icon: 'verified', iconColor: 'text-blue-500' },
+        { label: 'Startup Ideas', href: '/ideas', icon: 'emoji_objects', iconColor: 'text-yellow-500' },
+        { label: 'Contact', href: '/contact', icon: 'mail', iconColor: 'text-gray-600' },
       ]
     },
   ]
@@ -305,9 +313,11 @@ export default function Header() {
                             setMobileMenuOpen(false);
                           }
                         }}
-                        className="flex-1 flex items-center gap-2 py-3 text-xs font-mono font-black border-transparent border-b hover:border-black/5 uppercase text-black transition-colors relative"
+                        className="flex-1 flex items-center gap-2.5 py-3 text-xs font-mono font-black border-transparent border-b hover:border-black/5 uppercase text-black transition-colors relative"
                       >
-                        <span className="material-symbols-outlined text-base text-gray-500">{section.icon}</span>
+                        <span className={`w-7 h-7 flex items-center justify-center rounded-md border border-black/10 shadow-[1px_1px_0px_rgba(0,0,0,0.15)] ${section.iconBg} ${section.iconColor} transition-transform duration-300 ${expandedSection === section.id ? 'scale-110 rotate-[-4deg]' : ''}`}>
+                          <span className="material-symbols-outlined text-[16px]">{section.icon}</span>
+                        </span>
                         <span className="relative inline-block pr-6">
                           {section.label}
                           {section.id === 'studentbenefits' && (
@@ -338,9 +348,9 @@ export default function Header() {
                             key={child.href}
                             href={child.href}
                             onClick={() => setMobileMenuOpen(false)}
-                            className="flex items-center gap-2 px-3 py-3 text-[11px] font-mono font-bold uppercase text-gray-700 hover:bg-primary/10 hover:text-black border-b border-black/5 last:border-0 transition-colors"
+                            className="flex items-center gap-2.5 px-3 py-3 text-[11px] font-mono font-bold uppercase text-gray-700 hover:bg-primary/10 hover:text-black border-b border-black/5 last:border-0 transition-colors"
                           >
-                            <span className="material-symbols-outlined text-sm text-gray-400">{child.icon}</span>
+                            <span className={`material-symbols-outlined text-sm ${child.iconColor || 'text-gray-400'}`}>{child.icon}</span>
                             {child.label}
                           </Link>
                         ))}
@@ -353,9 +363,11 @@ export default function Header() {
                 <Link
                   href="/pricing"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-center gap-2 py-3 text-xs font-mono font-black uppercase text-black hover:bg-gray-50"
+                  className="flex items-center gap-2.5 py-3 text-xs font-mono font-black uppercase text-black hover:bg-gray-50"
                 >
-                  <span className="material-symbols-outlined text-base text-gray-500">sell</span>
+                  <span className="w-7 h-7 flex items-center justify-center rounded-md border border-black/10 shadow-[1px_1px_0px_rgba(0,0,0,0.15)] bg-green-400 text-black">
+                    <span className="material-symbols-outlined text-[16px]">sell</span>
+                  </span>
                   Pricing
                 </Link>
                 {/* 
@@ -378,7 +390,7 @@ export default function Header() {
                 */}
               </div>
 
-              <div className="border-t border-black/10 mt-2 pt-2">
+              <div className="border-t border-black/10 mt-2 pt-3 pb-1">
                 {/* Auth row */}
                 {user ? (
                   <div className="flex items-center gap-2">
@@ -395,11 +407,11 @@ export default function Header() {
                     </button>
                   </div>
                 ) : (
-                  <div className="flex gap-2">
-                    <Link href="/login" onClick={() => setMobileMenuOpen(false)} className="flex-1 text-center py-2 text-xs font-mono font-bold uppercase border-2 border-black hover:bg-black hover:text-white transition-all">
+                  <div className="grid grid-cols-2 gap-2">
+                    <Link href="/login" onClick={() => setMobileMenuOpen(false)} className="flex items-center justify-center py-3 text-xs font-mono font-bold uppercase border-2 border-black bg-white hover:bg-black hover:text-white transition-all">
                       Log In
                     </Link>
-                    <Link href="/pricing" onClick={() => setMobileMenuOpen(false)} className="flex-1 text-center py-2 text-xs font-mono font-bold uppercase border-2 border-black bg-accent-yellow hover:bg-yellow-400 transition-all">
+                    <Link href="/pricing" onClick={() => setMobileMenuOpen(false)} className="flex items-center justify-center py-3 text-xs font-mono font-bold uppercase border-2 border-black bg-accent-yellow hover:bg-yellow-400 transition-all">
                       Get Started
                     </Link>
                   </div>

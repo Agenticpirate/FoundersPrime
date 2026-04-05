@@ -41,7 +41,7 @@ export default function IncubatorsGrid() {
  badge: inc.applicationStatus === 'Active' ? 'Applications Open' : inc.applicationStatus,
  badgeColor: inc.applicationStatus === 'Active' ? 'bg-green-600' : 'bg-gray-500',
  title: inc.name,
- provider: inc.location,
+ provider: inc.name,
  value: inc.support,
  valueSubtext: inc.equity === '0% (Equity-free)' ? 'Equity Free' : inc.equity,
  valueStyle: 'bg-white text-ink border-2 border-ink',
@@ -55,21 +55,19 @@ export default function IncubatorsGrid() {
 
  return (
  <div className="w-full">
- <div className="flex flex-col md:flex-row md:items-center gap-4 mb-4 md:mb-5 border-b-3 border-black pb-2">
- <div>
- <h2 className="font-mono text-3xl font-bold text-black">Top Programs</h2>
- <span className="font-mono text-sm text-gray-500 mt-1 block">
- Verified incubators2026and venture studios
- </span>
+ <div className="flex flex-col sm:flex-row sm:items-center gap-2 mb-3 border-b-2 border-black pb-2">
+ <div className="flex items-center gap-2">
+ <h2 className="font-mono text-lg md:text-2xl font-bold text-black">Top Programs</h2>
+ <span className="font-mono text-[10px] text-gray-500">Verified</span>
  </div>
 
- <div className="ml-auto flex gap-2 overflow-x-auto pb-2 md:pb-0">
+ <div className="sm:ml-auto flex gap-1 overflow-x-auto pb-1 sm:pb-0">
  {regions.map(region => (
  <button
  key={region}
  onClick={() => setFilterRegion(region)}
- className={`px-3 py-1 font-mono text-xs border-2 border-black rounded-sm whitespace-nowrap transition-all ${filterRegion === region
- ? 'bg-black text-white shadow-[2px_2px_0px_0px_rgba(0,0,0,0.3)]'
+ className={`px-2 py-0.5 font-mono text-[10px] border border-black rounded-sm whitespace-nowrap transition-all flex-shrink-0 ${filterRegion === region
+ ? 'bg-black text-white'
  : 'bg-white text-black hover:bg-gray-100'
  }`}
  >
@@ -79,7 +77,7 @@ export default function IncubatorsGrid() {
  </div>
  </div>
 
- <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+ <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-4">
  {(isPro ? filteredDeals : filteredDeals.slice(0, 3)).map((inc) => (
  <DealCard
  key={inc.id}
@@ -95,7 +93,7 @@ export default function IncubatorsGrid() {
  visibleCount={3}
  label="Incubators"
  >
- <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+ <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-4">
  {filteredDeals.slice(3, 9).map((inc) => (
  <DealCard key={inc.id} deal={convertToCard(inc)} />
  ))}

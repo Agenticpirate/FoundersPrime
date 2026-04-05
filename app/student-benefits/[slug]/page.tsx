@@ -188,100 +188,49 @@ export default async function StudentBenefitDetailPage({ params }: PageProps) {
                 <main className="flex-1 bg-gray-50">
                     {/* Full-width header section */}
                     <div className="w-full bg-white border-b-3 border-black">
-                        <div className="max-w-[1400px] mx-auto px-6 py-6">
-                            {/* Breadcrumbs */}
-                            <nav className="mb-4 flex items-center gap-2 text-sm font-medium text-gray-600 font-mono">
-                                <a className="hover:text-black underline decoration-2 underline-offset-2" href="/">Home</a>
-                                <span className="text-gray-400">/</span>
-                                <a className="hover:text-black underline decoration-2 underline-offset-2" href="/student-benefits">Student Benefits</a>
-                                <span className="text-gray-400">/</span>
-                                {benefitData.appCategory === 'Free Access' && (
-                                    <>
-                                        <a className="hover:text-black underline decoration-2 underline-offset-2" href="/resources/free-access">Campus Edge</a>
-                                        <span className="text-gray-400">/</span>
-                                    </>
-                                )}
-                                {benefitData.appCategory === 'Credits & Savings' && (
-                                    <>
-                                        <a className="hover:text-black underline decoration-2 underline-offset-2" href="/resources/credits-savings">Credits &amp; Savings</a>
-                                        <span className="text-gray-400">/</span>
-                                    </>
-                                )}
-                                {benefitData.appCategory === 'Funding & Opportunities' && (
-                                    <>
-                                        <a className="hover:text-black underline decoration-2 underline-offset-2" href="/resources/funding-opportunities">Funding &amp; Opportunities</a>
-                                        <span className="text-gray-400">/</span>
-                                    </>
-                                )}
-                                <span className="text-black font-bold">{deal.title}</span>
+                        <div className="max-w-[1400px] mx-auto px-3 md:px-6 py-2 md:py-4">
+                            {/* Breadcrumb — same format as deals */}
+                            <nav aria-label="Breadcrumb" className="flex mb-3 md:mb-4">
+                                <ol className="inline-flex items-center space-x-1 md:space-x-3 font-mono text-xs md:text-sm font-medium whitespace-nowrap">
+                                    <li><a className="text-gray-500 hover:text-black" href="/">Home</a></li>
+                                    <li className="flex items-center">
+                                        <span className="material-symbols-outlined text-gray-400 text-sm mx-0.5 md:mx-1">chevron_right</span>
+                                        <a className="text-gray-500 hover:text-black" href="/student-benefits">Students</a>
+                                    </li>
+                                    <li className="flex items-center">
+                                        <span className="material-symbols-outlined text-gray-400 text-sm mx-0.5 md:mx-1">chevron_right</span>
+                                        <span className="text-black bg-primary/20 px-1.5 md:px-2 py-0.5 rounded-sm border border-black text-[11px] md:text-sm truncate max-w-[150px] md:max-w-[250px]">{deal.title}</span>
+                                    </li>
+                                </ol>
                             </nav>
 
-                            {/* Header with badges and title */}
-                            <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6">
-                                <div className="flex-1">
-                                    <div className="flex items-start gap-5 mb-4">
-                                        {/* Provider Logo */}
-                                        <DealLogo
-                                            logoUrl={benefitData.logo}
-                                            provider={benefitData.company}
-                                            size="md"
-                                        />
-                                        <div className="flex-1">
-                                            <div className="mb-3 flex flex-wrap gap-2">
-                                                <span className="inline-flex items-center rounded-sm border-2 border-black px-3 py-1 font-mono text-xs font-bold uppercase bg-green-100">
-                                                    {deal.status}
-                                                </span>
-                                                <span className="inline-flex items-center rounded-sm border-2 border-black px-3 py-1 font-mono text-xs font-bold uppercase bg-blue-100">
-                                                    {benefitData.appCategory}
-                                                </span>
-                                                <span className="inline-flex items-center rounded-sm border-2 border-black px-3 py-1 font-mono text-xs font-bold uppercase bg-purple-100">
-                                                    {benefitData.category}
-                                                </span>
-                                                {benefitData.benefitType && (
-                                                    <span className="inline-flex items-center rounded-sm border-2 border-black px-3 py-1 font-mono text-xs font-bold uppercase bg-yellow-100">
-                                                        {benefitData.benefitType}
-                                                    </span>
-                                                )}
-                                            </div>
-                                            <h1 className="font-mono text-2xl lg:text-3xl font-bold uppercase leading-tight text-black mb-2">
-                                                {deal.title}
-                                            </h1>
-                                            <div className="flex items-center gap-2 font-mono text-base font-medium text-gray-600">
-                                                <span className="material-symbols-outlined text-lg">domain</span>
-                                                <span>{deal.provider}</span>
-                                            </div>
-                                            <div className="mt-2 flex items-center gap-2 font-mono text-sm text-gray-600">
-                                                <span className="material-symbols-outlined text-base">verified</span>
-                                                <span>Verification: {benefitData.verification}</span>
-                                            </div>
-                                        </div>
+                            {/* Header — no CTA button */}
+                            <div className="flex items-start gap-3 lg:gap-5 mb-2 lg:mb-4">
+                                <DealLogo
+                                    logoUrl={benefitData.logo}
+                                    provider={benefitData.company}
+                                    size="sm"
+                                />
+                                <div className="flex-1 min-w-0">
+                                    <div className="mb-1.5 flex flex-wrap gap-1 lg:gap-2">
+                                        <span className="inline-flex items-center rounded-sm border border-black px-1.5 py-0.5 lg:px-3 lg:py-1 font-mono text-[9px] lg:text-xs font-bold uppercase bg-green-100">
+                                            {benefitData.appCategory}
+                                        </span>
+                                        <span className="inline-flex items-center rounded-sm border border-black px-1.5 py-0.5 lg:px-3 lg:py-1 font-mono text-[9px] lg:text-xs font-bold uppercase bg-purple-100">
+                                            {benefitData.category}
+                                        </span>
                                     </div>
-                                </div>
-
-                                {/* Apply button in header */}
-                                <div className="flex-shrink-0">
-                                    <div className="relative rounded-sm">
-                                        <GlowingEffect
-                                            spread={40}
-                                            glow={false}
-                                            disabled={false}
-                                            proximity={64}
-                                            inactiveZone={0.01}
-                                            borderWidth={2}
-                                        />
-                                        <a
-                                            href={benefitData.claimUrl || benefitData.url}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className="relative inline-flex items-center gap-2 rounded-sm border-3 border-black bg-primary px-8 py-4 font-mono text-base font-bold uppercase text-black shadow-[6px_6px_0px_#111111] hover:bg-primary-dark hover:shadow-[4px_4px_0px_#111111] hover:translate-x-[2px] hover:translate-y-[2px] transition-all"
-                                        >
-                                            Apply Now
-                                            <span className="material-symbols-outlined">arrow_forward</span>
-                                        </a>
-                                    </div>
-                                    <div className="mt-2 text-center">
-                                        <span className="text-xs font-mono text-gray-600">
-                                            {benefitData.region} • {benefitData.value}
+                                    <h1 className="font-mono text-base sm:text-xl lg:text-3xl font-bold uppercase leading-tight text-black mb-1">
+                                        {deal.title}
+                                    </h1>
+                                    <div className="flex items-center gap-3 text-xs lg:text-sm font-mono text-gray-500">
+                                        <span className="flex items-center gap-1">
+                                            <span className="material-symbols-outlined text-sm">domain</span>
+                                            {deal.provider}
+                                        </span>
+                                        <span className="flex items-center gap-1">
+                                            <span className="material-symbols-outlined text-sm">verified</span>
+                                            {benefitData.verification}
                                         </span>
                                     </div>
                                 </div>
@@ -289,8 +238,8 @@ export default async function StudentBenefitDetailPage({ params }: PageProps) {
                         </div>
                     </div>
 
-                    {/* Main content - full width */}
-                    <div className="max-w-[1400px] mx-auto px-6 py-8">
+                    {/* Main content */}
+                    <div className="max-w-[1400px] mx-auto px-3 md:px-6 py-2 md:py-6">
                         <SingleDealContent deal={deal} freeAccess={true} basePath="/student-benefits" />
                     </div>
                 </main>

@@ -71,25 +71,25 @@ export default function AdCreditsGrid() {
 
   return (
     <div className="w-full">
-      <div className="flex items-center gap-4 mb-4 md:mb-5 border-b-3 border-black pb-2">
-        <h2 className="font-mono text-3xl font-bold text-black">All Ad Programs</h2>
-        <span className="font-mono text-sm bg-gray-200 px-2 py-1 rounded-sm border border-black font-bold">
-          {deals.length} Active
-        </span>
-        <div className="ml-auto hidden md:flex gap-2">
-          <Link href="/deals" className="px-3 py-1 font-mono text-xs border-2 border-black bg-white text-black rounded-sm hover:bg-gray-100 flex items-center">
-            View All Deals
-          </Link>
+      <div className="flex items-center justify-between mb-3 border-b-2 border-black pb-2">
+        <div className="flex items-center gap-2">
+          <h2 className="font-mono text-lg md:text-2xl font-bold text-black">All Ad Programs</h2>
+          <span className="font-mono text-[10px] bg-gray-200 px-1.5 py-0.5 rounded-sm border border-black font-bold">
+            {deals.length}
+          </span>
         </div>
+        <Link href="/deals" className="px-2 py-1 font-mono text-[10px] border border-black bg-white text-black rounded-sm hover:bg-gray-100 hidden md:flex items-center">
+          All Deals
+        </Link>
       </div>
 
       {loading ? (
         <div className="text-center py-6">
-          <div className="animate-spin rounded-full h-12 w-12 border-4 border-primary border-t-transparent mx-auto mb-4"></div>
-          <p className="text-gray-500 font-mono">Loading ad credits...</p>
+          <div className="animate-spin rounded-full h-8 w-8 border-3 border-primary border-t-transparent mx-auto mb-2"></div>
+          <p className="text-gray-500 font-mono text-xs">Loading...</p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-4">
           {deals.map((deal) => (
             <DealCard key={deal.id} deal={convertDealToCardFormat(deal)} />
           ))}

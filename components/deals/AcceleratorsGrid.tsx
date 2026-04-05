@@ -103,7 +103,7 @@ export default function AcceleratorsGrid() {
  badge: acc.applicationStatus === 'Active' ? 'Applications Open' : acc.applicationStatus,
  badgeColor: acc.applicationStatus === 'Active' ? 'bg-green-600' : 'bg-gray-500',
  title: acc.name,
- provider: acc.location,
+ provider: acc.name,
  value: acc.investment,
  valueSubtext: acc.equity === '0%' ? 'Equity Free' : `${acc.equity} Equity`,
  valueStyle: 'bg-white text-ink border-2 border-ink',
@@ -118,10 +118,10 @@ export default function AcceleratorsGrid() {
  return (
  <div className="w-full">
  {/* Header */}
- <div className="flex flex-col sm:flex-row sm:items-center gap-2 md:gap-4 mb-4 md:mb-6 border-b-2 md:border-b-3 border-black pb-3 md:pb-2">
+ <div className="flex flex-col sm:flex-row sm:items-center gap-2 mb-3 border-b-2 border-black pb-2">
  <div className="flex-1">
- <h2 className="font-mono text-xl md:text-3xl font-bold text-black">Top Programs</h2>
- <span className="font-mono text-xs md:text-sm text-gray-500 mt-0.5 block">
+ <h2 className="font-mono text-lg md:text-2xl font-bold text-black">Top Programs</h2>
+ <span className="font-mono text-[10px] md:text-xs text-gray-500 mt-0.5 block">
  Verified terms and deadlines
  </span>
  </div>
@@ -141,8 +141,8 @@ export default function AcceleratorsGrid() {
  <button
  key={region}
  onClick={() => setFilterRegion(region)}
- className={`px-2.5 py-1 font-mono text-xs border-2 border-black rounded-sm whitespace-nowrap transition-all flex-shrink-0 ${filterRegion === region
- ? 'bg-black text-white shadow-[2px_2px_0px_0px_rgba(0,0,0,0.3)]'
+ className={`px-2 py-0.5 font-mono text-[10px] border border-black rounded-sm whitespace-nowrap transition-all flex-shrink-0 ${filterRegion === region
+ ? 'bg-black text-white'
  : 'bg-white text-black hover:bg-gray-100'
  }`}
  aria-pressed={filterRegion === region}
@@ -157,7 +157,7 @@ export default function AcceleratorsGrid() {
  id="sort-select"
  value={sortBy}
  onChange={(e) => setSortBy(e.target.value as SortOption)}
- className="w-full md:w-64 px-3 py-2 font-mono text-sm bg-white border-2 border-black rounded-sm shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] focus:outline-none"
+ className="w-full md:w-48 px-2 py-1.5 font-mono text-xs bg-white border-2 border-black rounded-sm focus:outline-none"
  aria-label="Sort accelerators"
  >
  <option value="name">Name (A-Z)</option>
@@ -168,18 +168,18 @@ export default function AcceleratorsGrid() {
  </div>
 
  {/* Results Count and Clear Filters */}
- <div className="flex items-center justify-between mb-6 pb-2 border-b-2 border-dashed border-gray-300">
- <div className="font-mono text-sm text-gray-600">
- Showing <span className="font-bold text-black">{filteredAndSearchedDeals.length}</span> programs
+ <div className="flex items-center justify-between mb-3 pb-1.5 border-b border-dashed border-gray-300">
+ <div className="font-mono text-[10px] md:text-xs text-gray-600">
+ <span className="font-bold text-black">{filteredAndSearchedDeals.length}</span> programs
  </div>
  {hasActiveFilters && (
  <button
  onClick={handleClearFilters}
- className="px-3 py-1.5 font-mono text-xs font-bold bg-white border-2 border-black rounded-sm hover:bg-gray-100 transition-colors flex items-center gap-2"
+ className="px-2 py-0.5 font-mono text-[10px] font-bold bg-white border border-black rounded-sm hover:bg-gray-100 flex items-center gap-0.5"
  aria-label="Clear all filters"
  >
- <span className="material-symbols-outlined text-sm">close</span>
- Clear Filters
+ <span className="material-symbols-outlined text-[10px]">close</span>
+ Clear
  </button>
  )}
  </div>
@@ -211,7 +211,7 @@ export default function AcceleratorsGrid() {
  visibleCount={3}
  label="Accelerators"
  >
- <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+ <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-4">
  {filteredAndSearchedDeals.slice(3, 9).map((acc) => (
  <DealCard key={acc.id} deal={convertToCard(acc)} />
  ))}

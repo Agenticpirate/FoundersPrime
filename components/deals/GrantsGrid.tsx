@@ -20,8 +20,8 @@ function GrantLogo({ grant }: { grant: Grant }) {
 
   const fallbackChain = [
     grant.logo,
-    domain ? `https://logo.clearbit.com/${domain}` : null,
     domain ? `https://www.google.com/s2/favicons?domain=${domain}&sz=128` : null,
+    domain ? `https://logo.clearbit.com/${domain}` : null,
   ].filter(Boolean) as string[]
 
   if (fallbackChain.length === 0) {
@@ -161,15 +161,13 @@ export default function GrantsGrid() {
   }
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-3 md:space-y-6">
       {/* Filters */}
-      <div className="neo-card bg-white p-6">
-        <div className="flex flex-col lg:flex-row gap-4">
-          {/* Search */}
+      <div className="bg-white border-2 border-black shadow-[2px_2px_0px_#111] p-3 md:p-5">
+        <div className="flex flex-col sm:flex-row gap-2 md:gap-4">
           <div className="flex-1">
-            <label className="block text-xs font-mono font-bold text-gray-600 mb-2">SEARCH</label>
             <div className="relative">
-              <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">search</span>
+              <span className="material-symbols-outlined absolute left-2.5 top-1/2 -translate-y-1/2 text-gray-400 text-sm">search</span>
               <input
                 type="text"
                 placeholder="Search grants..."
@@ -178,46 +176,36 @@ export default function GrantsGrid() {
                   setSearchQuery(e.target.value)
                   handlePageChange(1)
                 }}
-                className="w-full pl-10 pr-4 py-2 border-2 border-black rounded-sm font-mono text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+                className="w-full pl-8 pr-3 py-1.5 border-2 border-black rounded-sm font-mono text-xs focus:outline-none"
               />
             </div>
           </div>
-
-          {/* Region Filter */}
-          <div className="lg:w-48">
-            <label className="block text-xs font-mono font-bold text-gray-600 mb-2">REGION</label>
-            <select
-              value={selectedRegion}
-              onChange={(e) => handleFilterChange(setSelectedRegion, e.target.value)}
-              className="w-full px-4 py-2 border-2 border-black rounded-sm font-mono text-sm focus:outline-none focus:ring-2 focus:ring-primary bg-white"
-            >
-              {regions.map(region => (
-                <option key={region} value={region}>{region}</option>
-              ))}
-            </select>
-          </div>
-
-          {/* Type Filter */}
-          <div className="lg:w-48">
-            <label className="block text-xs font-mono font-bold text-gray-600 mb-2">TYPE</label>
-            <select
-              value={selectedType}
-              onChange={(e) => handleFilterChange(setSelectedType, e.target.value)}
-              className="w-full px-4 py-2 border-2 border-black rounded-sm font-mono text-sm focus:outline-none focus:ring-2 focus:ring-primary bg-white"
-            >
-              {types.map(type => (
-                <option key={type} value={type}>{type}</option>
-              ))}
-            </select>
-          </div>
+          <select
+            value={selectedRegion}
+            onChange={(e) => handleFilterChange(setSelectedRegion, e.target.value)}
+            className="px-2 py-1.5 border-2 border-black rounded-sm font-mono text-xs bg-white"
+          >
+            {regions.map(region => (
+              <option key={region} value={region}>{region}</option>
+            ))}
+          </select>
+          <select
+            value={selectedType}
+            onChange={(e) => handleFilterChange(setSelectedType, e.target.value)}
+            className="px-2 py-1.5 border-2 border-black rounded-sm font-mono text-xs bg-white"
+          >
+            {types.map(type => (
+              <option key={type} value={type}>{type}</option>
+            ))}
+          </select>
         </div>
 
-        <div className="mt-4 flex items-center justify-between border-t-2 border-gray-200 pt-4">
-          <div className="text-sm font-mono">
-            <span className="font-bold">{filteredGrants.length}</span> grants found
+        <div className="mt-2 flex items-center justify-between border-t border-gray-200 pt-2">
+          <div className="text-[10px] md:text-xs font-mono">
+            <span className="font-bold">{filteredGrants.length}</span> grants
             {filteredGrants.length > 0 && (
-              <span className="text-gray-500 ml-2">
-                (Showing {startIndex + 1}-{Math.min(endIndex, filteredGrants.length)})
+              <span className="text-gray-400 ml-1">
+                ({startIndex + 1}-{Math.min(endIndex, filteredGrants.length)})
               </span>
             )}
           </div>
@@ -229,51 +217,51 @@ export default function GrantsGrid() {
                 setSearchQuery('')
                 handlePageChange(1)
               }}
-              className="text-sm font-mono font-bold text-primary hover:underline"
+              className="text-[10px] font-mono font-bold text-primary hover:underline"
             >
-              Clear filters
+              Clear
             </button>
           )}
         </div>
       </div>
 
       {/* Grants Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-4">
         {(isPro ? currentGrants : currentGrants.slice(0, 3)).map((grant) => (
           <Link
             key={grant.id}
             href={isPro ? `/deals/${grant.slug}` : '/pricing'}
-            className="flex flex-col bg-white border-2 border-black shadow-[3px_3px_0px_#111] hover:shadow-[5px_5px_0px_#111] hover:-translate-x-px hover:-translate-y-px transition-all duration-200 overflow-hidden group h-full"
+            className="flex flex-col bg-white border-2 border-black shadow-[2px_2px_0px_#111] hover:shadow-[3px_3px_0px_#111] hover:-translate-x-px hover:-translate-y-px transition-all duration-200 overflow-hidden group h-full"
           >
             {/* Status */}
-            <div className="px-4 pt-3">
-              <span className={`inline-block px-2 py-0.5 ${getStatusColor(grant.applicationStatus)} text-[9px] font-bold uppercase tracking-wider`}>
+            <div className="px-3 pt-2.5">
+              <span className={`inline-block px-1.5 py-0.5 ${getStatusColor(grant.applicationStatus)} text-[8px] font-bold uppercase tracking-wider`}>
                 {grant.applicationStatus}
               </span>
             </div>
 
             {/* Logo + Title */}
-            <div className="flex items-center gap-3 px-4 pt-3 pb-3">
-              <div className="w-12 h-12 bg-gray-50 border-2 border-gray-200 flex items-center justify-center p-1.5 flex-shrink-0 rounded-sm overflow-hidden">
+            <div className="flex items-center gap-2 px-3 pt-2 pb-2">
+              <div className="w-8 h-8 md:w-10 md:h-10 bg-gray-50 border border-gray-200 flex items-center justify-center p-1 flex-shrink-0 rounded-sm overflow-hidden">
                 <GrantLogo grant={grant} />
               </div>
               <div className="flex-1 min-w-0">
-                <h3 className="text-sm font-bold text-gray-900 leading-snug group-hover:text-black transition-colors line-clamp-2">
-                  {grant.name.length > 45 ? grant.name.substring(0, 45) + '…' : grant.name}
+                <h3 className="text-[11px] md:text-sm font-bold text-gray-900 leading-snug group-hover:text-black transition-colors line-clamp-2">
+                  {grant.name.length > 40 ? grant.name.substring(0, 40) + '…' : grant.name}
                 </h3>
-                <p className="text-[11px] text-gray-400 font-mono truncate mt-0.5">{grant.organization}</p>
+                <p className="text-[9px] text-gray-400 font-mono truncate mt-0.5">{grant.organization}</p>
               </div>
             </div>
 
             {/* Description */}
-            <div className="px-4 pb-3 flex-grow">
-              <p className="text-xs text-gray-500 leading-relaxed line-clamp-3">{grant.description}</p>
+            <div className="px-3 pb-2 flex-grow">
+              <p className="text-[10px] md:text-xs text-gray-500 leading-snug line-clamp-2">{grant.description}</p>
             </div>
 
             {/* Value — pinned bottom */}
-            <div className="px-4 pb-4 mt-auto border-t border-gray-100 pt-3">
-              <p className="text-base font-bold text-green-600 font-mono">{grant.fundingAmount}</p>
-              <p className="text-[11px] text-gray-400 mt-0.5">{grant.equity}</p>
+            <div className="px-3 pb-3 mt-auto border-t border-gray-100 pt-2">
+              <p className="text-xs md:text-sm font-bold text-green-600 font-mono line-clamp-1">{grant.fundingAmount}</p>
+              <p className="text-[9px] text-gray-400">{grant.equity}</p>
             </div>
           </Link>
         ))}
@@ -286,20 +274,20 @@ export default function GrantsGrid() {
           visibleCount={3}
           label="Grants"
         >
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-4">
             {filteredGrants.slice(3, 9).map((grant) => (
-              <div key={grant.id} className="flex flex-col bg-white border-2 border-black overflow-hidden p-4 gap-2" tabIndex={-1}>
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 bg-gray-50 border-2 border-gray-200 flex items-center justify-center p-1.5 flex-shrink-0 rounded-sm overflow-hidden">
+              <div key={grant.id} className="flex flex-col bg-white border-2 border-black overflow-hidden p-2.5 md:p-4 gap-1.5" tabIndex={-1}>
+                <div className="flex items-center gap-2">
+                  <div className="w-8 h-8 md:w-10 md:h-10 bg-gray-50 border border-gray-200 flex items-center justify-center p-1 flex-shrink-0 rounded-sm overflow-hidden">
                     <GrantLogo grant={grant} />
                   </div>
                   <div className="min-w-0">
-                    <p className="text-sm font-bold text-gray-900 line-clamp-2">{grant.name}</p>
-                    <p className="text-[11px] text-gray-400">{grant.organization}</p>
+                    <p className="text-[11px] md:text-sm font-bold text-gray-900 line-clamp-2">{grant.name}</p>
+                    <p className="text-[9px] text-gray-400">{grant.organization}</p>
                   </div>
                 </div>
-                <p className="text-xs text-gray-500 line-clamp-3">{grant.description}</p>
-                <p className="text-base font-bold text-green-600 font-mono mt-auto">{grant.fundingAmount}</p>
+                <p className="text-[10px] md:text-xs text-gray-500 line-clamp-2">{grant.description}</p>
+                <p className="text-xs font-bold text-green-600 font-mono mt-auto">{grant.fundingAmount}</p>
               </div>
             ))}
           </div>

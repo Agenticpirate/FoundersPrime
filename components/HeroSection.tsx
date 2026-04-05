@@ -261,7 +261,7 @@ export default function HeroSection() {
             {BRANDS_LOOP.map((b, i) => (
               <div key={`brand-${i}`} className="flex flex-col items-center gap-0.5 flex-shrink-0">
                 <div className="w-8 h-8 bg-white border-2 border-black flex items-center justify-center shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] p-1">
-                  <BrandLogo name={b.name} domain={b.domain} size="sm" showFallbackIcon={false} />
+                  <BrandLogo name={b.name} domain={b.domain} size="sm" eager />
                 </div>
                 <span className="text-[7px] font-mono text-gray-500 font-bold uppercase truncate max-w-[32px] text-center">{b.name.split(' ')[0]}</span>
               </div>

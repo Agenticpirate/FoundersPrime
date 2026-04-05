@@ -40,48 +40,53 @@ function InitialsFallback({ provider, size }: { provider: string; size: 'sm' | '
   )
 }
 
-// Helper to get high-quality brand logo
-function getBrandLogo(logoUrl: string | undefined, brandIcon: string | undefined, provider: string): string | null {
-  const originalUrl = logoUrl || brandIcon
-  
-  if (!originalUrl) {
-    // Try Clearbit as primary source
-    const domain = provider.toLowerCase().replace(/\s+/g, '').replace(/[^a-z0-9]/g, '') + '.com'
-    return `https://logo.clearbit.com/${domain}`
+// Helper to get domain from provider name
+function providerToDomain(provider: string): string {
+  const cleaned = provider.toLowerCase().replace(/[^a-z0-9]/g, '')
+  const domainMap: Record<string, string> = {
+    'aws': 'aws.amazon.com',
+    'amazon': 'amazon.com',
+    'amazonwebservices': 'aws.amazon.com',
+    'awsactivate': 'aws.amazon.com',
+    'googlecloud': 'cloud.google.com',
+    'googleforstartups': 'google.com',
+    'google': 'google.com',
+    'microsoftazure': 'microsoft.com',
+    'microsoftforstartups': 'microsoft.com',
+    'microsoft': 'microsoft.com',
+    'azure': 'microsoft.com',
+    'notion': 'notion.so',
+    'linear': 'linear.app',
+    'github': 'github.com',
+    'stripe': 'stripe.com',
+    'vercel': 'vercel.com',
+    'netlify': 'netlify.com',
+    'digitalocean': 'digitalocean.com',
+    'hubspot': 'hubspot.com',
+    'intercom': 'intercom.com',
+    'airtable': 'airtable.com',
+    'figma': 'figma.com',
+    'slack': 'slack.com',
+    'discord': 'discord.com',
+    'mongodb': 'mongodb.com',
+    'supabase': 'supabase.com',
+    'cloudflare': 'cloudflare.com',
+    'datadog': 'datadoghq.com',
+    'sentry': 'sentry.io',
+    'segment': 'segment.com',
+    'mixpanel': 'mixpanel.com',
+    'amplitude': 'amplitude.com',
+    'brex': 'brex.com',
+    'ramp': 'ramp.com',
+    'openai': 'openai.com',
+    'anthropic': 'anthropic.com',
   }
-  
-  // If it's already a high-quality logo URL, use it
-  if (originalUrl.includes('logo.clearbit.com') || originalUrl.includes('cdn.brandfetch.io')) {
-    return originalUrl
-  }
-  
-  // Try to extract domain and get better logo
-  try {
-    let domain = ''
-    if (originalUrl.includes('domain=')) {
-      domain = originalUrl.split('domain=')[1].split('&')[0]
-    } else if (originalUrl.includes('url=')) {
-      const url = originalUrl.split('url=')[1].split('&')[0]
-      domain = new URL(decodeURIComponent(url)).hostname
-    } else if (originalUrl.includes('favicons?')) {
-      // Google favicon URL - extract domain
-      const match = originalUrl.match(/domain=([^&]+)/)
-      if (match) domain = match[1]
-    }
-    
-    if (domain) {
-      // Use Clearbit for high-quality logos
-      return `https://logo.clearbit.com/${domain}`
-    }
-  } catch {
-    // Fall through to original URL
-  }
-  
-  return originalUrl
+  return domainMap[cleaned] || `${cleaned}.com`
 }
 
 export default function DealLogo({ logoUrl, brandIcon, provider, size = 'md' }: DealLogoProps) {
   const [fallbackIndex, setFallbackIndex] = useState(0)
+  const [loaded, setLoaded] = useState(false)
   const [failed, setFailed] = useState(false)
 
   const sizeClasses = {
@@ -90,12 +95,13 @@ export default function DealLogo({ logoUrl, brandIcon, provider, size = 'md' }: 
     lg: 'w-24 h-24',
   }
 
-  const domain = provider.toLowerCase().replace(/\s+/g, '').replace(/[^a-z0-9]/g, '') + '.com'
+  // Get domain from provider name (ignore stored logo URLs)
+  const domain = providerToDomain(provider)
+  
   const fallbackChain = [
-    getBrandLogo(logoUrl, brandIcon, provider),
-    `https://logo.clearbit.com/${domain}`,
     `https://www.google.com/s2/favicons?domain=${domain}&sz=128`,
-  ].filter(Boolean) as string[]
+    `https://logo.clearbit.com/${domain}`,
+  ]
 
   const handleError = () => {
     const nextIndex = fallbackIndex + 1
@@ -108,7 +114,7 @@ export default function DealLogo({ logoUrl, brandIcon, provider, size = 'md' }: 
 
   return (
     <div className={`${sizeClasses[size]} bg-white border-3 border-black rounded-lg flex items-center justify-center flex-shrink-0 shadow-[4px_4px_0px_#111111] overflow-hidden`}>
-      {!failed && fallbackChain.length > 0 ? (
+      {!failed ? (
         <img
           src={fallbackChain[fallbackIndex]}
           alt={`${provider} logo`}

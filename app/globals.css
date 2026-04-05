@@ -2,6 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Prevent layout shifts from images loading */
+img {
+  content-visibility: auto;
+}
+
 /* Custom Google Translate Styling to match Neo-Brutalist Theme */
 .google-translate-container {
   display: inline-block;

@@ -7,18 +7,30 @@ import DealCard from './DealCard'
 import AcceleratorsSearch from './AcceleratorsSearch'
 import Pagination from '@/components/Pagination'
 
-// Helper for logo - uses Clearbit with fallback chain
+// Helper for logo - uses Google Favicons (fast, reliable)
 const getLogo = (url: string, company: string) => {
     try {
         const domain = new URL(url).hostname.replace('www.', '');
-        return `https://logo.clearbit.com/${domain}`;
+        return `https://www.google.com/s2/favicons?domain=${domain}&sz=128`;
     } catch (e) {
         const cleaned = company.toLowerCase().replace(/[^a-z0-9]/g, '');
-        return `https://logo.clearbit.com/${cleaned}.com`;
+        return `https://www.google.com/s2/favicons?domain=${cleaned}.com&sz=128`;
     }
 }
 
 type SortOption = 'relevance' | 'value' | 'alphabetical'
+
+// Famous programs that should appear first
+const PRIORITY_COMPANIES = [
+  'thiel fellowship', 'peter thiel', 'y combinator', 'techstars', '500 global',
+  'google', 'microsoft', 'apple', 'meta', 'amazon', 'aws',
+  'stripe', 'shopify', 'github', 'notion', 'figma', 'openai',
+  'ford foundation', 'gates foundation', 'knight foundation',
+  'national science foundation', 'nsf', 'darpa', 'arpa',
+  'xprize', 'hult prize', 'mit', 'stanford', 'harvard',
+  'forbes', 'un', 'united nations', 'world bank',
+  'mastercard', 'visa', 'paypal', 'square',
+]
 
 export default function StudentFundingGrid() {
     const [searchQuery, setSearchQuery] = useState('')
@@ -63,6 +75,19 @@ export default function StudentFundingGrid() {
             });
         } else if (sortBy === 'alphabetical') {
             results = [...results].sort((a, b) => a.title.localeCompare(b.title));
+        } else {
+            // Relevance: prioritize famous programs, then by value
+            results = [...results].sort((a, b) => {
+                const aName = (a.company + ' ' + a.title).toLowerCase()
+                const bName = (b.company + ' ' + b.title).toLowerCase()
+                const aPriority = PRIORITY_COMPANIES.some(p => aName.includes(p)) ? 0 : 1
+                const bPriority = PRIORITY_COMPANIES.some(p => bName.includes(p)) ? 0 : 1
+                if (aPriority !== bPriority) return aPriority - bPriority
+                // Then by value descending
+                const valA = parseInt(a.value.replace(/[^0-9]/g, '')) || 0
+                const valB = parseInt(b.value.replace(/[^0-9]/g, '')) || 0
+                return valB - valA
+            });
         }
 
         return results
@@ -116,20 +141,19 @@ export default function StudentFundingGrid() {
     return (
         <div className="w-full">
             {/* Search Bar */}
-            <div className="mb-6">
-                <AcceleratorsSearch onSearch={handleSearch} placeholder="Search grants, scholarships, competitions..." />
+            <div className="mb-3">
+                <AcceleratorsSearch onSearch={handleSearch} placeholder="Search grants, scholarships..." />
             </div>
 
             {/* Filters and Sorting */}
-            <div className="flex flex-col gap-2 mb-4 md:mb-6">
-                {/* Type Filter Pills - always horizontal scroll */}
-                <div className="flex gap-1.5 overflow-x-auto mobile-scroll-hide pb-0.5">
+            <div className="flex flex-col gap-1.5 mb-3">
+                <div className="flex gap-1 overflow-x-auto mobile-scroll-hide pb-0.5">
                     {types.map(type => (
                         <button
                             key={type}
                             onClick={() => { setFundingType(type); setCurrentPage(1); }}
-                            className={`px-2.5 py-1 font-mono text-xs border-2 border-black rounded-sm whitespace-nowrap flex-shrink-0 transition-all ${fundingType === type
-                                ? 'bg-black text-white shadow-[2px_2px_0px_0px_rgba(0,0,0,0.3)]'
+                            className={`px-2 py-0.5 font-mono text-[10px] border border-black rounded-sm whitespace-nowrap flex-shrink-0 transition-all ${fundingType === type
+                                ? 'bg-black text-white'
                                 : 'bg-white text-black hover:bg-gray-100'
                                 }`}
                         >
@@ -138,29 +162,25 @@ export default function StudentFundingGrid() {
                     ))}
                 </div>
 
-                {/* Sort */}
                 <select
                     value={sortBy}
                     onChange={(e) => setSortBy(e.target.value as SortOption)}
-                    className="w-full md:w-64 px-3 py-2 font-mono text-xs md:text-sm bg-white border-2 border-black rounded-sm shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] focus:outline-none"
+                    className="w-full md:w-48 px-2 py-1.5 font-mono text-xs bg-white border-2 border-black rounded-sm focus:outline-none"
                 >
-                    <option value="relevance">Sort: Relevance</option>
-                    <option value="value">Value (High to Low)</option>
-                    <option value="alphabetical">Name (A-Z)</option>
+                    <option value="relevance">Top Programs</option>
+                    <option value="value">Value (High→Low)</option>
+                    <option value="alphabetical">A-Z</option>
                 </select>
             </div>
 
             {/* Results Count */}
-            <div className="flex items-center justify-between mb-3 md:mb-6 pb-2 md:pb-2 border-b-2 border-dashed border-gray-300">
-                <div className="font-mono text-xs md:text-sm text-gray-600">
+            <div className="flex items-center justify-between mb-2 pb-1.5 border-b border-dashed border-gray-300">
+                <div className="font-mono text-[10px] md:text-xs text-gray-600">
                     <span className="font-bold text-black">{filteredDeals.length}</span> opportunities
                 </div>
                 {hasActiveFilters && (
-                    <button
-                        onClick={handleClearFilters}
-                        className="px-2.5 py-1 font-mono text-xs font-bold bg-white border-2 border-black rounded-sm hover:bg-gray-100 transition-colors flex items-center gap-1"
-                    >
-                        <span className="material-symbols-outlined text-xs">close</span>
+                    <button onClick={handleClearFilters} className="px-2 py-0.5 font-mono text-[10px] font-bold bg-white border border-black rounded-sm hover:bg-gray-100 flex items-center gap-0.5">
+                        <span className="material-symbols-outlined text-[10px]">close</span>
                         Clear
                     </button>
                 )}
@@ -169,7 +189,7 @@ export default function StudentFundingGrid() {
             {/* Grid */}
             {paginatedDeals.length > 0 ? (
                 <>
-                    <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
+                    <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-4">
                         {paginatedDeals.map((benefit, idx) => {
                             const deal = convertToCard(benefit, idx);
                             return (

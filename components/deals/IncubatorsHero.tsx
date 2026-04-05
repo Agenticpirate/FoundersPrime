@@ -1,32 +1,26 @@
 export default function IncubatorsHero() {
   return (
-    <div className="mb-6">
-      <div className="mb-4 md:mb-6">
-        <div className="inline-block border-2 border-black bg-accent-yellow px-2 py-1 font-mono text-[10px] font-bold uppercase tracking-wide rounded-sm mb-3">
-          GLOBAL DIRECTORY
+    <div className="mb-3 md:mb-5">
+      <div className="mb-2">
+        <div className="inline-block border border-black bg-accent-yellow px-1.5 py-0.5 font-mono text-[9px] font-bold uppercase tracking-wide rounded-sm mb-1.5">
+          Global Directory
         </div>
-        <h1 className="font-mono text-2xl md:text-4xl lg:text-5xl font-bold tracking-tight text-black mb-3 leading-tight">
-          Startup Incubators &amp; Venture Studios
+        <h1 className="font-mono text-lg md:text-3xl font-bold tracking-tight text-black mb-1 leading-tight">
+          Incubators & Venture Studios
         </h1>
-        <p className="font-sans text-sm md:text-base text-gray-700 leading-relaxed max-w-3xl">
-          Discover verified incubators worldwide — university programs, corporate innovation labs, and venture studios. Many offer equity-free support, lab access, and co-founding opportunities.
+        <p className="text-xs md:text-sm text-gray-600 max-w-2xl">
+          Verified incubators worldwide — university programs, corporate labs, and venture studios. Many offer equity-free support.
         </p>
       </div>
 
-      <div className="grid grid-cols-2 gap-2 md:gap-4">
-        <div className="bg-black text-white border-2 border-black shadow-[3px_3px_0px_0px_#1a1a1a] rounded-sm p-3 md:p-4 flex items-center justify-between">
-          <div>
-            <p className="font-mono text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">Equity-Free Options</p>
-            <p className="font-mono text-xl md:text-2xl font-bold text-white">Available</p>
-          </div>
-          <span className="material-symbols-outlined text-xl text-primary hidden sm:block">verified</span>
+      <div className="grid grid-cols-2 gap-1.5 md:gap-3">
+        <div className="bg-black text-white border-2 border-black shadow-[2px_2px_0px_#111] p-2 md:p-3">
+          <p className="font-mono text-[8px] md:text-[10px] font-bold text-gray-500 uppercase">Equity-Free</p>
+          <p className="font-mono text-base md:text-xl font-bold">Available</p>
         </div>
-        <div className="bg-white border-2 border-black shadow-[3px_3px_0px_0px_#1a1a1a] rounded-sm p-3 md:p-4 flex items-center justify-between">
-          <div>
-            <p className="font-mono text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-1">Includes</p>
-            <p className="font-mono text-xl md:text-2xl font-bold text-black">Venture Studios</p>
-          </div>
-          <span className="material-symbols-outlined text-xl text-black hidden sm:block">business_center</span>
+        <div className="bg-white border-2 border-black shadow-[2px_2px_0px_#111] p-2 md:p-3">
+          <p className="font-mono text-[8px] md:text-[10px] font-bold text-gray-400 uppercase">Includes</p>
+          <p className="font-mono text-base md:text-xl font-bold text-black">Venture Studios</p>
         </div>
       </div>
     </div>

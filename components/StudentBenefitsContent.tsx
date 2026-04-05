@@ -97,14 +97,14 @@ export default function StudentBenefitsContent({ benefits, title, description }:
         router.push(`${pathname}?${params.toString()}`, { scroll: false })
     }
 
-    // Logo helper - use Clearbit with fallback chain
+    // Logo helper - use Google Favicons (fast, reliable)
     const getLogo = (benefit: StudentBenefit) => {
         try {
             const domain = new URL(benefit.url).hostname.replace('www.', '');
-            return `https://logo.clearbit.com/${domain}`;
+            return `https://www.google.com/s2/favicons?domain=${domain}&sz=128`;
         } catch (e) {
             const cleaned = benefit.company.toLowerCase().replace(/[^a-z0-9]/g, '');
-            return `https://logo.clearbit.com/${cleaned}.com`;
+            return `https://www.google.com/s2/favicons?domain=${cleaned}.com&sz=128`;
         }
     }
 

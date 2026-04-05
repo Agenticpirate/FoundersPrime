@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
-import { dealCategories, getAllCategories, getSubcategoriesByCategory, type DealCategory, type DealSubcategory } from '@/lib/deals-database'
+import { getAllCategories, getSubcategoriesByCategory, type DealSubcategory } from '@/lib/deals-database'
 
 interface FilterState {
   search: string
@@ -18,83 +18,54 @@ interface DealsFilterBarProps {
 
 export default function DealsFilterBar({ onFilterChange, currentFilters }: DealsFilterBarProps) {
   const [filters, setFilters] = useState<FilterState>(currentFilters || {
-    search: '',
-    category: '',
-    subcategory: '',
-    value: '',
-    sort: 'relevance'
+    search: '', category: '', subcategory: '', value: '', sort: 'relevance'
   })
 
   const [subcategories, setSubcategories] = useState<DealSubcategory[]>([])
-  const [showSubcategories, setShowSubcategories] = useState(false)
   const isInitialMount = useRef(true)
-
   const categories = getAllCategories()
 
-  // Update local filters when currentFilters prop changes (but not on initial mount)
   useEffect(() => {
-    if (currentFilters && !isInitialMount.current) {
-      setFilters(currentFilters)
-    }
+    if (currentFilters && !isInitialMount.current) setFilters(currentFilters)
   }, [currentFilters])
 
   useEffect(() => {
     if (filters.category) {
-      const subs = getSubcategoriesByCategory(filters.category)
-      setSubcategories(subs)
-      setShowSubcategories(subs.length > 0)
+      setSubcategories(getSubcategoriesByCategory(filters.category))
     } else {
       setSubcategories([])
-      setShowSubcategories(false)
     }
   }, [filters.category])
 
-  // Only notify parent when filters actually change (not on mount)
   useEffect(() => {
-    if (isInitialMount.current) {
-      isInitialMount.current = false
-      return
-    }
-
-    const timeoutId = setTimeout(() => {
-      onFilterChange?.(filters)
-    }, 100) // Debounce to prevent rapid updates
-
-    return () => clearTimeout(timeoutId)
+    if (isInitialMount.current) { isInitialMount.current = false; return }
+    const t = setTimeout(() => onFilterChange?.(filters), 100)
+    return () => clearTimeout(t)
   }, [filters.search, filters.category, filters.subcategory, filters.value, filters.sort])
 
   const handleFilterChange = (key: keyof FilterState, value: string) => {
     setFilters(prev => {
-      const newFilters = { ...prev, [key]: value }
-      // Reset subcategory when category changes
-      if (key === 'category') {
-        newFilters.subcategory = ''
-      }
-      return newFilters
+      const n = { ...prev, [key]: value }
+      if (key === 'category') n.subcategory = ''
+      return n
     })
   }
 
   const resetFilters = () => {
-    setFilters({
-      search: '',
-      category: '',
-      subcategory: '',
-      value: '',
-      sort: 'relevance'
-    })
+    setFilters({ search: '', category: '', subcategory: '', value: '', sort: 'relevance' })
   }
 
-  const activeFiltersCount = Object.values(filters).filter(value => value && value !== 'relevance').length
+  const activeFiltersCount = Object.values(filters).filter(v => v && v !== 'relevance').length
 
   return (
-    <div className="bg-white border-2 border-black p-3 shadow-[4px_4px_0px_#111111] sticky top-14 md:top-20 z-30">
-      {/* Main Filter Row */}
-      <div className="flex flex-col gap-2">
+    <div className="bg-white border-2 border-black p-2 md:p-3 shadow-[2px_2px_0px_#111] sticky top-14 md:top-20 z-30">
+      {/* Search + Filters in one compact block */}
+      <div className="flex flex-col gap-1.5">
         {/* Search */}
         <div className="relative">
-          <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-lg">search</span>
+          <span className="material-symbols-outlined absolute left-2.5 top-1/2 -translate-y-1/2 text-gray-400 text-sm">search</span>
           <input
-            className="w-full h-9 md:h-10 pl-10 pr-4 border-2 border-black focus:border-[#ffd700] focus:ring-0 font-sans text-base md:text-sm bg-white placeholder:text-gray-400 shadow-[2px_2px_0px_#111111]"
+            className="w-full h-8 pl-8 pr-3 border-2 border-black focus:border-primary focus:ring-0 font-mono text-xs bg-white placeholder:text-gray-400"
             placeholder="Search deals..."
             type="text"
             value={filters.search}
@@ -102,36 +73,30 @@ export default function DealsFilterBar({ onFilterChange, currentFilters }: Deals
           />
         </div>
 
-        {/* Dropdowns — 3-col on mobile */}
-        <div className="grid grid-cols-3 md:flex gap-2">
+        {/* Dropdowns — compact row */}
+        <div className="grid grid-cols-3 gap-1.5">
           <select
-            className="h-10 md:h-10 border border-gray-300 bg-white px-2 md:px-3 py-1 text-base md:text-sm focus:ring-0 focus:border-primary cursor-pointer w-full font-bold"
+            className="h-7 border border-gray-300 bg-white px-1.5 text-[11px] md:text-xs focus:ring-0 focus:border-primary cursor-pointer font-mono"
             value={filters.category}
             onChange={(e) => handleFilterChange('category', e.target.value)}
           >
             <option value="">Category</option>
-            {categories.map(category => (
-              <option key={category.id} value={category.id}>
-                {category.name}
-              </option>
-            ))}
+            {categories.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
           </select>
-
           <select
-            className="h-10 md:h-10 border border-gray-300 bg-white px-2 md:px-3 py-1 text-base md:text-sm focus:ring-1 focus:ring-primary focus:border-primary cursor-pointer rounded w-full"
+            className="h-7 border border-gray-300 bg-white px-1.5 text-[11px] md:text-xs focus:ring-0 focus:border-primary cursor-pointer font-mono"
             value={filters.value}
             onChange={(e) => handleFilterChange('value', e.target.value)}
           >
             <option value="">Value</option>
-            <option value="under-1k">&lt; $1K</option>
+            <option value="under-1k">&lt;$1K</option>
             <option value="1k-10k">$1K-$10K</option>
             <option value="10k-50k">$10K-$50K</option>
             <option value="50k-100k">$50K-$100K</option>
-            <option value="over-100k">&gt; $100K</option>
+            <option value="over-100k">&gt;$100K</option>
           </select>
-
           <select
-            className="h-10 md:h-10 border border-gray-300 bg-white px-2 md:px-3 py-1 text-base md:text-sm focus:ring-1 focus:ring-primary focus:border-primary cursor-pointer rounded w-full"
+            className="h-7 border border-gray-300 bg-white px-1.5 text-[11px] md:text-xs focus:ring-0 focus:border-primary cursor-pointer font-mono"
             value={filters.sort}
             onChange={(e) => handleFilterChange('sort', e.target.value)}
           >
@@ -139,51 +104,34 @@ export default function DealsFilterBar({ onFilterChange, currentFilters }: Deals
             <option value="newest">Newest</option>
             <option value="value-high">Value ↓</option>
             <option value="value-low">Value ↑</option>
-            <option value="deadline">Deadline</option>
             <option value="alphabetical">A-Z</option>
           </select>
-
-          {activeFiltersCount > 0 && (
-            <button
-              onClick={resetFilters}
-              className="hidden md:block h-10 px-3 bg-gray-100 text-gray-700 text-sm font-bold border-2 border-black hover:bg-gray-200 transition-colors whitespace-nowrap shadow-[2px_2px_0px_#111111]"
-            >
-              Clear ({activeFiltersCount})
-            </button>
-          )}
         </div>
       </div>
 
-      {/* Quick Filters - Horizontally scrollable on mobile */}
-      <div className="flex gap-2 mt-2 md:mt-3 pt-2 md:pt-3 border-t border-gray-100 overflow-x-auto mobile-scroll-hide pb-0.5">
-        <button
-          onClick={() => resetFilters()}
-          className={`px-2.5 py-1 text-xs font-bold border-2 transition-colors whitespace-nowrap flex-shrink-0 ${activeFiltersCount === 0 ? 'bg-ink text-white border-ink shadow-[2px_2px_0px_#111111]' : 'bg-white text-gray-700 border-black hover:bg-gray-50'
+      {/* Quick Filters */}
+      <div className="flex gap-1.5 mt-1.5 pt-1.5 border-t border-gray-100 overflow-x-auto mobile-scroll-hide">
+        {[
+          { label: 'All', active: activeFiltersCount === 0, action: resetFilters },
+          { label: 'New', active: filters.sort === 'newest', action: () => handleFilterChange('sort', 'newest') },
+          { label: 'AI Tools', active: filters.category === 'ai', action: () => handleFilterChange('category', 'ai') },
+          { label: 'Popular', active: filters.sort === 'relevance' && !filters.category, action: () => { resetFilters() } },
+        ].map(f => (
+          <button
+            key={f.label}
+            onClick={f.action}
+            className={`px-2 py-0.5 text-[10px] font-bold border transition-colors whitespace-nowrap flex-shrink-0 font-mono ${
+              f.active ? 'bg-black text-white border-black' : 'bg-white text-gray-600 border-gray-300 hover:bg-gray-50'
             }`}
-        >
-          All
-        </button>
-        <button
-          onClick={() => handleFilterChange('sort', 'newest')}
-          className={`px-2.5 py-1 text-xs font-bold border-2 transition-colors whitespace-nowrap flex-shrink-0 ${filters.sort === 'newest' ? 'bg-ink text-white border-ink shadow-[2px_2px_0px_#111111]' : 'bg-white text-gray-700 border-black hover:bg-gray-50'
-            }`}
-        >
-          New
-        </button>
-        <button
-          onClick={() => handleFilterChange('category', 'ai')}
-          className={`px-2.5 py-1 text-xs font-bold border transition-colors whitespace-nowrap flex-shrink-0 ${filters.category === 'ai' ? 'bg-ink text-white border-ink' : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
-            }`}
-        >
-          AI Tools
-        </button>
-        <button
-          onClick={() => handleFilterChange('sort', 'relevance')}
-          className={`px-2.5 py-1 text-xs font-medium border rounded transition-colors whitespace-nowrap flex-shrink-0 ${filters.sort === 'relevance' && filters.category === '' ? 'bg-ink text-white border-ink' : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
-            }`}
-        >
-          Popular
-        </button>
+          >
+            {f.label}
+          </button>
+        ))}
+        {activeFiltersCount > 0 && (
+          <button onClick={resetFilters} className="px-2 py-0.5 text-[10px] font-bold text-red-500 border border-red-200 hover:bg-red-50 whitespace-nowrap flex-shrink-0 font-mono">
+            Clear
+          </button>
+        )}
       </div>
     </div>
   )

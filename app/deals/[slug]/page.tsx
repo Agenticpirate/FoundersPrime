@@ -424,129 +424,78 @@ export default async function SingleDealPage({ params }: PageProps) {
         <main className="flex-1">
           {/* Full-width header section */}
           <div className="w-full bg-white border-b-3 border-black">
-            <div className="max-w-[1600px] mx-auto px-4 lg:px-6 py-2 lg:py-4">
-              {/* Breadcrumbs */}
-              <nav aria-label="Breadcrumb" className="flex mb-4">
-                <ol className="inline-flex items-center space-x-1 md:space-x-3 font-mono text-sm font-medium">
-                  <li className="inline-flex items-center">
-                    <a className="text-gray-500 hover:text-black" href="/">Home</a>
-                  </li>
-                  {(dealData.category === 'accelerators' || dealData.category === 'incubators' || dealData.category === 'grants') ? (
-                    <>
-                      <li>
-                        <div className="flex items-center">
-                          <span className="material-symbols-outlined text-gray-400 text-base mx-1">chevron_right</span>
-                          <a className="text-gray-500 hover:text-black" href="/programs">Programs</a>
-                        </div>
+            <div className="max-w-[1600px] mx-auto px-3 lg:px-6 py-2 lg:py-4">
+              {(() => {
+                const subcategoryMap: Record<string, { label: string; href: string; parentLabel: string }> = {
+                  'accelerators': { label: 'Accelerators', href: '/deals/accelerators', parentLabel: 'Programs' },
+                  'incubators': { label: 'Incubators', href: '/deals/incubators', parentLabel: 'Programs' },
+                  'grants': { label: 'Grants', href: '/deals/grants', parentLabel: 'Programs' },
+                  'cloud-credits': { label: 'Cloud Credits', href: '/deals/cloud-credits', parentLabel: 'Deals' },
+                  'saas-discounts': { label: 'SaaS Discounts', href: '/deals/saas-discounts', parentLabel: 'Deals' },
+                  'ad-credits': { label: 'Ad Credits', href: '/deals/ad-credits', parentLabel: 'Deals' },
+                }
+                const sub = subcategoryMap[dealData.category]
+
+                return (
+                  <nav aria-label="Breadcrumb" className="flex mb-3 md:mb-4">
+                    <ol className="inline-flex items-center space-x-1 md:space-x-3 font-mono text-xs md:text-sm font-medium whitespace-nowrap">
+                      <li><a className="text-gray-500 hover:text-black" href="/">Home</a></li>
+                      <li className="flex items-center">
+                        <span className="material-symbols-outlined text-gray-400 text-sm mx-0.5 md:mx-1">chevron_right</span>
+                        <a className="text-gray-500 hover:text-black" href="/deals">{sub ? sub.parentLabel : 'Deals'}</a>
                       </li>
-                      {dealData.category === 'accelerators' && (
-                        <li>
-                          <div className="flex items-center">
-                            <span className="material-symbols-outlined text-gray-400 text-base mx-1">chevron_right</span>
-                            <a className="text-gray-500 hover:text-black" href="/deals/accelerators">Accelerators</a>
-                          </div>
+                      {sub && (
+                        <li className="flex items-center">
+                          <span className="material-symbols-outlined text-gray-400 text-sm mx-0.5 md:mx-1">chevron_right</span>
+                          <a className="text-gray-500 hover:text-black" href={sub.href}>{sub.label}</a>
                         </li>
                       )}
-                      {dealData.category === 'incubators' && (
-                        <li>
-                          <div className="flex items-center">
-                            <span className="material-symbols-outlined text-gray-400 text-base mx-1">chevron_right</span>
-                            <a className="text-gray-500 hover:text-black" href="/deals/incubators">Incubators</a>
-                          </div>
-                        </li>
-                      )}
-                      {dealData.category === 'grants' && (
-                        <li>
-                          <div className="flex items-center">
-                            <span className="material-symbols-outlined text-gray-400 text-base mx-1">chevron_right</span>
-                            <a className="text-gray-500 hover:text-black" href="/deals/grants">Grants</a>
-                          </div>
-                        </li>
-                      )}
-                    </>
-                  ) : (
-                    <li>
-                      <div className="flex items-center">
-                        <span className="material-symbols-outlined text-gray-400 text-base mx-1">chevron_right</span>
-                        <a className="text-gray-500 hover:text-black" href="/deals">Deals</a>
-                      </div>
-                    </li>
-                  )}
-                  <li aria-current="page">
-                    <div className="flex items-center">
-                      <span className="material-symbols-outlined text-gray-400 text-base mx-1">chevron_right</span>
-                      <span className="text-black bg-primary/20 px-2 py-0.5 rounded-sm border border-black">{deal.title}</span>
-                    </div>
-                  </li>
-                </ol>
-              </nav>
+                      <li className="flex items-center">
+                        <span className="material-symbols-outlined text-gray-400 text-sm mx-0.5 md:mx-1">chevron_right</span>
+                        <span className="text-black bg-primary/20 px-1.5 md:px-2 py-0.5 rounded-sm border border-black text-[11px] md:text-sm truncate max-w-[150px] md:max-w-[250px]">{deal.title}</span>
+                      </li>
+                    </ol>
+                  </nav>
+                )
+              })()}
 
-              {/* Header with badges and title */}
-              <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6">
-                <div className="flex-1">
-                  <div className="flex items-start gap-5 mb-4">
-                    {/* Provider Logo */}
-                    <DealLogo
-                      logoUrl={dealData.logoUrl}
-                      brandIcon={dealData.brandIcon}
-                      provider={dealData.provider}
-                      size="md"
-                    />
-                    <div className="flex-1">
-                      <div className="mb-3 flex flex-wrap gap-2">
-                        <span className="inline-flex items-center rounded-sm border-2 border-black px-3 py-1 font-mono text-xs font-bold uppercase bg-green-100">
-                          {deal.status}
-                        </span>
-                        <span className="inline-flex items-center rounded-sm border-2 border-black px-3 py-1 font-mono text-xs font-bold uppercase bg-blue-100">
-                          {deal.category}
-                        </span>
-                        {/* Premium Badge */}
-                        {isLocked && (
-                          <span className="inline-flex items-center gap-1 rounded-sm border-2 border-black px-3 py-1 font-mono text-xs font-bold uppercase bg-primary text-black">
-                            <span className="material-symbols-outlined text-sm">lock</span>
-                            Pro Only
-                          </span>
-                        )}
-                      </div>
-                      <h1 className="font-mono text-2xl lg:text-3xl font-bold uppercase leading-tight text-black mb-2">
-                        {deal.title}
-                      </h1>
-                      <div className="flex items-center gap-2 font-mono text-base font-medium text-gray-600">
-                        <span className="material-symbols-outlined text-lg">domain</span>
-                        <span>{deal.provider}</span>
-                      </div>
-                    </div>
+              {/* Header with badges and title — no CTA button here */}
+              <div className="flex items-start gap-3 lg:gap-5 mb-2 lg:mb-4">
+                <DealLogo
+                  logoUrl={dealData.logoUrl}
+                  brandIcon={dealData.brandIcon}
+                  provider={dealData.provider}
+                  size="sm"
+                />
+                <div className="flex-1 min-w-0">
+                  <div className="mb-1.5 lg:mb-3 flex flex-wrap gap-1 lg:gap-2">
+                    <span className="inline-flex items-center rounded-sm border border-black px-1.5 py-0.5 lg:px-3 lg:py-1 font-mono text-[9px] lg:text-xs font-bold uppercase bg-green-100">
+                      {deal.status}
+                    </span>
+                    <span className="inline-flex items-center rounded-sm border border-black px-1.5 py-0.5 lg:px-3 lg:py-1 font-mono text-[9px] lg:text-xs font-bold uppercase bg-blue-100">
+                      {deal.category}
+                    </span>
+                    {isLocked && (
+                      <span className="inline-flex items-center gap-0.5 rounded-sm border border-black px-1.5 py-0.5 lg:px-3 lg:py-1 font-mono text-[9px] lg:text-xs font-bold uppercase bg-primary text-black">
+                        <span className="material-symbols-outlined text-[10px] lg:text-sm">lock</span>
+                        Pro
+                      </span>
+                    )}
                   </div>
-                </div>
-
-                {/* Apply button in header */}
-                <div className="flex-shrink-0">
-                  {isLocked ? (
-                    <a
-                      href="/pricing"
-                      className="inline-flex items-center gap-2 rounded-sm border-3 border-black bg-gray-100 px-8 py-4 font-mono text-base font-bold uppercase text-gray-500 shadow-[2px_2px_0px_#111111] hover:bg-primary hover:text-black hover:shadow-[4px_4px_0px_#111111] hover:translate-x-[2px] hover:translate-y-[2px] transition-all"
-                    >
-                      <span className="material-symbols-outlined">lock</span>
-                      Unlock Deal
-                    </a>
-                  ) : (
-                    <a
-                      href={dealData.applicationUrl || getStartupProgramUrl(dealData.provider)}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 rounded-sm border-3 border-black bg-primary px-8 py-4 font-mono text-base font-bold uppercase text-black shadow-[6px_6px_0px_#111111] hover:bg-primary-dark hover:shadow-[4px_4px_0px_#111111] hover:translate-x-[2px] hover:translate-y-[2px] transition-all"
-                    >
-                      Apply Now
-                      <span className="material-symbols-outlined">arrow_forward</span>
-                    </a>
-                  )}
+                  <h1 className="font-mono text-base sm:text-xl lg:text-3xl font-bold uppercase leading-tight text-black mb-1">
+                    {deal.title}
+                  </h1>
+                  <div className="flex items-center gap-1.5 font-mono text-xs lg:text-base font-medium text-gray-600">
+                    <span className="material-symbols-outlined text-sm lg:text-lg">domain</span>
+                    <span>{deal.provider}</span>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
 
           {/* Main content - full width */}
-          <div className="max-w-[1600px] mx-auto px-4 lg:px-6 py-2 lg:py-4">
+          <div className="max-w-[1600px] mx-auto px-3 lg:px-6 py-2 lg:py-4">
             <SingleDealContent deal={deal} />
           </div>
         </main>

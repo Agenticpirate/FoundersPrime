@@ -68,8 +68,8 @@ function BenefitLogo({ benefit }: { benefit: StudentBenefit }) {
 
     const domain = extractDomain(benefit.url) || companyToDomain(benefit.company)
     const fallbackChain = [
-        `https://logo.clearbit.com/${domain}`,
         `https://www.google.com/s2/favicons?domain=${domain}&sz=128`,
+        `https://logo.clearbit.com/${domain}`,
         `https://ui-avatars.com/api/?name=${encodeURIComponent(benefit.company)}&background=f3f4f6&color=374151&bold=true&size=128`
     ]
 

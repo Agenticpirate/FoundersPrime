@@ -9,7 +9,7 @@ interface BrandLogoProps {
   domain?: string
   size?: 'xs' | 'sm' | 'md' | 'lg'
   className?: string
-  showFallbackIcon?: boolean
+  eager?: boolean
 }
 
 const sizeClasses = {
@@ -19,16 +19,8 @@ const sizeClasses = {
   lg: 'w-12 h-12'
 }
 
-export default function BrandLogo({ 
-  logo, 
-  name, 
-  domain, 
-  size = 'md', 
-  className = '',
-  showFallbackIcon = true 
-}: BrandLogoProps) {
+export default function BrandLogo({ logo, name, domain, size = 'md', className = '', eager = false }: BrandLogoProps) {
   const [loadState, setLoadState] = useState<'primary' | 'fallback' | 'avatar' | 'icon'>('primary')
-  const [loaded, setLoaded] = useState(false)
 
   const urls = getBestLogoUrl(logo, name, domain)
 
@@ -42,31 +34,15 @@ export default function BrandLogo({
   }
 
   const handleError = () => {
-    setLoaded(false)
-    if (loadState === 'primary') {
-      setLoadState('fallback')
-    } else if (loadState === 'fallback') {
-      setLoadState('avatar')
-    } else {
-      setLoadState('icon')
-    }
-  }
-
-  const handleLoad = () => {
-    setLoaded(true)
+    if (loadState === 'primary') setLoadState('fallback')
+    else if (loadState === 'fallback') setLoadState('avatar')
+    else setLoadState('icon')
   }
 
   if (loadState === 'icon') {
-    if (!showFallbackIcon) {
-      return (
-        <span className={`${sizeClasses[size]} flex items-center justify-center text-xs font-black font-mono text-gray-400 ${className}`}>
-          {name.substring(0, 2).toUpperCase()}
-        </span>
-      )
-    }
     return (
-      <span className={`material-symbols-outlined ${size === 'xs' ? 'text-sm' : size === 'sm' ? 'text-base' : size === 'md' ? 'text-xl' : 'text-2xl'} text-gray-300 ${className}`}>
-        rocket_launch
+      <span className={`${sizeClasses[size]} flex items-center justify-center text-[9px] font-black font-mono text-gray-400 ${className}`}>
+        {name.substring(0, 2).toUpperCase()}
       </span>
     )
   }
@@ -75,9 +51,8 @@ export default function BrandLogo({
     <img
       src={getCurrentSrc()}
       alt={`${name} logo`}
-      className={`${sizeClasses[size]} object-contain ${loaded ? 'opacity-100' : 'opacity-0'} transition-opacity duration-200 ${className}`}
-      loading="lazy"
-      onLoad={handleLoad}
+      className={`${sizeClasses[size]} object-contain ${className}`}
+      loading={eager ? 'eager' : 'lazy'}
       onError={handleError}
     />
   )

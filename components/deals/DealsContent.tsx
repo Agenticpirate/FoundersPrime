@@ -43,17 +43,15 @@ export default function DealsContent() {
   return (
     <div className="max-w-[1600px] mx-auto">
       {/* Mobile Category Filter Button */}
-      <div className="lg:hidden mb-3">
+      <div className="lg:hidden mb-2">
         <button
           onClick={() => setMobileCategoryOpen(true)}
-          className="flex items-center gap-2 px-4 py-2.5 border-2 border-black bg-white shadow-[3px_3px_0px_#111] font-mono text-xs font-bold uppercase tracking-wide hover:bg-gray-50 transition-all w-full"
+          className="flex items-center gap-2 px-3 py-2 border-2 border-black bg-white shadow-[2px_2px_0px_#111] font-mono text-[10px] font-bold uppercase tracking-wide hover:bg-gray-50 transition-all w-full"
         >
-          <span className="material-symbols-outlined text-base">filter_list</span>
+          <span className="material-symbols-outlined text-sm">filter_list</span>
           Filter by Category
           {activeCategory && (
-            <span className="ml-auto bg-black text-white text-[10px] px-2 py-0.5 font-bold uppercase">
-              1 active
-            </span>
+            <span className="ml-auto bg-black text-white text-[9px] px-1.5 py-0.5 font-bold">1</span>
           )}
         </button>
       </div>
@@ -108,15 +106,12 @@ export default function DealsContent() {
 
         {/* Right Column: Filters & Grid */}
         <div className="flex-1 min-w-0 flex flex-col gap-4">
-          {/* Pro Tip Alert */}
-          <div className="bg-yellow-50 border-2 border-yellow-200 p-4 rounded-sm flex items-start gap-3 shadow-sm">
-            <span className="material-symbols-outlined text-yellow-600 mt-0.5 shrink-0">lightbulb</span>
-            <div>
-              <p className="text-xs md:text-sm text-yellow-800 font-medium">
-                <span className="font-bold uppercase tracking-wider text-[10px] md:text-xs bg-yellow-200 px-1 py-0.5 rounded-sm mr-2 mb-1 inline-block">Pro Tip</span>
-                Use a professional email/domain (e.g. name@startup.com) instead of generic providers (gmail, yahoo) to increase approval chances.
-              </p>
-            </div>
+          {/* Pro Tip */}
+          <div className="bg-yellow-50 border border-yellow-200 px-3 py-2 rounded-sm flex items-start gap-2">
+            <span className="material-symbols-outlined text-yellow-600 text-sm mt-0.5 shrink-0">lightbulb</span>
+            <p className="text-[10px] md:text-xs text-yellow-800">
+              <span className="font-bold">Pro Tip:</span> Use a professional email (name@startup.com) to increase approval chances.
+            </p>
           </div>
 
           <DealsFilterBar onFilterChange={handleFilterChange} currentFilters={filters} />
