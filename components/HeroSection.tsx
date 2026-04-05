@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import CountUp from 'react-countup'
 import { GlowingEffect } from '@/components/ui/GlowingEffect'
+import BrandLogo from '@/components/ui/BrandLogo'
 
 /* ─── Module-level constant: created once, never re-created on render ─── */
 const BRANDS = [
@@ -56,11 +57,11 @@ export default function HeroSection() {
   }, [])
 
   return (
-    <section className="relative min-h-[calc(100dvh-80px)] md:min-h-[calc(100vh-120px)] pt-2 pb-0 md:pt-10 md:pb-0 lg:pt-14 overflow-hidden grid-bg flex flex-col justify-between">
+    <section className="relative min-h-[calc(100dvh-100px)] md:min-h-[calc(100vh-120px)] pt-6 pb-4 md:pt-10 md:pb-0 lg:pt-14 overflow-hidden grid-bg flex flex-col">
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full mb-0 md:mb-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-16 items-center">
           <div className="lg:col-span-7 flex flex-col justify-center items-start pt-0">
-            <div className="inline-flex items-center gap-2 bg-white neo-border px-2 py-0.5 mb-3 md:mb-3 neo-shadow-static hero-mobile-fade hero-mobile-fade-1">
+            <div className="inline-flex items-center gap-2 bg-white neo-border px-2 py-0.5 mb-3 md:mb-3 mt-2 md:mt-0 neo-shadow-static hero-mobile-fade hero-mobile-fade-1">
               <span className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></span>
               <span className="text-[9px] sm:text-xs font-mono font-bold text-black uppercase tracking-wide">VERIFIED GRANTS, CREDITS &amp; FOUNDER PROGRAMS</span>
             </div>
@@ -259,14 +260,8 @@ export default function HeroSection() {
           <div className="mobile-brand-marquee flex items-center gap-5 whitespace-nowrap">
             {BRANDS_LOOP.map((b, i) => (
               <div key={`brand-${i}`} className="flex flex-col items-center gap-0.5 flex-shrink-0">
-                <div className="w-8 h-8 bg-white border-2 border-black flex items-center justify-center shadow-[1px_1px_0px_0px_rgba(0,0,0,1)]">
-                  <img
-                    src={`https://www.google.com/s2/favicons?domain=${b.domain}&sz=64`}
-                    alt={b.name}
-                    className="w-4 h-4 object-contain"
-                    loading="lazy"
-                    onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
-                  />
+                <div className="w-8 h-8 bg-white border-2 border-black flex items-center justify-center shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] p-1">
+                  <BrandLogo name={b.name} domain={b.domain} size="sm" showFallbackIcon={false} />
                 </div>
                 <span className="text-[7px] font-mono text-gray-500 font-bold uppercase truncate max-w-[32px] text-center">{b.name.split(' ')[0]}</span>
               </div>

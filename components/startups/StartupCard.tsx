@@ -35,37 +35,45 @@ const FounderAvatar = ({ founder }: { founder: { name: string, avatar?: string }
 
 export default function StartupCard({ company }: StartupCardProps) {
   const getInitialLogoSrc = () => {
-    // Priority: small_logo_thumb_url → Google Favicon from website → null
+    // Priority: small_logo_thumb_url → Clearbit from website → null
     if (company.small_logo_thumb_url) return company.small_logo_thumb_url
     if (company.website) {
       try {
-        const domain = new URL(company.website).hostname
-        return `https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://${domain}&size=128`
+        const domain = new URL(company.website).hostname.replace('www.', '')
+        return `https://logo.clearbit.com/${domain}`
       } catch { return null }
     }
     return null
   }
 
   const [imgSrc, setImgSrc] = useState<string | null>(getInitialLogoSrc())
-  const [triedFallback, setTriedFallback] = useState(false)
+  const [fallbackIndex, setFallbackIndex] = useState(0)
 
   useEffect(() => {
     setImgSrc(getInitialLogoSrc())
-    setTriedFallback(false)
+    setFallbackIndex(0)
   }, [company.small_logo_thumb_url, company.website])
 
   const handleImageError = () => {
-    if (!triedFallback && company.website) {
-       try {
-           const domain = new URL(company.website).hostname
-           // Try Google Favicon (sz=128 for higher quality) as second fallback
-           setImgSrc(`https://www.google.com/s2/favicons?domain=${domain}&sz=128`)
-           setTriedFallback(true)
-       } catch {
-           setImgSrc(null)
-       }
+    if (company.website) {
+      try {
+        const domain = new URL(company.website).hostname.replace('www.', '')
+        const fallbacks = [
+          `https://logo.clearbit.com/${domain}`,
+          `https://www.google.com/s2/favicons?domain=${domain}&sz=128`,
+        ]
+        const nextIndex = fallbackIndex + 1
+        if (nextIndex < fallbacks.length) {
+          setImgSrc(fallbacks[nextIndex])
+          setFallbackIndex(nextIndex)
+        } else {
+          setImgSrc(null)
+        }
+      } catch {
+        setImgSrc(null)
+      }
     } else {
-       setImgSrc(null)
+      setImgSrc(null)
     }
   }
 

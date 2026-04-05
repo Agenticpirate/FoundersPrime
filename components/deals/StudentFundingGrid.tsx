@@ -7,13 +7,14 @@ import DealCard from './DealCard'
 import AcceleratorsSearch from './AcceleratorsSearch'
 import Pagination from '@/components/Pagination'
 
-// Helper for logo
+// Helper for logo - uses Clearbit with fallback chain
 const getLogo = (url: string, company: string) => {
     try {
-        const domain = new URL(url).hostname;
-        return `https://www.google.com/s2/favicons?domain=${domain}&sz=128`;
+        const domain = new URL(url).hostname.replace('www.', '');
+        return `https://logo.clearbit.com/${domain}`;
     } catch (e) {
-        return `https://ui-avatars.com/api/?name=${encodeURIComponent(company)}&background=random`;
+        const cleaned = company.toLowerCase().replace(/[^a-z0-9]/g, '');
+        return `https://logo.clearbit.com/${cleaned}.com`;
     }
 }
 

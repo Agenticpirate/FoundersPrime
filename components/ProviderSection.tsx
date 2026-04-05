@@ -132,18 +132,36 @@ export default function ProviderSection() {
 }
 
 function ProviderAvatar({ brand }: { brand: { name: string, domain: string } }) {
-  const [error, setError] = useState(false)
+  const [fallbackIndex, setFallbackIndex] = useState(0)
+  const [loaded, setLoaded] = useState(false)
+  const [failed, setFailed] = useState(false)
+
+  const fallbackChain = [
+    `https://logo.clearbit.com/${brand.domain}`,
+    `https://www.google.com/s2/favicons?domain=${brand.domain}&sz=128`,
+  ]
+
+  const handleError = () => {
+    const nextIndex = fallbackIndex + 1
+    if (nextIndex < fallbackChain.length) {
+      setFallbackIndex(nextIndex)
+      setLoaded(false)
+    } else {
+      setFailed(true)
+    }
+  }
 
   return (
-    <div className={`w-8 h-8 rounded-full border-2 border-white flex items-center justify-center overflow-hidden ring-1 ring-transparent group-hover:ring-[#101622] transition-all relative z-0 hover:z-10 hover:-translate-y-1 ${error ? 'bg-[#101622] text-white' : 'bg-white'}`}>
-      {error ? (
+    <div className={`w-8 h-8 rounded-full border-2 border-white flex items-center justify-center overflow-hidden ring-1 ring-transparent group-hover:ring-[#101622] transition-all relative z-0 hover:z-10 hover:-translate-y-1 ${failed ? 'bg-[#101622] text-white' : 'bg-white'}`}>
+      {failed ? (
         <span className="text-[9px] font-bold">{brand.name[0]}</span>
       ) : (
         <img
-          src={`https://www.google.com/s2/favicons?domain=${brand.domain}&sz=128`}
+          src={fallbackChain[fallbackIndex]}
           alt={brand.name}
-          className="w-full h-full object-contain p-1"
-          onError={() => setError(true)}
+          className={`w-full h-full object-contain p-1 transition-opacity duration-200 ${loaded ? 'opacity-100' : 'opacity-0'}`}
+          onLoad={() => setLoaded(true)}
+          onError={handleError}
         />
       )}
     </div>

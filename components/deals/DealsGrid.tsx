@@ -261,9 +261,9 @@ export default function DealsGrid({ filters }: DealsGridProps) {
     let logoFallback: string | null = null;
     if (providerUrl) {
       try {
-        const domain = new URL(providerUrl).hostname;
-        // Google's favicon service — fast, reliable, no external rate limits
-        logoFallback = `https://www.google.com/s2/favicons?domain=${domain}&sz=128`;
+        const domain = new URL(providerUrl).hostname.replace('www.', '');
+        // Use Clearbit for high-quality logos
+        logoFallback = `https://logo.clearbit.com/${domain}`;
       } catch (e) {
         // Ignore invalid URL — logoFallback stays null, card shows initials
       }

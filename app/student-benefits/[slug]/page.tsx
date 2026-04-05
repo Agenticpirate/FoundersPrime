@@ -5,6 +5,7 @@ import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import DealLogo from '@/components/deals/DealLogo'
 import { studentBenefits2026, StudentBenefit } from '@/data/student-benefits-2026'
+import { GlowingEffect } from '@/components/ui/GlowingEffect'
 
 // Force dynamic rendering
 export const dynamic = 'force-dynamic'
@@ -259,15 +260,25 @@ export default async function StudentBenefitDetailPage({ params }: PageProps) {
 
                                 {/* Apply button in header */}
                                 <div className="flex-shrink-0">
-                                    <a
-                                        href={benefitData.claimUrl || benefitData.url}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="inline-flex items-center gap-2 rounded-sm border-3 border-black bg-primary px-8 py-4 font-mono text-base font-bold uppercase text-black shadow-[6px_6px_0px_#111111] hover:bg-primary-dark hover:shadow-[4px_4px_0px_#111111] hover:translate-x-[2px] hover:translate-y-[2px] transition-all"
-                                    >
-                                        Apply Now
-                                        <span className="material-symbols-outlined">arrow_forward</span>
-                                    </a>
+                                    <div className="relative rounded-sm">
+                                        <GlowingEffect
+                                            spread={40}
+                                            glow={false}
+                                            disabled={false}
+                                            proximity={64}
+                                            inactiveZone={0.01}
+                                            borderWidth={2}
+                                        />
+                                        <a
+                                            href={benefitData.claimUrl || benefitData.url}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="relative inline-flex items-center gap-2 rounded-sm border-3 border-black bg-primary px-8 py-4 font-mono text-base font-bold uppercase text-black shadow-[6px_6px_0px_#111111] hover:bg-primary-dark hover:shadow-[4px_4px_0px_#111111] hover:translate-x-[2px] hover:translate-y-[2px] transition-all"
+                                        >
+                                            Apply Now
+                                            <span className="material-symbols-outlined">arrow_forward</span>
+                                        </a>
+                                    </div>
                                     <div className="mt-2 text-center">
                                         <span className="text-xs font-mono text-gray-600">
                                             {benefitData.region} • {benefitData.value}

@@ -2,11 +2,66 @@ import { useState, useMemo, useEffect } from 'react'
 import { useRouter, useSearchParams, usePathname } from 'next/navigation'
 import { grants2026, Grant } from '@/data/grants-2026'
 import Link from 'next/link'
-import Image from 'next/image'
 import Pagination from '@/components/Pagination'
 import { useAuth } from '@/lib/auth/hooks'
 import { checkProStatus } from '@/lib/auth/user-context'
 import ProGateOverlay from '@/components/ProGateOverlay'
+
+// Logo component with fallback chain
+function GrantLogo({ grant }: { grant: Grant }) {
+  const [fallbackIndex, setFallbackIndex] = useState(0)
+  const [loaded, setLoaded] = useState(false)
+  const [failed, setFailed] = useState(false)
+
+  let domain = ''
+  try {
+    domain = new URL(grant.website).hostname.replace('www.', '')
+  } catch {}
+
+  const fallbackChain = [
+    grant.logo,
+    domain ? `https://logo.clearbit.com/${domain}` : null,
+    domain ? `https://www.google.com/s2/favicons?domain=${domain}&sz=128` : null,
+  ].filter(Boolean) as string[]
+
+  if (fallbackChain.length === 0) {
+    fallbackChain.push(`https://ui-avatars.com/api/?name=${encodeURIComponent(grant.organization)}&background=f3f4f6&color=374151&bold=true&size=128`)
+  }
+
+  const handleError = () => {
+    const nextIndex = fallbackIndex + 1
+    if (nextIndex < fallbackChain.length) {
+      setFallbackIndex(nextIndex)
+      setLoaded(false)
+    } else {
+      setFailed(true)
+    }
+  }
+
+  useEffect(() => {
+    setFallbackIndex(0)
+    setLoaded(false)
+    setFailed(false)
+  }, [grant.id])
+
+  if (failed) {
+    return (
+      <span className="text-xs font-black font-mono text-gray-400">
+        {grant.organization.substring(0, 2).toUpperCase()}
+      </span>
+    )
+  }
+
+  return (
+    <img
+      src={fallbackChain[fallbackIndex]}
+      alt=""
+      className={`w-full h-full object-contain transition-opacity duration-200 ${loaded ? 'opacity-100' : 'opacity-0'}`}
+      onLoad={() => setLoaded(true)}
+      onError={handleError}
+    />
+  )
+}
 
 export default function GrantsGrid() {
   const { user } = useAuth()
@@ -199,12 +254,8 @@ export default function GrantsGrid() {
 
             {/* Logo + Title */}
             <div className="flex items-center gap-3 px-4 pt-3 pb-3">
-              <div className="w-12 h-12 bg-white border-2 border-gray-200 flex items-center justify-center p-1.5 flex-shrink-0 rounded-sm overflow-hidden">
-                <img
-                  src={grant.logo || `https://www.google.com/s2/favicons?domain=${(() => { try { return new URL(grant.website).hostname } catch { return '' } })()}&sz=64`}
-                  alt="" className="w-full h-full object-contain"
-                  onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; const p = (e.target as HTMLImageElement).parentElement; if (p) p.innerHTML = `<span class="text-xs font-black font-mono text-gray-400">${grant.organization.substring(0, 2).toUpperCase()}</span>` }}
-                />
+              <div className="w-12 h-12 bg-gray-50 border-2 border-gray-200 flex items-center justify-center p-1.5 flex-shrink-0 rounded-sm overflow-hidden">
+                <GrantLogo grant={grant} />
               </div>
               <div className="flex-1 min-w-0">
                 <h3 className="text-sm font-bold text-gray-900 leading-snug group-hover:text-black transition-colors line-clamp-2">
@@ -239,12 +290,8 @@ export default function GrantsGrid() {
             {filteredGrants.slice(3, 9).map((grant) => (
               <div key={grant.id} className="flex flex-col bg-white border-2 border-black overflow-hidden p-4 gap-2" tabIndex={-1}>
                 <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 bg-gray-50 border-2 border-gray-200 flex items-center justify-center flex-shrink-0 rounded-sm">
-                    {grant.logo ? (
-                      <img src={grant.logo} alt="" className="w-full h-full object-contain p-1.5" />
-                    ) : (
-                      <span className="material-symbols-outlined text-xl text-gray-400">workspace_premium</span>
-                    )}
+                  <div className="w-12 h-12 bg-gray-50 border-2 border-gray-200 flex items-center justify-center p-1.5 flex-shrink-0 rounded-sm overflow-hidden">
+                    <GrantLogo grant={grant} />
                   </div>
                   <div className="min-w-0">
                     <p className="text-sm font-bold text-gray-900 line-clamp-2">{grant.name}</p>

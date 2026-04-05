@@ -1,6 +1,40 @@
 'use client'
 
-import React from 'react'
+import React, { useState } from 'react'
+
+function PartnerLogo({ partner }: { partner: { name: string; domain: string } }) {
+    const [fallbackIndex, setFallbackIndex] = useState(0)
+    const [loaded, setLoaded] = useState(false)
+    const [failed, setFailed] = useState(false)
+
+    const fallbackChain = [
+        `https://logo.clearbit.com/${partner.domain}`,
+        `https://www.google.com/s2/favicons?domain=${partner.domain}&sz=128`,
+    ]
+
+    const handleError = () => {
+        const nextIndex = fallbackIndex + 1
+        if (nextIndex < fallbackChain.length) {
+            setFallbackIndex(nextIndex)
+            setLoaded(false)
+        } else {
+            setFailed(true)
+        }
+    }
+
+    if (failed) return null
+
+    return (
+        <img
+            src={fallbackChain[fallbackIndex]}
+            alt={`${partner.name} logo`}
+            className={`w-7 h-7 md:w-10 md:h-10 object-contain transition-opacity duration-200 ${loaded ? 'opacity-100' : 'opacity-0'}`}
+            loading="lazy"
+            onLoad={() => setLoaded(true)}
+            onError={handleError}
+        />
+    )
+}
 
 export default function PricingPartnerLogos() {
     const partners = [
@@ -64,15 +98,7 @@ export default function PricingPartnerLogos() {
                     <div className="flex gap-8 md:gap-12 animate-marquee whitespace-nowrap items-center">
                         {seamlessPartners.map((partner, index) => (
                             <div key={`${partner.name}-${index}`} className="flex items-center justify-center w-20 md:w-24 h-12 flex-shrink-0 transition-all duration-300 hover:scale-110">
-                                <img
-                                    src={`https://www.google.com/s2/favicons?domain=${partner.domain}&sz=128`}
-                                    alt={`${partner.name} logo`}
-                                    className="w-7 h-7 md:w-10 md:h-10 object-contain"
-                                    loading="lazy"
-                                    onError={(e) => {
-                                        (e.target as HTMLImageElement).style.display = 'none';
-                                    }}
-                                />
+                                <PartnerLogo partner={partner} />
                             </div>
                         ))}
                     </div>

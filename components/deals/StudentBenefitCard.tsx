@@ -1,20 +1,113 @@
 'use client'
 
-import Image from 'next/image'
-import Link from 'next/link'
+import { useState, useEffect } from 'react'
 import { StudentBenefit } from '@/data/student-benefits-2026'
 
-// Helper to extract domain for logo
-const getLogo = (benefit: StudentBenefit) => {
-    if (benefit.logo) {
-        return benefit.logo;
-    }
+// Extract domain from URL
+const extractDomain = (url: string): string | null => {
     try {
-        const domain = new URL(benefit.url).hostname;
-        return `https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://${domain}&size=128`;
-    } catch (e) {
-        return `https://ui-avatars.com/api/?name=${encodeURIComponent(benefit.company)}&background=random`;
+        return new URL(url).hostname.replace('www.', '')
+    } catch {
+        return null
     }
+}
+
+// Company to domain mapping for common brands
+const companyToDomain = (company: string): string => {
+    const cleaned = company.toLowerCase().replace(/[^a-z0-9]/g, '')
+    const domainMap: Record<string, string> = {
+        'spotify': 'spotify.com',
+        'medium': 'medium.com',
+        'figma': 'figma.com',
+        'gitlab': 'gitlab.com',
+        'cursor': 'cursor.com',
+        'framer': 'framer.com',
+        'microsoft': 'microsoft.com',
+        'miro': 'miro.com',
+        'google': 'google.com',
+        'youtube': 'youtube.com',
+        'amazon': 'amazon.com',
+        'adobe': 'adobe.com',
+        'thenewyorktimes': 'nytimes.com',
+        'nytimes': 'nytimes.com',
+        'wallstreetjournal': 'wsj.com',
+        'wsj': 'wsj.com',
+        'theeconomist': 'economist.com',
+        'economist': 'economist.com',
+        'babbel': 'babbel.com',
+        'youneedabudget': 'ynab.com',
+        'ynab': 'ynab.com',
+        'everyplate': 'everyplate.com',
+        'homechef': 'homechef.com',
+        'zipcar': 'zipcar.com',
+        'unitedairlines': 'united.com',
+        'united': 'united.com',
+        'studentuniverse': 'studentuniverse.com',
+        'thenorthface': 'thenorthface.com',
+        'northface': 'thenorthface.com',
+        'jcrew': 'jcrew.com',
+        'madewell': 'madewell.com',
+        'katespade': 'katespade.com',
+        'tommyhilfiger': 'tommy.com',
+        'reebok': 'reebok.com',
+        'apple': 'apple.com',
+        'notion': 'notion.so',
+        'github': 'github.com',
+        'slack': 'slack.com',
+        'discord': 'discord.com',
+        'canva': 'canva.com',
+        'airtable': 'airtable.com',
+    }
+    return domainMap[cleaned] || `${cleaned}.com`
+}
+
+function BenefitLogo({ benefit }: { benefit: StudentBenefit }) {
+    const [fallbackIndex, setFallbackIndex] = useState(0)
+    const [loaded, setLoaded] = useState(false)
+    const [failed, setFailed] = useState(false)
+
+    const domain = extractDomain(benefit.url) || companyToDomain(benefit.company)
+    const fallbackChain = [
+        `https://logo.clearbit.com/${domain}`,
+        `https://www.google.com/s2/favicons?domain=${domain}&sz=128`,
+        `https://ui-avatars.com/api/?name=${encodeURIComponent(benefit.company)}&background=f3f4f6&color=374151&bold=true&size=128`
+    ]
+
+    const currentSrc = fallbackChain[fallbackIndex]
+
+    const handleError = () => {
+        const nextIndex = fallbackIndex + 1
+        if (nextIndex < fallbackChain.length) {
+            setFallbackIndex(nextIndex)
+            setLoaded(false)
+        } else {
+            setFailed(true)
+        }
+    }
+
+    useEffect(() => {
+        setFallbackIndex(0)
+        setLoaded(false)
+        setFailed(false)
+    }, [benefit.company])
+
+    if (failed) {
+        return (
+            <span className="text-xs font-black font-mono text-gray-400">
+                {benefit.company.substring(0, 2).toUpperCase()}
+            </span>
+        )
+    }
+
+    return (
+        <img
+            src={currentSrc}
+            alt={benefit.company}
+            className={`w-full h-full object-contain transition-opacity duration-200 ${loaded ? 'opacity-100' : 'opacity-0'}`}
+            onLoad={() => setLoaded(true)}
+            onError={handleError}
+        />
+    )
 }
 
 export default function StudentBenefitCard({ benefit }: { benefit: StudentBenefit }) {
@@ -30,15 +123,8 @@ export default function StudentBenefitCard({ benefit }: { benefit: StudentBenefi
             </div>
 
             <div className="flex items-start gap-2 mb-2 md:mb-4">
-                <div className="w-9 h-9 md:w-12 md:h-12 border-2 border-black p-0.5 md:p-1 flex-shrink-0 bg-gray-50">
-                    <img
-                        src={getLogo(benefit)}
-                        alt={benefit.company}
-                        className="w-full h-full object-contain"
-                        onError={(e) => {
-                            (e.target as HTMLImageElement).src = `https://ui-avatars.com/api/?name=${encodeURIComponent(benefit.company)}&background=random`
-                        }}
-                    />
+                <div className="w-9 h-9 md:w-12 md:h-12 border-2 border-black p-0.5 md:p-1 flex-shrink-0 bg-gray-50 flex items-center justify-center">
+                    <BenefitLogo benefit={benefit} />
                 </div>
                 <div className="min-w-0">
                     <h3 className="font-bold text-sm md:text-lg leading-tight group-hover:text-primary transition-colors line-clamp-1">

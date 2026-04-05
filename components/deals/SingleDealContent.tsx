@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation'
 import { isProUser, isExplorerUser } from '@/lib/auth/user-context'
 import ProUpgradeModal from '@/components/ProUpgradeModal'
 import { claimDeal } from '@/app/actions/deal-actions'
+import { GlowingEffect } from '@/components/ui/GlowingEffect'
 
 interface Deal {
   id: string
@@ -273,20 +274,30 @@ export default function SingleDealContent({ deal, freeAccess = false, basePath =
             {isLoadingPro ? (
               <div className="w-full h-12 bg-gray-100 animate-pulse rounded-sm mb-3"></div>
             ) : (
-              <button
-                onClick={handleApplyClick}
-                disabled={isClaiming}
-                className="w-full rounded-sm border-2 md:border-4 border-black bg-primary py-3 md:py-4 font-mono text-sm md:text-base font-bold uppercase tracking-wide text-black shadow-[3px_3px_0px_#111111] hover:bg-yellow-300 transition-all mb-3 flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
-              >
-                {isClaiming ? (
-                    'Claiming...'
-                ) : (
-                    freeAccess ? 'Apply Now' : (isPro || isExplorer) ? 'Apply Now' : 'Apply Now (Premium)'
-                )}
-                <span className="material-symbols-outlined !text-[18px]">
-                    {isClaiming ? 'hourglass_empty' : (freeAccess || isPro || isExplorer ? 'arrow_forward' : 'lock')}
-                </span>
-              </button>
+              <div className="relative rounded-sm mb-3">
+                <GlowingEffect
+                  spread={40}
+                  glow={false}
+                  disabled={false}
+                  proximity={64}
+                  inactiveZone={0.01}
+                  borderWidth={2}
+                />
+                <button
+                  onClick={handleApplyClick}
+                  disabled={isClaiming}
+                  className="relative w-full rounded-sm border-2 md:border-4 border-black bg-primary py-3 md:py-4 font-mono text-sm md:text-base font-bold uppercase tracking-wide text-black shadow-[3px_3px_0px_#111111] hover:bg-yellow-300 hover:shadow-[5px_5px_0px_#111111] hover:-translate-x-px hover:-translate-y-px transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+                >
+                  {isClaiming ? (
+                      'Claiming...'
+                  ) : (
+                      freeAccess ? 'Apply Now' : (isPro || isExplorer) ? 'Apply Now' : 'Apply Now (Premium)'
+                  )}
+                  <span className="material-symbols-outlined !text-[18px]">
+                      {isClaiming ? 'hourglass_empty' : (freeAccess || isPro || isExplorer ? 'arrow_forward' : 'lock')}
+                  </span>
+                </button>
+              </div>
             )}
 
             <div className="grid grid-cols-2 gap-2">
@@ -475,16 +486,26 @@ export default function SingleDealContent({ deal, freeAccess = false, basePath =
             {isLoadingPro ? (
               <div className="h-12 w-40 bg-gray-100 animate-pulse rounded-sm"></div>
             ) : (
-              <button
-                onClick={handleApplyClick}
-                disabled={isClaiming}
-                className="inline-flex items-center gap-2 rounded-sm border-2 border-black bg-primary px-6 py-3 font-mono text-sm font-bold uppercase text-black shadow-[3px_3px_0px_#111] hover:bg-yellow-300 transition-all cursor-pointer disabled:opacity-50"
-              >
-                {isClaiming ? 'Claiming...' : (freeAccess ? 'Apply Now' : (isPro || isExplorer) ? 'Apply Now' : 'Apply Now (Premium)')}
-                <span className="material-symbols-outlined text-base">
-                    {isClaiming ? 'hourglass_empty' : (freeAccess || isPro || isExplorer ? 'arrow_forward' : 'lock')}
-                </span>
-              </button>
+              <div className="relative inline-block rounded-sm">
+                <GlowingEffect
+                  spread={40}
+                  glow={false}
+                  disabled={false}
+                  proximity={64}
+                  inactiveZone={0.01}
+                  borderWidth={2}
+                />
+                <button
+                  onClick={handleApplyClick}
+                  disabled={isClaiming}
+                  className="relative inline-flex items-center gap-2 rounded-sm border-2 border-black bg-primary px-6 py-3 font-mono text-sm font-bold uppercase text-black shadow-[3px_3px_0px_#111] hover:bg-yellow-300 hover:shadow-[5px_5px_0px_#111] hover:-translate-x-px hover:-translate-y-px transition-all cursor-pointer disabled:opacity-50"
+                >
+                  {isClaiming ? 'Claiming...' : (freeAccess ? 'Apply Now' : (isPro || isExplorer) ? 'Apply Now' : 'Apply Now (Premium)')}
+                  <span className="material-symbols-outlined text-base">
+                      {isClaiming ? 'hourglass_empty' : (freeAccess || isPro || isExplorer ? 'arrow_forward' : 'lock')}
+                  </span>
+                </button>
+              </div>
             )}
           </div>
         </section>
