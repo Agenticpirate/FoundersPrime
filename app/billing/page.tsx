@@ -18,7 +18,7 @@ export default async function BillingPage() {
   const { data: adminUser } = await supabase
     .from('admin_users').select('role').eq('email', user.email).single()
 
-  const PRO_USERS = ['raviteja.journal@gmail.com']
+  const PRO_USERS = ['raviteja.journal@gmail.com', 'hello@axionxlab.com']
   const isPro = !!adminUser || PRO_USERS.includes(user.email || '')
   const isAdmin = !!adminUser
   const userName = user.user_metadata?.full_name || user.email?.split('@')[0] || 'Founder'

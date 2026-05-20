@@ -26,7 +26,7 @@ export default async function DashboardPage({
     .from('admin_users').select('role').eq('email', user.email).single()
 
   const isPaymentSuccess = searchParams?.status === 'succeeded' || searchParams?.status === 'completed'
-  const PRO_USERS = ['raviteja.journal@gmail.com']
+  const PRO_USERS = ['raviteja.journal@gmail.com', 'hello@axionxlab.com']
   const isPro = !!adminUser || PRO_USERS.includes(user.email || '') || isPaymentSuccess
   const isAdmin = !!adminUser
   const userName = user.user_metadata?.full_name || user.email?.split('@')[0] || 'Founder'

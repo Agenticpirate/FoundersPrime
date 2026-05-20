@@ -19,7 +19,7 @@ export interface UserProfile {
 // Admin/Pro users who get full access
 const PRO_USERS = [
   'raviteja.journal@gmail.com',
-  // Add more pro users here
+  'hello@axionxlab.com',
 ]
 
 // Check if user has Pro access

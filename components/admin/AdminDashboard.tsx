@@ -29,13 +29,13 @@ export default function AdminDashboard() {
         ))}
       </div>
 
-      {/* Stats Overview — 4 col always */}
+      {/* Stats Overview — Real Data */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 md:gap-3 mb-4 md:mb-6">
         {[
-          { label: 'Users', value: '12,847', change: '+12%', accent: 'bg-primary' },
-          { label: 'Pro Subs', value: '2,341', change: '+5%', accent: 'bg-accent-yellow' },
-          { label: 'Lifetime', value: '847', change: '+1%', accent: 'bg-blue-500' },
-          { label: 'MRR', value: '$18,420', change: '+8%', accent: 'bg-black', dark: true },
+          { label: 'Total Users', value: '2', change: 'Early stage', accent: 'bg-primary' },
+          { label: 'Paid Subs', value: '1', change: 'Founder Plan', accent: 'bg-accent-yellow' },
+          { label: 'Lifetime', value: '0', change: '—', accent: 'bg-blue-500' },
+          { label: 'ARR', value: '$89.99', change: 'Yearly', accent: 'bg-black', dark: true },
         ].map((s) => (
           <div key={s.label} className={`${s.dark ? 'bg-black text-white' : 'bg-white'} p-3 border-2 border-black shadow-[2px_2px_0px_#111] relative overflow-hidden`}>
             <div className={`absolute -right-4 -top-4 w-12 h-12 ${s.accent} rounded-full ${s.dark ? 'border-white/20' : 'border-black'} border opacity-30`} />
@@ -51,10 +51,10 @@ export default function AdminDashboard() {
       {/* Quick Stats */}
       <div className="grid grid-cols-4 gap-2 mb-4 md:mb-6">
         {[
-          { label: 'Active Deals', value: '523', Icon: CheckCircle, bg: 'bg-white', text: 'text-black' },
-          { label: 'Pending', value: '12', Icon: Clock, bg: 'bg-accent-yellow', text: 'text-black' },
-          { label: 'Expiring', value: '8', Icon: Calendar, bg: 'bg-white', text: 'text-black' },
-          { label: 'Issues', value: '3', Icon: AlertTriangle, bg: 'bg-red-500', text: 'text-white' },
+          { label: 'Active Deals', value: '—', Icon: CheckCircle, bg: 'bg-white', text: 'text-black' },
+          { label: 'Pending', value: '0', Icon: Clock, bg: 'bg-accent-yellow', text: 'text-black' },
+          { label: 'Expiring', value: '0', Icon: Calendar, bg: 'bg-white', text: 'text-black' },
+          { label: 'Issues', value: '0', Icon: AlertTriangle, bg: 'bg-green-500', text: 'text-white' },
         ].map((s) => (
           <div key={s.label} className={`${s.bg} ${s.text} p-2 md:p-3 border-2 border-black shadow-[2px_2px_0px_#111]`}>
             <div className="flex justify-between items-start mb-1">
@@ -75,7 +75,7 @@ export default function AdminDashboard() {
             <div className="flex justify-between items-center mb-3 border-b-2 border-black pb-2">
               <h3 className="font-mono font-bold text-sm md:text-lg uppercase">Revenue</h3>
               <div className="flex gap-1">
-                {['MRR', 'YTD'].map((t) => (
+                {['ARR', 'ALL TIME'].map((t) => (
                   <button key={t} onClick={() => setTimeRange(t)} className={`px-2 py-0.5 font-mono text-[10px] font-bold border-2 border-black ${timeRange === t ? 'bg-black text-white' : 'bg-white text-black'}`}>
                     {t}
                   </button>
@@ -83,28 +83,28 @@ export default function AdminDashboard() {
               </div>
             </div>
 
-            {/* Chart */}
-            <div className="w-full h-32 md:h-48 bg-gray-50 border-2 border-dashed border-gray-300 mb-3 flex items-end justify-between px-2 pb-0 pt-4">
-              {[40, 55, 45, 60, 70, 65, 80, 75, 90].map((h, i) => (
-                <div key={i} className={`w-[9%] border-x border-t border-black ${[4, 6].includes(i) ? 'bg-primary' : i === 8 ? 'bg-accent-yellow' : 'bg-gray-200'}`} style={{ height: `${h}%` }} />
-              ))}
+            {/* Summary */}
+            <div className="w-full bg-gray-50 border-2 border-dashed border-gray-300 mb-3 p-4 md:p-6 text-center">
+              <p className="font-mono text-[10px] text-gray-400 uppercase mb-1">Total Revenue to Date</p>
+              <p className="font-black text-3xl md:text-4xl font-mono text-green-700">$89.99</p>
+              <p className="font-mono text-[10px] text-gray-500 mt-1">1 × Founder Yearly Plan</p>
             </div>
 
             {/* Table */}
             <table className="w-full text-left font-mono text-[11px] md:text-xs">
               <thead className="border-b-2 border-black bg-gray-50">
                 <tr>
-                  <th className="p-2 font-bold uppercase">Source</th>
-                  <th className="p-2 font-bold uppercase">Users</th>
+                  <th className="p-2 font-bold uppercase">Plan</th>
+                  <th className="p-2 font-bold uppercase">Subscribers</th>
                   <th className="p-2 font-bold uppercase">Revenue</th>
                   <th className="p-2 font-bold uppercase hidden sm:table-cell">Status</th>
                 </tr>
               </thead>
               <tbody>
                 {[
-                  { src: 'Pro Monthly', users: '1,842', rev: '$9,210', status: 'Stable', color: 'bg-green-500' },
-                  { src: 'Pro Annual', users: '499', rev: '$5,489', status: 'Growing', color: 'bg-green-500' },
-                  { src: 'Lifetime', users: '847', rev: '$3,721', status: 'Review', color: 'bg-yellow-400' },
+                  { src: 'Explorer Monthly', users: '0', rev: '$0', status: 'No subs', color: 'bg-gray-300' },
+                  { src: 'Founder Yearly', users: '1', rev: '$89.99', status: 'Active', color: 'bg-green-500' },
+                  { src: 'Legend Lifetime', users: '0', rev: '$0', status: 'No subs', color: 'bg-gray-300' },
                 ].map((r) => (
                   <tr key={r.src} className="border-b border-gray-100 hover:bg-gray-50">
                     <td className="p-2 font-bold">{r.src}</td>
@@ -119,18 +119,39 @@ export default function AdminDashboard() {
             </table>
           </section>
 
+          {/* Paid Users */}
+          <section className="bg-white border-2 border-black shadow-[3px_3px_0px_#111] p-3 md:p-5">
+            <div className="flex justify-between items-center mb-3">
+              <h3 className="font-mono font-bold text-sm md:text-lg uppercase">Paid Users</h3>
+            </div>
+            <div className="flex flex-col gap-1.5">
+              <div className="flex items-center gap-3 p-3 border border-black bg-green-50">
+                <div className="w-8 h-8 bg-accent-yellow border border-black flex items-center justify-center font-mono font-black text-sm">
+                  S
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="font-mono font-bold text-xs">Sammy Ray</p>
+                  <p className="font-mono text-[10px] text-gray-500 truncate">hello@axionxlab.com</p>
+                </div>
+                <div className="text-right flex-shrink-0">
+                  <span className="bg-accent-yellow text-black text-[8px] font-bold px-2 py-0.5 border border-black">FOUNDER</span>
+                  <p className="font-mono text-[9px] text-gray-400 mt-0.5">$89.99/yr</p>
+                </div>
+              </div>
+            </div>
+          </section>
+
           {/* Tasks */}
           <section className="bg-white border-2 border-black shadow-[3px_3px_0px_#111] p-3 md:p-5">
             <div className="flex justify-between items-center mb-3">
               <h3 className="font-mono font-bold text-sm md:text-lg uppercase">Tasks</h3>
-              <button className="text-[10px] font-mono underline decoration-primary underline-offset-2 hover:text-primary">View All</button>
             </div>
             <div className="flex flex-col gap-1.5">
               {[
-                { text: 'Verify 5 new grant applications', priority: 'HIGH', bg: 'bg-accent-yellow', done: false },
-                { text: 'Approve 2 incubator listings for YC S24', priority: 'MED', bg: 'bg-primary', done: false },
-                { text: 'Review Q3 Financial Report', priority: 'DONE', bg: 'bg-gray-200', done: true },
-                { text: 'Update Startup Credits Database', priority: 'MED', bg: 'bg-primary', done: false },
+                { text: 'Set up Supabase env vars for production', priority: 'HIGH', bg: 'bg-accent-yellow', done: false },
+                { text: 'Configure Dodo Payments webhook for live mode', priority: 'HIGH', bg: 'bg-accent-yellow', done: false },
+                { text: 'Add more deals to the database', priority: 'MED', bg: 'bg-primary', done: false },
+                { text: 'Google Analytics integration', priority: 'DONE', bg: 'bg-gray-200', done: true },
               ].map((t, i) => (
                 <label key={i} className="flex items-center gap-2 md:gap-3 p-2 border border-black hover:bg-gray-50 cursor-pointer group transition-colors">
                   <input
@@ -150,17 +171,15 @@ export default function AdminDashboard() {
         <div className="lg:col-span-1">
           <section className="bg-black text-white border-2 border-black shadow-[3px_3px_0px_#111] p-3 md:p-5">
             <div className="flex items-center gap-2 mb-3 border-b border-white/20 pb-2">
-              <span className="w-2 h-2 bg-red-500 rounded-full animate-pulse" />
-              <h3 className="font-mono font-bold text-sm uppercase">Live Activity</h3>
+              <span className="w-2 h-2 bg-green-500 rounded-full" />
+              <h3 className="font-mono font-bold text-sm uppercase">Recent Activity</h3>
             </div>
             <div className="flex flex-col gap-3 relative">
               <div className="absolute left-[15px] top-2 bottom-2 w-px bg-white/15" />
               {[
-                { time: '10:42 AM', text: 'New user: sarah@tech.co', Icon: UserPlus, bg: 'bg-white text-black' },
-                { time: '10:28 AM', text: 'Pro Upgrade: Annual ($299)', Icon: Award, bg: 'bg-primary text-black' },
-                { time: '09:15 AM', text: 'Broken link: AWS Credits', Icon: Flag, bg: 'bg-red-500 text-white' },
-                { time: '08:45 AM', text: 'Comment flagged: Idea #420', Icon: MessageCircle, bg: 'bg-gray-700 text-white' },
-                { time: '08:30 AM', text: 'New user: mike@build.io', Icon: UserPlus, bg: 'bg-white text-black' },
+                { time: 'Recent', text: 'Paid: Sammy Ray — Founder Yearly ($89.99)', Icon: Award, bg: 'bg-accent-yellow text-black' },
+                { time: 'Recent', text: 'New user: hello@axionxlab.com', Icon: UserPlus, bg: 'bg-white text-black' },
+                { time: 'Setup', text: 'Google Analytics configured', Icon: CheckCircle, bg: 'bg-green-500 text-white' },
               ].map((a, i) => (
                 <div key={i} className="flex gap-3 relative">
                   <div className={`w-8 h-8 shrink-0 ${a.bg} border border-white/30 flex items-center justify-center z-10`}>
@@ -174,9 +193,9 @@ export default function AdminDashboard() {
               ))}
             </div>
             <div className="mt-4 pt-3 border-t border-white/20">
-              <Link href="/admin/logs" className="block w-full text-center py-1.5 bg-white/10 hover:bg-white/20 border border-white/20 text-[10px] font-mono uppercase tracking-wider transition-colors">
-                View Full Log
-              </Link>
+              <p className="text-center text-[10px] font-mono text-white/40 uppercase">
+                Activity log will populate as users interact
+              </p>
             </div>
           </section>
         </div>
