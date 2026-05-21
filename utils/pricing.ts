@@ -19,19 +19,19 @@ interface PlanConfig {
 }
 
 export interface PricingConfig {
-    campus: PlanConfig
+    nextfounder: PlanConfig
     founder: PlanConfig
     legend: PlanConfig
 }
 
 export const PRICING_CONFIG: PricingConfig = {
-    campus: {
+    nextfounder: {
         USD: {
             actual: null,
-            discounted: 9.99,
+            discounted: 29.99,
             savings: null,
             symbol: '$',
-            period: '/mo'
+            period: '/yr'
         }
     },
     founder: {
@@ -63,7 +63,7 @@ export function getPricing(plan: keyof PricingConfig, currency: Currency): Prici
 
 export function formatPrice(amount: number | null | undefined, currency: Currency): string {
     if (amount === null || amount === undefined) return ''
-    const info = PRICING_CONFIG.campus[currency]
+    const info = PRICING_CONFIG.nextfounder[currency]
     return `${info.symbol}${amount.toLocaleString('en-US', {
         minimumFractionDigits: Number.isInteger(amount) ? 0 : 2,
         maximumFractionDigits: 2

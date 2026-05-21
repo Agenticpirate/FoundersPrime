@@ -5,12 +5,12 @@ export interface UserProfile {
   id: string
   email: string
   name?: string
-  isPro: boolean      // True for Founder, Legend, Admin (Full Access)
-  isCampus: boolean   // True for Campus / Student plan ($9.99/mo)
+  isPro: boolean        // True for Founder, Legend, Admin (Full Access)
+  isNextFounder: boolean // True for NextFounder / Student plan ($29.99/yr)
   isAdmin: boolean
-  plan: 'free' | 'campus' | 'founder' | 'legend'
+  plan: 'free' | 'nextfounder' | 'founder' | 'legend'
   subscription?: {
-    plan: 'free' | 'campus' | 'founder' | 'legend' | 'explorer' | 'pro' | 'pro-plus'
+    plan: 'free' | 'nextfounder' | 'founder' | 'legend' | 'campus' | 'explorer' | 'pro' | 'pro-plus'
     status: 'active' | 'cancelled' | 'expired'
     expiresAt?: string
   }
@@ -67,25 +67,27 @@ export async function checkProStatus(): Promise<{
       .limit(1)
       .maybeSingle()
 
-    let computedPlan: 'free' | 'campus' | 'founder' | 'legend' = 'free'
+    let computedPlan: 'free' | 'nextfounder' | 'founder' | 'legend' = 'free'
     
     if (isAdmin || isHardcodedPro) {
       computedPlan = 'legend'
     } else if (subData) {
-      // Map legacy 'explorer' subscriptions to 'campus'
+      // Map legacy 'explorer' / 'campus' subscriptions to 'nextfounder'
       const dbPlan = subData.plan as string
-      computedPlan = (dbPlan === 'explorer' ? 'campus' : dbPlan) as any
+      computedPlan = (
+        dbPlan === 'explorer' || dbPlan === 'campus' ? 'nextfounder' : dbPlan
+      ) as any
     }
 
     const isPro = ['founder', 'legend'].includes(computedPlan) || isAdmin
-    const isCampus = computedPlan === 'campus'
+    const isNextFounder = computedPlan === 'nextfounder'
 
     const userProfile: UserProfile = {
       id: user.id,
       email: user.email || '',
       name: user.user_metadata?.name || user.email?.split('@')[0],
       isPro,
-      isCampus,
+      isNextFounder,
       isAdmin,
       plan: computedPlan,
       subscription: {
@@ -118,10 +120,10 @@ export async function isProUser(): Promise<boolean> {
   return isPro
 }
 
-// Quick check for Campus / Student status (client-side)
-export async function isCampusUser(): Promise<boolean> {
+// Quick check for NextFounder / Student status (client-side)
+export async function isNextFounderUser(): Promise<boolean> {
   const { user } = await checkProStatus()
-  return !!user?.isCampus
+  return !!user?.isNextFounder
 }
 
 // Quick check for Admin status (client-side)

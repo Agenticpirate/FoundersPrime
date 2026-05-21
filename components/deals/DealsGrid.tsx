@@ -31,7 +31,7 @@ export default function DealsGrid({ filters }: DealsGridProps) {
 
   const { user, loading: authLoading } = useAuth()
   const [isPro, setIsPro] = useState(false)
-  const [isCampus, setIsCampus] = useState(false)
+  const [isNextFounder, setIsNextFounder] = useState(false)
   const [checkingAccess, setCheckingAccess] = useState(true)
 
   const [deals, setDeals] = useState<Deal[]>(globalDealsCache || [])
@@ -68,14 +68,14 @@ export default function DealsGrid({ filters }: DealsGridProps) {
     const fetchAuth = user
       ? checkProStatus().then(({ isPro: hasPro, user: userProfile }) => ({
           isPro: hasPro,
-          isCampus: !!userProfile?.isCampus,
+          isNextFounder: !!userProfile?.isNextFounder,
         }))
-      : Promise.resolve({ isPro: false, isCampus: false })
+      : Promise.resolve({ isPro: false, isNextFounder: false })
 
     Promise.all([fetchDeals, fetchAuth]).then(([dealList, access]) => {
       setDeals(dealList)
       setIsPro(access.isPro)
-      setIsCampus(access.isCampus)
+      setIsNextFounder(access.isNextFounder)
       setLoading(false)
       setCheckingAccess(false)
     })
@@ -390,16 +390,16 @@ export default function DealsGrid({ filters }: DealsGridProps) {
         const isAcceleratorOrIncubator = filters?.category === 'accelerators' || filters?.category === 'incubators';
 
         if (!isPro) {
-          if (isCampus) {
-            // Campus plan limits
+          if (isNextFounder) {
+            // NextFounder plan limits
              if (isAcceleratorOrIncubator && currentPage > 1) {
                 isLocked = true;
                 lockTitle = "Upgrade to Founder";
-                lockMessage = "Campus users can view 1 page of Accelerators & Incubators. Upgrade to Founder to unlock the rest.";
+                lockMessage = "NextFounder users can view 1 page of Accelerators & Incubators. Upgrade to Founder to unlock the rest.";
              } else if (currentPage > 10) {
                 isLocked = true;
                 lockTitle = "Upgrade to Founder";
-                lockMessage = "Campus users are limited to 10 pages of deals. Upgrade to Founder to view everything.";
+                lockMessage = "NextFounder users are limited to 10 pages of deals. Upgrade to Founder to view everything.";
              }
           } else {
              // Free plan limits

@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import { getStartupProgramUrl } from '@/lib/comprehensive-startup-urls'
 import { useRouter } from 'next/navigation'
-import { isProUser, isCampusUser } from '@/lib/auth/user-context'
+import { isProUser, isNextFounderUser } from '@/lib/auth/user-context'
 import ProUpgradeModal from '@/components/ProUpgradeModal'
 import { claimDeal } from '@/app/actions/deal-actions'
 import { GlowingEffect } from '@/components/ui/GlowingEffect'
@@ -73,7 +73,7 @@ export default function SingleDealContent({ deal, freeAccess = false, basePath =
 
   // Pro Access State
   const [isPro, setIsPro] = useState(false)
-  const [isCampus, setIsCampus] = useState(false)
+  const [isNextFounder, setIsNextFounder] = useState(false)
   const [isLoadingPro, setIsLoadingPro] = useState(true)
   const [showUpgradeModal, setShowUpgradeModal] = useState(false)
   const [isClaiming, setIsClaiming] = useState(false)
@@ -93,8 +93,8 @@ export default function SingleDealContent({ deal, freeAccess = false, basePath =
       try {
         const proStatus = await isProUser()
         setIsPro(proStatus)
-        const campusStatus = await isCampusUser()
-        setIsCampus(campusStatus)
+        const nfStatus = await isNextFounderUser()
+        setIsNextFounder(nfStatus)
       } catch (error) {
         console.error('Error checking pro status:', error)
       } finally {
@@ -204,7 +204,7 @@ export default function SingleDealContent({ deal, freeAccess = false, basePath =
       return
     }
 
-    if (!isPro && !isCampus) {
+    if (!isPro && !isNextFounder) {
       setShowUpgradeModal(true)
       return
     }
@@ -292,10 +292,10 @@ export default function SingleDealContent({ deal, freeAccess = false, basePath =
                   {isClaiming ? (
                       'Claiming...'
                   ) : (
-                      freeAccess ? 'Apply Now' : (isPro || isCampus) ? 'Apply Now' : 'Apply Now (Premium)'
+                      freeAccess ? 'Apply Now' : (isPro || isNextFounder) ? 'Apply Now' : 'Apply Now (Premium)'
                   )}
                   <span className="material-symbols-outlined !text-[18px]">
-                      {isClaiming ? 'hourglass_empty' : (freeAccess || isPro || isCampus ? 'arrow_forward' : 'lock')}
+                      {isClaiming ? 'hourglass_empty' : (freeAccess || isPro || isNextFounder ? 'arrow_forward' : 'lock')}
                   </span>
                 </button>
               </div>

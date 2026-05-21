@@ -12,10 +12,10 @@ const client = process.env.DODO_PAYMENTS_API_KEY
 const WEBHOOK_SECRET = process.env.DODO_PAYMENTS_WEBHOOK_SECRET;
 
 // Map Dodo Product IDs → our plan names
-const PRODUCT_TO_PLAN: Record<string, 'campus' | 'founder' | 'legend'> = {
-  [process.env.DODO_PRODUCT_CAMPUS_MONTHLY  || process.env.DODO_PRODUCT_EXPLORER_MONTHLY || 'pdt_0NYGgiPYXbfSQSTu2YZVA']: 'campus',
-  [process.env.DODO_PRODUCT_FOUNDER_YEARLY  || 'pdt_0NYGhiHbaHo141y9EXBl7']: 'founder',
-  [process.env.DODO_PRODUCT_LEGEND_LIFETIME || 'pdt_0NYGi3cj7tCz581sqfnWw']: 'legend',
+const PRODUCT_TO_PLAN: Record<string, 'nextfounder' | 'founder' | 'legend'> = {
+  [process.env.DODO_PRODUCT_NEXTFOUNDER_YEARLY || process.env.DODO_PRODUCT_CAMPUS_MONTHLY || process.env.DODO_PRODUCT_EXPLORER_MONTHLY || 'pdt_0NYGgiPYXbfSQSTu2YZVA']: 'nextfounder',
+  [process.env.DODO_PRODUCT_FOUNDER_YEARLY     || 'pdt_0NYGhiHbaHo141y9EXBl7']: 'founder',
+  [process.env.DODO_PRODUCT_LEGEND_LIFETIME    || 'pdt_0NYGi3cj7tCz581sqfnWw']: 'legend',
 };
 
 // Activate / update a user's subscription in Supabase using DELETE + INSERT
@@ -28,7 +28,7 @@ async function activatePlan({
   dodoCustomerId,
 }: {
   email: string;
-  plan: 'campus' | 'founder' | 'legend';
+  plan: 'nextfounder' | 'founder' | 'legend';
   periodEnd?: string | null;
   dodoSubscriptionId?: string | null;
   dodoCustomerId?: string | null;
@@ -148,7 +148,7 @@ export async function POST(request: Request) {
         break;
       }
 
-      // ── Subscriptions (Campus Monthly / Founder Yearly) ─────────────────
+      // ── Subscriptions (NextFounder Yearly / Founder Yearly) ─────────────────
       case 'subscription.active':
       case 'subscription.renewed': {
         const email = data?.customer?.email;

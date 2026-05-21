@@ -12,7 +12,7 @@ interface PricingPlansProps {
 
 export default function PricingPlans({ currency }: PricingPlansProps) {
   const router = useRouter()
-  const campusPricing = getPricing('campus', currency)
+  const nextFounderPricing = getPricing('nextfounder', currency)
   const founderPricing = getPricing('founder', currency)
   const legendPricing = getPricing('legend', currency)
 
@@ -43,24 +43,27 @@ export default function PricingPlans({ currency }: PricingPlansProps) {
 
   const plans = [
     {
-      name: 'Campus',
-      planKey: 'campus',
+      name: 'NextFounder',
+      planKey: 'nextfounder',
       icon: 'school',
-      price: formatPrice(campusPricing.discounted, currency),
+      price: formatPrice(nextFounderPricing.discounted, currency),
       originalPrice: null,
-      period: campusPricing.period,
-      description: 'For students. Build, learn, save.',
+      period: nextFounderPricing.period,
+      description: 'For students, indie hackers & early builders.',
       features: [
-        'Student Funding & Opportunities',
-        'Fellowships, Internships & Scholarships',
-        'Campus Edge Deals & Credits',
-        '100s of student-only deals',
-        'Cancel anytime',
+        'Premium AI & SaaS credits',
+        'Curated tools & opportunities',
+        'Hackathons, internships & fellowships',
+        'Startup grants & founder programs',
+        'Opportunity Hub for career & growth',
+        'NextFounder community access',
+        'Early access to perks & opportunities',
       ],
-      cta: 'Get Campus Access',
+      footnote: 'Active student verification required. All NextFounder benefits are reserved for verified students only — not for general founders.',
+      cta: 'Join NextFounder',
       popular: false,
       buttonStyle: 'bg-white hover:bg-gray-50 text-[#111111]',
-      badge: 'STUDENTS',
+      badge: 'STUDENTS ONLY',
       special: false,
       headerBg: 'bg-gray-50',
       cardBg: 'bg-white',
@@ -93,6 +96,7 @@ export default function PricingPlans({ currency }: PricingPlansProps) {
         'Private Founder Community (Discord)',
         'Priority support',
       ],
+      footnote: null,
       cta: 'Join Founder (Pro)',
       popular: true,
       buttonStyle: 'bg-[#111111] text-white hover:bg-[#333]',
@@ -126,6 +130,7 @@ export default function PricingPlans({ currency }: PricingPlansProps) {
         'Private Founder Community (Discord)',
         'Priority support'
       ],
+      footnote: null,
       cta: 'Get Legend Status',
       popular: false,
       buttonStyle: 'bg-[#111111] text-white hover:bg-[#333]',
@@ -205,6 +210,13 @@ export default function PricingPlans({ currency }: PricingPlansProps) {
                   ))}
                 </ul>
 
+                {plan.footnote && (
+                  <div className="mt-2 p-1.5 bg-amber-50 border border-amber-200 flex items-start gap-1">
+                    <span className="material-symbols-outlined text-amber-700 text-[12px] mt-px flex-shrink-0">info</span>
+                    <p className="font-sans text-[9px] text-amber-900 leading-snug">{plan.footnote}</p>
+                  </div>
+                )}
+
                 <button
                   onClick={() => handleCheckout(plan.planKey)}
                   disabled={loadingPlan === plan.planKey}
@@ -267,7 +279,7 @@ export default function PricingPlans({ currency }: PricingPlansProps) {
               </span>
 
               <div className="flex items-center gap-2">
-                <div className={`w-7 h-7 ${plan.iconBg} border border-[#111111]/20 flex items-center justify-center transition-all duration-500 group-hover:rotate-[-8deg] group-hover:scale-110 ${plan.name === 'Campus' ? 'group-hover:animate-icon-spin' : ''} ${plan.name === 'Founder' ? 'group-hover:animate-icon-bounce' : ''} ${plan.name === 'Legend' ? 'group-hover:animate-icon-pulse' : ''}`}>
+                <div className={`w-7 h-7 ${plan.iconBg} border border-[#111111]/20 flex items-center justify-center transition-all duration-500 group-hover:rotate-[-8deg] group-hover:scale-110 ${plan.name === 'NextFounder' ? 'group-hover:animate-icon-spin' : ''} ${plan.name === 'Founder' ? 'group-hover:animate-icon-bounce' : ''} ${plan.name === 'Legend' ? 'group-hover:animate-icon-pulse' : ''}`}>
                   <span className="material-symbols-outlined text-sm text-[#111111]">
                     {plan.icon}
                   </span>
@@ -322,6 +334,13 @@ export default function PricingPlans({ currency }: PricingPlansProps) {
                   </li>
                 ))}
               </ul>
+
+              {plan.footnote && (
+                <div className="mt-3 p-2 bg-amber-50 border border-amber-200 flex items-start gap-1.5">
+                  <span className="material-symbols-outlined text-amber-700 text-sm mt-px flex-shrink-0">info</span>
+                  <p className="font-sans text-[10px] text-amber-900 leading-snug">{plan.footnote}</p>
+                </div>
+              )}
 
               {/* CTA Button */}
               <div className="mt-5 relative rounded-sm">
