@@ -31,7 +31,7 @@ export default function DealsGrid({ filters }: DealsGridProps) {
 
   const { user, loading: authLoading } = useAuth()
   const [isPro, setIsPro] = useState(false)
-  const [isExplorer, setIsExplorer] = useState(false)
+  const [isCampus, setIsCampus] = useState(false)
   const [checkingAccess, setCheckingAccess] = useState(true)
 
   const [deals, setDeals] = useState<Deal[]>(globalDealsCache || [])
@@ -68,14 +68,14 @@ export default function DealsGrid({ filters }: DealsGridProps) {
     const fetchAuth = user
       ? checkProStatus().then(({ isPro: hasPro, user: userProfile }) => ({
           isPro: hasPro,
-          isExplorer: !!userProfile?.isExplorer,
+          isCampus: !!userProfile?.isCampus,
         }))
-      : Promise.resolve({ isPro: false, isExplorer: false })
+      : Promise.resolve({ isPro: false, isCampus: false })
 
     Promise.all([fetchDeals, fetchAuth]).then(([dealList, access]) => {
       setDeals(dealList)
       setIsPro(access.isPro)
-      setIsExplorer(access.isExplorer)
+      setIsCampus(access.isCampus)
       setLoading(false)
       setCheckingAccess(false)
     })
@@ -390,16 +390,16 @@ export default function DealsGrid({ filters }: DealsGridProps) {
         const isAcceleratorOrIncubator = filters?.category === 'accelerators' || filters?.category === 'incubators';
 
         if (!isPro) {
-          if (isExplorer) {
-            // Explorer plan limits
+          if (isCampus) {
+            // Campus plan limits
              if (isAcceleratorOrIncubator && currentPage > 1) {
                 isLocked = true;
                 lockTitle = "Upgrade to Founder";
-                lockMessage = "Explorer users can view 1 page of Accelerators & Incubators. Upgrade to Founder to unlock the rest.";
+                lockMessage = "Campus users can view 1 page of Accelerators & Incubators. Upgrade to Founder to unlock the rest.";
              } else if (currentPage > 10) {
                 isLocked = true;
                 lockTitle = "Upgrade to Founder";
-                lockMessage = "Explorer users are limited to 10 pages of deals. Upgrade to Founder to view everything.";
+                lockMessage = "Campus users are limited to 10 pages of deals. Upgrade to Founder to view everything.";
              }
           } else {
              // Free plan limits

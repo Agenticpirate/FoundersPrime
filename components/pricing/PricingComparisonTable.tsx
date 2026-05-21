@@ -6,28 +6,31 @@ export default function PricingComparisonTable() {
         {
             category: "Core Access & Usage Limits",
             items: [
-                { name: "SaaS Deals & Cloud Credits", explorer: "Up to Page 10", founder: "Unlimited Pages", legend: "Unlimited Pages" },
-                { name: "Monthly Deal Applications", explorer: "10 per month", founder: "Unlimited", legend: "Unlimited" },
-                { name: "Update Frequency", explorer: "Daily", founder: "Daily", legend: "Daily" },
+                { name: "SaaS Deals & Cloud Credits", campus: "Student-only deals", founder: "Unlimited Pages", legend: "Unlimited Pages" },
+                { name: "Monthly Deal Applications", campus: "20 per month", founder: "Unlimited", legend: "Unlimited" },
+                { name: "Update Frequency", campus: "Daily", founder: "Daily", legend: "Daily" },
             ]
         },
         {
             category: "Programs & Databases",
             items: [
-                { name: "Grants Database", explorer: "View 1 Page", founder: "✓ All Pages", legend: "✓ All Pages" },
-                { name: "Accelerator Programs", explorer: "View 1 Page", founder: "✓ All Pages", legend: "✓ All Pages" },
-                { name: "Incubator Programs", explorer: "View 1 Page", founder: "✓ All Pages", legend: "✓ All Pages" },
-                { name: "Verified Startups Database", explorer: "—", founder: "✓", legend: "✓" },
-                { name: "Investor Database", explorer: "—", founder: "✓", legend: "✓" },
+                { name: "Student Funding & Scholarships", campus: "✓ All Pages", founder: "—", legend: "—" },
+                { name: "Fellowships & Internships", campus: "✓ All Pages", founder: "—", legend: "—" },
+                { name: "Campus Edge Deals & Credits", campus: "✓ All Pages", founder: "—", legend: "—" },
+                { name: "Grants Database", campus: "—", founder: "✓ All Pages", legend: "✓ All Pages" },
+                { name: "Accelerator Programs", campus: "—", founder: "✓ All Pages", legend: "✓ All Pages" },
+                { name: "Incubator Programs", campus: "—", founder: "✓ All Pages", legend: "✓ All Pages" },
+                { name: "Verified Startups Database", campus: "—", founder: "✓", legend: "✓" },
+                { name: "Investor Database", campus: "—", founder: "✓", legend: "✓" },
             ]
         },
         {
             category: "Resources & Support",
             items: [
-                { name: "Master Resources Library", explorer: "—", founder: "✓", legend: "✓" },
-                { name: "Support Level", explorer: "Standard", founder: "Priority", legend: "1:1 Dedicated" },
-                { name: "All Future Updates", explorer: "✓", founder: "✓", legend: "✓" },
-                { name: "Lifetime Access", explorer: "—", founder: "—", legend: "✓ One-time" },
+                { name: "Master Resources Library", campus: "—", founder: "✓", legend: "✓" },
+                { name: "Support Level", campus: "Standard", founder: "Priority", legend: "1:1 Dedicated" },
+                { name: "All Future Updates", campus: "✓", founder: "✓", legend: "✓" },
+                { name: "Lifetime Access", campus: "—", founder: "—", legend: "✓ One-time" },
             ]
         }
     ]
@@ -55,7 +58,7 @@ export default function PricingComparisonTable() {
                         <thead>
                             <tr className="bg-[#111111] text-white font-mono text-xs uppercase tracking-wider">
                                 <th className="p-4 w-1/3 border-r border-gray-800">Feature</th>
-                                <th className="p-4 w-1/5 text-center border-r border-gray-800 text-gray-400 font-medium">Explorer</th>
+                                <th className="p-4 w-1/5 text-center border-r border-gray-800 text-gray-400 font-medium">Campus</th>
                                 <th className="p-4 w-1/5 text-center border-r border-gray-800 text-[#13b6ec] font-black bg-[#1a1a1a]">Founder</th>
                                 <th className="p-4 w-1/5 text-center text-[#ffd700] font-black">Legend</th>
                             </tr>
@@ -69,8 +72,8 @@ export default function PricingComparisonTable() {
                                     {section.items.map((item, iIdx) => (
                                         <tr key={iIdx} className="border-b border-gray-100 hover:bg-gray-50 transition-colors">
                                             <td className="p-3 pl-4 border-r border-gray-100 font-bold text-xs">{item.name}</td>
-                                            <td className={`p-3 text-center border-r border-gray-100 text-xs font-medium ${item.explorer === '✓' ? 'text-green-600 font-bold' : item.explorer === '—' ? 'text-gray-300' : 'text-gray-500'}`}>
-                                                {item.explorer}
+                                            <td className={`p-3 text-center border-r border-gray-100 text-xs font-medium ${item.campus === '✓' ? 'text-green-600 font-bold' : item.campus === '—' ? 'text-gray-300' : 'text-gray-500'}`}>
+                                                {item.campus}
                                             </td>
                                             <td className={`p-3 text-center border-r border-gray-100 text-xs font-bold bg-[#f0f9ff] ${item.founder === '✓' ? 'text-green-600' : item.founder === '—' ? 'text-gray-300' : 'text-[#111111]'}`}>
                                                 {item.founder}

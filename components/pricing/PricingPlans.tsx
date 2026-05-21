@@ -12,7 +12,7 @@ interface PricingPlansProps {
 
 export default function PricingPlans({ currency }: PricingPlansProps) {
   const router = useRouter()
-  const explorerPricing = getPricing('explorer', currency)
+  const campusPricing = getPricing('campus', currency)
   const founderPricing = getPricing('founder', currency)
   const legendPricing = getPricing('legend', currency)
 
@@ -43,22 +43,24 @@ export default function PricingPlans({ currency }: PricingPlansProps) {
 
   const plans = [
     {
-      name: 'Explorer',
-      planKey: 'explorer',
-      icon: 'explore',
-      price: formatPrice(explorerPricing.actual || explorerPricing.discounted, currency),
+      name: 'Campus',
+      planKey: 'campus',
+      icon: 'school',
+      price: formatPrice(campusPricing.discounted, currency),
       originalPrice: null,
-      period: explorerPricing.period,
-      description: 'Access the platform with usage limits.',
+      period: campusPricing.period,
+      description: 'For students. Build, learn, save.',
       features: [
-        'All SaaS deals & cloud credits',
-        'Limited claims per month',
+        'Student Funding & Opportunities',
+        'Fellowships, Internships & Scholarships',
+        'Campus Edge Deals & Credits',
+        '100s of student-only deals',
         'Cancel anytime',
       ],
-      cta: 'Start Exploring',
+      cta: 'Get Campus Access',
       popular: false,
       buttonStyle: 'bg-white hover:bg-gray-50 text-[#111111]',
-      badge: null,
+      badge: 'STUDENTS',
       special: false,
       headerBg: 'bg-gray-50',
       cardBg: 'bg-white',
@@ -77,8 +79,8 @@ export default function PricingPlans({ currency }: PricingPlansProps) {
       name: 'Founder',
       planKey: 'founder',
       icon: 'rocket_launch',
-      price: formatPrice(founderPricing.actual || founderPricing.discounted, currency),
-      originalPrice: null,
+      price: formatPrice(founderPricing.discounted, currency),
+      originalPrice: founderPricing.actual ? formatPrice(founderPricing.actual, currency) : null,
       period: founderPricing.period,
       description: 'Everything — unlimited access.',
       features: [
@@ -113,8 +115,8 @@ export default function PricingPlans({ currency }: PricingPlansProps) {
       name: 'Legend',
       planKey: 'legend',
       icon: 'diamond',
-      price: formatPrice(legendPricing.actual || legendPricing.discounted, currency),
-      originalPrice: null,
+      price: formatPrice(legendPricing.discounted, currency),
+      originalPrice: legendPricing.actual ? formatPrice(legendPricing.actual, currency) : null,
       period: legendPricing.period,
       description: 'Pay once, own it forever.',
       features: [
@@ -184,8 +186,11 @@ export default function PricingPlans({ currency }: PricingPlansProps) {
                   )}
                 </div>
                 <div className={`flex items-baseline ${plan.textColor}`}>
+                  {plan.originalPrice && (
+                    <span className="font-sans text-xs font-bold line-through opacity-50 mr-1.5">{plan.originalPrice}</span>
+                  )}
                   <span className="font-sans text-lg font-black tracking-tight leading-none">{plan.price}</span>
-                  <span className="font-mono text-[7px] font-bold uppercase ml-0.5 opacity-50">/{plan.period}</span>
+                  <span className="font-mono text-[7px] font-bold uppercase ml-0.5 opacity-50">{plan.period}</span>
                 </div>
               </div>
 
@@ -262,7 +267,7 @@ export default function PricingPlans({ currency }: PricingPlansProps) {
               </span>
 
               <div className="flex items-center gap-2">
-                <div className={`w-7 h-7 ${plan.iconBg} border border-[#111111]/20 flex items-center justify-center transition-all duration-500 group-hover:rotate-[-8deg] group-hover:scale-110 ${plan.name === 'Explorer' ? 'group-hover:animate-icon-spin' : ''} ${plan.name === 'Founder' ? 'group-hover:animate-icon-bounce' : ''} ${plan.name === 'Legend' ? 'group-hover:animate-icon-pulse' : ''}`}>
+                <div className={`w-7 h-7 ${plan.iconBg} border border-[#111111]/20 flex items-center justify-center transition-all duration-500 group-hover:rotate-[-8deg] group-hover:scale-110 ${plan.name === 'Campus' ? 'group-hover:animate-icon-spin' : ''} ${plan.name === 'Founder' ? 'group-hover:animate-icon-bounce' : ''} ${plan.name === 'Legend' ? 'group-hover:animate-icon-pulse' : ''}`}>
                   <span className="material-symbols-outlined text-sm text-[#111111]">
                     {plan.icon}
                   </span>
@@ -272,18 +277,15 @@ export default function PricingPlans({ currency }: PricingPlansProps) {
                 </h3>
               </div>
 
-              {plan.originalPrice && (
-                <span className={`text-xs font-bold line-through opacity-50 ${plan.textColor} block mt-2`}>
-                  {plan.originalPrice}
-                </span>
-              )}
-
-              <div className={`flex items-baseline ${plan.textColor} ${plan.originalPrice ? 'mt-0.5' : 'mt-2'}`}>
+              <div className={`flex items-baseline ${plan.textColor} mt-2`}>
+                {plan.originalPrice && (
+                  <span className="font-sans text-base md:text-lg font-bold line-through opacity-50 mr-2">{plan.originalPrice}</span>
+                )}
                 <span className="font-sans text-3xl md:text-4xl font-black tracking-tight leading-none transition-transform duration-300 group-hover:scale-[1.02] origin-left">
                   {plan.price}
                 </span>
                 <span className="font-mono text-[10px] font-bold uppercase ml-1 opacity-60">
-                  /{plan.period}
+                  {plan.period}
                 </span>
               </div>
 

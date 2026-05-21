@@ -13,9 +13,9 @@ const client = DODO_API_KEY ? new DodoPayments({
 
 // Product IDs from Dodo Payments Dashboard (via env vars)
 const PRODUCTS: Record<string, string> = {
-  explorer: process.env.DODO_PRODUCT_EXPLORER_MONTHLY || 'pdt_0NYGgiPYXbfSQSTu2YZVA',
-  founder:  process.env.DODO_PRODUCT_FOUNDER_YEARLY  || 'pdt_0NYGhiHbaHo141y9EXBl7',
-  legend:   process.env.DODO_PRODUCT_LEGEND_LIFETIME || 'pdt_0NYGi3cj7tCz581sqfnWw',
+  campus:  process.env.DODO_PRODUCT_CAMPUS_MONTHLY  || process.env.DODO_PRODUCT_EXPLORER_MONTHLY || 'pdt_0NYGgiPYXbfSQSTu2YZVA',
+  founder: process.env.DODO_PRODUCT_FOUNDER_YEARLY  || 'pdt_0NYGhiHbaHo141y9EXBl7',
+  legend:  process.env.DODO_PRODUCT_LEGEND_LIFETIME || 'pdt_0NYGi3cj7tCz581sqfnWw',
 };
 
 export async function POST(request: Request) {
@@ -56,7 +56,28 @@ export async function POST(request: Request) {
       payment_id: session.session_id
     });
   } catch (error: any) {
-    console.error('Dodo Payment Error:', error);
-    return NextResponse.json({ error: 'Payment creation failed' }, { status: 500 });
+    // Surface real error info so the UI can display something useful and
+    // the issue is visible in Vercel logs.
+    const dodoMessage =
+      error?.error?.message ||
+      error?.response?.data?.message ||
+      error?.message ||
+      'Unknown error';
+    const status = error?.status || error?.statusCode || 500;
+
+    console.error('❌ Dodo Payment Error:', {
+      status,
+      message: dodoMessage,
+      raw: error,
+    });
+
+    return NextResponse.json(
+      {
+        error: `Payment creation failed: ${dodoMessage}`,
+        // Only include details in non-production for debugging
+        ...(process.env.NODE_ENV !== 'production' && { details: error }),
+      },
+      { status: status >= 400 && status < 600 ? status : 500 }
+    );
   }
 }

@@ -19,16 +19,16 @@ interface PlanConfig {
 }
 
 export interface PricingConfig {
-    explorer: PlanConfig
+    campus: PlanConfig
     founder: PlanConfig
     legend: PlanConfig
 }
 
 export const PRICING_CONFIG: PricingConfig = {
-    explorer: {
+    campus: {
         USD: {
             actual: null,
-            discounted: 1.99,
+            discounted: 9.99,
             savings: null,
             symbol: '$',
             period: '/mo'
@@ -36,21 +36,23 @@ export const PRICING_CONFIG: PricingConfig = {
     },
     founder: {
         USD: {
-            actual: null,
-            discounted: 89.99,
-            savings: null,
+            actual: 149,
+            discounted: 99.99,
+            savings: 49.01,
             symbol: '$',
             period: '/yr',
-            monthlyEquivalent: 7.50
+            monthlyEquivalent: 8.33,
+            badge: 'SAVE $49'
         }
     },
     legend: {
         USD: {
-            actual: null,
-            discounted: 149.99,
-            savings: null,
+            actual: 299,
+            discounted: 149,
+            savings: 150,
             symbol: '$',
-            period: '/once'
+            period: '/once',
+            badge: 'SAVE $150'
         }
     }
 }
@@ -61,7 +63,7 @@ export function getPricing(plan: keyof PricingConfig, currency: Currency): Prici
 
 export function formatPrice(amount: number | null | undefined, currency: Currency): string {
     if (amount === null || amount === undefined) return ''
-    const info = PRICING_CONFIG.explorer[currency]
+    const info = PRICING_CONFIG.campus[currency]
     return `${info.symbol}${amount.toLocaleString('en-US', {
         minimumFractionDigits: Number.isInteger(amount) ? 0 : 2,
         maximumFractionDigits: 2

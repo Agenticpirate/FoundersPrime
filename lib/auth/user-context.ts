@@ -6,11 +6,11 @@ export interface UserProfile {
   email: string
   name?: string
   isPro: boolean      // True for Founder, Legend, Admin (Full Access)
-  isExplorer: boolean // True for Explorer plan ($1.99/mo)
+  isCampus: boolean   // True for Campus / Student plan ($9.99/mo)
   isAdmin: boolean
-  plan: 'free' | 'explorer' | 'founder' | 'legend'
+  plan: 'free' | 'campus' | 'founder' | 'legend'
   subscription?: {
-    plan: 'free' | 'explorer' | 'founder' | 'legend' | 'pro' | 'pro-plus'
+    plan: 'free' | 'campus' | 'founder' | 'legend' | 'explorer' | 'pro' | 'pro-plus'
     status: 'active' | 'cancelled' | 'expired'
     expiresAt?: string
   }
@@ -67,23 +67,25 @@ export async function checkProStatus(): Promise<{
       .limit(1)
       .maybeSingle()
 
-    let computedPlan: 'free' | 'explorer' | 'founder' | 'legend' = 'free'
+    let computedPlan: 'free' | 'campus' | 'founder' | 'legend' = 'free'
     
     if (isAdmin || isHardcodedPro) {
       computedPlan = 'legend'
     } else if (subData) {
-      computedPlan = subData.plan as any
+      // Map legacy 'explorer' subscriptions to 'campus'
+      const dbPlan = subData.plan as string
+      computedPlan = (dbPlan === 'explorer' ? 'campus' : dbPlan) as any
     }
 
     const isPro = ['founder', 'legend'].includes(computedPlan) || isAdmin
-    const isExplorer = computedPlan === 'explorer'
+    const isCampus = computedPlan === 'campus'
 
     const userProfile: UserProfile = {
       id: user.id,
       email: user.email || '',
       name: user.user_metadata?.name || user.email?.split('@')[0],
       isPro,
-      isExplorer,
+      isCampus,
       isAdmin,
       plan: computedPlan,
       subscription: {
@@ -116,10 +118,10 @@ export async function isProUser(): Promise<boolean> {
   return isPro
 }
 
-// Quick check for Explorer status (client-side)
-export async function isExplorerUser(): Promise<boolean> {
+// Quick check for Campus / Student status (client-side)
+export async function isCampusUser(): Promise<boolean> {
   const { user } = await checkProStatus()
-  return !!user?.isExplorer
+  return !!user?.isCampus
 }
 
 // Quick check for Admin status (client-side)

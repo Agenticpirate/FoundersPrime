@@ -12,8 +12,8 @@ const client = process.env.DODO_PAYMENTS_API_KEY
 const WEBHOOK_SECRET = process.env.DODO_PAYMENTS_WEBHOOK_SECRET;
 
 // Map Dodo Product IDs → our plan names
-const PRODUCT_TO_PLAN: Record<string, 'explorer' | 'founder' | 'legend'> = {
-  [process.env.DODO_PRODUCT_EXPLORER_MONTHLY || 'pdt_0NYGgiPYXbfSQSTu2YZVA']: 'explorer',
+const PRODUCT_TO_PLAN: Record<string, 'campus' | 'founder' | 'legend'> = {
+  [process.env.DODO_PRODUCT_CAMPUS_MONTHLY  || process.env.DODO_PRODUCT_EXPLORER_MONTHLY || 'pdt_0NYGgiPYXbfSQSTu2YZVA']: 'campus',
   [process.env.DODO_PRODUCT_FOUNDER_YEARLY  || 'pdt_0NYGhiHbaHo141y9EXBl7']: 'founder',
   [process.env.DODO_PRODUCT_LEGEND_LIFETIME || 'pdt_0NYGi3cj7tCz581sqfnWw']: 'legend',
 };
@@ -28,7 +28,7 @@ async function activatePlan({
   dodoCustomerId,
 }: {
   email: string;
-  plan: 'explorer' | 'founder' | 'legend';
+  plan: 'campus' | 'founder' | 'legend';
   periodEnd?: string | null;
   dodoSubscriptionId?: string | null;
   dodoCustomerId?: string | null;
@@ -133,6 +133,10 @@ export async function POST(request: Request) {
         const productId = data?.product_cart?.[0]?.product_id;
         const plan = productId ? PRODUCT_TO_PLAN[productId] : undefined;
 
+        if (!plan && productId) {
+          console.warn(`⚠️ Unknown product ID in payment.succeeded: ${productId}. Known IDs: ${Object.keys(PRODUCT_TO_PLAN).join(', ')}`);
+        }
+
         if (email && plan) {
           await activatePlan({
             email,
@@ -144,12 +148,16 @@ export async function POST(request: Request) {
         break;
       }
 
-      // ── Subscriptions (Explorer Monthly / Founder Yearly) ─────────────────
+      // ── Subscriptions (Campus Monthly / Founder Yearly) ─────────────────
       case 'subscription.active':
       case 'subscription.renewed': {
         const email = data?.customer?.email;
         const productId = data?.product_id;
         const plan = productId ? PRODUCT_TO_PLAN[productId] : undefined;
+
+        if (!plan && productId) {
+          console.warn(`⚠️ Unknown product ID in ${event.type as string}: ${productId}. Known IDs: ${Object.keys(PRODUCT_TO_PLAN).join(', ')}`);
+        }
 
         if (email && plan) {
           await activatePlan({
@@ -167,6 +175,10 @@ export async function POST(request: Request) {
         const email = data?.customer?.email;
         const productId = data?.product_id;
         const plan = productId ? PRODUCT_TO_PLAN[productId] : undefined;
+
+        if (!plan && productId) {
+          console.warn(`⚠️ Unknown product ID in subscription.plan_changed: ${productId}`);
+        }
 
         if (email && plan) {
           await activatePlan({

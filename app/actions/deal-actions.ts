@@ -29,9 +29,9 @@ export async function claimDeal(dealId: string, applicationUrl: string): Promise
       return { success: true, url: applicationUrl }
     }
 
-    // Only Explorer users are tracked for limits (Free users are blocked completely)
-    if (user.plan !== 'explorer') {
-      return { success: false, error: 'Upgrade to Explorer or Founder to claim this deal.' }
+    // Only Campus users are tracked for limits (Free users are blocked completely)
+    if (user.plan !== 'campus') {
+      return { success: false, error: 'Upgrade to Campus or Founder to claim this deal.' }
     }
 
     const supabase = createClient()

@@ -4,7 +4,7 @@ import PricingPageContent from '@/components/pricing/PricingPageContent'
 
 export const metadata = {
   title: 'Pricing — Plans for Every Founder',
-  description: 'Access verified startup deals, cloud credits, and grants. Explorer at $1.99/mo, Founder at $89.99/yr with unlimited access and private community, or Legend lifetime at $149.99.',
+  description: 'Verified startup deals, cloud credits, and grants. Campus at $9.99/mo for students, Founder at $99.99/yr (was $149) with unlimited access, or Legend lifetime at $149 (was $299).',
 }
 
 export default function PricingPage() {

@@ -109,7 +109,8 @@ export default function PricingPageContent() {
                     {[
                         { q: 'How fast will I see savings?', a: 'Most founders claim their first deal within 3 minutes. A single cloud credit can save $5K–$100K instantly.' },
                         { q: 'Are deals actually verified?', a: 'Every deal is manually verified weekly. Broken links removed, expired offers flagged, new deals added constantly.' },
-                        { q: 'What if I only need one deal?', a: 'Even one deal pays for your membership 10x over. Explorer at $1.99/mo gets you started immediately.' },
+                        { q: 'I am a student — which plan is for me?', a: 'The Campus plan at $9.99/mo is built for students. You get fellowships, internships, scholarships, and our Campus Edge deals — hundreds of student-only credits and savings.' },
+                        { q: 'What if I only need one deal?', a: 'Even one deal pays for your membership 10x over. Founder at $99.99/yr gets you full access immediately.' },
                         { q: 'Can I cancel anytime?', a: 'Yes. No contracts, no lock-in. Cancel from your dashboard in one click.' },
                     ].map((faq) => (
                         <details key={faq.q} className="group border-2 border-black bg-white shadow-[2px_2px_0px_#111]">
