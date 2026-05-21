@@ -52,12 +52,11 @@ export default function PricingPlans({ currency }: PricingPlansProps) {
       description: 'For students, indie hackers & early builders.',
       features: [
         'Premium AI & SaaS credits',
-        'Curated tools & opportunities',
+        'Curated tools, perks & early access opportunities',
         'Hackathons, internships & fellowships',
         'Startup grants & founder programs',
         'Opportunity Hub for career & growth',
         'NextFounder community access',
-        'Early access to perks & opportunities',
       ],
       footnote: 'Active student verification required. All NextFounder benefits are reserved for verified students only — not for general founders.',
       cta: 'Join NextFounder',
