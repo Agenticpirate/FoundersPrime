@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { GlowingEffect } from '@/components/ui/GlowingEffect'
+import Link from 'next/link'
 
 export default function FinalCTA() {
   const [email, setEmail] = useState('')
@@ -10,78 +10,83 @@ export default function FinalCTA() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     if (!email.trim()) return
+    // TODO: wire to email provider
     setSubmitted(true)
   }
 
   return (
-    <section className="py-4 md:py-8 bg-black text-white border-t-2 border-black border-b-4 border-b-accent-yellow relative overflow-hidden">
-      <div
-        className="absolute inset-0 z-0 opacity-10 pointer-events-none"
-        style={{
-          backgroundImage: 'linear-gradient(#333 1px, transparent 1px), linear-gradient(90deg, #333 1px, transparent 1px)',
-          backgroundSize: '20px 20px',
-        }}
-      />
+    <section className="relative bg-black text-white py-10 md:py-16 border-t-4 border-accent-yellow overflow-hidden grid-bg-dark">
+      {/* Animated gradient blobs */}
+      <div className="absolute -top-32 left-1/4 w-96 h-96 bg-accent-yellow/20 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute -bottom-32 right-1/4 w-96 h-96 bg-pink-500/15 rounded-full blur-3xl pointer-events-none" />
 
-      <div className="max-w-[1600px] mx-auto px-6 relative z-10">
-        <div className="flex flex-col lg:flex-row items-center justify-between gap-6 lg:gap-12">
-
-          {/* Left */}
-          <div className="flex-1 min-w-0">
-            <h2 className="text-xl md:text-3xl font-black font-mono tracking-tighter text-white uppercase leading-tight mb-1">
-              Stay Ahead. <span className="text-accent-yellow">Get Alerts.</span>
+      <div className="relative max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-12 items-center">
+          {/* Left: copy */}
+          <div className="lg:col-span-3">
+            <span className="inline-flex items-center gap-1.5 bg-accent-yellow text-black font-mono text-[9px] md:text-[10px] font-black uppercase tracking-widest px-2.5 py-1 border border-black mb-3 shadow-[2px_2px_0px_#fff]">
+              <span className="material-symbols-outlined text-[12px]">campaign</span>
+              The Founder Brief · Free
+            </span>
+            <h2 className="text-2xl md:text-4xl lg:text-5xl font-black font-mono uppercase tracking-tight leading-[1.05] mb-3">
+              Don't miss the next<br />
+              <span className="bg-gradient-to-r from-accent-yellow via-yellow-300 to-orange-400 bg-clip-text text-transparent">
+                $50K deal again.
+              </span>
             </h2>
-            <p className="text-xs md:text-sm text-gray-400 font-mono leading-relaxed">
-              New deals, grants, accelerators &amp; credits — straight to your inbox.
+            <p className="text-sm md:text-base text-gray-400 font-sans mb-4 max-w-md">
+              Every Monday: the freshest credits, accelerator deadlines, and grants — curated for founders who actually ship. No filler. No fluff.
             </p>
+
+            <div className="flex flex-wrap gap-3 text-[10px] md:text-xs text-gray-500 font-mono uppercase tracking-widest">
+              {['One email a week', 'Unsubscribe anytime', 'Curated by founders'].map((t) => (
+                <span key={t} className="flex items-center gap-1">
+                  <span className="material-symbols-outlined text-sm text-green-400">check_circle</span>
+                  {t}
+                </span>
+              ))}
+            </div>
           </div>
 
-          {/* Right */}
-          <div className="w-full lg:w-auto flex-shrink-0">
+          {/* Right: form */}
+          <div className="lg:col-span-2 w-full">
             {submitted ? (
-              <div className="flex items-center gap-3 border-2 border-accent-yellow px-6 py-3">
-                <span className="material-symbols-outlined text-accent-yellow text-xl">mark_email_read</span>
-                <p className="font-mono text-sm font-bold text-white uppercase tracking-wide">You&apos;re on the list!</p>
-              </div>
-            ) : (
-              <div>
-                <form onSubmit={handleSubmit} className="relative flex flex-row gap-0 neo-shadow">
-                  <GlowingEffect
-                    spread={40}
-                    glow={false}
-                    disabled={false}
-                    proximity={48}
-                    inactiveZone={0.01}
-                    borderWidth={2}
-                  />
-                  <input
-                    className="flex-1 min-w-0 bg-white text-black text-sm p-3 focus:ring-0 focus:outline-none font-mono rounded-none placeholder-gray-500"
-                    placeholder="YOUR EMAIL ADDRESS"
-                    type="email"
-                    required
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
-                  <button
-                    type="submit"
-                    className="bg-accent-yellow text-black text-sm font-black px-4 py-3 hover:bg-white transition-all whitespace-nowrap font-mono uppercase flex items-center justify-center gap-1.5 border-2 border-accent-yellow"
-                  >
-                    <span className="hidden sm:inline">Subscribe</span>
-                    <span className="material-symbols-outlined text-sm">arrow_forward</span>
-                  </button>
-                </form>
-                <div className="flex items-center gap-4 mt-2.5 text-[10px] text-gray-500 font-mono uppercase tracking-widest">
-                  {['No spam', 'Unsubscribe anytime'].map((t) => (
-                    <span key={t} className="flex items-center gap-1">
-                      <span className="material-symbols-outlined text-xs text-green-500">check</span>
-                      {t}
-                    </span>
-                  ))}
+              <div className="bg-white/5 border-2 border-green-400 backdrop-blur-sm p-5 md:p-6 flex items-center gap-4">
+                <div className="w-12 h-12 bg-green-400 border-2 border-black flex items-center justify-center flex-shrink-0">
+                  <span className="material-symbols-outlined text-2xl text-black">mark_email_read</span>
+                </div>
+                <div>
+                  <p className="font-mono font-black text-base uppercase tracking-tight">You're in.</p>
+                  <p className="font-sans text-sm text-gray-400">Check your inbox — first drop coming this week.</p>
                 </div>
               </div>
+            ) : (
+              <form onSubmit={handleSubmit} className="flex flex-col gap-3">
+                <input
+                  type="email"
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="founder@yourstartup.com"
+                  className="w-full bg-white/5 border-2 border-white/15 px-4 py-3.5 font-mono text-sm text-white placeholder-gray-500 focus:outline-none focus:border-accent-yellow transition-colors"
+                />
+                <button
+                  type="submit"
+                  className="w-full bg-accent-yellow text-black font-mono font-black text-sm md:text-base uppercase tracking-wider px-6 py-3.5 border-2 border-accent-yellow hover:bg-white hover:border-white hover:-translate-y-0.5 transition-all shadow-[3px_3px_0px_rgba(255,255,255,0.2)] hover:shadow-[5px_5px_0px_rgba(255,255,255,0.3)] flex items-center justify-center gap-2"
+                >
+                  <span className="material-symbols-outlined text-base">bolt</span>
+                  Send me the Brief
+                  <span className="material-symbols-outlined text-base">arrow_forward</span>
+                </button>
+                <Link
+                  href="/pricing"
+                  className="w-full text-center font-mono text-xs uppercase tracking-widest text-gray-400 hover:text-accent-yellow transition-colors py-1"
+                >
+                  Or skip the wait — see plans →
+                </Link>
+              </form>
             )}
           </div>
-
         </div>
       </div>
     </section>

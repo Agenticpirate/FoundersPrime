@@ -214,16 +214,51 @@ export default function Pricing3DTestimonials() {
     }, [totalMobile])
 
     return (
-        <section className="w-full py-8 md:py-8 md:py-6 md:py-8 bg-background-light border-b-3 border-[#111111] overflow-hidden">
-            <div className="max-w-[1600px] mx-auto px-4 md:px-8 lg:px-12">
+        <section className="relative w-full py-10 md:py-14 bg-background-light border-b-3 border-[#111111] overflow-hidden">
+            {/* Decorative background grid + glow */}
+            <div
+                className="absolute inset-0 opacity-[0.03] pointer-events-none"
+                style={{
+                    backgroundImage:
+                        'linear-gradient(#000 1px, transparent 1px), linear-gradient(90deg, #000 1px, transparent 1px)',
+                    backgroundSize: '32px 32px',
+                }}
+                aria-hidden="true"
+            />
+            <div className="absolute -top-20 left-1/4 w-72 h-72 bg-accent-yellow/10 rounded-full blur-3xl pointer-events-none" aria-hidden="true" />
+
+            <div className="relative max-w-[1600px] mx-auto px-4 md:px-8 lg:px-12">
                 {/* Header */}
-                <div className="text-center mb-4 md:mb-6 md:mb-4 md:mb-6">
-                    <h2 className="text-xl md:text-3xl lg:text-4xl font-black uppercase mb-1.5 md:mb-4 tracking-tighter text-[#111111]">
-                        Don&apos;t Take Our Word For It
+                <div className="text-center mb-6 md:mb-8 max-w-3xl mx-auto">
+                    <span className="inline-flex items-center gap-1.5 bg-accent-yellow text-black px-2.5 py-0.5 font-mono text-[10px] font-black uppercase tracking-[0.16em] mb-3 border-2 border-black shadow-[2px_2px_0px_#111]">
+                        <span className="material-symbols-outlined !text-[12px]">format_quote</span>
+                        Founder reviews
+                    </span>
+                    <h2 className="font-mono text-2xl md:text-3xl lg:text-4xl font-black uppercase mb-2 tracking-tight text-[#111111] leading-[1.05]">
+                        Don&apos;t take our word{' '}
+                        <span className="bg-accent-yellow px-2 inline-block border-2 border-black shadow-[3px_3px_0px_#111] mt-1 md:mt-0">
+                            for it.
+                        </span>
                     </h2>
-                    <p className="text-xs md:text-base font-medium text-gray-500 max-w-2xl mx-auto">
-                        Real founders. Real results. See how FoundersPrime is helping startups save thousands.
+                    <p className="text-[13px] md:text-[15px] font-medium text-gray-600 max-w-2xl mx-auto leading-relaxed mt-4">
+                        Real founders sharing how FoundersPrime fits into their build — across cloud, SaaS, grants, and programs.
                     </p>
+
+                    {/* Trust stat strip */}
+                    <div className="mt-5 inline-flex flex-wrap items-center justify-center gap-x-5 gap-y-2 px-4 py-2.5 bg-white border-2 border-black rounded-sm shadow-[3px_3px_0px_#111]">
+                        {[
+                            { icon: 'verified', text: 'Hand-vetted listings', color: 'text-emerald-600' },
+                            { icon: 'group', text: 'Active founder community', color: 'text-sky-600' },
+                            { icon: 'update', text: 'Refreshed weekly', color: 'text-amber-500' },
+                        ].map((item) => (
+                            <div key={item.text} className="inline-flex items-center gap-1.5">
+                                <span className={`material-symbols-outlined !text-[15px] ${item.color}`} style={{ fontVariationSettings: "'FILL' 1" }}>{item.icon}</span>
+                                <span className="font-mono text-[10.5px] md:text-[11px] font-bold uppercase tracking-wide text-gray-800">
+                                    {item.text}
+                                </span>
+                            </div>
+                        ))}
+                    </div>
                 </div>
 
                 <div

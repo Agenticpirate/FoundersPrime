@@ -1,7 +1,6 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { createClient } from '@/lib/supabase/client'
 import Link from 'next/link'
 import Image from 'next/image'
 import AdminHeader from '@/components/admin/AdminHeader'
@@ -12,13 +11,19 @@ export default function AdminSubmissionsPage() {
 
   useEffect(() => {
     const fetchSubmissions = async () => {
-      const supabase = createClient()
-      const { data, error } = await supabase
-        .from('deal_submissions')
-        .select('*')
-        .order('created_at', { ascending: false })
-      if (!error) setSubmissions(data || [])
-      setLoading(false)
+      try {
+        const res = await fetch('/api/admin/submissions')
+        const json = await res.json()
+        if (res.ok) {
+          setSubmissions(json.submissions || [])
+        } else {
+          console.error('Admin submissions fetch error:', json.error)
+        }
+      } catch (e) {
+        console.error('Admin submissions fetch failed:', e)
+      } finally {
+        setLoading(false)
+      }
     }
     fetchSubmissions()
   }, [])
@@ -66,6 +71,11 @@ export default function AdminSubmissionsPage() {
                         </div>
                       )}
                       <span className="font-bold truncate">{sub.company_name}</span>
+                      {sub.featured_requested && (
+                        <span className="bg-accent-yellow text-black border border-black px-1 py-0 text-[8px] font-black uppercase tracking-widest flex items-center gap-0.5 flex-shrink-0">
+                          ⭐ Featured
+                        </span>
+                      )}
                     </div>
                   </td>
                   <td className="px-3 py-2 hidden sm:table-cell">

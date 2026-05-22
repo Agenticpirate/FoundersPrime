@@ -9,7 +9,6 @@ export default function Header() {
   const { user, loading, signOut } = useAuth()
   const [isPro, setIsPro] = useState(false)
   const [isAdmin, setIsAdmin] = useState(false)
-  /* ─── Guard: prevent duplicate Supabase round-trips during hydration flicker ─── */
   const hasCheckedRef = useRef<string | null>(null)
 
   useEffect(() => {
@@ -31,15 +30,21 @@ export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [expandedSection, setExpandedSection] = useState<string | null>(null)
 
-  // Close mobile menu when route changes or user logs out
   useEffect(() => {
     setMobileMenuOpen(false)
     setExpandedSection(null)
   }, [user])
 
   const toggleSection = (section: string) => {
-    setExpandedSection(prev => prev === section ? null : section)
+    setExpandedSection((prev) => (prev === section ? null : section))
   }
+
+  const dropdownClasses =
+    'invisible opacity-0 translate-y-1 group-hover:visible group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-200 ease-out absolute left-0 top-full pt-2 z-50'
+  const dropdownPanelClasses =
+    'relative bg-[#0a0a0a]/95 backdrop-blur-xl border border-white/10 shadow-[0_20px_50px_-12px_rgba(0,0,0,0.8),0_0_0_1px_rgba(255,221,0,0.08)] min-w-[240px] overflow-hidden header-dropdown-panel'
+  const dropdownItemClasses =
+    'group/item relative flex items-center gap-3 px-4 py-3 text-[11.5px] font-mono font-bold uppercase tracking-[0.04em] text-gray-300 hover:bg-white/[0.04] hover:text-accent-yellow border-b border-white/[0.06] last:border-0 transition-all'
 
   const mobileNavSections = [
     {
@@ -47,310 +52,360 @@ export default function Header() {
       label: 'Deals',
       href: '/deals',
       icon: 'local_offer',
-      iconBg: 'bg-accent-yellow',
-      iconColor: 'text-black',
       children: [
-        { label: 'All Deals', href: '/deals', icon: 'grid_view', iconColor: 'text-black' },
-        { label: 'Cloud Credits', href: '/deals/cloud-credits', icon: 'cloud', iconColor: 'text-blue-600' },
-        { label: 'SaaS Discounts', href: '/deals/saas-discounts', icon: 'apps', iconColor: 'text-purple-600' },
-        { label: 'Ad Credits', href: '/deals/ad-credits', icon: 'campaign', iconColor: 'text-orange-500' },
-      ]
+        { label: 'All Deals', href: '/deals', icon: 'grid_view' },
+        { label: 'Cloud Credits', href: '/deals/cloud-credits', icon: 'cloud' },
+        { label: 'SaaS Discounts', href: '/deals/saas-discounts', icon: 'apps' },
+        { label: 'Ad Credits', href: '/deals/ad-credits', icon: 'campaign' },
+      ],
     },
     {
       id: 'programs',
       label: 'Programs',
       href: '/deals/accelerators',
       icon: 'rocket_launch',
-      iconBg: 'bg-orange-400',
-      iconColor: 'text-white',
       children: [
-        { label: 'Accelerators', href: '/deals/accelerators', icon: 'rocket_launch', iconColor: 'text-orange-500' },
-        { label: 'Incubators', href: '/deals/incubators', icon: 'lightbulb', iconColor: 'text-yellow-500' },
-        { label: 'Grants', href: '/deals/grants', icon: 'payments', iconColor: 'text-green-600' },
-        { label: 'Funding & Opps', href: '/resources/funding-opportunities', icon: 'monetization_on', iconColor: 'text-emerald-500' },
-      ]
+        { label: 'Accelerators', href: '/deals/accelerators', icon: 'rocket_launch' },
+        { label: 'Incubators', href: '/deals/incubators', icon: 'lightbulb' },
+        { label: 'Grants', href: '/deals/grants', icon: 'payments' },
+      ],
     },
     {
       id: 'studentbenefits',
       label: 'Student Benefits',
       href: '#',
       icon: 'school',
-      iconBg: 'bg-[#FF90E8]',
-      iconColor: 'text-black',
       children: [
-        { label: 'Campus Edge', href: '/resources/free-access', icon: 'workspace_premium', iconColor: 'text-pink-500' },
-        { label: 'Credits & Savings', href: '/resources/credits-savings', icon: 'savings', iconColor: 'text-green-500' },
-      ]
+        { label: 'Funding & Opportunities', href: '/resources/funding-opportunities', icon: 'monetization_on' },
+        { label: 'Campus Edge', href: '/resources/free-access', icon: 'workspace_premium' },
+        { label: 'Credits & Savings', href: '/resources/credits-savings', icon: 'savings' },
+      ],
     },
     {
       id: 'resources',
       label: 'Resources',
       href: '/resources',
       icon: 'folder_open',
-      iconBg: 'bg-[#7ed6e0]',
-      iconColor: 'text-black',
       children: [
-        { label: 'Templates & Guides', href: '/resources', icon: 'description', iconColor: 'text-cyan-600' },
-        { label: 'Verified Startups', href: '/startups', icon: 'verified', iconColor: 'text-blue-500' },
-        { label: 'Startup Ideas', href: '/ideas', icon: 'emoji_objects', iconColor: 'text-yellow-500' },
-        { label: 'Contact', href: '/contact', icon: 'mail', iconColor: 'text-gray-600' },
-      ]
+        { label: 'Verified Startups', href: '/startups', icon: 'verified' },
+        { label: 'Startup Ideas', href: '/ideas', icon: 'emoji_objects' },
+        { label: 'Templates & Guides', href: '/resources', icon: 'description' },
+        { label: 'Contact', href: '/contact', icon: 'mail' },
+      ],
     },
   ]
 
   return (
-    <header className="sticky top-0 z-50 bg-background-light border-b-2 border-black">
-      <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-14 md:h-20 gap-4">
-          <div className="flex-shrink-0 flex items-center">
-            <Link className="text-xl md:text-2xl font-bold tracking-tighter text-black flex items-center gap-2 font-mono" href="/">
-              <div className="w-8 h-8 relative">
-                <img src="/logo.svg" alt="FoundersPrime Logo" className="w-full h-full object-contain" onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }} />
+    <header className="sticky top-0 z-50 bg-[#050505]/95 backdrop-blur-xl text-white border-b border-white/10 shadow-[0_1px_0_0_rgba(255,221,0,0.18),0_8px_30px_-12px_rgba(0,0,0,0.8)] relative overflow-visible">
+      {/* Animated gradient sweep on the very top */}
+      <div className="absolute top-0 left-0 right-0 h-[1px] overflow-hidden pointer-events-none">
+        <div
+          className="h-full w-[200%] header-gradient-sweep"
+          style={{
+            background:
+              'linear-gradient(90deg, transparent, transparent 30%, rgba(255,221,0,0.7) 50%, transparent 70%, transparent)',
+          }}
+        />
+      </div>
+
+      {/* Soft glow halo under the header */}
+      <div
+        className="absolute -bottom-px left-1/2 -translate-x-1/2 w-[60%] h-[1px] pointer-events-none"
+        style={{ background: 'linear-gradient(90deg, transparent, rgba(255,221,0,0.35), transparent)' }}
+        aria-hidden="true"
+      />
+
+      <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 relative">
+        <div className="flex justify-between items-center h-14 md:h-16 gap-4">
+
+          {/* ─── Brand — original logo ─── */}
+          <div className="flex-shrink-0">
+            <Link
+              href="/"
+              className="inline-flex items-center gap-2.5 no-underline group"
+            >
+              <div className="relative w-8 h-8 flex-shrink-0">
+                <span className="absolute inset-0 rounded-sm bg-accent-yellow/20 blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-300" aria-hidden="true" />
+                <img
+                  src="/logo-white.svg"
+                  alt="FoundersPrime"
+                  className="relative w-full h-full object-contain group-hover:rotate-6 transition-transform duration-300"
+                  onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
+                />
               </div>
-              <span>FOUNDERS<span className="text-blue-600">[</span>PRIME<span className="text-blue-600">]</span></span>
+              <span className="font-mono font-black text-base md:text-[17px] tracking-[0.18em] text-white uppercase whitespace-nowrap">
+                FOUNDERS<span className="text-accent-yellow">[</span>PRIME<span className="text-accent-yellow">]</span>
+              </span>
             </Link>
           </div>
 
-          <nav className="hidden md:flex space-x-6 items-center font-mono text-sm uppercase tracking-tight">
-            {/* Deals Dropdown */}
+          {/* ─── Desktop nav ─── */}
+          <nav className="hidden md:flex items-center gap-0.5 lg:gap-1 font-mono text-[12px] uppercase tracking-[0.06em]">
+            {/* Deals */}
             <div className="relative group">
-              <Link className="text-black font-bold hover:text-primary flex items-center gap-1 py-6" href="/deals">
-                Deals <span className="material-symbols-outlined text-sm">expand_more</span>
+              <Link
+                href="/deals"
+                className="header-nav-link relative text-gray-200 font-bold hover:text-white flex items-center gap-1.5 px-3 py-2 rounded-md hover:bg-white/[0.05] transition-all"
+              >
+                <span className="header-nav-text">Deals</span>
+                <span className="material-symbols-outlined text-[14px] text-gray-500 transition-all duration-300 group-hover:rotate-180 group-hover:text-accent-yellow">expand_more</span>
               </Link>
-              <div className="absolute left-0 top-full pt-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 ease-out z-50">
-                <div className="bg-white border-3 border-black shadow-[6px_6px_0px_#111111] min-w-[220px]">
-                  <Link href="/deals" className="block px-4 py-3 text-sm font-bold hover:bg-primary/20 border-b border-black/10 flex items-center gap-2">
-                    <span className="material-symbols-outlined text-lg">local_offer</span>
+              <div className={dropdownClasses}>
+                <div className={dropdownPanelClasses}>
+                  <Link href="/deals" className={dropdownItemClasses}>
+                    <span className="material-symbols-outlined text-base text-accent-yellow">grid_view</span>
                     All Deals
                   </Link>
-                  <Link href="/deals/cloud-credits" className="block px-4 py-3 text-sm font-bold hover:bg-primary/20 border-b border-black/10 flex items-center gap-2">
-                    <span className="material-symbols-outlined text-lg">cloud</span>
+                  <Link href="/deals/cloud-credits" className={dropdownItemClasses}>
+                    <span className="material-symbols-outlined text-base text-sky-400">cloud</span>
                     Cloud Credits
                   </Link>
-                  <Link href="/deals/saas-discounts" className="block px-4 py-3 text-sm font-bold hover:bg-primary/20 border-b border-black/10 flex items-center gap-2">
-                    <span className="material-symbols-outlined text-lg">apps</span>
+                  <Link href="/deals/saas-discounts" className={dropdownItemClasses}>
+                    <span className="material-symbols-outlined text-base text-purple-400">apps</span>
                     SaaS Discounts
                   </Link>
-                  <Link href="/deals/ad-credits" className="block px-4 py-3 text-sm font-bold hover:bg-primary/20 flex items-center gap-2">
-                    <span className="material-symbols-outlined text-lg">campaign</span>
+                  <Link href="/deals/ad-credits" className={dropdownItemClasses}>
+                    <span className="material-symbols-outlined text-base text-pink-400">campaign</span>
                     Ad Credits
                   </Link>
                 </div>
               </div>
             </div>
 
-            {/* Programs Dropdown */}
+            {/* Programs */}
             <div className="relative group">
-              <Link className="text-black font-bold hover:text-primary flex items-center gap-1 py-6" href="/deals/accelerators">
-                Programs <span className="material-symbols-outlined text-sm">expand_more</span>
+              <Link
+                href="/deals/accelerators"
+                className="header-nav-link relative text-gray-200 font-bold hover:text-white flex items-center gap-1.5 px-3 py-2 rounded-md hover:bg-white/[0.05] transition-all"
+              >
+                <span className="header-nav-text">Programs</span>
+                <span className="material-symbols-outlined text-[14px] text-gray-500 transition-all duration-300 group-hover:rotate-180 group-hover:text-accent-yellow">expand_more</span>
               </Link>
-              <div className="absolute left-0 top-full pt-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 ease-out z-50">
-                <div className="bg-white border-3 border-black shadow-[6px_6px_0px_#111111] min-w-[220px]">
-                  <Link href="/deals/accelerators" className="block px-4 py-3 text-sm font-bold hover:bg-primary/20 border-b border-black/10 flex items-center gap-2">
-                    <span className="material-symbols-outlined text-lg">rocket_launch</span>
+              <div className={dropdownClasses}>
+                <div className={dropdownPanelClasses}>
+                  <Link href="/deals/accelerators" className={dropdownItemClasses}>
+                    <span className="material-symbols-outlined text-base text-orange-400">rocket_launch</span>
                     Accelerators
                   </Link>
-                  <Link href="/deals/incubators" className="block px-4 py-3 text-sm font-bold hover:bg-primary/20 border-b border-black/10 flex items-center gap-2">
-                    <span className="material-symbols-outlined text-lg">lightbulb</span>
+                  <Link href="/deals/incubators" className={dropdownItemClasses}>
+                    <span className="material-symbols-outlined text-base text-yellow-400">lightbulb</span>
                     Incubators
                   </Link>
-                  <Link href="/deals/grants" className="block px-4 py-3 text-sm font-bold hover:bg-primary/20 border-b border-black/10 flex items-center gap-2">
-                    <span className="material-symbols-outlined text-lg">payments</span>
+                  <Link href="/deals/grants" className={dropdownItemClasses}>
+                    <span className="material-symbols-outlined text-base text-green-400">payments</span>
                     Grants
-                  </Link>
-                  <Link href="/resources/funding-opportunities" className="block px-4 py-3 text-sm font-bold hover:bg-primary/20 flex items-center gap-2">
-                    <span className="material-symbols-outlined text-lg">monetization_on</span>
-                    Funding &amp; Opportunities
                   </Link>
                 </div>
               </div>
             </div>
 
-            {/* Student Benefits Dropdown */}
+            {/* Student Benefits */}
             <div className="relative group">
-              <Link className="text-black font-bold hover:text-primary flex items-center gap-1 py-6" href="#">
-                <span className="relative inline-block">
-                  Student Benefits 
-                  <span className="absolute -top-3 -right-6 rotate-[12deg] bg-[#FF90E8] text-black text-[9px] px-1.5 py-0.5 border border-black font-black uppercase shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] leading-none z-10">
-                    FREE
-                  </span>
-                </span>
-                <span className="material-symbols-outlined text-sm ml-1">expand_more</span>
+              <Link
+                href="#"
+                className="header-nav-link relative text-gray-200 font-bold hover:text-white flex items-center gap-1.5 px-3 py-2 rounded-md hover:bg-white/[0.05] transition-all"
+              >
+                <span className="header-nav-text">Student Benefits</span>
+                <span className="material-symbols-outlined text-[14px] text-gray-500 transition-all duration-300 group-hover:rotate-180 group-hover:text-accent-yellow">expand_more</span>
               </Link>
-              <div className="absolute left-0 top-full pt-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 ease-out z-50">
-                <div className="bg-white border-3 border-black shadow-[6px_6px_0px_#111111] min-w-[240px]">
-                  <Link href="/resources/free-access" className="block px-4 py-3 text-sm font-bold hover:bg-primary/20 border-b border-black/10 flex items-center gap-2">
-                    <span className="material-symbols-outlined text-lg">workspace_premium</span>
+              <div className={dropdownClasses}>
+                <div className={dropdownPanelClasses}>
+                  <Link href="/resources/funding-opportunities" className={dropdownItemClasses}>
+                    <span className="material-symbols-outlined text-base text-emerald-400">monetization_on</span>
+                    Funding &amp; Opportunities
+                  </Link>
+                  <Link href="/resources/free-access" className={dropdownItemClasses}>
+                    <span className="material-symbols-outlined text-base text-pink-400">workspace_premium</span>
                     Campus Edge
                   </Link>
-                  <Link href="/resources/credits-savings" className="block px-4 py-3 text-sm font-bold hover:bg-primary/20 flex items-center gap-2">
-                    <span className="material-symbols-outlined text-lg">savings</span>
+                  <Link href="/resources/credits-savings" className={dropdownItemClasses}>
+                    <span className="material-symbols-outlined text-base text-green-400">savings</span>
                     Credits &amp; Savings
                   </Link>
                 </div>
               </div>
             </div>
 
-            {/* Resources Dropdown */}
+            {/* Resources */}
             <div className="relative group">
-              <Link className="text-black font-bold hover:text-primary flex items-center gap-1 py-6" href="/resources">
-                Resources <span className="material-symbols-outlined text-sm">expand_more</span>
+              <Link
+                href="/resources"
+                className="header-nav-link relative text-gray-200 font-bold hover:text-white flex items-center gap-1.5 px-3 py-2 rounded-md hover:bg-white/[0.05] transition-all"
+              >
+                <span className="header-nav-text">Resources</span>
+                <span className="material-symbols-outlined text-[14px] text-gray-500 transition-all duration-300 group-hover:rotate-180 group-hover:text-accent-yellow">expand_more</span>
               </Link>
-              <div className="absolute left-0 top-full pt-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 ease-out z-50">
-                <div className="bg-white border-3 border-black shadow-[6px_6px_0px_#111111] min-w-[220px]">
-                  <Link href="/startups" className="block px-4 py-3 text-sm font-bold hover:bg-primary/20 border-b border-black/10 flex items-center gap-2">
-                    <span className="material-symbols-outlined text-lg">verified</span>
+              <div className={dropdownClasses}>
+                <div className={dropdownPanelClasses}>
+                  <Link href="/startups" className={dropdownItemClasses}>
+                    <span className="material-symbols-outlined text-base text-blue-400">verified</span>
                     Verified Startups
                   </Link>
-                  <Link href="/ideas" className="block px-4 py-3 text-sm font-bold hover:bg-primary/20 border-b border-black/10 flex items-center gap-2">
-                    <span className="material-symbols-outlined text-lg">emoji_objects</span>
+                  <Link href="/ideas" className={dropdownItemClasses}>
+                    <span className="material-symbols-outlined text-base text-yellow-400">emoji_objects</span>
                     Startup Ideas
                   </Link>
-                  <Link href="/resources" className="block px-4 py-3 text-sm font-bold hover:bg-primary/20 border-b border-black/10 flex items-center gap-2">
-                    <span className="material-symbols-outlined text-lg">folder_open</span>
+                  <Link href="/resources" className={dropdownItemClasses}>
+                    <span className="material-symbols-outlined text-base text-cyan-400">description</span>
                     Templates &amp; Guides
                   </Link>
-                  <Link href="/contact" className="block px-4 py-3 text-sm font-bold hover:bg-primary/20 flex items-center gap-2">
-                    <span className="material-symbols-outlined text-lg">mail</span>
+                  <Link href="/contact" className={dropdownItemClasses}>
+                    <span className="material-symbols-outlined text-base text-gray-400">mail</span>
                     Contact
                   </Link>
                 </div>
               </div>
             </div>
 
-            <Link className="text-black font-bold hover:text-primary" href="/pricing">Pricing</Link>
+            {/* Vertical divider */}
+            <span className="hidden lg:block w-px h-5 bg-gradient-to-b from-transparent via-white/20 to-transparent mx-2" aria-hidden="true" />
 
+            <Link
+              href="/pricing"
+              className="header-nav-link relative text-accent-yellow font-bold hover:text-white flex items-center gap-2 px-3 py-2 rounded-sm hover:bg-accent-yellow/[0.08] transition-all"
+            >
+              <span className="header-nav-text">Pricing</span>
+              <span className="hidden lg:inline-flex items-center gap-1 bg-accent-yellow text-black text-[8px] font-black uppercase tracking-[0.12em] px-1.5 py-0.5 leading-none animate-pulse-subtle shadow-[0_0_12px_rgba(255,221,0,0.4)]">
+                <span className="w-1 h-1 bg-red-500 rounded-full animate-pulse" />
+                Sale
+              </span>
+            </Link>
           </nav>
 
-          <div className="hidden md:flex items-center gap-4">
+          {/* ─── Right: Auth / CTA ─── */}
+          <div className="hidden md:flex items-center gap-3">
             {loading ? (
-              <div className="w-24 h-10 bg-gray-200 animate-pulse"></div>
+              <div className="w-24 h-9 bg-white/10 animate-pulse rounded-sm" />
             ) : user ? (
-              <>
-
-                <div className="relative group">
-                  <button className="neo-border neo-shadow bg-white text-black font-mono font-bold py-2 px-4 rounded-none text-sm transition-all uppercase flex items-center gap-2">
-                    <span className="material-symbols-outlined text-lg">account_circle</span>
-                    {user.user_metadata?.full_name?.split(' ')[0] || user.email?.split('@')[0]}
-                    {isPro && (
-                      <span className="bg-accent-yellow text-black text-xs px-2 py-0.5 rounded-sm border border-black font-bold ml-1">
-                        PRO
-                      </span>
-                    )}
+              <div className="relative group">
+                <button className="bg-white/[0.04] border border-white/10 hover:border-accent-yellow/40 text-white font-mono font-bold py-2 px-3 text-[12px] rounded-md transition-all uppercase tracking-[0.06em] flex items-center gap-2 hover:bg-white/[0.08]">
+                  <span className="material-symbols-outlined text-base text-accent-yellow">account_circle</span>
+                  <span className="hidden lg:inline">{user.user_metadata?.full_name?.split(' ')[0] || user.email?.split('@')[0]}</span>
+                  {isPro && (
+                    <span className="bg-accent-yellow text-black text-[9px] px-1.5 py-0.5 font-bold uppercase ml-0.5 rounded-sm tracking-wider">
+                      PRO
+                    </span>
+                  )}
+                  {isAdmin && (
+                    <span className="bg-red-500 text-white text-[9px] px-1.5 py-0.5 font-bold uppercase ml-0.5 rounded-sm tracking-wider">
+                      ADMIN
+                    </span>
+                  )}
+                  <span className="material-symbols-outlined text-[14px] text-gray-400">expand_more</span>
+                </button>
+                <div className="absolute right-0 top-full pt-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                  <div className={`${dropdownPanelClasses} min-w-[200px]`}>
+                    <Link href="/dashboard" className={dropdownItemClasses}>
+                      <span className="material-symbols-outlined text-base text-accent-yellow">dashboard</span>
+                      Dashboard
+                    </Link>
                     {isAdmin && (
-                      <span className="bg-red-500 text-white text-xs px-2 py-0.5 rounded-sm border border-black font-bold ml-1">
-                        ADMIN
-                      </span>
+                      <Link href="/admin" className={`${dropdownItemClasses} hover:!text-red-400`}>
+                        <span className="material-symbols-outlined text-base text-red-400">admin_panel_settings</span>
+                        Admin Panel
+                      </Link>
                     )}
-                    <span className="material-symbols-outlined text-sm">expand_more</span>
-                  </button>
-                  <div className="absolute right-0 top-full pt-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 ease-out z-50">
-                    <div className="bg-white border-3 border-black shadow-[6px_6px_0px_#111111] min-w-[180px]">
-                      <Link href="/dashboard" className="block px-4 py-3 text-sm font-bold hover:bg-primary/20 border-b border-black/10 flex items-center gap-2">
-                        <span className="material-symbols-outlined text-lg">dashboard</span>
-                        Dashboard
-                      </Link>
-                      {isAdmin && (
-                        <Link href="/admin" className="block px-4 py-3 text-sm font-bold hover:bg-red-50 border-b border-black/10 flex items-center gap-2 text-red-600">
-                          <span className="material-symbols-outlined text-lg">admin_panel_settings</span>
-                          Admin Panel
-                        </Link>
-                      )}
-                      <Link href="/billing" className="block px-4 py-3 text-sm font-bold hover:bg-primary/20 border-b border-black/10 flex items-center gap-2">
-                        <span className="material-symbols-outlined text-lg">credit_card</span>
-                        Billing
-                      </Link>
-                      <button
-                        onClick={() => signOut()}
-                        className="w-full text-left px-4 py-3 text-sm font-bold hover:bg-red-100 text-red-600 flex items-center gap-2"
-                      >
-                        <span className="material-symbols-outlined text-lg">logout</span>
-                        Sign Out
-                      </button>
-                    </div>
+                    <Link href="/billing" className={dropdownItemClasses}>
+                      <span className="material-symbols-outlined text-base text-green-400">credit_card</span>
+                      Billing
+                    </Link>
+                    <button
+                      onClick={() => signOut()}
+                      className="w-full flex items-center gap-2.5 px-4 py-3 text-[12px] font-mono font-black uppercase tracking-tight text-red-400 hover:bg-red-500/10 hover:text-red-300 transition-colors"
+                    >
+                      <span className="material-symbols-outlined text-base">logout</span>
+                      Sign Out
+                    </button>
                   </div>
                 </div>
-              </>
+              </div>
             ) : (
               <>
-                <Link className="text-black font-mono font-bold text-sm hover:underline uppercase" href="/login">Log In</Link>
-                <Link href="/pricing" className="neo-border neo-shadow bg-accent-yellow text-black font-mono font-bold py-2 px-5 rounded-none text-sm transition-all uppercase flex items-center gap-2">
-                  Get Started
-                  <span className="material-symbols-outlined text-base">arrow_forward</span>
+                <Link
+                  href="/login"
+                  className="text-gray-300 font-mono font-bold text-[12px] hover:text-white uppercase tracking-[0.06em] px-3 py-2 rounded-md hover:bg-white/[0.05] transition-all"
+                >
+                  Log In
+                </Link>
+                <Link
+                  href="/pricing"
+                  className="relative group bg-accent-yellow text-black font-mono font-black py-2 px-4 text-[12px] uppercase tracking-[0.1em] flex items-center gap-1.5 rounded-md hover:bg-white transition-all overflow-hidden shadow-[0_4px_20px_-4px_rgba(255,221,0,0.5)] hover:shadow-[0_8px_30px_-4px_rgba(255,221,0,0.7)]"
+                >
+                  <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" aria-hidden="true" />
+                  <span className="relative">Get Started</span>
+                  <span className="material-symbols-outlined text-sm relative group-hover:translate-x-0.5 transition-transform">arrow_forward</span>
                 </Link>
               </>
             )}
           </div>
 
-          <div className="md:hidden flex items-center gap-4">
+          {/* ─── Mobile toggle ─── */}
+          <div className="md:hidden flex items-center gap-2">
             <button
-              className="text-black p-2 neo-border bg-white"
+              className="text-white p-2 bg-white/5 border border-white/15 hover:bg-white/10 hover:border-accent-yellow transition-colors"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              aria-label="Toggle menu"
             >
               <span className="material-symbols-outlined">{mobileMenuOpen ? 'close' : 'menu'}</span>
             </button>
           </div>
         </div>
 
-        {/* Mobile Menu — Accordion style with sub-menus */}
+        {/* ─── Mobile Menu ─── */}
         {mobileMenuOpen && (
-          <div className="md:hidden absolute left-0 right-0 bg-white border-b-2 border-black shadow-[0_8px_32px_rgba(0,0,0,0.12)] z-40 animate-slideDown max-h-[80vh] overflow-y-auto">
+          <div className="md:hidden absolute left-0 right-0 bg-black text-white border-b-2 border-accent-yellow shadow-[0_8px_24px_rgba(0,0,0,0.4)] z-40 animate-slideDown max-h-[80vh] overflow-y-auto">
             <div className="px-3 py-2">
-
-              {/* Accordion Nav Sections */}
-              <div className="flex flex-col divide-y divide-black/8">
+              <div className="flex flex-col divide-y divide-white/10">
                 {mobileNavSections.map((section) => (
                   <div key={section.id}>
-                    {/* Section Header Row */}
                     <div className="flex items-center">
                       <Link
                         href={section.children && section.children.length > 0 ? '#' : section.href}
                         onClick={(e) => {
                           if (section.children && section.children.length > 0) {
-                            e.preventDefault();
-                            toggleSection(section.id);
+                            e.preventDefault()
+                            toggleSection(section.id)
                           } else {
-                            setMobileMenuOpen(false);
+                            setMobileMenuOpen(false)
                           }
                         }}
-                        className="flex-1 flex items-center gap-2.5 py-3 text-xs font-mono font-black border-transparent border-b hover:border-black/5 uppercase text-black transition-colors relative"
+                        className="flex-1 flex items-center gap-2.5 py-3 text-xs font-mono font-black uppercase text-white transition-colors"
                       >
-                        <span className={`w-7 h-7 flex items-center justify-center rounded-md border border-black/10 shadow-[1px_1px_0px_rgba(0,0,0,0.15)] ${section.iconBg} ${section.iconColor} transition-transform duration-300 ${expandedSection === section.id ? 'scale-110 rotate-[-4deg]' : ''}`}>
+                        <span
+                          className={`w-7 h-7 flex items-center justify-center bg-white/5 border border-white/15 transition-transform duration-300 ${
+                            expandedSection === section.id ? 'scale-110 rotate-[-4deg] bg-accent-yellow text-black border-accent-yellow' : 'text-accent-yellow'
+                          }`}
+                        >
                           <span className="material-symbols-outlined text-[16px]">{section.icon}</span>
                         </span>
-                        <span className="relative inline-block pr-6">
-                          {section.label}
-                          {section.id === 'studentbenefits' && (
-                            <span className="absolute -top-2 right-0 rotate-[12deg] bg-[#FF90E8] text-black text-[8px] px-1 py-0.5 border border-black font-black uppercase shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] leading-none z-10 w-fit h-fit">
-                              FREE
-                            </span>
-                          )}
-                        </span>
+                        {section.label}
                       </Link>
                       {section.children && section.children.length > 0 && (
                         <button
                           onClick={() => toggleSection(section.id)}
-                          className="p-3 text-black hover:bg-gray-50 rounded-sm"
+                          className="p-3 text-gray-400 hover:bg-white/5 hover:text-accent-yellow"
                           aria-label={`Expand ${section.label}`}
                         >
-                          <span className="material-symbols-outlined text-sm transition-transform duration-300 ease-out" style={{ transform: expandedSection === section.id ? 'rotate(180deg)' : 'rotate(0deg)' }}>
+                          <span
+                            className="material-symbols-outlined text-sm transition-transform duration-300 ease-out"
+                            style={{ transform: expandedSection === section.id ? 'rotate(180deg)' : 'rotate(0deg)' }}
+                          >
                             expand_more
                           </span>
                         </button>
                       )}
                     </div>
 
-                    {/* Sub-links */}
                     {expandedSection === section.id && section.children && section.children.length > 0 && (
-                      <div className="ml-6 mb-2 flex flex-col gap-0.5 bg-gray-50 border border-black/8 rounded-sm overflow-hidden animate-slideDown">
-                        {section.children.map((child: any) => (
+                      <div className="ml-6 mb-2 flex flex-col bg-white/5 border border-white/10 overflow-hidden animate-slideDown">
+                        {section.children.map((child) => (
                           <Link
                             key={child.href}
                             href={child.href}
                             onClick={() => setMobileMenuOpen(false)}
-                            className="flex items-center gap-2.5 px-3 py-3 text-[11px] font-mono font-bold uppercase text-gray-700 hover:bg-primary/10 hover:text-black border-b border-black/5 last:border-0 transition-colors"
+                            className="flex items-center gap-2.5 px-3 py-2.5 text-[11px] font-mono font-bold uppercase text-gray-300 hover:bg-white/10 hover:text-accent-yellow border-b border-white/10 last:border-0 transition-colors"
                           >
-                            <span className={`material-symbols-outlined text-sm ${child.iconColor || 'text-gray-400'}`}>{child.icon}</span>
+                            <span className="material-symbols-outlined text-sm text-accent-yellow/70">{child.icon}</span>
                             {child.label}
                           </Link>
                         ))}
@@ -359,59 +414,64 @@ export default function Header() {
                   </div>
                 ))}
 
-                {/* Standalone links */}
+                {/* Pricing standalone */}
                 <Link
                   href="/pricing"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-center gap-2.5 py-3 text-xs font-mono font-black uppercase text-black hover:bg-gray-50"
+                  className="flex items-center gap-2.5 py-3 text-xs font-mono font-black uppercase text-accent-yellow"
                 >
-                  <span className="w-7 h-7 flex items-center justify-center rounded-md border border-black/10 shadow-[1px_1px_0px_rgba(0,0,0,0.15)] bg-green-400 text-black">
+                  <span className="w-7 h-7 flex items-center justify-center bg-accent-yellow text-black border border-accent-yellow">
                     <span className="material-symbols-outlined text-[16px]">sell</span>
                   </span>
                   Pricing
                 </Link>
-                {/* 
-                <Link
-                  href="/ideas"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-center gap-2 py-3 text-xs font-mono font-black uppercase text-black hover:bg-gray-50"
-                >
-                  <span className="material-symbols-outlined text-base text-gray-500">emoji_objects</span>
-                  Ideas
-                </Link>
-                <Link
-                  href="/startups"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-center gap-2 py-3 text-xs font-mono font-black uppercase text-black hover:bg-gray-50"
-                >
-                  <span className="material-symbols-outlined text-base text-gray-500">verified</span>
-                  Startups
-                </Link>
-                */}
               </div>
 
-              <div className="border-t border-black/10 mt-2 pt-3 pb-1">
-                {/* Auth row */}
+              <div className="border-t border-white/10 mt-2 pt-3 pb-1">
                 {user ? (
                   <div className="flex items-center gap-2">
                     <div className="flex items-center gap-1.5 flex-1 min-w-0">
-                      <span className="material-symbols-outlined text-base text-gray-500">account_circle</span>
-                      <span className="text-xs font-mono font-bold truncate">{user.user_metadata?.full_name?.split(' ')[0] || user.email?.split('@')[0]}</span>
-                      {isPro && <span className="bg-accent-yellow text-black text-[9px] px-1.5 py-0.5 font-bold uppercase border border-black">PRO</span>}
+                      <span className="material-symbols-outlined text-base text-accent-yellow">account_circle</span>
+                      <span className="text-xs font-mono font-bold truncate text-white">
+                        {user.user_metadata?.full_name?.split(' ')[0] || user.email?.split('@')[0]}
+                      </span>
+                      {isPro && (
+                        <span className="bg-accent-yellow text-black text-[9px] px-1.5 py-0.5 font-bold uppercase border border-black">
+                          PRO
+                        </span>
+                      )}
                     </div>
-                    <Link href="/dashboard" onClick={() => setMobileMenuOpen(false)} className="text-[11px] font-mono font-bold uppercase px-3 py-1.5 border border-black hover:bg-black hover:text-white transition-all">
+                    <Link
+                      href="/dashboard"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="text-[11px] font-mono font-bold uppercase px-3 py-1.5 border border-white/30 text-white hover:bg-accent-yellow hover:text-black hover:border-accent-yellow transition-all"
+                    >
                       Dashboard
                     </Link>
-                    <button onClick={() => { signOut(); setMobileMenuOpen(false); }} className="text-[11px] font-mono font-bold uppercase px-3 py-1.5 border border-red-400 text-red-500 hover:bg-red-500 hover:text-white transition-all">
+                    <button
+                      onClick={() => {
+                        signOut()
+                        setMobileMenuOpen(false)
+                      }}
+                      className="text-[11px] font-mono font-bold uppercase px-3 py-1.5 border border-red-500/40 text-red-400 hover:bg-red-500 hover:text-white hover:border-red-500 transition-all"
+                    >
                       Out
                     </button>
                   </div>
                 ) : (
                   <div className="grid grid-cols-2 gap-2">
-                    <Link href="/login" onClick={() => setMobileMenuOpen(false)} className="flex items-center justify-center py-3 text-xs font-mono font-bold uppercase border-2 border-black bg-white hover:bg-black hover:text-white transition-all">
+                    <Link
+                      href="/login"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="flex items-center justify-center py-3 text-xs font-mono font-bold uppercase border border-white/30 text-white hover:bg-white/10 hover:border-accent-yellow transition-all"
+                    >
                       Log In
                     </Link>
-                    <Link href="/pricing" onClick={() => setMobileMenuOpen(false)} className="flex items-center justify-center py-3 text-xs font-mono font-bold uppercase border-2 border-black bg-accent-yellow hover:bg-yellow-400 transition-all">
+                    <Link
+                      href="/pricing"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="flex items-center justify-center py-3 text-xs font-mono font-black uppercase border-2 border-accent-yellow bg-accent-yellow text-black hover:bg-white hover:border-white transition-all"
+                    >
                       Get Started
                     </Link>
                   </div>
@@ -420,8 +480,61 @@ export default function Header() {
             </div>
           </div>
         )}
-
       </div>
+
+      <style jsx>{`
+        /* Animated gradient sweep on top edge */
+        @keyframes headerGradientSweep {
+          0% { transform: translateX(-50%); }
+          100% { transform: translateX(0%); }
+        }
+        .header-gradient-sweep {
+          animation: headerGradientSweep 6s linear infinite;
+        }
+
+        /* Hover underline reveal on nav links */
+        .header-nav-link {
+          position: relative;
+        }
+        .header-nav-text {
+          position: relative;
+        }
+        .header-nav-text::after {
+          content: '';
+          position: absolute;
+          left: 0;
+          right: 0;
+          bottom: -6px;
+          height: 1px;
+          background: linear-gradient(90deg, transparent, #FFD500, transparent);
+          transform: scaleX(0);
+          transform-origin: center;
+          transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .header-nav-link:hover .header-nav-text::after {
+          transform: scaleX(1);
+        }
+
+        /* Dropdown panel top accent line */
+        :global(.header-dropdown-panel)::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 12px;
+          right: 12px;
+          height: 1px;
+          background: linear-gradient(90deg, transparent, rgba(255,221,0,0.4), transparent);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .header-gradient-sweep {
+            animation: none;
+          }
+          .header-nav-text::after {
+            transition: none;
+          }
+        }
+      `}</style>
     </header>
   )
 }

@@ -1,7 +1,6 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { createClient } from '@/lib/supabase/client'
 import { useParams, useRouter } from 'next/navigation'
 import Link from 'next/link'
 
@@ -15,24 +14,53 @@ export default function AdminSubmissionDetail() {
 
     useEffect(() => {
         const fetchSubmission = async () => {
-            const supabase = createClient()
-            const { data, error } = await supabase
-                .from('deal_submissions')
-                .select('*')
-                .eq('id', id)
-                .single()
-
-            if (error) {
-                console.error('Error fetching submission:', error)
-            } else {
-                setSubmission(data)
-                setAdminNote(data.admin_notes || '')
+            try {
+                const res = await fetch(`/api/admin/submissions/${id}`)
+                const json = await res.json()
+                if (res.ok && json.submission) {
+                    setSubmission(json.submission)
+                    setAdminNote(json.submission.admin_notes || '')
+                } else {
+                    console.error('Error fetching submission:', json.error)
+                }
+            } catch (e) {
+                console.error('Error fetching submission:', e)
+            } finally {
+                setLoading(false)
             }
-            setLoading(false)
         }
 
         if (id) fetchSubmission()
     }, [id])
+
+    const [paymentLink, setPaymentLink] = useState<string>('')
+    const [generatingLink, setGeneratingLink] = useState(false)
+
+    const handleGeneratePaymentLink = async () => {
+        setGeneratingLink(true)
+        try {
+            const res = await fetch('/api/admin/featured-payment-link', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ submissionId: submission.id }),
+            })
+            const data = await res.json()
+            if (res.ok && data.url) {
+                setPaymentLink(data.url)
+            } else {
+                alert(data.error || 'Failed to generate payment link')
+            }
+        } catch (err) {
+            alert('Network error generating payment link')
+        } finally {
+            setGeneratingLink(false)
+        }
+    }
+
+    const copyPaymentLink = () => {
+        navigator.clipboard.writeText(paymentLink)
+        alert('Payment link copied to clipboard')
+    }
 
     const handleAction = async (action: 'approve' | 'reject' | 'request_changes') => {
         if (!confirm(`Are you sure you want to ${action.replace('_', ' ')} this submission?`)) return
@@ -77,7 +105,7 @@ export default function AdminSubmissionDetail() {
                 <div className="flex justify-between items-start mb-4 md:mb-6">
                     <div>
                         <h1 className="text-3xl font-black uppercase tracking-tight mb-2">{submission.company_name}</h1>
-                        <div className="flex gap-2">
+                        <div className="flex flex-wrap gap-2">
                             <span className={`inline-block px-2 py-1 text-[10px] font-black uppercase border border-black ${submission.status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
                                 submission.status === 'approved' ? 'bg-green-100 text-green-800' :
                                     submission.status === 'rejected' ? 'bg-red-100 text-red-800' :
@@ -88,6 +116,16 @@ export default function AdminSubmissionDetail() {
                             {submission.is_exclusive && (
                                 <span className="inline-block px-2 py-1 text-[10px] font-black uppercase border border-black bg-purple-100 text-purple-800">
                                     Exclusive
+                                </span>
+                            )}
+                            {submission.featured_requested && (
+                                <span className="inline-flex items-center gap-1 px-2 py-1 text-[10px] font-black uppercase border border-black bg-accent-yellow text-black">
+                                    ⭐ Featured Requested
+                                    {submission.featured_paid ? (
+                                        <span className="ml-1 bg-green-500 text-white px-1 text-[9px]">PAID</span>
+                                    ) : (
+                                        <span className="ml-1 bg-orange-500 text-white px-1 text-[9px]">UNPAID</span>
+                                    )}
                                 </span>
                             )}
                         </div>
@@ -190,6 +228,91 @@ export default function AdminSubmissionDetail() {
                                 </a>
                             </div>
                         </div>
+
+                        {/* Featured Listing — only shown if requested */}
+                        {submission.featured_requested && (
+                            <div className="bg-white border-3 border-[#111] p-6 shadow-[4px_4px_0_0_#000]">
+                                <div className="flex items-center justify-between mb-3">
+                                    <h2 className="text-sm font-black uppercase flex items-center gap-1">
+                                        <span className="text-amber-500">⭐</span> Featured Listing
+                                    </h2>
+                                    {submission.featured_paid ? (
+                                        <span className="bg-green-500 text-white border border-black px-2 py-0.5 text-[9px] font-black uppercase">PAID</span>
+                                    ) : (
+                                        <span className="bg-orange-500 text-white border border-black px-2 py-0.5 text-[9px] font-black uppercase">UNPAID</span>
+                                    )}
+                                </div>
+
+                                <p className="text-xs text-gray-600 mb-3 leading-snug">
+                                    Submitter requested a Featured listing ($99 / 30 days).
+                                    {submission.status === 'pending' && ' Approve the submission first, then generate the payment link.'}
+                                </p>
+
+                                {submission.featured_paid && submission.featured_until && (
+                                    <div className="bg-green-50 border-2 border-green-500 p-2 mb-3 text-xs font-bold text-green-800">
+                                        Pinned until {new Date(submission.featured_until).toLocaleDateString()}
+                                    </div>
+                                )}
+
+                                {/* Generate payment link */}
+                                {submission.status === 'approved' && !submission.featured_paid && (
+                                    <>
+                                        {!paymentLink ? (
+                                            <button
+                                                onClick={handleGeneratePaymentLink}
+                                                disabled={generatingLink}
+                                                className="w-full px-3 py-2 bg-amber-400 text-black font-black uppercase text-xs border-2 border-black shadow-[2px_2px_0_0_#000] hover:translate-y-px hover:shadow-none disabled:opacity-50 disabled:cursor-not-allowed"
+                                            >
+                                                {generatingLink ? 'Generating…' : 'Generate Payment Link'}
+                                            </button>
+                                        ) : (
+                                            <div className="space-y-2">
+                                                <div className="bg-gray-100 border border-gray-300 p-2 text-[10px] font-mono break-all">
+                                                    {paymentLink}
+                                                </div>
+                                                <div className="grid grid-cols-2 gap-2">
+                                                    <button
+                                                        onClick={copyPaymentLink}
+                                                        className="px-2 py-1.5 bg-black text-white font-bold uppercase text-[10px] border-2 border-black hover:bg-gray-800"
+                                                    >
+                                                        Copy
+                                                    </button>
+                                                    <a
+                                                        href={`mailto:${submission.submitter_email || ''}?subject=${encodeURIComponent('Your Featured Listing payment link')}&body=${encodeURIComponent(`Hi,\n\nThanks for choosing Featured listing for ${submission.company_name} on FoundersPrime.\n\nPay $99 here to activate your 30-day pinned placement:\n\n${paymentLink}\n\n— FoundersPrime`)}`}
+                                                        className="px-2 py-1.5 bg-blue-500 text-white font-bold uppercase text-[10px] border-2 border-black hover:bg-blue-600 text-center"
+                                                    >
+                                                        Email it
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        )}
+                                    </>
+                                )}
+
+                                {submission.status === 'pending' && (
+                                    <p className="text-[11px] text-amber-700 bg-amber-50 border border-amber-200 p-2 font-bold">
+                                        Approve the submission to enable payment link.
+                                    </p>
+                                )}
+
+                                {(submission.status === 'rejected' || submission.status === 'changes_requested') && !submission.featured_paid && (
+                                    <p className="text-[11px] text-gray-500">
+                                        No payment due — submission was {submission.status.replace('_', ' ')}.
+                                    </p>
+                                )}
+
+                                {submission.featured_paid && (
+                                    <a
+                                        href="https://app.dodopayments.com"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="block w-full text-center px-3 py-2 bg-white text-black font-bold uppercase text-[11px] border-2 border-red-500 text-red-600 hover:bg-red-50"
+                                    >
+                                        Refund in Dodo →
+                                    </a>
+                                )}
+                            </div>
+                        )}
                     </div>
 
                 </div>

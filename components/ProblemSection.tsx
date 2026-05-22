@@ -1,15 +1,44 @@
 'use client'
 
-import Link from 'next/link'
 import { useRef, useState, useEffect } from 'react'
+
+const insights = [
+    {
+        icon: 'schedule',
+        title: 'Heard too late',
+        text: 'You only find the $50K credit after you\'ve burned $50K. The clock\'s already running.',
+        bg: 'bg-accent-yellow',
+        accent: 'bg-orange-400',
+    },
+    {
+        icon: 'search_off',
+        title: 'Buried details',
+        text: 'Grants exist — but eligibility is buried in 40-page PDFs no founder has time to read.',
+        bg: 'bg-blue-100',
+        accent: 'bg-blue-500',
+    },
+    {
+        icon: 'hourglass_empty',
+        title: 'Last-minute apps',
+        text: 'Accelerator deadlines hit your inbox the night before. Rushed apps don\'t get accepted.',
+        bg: 'bg-pink-100',
+        accent: 'bg-pink-500',
+    },
+    {
+        icon: 'school',
+        title: 'Students get more',
+        text: 'Most student perks aren\'t advertised. Next\'Founder unlocks the ones built for builders.',
+        bg: 'bg-green-100',
+        accent: 'bg-green-500',
+    },
+]
 
 export default function ProblemSection() {
     const scrollRef = useRef<HTMLDivElement>(null)
     const [activeIdx, setActiveIdx] = useState(0)
     const isTouch = useRef(false)
-    const CARD_COUNT = 4
+    const CARD_COUNT = insights.length
 
-    // Auto-advance every 3 seconds on mobile
     useEffect(() => {
         const interval = setInterval(() => {
             if (isTouch.current) return
@@ -34,103 +63,180 @@ export default function ProblemSection() {
     }
 
     return (
-        <section className="relative py-4 md:py-8 lg:py-10 overflow-hidden grid-bg flex flex-col border-b-2 border-black">
-            <div className="max-w-[1400px] w-full mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="flex flex-col lg:flex-row gap-10 lg:gap-16 items-start lg:items-center w-full">
-                    
-                    {/* Left side: Text & Context */}
-                    <div className="flex-1 flex flex-col items-start text-left w-full lg:max-w-[55%]">
-                        {/* Label */}
-                        <div className="inline-block bg-black text-white text-xs font-mono font-bold px-3 py-1 mb-2 md:mb-3 uppercase tracking-wider neo-shadow-sm transform -rotate-2 self-start">
-                            Why This Exists
-                        </div>
+        <section className="relative py-8 md:py-14 overflow-hidden border-b-2 border-black bg-gradient-to-b from-white via-gray-50 to-white grid-bg">
+            {/* Soft accent blobs */}
+            <div className="absolute -top-20 right-1/4 w-72 h-72 bg-accent-yellow/15 rounded-full blur-3xl pointer-events-none" />
+            <div className="absolute -bottom-32 left-0 w-72 h-72 bg-pink-200/30 rounded-full blur-3xl pointer-events-none" />
 
-                        {/* Headline */}
-                        <h2 className="text-2xl sm:text-4xl lg:text-5xl xl:text-6xl font-black text-black mb-3 leading-[1.1] uppercase font-sans w-full">
-                            The problem isn't <br className="hidden sm:block" />
-                            lack of opportunities.<br />
-                            <span className="bg-accent-red text-white px-3 mt-2 inline-block transform rotate-1 origin-left border-2 border-black neo-shadow-sm">It's lack of visibility.</span>
+            <div className="relative max-w-[1200px] w-full mx-auto px-4 sm:px-6 lg:px-8">
+                {/* Top header row */}
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-start">
+                    {/* Left: header + copy */}
+                    <div className="lg:col-span-7 flex flex-col items-start">
+                        <span className="inline-flex items-center gap-1.5 bg-black text-accent-yellow font-mono text-[9px] md:text-[10px] font-black uppercase tracking-widest px-2.5 py-1 border border-black mb-3 md:mb-4">
+                            <span className="material-symbols-outlined text-[12px]">visibility_off</span>
+                            The hidden cost most founders pay
+                        </span>
+
+                        <h2 className="text-2xl sm:text-4xl lg:text-5xl xl:text-6xl font-black text-black mb-4 leading-[1.05] uppercase font-sans w-full">
+                            The problem isn't<br className="hidden sm:block" />
+                            <span className="text-gray-500">missing opportunities.</span><br />
+                            <span className="relative inline-block mt-2">
+                                <span className="absolute inset-0 bg-accent-red transform -skew-y-1 -z-0" />
+                                <span className="relative text-white px-3 py-1 inline-block">It's not finding them in time.</span>
+                            </span>
                         </h2>
 
-                        {/* Subheadline */}
-                        <p className="text-xs sm:text-lg lg:text-xl text-gray-800 font-medium leading-relaxed max-w-xl mb-4 font-mono bg-white/70 p-2 sm:p-0 sm:bg-transparent border-2 border-black sm:border-none shadow-[2px_2px_0_0_rgba(0,0,0,1)] sm:shadow-none">
-                            Startup credits, grants, and accelerator programs already exist.
-                            But they're scattered across dozens of sites, buried in PDFs,
-                            or discovered only after founders have already overspent.
+                        <p className="text-sm sm:text-base lg:text-lg text-gray-700 font-medium leading-relaxed max-w-xl mb-4">
+                            Most founders leave <strong>$50K–$500K on the table</strong> in their first 18 months — not because the credits don't exist, but because they're scattered, buried, or surface days before deadline.
                         </p>
 
-                        {/* Reframe Line */}
-                        <div className="relative mb-0 md:mb-2 w-full max-w-xl">
-                            <div className="absolute -inset-1 bg-gray-200 transform -rotate-1 border-2 border-black"></div>
-                            <p className="relative z-10 text-sm md:text-lg font-black text-black bg-white border-2 border-black px-4 py-3 neo-shadow">
-                                FoundersPrime brings all of this into one structured platform.
-                            </p>
+                        {/* Cost meter — three stat tiles, same vertical footprint */}
+                        <div className="grid grid-cols-3 gap-2 w-full max-w-xl mb-4">
+                            {[
+                                { value: '40+', label: 'Sites to track', icon: 'public' },
+                                { value: '20hr', label: 'Wasted/week', icon: 'schedule' },
+                                { value: '$50K+', label: 'Left behind', icon: 'trending_down' },
+                            ].map((s) => (
+                                <div
+                                    key={s.label}
+                                    className="bg-white border-2 border-black p-2 md:p-3 shadow-[2px_2px_0px_#111] flex items-center gap-2 hover:-translate-y-0.5 transition-transform"
+                                >
+                                    <span className="material-symbols-outlined text-base md:text-lg text-accent-red flex-shrink-0">{s.icon}</span>
+                                    <div className="min-w-0">
+                                        <p className="font-mono font-black text-sm md:text-base leading-none text-black">{s.value}</p>
+                                        <p className="font-mono text-[8px] md:text-[9px] uppercase tracking-widest text-gray-500 mt-0.5 truncate">{s.label}</p>
+                                    </div>
+                                </div>
+                            ))}
                         </div>
 
+                        <div className="relative w-full max-w-xl">
+                            <div className="absolute -inset-1 bg-accent-yellow transform -rotate-1 border-2 border-black" />
+                            <p className="relative z-10 text-sm md:text-base font-black text-black bg-white border-2 border-black px-4 py-3 shadow-[3px_3px_0px_#111] flex items-center gap-2">
+                                <span className="material-symbols-outlined text-base text-accent-yellow bg-black p-0.5 rounded-sm flex-shrink-0">bolt</span>
+                                One terminal. Every deal that matters. Verified weekly.
+                            </p>
+                        </div>
                     </div>
 
-                    {/* Right side: Cards */}
-                    <div className="flex-1 w-full lg:max-w-[45%]">
-                        {/* Insights — horizontal auto-scroll on mobile, 2x2 grid on sm+ */}
+                    {/* Right: insight cards */}
+                    <div className="lg:col-span-5 w-full">
                         <div
                             ref={scrollRef}
                             onScroll={handleScroll}
                             onTouchStart={() => { isTouch.current = true }}
                             onTouchEnd={() => { setTimeout(() => { isTouch.current = false }, 2000) }}
-                            className="flex sm:grid sm:grid-cols-2 gap-4 sm:gap-5 w-full text-left overflow-x-auto snap-x snap-mandatory pb-4 pt-2 -mx-4 px-4 sm:mx-0 sm:px-0 sm:pb-0 sm:pt-0 scroll-smooth mobile-scroll-hide"
+                            className="flex sm:grid sm:grid-cols-2 gap-3 md:gap-4 w-full text-left overflow-x-auto snap-x snap-mandatory pb-4 pt-2 -mx-4 px-4 sm:mx-0 sm:px-0 sm:pb-0 sm:pt-0 scroll-smooth mobile-scroll-hide"
                         >
-                            
-                            {/* Insight 1 */}
-                            <div className="border-2 border-black p-5 lg:p-6 bg-accent-yellow neo-shadow hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all snap-start shrink-0 w-[85vw] sm:w-auto h-full flex flex-col justify-start relative group">
-                                <div className="absolute top-4 right-4 opacity-10 transform scale-150 rotate-12 group-hover:scale-110 transition-transform duration-500 pointer-events-none">
-                                    <span className="material-symbols-outlined text-6xl">schedule</span>
-                                </div>
-                                <span className="material-symbols-outlined text-3xl mb-4 block text-black bg-white/50 w-fit p-1.5 rounded-md border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] group-hover:translate-x-0.5 group-hover:translate-y-0.5 group-hover:shadow-none transition-all">schedule</span>
-                                <p className="font-bold text-black text-sm md:text-base font-mono leading-snug z-10">
-                                    Credits exist, but founders hear about them <span className="inline-block bg-black text-white px-1 mt-0.5 transform -rotate-1 rounded-sm">too late</span>.
-                                </p>
-                            </div>
+                            {insights.map((insight, idx) => (
+                                <div
+                                    key={insight.title}
+                                    className={`relative ${insight.bg} border-2 border-black p-4 md:p-5 shadow-[3px_3px_0px_#111] hover:-translate-y-1 hover:shadow-[5px_5px_0px_#111] transition-all snap-start shrink-0 w-[85vw] sm:w-auto h-full flex flex-col group overflow-hidden insight-fade-in`}
+                                    style={{ animationDelay: `${idx * 80}ms` }}
+                                >
+                                    <div className={`absolute -top-4 -right-4 w-16 h-16 ${insight.accent} opacity-30 rounded-full blur-2xl group-hover:opacity-50 transition-opacity pointer-events-none`} />
 
-                            {/* Insight 2 */}
-                            <div className="border-2 border-black p-5 lg:p-6 bg-accent-cyan neo-shadow hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all snap-start shrink-0 w-[85vw] sm:w-auto h-full flex flex-col justify-start relative group">
-                                <div className="absolute top-4 right-4 opacity-10 transform scale-150 -rotate-12 group-hover:scale-110 transition-transform duration-500 pointer-events-none">
-                                    <span className="material-symbols-outlined text-6xl">search_off</span>
+                                    <div className="relative z-10 flex items-start gap-2.5 mb-2">
+                                        <div className="w-9 h-9 bg-white border-2 border-black flex items-center justify-center flex-shrink-0 shadow-[2px_2px_0px_#111]">
+                                            <span className="material-symbols-outlined text-lg text-black">{insight.icon}</span>
+                                        </div>
+                                        <h3 className="font-mono font-black text-[11px] md:text-xs uppercase tracking-wider text-black pt-1.5">
+                                            {insight.title}
+                                        </h3>
+                                    </div>
+                                    <p className="relative z-10 font-sans text-sm md:text-[15px] text-black leading-snug font-medium">
+                                        {insight.text}
+                                    </p>
                                 </div>
-                                <span className="material-symbols-outlined text-3xl mb-4 block text-black bg-white/50 w-fit p-1.5 rounded-md border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] group-hover:translate-x-0.5 group-hover:translate-y-0.5 group-hover:shadow-none transition-all">search_off</span>
-                                <p className="font-bold text-black text-sm md:text-base font-mono leading-snug z-10">
-                                    Grants are real, but eligibility and timelines are <span className="inline-block bg-white text-black border border-black px-1 mt-0.5 transform rotate-2 rounded-sm">unclear</span>.
-                                </p>
-                            </div>
-
-                            {/* Insight 3 */}
-                            <div className="border-2 border-black p-5 lg:p-6 bg-primary text-white neo-shadow hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all snap-start shrink-0 w-[85vw] sm:w-auto h-full flex flex-col justify-start relative group">
-                                <div className="absolute top-4 right-4 opacity-10 transform scale-150 rotate-12 group-hover:scale-110 transition-transform duration-500 pointer-events-none">
-                                    <span className="material-symbols-outlined text-6xl text-white">hourglass_empty</span>
-                                </div>
-                                <span className="material-symbols-outlined text-3xl mb-4 block text-black bg-white w-fit p-1.5 rounded-md border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] group-hover:translate-x-0.5 group-hover:translate-y-0.5 group-hover:shadow-none transition-all">hourglass_empty</span>
-                                <p className="font-bold text-white text-sm md:text-base font-mono leading-snug z-10">
-                                    Accelerators are competitive, and applications are mostly <span className="inline-block bg-accent-orange text-black px-1 mt-0.5 transform -rotate-2 border border-black rounded-sm">rushed</span>.
-                                </p>
-                            </div>
-
-                            {/* Insight 4 */}
-                            <div className="border-2 border-black p-5 lg:p-6 bg-accent-orange text-black neo-shadow hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all snap-start shrink-0 w-[85vw] sm:w-auto h-full flex flex-col justify-start relative group">
-                                <div className="absolute top-4 right-4 opacity-10 transform scale-150 -rotate-12 group-hover:scale-110 transition-transform duration-500 pointer-events-none">
-                                    <span className="material-symbols-outlined text-6xl">school</span>
-                                </div>
-                                <span className="material-symbols-outlined text-3xl mb-4 block text-black bg-white/50 w-fit p-1.5 rounded-md border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] group-hover:translate-x-0.5 group-hover:translate-y-0.5 group-hover:shadow-none transition-all">school</span>
-                                <p className="font-bold text-black text-sm md:text-base font-mono leading-snug z-10">
-                                    <span className="inline-block bg-accent-yellow border border-black px-1 mb-1 transform rotate-1 rounded-sm">Student Benefits:</span> Build for free with exclusive deals & credits.
-                                </p>
-                            </div>
-
+                            ))}
                         </div>
 
+                        {/* Mobile dots */}
+                        <div className="flex sm:hidden justify-center gap-1.5 mt-2">
+                            {insights.map((_, idx) => (
+                                <div
+                                    key={idx}
+                                    style={{
+                                        width: activeIdx === idx ? 16 : 6,
+                                        height: 6,
+                                        backgroundColor: activeIdx === idx ? '#000' : '#d1d5db',
+                                        transition: 'all 0.3s',
+                                    }}
+                                />
+                            ))}
+                        </div>
 
+                        {/* Audience reel — sleek minimalist animation strip (desktop only) */}
+                        <div className="hidden sm:block mt-4 relative bg-white border-2 border-black shadow-[3px_3px_0px_#111] overflow-hidden">
+                            {/* Decorative left bar */}
+                            <div className="absolute left-0 top-0 bottom-0 w-1 bg-accent-yellow" />
+
+                            <div className="flex items-center gap-3 px-4 py-3">
+                                <span className="font-mono text-[10px] font-black uppercase tracking-widest text-black flex-shrink-0">
+                                    Built for
+                                </span>
+
+                                {/* Vertical scroll reel */}
+                                <div className="relative h-5 flex-1 overflow-hidden">
+                                    <div className="audience-reel">
+                                        {[
+                                            { icon: 'rocket_launch', label: 'First-time founders', color: 'text-orange-600' },
+                                            { icon: 'school', label: 'Student builders', color: 'text-pink-600' },
+                                            { icon: 'payments', label: 'Grant seekers', color: 'text-green-600' },
+                                            { icon: 'trending_up', label: 'Bootstrappers', color: 'text-blue-600' },
+                                            { icon: 'lightbulb', label: 'Indie hackers', color: 'text-amber-600' },
+                                            { icon: 'code', label: 'Solo devs', color: 'text-purple-600' },
+                                            { icon: 'rocket_launch', label: 'First-time founders', color: 'text-orange-600' },
+                                        ].map((item, i) => (
+                                            <div key={i} className="h-5 flex items-center gap-1.5 font-mono text-[12px] font-black">
+                                                <span className={`material-symbols-outlined text-[14px] ${item.color}`}>{item.icon}</span>
+                                                <span className="text-black">{item.label}</span>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                {/* Tiny pulse */}
+                                <div className="flex items-center gap-1 flex-shrink-0">
+                                    <span className="w-1 h-1 bg-green-500 rounded-full animate-pulse" />
+                                    <span className="font-mono text-[9px] font-bold uppercase tracking-widest text-gray-400">Live</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
+
+            <style jsx>{`
+                @keyframes insightFadeIn {
+                    from { opacity: 0; transform: translateY(8px); }
+                    to { opacity: 1; transform: translateY(0); }
+                }
+                .insight-fade-in {
+                    animation: insightFadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+                }
+
+                /* Audience reel — vertical cycle with hold + transition */
+                @keyframes audienceReel {
+                    0%, 14%   { transform: translateY(0); }
+                    16%, 30%  { transform: translateY(-20px); }
+                    32%, 46%  { transform: translateY(-40px); }
+                    48%, 62%  { transform: translateY(-60px); }
+                    64%, 78%  { transform: translateY(-80px); }
+                    80%, 94%  { transform: translateY(-100px); }
+                    96%, 100% { transform: translateY(-120px); }
+                }
+                .audience-reel {
+                    animation: audienceReel 14s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+                }
+
+                @media (prefers-reduced-motion: reduce) {
+                    .audience-reel {
+                        animation: none;
+                    }
+                }
+            `}</style>
         </section>
     )
 }
-

@@ -179,10 +179,16 @@ export default function DealsGrid({ filters }: DealsGridProps) {
           result.sort((a, b) => a.title.localeCompare(b.title))
           break
         default:
-          // For "All Deals" (no category filter), show recommended first, then popular brands
+          // For "All Deals" (no category filter), show paid Featured first, then recommended, then popular brands
           if (!filters?.category) {
             result.sort((a, b) => {
-              // Recommended deals always first
+              // Paid Featured pinned at top (only if featured_until is in the future)
+              const now = Date.now()
+              const aFeatActive = a.featured && a.featuredUntil && new Date(a.featuredUntil).getTime() > now ? 1 : 0
+              const bFeatActive = b.featured && b.featuredUntil && new Date(b.featuredUntil).getTime() > now ? 1 : 0
+              if (aFeatActive !== bFeatActive) return bFeatActive - aFeatActive
+
+              // Recommended deals next
               const aRec = a.recommended ? 1 : 0;
               const bRec = b.recommended ? 1 : 0;
               if (aRec !== bRec) return bRec - aRec;
@@ -210,6 +216,11 @@ export default function DealsGrid({ filters }: DealsGridProps) {
             })
           } else {
             result.sort((a, b) => {
+              const now = Date.now()
+              const aFeatActive = a.featured && a.featuredUntil && new Date(a.featuredUntil).getTime() > now ? 1 : 0
+              const bFeatActive = b.featured && b.featuredUntil && new Date(b.featuredUntil).getTime() > now ? 1 : 0
+              if (aFeatActive !== bFeatActive) return bFeatActive - aFeatActive
+
               if (a.recommended && !b.recommended) return -1
               if (!a.recommended && b.recommended) return 1
               if (a.featured && !b.featured) return -1
@@ -232,7 +243,12 @@ export default function DealsGrid({ filters }: DealsGridProps) {
     let badge = undefined
     let badgeColor = undefined
 
-    if (deal.recommended) {
+    const isPaidFeatured = deal.featured && deal.featuredUntil && new Date(deal.featuredUntil).getTime() > Date.now()
+
+    if (isPaidFeatured) {
+      badge = '⭐ Featured'
+      badgeColor = 'bg-amber-400 text-black'
+    } else if (deal.recommended) {
       badge = 'Recommended'
       badgeColor = 'bg-orange-500'
     } else if (deal.featured) {
@@ -319,17 +335,17 @@ export default function DealsGrid({ filters }: DealsGridProps) {
   return (
     <>
       {/* Results Summary */}
-      <div className="mb-3 md:mb-6 px-3 py-2 md:p-4 bg-gray-50 border-2 border-gray-200">
-        <div className="flex justify-between items-center gap-2">
-          <p className="text-xs md:text-sm text-gray-600">
-            {filteredDeals.length > 0 ? startIndex + 1 : 0}–{Math.min(endIndex, filteredDeals.length)} of {filteredDeals.length} deals
+      <div className="mb-3 md:mb-5 flex justify-between items-center gap-2 px-1">
+        <p className="text-xs md:text-[13px] text-gray-600">
+          Showing <span className="font-semibold text-gray-900 tabular-nums">{filteredDeals.length > 0 ? startIndex + 1 : 0}–{Math.min(endIndex, filteredDeals.length)}</span> of{' '}
+          <span className="font-semibold text-gray-900 tabular-nums">{filteredDeals.length}</span> deals
+        </p>
+        {filters?.search && (
+          <p className="text-xs md:text-[13px] text-gray-500 truncate flex items-center gap-1">
+            <span className="material-symbols-outlined text-[14px] text-gray-400">search</span>
+            <span className="truncate">&ldquo;{filters.search}&rdquo;</span>
           </p>
-          {filters?.search && (
-            <p className="text-xs md:text-sm text-gray-600 truncate">
-              &ldquo;{filters.search}&rdquo;
-            </p>
-          )}
-        </div>
+        )}
       </div>
 
       {/* No Results */}
@@ -380,13 +396,21 @@ export default function DealsGrid({ filters }: DealsGridProps) {
       )}
 
 
-      {/* Deals Grid or Lock CTA */}
+      {/* Deals Grid (with blur lock overlay if needed) */}
       {!loading && !authLoading && !checkingAccess && filteredDeals.length > 0 && (() => {
         // Enforce pagination limits based on plan and category
         let isLocked = false;
-        let lockTitle = "Unlock More Deals";
-        let lockMessage = "Upgrade to Premium to instantly access our entire database.";
-        
+        let lockTitle = "Don't Leave $50K On The Table";
+        let lockSubtitle = "Members-only access";
+        let lockMessage = "You're one click from cloud credits, SaaS discounts, and grants worth six figures. Founders who unlock the catalog typically stack $25K–$200K in their first month.";
+        let bullets: string[] = [
+          'Stack $200K+ in cloud credits across AWS, GCP and Azure',
+          '500+ vetted SaaS discounts (Notion, Linear, HubSpot, more)',
+          'Grant programs reviewed and matched to your stage',
+        ];
+        let primaryCta = "See Plans · Unlock Now";
+        let reassurance = "Cancel anytime · Instant access · No risk";
+
         const isAcceleratorOrIncubator = filters?.category === 'accelerators' || filters?.category === 'incubators';
 
         if (!isPro) {
@@ -394,43 +418,157 @@ export default function DealsGrid({ filters }: DealsGridProps) {
             // NextFounder plan limits
              if (isAcceleratorOrIncubator && currentPage > 1) {
                 isLocked = true;
-                lockTitle = "Upgrade to Founder";
-                lockMessage = "NextFounder users can view 1 page of Accelerators & Incubators. Upgrade to Founder to unlock the rest.";
+                lockTitle = "Skip the Application Maze";
+                lockSubtitle = "Founder plan unlocks all programs";
+                lockMessage = "Most founders waste 40+ hours hunting accelerators. Founder unlocks every program in the catalog so you apply to the right ones in minutes.";
+                bullets = [
+                  'Full access to YC, Techstars, 500 Global, and 80+ more',
+                  'Incubator partnerships matched to your stage and sector',
+                  'Application tips from founders who got in',
+                ];
              } else if (currentPage > 10) {
                 isLocked = true;
-                lockTitle = "Upgrade to Founder";
-                lockMessage = "NextFounder users are limited to 10 pages of deals. Upgrade to Founder to view everything.";
+                lockTitle = "Unlock The Rest Of Your Stack";
+                lockSubtitle = "Founder plan removes the limit";
+                lockMessage = "You've already saved on the basics. Upgrade to Founder and unlock the deals that compound — six-figure cloud credits, premium SaaS, and grant programs.";
+                bullets = [
+                  '$200K+ in additional cloud and infra credits',
+                  'Premium SaaS deals reserved for funded founders',
+                  'Grant programs filtered to your stage',
+                ];
              }
           } else {
              // Free plan limits
-             if (currentPage > 3) {
-                 isLocked = true;
-                 lockTitle = `Unlock More Deals`;
-                 lockMessage = "Upgrade to instantly access our full database of verified software credits and grants.";
+             isLocked = currentPage > 3;
+             if (isLocked) {
+               lockTitle = "Don't Leave $50K On The Table";
+               lockSubtitle = "Members-only access";
+               lockMessage = "You're one click from cloud credits, SaaS discounts, and grants worth six figures. Founders who unlock the catalog typically stack $25K–$200K in their first month.";
+               bullets = [
+                 'Stack $200K+ in cloud credits across AWS, GCP and Azure',
+                 '500+ vetted SaaS discounts (Notion, Linear, HubSpot, more)',
+                 'Grant programs reviewed and matched to your stage',
+               ];
              }
           }
         }
 
-        if (isLocked) {
-          return (
-            <div className="mt-6 mb-4 md:mt-12 md:mb-4 md:mb-5 bg-gray-50 border-4 border-black p-4 md:p-8 text-center neo-shadow">
-              <span className="material-symbols-outlined text-3xl md:text-4xl mb-2 md:mb-4">lock</span>
-              <h3 className="text-lg md:text-2xl font-bold font-mono uppercase mb-2">{lockTitle}</h3>
-              <p className="text-xs md:text-sm text-gray-600 mb-4 md:mb-6 max-w-xl mx-auto">
-                {lockMessage}
-              </p>
-              <a href="/pricing" className="inline-block bg-primary text-black font-bold font-mono px-5 py-3 md:px-8 md:py-4 border-2 border-black hover:bg-yellow-400 neo-shadow transition-all text-sm">
-                VIEW PRICING PLANS
-              </a>
-            </div>
-          );
-        }
-
         return (
-          <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4 mb-4 md:mb-5">
-            {currentDeals.map((deal) => (
-              <DealCard key={deal.id} deal={convertDealToCardFormat(deal)} />
-            ))}
+          <div className="relative mb-4 md:mb-5">
+            <div
+              className={`grid grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4 transition-all duration-300 ${
+                isLocked ? 'pointer-events-none select-none' : ''
+              }`}
+              aria-hidden={isLocked}
+              style={isLocked ? { filter: 'blur(7px) saturate(0.8)' } : undefined}
+            >
+              {currentDeals.map((deal) => (
+                <DealCard key={deal.id} deal={convertDealToCardFormat(deal)} />
+              ))}
+            </div>
+
+            {/* Lock overlay — content remains visible but blurred underneath */}
+            {isLocked && (
+              <div className="absolute inset-0 z-20 flex items-center justify-center px-3 py-6">
+                {/* Soft fade so blur reads as depth, not noise */}
+                <div className="absolute inset-0 bg-gradient-to-b from-white/40 via-white/65 to-white/40 pointer-events-none" />
+
+                {/* Card */}
+                <div className="relative w-full max-w-md bg-white border-2 border-black rounded-sm shadow-[5px_5px_0px_#111] overflow-hidden lock-overlay-fade-in">
+                  {/* Decorative mandala */}
+                  <div className="absolute -top-12 -right-12 w-44 h-44 pointer-events-none opacity-[0.10]" aria-hidden="true">
+                    <svg viewBox="0 0 200 200" className="w-full h-full text-gray-900 lock-overlay-mandala-spin" fill="none" stroke="currentColor" strokeWidth="0.7">
+                      <circle cx="100" cy="100" r="40" />
+                      <circle cx="100" cy="100" r="60" strokeDasharray="2 4" />
+                      <circle cx="100" cy="100" r="80" strokeDasharray="1 6" />
+                      {[0, 60, 120, 180, 240, 300].map((deg) => (
+                        <g key={deg} transform={`rotate(${deg} 100 100)`}>
+                          <line x1="100" y1="40" x2="100" y2="20" />
+                          <circle cx="100" cy="20" r="2" fill="currentColor" />
+                        </g>
+                      ))}
+                      <circle cx="100" cy="100" r="3" fill="currentColor" />
+                    </svg>
+                  </div>
+
+                  <div className="relative p-5 md:p-7">
+                    {/* Subtitle pill */}
+                    <div className="mb-3 inline-flex items-center gap-1.5 px-2 py-0.5 bg-accent-yellow/20 border-2 border-black rounded-sm">
+                      <span className="material-symbols-outlined !text-[12px] text-black">lock</span>
+                      <span className="font-mono text-[9px] font-black uppercase tracking-[0.12em] text-black">
+                        {lockSubtitle}
+                      </span>
+                    </div>
+
+                    {/* Title */}
+                    <h3 className="font-mono text-lg md:text-xl font-black uppercase text-black mb-1.5 leading-tight">
+                      {lockTitle}
+                    </h3>
+
+                    {/* Description */}
+                    <p className="text-[12.5px] md:text-[13px] text-gray-700 leading-relaxed mb-4">
+                      {lockMessage}
+                    </p>
+
+                    {/* Quick value props */}
+                    <ul className="space-y-1.5 mb-5 pb-4 border-b-2 border-black border-dashed">
+                      {bullets.map((b, i) => (
+                        <li key={i} className="flex items-start gap-2 text-[12px] text-gray-800">
+                          <span className="material-symbols-outlined !text-[14px] text-emerald-600 flex-shrink-0 mt-0.5">check_circle</span>
+                          <span>{b}</span>
+                        </li>
+                      ))}
+                    </ul>
+
+                    {/* CTAs */}
+                    <div className="flex flex-col sm:flex-row gap-2">
+                      <a
+                        href="/pricing"
+                        className="group flex-1 inline-flex items-center justify-center gap-1.5 bg-accent-yellow text-black font-mono font-black px-4 py-2.5 text-[12px] uppercase tracking-[0.1em] rounded-sm border-2 border-black shadow-[3px_3px_0px_#111] hover:bg-amber-300 hover:shadow-[5px_5px_0px_#111] hover:-translate-x-px hover:-translate-y-px transition-all"
+                      >
+                        {primaryCta}
+                        <span className="material-symbols-outlined !text-[14px] group-hover:translate-x-0.5 transition-transform">arrow_forward</span>
+                      </a>
+                      <a
+                        href="/login"
+                        className="inline-flex items-center justify-center gap-1.5 bg-white text-black font-mono font-black px-4 py-2.5 text-[12px] uppercase tracking-[0.1em] rounded-sm border-2 border-black shadow-[2px_2px_0px_#111] hover:bg-gray-50 hover:shadow-[3px_3px_0px_#111] hover:-translate-x-px hover:-translate-y-px transition-all"
+                      >
+                        Log In
+                      </a>
+                    </div>
+
+                    {/* Reassurance line */}
+                    <p className="mt-3 font-mono text-[10px] text-gray-500 text-center">
+                      {reassurance}
+                    </p>
+                  </div>
+                </div>
+
+                <style jsx>{`
+                  @keyframes lockOverlayFadeIn {
+                    from { opacity: 0; transform: translateY(8px) scale(0.98); }
+                    to { opacity: 1; transform: translateY(0) scale(1); }
+                  }
+                  @keyframes lockOverlayMandalaSpin {
+                    from { transform: rotate(0deg); }
+                    to { transform: rotate(360deg); }
+                  }
+                  :global(.lock-overlay-fade-in) {
+                    animation: lockOverlayFadeIn 0.45s cubic-bezier(0.4, 0, 0.2, 1) backwards;
+                  }
+                  :global(.lock-overlay-mandala-spin) {
+                    animation: lockOverlayMandalaSpin 80s linear infinite;
+                    transform-origin: center;
+                  }
+                  @media (prefers-reduced-motion: reduce) {
+                    :global(.lock-overlay-fade-in),
+                    :global(.lock-overlay-mandala-spin) {
+                      animation: none;
+                    }
+                  }
+                `}</style>
+              </div>
+            )}
           </div>
         );
       })()}

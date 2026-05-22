@@ -26,6 +26,7 @@ export interface Deal {
   providerWebsite?: string
   logoUrl?: string
   featured: boolean
+  featuredUntil?: string
   recommended: boolean
   verified: boolean
   difficulty: 'easy' | 'medium' | 'hard'

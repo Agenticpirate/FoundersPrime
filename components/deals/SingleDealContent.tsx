@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation'
 import { isProUser, isNextFounderUser } from '@/lib/auth/user-context'
 import ProUpgradeModal from '@/components/ProUpgradeModal'
 import { claimDeal } from '@/app/actions/deal-actions'
-import { GlowingEffect } from '@/components/ui/GlowingEffect'
+import RichDescription from './RichDescription'
 
 interface Deal {
   id: string
@@ -237,297 +237,395 @@ export default function SingleDealContent({ deal, freeAccess = false, basePath =
   }
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-8">
+    <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-5">
       {/* Sidebar — shown FIRST on mobile (Apply box top) */}
       <div className="lg:col-span-1 order-first lg:order-last">
-        <div className="lg:sticky lg:top-24 space-y-4 md:space-y-6">
+        <div className="lg:sticky lg:top-24 space-y-4">
 
-          {/* Apply Box */}
-          <div className="rounded-sm border-2 border-black bg-white shadow-[3px_3px_0px_#111] p-3 md:p-5">
-            
-            {claimError && (
-              <div className={`mb-3 p-2 text-xs font-bold border-2 rounded-sm ${claimError.startsWith('⚡') ? 'bg-amber-50 text-amber-700 border-amber-300' : 'bg-red-50 text-red-700 border-red-500'}`}>
-                {claimError.startsWith('⚡') ? claimError : `⚠️ ${claimError}`}
-              </div>
-            )}
-            
-            {/* Compact value + stats row on mobile */}
-            <div className="flex items-baseline justify-between mb-2 md:mb-4">
-              <div>
-                <div className="text-[9px] md:text-xs font-bold uppercase text-gray-500 font-mono">Deal Value</div>
-                <div className="text-lg md:text-3xl font-black text-black font-mono">{displayValue}</div>
-              </div>
+          {/* Apply Box — neo-brutalist premium */}
+          <div className="relative rounded-sm border-2 border-black bg-white shadow-[4px_4px_0px_#111] overflow-hidden">
+            {/* Decorative mandala in top-right */}
+            <div className="absolute -top-10 -right-10 w-40 h-40 pointer-events-none opacity-[0.08]" aria-hidden="true">
+              <svg viewBox="0 0 200 200" className="w-full h-full text-gray-900 deal-apply-mandala-spin" fill="none" stroke="currentColor" strokeWidth="0.7">
+                <circle cx="100" cy="100" r="50" />
+                <circle cx="100" cy="100" r="35" strokeDasharray="3 3" />
+                {[...Array(12)].map((_, i) => (
+                  <line
+                    key={i}
+                    x1="100"
+                    y1="100"
+                    x2={100 + Math.cos((i * Math.PI) / 6) * 90}
+                    y2={100 + Math.sin((i * Math.PI) / 6) * 90}
+                  />
+                ))}
+                <circle cx="100" cy="100" r="2" fill="currentColor" />
+              </svg>
             </div>
 
-            <div className="space-y-1.5 md:space-y-3 mb-3 pb-3 border-b border-gray-200 text-xs md:text-sm">
-              <div className="flex justify-between">
-                <span className="text-gray-500">Time</span>
-                <span className="font-bold font-mono">{deal.stats.appTime}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-gray-500">Approval</span>
-                <span className="font-bold font-mono">{deal.stats.approval}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-gray-500">Deadline</span>
-                <span className="font-bold text-green-600 font-mono">Rolling</span>
-              </div>
-            </div>
+            <div className="relative p-5">
+              {claimError && (
+                <div className={`mb-3 px-3 py-2 text-[11px] font-semibold rounded-sm border-2 ${claimError.startsWith('⚡') ? 'bg-amber-50 text-amber-800 border-amber-400' : 'bg-red-50 text-red-700 border-red-400'}`}>
+                  {claimError.startsWith('⚡') ? claimError : `⚠️ ${claimError}`}
+                </div>
+              )}
 
-            {/* Apply button — always visible, Pro check happens on click */}
-              <div className="relative rounded-sm mb-2">
-                <GlowingEffect
-                  spread={40}
-                  glow={false}
-                  disabled={false}
-                  proximity={64}
-                  inactiveZone={0.01}
-                  borderWidth={2}
-                />
-                <button
-                  onClick={handleApplyClick}
-                  disabled={isClaiming}
-                  className="relative w-full rounded-sm border-2 border-black bg-primary py-2.5 md:py-4 font-mono text-xs md:text-base font-bold uppercase tracking-wide text-black shadow-[3px_3px_0px_#111111] hover:bg-yellow-300 hover:shadow-[5px_5px_0px_#111111] hover:-translate-x-px hover:-translate-y-px transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
-                >
-                  {isClaiming ? (
-                      'Claiming...'
-                  ) : (
-                      freeAccess ? 'Apply Now' : (isPro || isNextFounder) ? 'Apply Now' : 'Apply Now (Premium)'
-                  )}
-                  <span className="material-symbols-outlined !text-[18px]">
-                      {isClaiming ? 'hourglass_empty' : (freeAccess || isPro || isNextFounder ? 'arrow_forward' : 'lock')}
+              {/* Value display */}
+              <div className="mb-4 pb-4 border-b-2 border-black border-dashed">
+                <div className="text-[10px] font-bold uppercase text-gray-500 font-mono tracking-[0.12em] mb-1">Deal Value</div>
+                <div className="text-2xl md:text-3xl font-black font-mono text-black leading-none">
+                  {displayValue}
+                </div>
+              </div>
+
+              {/* Stat rows */}
+              <div className="space-y-2 mb-4 pb-4 border-b-2 border-black border-dashed">
+                <div className="flex justify-between items-center text-[12.5px]">
+                  <span className="text-gray-500 inline-flex items-center gap-1.5">
+                    <span className="material-symbols-outlined text-[14px] text-gray-500">timer</span>
+                    Time
                   </span>
-                </button>
+                  <span className="font-bold font-mono text-black">{deal.stats.appTime}</span>
+                </div>
+                <div className="flex justify-between items-center text-[12.5px]">
+                  <span className="text-gray-500 inline-flex items-center gap-1.5">
+                    <span className="material-symbols-outlined text-[14px] text-gray-500">task_alt</span>
+                    Approval
+                  </span>
+                  <span className="font-bold font-mono text-black">{deal.stats.approval}</span>
+                </div>
+                <div className="flex justify-between items-center text-[12.5px]">
+                  <span className="text-gray-500 inline-flex items-center gap-1.5">
+                    <span className="material-symbols-outlined text-[14px] text-gray-500">event</span>
+                    Deadline
+                  </span>
+                  <span className="font-bold font-mono text-emerald-600">Rolling</span>
+                </div>
               </div>
 
-            <div className="grid grid-cols-2 gap-2">
+              {/* Apply button — neo-brutalist */}
               <button
-                onClick={handleSave}
-                disabled={isSaving}
-                className={`rounded-sm border-2 border-black py-2 font-mono text-xs font-bold uppercase hover:shadow-[2px_2px_0px_#111111] transition-all flex items-center justify-center gap-1 ${isSaved ? 'bg-yellow-400 text-black' : 'bg-white text-black hover:bg-gray-50'
-                  } ${isSaving ? 'opacity-50 cursor-not-allowed' : ''}`}
+                onClick={handleApplyClick}
+                disabled={isClaiming}
+                className="group relative w-full bg-accent-yellow text-black font-mono font-black py-3 text-[12.5px] uppercase tracking-[0.1em] rounded-sm border-2 border-black shadow-[3px_3px_0px_#111] hover:bg-amber-300 hover:shadow-[5px_5px_0px_#111] hover:-translate-x-px hover:-translate-y-px transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 mb-2"
               >
-                <span className="material-symbols-outlined !text-[16px]">{isSaved ? 'bookmark_added' : 'bookmark'}</span>
-                {isSaved ? 'Saved' : 'Save'}
+                <span className="relative">
+                  {isClaiming
+                    ? 'Claiming…'
+                    : freeAccess
+                      ? 'Apply Now'
+                      : (isPro || isNextFounder) ? 'Apply Now' : 'Apply Now (Premium)'}
+                </span>
+                <span className="material-symbols-outlined relative !text-[18px] group-hover:translate-x-0.5 transition-transform">
+                  {isClaiming ? 'hourglass_empty' : (freeAccess || isPro || isNextFounder ? 'arrow_forward' : 'lock')}
+                </span>
               </button>
-              <div className="relative">
+
+              {/* Save / Share */}
+              <div className="grid grid-cols-2 gap-2">
                 <button
-                  onClick={() => setShowShareMenu(!showShareMenu)}
-                  className="w-full rounded-sm border-2 border-black bg-white py-2 font-mono text-xs font-bold uppercase text-black hover:bg-gray-50 transition-all flex items-center justify-center gap-1"
+                  onClick={handleSave}
+                  disabled={isSaving}
+                  className={`rounded-sm border-2 border-black py-2 font-mono text-[11px] font-bold uppercase tracking-wide transition-all flex items-center justify-center gap-1.5 hover:shadow-[2px_2px_0px_#111] hover:-translate-x-px hover:-translate-y-px ${
+                    isSaved
+                      ? 'bg-accent-yellow text-black'
+                      : 'bg-white text-black hover:bg-gray-50'
+                  } ${isSaving ? 'opacity-50 cursor-not-allowed' : ''}`}
                 >
-                  <span className="material-symbols-outlined !text-[16px]">ios_share</span> Share
+                  <span className="material-symbols-outlined !text-[15px]">{isSaved ? 'bookmark_added' : 'bookmark'}</span>
+                  {isSaved ? 'Saved' : 'Save'}
                 </button>
-                {showShareMenu && (
-                  <div className="absolute top-full left-0 right-0 mt-2 bg-white border-2 border-black shadow-[3px_3px_0px_#111111] z-50">
-                    <button onClick={() => handleShare('copy')} className="w-full px-3 py-2 text-left text-xs font-bold hover:bg-gray-100 flex items-center gap-2">
-                      <span className="material-symbols-outlined !text-[14px]">content_copy</span>
-                      {showCopied ? 'Copied!' : 'Copy Link'}
-                    </button>
-                    <button onClick={() => handleShare('twitter')} className="w-full px-3 py-2 text-left text-xs font-bold hover:bg-gray-100 flex items-center gap-2">
-                      <span className="material-symbols-outlined !text-[14px]">share</span>Share on X
-                    </button>
-                    <button onClick={() => handleShare('linkedin')} className="w-full px-3 py-2 text-left text-xs font-bold hover:bg-gray-100 flex items-center gap-2">
-                      <span className="material-symbols-outlined !text-[14px]">work</span>LinkedIn
-                    </button>
-                    <button onClick={() => handleShare('email')} className="w-full px-3 py-2 text-left text-xs font-bold hover:bg-gray-100 flex items-center gap-2">
-                      <span className="material-symbols-outlined !text-[14px]">mail</span>Email
-                    </button>
-                  </div>
-                )}
+                <div className="relative">
+                  <button
+                    onClick={() => setShowShareMenu(!showShareMenu)}
+                    className="w-full rounded-sm border-2 border-black bg-white py-2 font-mono text-[11px] font-bold uppercase tracking-wide text-black hover:bg-gray-50 hover:shadow-[2px_2px_0px_#111] hover:-translate-x-px hover:-translate-y-px transition-all flex items-center justify-center gap-1.5"
+                  >
+                    <span className="material-symbols-outlined !text-[15px]">ios_share</span> Share
+                  </button>
+                  {showShareMenu && (
+                    <div className="absolute top-full left-0 right-0 mt-1.5 bg-white border-2 border-black rounded-sm shadow-[3px_3px_0px_#111] z-50 overflow-hidden">
+                      <button onClick={() => handleShare('copy')} className="w-full px-3 py-2 text-left text-[11px] font-bold hover:bg-gray-100 flex items-center gap-2 text-black">
+                        <span className="material-symbols-outlined !text-[14px]">content_copy</span>
+                        {showCopied ? 'Copied!' : 'Copy Link'}
+                      </button>
+                      <button onClick={() => handleShare('twitter')} className="w-full px-3 py-2 text-left text-[11px] font-bold hover:bg-gray-100 flex items-center gap-2 text-black border-t border-gray-200">
+                        <span className="material-symbols-outlined !text-[14px]">share</span>Share on X
+                      </button>
+                      <button onClick={() => handleShare('linkedin')} className="w-full px-3 py-2 text-left text-[11px] font-bold hover:bg-gray-100 flex items-center gap-2 text-black border-t border-gray-200">
+                        <span className="material-symbols-outlined !text-[14px]">work</span>LinkedIn
+                      </button>
+                      <button onClick={() => handleShare('email')} className="w-full px-3 py-2 text-left text-[11px] font-bold hover:bg-gray-100 flex items-center gap-2 text-black border-t border-gray-200">
+                        <span className="material-symbols-outlined !text-[14px]">mail</span>Email
+                      </button>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           </div>
 
-          {/* Quick Links — hidden on mobile to save space */}
-          <div className="hidden md:block rounded-sm border-2 md:border-4 border-black bg-white shadow-[4px_4px_0px_#111111] p-5">
-            <h4 className="font-mono text-sm font-bold uppercase mb-4 text-gray-700 border-b-2 border-gray-200 pb-2">Quick Links</h4>
-            <ul className="space-y-3">
+          {/* Quick Links */}
+          <div className="hidden md:block rounded-sm border-2 border-black bg-white p-4 shadow-[3px_3px_0px_#111]">
+            <h4 className="font-mono text-[10px] font-bold uppercase tracking-[0.12em] text-gray-700 mb-3 pb-2 border-b-2 border-black border-dashed">Quick Links</h4>
+            <ul className="space-y-1">
               <li>
-                <button onClick={handleApplyClick} className="flex items-center gap-2 text-sm font-bold hover:text-primary hover:underline">
-                  <span className="material-symbols-outlined !text-[18px]">open_in_new</span>
+                <button onClick={handleApplyClick} className="w-full flex items-center gap-2 text-[12.5px] font-bold text-black hover:bg-accent-yellow/15 rounded-sm px-2 py-1.5 transition-colors">
+                  <span className="material-symbols-outlined !text-[16px] text-accent-yellow">open_in_new</span>
                   Apply for Deal
                 </button>
               </li>
               <li>
-                <a href={`https://www.${deal.provider.toLowerCase().replace(/\s+/g, '')}.com`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm font-bold hover:text-primary hover:underline">
-                  <span className="material-symbols-outlined !text-[18px]">info</span>
+                <a href={`https://www.${deal.provider.toLowerCase().replace(/\s+/g, '')}.com`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-[12.5px] font-bold text-black hover:bg-gray-100 rounded-sm px-2 py-1.5 transition-colors">
+                  <span className="material-symbols-outlined !text-[16px] text-sky-500">info</span>
                   About {deal.provider}
                 </a>
               </li>
             </ul>
           </div>
 
-          {/* Help CTA — hidden on mobile */}
-          <div className="hidden md:block rounded-sm bg-black text-white p-5 shadow-[3px_3px_0px_#111] text-center border-2 border-black">
-            <div className="inline-block p-3 rounded-full bg-yellow-400 border-3 border-white mb-4 text-black">
-              <span className="material-symbols-outlined block !text-[28px]">rocket_launch</span>
+          {/* Trust Stats — neo-brutalist dark with mandala */}
+          <div className="hidden md:block relative rounded-sm bg-black text-white p-5 overflow-hidden border-2 border-black shadow-[3px_3px_0px_rgba(255,221,0,0.5)]">
+            <div className="absolute -top-12 -right-12 w-44 h-44 pointer-events-none opacity-[0.18]" aria-hidden="true">
+              <svg viewBox="0 0 200 200" className="w-full h-full text-accent-yellow deal-apply-mandala-spin" fill="none" stroke="currentColor" strokeWidth="0.7">
+                <circle cx="100" cy="100" r="40" />
+                <circle cx="100" cy="100" r="60" strokeDasharray="2 4" />
+                <circle cx="100" cy="100" r="80" strokeDasharray="1 6" />
+                {[0, 60, 120, 180, 240, 300].map((deg) => (
+                  <g key={deg} transform={`rotate(${deg} 100 100)`}>
+                    <line x1="100" y1="40" x2="100" y2="20" />
+                    <circle cx="100" cy="20" r="2" fill="currentColor" />
+                  </g>
+                ))}
+                <circle cx="100" cy="100" r="3" fill="currentColor" />
+              </svg>
             </div>
-            <h4 className="font-mono font-bold text-xl mb-3 uppercase">Need Help?</h4>
-            <p className="text-sm text-gray-300 mb-5 leading-relaxed">
-              Get expert guidance on your application to maximize your chances of approval.
-            </p>
-            <button className="w-full py-3 bg-yellow-400 text-black font-bold font-mono text-sm uppercase rounded-sm hover:bg-yellow-300 shadow-[4px_4px_0px_rgba(255,255,255,0.2)] transition-all border-2 border-white">
-              Get Expert Help
-            </button>
+            <div className="relative">
+              <p className="font-mono text-[9px] font-bold uppercase tracking-[0.14em] text-accent-yellow mb-2">
+                · Trust Signal
+              </p>
+              <p className="font-mono text-2xl font-black leading-none text-white mb-1.5 tabular-nums">
+                {deal.verification.appliedCount.toLocaleString()}+
+              </p>
+              <p className="text-[11.5px] text-gray-400 leading-relaxed mb-3">
+                Founders applied through FoundersPrime. Last verified{' '}
+                {new Date(deal.verification.lastVerified).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}.
+              </p>
+              <div className="flex items-center gap-1.5 text-[10px] font-mono font-bold uppercase tracking-wide text-accent-yellow">
+                <span className="material-symbols-outlined !text-[14px]">verified</span>
+                <span>Hand-verified deal</span>
+              </div>
+            </div>
           </div>
+
+          {/* Bottom mandala tile — premium ornament */}
+          <div className="hidden md:block relative rounded-sm bg-gray-50 border-2 border-black p-5 overflow-hidden shadow-[3px_3px_0px_#111]">
+            <div className="absolute -bottom-10 -left-10 w-36 h-36 pointer-events-none opacity-[0.10]" aria-hidden="true">
+              <svg viewBox="0 0 200 200" className="w-full h-full text-gray-900 deal-apply-mandala-spin-reverse" fill="none" stroke="currentColor" strokeWidth="0.6">
+                {[20, 35, 50, 65].map((r, i) => (
+                  <ellipse
+                    key={i}
+                    cx="100"
+                    cy="100"
+                    rx={r}
+                    ry={r / 1.8}
+                    transform={`rotate(${i * 30} 100 100)`}
+                  />
+                ))}
+                <circle cx="100" cy="100" r="2" fill="currentColor" />
+              </svg>
+            </div>
+            <div className="relative">
+              <p className="font-mono text-[9px] font-bold uppercase tracking-[0.14em] text-gray-700 mb-1.5">
+                · Founder Tip
+              </p>
+              <p className="text-[12px] text-gray-700 leading-relaxed">
+                Apply with a <span className="font-bold text-black bg-accent-yellow/40 px-1">company email</span> matching your domain. Approval rates jump <span className="font-bold text-black">3×</span> when emails match.
+              </p>
+            </div>
+          </div>
+
+          <style jsx>{`
+            @keyframes dealApplyMandalaSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+            @keyframes dealApplyMandalaSpinReverse { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
+            :global(.deal-apply-mandala-spin) {
+              animation: dealApplyMandalaSpin 90s linear infinite;
+              transform-origin: center;
+            }
+            :global(.deal-apply-mandala-spin-reverse) {
+              animation: dealApplyMandalaSpinReverse 110s linear infinite;
+              transform-origin: center;
+            }
+            @media (prefers-reduced-motion: reduce) {
+              :global(.deal-apply-mandala-spin),
+              :global(.deal-apply-mandala-spin-reverse) { animation: none; }
+            }
+          `}</style>
         </div>
       </div>
 
       {/* Main Content */}
-      <div className="lg:col-span-2 space-y-4 md:space-y-6 order-last lg:order-first">
+      <div className="lg:col-span-2 space-y-4 order-last lg:order-first">
 
-        {/* Quick Stats Bar — compact on mobile */}
-        <div className="grid grid-cols-4 gap-1.5 md:gap-2">
-          <div className="rounded-sm border border-black bg-white p-1.5 md:p-2.5 shadow-[1px_1px_0px_#111] md:shadow-[2px_2px_0px_#111]">
-            <div className="text-[8px] md:text-[10px] font-bold uppercase text-gray-500 font-mono">Time</div>
-            <div className="text-[11px] md:text-base font-bold text-black font-mono">{deal.stats.appTime}</div>
-          </div>
-          <div className="rounded-sm border border-black bg-white p-1.5 md:p-2.5 shadow-[1px_1px_0px_#111] md:shadow-[2px_2px_0px_#111]">
-            <div className="text-[8px] md:text-[10px] font-bold uppercase text-gray-500 font-mono">Approval</div>
-            <div className="text-[11px] md:text-base font-bold text-black font-mono">{deal.stats.approval}</div>
-          </div>
-          <div className="rounded-sm border border-black bg-white p-1.5 md:p-2.5 shadow-[1px_1px_0px_#111] md:shadow-[2px_2px_0px_#111]">
-            <div className="text-[8px] md:text-[10px] font-bold uppercase text-gray-500 font-mono">Difficulty</div>
-            <div className="text-[11px] md:text-base font-bold text-green-600 font-mono">{deal.stats.difficulty}</div>
-          </div>
-          <div className="rounded-sm border border-black bg-white p-1.5 md:p-2.5 shadow-[1px_1px_0px_#111] md:shadow-[2px_2px_0px_#111]">
-            <div className="text-[8px] md:text-[10px] font-bold uppercase text-gray-500 font-mono">Success</div>
-            <div className="text-[11px] md:text-base font-bold text-blue-600 font-mono">{deal.stats.successRate}</div>
-          </div>
+        {/* Quick Stats Bar — neo-brutalist tiles */}
+        <div className="grid grid-cols-4 gap-2 md:gap-3">
+          {[
+            { label: 'Time', value: deal.stats.appTime, icon: 'timer', color: 'text-sky-600', bg: 'bg-sky-100' },
+            { label: 'Approval', value: deal.stats.approval, icon: 'task_alt', color: 'text-indigo-600', bg: 'bg-indigo-100' },
+            { label: 'Difficulty', value: deal.stats.difficulty, icon: 'speed', color: 'text-emerald-600', bg: 'bg-emerald-100' },
+            { label: 'Success', value: deal.stats.successRate, icon: 'trending_up', color: 'text-amber-600', bg: 'bg-amber-100' },
+          ].map((s) => (
+            <div key={s.label} className="rounded-sm border-2 border-black bg-white p-2.5 md:p-3 shadow-[2px_2px_0px_#111] hover:shadow-[3px_3px_0px_#111] hover:-translate-x-px hover:-translate-y-px transition-all">
+              <div className="flex items-center gap-2 mb-1.5">
+                <div className={`w-6 h-6 rounded-sm border-2 border-black flex items-center justify-center flex-shrink-0 ${s.bg}`}>
+                  <span className={`material-symbols-outlined !text-[13px] ${s.color}`}>{s.icon}</span>
+                </div>
+                <div className="text-[9px] md:text-[10px] font-bold uppercase text-gray-600 font-mono tracking-[0.1em]">{s.label}</div>
+              </div>
+              <div className="text-[12px] md:text-sm font-black text-black font-mono leading-tight truncate">{s.value}</div>
+            </div>
+          ))}
         </div>
 
         {/* Overview Section */}
         {description && description.length > 10 && (
-        <section className="rounded-sm border border-black bg-white p-3 md:p-6 shadow-[2px_2px_0px_#111]">
-          <h2 className="mb-2 flex items-center gap-1.5 border-b border-black pb-1.5 font-mono text-sm md:text-xl font-bold uppercase">
-            <span className="material-symbols-outlined text-primary text-base md:text-xl">info</span>
+        <section className="rounded-sm border-2 border-black bg-white p-5 shadow-[3px_3px_0px_#111]">
+          <h2 className="mb-3 flex items-center gap-2 font-mono text-[13px] md:text-sm font-black uppercase tracking-[0.08em] text-black pb-2 border-b-2 border-black border-dashed">
+            <span className="inline-flex items-center justify-center w-7 h-7 rounded-sm bg-accent-yellow border-2 border-black">
+              <span className="material-symbols-outlined text-black !text-[16px]">info</span>
+            </span>
             About This Deal
           </h2>
-          <p className="text-xs md:text-base leading-relaxed text-gray-800 whitespace-pre-line break-words">{description}</p>
+          <RichDescription text={description} />
         </section>
         )}
 
         {/* What's Included / Benefits */}
         {Array.isArray(benefits) && benefits.length > 0 && (
-        <section className="rounded-sm border border-black bg-white p-3 md:p-6 shadow-[2px_2px_0px_#111]">
-          <h2 className="mb-2 flex items-center gap-1.5 border-b border-black pb-1.5 font-mono text-sm md:text-xl font-bold uppercase">
-            <span className="material-symbols-outlined text-primary text-base md:text-xl">inventory_2</span>
-            {deal.benefits ? 'Benefits & Features' : 'What\'s Included'}
-          </h2>
-          <div className="grid md:grid-cols-2 gap-1.5 md:gap-3">
-            {benefits.map((item, index) => (
-              <div key={index} className="flex items-start gap-1.5 p-2 bg-gray-50 rounded-sm border border-gray-200">
-                <span className="material-symbols-outlined text-green-600 flex-shrink-0 text-sm">check_circle</span>
-                <div>
-                  {typeof item === 'string' ? (
-                    <p className="text-xs md:text-sm font-medium">{item}</p>
-                  ) : (
-                    <>
-                      <h3 className="font-bold font-mono text-xs mb-0.5">{item.title}</h3>
-                      <p className="text-[11px] md:text-xs text-gray-600">{item.description}</p>
-                    </>
-                  )}
-                </div>
+        <CollapsibleList
+          icon="inventory_2"
+          title={deal.benefits ? 'Benefits & Features' : "What's Included"}
+          count={benefits.length}
+          items={benefits as any[]}
+          maxVisible={6}
+          renderItem={(item: any, index: number) => (
+            <div key={index} className="flex items-start gap-2 p-2.5 bg-white rounded-sm border-2 border-black shadow-[2px_2px_0px_#111] hover:shadow-[3px_3px_0px_#111] hover:-translate-x-px hover:-translate-y-px transition-all">
+              <span className="material-symbols-outlined text-emerald-600 flex-shrink-0 !text-[16px] mt-0.5">check_circle</span>
+              <div className="min-w-0">
+                {typeof item === 'string' ? (
+                  <p className="text-[12.5px] font-medium text-gray-800 leading-snug">{item}</p>
+                ) : (
+                  <>
+                    <h3 className="font-bold font-mono text-[12px] text-black mb-0.5">{item.title}</h3>
+                    <p className="text-[11.5px] text-gray-700 leading-snug">{item.description}</p>
+                  </>
+                )}
               </div>
-            ))}
-          </div>
-        </section>
+            </div>
+          )}
+          gridClass="grid md:grid-cols-2 gap-2.5"
+        />
         )}
 
         {/* Eligibility Requirements */}
         {eligibility && eligibility.length > 0 && (
-        <section className="rounded-sm border border-black bg-white p-3 md:p-5 shadow-[2px_2px_0px_#111]">
-          <h2 className="mb-2 flex items-center gap-1.5 border-b border-black pb-1.5 font-mono text-sm md:text-xl font-bold uppercase">
-            <span className="material-symbols-outlined text-primary text-base">checklist</span>
-            Eligibility
-          </h2>
-          <ul className="space-y-1">
-            {eligibility.map((requirement, index) => (
-              <li key={index} className="flex items-start gap-1.5 p-1.5 md:p-2 bg-yellow-50 rounded-sm border-l-3 border-black">
-                <span className="material-symbols-outlined text-primary flex-shrink-0 text-xs mt-0.5">arrow_right</span>
-                <span className="text-xs md:text-sm font-medium leading-snug">{requirement}</span>
-              </li>
-            ))}
-          </ul>
-        </section>
+        <CollapsibleList
+          icon="checklist"
+          title="Eligibility"
+          count={eligibility.length}
+          items={eligibility as any[]}
+          maxVisible={5}
+          renderItem={(requirement: string, index: number) => (
+            <li key={index} className="flex items-start gap-2 px-3 py-2 bg-amber-50 rounded-sm border-2 border-black border-l-[6px] border-l-accent-yellow shadow-[2px_2px_0px_#111]">
+              <span className="material-symbols-outlined text-black flex-shrink-0 !text-[14px] mt-0.5">arrow_right</span>
+              <span className="text-[12.5px] font-medium text-gray-800 leading-snug">{requirement}</span>
+            </li>
+          )}
+          listMode="ul"
+          gridClass="grid md:grid-cols-2 gap-2"
+        />
         )}
 
-        {/* How to Apply */}
+        {/* How to Apply — neo-brutalist compact */}
         {instructions && instructions.length > 0 && (
-        <section className="rounded-sm border border-black bg-white p-3 md:p-5 shadow-[2px_2px_0px_#111]">
-          <h2 className="mb-2 flex items-center gap-1.5 border-b border-black pb-1.5 font-mono text-sm md:text-xl font-bold uppercase">
-            <span className="material-symbols-outlined text-primary text-base">directions_run</span>
-            How to Apply
-          </h2>
-          <div className="space-y-2 md:space-y-3">
-            {instructions.map((step, index) => (
-              <div key={index} className="flex gap-3">
-                <div className="flex-shrink-0">
-                  <div className={`h-7 w-7 md:h-9 md:w-9 rounded-full border-2 border-black flex items-center justify-center font-bold font-mono text-xs md:text-sm shadow-[2px_2px_0px_#111] ${index === 0 ? 'bg-yellow-400' : 'bg-white'}`}>
+        <section className="rounded-sm border-2 border-black bg-white p-5 shadow-[3px_3px_0px_#111]">
+          <div className="flex items-center justify-between mb-3 pb-2 border-b-2 border-black border-dashed">
+            <h2 className="flex items-center gap-2 font-mono text-[13px] md:text-sm font-black uppercase tracking-[0.08em] text-black">
+              <span className="inline-flex items-center justify-center w-7 h-7 rounded-sm bg-accent-yellow border-2 border-black">
+                <span className="material-symbols-outlined text-black !text-[16px]">directions_run</span>
+              </span>
+              How to Apply
+            </h2>
+            <span className="font-mono text-[10px] font-bold uppercase tracking-[0.1em] text-black bg-gray-100 px-2 py-0.5 border-2 border-black rounded-sm">
+              {instructions.length} steps
+            </span>
+          </div>
+          <ol className="relative space-y-2">
+            {/* Vertical connecting rail */}
+            <span className="absolute left-[13px] top-3 bottom-3 w-px bg-black border-l-2 border-dashed" aria-hidden="true" />
+            {instructions.map((step, index) => {
+              const isString = typeof step === 'string'
+              const text = isString ? (step as string) : (step as { description: string }).description
+              const title = isString ? null : (step as { title: string }).title
+              return (
+                <li key={index} className="relative flex items-start gap-3 pl-0">
+                  <div className={`relative z-10 flex-shrink-0 w-[26px] h-[26px] rounded-sm flex items-center justify-center font-mono text-[11px] font-black tabular-nums border-2 border-black ${
+                    index === 0
+                      ? 'bg-accent-yellow text-black shadow-[2px_2px_0px_#111]'
+                      : 'bg-white text-black shadow-[1px_1px_0px_#111]'
+                  }`}>
                     {index + 1}
                   </div>
-                </div>
-                <div className="flex-1 pt-0.5">
-                  {typeof step === 'string' ? (
-                    <p className="text-sm text-gray-700 leading-snug">{step}</p>
-                  ) : (
-                    <>
-                      <h3 className="font-bold text-sm font-mono mb-0.5">{step.title}</h3>
-                      <p className="text-xs text-gray-700 leading-snug">{step.description}</p>
-                    </>
-                  )}
-                </div>
-              </div>
-            ))}
-          </div>
+                  <div className="flex-1 min-w-0 pt-[3px] pb-1">
+                    {title && (
+                      <span className="font-mono text-[11px] font-black text-black mr-1.5">{title}.</span>
+                    )}
+                    <span className="text-[12.5px] text-gray-800 leading-snug">{text}</span>
+                  </div>
+                </li>
+              )
+            })}
+          </ol>
 
           {/* Apply button */}
-          <div className="mt-4 pt-4 border-t-2 border-gray-200">
-              <div className="relative inline-block rounded-sm">
-                <GlowingEffect
-                  spread={40}
-                  glow={false}
-                  disabled={false}
-                  proximity={64}
-                  inactiveZone={0.01}
-                  borderWidth={2}
-                />
-                <button
-                  onClick={handleApplyClick}
-                  disabled={isClaiming}
-                  className="relative inline-flex items-center gap-2 rounded-sm border-2 border-black bg-primary px-6 py-3 font-mono text-sm font-bold uppercase text-black shadow-[3px_3px_0px_#111] hover:bg-yellow-300 hover:shadow-[5px_5px_0px_#111] hover:-translate-x-px hover:-translate-y-px transition-all cursor-pointer disabled:opacity-50"
-                >
-                  {isClaiming ? 'Claiming...' : 'Apply Now'}
-                  <span className="material-symbols-outlined text-base">
-                      {isClaiming ? 'hourglass_empty' : 'arrow_forward'}
-                  </span>
-                </button>
-              </div>
+          <div className="mt-4 pt-4 border-t-2 border-black border-dashed">
+            <button
+              onClick={handleApplyClick}
+              disabled={isClaiming}
+              className="group inline-flex items-center gap-2 bg-accent-yellow text-black font-mono font-black px-5 py-2.5 text-[12px] uppercase tracking-[0.1em] rounded-sm border-2 border-black shadow-[3px_3px_0px_#111] hover:bg-amber-300 hover:shadow-[5px_5px_0px_#111] hover:-translate-x-px hover:-translate-y-px transition-all cursor-pointer disabled:opacity-50"
+            >
+              <span>{isClaiming ? 'Claiming…' : 'Apply Now'}</span>
+              <span className="material-symbols-outlined !text-[16px] group-hover:translate-x-0.5 transition-transform">
+                {isClaiming ? 'hourglass_empty' : 'arrow_forward'}
+              </span>
+            </button>
           </div>
         </section>
         )}
 
         {/* FAQ Section */}
         {faqs && faqs.length > 0 && (
-        <section className="rounded-sm border border-black bg-white p-3 md:p-5 shadow-[2px_2px_0px_#111]">
-          <h2 className="mb-2 flex items-center gap-1.5 border-b border-black pb-1.5 font-mono text-sm md:text-xl font-bold uppercase">
-            <span className="material-symbols-outlined text-primary text-base">help</span>
+        <section className="rounded-sm border-2 border-black bg-white p-5 shadow-[3px_3px_0px_#111]">
+          <h2 className="mb-3 flex items-center gap-2 font-mono text-[13px] md:text-sm font-black uppercase tracking-[0.08em] text-black pb-2 border-b-2 border-black border-dashed">
+            <span className="inline-flex items-center justify-center w-7 h-7 rounded-sm bg-accent-yellow border-2 border-black">
+              <span className="material-symbols-outlined text-black !text-[16px]">help</span>
+            </span>
             FAQ
           </h2>
-          <div className="space-y-1.5">
+          <div className="space-y-2">
             {faqs.map((faqItem, index) => (
-              <div key={index} className="rounded-sm border border-black bg-white shadow-[1px_1px_0px_#111] overflow-hidden">
+              <div key={index} className="rounded-sm border-2 border-black bg-white overflow-hidden shadow-[2px_2px_0px_#111] hover:shadow-[3px_3px_0px_#111] transition-shadow">
                 <button
                   onClick={() => setOpenFaqIndex(openFaqIndex === index ? null : index)}
-                  className="flex cursor-pointer items-center justify-between p-2 md:p-3 text-xs md:text-sm font-bold font-mono w-full text-left hover:bg-gray-50 transition-colors"
+                  className={`flex items-center justify-between gap-3 px-3.5 py-2.5 w-full text-left transition-colors ${
+                    openFaqIndex === index ? 'bg-accent-yellow/15' : 'hover:bg-gray-50'
+                  }`}
                 >
-                  <span className="pr-4">{faqItem.question}</span>
-                  <span className={`material-symbols-outlined text-sm transition-transform flex-shrink-0 ${openFaqIndex === index ? 'rotate-180' : ''}`}>
+                  <span className="text-[12.5px] font-bold font-mono text-black pr-2">{faqItem.question}</span>
+                  <span className={`material-symbols-outlined !text-[18px] text-black transition-transform flex-shrink-0 ${openFaqIndex === index ? 'rotate-180' : ''}`}>
                     expand_more
                   </span>
                 </button>
                 {openFaqIndex === index && (
-                  <div className="border-t-2 border-gray-200 px-3 pb-3 pt-2 text-sm text-gray-700 leading-relaxed bg-gray-50">
+                  <div className="px-3.5 pb-3 pt-2 text-[12.5px] text-gray-700 leading-relaxed bg-gray-50 border-t-2 border-black border-dashed">
                     {faqItem.answer}
                   </div>
                 )}
@@ -537,7 +635,54 @@ export default function SingleDealContent({ deal, freeAccess = false, basePath =
         </section>
         )}
 
-        {/* Similar Deals - removed for cleaner layout */}
+        {/* Tags + decorative footer */}
+        {Array.isArray(deal.tags) && deal.tags.length > 0 && (
+        <section className="relative rounded-sm border-2 border-black bg-gray-50 p-5 overflow-hidden shadow-[3px_3px_0px_#111]">
+          <div className="absolute -bottom-12 -right-12 w-44 h-44 pointer-events-none opacity-[0.08]" aria-hidden="true">
+            <svg viewBox="0 0 200 200" className="w-full h-full text-gray-900 deal-tags-mandala-spin" fill="none" stroke="currentColor" strokeWidth="0.6">
+              <circle cx="100" cy="100" r="40" />
+              <circle cx="100" cy="100" r="60" strokeDasharray="2 4" />
+              <circle cx="100" cy="100" r="80" strokeDasharray="1 6" />
+              <circle cx="100" cy="100" r="3" fill="currentColor" />
+              {[0, 45, 90, 135, 180, 225, 270, 315].map((deg) => (
+                <g key={deg} transform={`rotate(${deg} 100 100)`}>
+                  <line x1="100" y1="40" x2="100" y2="20" />
+                  <circle cx="100" cy="20" r="2" fill="currentColor" />
+                </g>
+              ))}
+            </svg>
+          </div>
+          <div className="relative">
+            <h2 className="mb-3 flex items-center gap-2 font-mono text-[13px] md:text-sm font-black uppercase tracking-[0.08em] text-black pb-2 border-b-2 border-black border-dashed">
+              <span className="inline-flex items-center justify-center w-7 h-7 rounded-sm bg-accent-yellow border-2 border-black">
+                <span className="material-symbols-outlined text-black !text-[16px]">tag</span>
+              </span>
+              Tags &amp; Categories
+            </h2>
+            <div className="flex flex-wrap gap-1.5">
+              {deal.tags.map((tag, i) => (
+                <span
+                  key={i}
+                  className="inline-flex items-center px-2.5 py-1 text-[11px] font-mono font-bold uppercase tracking-wide text-black bg-white border-2 border-black rounded-sm shadow-[1px_1px_0px_#111] hover:shadow-[2px_2px_0px_#111] hover:-translate-x-px hover:-translate-y-px hover:bg-accent-yellow transition-all"
+                >
+                  #{tag}
+                </span>
+              ))}
+            </div>
+          </div>
+          <style jsx>{`
+            @keyframes dealTagsMandalaSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+            :global(.deal-tags-mandala-spin) {
+              animation: dealTagsMandalaSpin 100s linear infinite;
+              transform-origin: center;
+            }
+            @media (prefers-reduced-motion: reduce) {
+              :global(.deal-tags-mandala-spin) { animation: none; }
+            }
+          `}</style>
+        </section>
+        )}
+
       </div>
 
       <ProUpgradeModal
@@ -545,5 +690,69 @@ export default function SingleDealContent({ deal, freeAccess = false, basePath =
         onClose={() => setShowUpgradeModal(false)}
       />
     </div>
+  )
+}
+
+/* ─── Collapsible list section ───────────────────────────── */
+function CollapsibleList({
+  icon,
+  title,
+  count,
+  items,
+  maxVisible,
+  renderItem,
+  listMode = 'div',
+  gridClass,
+}: {
+  icon: string
+  title: string
+  count: number
+  items: any[]
+  maxVisible: number
+  renderItem: (item: any, index: number) => JSX.Element
+  listMode?: 'ul' | 'div'
+  gridClass: string
+}) {
+  const [expanded, setExpanded] = useState(false)
+  const isLong = items.length > maxVisible
+  const visible = expanded || !isLong ? items : items.slice(0, maxVisible)
+  const Container: any = listMode === 'ul' ? 'ul' : 'div'
+
+  return (
+    <section className="rounded-sm border-2 border-black bg-white p-5 shadow-[3px_3px_0px_#111]">
+      <div className="flex items-center justify-between mb-3 pb-2 border-b-2 border-black border-dashed">
+        <h2 className="flex items-center gap-2 font-mono text-[13px] md:text-sm font-black uppercase tracking-[0.08em] text-black">
+          <span className="inline-flex items-center justify-center w-7 h-7 rounded-sm bg-accent-yellow border-2 border-black">
+            <span className="material-symbols-outlined text-black !text-[16px]">{icon}</span>
+          </span>
+          {title}
+        </h2>
+        <span className="font-mono text-[10px] font-bold uppercase tracking-[0.1em] text-black bg-gray-100 px-2 py-0.5 border-2 border-black rounded-sm">
+          {count} items
+        </span>
+      </div>
+      <Container className={gridClass}>
+        {visible.map((item, i) => renderItem(item, i))}
+      </Container>
+      {isLong && (
+        <div className="pt-3 mt-3 border-t-2 border-black border-dashed">
+          <button
+            onClick={() => setExpanded((v) => !v)}
+            className="inline-flex items-center gap-1.5 text-[11px] font-mono font-black uppercase tracking-[0.1em] text-black bg-white border-2 border-black px-3 py-1.5 rounded-sm shadow-[2px_2px_0px_#111] hover:bg-accent-yellow hover:shadow-[3px_3px_0px_#111] hover:-translate-x-px hover:-translate-y-px transition-all"
+          >
+            <span>
+              {expanded ? 'Show Less' : `Show All ${count}`}
+            </span>
+            <span
+              className={`material-symbols-outlined !text-[14px] transition-transform ${
+                expanded ? 'rotate-180' : ''
+              }`}
+            >
+              expand_more
+            </span>
+          </button>
+        </div>
+      )}
+    </section>
   )
 }

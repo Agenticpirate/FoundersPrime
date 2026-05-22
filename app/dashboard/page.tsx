@@ -20,18 +20,26 @@ export default async function DashboardPage({
   const supabase = createClient()
   const { data: { user } } = await supabase.auth.getUser()
 
-  if (!user) { redirect('/login') }
+  // In local dev without Supabase env vars, show dashboard with mock data
+  const isLocalDev = !process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 
-  const { data: adminUser } = await supabase
-    .from('admin_users').select('role').eq('email', user.email).single()
+  if (!user && !isLocalDev) { redirect('/login') }
+
+  let adminUser = null
+  if (user) {
+    const { data } = await supabase
+      .from('admin_users').select('role').eq('email', user.email).single()
+    adminUser = data
+  }
 
   const isPaymentSuccess = searchParams?.status === 'succeeded' || searchParams?.status === 'completed'
   const PRO_USERS = ['raviteja.journal@gmail.com', 'hello@axionxlab.com']
-  const isPro = !!adminUser || PRO_USERS.includes(user.email || '') || isPaymentSuccess
-  const isAdmin = !!adminUser
-  const userName = user.user_metadata?.full_name || user.email?.split('@')[0] || 'Founder'
-  const savedDeals = user.user_metadata?.saved_deals || []
-  const memberSince = user.created_at ? new Date(user.created_at).toLocaleDateString('en-US', { month: 'short', year: 'numeric' }) : ''
+  const userEmail = user?.email || 'dev@localhost'
+  const isPro = !!adminUser || PRO_USERS.includes(userEmail) || isPaymentSuccess || isLocalDev
+  const isAdmin = !!adminUser || isLocalDev
+  const userName = user?.user_metadata?.full_name || userEmail.split('@')[0] || 'Founder'
+  const savedDeals = user?.user_metadata?.saved_deals || []
+  const memberSince = user?.created_at ? new Date(user.created_at).toLocaleDateString('en-US', { month: 'short', year: 'numeric' }) : 'Local Dev'
 
   return (
     <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden">
@@ -45,7 +53,7 @@ export default async function DashboardPage({
                 <h1 className="text-lg md:text-3xl font-black uppercase font-mono truncate">
                   Hey, <span className="text-accent-yellow">{userName}</span>
                 </h1>
-                <p className="text-gray-500 text-[10px] md:text-sm mt-0.5 font-mono truncate">{user.email}</p>
+                <p className="text-gray-500 text-[10px] md:text-sm mt-0.5 font-mono truncate">{userEmail}</p>
               </div>
               <div className="flex items-center gap-2 flex-shrink-0">
                 {isAdmin && (
@@ -141,8 +149,8 @@ export default async function DashboardPage({
             <div className="lg:col-span-2">
               <ProfileManager
                 initialName={userName}
-                initialEmail={user.email || ''}
-                initialAvatar={user.user_metadata?.avatar_url || null}
+                initialEmail={userEmail}
+                initialAvatar={user?.user_metadata?.avatar_url || null}
                 memberSince={memberSince}
               />
             </div>

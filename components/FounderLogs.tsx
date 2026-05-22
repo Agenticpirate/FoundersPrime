@@ -52,23 +52,67 @@ const testimonials = [
     title: "Product Designer",
     image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80",
   },
+  {
+    quote: "Closed our seed round faster after using the investor database. Game changer.",
+    name: "Aarav K.",
+    title: "Founder, StackedAI",
+    image: "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80",
+  },
+  {
+    quote: "Got into Antler because I knew the deadline a month before everyone else.",
+    name: "Nadia S.",
+    title: "Founder, GreenCart",
+    image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80",
+  },
+  {
+    quote: "Notion + Linear + HubSpot — got all three discounted. Saved us $4k year one.",
+    name: "Ravi M.",
+    title: "Co-founder, Loop",
+    image: "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80",
+  },
+  {
+    quote: "The student perks under NextFounder are unreal. Built my MVP for $0.",
+    name: "Maya O.",
+    title: "Student, NUS",
+    image: "https://images.unsplash.com/photo-1488508872907-592763824245?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80",
+  },
+  {
+    quote: "Just the Google Cloud credits alone covered our entire infra for 18 months.",
+    name: "Kenji T.",
+    title: "Co-founder, Volt",
+    image: "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80",
+  },
+  {
+    quote: "I subscribed for $69/yr and applied to 3 grants in week one. Insane value.",
+    name: "Sofia R.",
+    title: "Founder, Lumen",
+    image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80",
+  },
+  {
+    quote: "I run on 2 hours a week of admin now. The filters do the heavy lifting.",
+    name: "Diego A.",
+    title: "Indie SaaS",
+    image: "https://images.unsplash.com/photo-1463453091185-61582044d556?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80",
+  },
 ]
 
-// Split into 2 columns (offset so they start at different points)
-const col1 = testimonials.filter((_, i) => i % 2 === 0)
-const col2 = testimonials.filter((_, i) => i % 2 === 1)
+// Distribute testimonials across 3 columns with no overlap.
+// Each column gets a unique slice; the loop comes from triplicating that slice for seamless scroll.
+const col1 = testimonials.filter((_, i) => i % 3 === 0)
+const col2 = testimonials.filter((_, i) => i % 3 === 1)
+const col3 = testimonials.filter((_, i) => i % 3 === 2)
 
 function TestimonialCard({ t }: { t: typeof testimonials[0] }) {
   const [imgError, setImgError] = useState(false)
   return (
-    <div className="bg-white border-2 border-[#111111] shadow-[2px_2px_0_0_#111111] p-3 md:p-4 hover:-translate-y-0.5 hover:shadow-[4px_4px_0_0_#111111] transition-all duration-200">
+    <div className="bg-white border-2 border-black shadow-[3px_3px_0_0_#111] p-4 hover:-translate-y-0.5 hover:shadow-[5px_5px_0_0_#111] transition-all duration-200">
       {/* Stars */}
-      <div className="flex gap-0.5 mb-2">
+      <div className="flex gap-0.5 mb-2.5">
         {[...Array(5)].map((_, i) => (
           <span
             key={i}
-            className="material-symbols-outlined text-[11px] md:text-sm text-[#f5c800]"
-            style={{ fontVariationSettings: "'FILL' 1" }}
+            className="material-symbols-outlined text-[14px] md:text-base text-[#f5c800]"
+            style={{ fontVariationSettings: "'FILL' 1, 'wght' 700, 'GRAD' 0, 'opsz' 24" }}
           >
             star
           </span>
@@ -76,31 +120,39 @@ function TestimonialCard({ t }: { t: typeof testimonials[0] }) {
       </div>
 
       {/* Quote */}
-      <p className="font-mono text-[9px] md:text-[11px] text-gray-700 leading-relaxed mb-3 line-clamp-3">
+      <p className="font-sans text-[12px] md:text-[13px] text-gray-800 leading-relaxed mb-3 line-clamp-4">
         &ldquo;{t.quote}&rdquo;
       </p>
 
       {/* Author */}
-      <div className="flex items-center gap-2 border-t border-dashed border-gray-200 pt-2">
-        <div className="w-6 h-6 md:w-7 md:h-7 border border-black overflow-hidden flex-shrink-0 relative bg-gray-100">
+      <div className="flex items-center gap-2.5 border-t border-dashed border-gray-200 pt-2.5">
+        <div className="w-8 h-8 md:w-9 md:h-9 border-2 border-black overflow-hidden flex-shrink-0 relative bg-gray-100">
           {!imgError ? (
             <Image
               src={t.image}
               alt={t.name}
               fill
               className="object-cover"
-              sizes="28px"
+              sizes="36px"
               onError={() => setImgError(true)}
             />
           ) : (
-            <div className="w-full h-full flex items-center justify-center bg-gray-200 text-[8px] font-bold text-gray-600">
+            <div className="w-full h-full flex items-center justify-center bg-gray-200 text-[10px] font-bold text-gray-700">
               {t.name[0]}
             </div>
           )}
         </div>
         <div className="min-w-0">
-          <p className="font-mono font-black text-[8px] md:text-[9px] uppercase tracking-tight truncate text-black">{t.name}</p>
-          <p className="font-mono text-[7px] md:text-[8px] text-gray-400 truncate">{t.title}</p>
+          <p className="font-mono font-black text-[10px] md:text-[11px] uppercase tracking-tight truncate text-black flex items-center gap-1">
+            {t.name}
+            <span
+              className="material-symbols-outlined text-[12px] text-blue-500"
+              style={{ fontVariationSettings: "'FILL' 1" }}
+            >
+              verified
+            </span>
+          </p>
+          <p className="font-mono text-[9px] md:text-[10px] text-gray-500 truncate">{t.title}</p>
         </div>
       </div>
     </div>
@@ -108,10 +160,9 @@ function TestimonialCard({ t }: { t: typeof testimonials[0] }) {
 }
 
 function ScrollCol({ items, reverse }: { items: typeof testimonials; reverse?: boolean }) {
-  // Triplicate for seamless loop
   const repeated = [...items, ...items, ...items]
   return (
-    <div className={`flex flex-col gap-2 md:gap-3 flex-1 ${reverse ? 'animate-marquee-v-reverse' : 'animate-marquee-v'}`}>
+    <div className={`flex flex-col gap-3 md:gap-4 flex-1 ${reverse ? 'animate-marquee-v-reverse' : 'animate-marquee-v'}`}>
       {repeated.map((t, i) => (
         <TestimonialCard key={i} t={t} />
       ))}
@@ -121,30 +172,36 @@ function ScrollCol({ items, reverse }: { items: typeof testimonials; reverse?: b
 
 export default function FounderLogs() {
   return (
-    <section className="py-4 md:py-10 bg-background-light border-y-2 border-black overflow-hidden">
+    <section className="py-8 md:py-14 bg-background-light border-y-2 border-black overflow-hidden">
       <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
-
         {/* Section header */}
-        <div className="text-center mb-3 md:mb-6">
-          <h2 className="text-sm md:text-4xl font-black text-black font-mono uppercase tracking-tight">
-            <span className="bg-accent-yellow px-2 md:px-4 py-0.5 md:py-1 border-2 border-black shadow-[3px_3px_0px_#000]">
-              Founder_Logs
+        <div className="text-center mb-6 md:mb-10">
+          <span className="inline-flex items-center gap-1.5 bg-black text-accent-yellow font-mono text-[9px] md:text-[10px] font-black uppercase tracking-widest px-2.5 py-1 border border-black mb-3">
+            <span className="material-symbols-outlined text-[12px]">forum</span>
+            Founder logs
+          </span>
+          <h2 className="text-2xl md:text-4xl font-black text-black font-mono uppercase tracking-tight mb-1">
+            From "I wish I knew" to{' '}
+            <span className="bg-gradient-to-r from-accent-yellow via-yellow-300 to-orange-400 bg-clip-text text-transparent">
+              "I just claimed it."
             </span>
           </h2>
+          <p className="text-sm md:text-base text-gray-600 font-sans max-w-xl mx-auto">
+            What founders said after they stopped leaving money on the table.
+          </p>
         </div>
 
         {/* Vertical scrolling columns */}
-        <div className="flex gap-2 md:gap-4 h-[260px] md:h-[420px] overflow-hidden mask-fade-v">
+        <div className="flex gap-3 md:gap-4 h-[420px] md:h-[520px] overflow-hidden mask-fade-v">
+          {/* Mobile shows 2 columns, desktop adds the 3rd */}
           <ScrollCol items={col1} />
           <ScrollCol items={col2} reverse />
-          {/* Third col — desktop only */}
-          <div className="hidden md:flex flex-col gap-3 flex-1 animate-marquee-v">
-            {[...col1.slice(1), ...col2, ...col1.slice(1), ...col2].map((t, i) => (
+          <div className="hidden md:flex flex-col gap-4 flex-1 animate-marquee-v">
+            {[...col3, ...col3, ...col3].map((t, i) => (
               <TestimonialCard key={i} t={t} />
             ))}
           </div>
         </div>
-
       </div>
     </section>
   )

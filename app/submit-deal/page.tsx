@@ -37,30 +37,44 @@ export default function SubmitDealPage() {
 
     const [isSubmitting, setIsSubmitting] = useState(false)
     const [submissionStatus, setSubmissionStatus] = useState<'idle' | 'success' | 'error'>('idle')
+    const [errorMessage, setErrorMessage] = useState<string>('')
+    const [tier, setTier] = useState<'standard' | 'featured'>('standard')
+
+    // Track when the form was first rendered (for anti-bot fill-time check)
+    const formLoadedAt = useRef<number>(Date.now())
+    useEffect(() => {
+        formLoadedAt.current = Date.now()
+    }, [])
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
 
         if (!isHuman) {
-            alert("Please complete the security check correctly.")
+            setErrorMessage('Please complete the security check correctly.')
+            setSubmissionStatus('error')
             return
         }
 
         setIsSubmitting(true)
         setSubmissionStatus('idle')
+        setErrorMessage('')
 
         const formData = new FormData(e.currentTarget)
         const data = {
             company_name: formData.get('company_name'),
             website_url: formData.get('website_url'),
-            logo_url: logoMethod === 'url' ? formData.get('logo_url') : previewUrl, // Handle file upload properly later if needed
+            logo_url: logoMethod === 'url' ? formData.get('logo_url') : previewUrl,
             benefit_description: formData.get('benefit_description'),
             category: formData.get('category'),
             deal_value: formData.get('deal_value'),
             redemption_method: formData.get('redemption'),
             redemption_link: formData.get('redemption_link'),
             is_exclusive: formData.get('is_exclusive') === 'on',
-            submitter_email: formData.get('submitter_email'), // Add this field to form
+            submitter_email: formData.get('submitter_email'),
+            featured_requested: tier === 'featured',
+            // Anti-bot signals
+            website_link: formData.get('website_link'), // honeypot — should be empty
+            fill_time_ms: Date.now() - formLoadedAt.current,
         }
 
         try {
@@ -72,22 +86,25 @@ export default function SubmitDealPage() {
                 body: JSON.stringify(data),
             })
 
+            const result = await response.json().catch(() => ({}))
+
             if (response.ok) {
                 setSubmissionStatus('success')
                 e.currentTarget.reset()
                 setPreviewUrl('')
                 setIsHuman(false)
                 setSecurityAnswer('')
-                // Helper to reset security check
                 const num1 = Math.floor(Math.random() * 10) + 1
                 const num2 = Math.floor(Math.random() * 10) + 1
                 setChallenge({ num1, num2, answer: (num1 + num2).toString() })
             } else {
                 setSubmissionStatus('error')
+                setErrorMessage(result?.error || `Submission failed (${response.status}). Please try again.`)
             }
         } catch (error) {
             console.error('Submission error:', error)
             setSubmissionStatus('error')
+            setErrorMessage('Network error. Please check your connection and try again.')
         } finally {
             setIsSubmitting(false)
         }
@@ -132,12 +149,19 @@ export default function SubmitDealPage() {
                                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
                                     <div>
                                         <label className="block text-xs font-bold uppercase mb-1">Company Name *</label>
-                                        <input type="text" placeholder="e.g. Acme Corp" className="w-full p-2 md:p-3 text-sm md:text-base border-2 border-black focus:outline-none focus:shadow-[4px_4px_0px_0px_#000] transition-shadow bg-background-light" required />
+                                        <input name="company_name" type="text" placeholder="e.g. Acme Corp" className="w-full p-2 md:p-3 text-sm md:text-base border-2 border-black focus:outline-none focus:shadow-[4px_4px_0px_0px_#000] transition-shadow bg-background-light" required />
                                     </div>
                                     <div>
                                         <label className="block text-xs font-bold uppercase mb-1">Website URL *</label>
-                                        <input type="url" placeholder="https://" className="w-full p-2 md:p-3 text-sm md:text-base border-2 border-black focus:outline-none focus:shadow-[4px_4px_0px_0px_#000] transition-shadow bg-background-light" required />
+                                        <input name="website_url" type="url" placeholder="https://" className="w-full p-2 md:p-3 text-sm md:text-base border-2 border-black focus:outline-none focus:shadow-[4px_4px_0px_0px_#000] transition-shadow bg-background-light" required />
                                     </div>
+                                </div>
+
+                                {/* Honeypot — hidden from real users, visible to bots */}
+                                <div aria-hidden="true" className="absolute left-[-9999px] top-[-9999px] opacity-0 pointer-events-none" tabIndex={-1}>
+                                    <label>Leave this field blank
+                                        <input type="text" name="website_link" tabIndex={-1} autoComplete="off" />
+                                    </label>
                                 </div>
 
                                 <div>
@@ -163,6 +187,7 @@ export default function SubmitDealPage() {
                                     {logoMethod === 'url' ? (
                                         <div className="flex gap-2">
                                             <input
+                                                name="logo_url"
                                                 type="url"
                                                 placeholder="https://domain.com/logo.png"
                                                 className="w-full p-2 md:p-3 text-sm md:text-base border-2 border-black focus:outline-none focus:shadow-[4px_4px_0px_0px_#000] transition-shadow bg-background-light"
@@ -217,13 +242,13 @@ export default function SubmitDealPage() {
 
                                 <div>
                                     <label className="block text-xs font-bold uppercase mb-1">Benefit Description *</label>
-                                    <input type="text" placeholder="e.g. $5,000 in Credits for 12 months" className="w-full p-2 md:p-3 text-sm md:text-base border-2 border-black focus:outline-none focus:shadow-[4px_4px_0px_0px_#000] transition-shadow bg-background-light" required />
+                                    <input name="benefit_description" type="text" placeholder="e.g. $5,000 in Credits for 12 months" className="w-full p-2 md:p-3 text-sm md:text-base border-2 border-black focus:outline-none focus:shadow-[4px_4px_0px_0px_#000] transition-shadow bg-background-light" required />
                                 </div>
 
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
                                     <div>
                                         <label className="block text-xs font-bold uppercase mb-1">Category *</label>
-                                        <select className="w-full p-2 md:p-3 text-sm md:text-base border-2 border-black focus:outline-none focus:shadow-[4px_4px_0px_0px_#000] transition-shadow bg-background-light appearance-none" required>
+                                        <select name="category" className="w-full p-2 md:p-3 text-sm md:text-base border-2 border-black focus:outline-none focus:shadow-[4px_4px_0px_0px_#000] transition-shadow bg-background-light appearance-none" required>
                                             <option value="">Select Category...</option>
                                             <option value="cloud">Cloud Credits</option>
                                             <option value="saas">SaaS Discount</option>
@@ -235,7 +260,7 @@ export default function SubmitDealPage() {
                                     </div>
                                     <div>
                                         <label className="block text-xs font-bold uppercase mb-1">Deal Value ($) *</label>
-                                        <input type="number" placeholder="e.g. 5000" className="w-full p-2 md:p-3 text-sm md:text-base border-2 border-black focus:outline-none focus:shadow-[4px_4px_0px_0px_#000] transition-shadow bg-background-light" required />
+                                        <input name="deal_value" type="text" placeholder="e.g. 5000" className="w-full p-2 md:p-3 text-sm md:text-base border-2 border-black focus:outline-none focus:shadow-[4px_4px_0px_0px_#000] transition-shadow bg-background-light" required />
                                     </div>
                                 </div>
 
@@ -255,14 +280,20 @@ export default function SubmitDealPage() {
 
                                 <div>
                                     <label className="block text-xs font-bold uppercase mb-1">Redemption Link / Code *</label>
-                                    <input type="text" placeholder="https://your-site.com/founders-prime OR Code: PRIME2025" className="w-full p-2 md:p-3 text-sm md:text-base border-2 border-black focus:outline-none focus:shadow-[4px_4px_0px_0px_#000] transition-shadow bg-background-light" required />
+                                    <input name="redemption_link" type="text" placeholder="https://your-site.com/founders-prime OR Code: PRIME2025" className="w-full p-2 md:p-3 text-sm md:text-base border-2 border-black focus:outline-none focus:shadow-[4px_4px_0px_0px_#000] transition-shadow bg-background-light" required />
+                                </div>
+
+                                <div>
+                                    <label className="block text-xs font-bold uppercase mb-1">Your Email (optional)</label>
+                                    <input name="submitter_email" type="email" placeholder="hello@yourcompany.com" className="w-full p-2 md:p-3 text-sm md:text-base border-2 border-black focus:outline-none focus:shadow-[4px_4px_0px_0px_#000] transition-shadow bg-background-light" />
+                                    <p className="text-[10px] text-gray-500 mt-1">We'll only use this to notify you about your submission status.</p>
                                 </div>
                             </div>
 
                             {/* Section 3: Exclusivity */}
                             <div className="bg-accent-yellow/20 border-2 border-black p-3 md:p-4">
                                 <label className="flex items-start gap-2 md:gap-3 cursor-pointer">
-                                    <input type="checkbox" className="mt-1 w-4 h-4 md:w-5 md:h-5 accent-black border-2 border-black" required />
+                                    <input name="is_exclusive" type="checkbox" className="mt-1 w-4 h-4 md:w-5 md:h-5 accent-black border-2 border-black" required />
                                     <div>
                                         <span className="font-bold uppercase block text-xs md:text-sm">Exclusivity Confirmation *</span>
                                         <span className="text-[11px] md:text-xs text-gray-800 tracking-tight md:tracking-normal leading-snug block mt-0.5">
@@ -272,7 +303,103 @@ export default function SubmitDealPage() {
                                 </label>
                             </div>
 
-                            {/* Section 4: Security Check */}
+                            {/* Section 4: Tier Selection */}
+                            <div className="space-y-3 md:space-y-4">
+                                <h2 className="text-lg md:text-xl font-bold uppercase border-b-2 border-black pb-2 flex items-center gap-2">
+                                    <span className="bg-black text-white w-5 h-5 md:w-6 md:h-6 flex items-center justify-center text-xs md:text-sm rounded-none">4</span>
+                                    Listing Tier
+                                </h2>
+
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                    {/* Standard */}
+                                    <label
+                                        className={`relative cursor-pointer border-2 p-3 md:p-4 transition-all ${
+                                            tier === 'standard'
+                                                ? 'border-black bg-white shadow-[3px_3px_0px_#111]'
+                                                : 'border-gray-300 bg-gray-50 hover:border-black'
+                                        }`}
+                                    >
+                                        <input
+                                            type="radio"
+                                            name="tier"
+                                            value="standard"
+                                            checked={tier === 'standard'}
+                                            onChange={() => setTier('standard')}
+                                            className="absolute opacity-0 pointer-events-none"
+                                        />
+                                        <div className="flex items-start gap-2 mb-2">
+                                            <div className={`w-4 h-4 rounded-full border-2 border-black flex-shrink-0 mt-0.5 ${tier === 'standard' ? 'bg-black' : 'bg-white'}`}>
+                                                {tier === 'standard' && (
+                                                    <div className="w-1.5 h-1.5 bg-accent-yellow rounded-full m-auto mt-[3px]" />
+                                                )}
+                                            </div>
+                                            <div className="flex-1 min-w-0">
+                                                <div className="flex items-baseline justify-between gap-2 mb-0.5">
+                                                    <span className="font-mono text-sm md:text-base font-black uppercase">Standard</span>
+                                                    <span className="font-mono text-base md:text-lg font-black">FREE</span>
+                                                </div>
+                                                <p className="text-[10px] md:text-xs text-gray-600 leading-snug">
+                                                    Listed in standard order after admin approval. ~48 hour review.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </label>
+
+                                    {/* Featured */}
+                                    <label
+                                        className={`relative cursor-pointer border-2 p-3 md:p-4 transition-all ${
+                                            tier === 'featured'
+                                                ? 'border-black bg-accent-yellow/30 shadow-[3px_3px_0px_#111]'
+                                                : 'border-gray-300 bg-gray-50 hover:border-black hover:bg-accent-yellow/10'
+                                        }`}
+                                    >
+                                        <input
+                                            type="radio"
+                                            name="tier"
+                                            value="featured"
+                                            checked={tier === 'featured'}
+                                            onChange={() => setTier('featured')}
+                                            className="absolute opacity-0 pointer-events-none"
+                                        />
+                                        <span className="absolute -top-2 -right-2 bg-red-500 text-white border border-black px-1.5 py-0.5 font-mono text-[8px] md:text-[9px] font-black uppercase tracking-widest shadow-[1px_1px_0px_#111] rotate-3">
+                                            ⏳ Limited
+                                        </span>
+                                        <div className="flex items-start gap-2 mb-2">
+                                            <div className={`w-4 h-4 rounded-full border-2 border-black flex-shrink-0 mt-0.5 ${tier === 'featured' ? 'bg-black' : 'bg-white'}`}>
+                                                {tier === 'featured' && (
+                                                    <div className="w-1.5 h-1.5 bg-accent-yellow rounded-full m-auto mt-[3px]" />
+                                                )}
+                                            </div>
+                                            <div className="flex-1 min-w-0">
+                                                <div className="flex items-baseline justify-between gap-2 mb-0.5">
+                                                    <span className="font-mono text-sm md:text-base font-black uppercase flex items-center gap-1">
+                                                        <span className="material-symbols-outlined text-base text-amber-600" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
+                                                        Featured
+                                                    </span>
+                                                    <span className="flex items-baseline gap-1">
+                                                        <span className="font-mono text-xs font-bold line-through text-gray-400">$299</span>
+                                                        <span className="font-mono text-base md:text-lg font-black">$99</span>
+                                                    </span>
+                                                </div>
+                                                <ul className="text-[10px] md:text-xs text-gray-700 leading-snug space-y-0.5 mt-1">
+                                                    <li>· Pinned at top for 30 days</li>
+                                                    <li>· ⭐ Featured badge on listing</li>
+                                                    <li>· Priority admin review</li>
+                                                    <li>· Auto-refund if not approved</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+
+                                {tier === 'featured' && (
+                                    <p className="text-[10px] md:text-xs text-gray-600 bg-amber-50 border border-amber-200 px-3 py-2 leading-snug">
+                                        <span className="font-bold">How it works:</span> Submit free → we review within 24 hours → if approved, you'll get a payment link for $99 → after payment, your deal goes live with the Featured badge for 30 days.
+                                    </p>
+                                )}
+                            </div>
+
+                            {/* Section 5: Security Check */}
                             <div className="border-t-2 border-black pt-3 md:pt-4">
                                 <label className="block text-xs font-bold uppercase mb-2">Security Verification *</label>
                                 <div className="bg-gray-100 p-3 md:p-4 border-2 border-black flex flex-col md:flex-row items-center justify-between md:justify-start gap-3 md:gap-4">
@@ -309,7 +436,11 @@ export default function SubmitDealPage() {
                                     {isSubmitting ? 'Submitting...' : 'Submit'} <span className="material-symbols-outlined text-[18px] md:text-base">send</span>
                                 </button>
                                 <p className="text-center text-[9px] md:text-[10px] text-gray-500 mt-3 md:mt-4 uppercase font-bold">
-                                    {submissionStatus === 'error' && <span className="text-red-500 block mb-1">Error submitting deal. Please try again.</span>}
+                                    {submissionStatus === 'error' && (
+                                        <span className="text-red-600 block mb-1 normal-case font-mono text-xs">
+                                            ⚠ {errorMessage || 'Error submitting deal. Please try again.'}
+                                        </span>
+                                    )}
                                     Review time: ~48 Hours. You will be notified via email.
                                 </p>
                             </div>

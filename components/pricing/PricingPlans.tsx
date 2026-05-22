@@ -4,7 +4,6 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { Currency } from '@/utils/currency'
 import { getPricing, formatPrice } from '@/utils/pricing'
-import { GlowingEffect } from '@/components/ui/GlowingEffect'
 
 interface PricingPlansProps {
   currency: Currency
@@ -41,41 +40,54 @@ export default function PricingPlans({ currency }: PricingPlansProps) {
     }
   }
 
-  const plans = [
+  type Plan = {
+    name: string
+    planKey: string
+    icon: string
+    price: string
+    originalPrice: string | null
+    period: string
+    headline: string
+    subline: string
+    monthlySub: string | null
+    features: string[]
+    footnote: string | null
+    cta: string
+    popular: boolean
+    accent: 'gray' | 'sky' | 'amber'
+    badge: string | null
+    delay: number
+    trust: string
+    valueAnchor: string | null
+  }
+
+  const plans: Plan[] = [
     {
-      name: 'NextFounder',
+      name: "Next'Founder",
       planKey: 'nextfounder',
       icon: 'school',
       price: formatPrice(nextFounderPricing.discounted, currency),
-      originalPrice: null,
+      originalPrice: nextFounderPricing.actual ? formatPrice(nextFounderPricing.actual, currency) : null,
       period: nextFounderPricing.period,
-      description: 'For students, indie hackers & early builders.',
+      headline: 'Ship your first idea on a tight budget.',
+      subline: 'For students and indie hackers building lean.',
+      monthlySub: null,
+      valueAnchor: null,
       features: [
-        'Premium AI & SaaS credits',
-        'Curated tools, perks & early access opportunities',
-        'Hackathons, internships & fellowships',
-        'Startup grants & founder programs',
-        'Opportunity Hub for career & growth',
-        'NextFounder community access',
+        'Curated AI & SaaS perks for early builders',
+        'Hackathons, fellowships & student programs',
+        'Early-stage grants & founder communities',
+        'Tools and credits matched to your stage',
+        'Career & opportunity hub',
+        "Next'Founder community access",
       ],
-      footnote: 'Active student verification required. All NextFounder benefits are reserved for verified students only — not for general founders.',
-      cta: 'Join NextFounder',
+      footnote: 'Built for active student builders shipping their first product.',
+      cta: "Start Building Smarter",
       popular: false,
-      buttonStyle: 'bg-white hover:bg-gray-50 text-[#111111]',
-      badge: 'STUDENTS ONLY',
-      special: false,
-      headerBg: 'bg-gray-50',
-      cardBg: 'bg-white',
-      textColor: 'text-[#111111]',
-      featureIcon: 'text-[#111111]',
-      iconBg: 'bg-gray-100',
+      accent: 'gray',
+      badge: 'STUDENTS',
       delay: 0,
-      glowColors: {
-        gradient: `radial-gradient(circle, #a3a3a3 10%, #a3a3a300 20%),
-          radial-gradient(circle at 40% 40%, #d4d4d4 5%, #d4d4d400 15%),
-          radial-gradient(circle at 60% 60%, #737373 10%, #73737300 20%),
-          repeating-conic-gradient(from 236.84deg at 50% 50%, #a3a3a3 0%, #d4d4d4 calc(25% / 5), #737373 calc(50% / 5), #a3a3a3 calc(75% / 5), #d4d4d4 calc(100% / 5))`,
-      },
+      trust: 'Cancel anytime to stop renewals · Instant access',
     },
     {
       name: 'Founder',
@@ -84,342 +96,360 @@ export default function PricingPlans({ currency }: PricingPlansProps) {
       price: formatPrice(founderPricing.discounted, currency),
       originalPrice: founderPricing.actual ? formatPrice(founderPricing.actual, currency) : null,
       period: founderPricing.period,
-      description: 'Everything — unlimited access.',
+      headline: 'Everything you need to scale.',
+      subline: 'Full catalog access while you ship and grow your startup.',
+      monthlySub: 'Just $5.75/month, billed yearly',
+      valueAnchor: null,
       features: [
-        'Unlimited Deal Claims (All Deals)',
-        'Funding Opportunities',
-        'Incubators, Accelerators & Programs',
-        'Verified Startups Full Database',
-        'Startup Ideas Database',
-        'Master Resources Library',
-        'Private Founder Community (Discord)',
-        'Priority support',
+        "Everything in Next'Founder, plus:",
+        'Cloud credit deals (AWS, GCP, Azure)',
+        'SaaS discount catalog (HubSpot, Stripe, Intercom + more)',
+        'Unlimited deal claims across every category',
+        'Funding & grant programs filtered to your stage',
+        'Incubators, Accelerators & Programs database',
+        'Verified Startups + Startup Ideas database',
+        'Private Founder community on Discord',
+        'Priority support — answers in hours, not days',
       ],
       footnote: null,
-      cta: 'Join Founder (Pro)',
+      cta: 'Scale as a Founder',
       popular: true,
-      buttonStyle: 'bg-[#111111] text-white hover:bg-[#333]',
+      accent: 'sky',
       badge: null,
-      special: false,
-      headerBg: 'bg-[#38bdf8]',
-      cardBg: 'bg-[#e0f2fe]',
-      textColor: 'text-[#111111]',
-      featureIcon: 'text-[#0284c7]',
-      iconBg: 'bg-white/30',
       delay: 100,
-      glowColors: {
-        gradient: `radial-gradient(circle, #38bdf8 10%, #38bdf800 20%),
-          radial-gradient(circle at 40% 40%, #0ea5e9 5%, #0ea5e900 15%),
-          radial-gradient(circle at 60% 60%, #0284c7 10%, #0284c700 20%),
-          repeating-conic-gradient(from 236.84deg at 50% 50%, #38bdf8 0%, #0ea5e9 calc(25% / 5), #0284c7 calc(50% / 5), #38bdf8 calc(75% / 5), #0ea5e9 calc(100% / 5))`,
-      },
+      trust: 'Cancel anytime · Instant access · Yearly billing',
     },
     {
       name: 'Legend',
       planKey: 'legend',
-      icon: 'diamond',
+      icon: 'workspace_premium',
       price: formatPrice(legendPricing.discounted, currency),
       originalPrice: legendPricing.actual ? formatPrice(legendPricing.actual, currency) : null,
       period: legendPricing.period,
-      description: 'Pay once, own it forever.',
+      headline: 'Pay once. Keep access for life.',
+      subline: 'For founders building over the long haul.',
+      monthlySub: 'One-time payment · No renewals',
+      valueAnchor: null,
       features: [
-        'Everything in Founder',
-        'Lifetime access forever',
-        'All future updates included',
-        'Private Founder Community (Discord)',
-        'Priority support'
+        'Everything in Founder — for life',
+        'Pay once, never charged again',
+        'Every future update included',
+        'Founding member perks',
+        'Direct line to the team',
+        'Lock in launch pricing forever',
       ],
       footnote: null,
-      cta: 'Get Legend Status',
+      cta: 'Lock In Legend Access',
       popular: false,
-      buttonStyle: 'bg-[#111111] text-white hover:bg-[#333]',
-      badge: null,
-      special: true,
-      headerBg: 'bg-[#fde047]',
-      cardBg: 'bg-[#fefce8]',
-      textColor: 'text-[#111111]',
-      featureIcon: 'text-[#ca8a04]',
-      iconBg: 'bg-white/30',
+      accent: 'amber',
+      badge: 'BEST VALUE',
       delay: 200,
-      glowColors: {
-        gradient: `radial-gradient(circle, #fde047 10%, #fde04700 20%),
-          radial-gradient(circle at 40% 40%, #fbbf24 5%, #fbbf2400 15%),
-          radial-gradient(circle at 60% 60%, #f59e0b 10%, #f59e0b00 20%),
-          repeating-conic-gradient(from 236.84deg at 50% 50%, #fde047 0%, #fbbf24 calc(25% / 5), #f59e0b calc(50% / 5), #fde047 calc(75% / 5), #fbbf24 calc(100% / 5))`,
-      },
-    }
+      trust: 'One-time payment · Lifetime updates · Lock in launch price',
+    },
   ]
 
   return (
-    <section className="mb-6 md:mb-8">
-      {/* Section Heading */}
-      <h2 className="font-mono text-xl md:text-3xl font-black uppercase text-center text-[#111111] tracking-tight mb-5 md:mb-8">
-        Unlock More Value
-      </h2>
+    <section className="relative py-6 md:py-10 px-4">
+      {/* Decorative grid + soft blobs */}
+      <div className="absolute inset-0 grid-bg opacity-40 pointer-events-none" aria-hidden="true" />
+      <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
+        <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-accent-yellow/15 rounded-full blur-3xl" />
+        <div className="absolute bottom-1/4 right-1/4 w-72 h-72 bg-sky-200/30 rounded-full blur-3xl" />
+      </div>
 
       {/* ═══ Mobile Stacked View ═══ */}
-      <div className="md:hidden flex flex-col gap-3 px-4 pb-2">
+      <div className="md:hidden flex flex-col gap-5 pb-2 relative">
         {plans.map((plan, index) => (
-          <div
+          <PlanCard
             key={index}
-            className="group relative rounded-sm animate-fade-in-up"
-            style={{ animationDelay: `${index * 80}ms`, animationFillMode: 'both' }}
-          >
-            <GlowingEffect
-              spread={40}
-              glow={plan.popular}
-              disabled={false}
-              proximity={64}
-              inactiveZone={0.01}
-              borderWidth={2}
-            />
-
-            <div className={`relative flex flex-col border-2 border-[#111111] shadow-[2px_2px_0px_0px_#111111] overflow-hidden`}>
-              {/* Header row: icon + name + badge + price all in one line */}
-              <div className={`${plan.headerBg} px-3 py-2.5 flex items-center justify-between`}>
-                <div className="flex items-center gap-1.5">
-                  <span className="material-symbols-outlined text-sm text-[#111111]">{plan.icon}</span>
-                  <h3 className={`font-mono text-[11px] font-black uppercase ${plan.textColor}`}>{plan.name}</h3>
-                  {plan.popular && (
-                    <span className="bg-[#111111] text-white px-1.5 py-px font-mono text-[7px] font-black uppercase tracking-wider ml-1">★ Popular</span>
-                  )}
-                  {plan.special && (
-                    <span className="bg-[#111111] text-white px-1.5 py-px font-mono text-[7px] font-black uppercase tracking-wider ml-1 flex items-center gap-0.5">
-                      <span className="material-symbols-outlined text-[7px] text-amber-400">bolt</span>Elite
-                    </span>
-                  )}
-                </div>
-                <div className={`flex items-baseline ${plan.textColor}`}>
-                  {plan.originalPrice && (
-                    <span className="font-sans text-xs font-bold line-through opacity-50 mr-1.5">{plan.originalPrice}</span>
-                  )}
-                  <span className="font-sans text-lg font-black tracking-tight leading-none">{plan.price}</span>
-                  <span className="font-mono text-[7px] font-bold uppercase ml-0.5 opacity-50">{plan.period}</span>
-                </div>
-              </div>
-
-              {/* Features + CTA */}
-              <div className={`px-3 py-2 ${plan.cardBg}`}>
-                <ul className="space-y-1">
-                  {plan.features.map((feature, idx) => (
-                    <li key={idx} className="flex items-center gap-1.5 min-h-[18px]">
-                      <span className={`material-symbols-outlined text-[13px] leading-none shrink-0 ${plan.featureIcon}`} style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
-                      <span className="font-sans text-[11px] text-[#111111]/80 leading-none">{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-
-                {plan.footnote && (
-                  <div className="mt-2 p-1.5 bg-amber-50 border border-amber-200 flex items-start gap-1">
-                    <span className="material-symbols-outlined text-amber-700 text-[12px] mt-px flex-shrink-0">info</span>
-                    <p className="font-sans text-[9px] text-amber-900 leading-snug">{plan.footnote}</p>
-                  </div>
-                )}
-
-                <button
-                  onClick={() => handleCheckout(plan.planKey)}
-                  disabled={loadingPlan === plan.planKey}
-                  className={`pricing-cta-btn w-full mt-2.5 py-2 font-mono font-bold uppercase tracking-wider text-[10px] border-2 border-[#111111] flex items-center justify-center gap-1.5 shadow-[2px_2px_0_0_#111111] active:translate-x-[1px] active:translate-y-[1px] active:shadow-[1px_1px_0_0_#111111] transition-all ${plan.buttonStyle} disabled:opacity-60`}
-                >
-                  {loadingPlan === plan.planKey ? 'Redirecting...' : plan.cta}
-                  <span className="material-symbols-outlined text-xs pricing-cta-arrow">
-                    {loadingPlan === plan.planKey ? 'hourglass_empty' : 'arrow_forward'}
-                  </span>
-                </button>
-              </div>
-            </div>
-          </div>
+            plan={plan}
+            loading={loadingPlan === plan.planKey}
+            onClick={() => handleCheckout(plan.planKey)}
+            delay={index * 80}
+          />
         ))}
       </div>
 
       {/* ═══ Desktop Grid ═══ */}
-      <div className="hidden md:grid md:grid-cols-3 gap-5 items-stretch max-w-5xl mx-auto px-4">
+      <div className="hidden md:grid md:grid-cols-3 gap-5 lg:gap-7 items-stretch max-w-6xl mx-auto pt-6 lg:pt-8 relative">
         {plans.map((plan, index) => (
-          <div
+          <PlanCard
             key={index}
-            className="relative rounded-sm"
-            style={{ animationDelay: `${plan.delay}ms`, animationFillMode: 'both' }}
-          >
-            <GlowingEffect
-              spread={40}
-              glow={false}
-              disabled={false}
-              proximity={64}
-              inactiveZone={0.01}
-              borderWidth={2}
-            />
-            <div
-              className="group relative flex flex-col border-2 border-[#111111] shadow-[4px_4px_0px_0px_#111111] overflow-hidden transition-all duration-500 ease-out hover:shadow-[6px_6px_0px_0px_#111111] hover:-translate-y-1 animate-fade-in-up h-full"
-            >
-            {/* Badges */}
-            {plan.popular && (
-              <div className="absolute top-0 left-1/2 -translate-x-1/2 z-20 rounded-sm overflow-hidden">
-                <GlowingEffect spread={20} glow disabled={false} proximity={32} inactiveZone={0.01} borderWidth={1} />
-                <div className="relative bg-[#111111] text-white px-3 py-1 font-mono text-[10px] font-black uppercase tracking-widest">
-                  ★ Most Popular
-                </div>
-              </div>
-            )}
-
-            {plan.special && (
-              <div className="absolute top-0 left-1/2 -translate-x-1/2 z-20 rounded-sm overflow-hidden">
-                <GlowingEffect spread={20} glow disabled={false} proximity={32} inactiveZone={0.01} borderWidth={1} />
-                <div className="relative bg-[#111111] text-white px-3 py-1 font-mono text-[10px] font-black uppercase tracking-widest flex items-center gap-1">
-                  <span className="material-symbols-outlined text-xs text-amber-400">bolt</span>
-                  Elite Status
-                </div>
-              </div>
-            )}
-
-            {/* Header / Pricing Area */}
-            <div className={`${plan.headerBg} px-5 pt-9 pb-4 text-left relative overflow-hidden border-b-2 border-[#111111]/15`}>
-              <span className="material-symbols-outlined absolute top-2 right-3 text-4xl opacity-[0.07] transition-all duration-700 group-hover:opacity-[0.12] group-hover:rotate-12 group-hover:scale-110">
-                {plan.icon}
-              </span>
-
-              <div className="flex items-center gap-2">
-                <div className={`w-7 h-7 ${plan.iconBg} border border-[#111111]/20 flex items-center justify-center transition-all duration-500 group-hover:rotate-[-8deg] group-hover:scale-110 ${plan.name === 'NextFounder' ? 'group-hover:animate-icon-spin' : ''} ${plan.name === 'Founder' ? 'group-hover:animate-icon-bounce' : ''} ${plan.name === 'Legend' ? 'group-hover:animate-icon-pulse' : ''}`}>
-                  <span className="material-symbols-outlined text-sm text-[#111111]">
-                    {plan.icon}
-                  </span>
-                </div>
-                <h3 className={`font-mono text-base font-black uppercase tracking-tight ${plan.textColor}`}>
-                  {plan.name}
-                </h3>
-              </div>
-
-              <div className={`flex items-baseline ${plan.textColor} mt-2`}>
-                {plan.originalPrice && (
-                  <span className="font-sans text-base md:text-lg font-bold line-through opacity-50 mr-2">{plan.originalPrice}</span>
-                )}
-                <span className="font-sans text-3xl md:text-4xl font-black tracking-tight leading-none transition-transform duration-300 group-hover:scale-[1.02] origin-left">
-                  {plan.price}
-                </span>
-                <span className="font-mono text-[10px] font-bold uppercase ml-1 opacity-60">
-                  {plan.period}
-                </span>
-              </div>
-
-              {plan.badge && (
-                <div className="mt-2">
-                  <span className={`inline-block text-[10px] font-black px-2 py-0.5 uppercase tracking-wider transition-transform duration-300 group-hover:-rotate-1 ${plan.special ? 'bg-[#ef4444] text-white' : 'bg-[#22c55e] text-white'}`}>
-                    {plan.badge}
-                  </span>
-                </div>
-              )}
-
-              {plan.description && (
-                <p className={`font-sans text-xs mt-2 opacity-60 ${plan.textColor}`}>
-                  {plan.description}
-                </p>
-              )}
-            </div>
-
-            {/* Features */}
-            <div className={`px-5 py-4 flex-1 flex flex-col justify-between ${plan.cardBg}`}>
-              <ul className="space-y-2.5">
-                {plan.features.map((feature, idx) => (
-                  <li
-                    key={idx}
-                    className="flex items-center gap-2.5 transition-transform duration-300 ease-out group-hover:translate-x-0.5"
-                    style={{ transitionDelay: `${idx * 40}ms` }}
-                  >
-                    <span className={`material-symbols-outlined text-lg ${plan.featureIcon} transition-transform duration-300 group-hover:scale-110`} style={{ fontVariationSettings: "'FILL' 1" }}>
-                      check_circle
-                    </span>
-                    <span className="font-sans text-sm text-[#111111]">
-                      {feature}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-
-              {plan.footnote && (
-                <div className="mt-3 p-2 bg-amber-50 border border-amber-200 flex items-start gap-1.5">
-                  <span className="material-symbols-outlined text-amber-700 text-sm mt-px flex-shrink-0">info</span>
-                  <p className="font-sans text-[10px] text-amber-900 leading-snug">{plan.footnote}</p>
-                </div>
-              )}
-
-              {/* CTA Button */}
-              <div className="mt-5 relative rounded-sm">
-                <GlowingEffect
-                  spread={40}
-                  glow={false}
-                  disabled={false}
-                  proximity={48}
-                  inactiveZone={0.01}
-                  borderWidth={2}
-                />
-                <button
-                  onClick={() => handleCheckout(plan.planKey)}
-                  disabled={loadingPlan === plan.planKey}
-                  className={`pricing-cta-btn relative w-full py-2.5 font-mono font-bold uppercase tracking-wider text-xs border-2 border-[#111111] flex items-center justify-center gap-2 shadow-[3px_3px_0_0_#111111] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[1px_1px_0_0_#111111] transition-all duration-200 ${plan.buttonStyle} disabled:opacity-60`}
-                >
-                  {loadingPlan === plan.planKey ? 'Redirecting...' : plan.cta}
-                  <span className="material-symbols-outlined text-base transition-transform duration-300 group-hover:translate-x-0.5 pricing-cta-arrow">
-                    {loadingPlan === plan.planKey ? 'hourglass_empty' : 'arrow_forward'}
-                  </span>
-                </button>
-              </div>
-            </div>
-          </div>
-          </div>
+            plan={plan}
+            loading={loadingPlan === plan.planKey}
+            onClick={() => handleCheckout(plan.planKey)}
+            delay={plan.delay}
+          />
         ))}
       </div>
 
-      {/* Animations */}
+      {/* Security & data trust strip */}
+      <div className="relative max-w-4xl mx-auto mt-10 md:mt-12 px-4">
+        <div className="relative bg-white border-2 border-black rounded-sm shadow-[3px_3px_0px_#111] overflow-hidden">
+          {/* Decorative mandala */}
+          <div className="absolute -top-12 -right-12 w-32 h-32 pointer-events-none opacity-[0.08]" aria-hidden="true">
+            <svg viewBox="0 0 200 200" className="w-full h-full text-gray-900 pricing-anchor-mandala-spin" fill="none" stroke="currentColor" strokeWidth="0.6">
+              <circle cx="100" cy="100" r="40" />
+              <circle cx="100" cy="100" r="60" strokeDasharray="2 4" />
+              {[0, 60, 120, 180, 240, 300].map((deg) => (
+                <g key={deg} transform={`rotate(${deg} 100 100)`}>
+                  <line x1="100" y1="40" x2="100" y2="20" />
+                  <circle cx="100" cy="20" r="2" fill="currentColor" />
+                </g>
+              ))}
+              <circle cx="100" cy="100" r="2.5" fill="currentColor" />
+            </svg>
+          </div>
+
+          <div className="relative px-4 md:px-6 py-3.5">
+            <div className="flex flex-col md:flex-row items-start md:items-center gap-3 md:gap-5">
+              {/* Heading + lock */}
+              <div className="flex items-center gap-2.5 md:flex-shrink-0 md:pr-5 md:border-r-2 md:border-black md:border-dashed">
+                <div className="w-9 h-9 bg-emerald-50 border-2 border-black rounded-sm flex items-center justify-center shadow-[1px_1px_0px_#111]">
+                  <span className="material-symbols-outlined !text-[16px] text-emerald-600" style={{ fontVariationSettings: "'FILL' 1" }}>
+                    lock
+                  </span>
+                </div>
+                <div>
+                  <p className="font-mono text-[10.5px] font-black uppercase tracking-[0.12em] text-black leading-none">
+                    Secure Checkout
+                  </p>
+                  <p className="text-[10.5px] text-gray-500 mt-0.5 leading-none">
+                    Your data is protected
+                  </p>
+                </div>
+              </div>
+
+              {/* Trust signals — wrapping row */}
+              <div className="flex flex-wrap items-center gap-x-4 gap-y-2 flex-1">
+                {[
+                  { icon: 'verified_user', text: 'PCI-DSS payments via Dodo', color: 'text-sky-600' },
+                  { icon: 'enhanced_encryption', text: '256-bit TLS encryption', color: 'text-indigo-600' },
+                  { icon: 'shield_lock', text: 'Card data never stored on our servers', color: 'text-amber-600' },
+                  { icon: 'cancel_schedule_send', text: 'Cancel renewals from your dashboard', color: 'text-rose-600' },
+                ].map((item) => (
+                  <div key={item.text} className="inline-flex items-center gap-1.5">
+                    <span className={`material-symbols-outlined !text-[14px] ${item.color}`} style={{ fontVariationSettings: "'FILL' 1" }}>
+                      {item.icon}
+                    </span>
+                    <span className="font-mono text-[10.5px] font-bold uppercase tracking-wide text-gray-700">
+                      {item.text}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Section animations */}
       <style jsx>{`
         @keyframes fadeInUp {
-          from {
-            opacity: 0;
-            transform: translateY(20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
+          from { opacity: 0; transform: translateY(16px); }
+          to { opacity: 1; transform: translateY(0); }
         }
-        .animate-fade-in-up {
-          animation: fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        :global(.plan-card-fade-in) {
+          animation: fadeInUp 0.55s cubic-bezier(0.16, 1, 0.3, 1) backwards;
         }
-        @keyframes iconSpin {
-          0% { transform: rotate(0deg) scale(1.1); }
-          50% { transform: rotate(15deg) scale(1.15); }
-          100% { transform: rotate(-8deg) scale(1.1); }
+        @keyframes badgeFloat {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-2px); }
         }
-        @keyframes iconBounce {
-          0%, 100% { transform: translateY(0) rotate(-8deg) scale(1.1); }
-          50% { transform: translateY(-3px) rotate(-8deg) scale(1.15); }
+        :global(.plan-recommended-badge) {
+          animation: badgeFloat 2.4s ease-in-out infinite;
         }
-        @keyframes iconPulse {
-          0%, 100% { transform: scale(1.1) rotate(-8deg); }
-          50% { transform: scale(1.2) rotate(-8deg); }
+        @keyframes pricingAnchorSpin {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
         }
-        .group:hover .group-hover\\:animate-icon-spin {
-          animation: iconSpin 0.6s ease-in-out;
+        @keyframes pricingAnchorSpinReverse {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(-360deg); }
         }
-        .group:hover .group-hover\\:animate-icon-bounce {
-          animation: iconBounce 0.5s ease-in-out infinite;
+        :global(.pricing-anchor-mandala-spin) {
+          animation: pricingAnchorSpin 90s linear infinite;
+          transform-origin: center;
         }
-        .group:hover .group-hover\\:animate-icon-pulse {
-          animation: iconPulse 0.8s ease-in-out infinite;
+        :global(.pricing-anchor-mandala-spin-reverse) {
+          animation: pricingAnchorSpinReverse 110s linear infinite;
+          transform-origin: center;
         }
-        @keyframes ctaArrowBounce {
-          0%, 100% { transform: translateX(0); }
-          50% { transform: translateX(4px); }
-        }
-        .pricing-cta-btn .pricing-cta-arrow {
-          animation: ctaArrowBounce 1.5s ease-in-out infinite;
-        }
-        @keyframes ctaShimmer {
-          0% { background-position: -200% center; }
-          100% { background-position: 200% center; }
-        }
-        .pricing-cta-btn {
-          background-size: 200% 100%;
+        @media (prefers-reduced-motion: reduce) {
+          :global(.plan-card-fade-in),
+          :global(.plan-recommended-badge),
+          :global(.pricing-anchor-mandala-spin),
+          :global(.pricing-anchor-mandala-spin-reverse) { animation: none; }
         }
       `}</style>
     </section>
+  )
+}
+
+/* ─── Single plan card ──────────────────────────────────────────── */
+function PlanCard({
+  plan,
+  loading,
+  onClick,
+  delay = 0,
+}: {
+  plan: any
+  loading: boolean
+  onClick: () => void
+  delay?: number
+}) {
+  const isPopular = plan.popular
+
+  // Accent colors per plan
+  const accent = {
+    gray: { iconChip: 'bg-gray-100', iconColor: 'text-gray-700', check: 'text-gray-700', badgeBg: 'bg-gray-100', badgeText: 'text-gray-800', headerStripe: 'bg-gray-300' },
+    sky: { iconChip: 'bg-sky-100', iconColor: 'text-sky-700', check: 'text-sky-600', badgeBg: 'bg-red-500', badgeText: 'text-white', headerStripe: 'bg-accent-yellow' },
+    amber: { iconChip: 'bg-amber-100', iconColor: 'text-amber-700', check: 'text-amber-700', badgeBg: 'bg-amber-200', badgeText: 'text-amber-900', headerStripe: 'bg-amber-400' },
+  }[plan.accent as 'gray' | 'sky' | 'amber']
+
+  return (
+    <div
+      className={`relative plan-card-fade-in flex ${
+        isPopular ? 'lg:-mt-6 lg:scale-[1.04] z-10' : ''
+      }`}
+      style={{ animationDelay: `${delay}ms` }}
+    >
+      {/* Recommended banner — sits cleanly above the card */}
+      {isPopular && (
+        <div className="absolute -top-5 left-1/2 -translate-x-1/2 z-20 whitespace-nowrap">
+          <div className="plan-recommended-badge inline-flex items-center gap-1.5 bg-black text-accent-yellow px-4 py-1.5 border-2 border-black shadow-[3px_3px_0px_rgba(255,221,0,0.6)] font-mono text-[10px] md:text-[10.5px] font-black uppercase tracking-[0.18em] rounded-sm">
+            <span className="material-symbols-outlined !text-[13px] text-accent-yellow">star</span>
+            Most Founders Pick This
+          </div>
+        </div>
+      )}
+
+      <div
+        className={`relative w-full bg-white border-2 border-black overflow-hidden flex flex-col transition-all duration-300 hover:-translate-x-px hover:-translate-y-px ${
+          isPopular
+            ? 'shadow-[5px_5px_0px_#111,9px_9px_0px_#FFD500] hover:shadow-[7px_7px_0px_#111,11px_11px_0px_#FFD500]'
+            : 'shadow-[4px_4px_0px_#111] hover:shadow-[6px_6px_0px_#111]'
+        }`}
+      >
+        {/* Top accent strip */}
+        <div className={`absolute top-0 left-0 right-0 h-1.5 ${accent.headerStripe}`} />
+
+        {/* Header */}
+        <div className="px-6 pt-8 pb-6 border-b-2 border-black border-dashed relative">
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-2.5">
+              <div className={`w-10 h-10 rounded-sm border-2 border-black ${accent.iconChip} flex items-center justify-center shadow-[2px_2px_0px_#111]`}>
+                <span className={`material-symbols-outlined !text-[20px] ${accent.iconColor}`}>
+                  {plan.icon}
+                </span>
+              </div>
+              <div>
+                <h3 className="font-mono text-[14px] font-black uppercase tracking-[0.06em] text-black leading-none">
+                  {plan.name}
+                </h3>
+              </div>
+            </div>
+            {plan.badge && (
+              <span
+                className={`inline-flex items-center px-2 py-0.5 rounded-sm border-2 border-black shadow-[1px_1px_0px_#111] text-[9px] font-mono font-black uppercase tracking-[0.1em] ${accent.badgeBg} ${accent.badgeText}`}
+              >
+                {plan.badge}
+              </span>
+            )}
+          </div>
+
+          {/* Outcome headline (Hormozi style) */}
+          <h4 className="font-mono text-[16px] md:text-[17px] font-black text-black leading-[1.25] mb-2">
+            {plan.headline}
+          </h4>
+          <p className="text-[12.5px] text-gray-600 leading-relaxed mb-5">{plan.subline}</p>
+
+          {/* Price */}
+          <div className="flex items-baseline gap-2 mb-3">
+            {plan.originalPrice && (
+              <span className="font-sans text-lg text-gray-400 line-through">
+                {plan.originalPrice}
+              </span>
+            )}
+            <span className="font-mono text-[44px] md:text-[48px] font-black tracking-tight text-black leading-none tabular-nums">
+              {plan.price}
+            </span>
+            <span className="font-mono text-[11px] font-bold uppercase tracking-wide text-gray-500">
+              {plan.period}
+            </span>
+          </div>
+
+          {plan.monthlySub && (
+            <div className="inline-flex items-center gap-1 bg-black text-accent-yellow font-mono font-black text-[10.5px] px-2.5 py-1 border-2 border-black rounded-sm shadow-[2px_2px_0px_rgba(255,221,0,0.4)]">
+              <span className="material-symbols-outlined !text-[12px]">bolt</span>
+              {plan.monthlySub}
+            </div>
+          )}
+        </div>
+
+        {/* Features */}
+        <div className="px-6 py-6 flex-1 flex flex-col bg-gray-50/40">
+          <ul className="space-y-3 mb-6">
+            {plan.features.map((feature: string, idx: number) => {
+              // First "Everything in X, plus:" gets bolder treatment
+              const isInheritance = feature.endsWith(', plus:') || feature.startsWith('Everything in')
+              return (
+                <li key={idx} className="flex items-start gap-2.5">
+                  <span
+                    className={`material-symbols-outlined !text-[17px] flex-shrink-0 mt-0.5 ${
+                      isInheritance ? 'text-black' : accent.check
+                    }`}
+                    style={{ fontVariationSettings: "'FILL' 1" }}
+                  >
+                    {isInheritance ? 'add_circle' : 'check_circle'}
+                  </span>
+                  <span
+                    className={`text-[13px] leading-snug ${
+                      isInheritance ? 'font-mono font-bold uppercase tracking-wide text-black text-[11px]' : 'text-gray-800'
+                    }`}
+                  >
+                    {feature}
+                  </span>
+                </li>
+              )
+            })}
+          </ul>
+
+          {plan.footnote && (
+            <div className="mt-auto mb-5 px-3 py-2.5 bg-amber-50 border-2 border-black border-dashed rounded-sm flex items-start gap-2">
+              <span className="material-symbols-outlined !text-[15px] text-amber-700 mt-0.5 flex-shrink-0">info</span>
+              <p className="text-[11.5px] text-amber-900 leading-relaxed">{plan.footnote}</p>
+            </div>
+          )}
+
+          {/* CTA */}
+          <button
+            onClick={onClick}
+            disabled={loading}
+            className={`group/cta mt-auto w-full inline-flex items-center justify-center gap-2 py-3.5 px-4 font-mono font-black text-[12px] md:text-[12.5px] uppercase tracking-[0.12em] rounded-sm border-2 border-black transition-all overflow-hidden relative disabled:opacity-60 ${
+              isPopular
+                ? 'bg-accent-yellow text-black shadow-[3px_3px_0px_#111] hover:shadow-[5px_5px_0px_#111] hover:-translate-x-px hover:-translate-y-px'
+                : plan.accent === 'amber'
+                  ? 'bg-black text-white shadow-[3px_3px_0px_#111] hover:shadow-[5px_5px_0px_#111] hover:-translate-x-px hover:-translate-y-px'
+                  : 'bg-white text-black shadow-[3px_3px_0px_#111] hover:bg-gray-50 hover:shadow-[5px_5px_0px_#111] hover:-translate-x-px hover:-translate-y-px'
+            }`}
+          >
+            <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover/cta:translate-x-full transition-transform duration-700 pointer-events-none" />
+            <span className="relative">
+              {loading ? 'Redirecting…' : plan.cta}
+            </span>
+            <span className="material-symbols-outlined relative !text-[16px] group-hover/cta:translate-x-1 transition-transform">
+              {loading ? 'hourglass_empty' : 'arrow_forward'}
+            </span>
+          </button>
+
+          {/* Trust line */}
+          <p className="mt-3 text-center text-[10.5px] text-gray-500 font-mono leading-snug">
+            <span className="material-symbols-outlined !text-[11px] align-middle mr-0.5">lock</span>
+            {plan.trust}
+          </p>
+        </div>
+      </div>
+    </div>
   )
 }

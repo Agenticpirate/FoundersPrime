@@ -141,6 +141,13 @@ h6 {
     linear-gradient(to bottom, rgba(16, 22, 34, 0.05) 1px, transparent 1px);
 }
 
+.grid-bg-dark {
+  background-size: 40px 40px;
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+}
+
 .cursor-blink {
   animation: blink 1s step-end infinite;
 }
@@ -338,6 +345,9 @@ h6 {
 /* Mobile: reduce section padding globally for tighter layout */
 @media (max-width: 767px) {
   .grid-bg {
+    background-size: 30px 30px;
+  }
+  .grid-bg-dark {
     background-size: 30px 30px;
   }
 }
@@ -617,5 +627,74 @@ p > a, li > a, span > a {
 
   .pricing-cta-btn .pricing-cta-arrow {
     animation: none !important;
+  }
+}
+
+
+/* ─── Pricing page mandala animations ─── */
+@keyframes pricingMandalaSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+@keyframes pricingMandalaSpinReverse {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(-360deg); }
+}
+.pricing-hero-mandala-spin {
+  animation: pricingMandalaSpin 80s linear infinite;
+  transform-origin: center;
+}
+.pricing-hero-mandala-spin-reverse {
+  animation: pricingMandalaSpinReverse 100s linear infinite;
+  transform-origin: center;
+}
+.included-mandala-spin {
+  animation: pricingMandalaSpin 110s linear infinite;
+  transform-origin: center;
+}
+.included-mandala-spin-reverse {
+  animation: pricingMandalaSpinReverse 130s linear infinite;
+  transform-origin: center;
+}
+.final-cta-mandala-spin {
+  animation: pricingMandalaSpin 70s linear infinite;
+  transform-origin: center;
+}
+.final-cta-mandala-spin-reverse {
+  animation: pricingMandalaSpinReverse 90s linear infinite;
+  transform-origin: center;
+}
+@media (prefers-reduced-motion: reduce) {
+  .pricing-hero-mandala-spin,
+  .pricing-hero-mandala-spin-reverse,
+  .included-mandala-spin,
+  .included-mandala-spin-reverse,
+  .final-cta-mandala-spin,
+  .final-cta-mandala-spin-reverse {
+    animation: none;
+  }
+}
+
+
+/* ─── Pricing "What you unlock" card animations ─── */
+@keyframes includedCardFadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes includedCardMandalaSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+.included-card-fade-in {
+  animation: includedCardFadeIn 0.55s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+}
+.included-card-mandala-spin {
+  animation: includedCardMandalaSpin 60s linear infinite;
+  transform-origin: center;
+}
+@media (prefers-reduced-motion: reduce) {
+  .included-card-fade-in,
+  .included-card-mandala-spin {
+    animation: none;
   }
 }

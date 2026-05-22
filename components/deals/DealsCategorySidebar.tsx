@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { getAllCategories, getSubcategoriesByCategory, Deal, getFeaturedCategories } from '@/lib/deals-database'
+import { getSubcategoriesByCategory, Deal, getAllCategories } from '@/lib/deals-database'
 
 interface CategorySidebarProps {
   onCategorySelect?: (category: string, subcategory?: string) => void
@@ -9,42 +9,49 @@ interface CategorySidebarProps {
   selectedSubcategory?: string
 }
 
+const CATEGORY_ICONS: Record<string, string> = {
+  'cloud-credits': 'cloud',
+  'ad-credits': 'campaign',
+  'saas-discounts': 'apps',
+  'startup-programs': 'rocket_launch',
+}
+
+const CATEGORY_ICON_COLORS: Record<string, string> = {
+  'cloud-credits': 'text-sky-500',
+  'ad-credits': 'text-pink-500',
+  'saas-discounts': 'text-indigo-500',
+  'startup-programs': 'text-orange-500',
+}
+
 export default function DealsCategorySidebar({
   onCategorySelect,
   selectedCategory = '',
   selectedSubcategory = ''
 }: CategorySidebarProps) {
-  const [expandedCategories, setExpandedCategories] = useState<string[]>([selectedCategory])
+  const [expandedCategories, setExpandedCategories] = useState<string[]>([selectedCategory].filter(Boolean))
   const [categoryCounts, setCategoryCounts] = useState<Record<string, number>>({})
   const [subcategoryCounts, setSubcategoryCounts] = useState<Record<string, number>>({})
   const [totalDeals, setTotalDeals] = useState(0)
-  const categories = getFeaturedCategories()
+  const categories = getAllCategories()
 
-  // Load deals and calculate counts
   useEffect(() => {
     const loadCounts = async () => {
       try {
         const response = await fetch('/api/deals')
         const data = await response.json()
-
         if (data.success && data.deals) {
           const deals: Deal[] = data.deals
           setTotalDeals(deals.length)
-
-          // Calculate category counts
           const catCounts: Record<string, number> = {}
           const subCounts: Record<string, number> = {}
-
           deals.forEach(deal => {
             const catId = deal.category.toLowerCase().replace(/\s+/g, '-')
             catCounts[catId] = (catCounts[catId] || 0) + 1
             if (deal.subcategory) {
               const subId = deal.subcategory.toLowerCase().replace(/\s+/g, '-')
-              const subKey = `${catId}/${subId}`
-              subCounts[subKey] = (subCounts[subKey] || 0) + 1
+              subCounts[`${catId}/${subId}`] = (subCounts[`${catId}/${subId}`] || 0) + 1
             }
           })
-
           setCategoryCounts(catCounts)
           setSubcategoryCounts(subCounts)
         }
@@ -52,38 +59,27 @@ export default function DealsCategorySidebar({
         console.error('Error loading deal counts:', error)
       }
     }
-
     loadCounts()
   }, [])
 
   const toggleCategory = (categoryId: string) => {
     setExpandedCategories(prev =>
-      prev.includes(categoryId)
-        ? prev.filter(id => id !== categoryId)
-        : [...prev, categoryId]
+      prev.includes(categoryId) ? prev.filter(id => id !== categoryId) : [...prev, categoryId]
     )
   }
 
   const handleCategoryClick = (categoryId: string, e?: React.MouseEvent) => {
-    // Prevent event bubbling
     e?.stopPropagation()
-
-    if (selectedCategory === categoryId) {
-      // Deselect if clicking active category
+    if (selectedCategory === categoryId && !selectedSubcategory) {
       onCategorySelect?.('', '')
-      // Also collapse the category
       setExpandedCategories(prev => prev.filter(id => id !== categoryId))
     } else {
       onCategorySelect?.(categoryId, '')
-      // Auto-expand when clicking the category
-      setExpandedCategories(prev =>
-        prev.includes(categoryId) ? prev : [...prev, categoryId]
-      )
+      setExpandedCategories(prev => (prev.includes(categoryId) ? prev : [...prev, categoryId]))
     }
   }
 
   const handleToggleOnly = (categoryId: string, e: React.MouseEvent) => {
-    // Prevent triggering category selection
     e.stopPropagation()
     toggleCategory(categoryId)
   }
@@ -93,105 +89,173 @@ export default function DealsCategorySidebar({
   }
 
   return (
-    <aside className="w-56 flex-shrink-0">
-      <div className="sticky top-20 max-h-[calc(100vh-6rem)] overflow-y-auto bg-white border-2 border-black p-3 shadow-[4px_4px_0px_#111111]">
-        {/* Categories Header */}
-        <div className="mb-2">
-          <h3 className="text-xs font-bold text-gray-600 uppercase tracking-wide px-2">Categories</h3>
+    <aside className="w-full">
+      <div className="relative sticky top-20 max-h-[calc(100vh-6rem)] overflow-hidden bg-white border border-gray-200 rounded-xl shadow-sm">
+        {/* Decorative mandala — corner ornament */}
+        <div className="absolute -bottom-12 -right-12 w-40 h-40 pointer-events-none opacity-[0.06]" aria-hidden="true">
+          <svg viewBox="0 0 200 200" className="w-full h-full text-gray-900 sidebar-mandala-spin" fill="none" stroke="currentColor" strokeWidth="0.6">
+            <circle cx="100" cy="100" r="50" />
+            <circle cx="100" cy="100" r="35" strokeDasharray="3 3" />
+            {[...Array(12)].map((_, i) => (
+              <line
+                key={i}
+                x1="100"
+                y1="100"
+                x2={100 + Math.cos((i * Math.PI) / 6) * 90}
+                y2={100 + Math.sin((i * Math.PI) / 6) * 90}
+              />
+            ))}
+            <circle cx="100" cy="100" r="2" fill="currentColor" />
+          </svg>
         </div>
 
-        {/* All Deals Option */}
-        <button
-          onClick={() => onCategorySelect?.('', '')}
-          className={`w-full flex items-center justify-between px-2 py-1.5 text-left transition-colors text-sm ${!selectedCategory
-            ? 'bg-ink text-white font-medium shadow-[2px_2px_0px_#111111]'
-            : 'hover:bg-gray-50 text-gray-700'
-            }`}
-        >
-          <div className="flex items-center gap-1.5">
-            <span className="material-symbols-outlined text-base">apps</span>
-            <span>All Deals</span>
+        <div className="relative max-h-[calc(100vh-6rem)] overflow-y-auto">
+        {/* Header */}
+        <div className="px-4 pt-4 pb-3 border-b border-gray-100">
+          <div className="flex items-center justify-between">
+            <h3 className="text-[10px] font-bold text-gray-500 uppercase tracking-[0.12em]">Categories</h3>
+            <span className="text-[10px] font-mono text-gray-400">{categories.length}</span>
           </div>
-          <span className="text-xs font-medium">
-            {totalDeals}
-          </span>
-        </button>
+        </div>
 
-        {/* Category List */}
-        <div className="space-y-0.5 mt-2">
-          {categories.map((category) => {
-            const subcategories = getSubcategoriesByCategory(category.id)
-            const isExpanded = expandedCategories.includes(category.id)
-            const isActive = selectedCategory === category.id && !selectedSubcategory
-            const hasSubcategories = subcategories.length > 0
+        <div className="p-2">
+          {/* All Deals */}
+          <button
+            onClick={() => onCategorySelect?.('', '')}
+            className={`group w-full flex items-center gap-2 px-2.5 py-2 text-left rounded-lg transition-all ${
+              !selectedCategory
+                ? 'bg-gray-900 text-white shadow-sm'
+                : 'hover:bg-gray-50 text-gray-700'
+            }`}
+          >
+            <span className={`material-symbols-outlined text-[17px] flex-shrink-0 ${!selectedCategory ? 'text-accent-yellow' : 'text-gray-400 group-hover:text-gray-600'}`}>
+              grid_view
+            </span>
+            <span className="text-[13px] font-medium flex-1 min-w-0 truncate">All Deals</span>
+            <span className={`text-[10.5px] font-mono px-1.5 py-0.5 rounded flex-shrink-0 ${
+              !selectedCategory ? 'bg-white/10 text-white' : 'bg-gray-100 text-gray-500 group-hover:bg-gray-200'
+            }`}>
+              {totalDeals}
+            </span>
+          </button>
 
-            return (
-              <div key={category.id}>
-                {/* Category Item */}
-                <div className="flex items-center">
-                  {/* Expand/Collapse Button */}
-                  {hasSubcategories ? (
+          <div className="my-2 border-t border-gray-100" aria-hidden="true" />
+
+          {/* Categories */}
+          <div className="space-y-0.5">
+            {categories.map((category) => {
+              const subcategories = getSubcategoriesByCategory(category.id)
+              const isExpanded = expandedCategories.includes(category.id)
+              const isActive = selectedCategory === category.id && !selectedSubcategory
+              const hasSubcategories = subcategories.length > 0
+              const icon = CATEGORY_ICONS[category.id] || 'folder'
+              const iconColor = CATEGORY_ICON_COLORS[category.id] || 'text-gray-400'
+              const count = categoryCounts[category.id] || 0
+
+              return (
+                <div key={category.id}>
+                  <div
+                    className={`group relative flex items-center rounded-lg transition-all ${
+                      isActive ? 'bg-gray-100' : 'hover:bg-gray-50'
+                    }`}
+                  >
                     <button
-                      onClick={(e) => handleToggleOnly(category.id, e)}
-                      className="p-0.5 hover:bg-gray-100 rounded transition-colors"
-                      aria-label={isExpanded ? 'Collapse' : 'Expand'}
+                      onClick={(e) => handleCategoryClick(category.id, e)}
+                      className="flex-1 min-w-0 flex items-center gap-2 px-2.5 py-2 text-left rounded-lg"
                     >
-                      <span className={`material-symbols-outlined text-sm text-gray-500 transition-transform duration-200 ease-out ${isExpanded ? 'rotate-90' : 'rotate-0'
-                        }`}>
-                        chevron_right
+                      <span className={`material-symbols-outlined text-[17px] flex-shrink-0 ${
+                        isActive ? iconColor : `${iconColor} opacity-70 group-hover:opacity-100`
+                      }`}>
+                        {icon}
+                      </span>
+                      <span className={`text-[13px] truncate flex-1 min-w-0 ${isActive ? 'font-semibold text-gray-900' : 'text-gray-700 font-medium'}`}>
+                        {category.name}
+                      </span>
+                      <span className={`text-[10.5px] font-mono px-1.5 py-0.5 rounded flex-shrink-0 ${
+                        isActive ? 'bg-white text-gray-700 border border-gray-200' : 'bg-gray-100 text-gray-500'
+                      }`}>
+                        {count}
                       </span>
                     </button>
-                  ) : (
-                    <div className="w-5"></div>
-                  )}
 
-                  <button
-                    onClick={(e) => handleCategoryClick(category.id, e)}
-                    className={`flex-1 flex items-center justify-between px-2 py-1.5 text-left transition-colors rounded text-sm ${isActive
-                      ? 'bg-gray-100 text-gray-900 font-medium'
-                      : 'hover:bg-gray-50 text-gray-700'
-                      }`}
-                  >
-                    <span>{category.name}</span>
-                    <span className="text-xs font-medium">
-                      {categoryCounts[category.id] || 0}
-                    </span>
-                  </button>
-                </div>
-
-                {/* Subcategories with smooth animation */}
-                {hasSubcategories && (
-                  <div
-                    className={`ml-5 overflow-hidden transition-all duration-200 ease-out ${isExpanded ? 'max-h-[500px] opacity-100 mt-0.5' : 'max-h-0 opacity-0 mt-0'
-                      }`}
-                  >
-                    <div className="space-y-0.5 py-0.5">
-                      {subcategories.map((subcategory) => {
-                        const isSubActive = selectedCategory === category.id && selectedSubcategory === subcategory.id
-
-                        return (
-                          <button
-                            key={subcategory.id}
-                            onClick={() => handleSubcategoryClick(category.id, subcategory.id)}
-                            className={`w-full flex items-center justify-between px-2 py-1.5 text-left transition-colors rounded text-xs ${isSubActive
-                              ? 'bg-gray-100 text-gray-900 font-medium'
-                              : 'hover:bg-gray-50 text-gray-600'
-                              }`}
-                          >
-                            <span>{subcategory.name}</span>
-                            <span className="text-xs font-medium">
-                              {subcategoryCounts[`${category.id}/${subcategory.id}`] || 0}
-                            </span>
-                          </button>
-                        )
-                      })}
-                    </div>
+                    {hasSubcategories && (
+                      <button
+                        onClick={(e) => handleToggleOnly(category.id, e)}
+                        className="flex-shrink-0 p-1.5 mr-1 rounded hover:bg-gray-200/60 transition-colors"
+                        aria-label={isExpanded ? 'Collapse' : 'Expand'}
+                      >
+                        <span
+                          className={`material-symbols-outlined text-[15px] text-gray-400 transition-transform duration-200 block ${
+                            isExpanded ? 'rotate-90' : 'rotate-0'
+                          }`}
+                        >
+                          chevron_right
+                        </span>
+                      </button>
+                    )}
                   </div>
-                )}
-              </div>
-            )
-          })}
+
+                  {/* Subcategories */}
+                  {hasSubcategories && (
+                    <div
+                      className={`overflow-hidden transition-all duration-200 ease-out ${
+                        isExpanded ? 'max-h-[600px] opacity-100' : 'max-h-0 opacity-0'
+                      }`}
+                    >
+                      <div className="mt-0.5 ml-7 pl-2 border-l border-gray-200 space-y-0.5">
+                        {subcategories.map((subcategory) => {
+                          const isSubActive =
+                            selectedCategory === category.id && selectedSubcategory === subcategory.id
+                          const subCount = subcategoryCounts[`${category.id}/${subcategory.id}`] || 0
+                          return (
+                            <button
+                              key={subcategory.id}
+                              onClick={() => handleSubcategoryClick(category.id, subcategory.id)}
+                              className={`w-full flex items-center justify-between gap-2 px-2.5 py-1.5 text-left rounded-md transition-colors text-[12.5px] ${
+                                isSubActive
+                                  ? 'bg-accent-yellow/15 text-gray-900 font-semibold'
+                                  : 'hover:bg-gray-50 text-gray-600'
+                              }`}
+                            >
+                              <span className="truncate">{subcategory.name}</span>
+                              <span className={`text-[10px] font-mono ${
+                                isSubActive ? 'text-gray-700' : 'text-gray-400'
+                              }`}>
+                                {subCount}
+                              </span>
+                            </button>
+                          )
+                        })}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )
+            })}
+          </div>
         </div>
+
+        {/* Footer hint */}
+        <div className="px-4 py-3 border-t border-gray-100 bg-gray-50/60 rounded-b-xl">
+          <p className="text-[10px] text-gray-500 leading-relaxed">
+            <span className="font-semibold text-gray-700">Tip:</span> Use a work email to boost approval rates.
+          </p>
+        </div>
+        </div>
+
+        <style jsx>{`
+          @keyframes sidebarMandalaSpin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+          }
+          :global(.sidebar-mandala-spin) {
+            animation: sidebarMandalaSpin 90s linear infinite;
+            transform-origin: center;
+          }
+          @media (prefers-reduced-motion: reduce) {
+            :global(.sidebar-mandala-spin) { animation: none; }
+          }
+        `}</style>
       </div>
     </aside>
   )

@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import DodoPayments from 'dodopayments';
 import { createClient } from '@/lib/supabase/server';
+import { createClient as createServiceClient } from '@supabase/supabase-js';
 
 const client = process.env.DODO_PAYMENTS_API_KEY
   ? new DodoPayments({
@@ -10,6 +11,7 @@ const client = process.env.DODO_PAYMENTS_API_KEY
   : null;
 
 const WEBHOOK_SECRET = process.env.DODO_PAYMENTS_WEBHOOK_SECRET;
+const FEATURED_LISTING_PRODUCT_ID = process.env.DODO_PRODUCT_FEATURED_LISTING || 'pdt_0NfKKpeNPl8Np5GDyluVq';
 
 // Map Dodo Product IDs → our plan names
 const PRODUCT_TO_PLAN: Record<string, 'nextfounder' | 'founder' | 'legend'> = {
@@ -17,6 +19,91 @@ const PRODUCT_TO_PLAN: Record<string, 'nextfounder' | 'founder' | 'legend'> = {
   [process.env.DODO_PRODUCT_FOUNDER_YEARLY     || 'pdt_0NYGhiHbaHo141y9EXBl7']: 'founder',
   [process.env.DODO_PRODUCT_LEGEND_LIFETIME    || 'pdt_0NYGi3cj7tCz581sqfnWw']: 'legend',
 };
+
+function getServiceRoleClient() {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!url || !key) return null;
+  return createServiceClient(url, key, {
+    auth: { autoRefreshToken: false, persistSession: false },
+  });
+}
+
+// Activate a Featured Listing — mark submission paid, set 30d expiry, propagate to deal if exists
+async function activateFeaturedListing(data: any) {
+  const supabase = getServiceRoleClient();
+  if (!supabase) {
+    console.error('⚠️ Featured listing activate failed — service role not configured');
+    return;
+  }
+
+  const submissionId =
+    data?.metadata?.submission_id ||
+    data?.payload?.metadata?.submission_id ||
+    null;
+  const sessionId =
+    data?.session_id || data?.checkout_session_id || data?.id || null;
+
+  if (!submissionId && !sessionId) {
+    console.warn('⚠️ Featured listing payment has no submission_id or session_id — skipping');
+    return;
+  }
+
+  // Look up the submission either by metadata.submission_id or by stored featured_payment_id
+  let query = supabase.from('deal_submissions').select('*');
+  if (submissionId) {
+    query = query.eq('id', submissionId);
+  } else {
+    query = query.eq('featured_payment_id', sessionId);
+  }
+  const { data: submission, error } = await query.maybeSingle();
+
+  if (error || !submission) {
+    console.warn(`⚠️ Featured payment received but submission not found. submissionId=${submissionId} sessionId=${sessionId}`);
+    return;
+  }
+
+  const featuredUntil = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString();
+  const paymentRefId =
+    data?.payment_id || data?.transaction_id || sessionId || null;
+
+  // Mark submission paid
+  await supabase
+    .from('deal_submissions')
+    .update({
+      featured_paid: true,
+      featured_until: featuredUntil,
+      featured_payment_id: paymentRefId,
+      updated_at: new Date().toISOString(),
+    })
+    .eq('id', submission.id);
+
+  console.log(`⭐ Featured listing paid for submission ${submission.id} (until ${featuredUntil})`);
+
+  // Try to update the corresponding deal if it was already approved/published.
+  // We match by provider name + (recent) created_at, since approval generates a slug-with-random-suffix.
+  const { data: deal } = await supabase
+    .from('deals')
+    .select('id, slug, featured_until')
+    .eq('provider', submission.company_name)
+    .order('created_at', { ascending: false })
+    .limit(1)
+    .maybeSingle();
+
+  if (deal) {
+    await supabase
+      .from('deals')
+      .update({
+        featured: true,
+        featured_until: featuredUntil,
+        updated_at: new Date().toISOString(),
+      })
+      .eq('id', deal.id);
+    console.log(`⭐ Deal ${deal.slug} pinned as featured until ${featuredUntil}`);
+  } else {
+    console.log(`ℹ️ No published deal yet for "${submission.company_name}". featured_until set on submission only — deal will pick it up on approval.`);
+  }
+}
 
 // Activate / update a user's subscription in Supabase using DELETE + INSERT
 // (required because ON CONFLICT doesn't work with partial unique indexes)
@@ -127,10 +214,19 @@ export async function POST(request: Request) {
 
     switch (event.type as string) {
 
-      // ── One-time payments (Legend Lifetime) ──────────────────────────────
+      // ── One-time payments ──────────────────────────────
+      // Handles both: Legend Lifetime AND Featured Listing add-on.
       case 'payment.succeeded': {
-        const email = data?.customer?.email;
         const productId = data?.product_cart?.[0]?.product_id;
+
+        // Featured Listing flow — no plan activation, just pin the deal
+        if (productId && productId === FEATURED_LISTING_PRODUCT_ID) {
+          await activateFeaturedListing(data);
+          break;
+        }
+
+        // Otherwise: subscription/lifetime plan activation
+        const email = data?.customer?.email;
         const plan = productId ? PRODUCT_TO_PLAN[productId] : undefined;
 
         if (!plan && productId) {

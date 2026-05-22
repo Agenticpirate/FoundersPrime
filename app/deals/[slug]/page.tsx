@@ -415,16 +415,51 @@ export default async function SingleDealPage({ params }: PageProps) {
     }
 
     return (
-      <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden bg-background-light">
+      <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden bg-gray-50">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
         <Header />
         <main className="flex-1">
-          {/* Full-width header section */}
-          <div className="w-full bg-white border-b-3 border-black">
-            <div className="max-w-[1600px] mx-auto px-3 lg:px-6 py-2 lg:py-4">
+          {/* Neo-brutalist hero header — gradient bg + mandala ornaments */}
+          <div className="relative w-full bg-white border-b-3 border-b-black overflow-hidden">
+            {/* Subtle grid bg */}
+            <div className="absolute inset-0 grid-bg opacity-[0.5] pointer-events-none" aria-hidden="true" />
+
+            {/* Decorative mandalas */}
+            <div className="absolute -top-16 -right-16 w-72 h-72 pointer-events-none opacity-[0.08] hidden md:block" aria-hidden="true">
+              <svg viewBox="0 0 200 200" className="w-full h-full text-gray-900 single-deal-mandala-spin" fill="none" stroke="currentColor" strokeWidth="0.7">
+                <circle cx="100" cy="100" r="40" />
+                <circle cx="100" cy="100" r="60" strokeDasharray="2 4" />
+                <circle cx="100" cy="100" r="80" strokeDasharray="1 6" />
+                <circle cx="100" cy="100" r="3" fill="currentColor" />
+                {[0, 45, 90, 135, 180, 225, 270, 315].map((deg) => (
+                  <g key={deg} transform={`rotate(${deg} 100 100)`}>
+                    <line x1="100" y1="40" x2="100" y2="20" />
+                    <circle cx="100" cy="20" r="2" fill="currentColor" />
+                  </g>
+                ))}
+              </svg>
+            </div>
+            <div className="absolute -bottom-20 -left-20 w-64 h-64 pointer-events-none opacity-[0.06] hidden md:block" aria-hidden="true">
+              <svg viewBox="0 0 200 200" className="w-full h-full text-accent-yellow single-deal-mandala-spin-reverse" fill="none" stroke="currentColor" strokeWidth="0.7">
+                <circle cx="100" cy="100" r="50" />
+                <circle cx="100" cy="100" r="35" strokeDasharray="3 3" />
+                {[...Array(12)].map((_, i) => (
+                  <line
+                    key={i}
+                    x1="100"
+                    y1="100"
+                    x2={100 + Math.cos((i * Math.PI) / 6) * 90}
+                    y2={100 + Math.sin((i * Math.PI) / 6) * 90}
+                  />
+                ))}
+                <circle cx="100" cy="100" r="2" fill="currentColor" />
+              </svg>
+            </div>
+
+            <div className="relative max-w-[1600px] mx-auto px-4 lg:px-6 py-4 lg:py-6">
               {(() => {
                 const subcategoryMap: Record<string, { label: string; href: string; parentLabel: string }> = {
                   'accelerators': { label: 'Accelerators', href: '/deals/accelerators', parentLabel: 'Programs' },
@@ -437,65 +472,86 @@ export default async function SingleDealPage({ params }: PageProps) {
                 const sub = subcategoryMap[dealData.category]
 
                 return (
-                  <nav aria-label="Breadcrumb" className="flex mb-3 md:mb-4">
-                    <ol className="inline-flex items-center space-x-1 md:space-x-3 font-mono text-xs md:text-sm font-medium whitespace-nowrap">
-                      <li><a className="text-gray-500 hover:text-black" href="/">Home</a></li>
-                      <li className="flex items-center">
-                        <span className="material-symbols-outlined text-gray-400 text-sm mx-0.5 md:mx-1">chevron_right</span>
-                        <a className="text-gray-500 hover:text-black" href="/deals">{sub ? sub.parentLabel : 'Deals'}</a>
-                      </li>
+                  <nav aria-label="Breadcrumb" className="flex mb-4">
+                    <ol className="inline-flex items-center gap-1.5 font-mono text-[11px] md:text-xs text-gray-600 whitespace-nowrap">
+                      <li><a className="hover:text-black transition-colors" href="/">Home</a></li>
+                      <li className="text-gray-400">/</li>
+                      <li><a className="hover:text-black transition-colors" href="/deals">{sub ? sub.parentLabel : 'Deals'}</a></li>
                       {sub && (
-                        <li className="flex items-center">
-                          <span className="material-symbols-outlined text-gray-400 text-sm mx-0.5 md:mx-1">chevron_right</span>
-                          <a className="text-gray-500 hover:text-black" href={sub.href}>{sub.label}</a>
-                        </li>
+                        <>
+                          <li className="text-gray-400">/</li>
+                          <li><a className="hover:text-black transition-colors" href={sub.href}>{sub.label}</a></li>
+                        </>
                       )}
-                      <li className="flex items-center">
-                        <span className="material-symbols-outlined text-gray-400 text-sm mx-0.5 md:mx-1">chevron_right</span>
-                        <span className="text-black bg-primary/20 px-1.5 md:px-2 py-0.5 rounded-sm border border-black text-[11px] md:text-sm truncate max-w-[150px] md:max-w-[250px]">{deal.title}</span>
+                      <li className="text-gray-400">/</li>
+                      <li aria-current="page">
+                        <span className="text-black font-bold bg-accent-yellow/30 px-2 py-0.5 border-2 border-black rounded-sm truncate max-w-[180px] md:max-w-[280px] inline-block align-bottom">{deal.title}</span>
                       </li>
                     </ol>
                   </nav>
                 )
               })()}
 
-              {/* Header with badges and title — no CTA button here */}
-              <div className="flex items-start gap-3 lg:gap-5 mb-2 lg:mb-4">
-                <DealLogo
-                  logoUrl={dealData.logoUrl}
-                  brandIcon={dealData.brandIcon}
-                  provider={dealData.provider}
-                  size="sm"
-                />
+              {/* Header — logo + title block */}
+              <div className="flex items-start gap-3 lg:gap-5">
+                <div className="flex-shrink-0">
+                  <div className="relative w-14 h-14 lg:w-20 lg:h-20 rounded-sm bg-white border-2 border-black shadow-[3px_3px_0px_#111] overflow-hidden flex items-center justify-center">
+                    <DealLogo
+                      logoUrl={dealData.logoUrl}
+                      brandIcon={dealData.brandIcon}
+                      provider={dealData.provider}
+                      size="sm"
+                    />
+                  </div>
+                </div>
                 <div className="flex-1 min-w-0">
-                  <div className="mb-1.5 lg:mb-3 flex flex-wrap gap-1 lg:gap-2">
-                    <span className="inline-flex items-center rounded-sm border border-black px-1.5 py-0.5 lg:px-3 lg:py-1 font-mono text-[9px] lg:text-xs font-bold uppercase bg-green-100">
+                  <div className="mb-2 flex flex-wrap gap-1.5">
+                    <span className="inline-flex items-center gap-1 rounded-sm px-2.5 py-0.5 font-mono text-[10px] font-black uppercase tracking-wide bg-emerald-100 text-black border-2 border-black shadow-[1px_1px_0px_#111]">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
                       {deal.status}
                     </span>
-                    <span className="inline-flex items-center rounded-sm border border-black px-1.5 py-0.5 lg:px-3 lg:py-1 font-mono text-[9px] lg:text-xs font-bold uppercase bg-blue-100">
+                    <span className="inline-flex items-center rounded-sm px-2.5 py-0.5 font-mono text-[10px] font-black uppercase tracking-wide bg-sky-100 text-black border-2 border-black shadow-[1px_1px_0px_#111]">
                       {deal.category}
                     </span>
                     {isLocked && (
-                      <span className="inline-flex items-center gap-0.5 rounded-sm border border-black px-1.5 py-0.5 lg:px-3 lg:py-1 font-mono text-[9px] lg:text-xs font-bold uppercase bg-primary text-black">
-                        <span className="material-symbols-outlined text-[10px] lg:text-sm">lock</span>
+                      <span className="inline-flex items-center gap-1 rounded-sm px-2.5 py-0.5 font-mono text-[10px] font-black uppercase tracking-wide bg-accent-yellow text-black border-2 border-black shadow-[1px_1px_0px_#111]">
+                        <span className="material-symbols-outlined text-[12px]">lock</span>
                         Pro
                       </span>
                     )}
                   </div>
-                  <h1 className="font-mono text-base sm:text-xl lg:text-3xl font-bold uppercase leading-tight text-black mb-1">
+                  <h1 className="font-mono text-xl sm:text-2xl lg:text-[34px] font-black tracking-tight text-black leading-[1.1] mb-1.5">
                     {deal.title}
                   </h1>
-                  <div className="flex items-center gap-1.5 font-mono text-xs lg:text-base font-medium text-gray-600">
-                    <span className="material-symbols-outlined text-sm lg:text-lg">domain</span>
-                    <span>{deal.provider}</span>
+                  <div className="flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-xs lg:text-sm text-gray-700">
+                    <span className="inline-flex items-center gap-1">
+                      <span className="material-symbols-outlined text-[16px] text-gray-600">domain</span>
+                      <span className="font-bold text-black">{deal.provider}</span>
+                    </span>
+                    <span className="hidden md:inline text-gray-400">·</span>
+                    <span className="inline-flex items-center gap-1">
+                      <span className="material-symbols-outlined text-[16px] text-amber-600">verified</span>
+                      <span>Verified · Last checked {new Date(deal.verification.lastVerified).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</span>
+                    </span>
                   </div>
                 </div>
               </div>
             </div>
+
+            {/* Mandala spin keyframes */}
+            <style dangerouslySetInnerHTML={{ __html: `
+              @keyframes singleDealMandalaSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+              @keyframes singleDealMandalaSpinReverse { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
+              .single-deal-mandala-spin { animation: singleDealMandalaSpin 80s linear infinite; transform-origin: center; }
+              .single-deal-mandala-spin-reverse { animation: singleDealMandalaSpinReverse 100s linear infinite; transform-origin: center; }
+              @media (prefers-reduced-motion: reduce) {
+                .single-deal-mandala-spin, .single-deal-mandala-spin-reverse { animation: none; }
+              }
+            ` }} />
           </div>
 
-          {/* Main content - full width */}
-          <div className="max-w-[1600px] mx-auto px-3 lg:px-6 py-2 lg:py-4">
+          {/* Main content */}
+          <div className="max-w-[1600px] mx-auto px-4 lg:px-6 py-4 lg:py-6">
             <SingleDealContent deal={deal} />
           </div>
         </main>
