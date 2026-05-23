@@ -1,9 +1,36 @@
 import type { Metadata } from 'next'
 import Script from 'next/script'
+import { IBM_Plex_Sans, IBM_Plex_Mono, Space_Grotesk } from 'next/font/google'
 import './globals.css'
 import CookieConsentProvider from '@/components/cookie/CookieConsentProvider'
 
 const GA_MEASUREMENT_ID = 'G-X2EQLZJD8C'
+
+// Self-host fonts via next/font — eliminates render-blocking CSS request,
+// preloads critical weights, swap behavior prevents FOIT.
+const ibmPlexSans = IBM_Plex_Sans({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  display: 'swap',
+  variable: '--font-sans',
+  preload: true,
+})
+
+const ibmPlexMono = IBM_Plex_Mono({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  display: 'swap',
+  variable: '--font-mono',
+  preload: true,
+})
+
+const spaceGrotesk = Space_Grotesk({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  display: 'swap',
+  variable: '--font-display',
+  preload: false,
+})
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.foundersprime.com'),
@@ -69,15 +96,17 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+  const fontVariables = `${ibmPlexSans.variable} ${ibmPlexMono.variable} ${spaceGrotesk.variable}`
+
   return (
-    <html lang="en" className="light">
+    <html lang="en" className={`light ${fontVariables}`}>
       <head>
-        {/* Google tag (gtag.js) */}
+        {/* Google Analytics — lazy-load after interactive */}
         <Script
           src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
-          strategy="afterInteractive"
+          strategy="lazyOnload"
         />
-        <Script id="google-analytics" strategy="afterInteractive">
+        <Script id="google-analytics" strategy="lazyOnload">
           {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
@@ -85,10 +114,19 @@ export default function RootLayout({
             gtag('config', '${GA_MEASUREMENT_ID}');
           `}
         </Script>
+
+        {/* Material Symbols icons — async load so it doesn't block first paint */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
-        <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0..1,0&display=swap" rel="stylesheet" />
+        <link
+          rel="preload"
+          as="style"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0..1,0&display=swap"
+        />
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0..1,0&display=swap"
+        />
       </head>
       <body className="bg-background-light text-black flex flex-col min-h-screen overflow-x-hidden w-full relative">
         <script

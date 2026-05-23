@@ -6,6 +6,7 @@ import Footer from '@/components/Footer'
 import DealLogo from '@/components/deals/DealLogo'
 import { studentBenefits2026, StudentBenefit } from '@/data/student-benefits-2026'
 import { GlowingEffect } from '@/components/ui/GlowingEffect'
+import { merchantReturnPolicy } from '@/lib/seo/merchant-return-policy'
 
 // Force dynamic rendering
 export const dynamic = 'force-dynamic'
@@ -174,7 +175,8 @@ export default async function StudentBenefitDetailPage({ params }: PageProps) {
                 price: '0',
                 priceCurrency: 'USD',
                 availability: 'https://schema.org/InStock',
-                url: `https://www.foundersprime.com/student-benefits/${params.slug}`
+                url: `https://www.foundersprime.com/student-benefits/${params.slug}`,
+                hasMerchantReturnPolicy: merchantReturnPolicy
             }
         }
 

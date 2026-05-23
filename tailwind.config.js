@@ -35,10 +35,10 @@ module.exports = {
         "light": "#f8f9fa",
       },
       fontFamily: {
-        "sans": ["IBM Plex Sans", "sans-serif"],
-        "mono": ["IBM Plex Mono", "monospace"],
-        "display": ["Space Grotesk", "sans-serif"],
-        "body": ["Space Grotesk", "sans-serif"],
+        "sans": ["var(--font-sans)", "IBM Plex Sans", "sans-serif"],
+        "mono": ["var(--font-mono)", "IBM Plex Mono", "monospace"],
+        "display": ["var(--font-display)", "Space Grotesk", "sans-serif"],
+        "body": ["var(--font-display)", "Space Grotesk", "sans-serif"],
       },
       borderRadius: {
         "DEFAULT": "0px",

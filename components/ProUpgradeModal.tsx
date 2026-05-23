@@ -2,7 +2,6 @@
 
 import React from 'react'
 import Link from 'next/link'
-import { GlowingEffect } from '@/components/ui/GlowingEffect'
 
 interface ProUpgradeModalProps {
     isOpen: boolean
@@ -16,81 +15,204 @@ export default function ProUpgradeModal({ isOpen, onClose }: ProUpgradeModalProp
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
             {/* Backdrop */}
             <div
-                className="absolute inset-0 bg-black/50 backdrop-blur-sm transition-opacity"
+                className="absolute inset-0 bg-black/55 backdrop-blur-sm transition-opacity upgrade-modal-fade"
                 onClick={onClose}
+                aria-hidden="true"
             />
 
-            {/* Modal Content */}
-            <div className="relative w-full max-w-sm md:max-w-md bg-white border-3 md:border-4 border-black shadow-[4px_4px_0px_#111111] md:shadow-[8px_8px_0px_#111111] overflow-hidden animate-in fade-in zoom-in-95 duration-200 z-50">
+            {/* Modal Card */}
+            <div
+                className="relative w-full max-w-md bg-white border-2 border-black shadow-[6px_6px_0px_#111,9px_9px_0px_#FFD500] overflow-hidden upgrade-modal-pop z-50"
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="upgrade-modal-title"
+            >
+                {/* Decorative mandalas */}
+                <div className="absolute -top-12 -right-12 w-44 h-44 pointer-events-none opacity-[0.10]" aria-hidden="true">
+                    <svg viewBox="0 0 200 200" className="w-full h-full text-gray-900 upgrade-mandala-spin" fill="none" stroke="currentColor" strokeWidth="0.7">
+                        <circle cx="100" cy="100" r="40" />
+                        <circle cx="100" cy="100" r="60" strokeDasharray="2 4" />
+                        <circle cx="100" cy="100" r="80" strokeDasharray="1 6" />
+                        {[0, 60, 120, 180, 240, 300].map((deg) => (
+                            <g key={deg} transform={`rotate(${deg} 100 100)`}>
+                                <line x1="100" y1="40" x2="100" y2="20" />
+                                <circle cx="100" cy="20" r="2" fill="currentColor" />
+                            </g>
+                        ))}
+                        <circle cx="100" cy="100" r="3" fill="currentColor" />
+                    </svg>
+                </div>
+                <div className="absolute -bottom-10 -left-10 w-36 h-36 pointer-events-none opacity-[0.07]" aria-hidden="true">
+                    <svg viewBox="0 0 200 200" className="w-full h-full text-gray-900 upgrade-mandala-spin-reverse" fill="none" stroke="currentColor" strokeWidth="0.6">
+                        {[20, 35, 50, 65].map((r, i) => (
+                            <ellipse
+                                key={i}
+                                cx="100"
+                                cy="100"
+                                rx={r}
+                                ry={r / 1.8}
+                                transform={`rotate(${i * 30} 100 100)`}
+                            />
+                        ))}
+                        <circle cx="100" cy="100" r="2" fill="currentColor" />
+                    </svg>
+                </div>
 
                 {/* Header */}
-                <div className="bg-[#00D4FF] px-4 md:px-6 py-3 md:py-4 border-b-3 border-black flex justify-between items-center">
-                    <h2 className="font-mono text-base md:text-xl font-bold uppercase leading-tight flex items-center gap-2">
-                        <span className="material-symbols-outlined text-base md:text-xl">workspace_premium</span> Unlock Full Access
+                <div className="relative bg-accent-yellow px-5 md:px-6 py-3 md:py-3.5 border-b-2 border-black flex justify-between items-center">
+                    <h2
+                        id="upgrade-modal-title"
+                        className="font-mono text-[13px] md:text-[15px] font-black uppercase tracking-[0.1em] leading-tight flex items-center gap-2 text-black"
+                    >
+                        <span className="material-symbols-outlined !text-[16px] md:!text-[18px]">workspace_premium</span>
+                        Founder Members Only
                     </h2>
                     <button
                         onClick={onClose}
-                        className="p-1 hover:bg-black/10 rounded-full transition-colors flex items-center justify-center"
+                        aria-label="Close upgrade dialog"
+                        className="w-7 h-7 flex items-center justify-center bg-white border-2 border-black hover:bg-black hover:text-white transition-colors rounded-sm shadow-[1px_1px_0px_#111]"
                     >
-                        <span className="material-symbols-outlined text-black font-bold text-base md:text-xl">close</span>
+                        <span className="material-symbols-outlined !text-[14px]">close</span>
                     </button>
                 </div>
 
                 {/* Body */}
-                <div className="p-4 md:p-6 bg-white">
-                    <div className="flex flex-col items-center mb-4 md:mb-6">
-                        <div className="h-12 w-12 md:h-16 md:w-16 bg-yellow-100 border-2 md:border-3 border-black flex items-center justify-center shadow-[3px_3px_0px_rgba(0,0,0,0.1)] mb-3 md:mb-4">
-                            <span className="material-symbols-outlined text-3xl md:text-4xl text-black">rocket_launch</span>
+                <div className="relative p-5 md:p-6 bg-white">
+                    {/* Icon block */}
+                    <div className="flex flex-col items-center mb-4 md:mb-5">
+                        <div className="relative w-14 h-14 md:w-16 md:h-16 mb-3.5">
+                            {/* Inner mandala behind icon */}
+                            <svg viewBox="0 0 200 200" className="absolute inset-0 w-full h-full text-accent-yellow upgrade-icon-mandala-spin opacity-50" fill="none" stroke="currentColor" strokeWidth="0.8" aria-hidden="true">
+                                <circle cx="100" cy="100" r="80" strokeDasharray="2 4" />
+                                <circle cx="100" cy="100" r="60" strokeDasharray="3 3" />
+                                {[0, 45, 90, 135, 180, 225, 270, 315].map((deg) => (
+                                    <line
+                                        key={deg}
+                                        x1="100"
+                                        y1="100"
+                                        x2={100 + Math.cos((deg * Math.PI) / 180) * 90}
+                                        y2={100 + Math.sin((deg * Math.PI) / 180) * 90}
+                                    />
+                                ))}
+                            </svg>
+                            <div className="absolute inset-2.5 bg-accent-yellow border-2 border-black flex items-center justify-center shadow-[2px_2px_0px_#111] rounded-sm upgrade-icon-pulse">
+                                <span className="material-symbols-outlined text-2xl md:text-3xl text-black">rocket_launch</span>
+                            </div>
                         </div>
 
-                        <h3 className="text-base md:text-xl font-black uppercase text-center mb-1.5 md:mb-2">This is a Founder Plan Deal</h3>
-                        <p className="text-center text-gray-600 leading-relaxed text-xs md:text-sm max-w-xs">
-                            Upgrade to access this verified deal along with hundreds of credits, grants, and opportunities.
+                        <h3 className="font-mono text-base md:text-lg font-black uppercase text-center mb-1.5 leading-tight tracking-tight text-black">
+                            One step from the full catalog.
+                        </h3>
+                        <p className="text-center text-gray-600 leading-relaxed text-[12.5px] md:text-[13px] max-w-sm">
+                            This deal is part of the Founder plan. Upgrade now to unlock it — plus every credit, grant, and program in the dashboard.
                         </p>
                     </div>
 
-                    <div className="bg-gray-50 border-2 border-black p-3 md:p-4 mb-4 md:mb-6">
-                        <ul className="space-y-2 md:space-y-3">
-                            <li className="flex items-start gap-2 md:gap-3">
-                                <span className="material-symbols-outlined text-green-600 text-base md:text-lg mt-0.5 shrink-0">check_circle</span>
-                                <span className="text-xs md:text-sm font-bold">Instant Access to All Deals</span>
-                            </li>
-                            <li className="flex items-start gap-2 md:gap-3">
-                                <span className="material-symbols-outlined text-green-600 text-base md:text-lg mt-0.5 shrink-0">check_circle</span>
-                                <span className="text-xs md:text-sm font-bold">Grants, Accelerators & Programs</span>
-                            </li>
-                            <li className="flex items-start gap-2 md:gap-3">
-                                <span className="material-symbols-outlined text-green-600 text-base md:text-lg mt-0.5 shrink-0">check_circle</span>
-                                <span className="text-xs md:text-sm font-bold">Priority Concierge Support</span>
-                            </li>
+                    {/* Benefits */}
+                    <div className="bg-gray-50 border-2 border-black border-dashed rounded-sm p-3.5 md:p-4 mb-5">
+                        <p className="font-mono text-[9.5px] font-black uppercase tracking-[0.14em] text-gray-500 mb-2.5 inline-flex items-center gap-1.5">
+                            <span className="w-1 h-1 rounded-full bg-accent-yellow" />
+                            What you unlock
+                        </p>
+                        <ul className="space-y-2">
+                            {[
+                                'Unlimited deal claims across every category',
+                                'Grants, accelerators, and incubator programs',
+                                'Priority support — answers in hours',
+                            ].map((item) => (
+                                <li key={item} className="flex items-start gap-2.5">
+                                    <span
+                                        className="material-symbols-outlined !text-[16px] text-emerald-600 flex-shrink-0 mt-0.5"
+                                        style={{ fontVariationSettings: "'FILL' 1" }}
+                                    >
+                                        check_circle
+                                    </span>
+                                    <span className="text-[12px] md:text-[12.5px] font-semibold text-gray-800">{item}</span>
+                                </li>
+                            ))}
                         </ul>
                     </div>
 
-                    <div className="relative">
-                      <GlowingEffect
-                        spread={40}
-                        glow={false}
-                        disabled={false}
-                        proximity={48}
-                        inactiveZone={0.01}
-                        borderWidth={2}
-                      />
-                      <Link
+                    {/* Primary CTA */}
+                    <Link
                         href="/pricing"
-                        className="relative flex items-center justify-center w-full bg-black text-white font-mono font-bold text-sm md:text-base uppercase py-3 md:py-4 border-2 border-transparent shadow-[3px_3px_0px_#666] hover:shadow-[1px_1px_0px_#666] hover:translate-x-[2px] hover:translate-y-[2px] transition-all gap-2"
-                      >
-                        View Pricing Plans <span className="material-symbols-outlined text-base md:text-lg">arrow_forward</span>
-                      </Link>
-                    </div>
+                        onClick={onClose}
+                        className="group/cta relative flex items-center justify-center w-full bg-accent-yellow text-black font-mono font-black text-[12px] md:text-[13px] uppercase tracking-[0.1em] py-3 md:py-3.5 border-2 border-black shadow-[3px_3px_0px_#111] hover:bg-amber-300 hover:shadow-[5px_5px_0px_#111] hover:-translate-x-px hover:-translate-y-px transition-all gap-2 overflow-hidden rounded-sm"
+                    >
+                        <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover/cta:translate-x-full transition-transform duration-700" aria-hidden="true" />
+                        <span className="relative">Scale as a Founder</span>
+                        <span className="material-symbols-outlined relative !text-[16px] group-hover/cta:translate-x-1 transition-transform">arrow_forward</span>
+                    </Link>
 
+                    {/* Trust line */}
+                    <p className="mt-3 text-center text-[10px] text-gray-500 font-mono leading-snug inline-flex items-center justify-center gap-1.5 w-full">
+                        <span className="material-symbols-outlined !text-[11px]">lock</span>
+                        Cancel renewals anytime · Instant access
+                    </p>
+
+                    {/* Maybe later */}
                     <button
                         onClick={onClose}
-                        className="w-full mt-3 text-xs font-bold text-gray-400 hover:text-black uppercase tracking-wide hover:underline text-center"
+                        className="w-full mt-2.5 text-[10.5px] font-mono font-bold text-gray-400 hover:text-black uppercase tracking-[0.1em] transition-colors"
                     >
-                        Maybe Later
+                        Maybe later
                     </button>
                 </div>
             </div>
+
+            <style jsx>{`
+                @keyframes upgradeModalFade {
+                    from { opacity: 0; }
+                    to { opacity: 1; }
+                }
+                @keyframes upgradeModalPop {
+                    from { opacity: 0; transform: translateY(8px) scale(0.96); }
+                    to { opacity: 1; transform: translateY(0) scale(1); }
+                }
+                @keyframes upgradeMandalaSpin {
+                    from { transform: rotate(0deg); }
+                    to { transform: rotate(360deg); }
+                }
+                @keyframes upgradeMandalaSpinReverse {
+                    from { transform: rotate(0deg); }
+                    to { transform: rotate(-360deg); }
+                }
+                @keyframes upgradeIconPulse {
+                    0%, 100% { transform: scale(1); }
+                    50% { transform: scale(1.04); }
+                }
+                :global(.upgrade-modal-fade) {
+                    animation: upgradeModalFade 0.2s ease-out;
+                }
+                :global(.upgrade-modal-pop) {
+                    animation: upgradeModalPop 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+                }
+                :global(.upgrade-mandala-spin) {
+                    animation: upgradeMandalaSpin 90s linear infinite;
+                    transform-origin: center;
+                }
+                :global(.upgrade-mandala-spin-reverse) {
+                    animation: upgradeMandalaSpinReverse 110s linear infinite;
+                    transform-origin: center;
+                }
+                :global(.upgrade-icon-mandala-spin) {
+                    animation: upgradeMandalaSpin 30s linear infinite;
+                    transform-origin: center;
+                }
+                :global(.upgrade-icon-pulse) {
+                    animation: upgradeIconPulse 2s ease-in-out infinite;
+                }
+                @media (prefers-reduced-motion: reduce) {
+                    :global(.upgrade-modal-fade),
+                    :global(.upgrade-modal-pop),
+                    :global(.upgrade-mandala-spin),
+                    :global(.upgrade-mandala-spin-reverse),
+                    :global(.upgrade-icon-mandala-spin),
+                    :global(.upgrade-icon-pulse) {
+                        animation: none;
+                    }
+                }
+            `}</style>
         </div>
     )
 }

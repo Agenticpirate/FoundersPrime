@@ -180,7 +180,7 @@ async function deactivatePlan(email: string) {
 
   await supabase
     .from('user_subscriptions')
-    .update({ status: 'cancelled', updated_at: new Date().toISOString() })
+    .update({ status: 'cancelled', cancel_at_period_end: false, updated_at: new Date().toISOString() })
     .eq('user_id', user.id)
     .eq('status', 'active');
 

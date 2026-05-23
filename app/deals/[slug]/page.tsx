@@ -13,6 +13,7 @@ import path from 'path'
 import { accelerators2026 } from '@/data/accelerators-2026'
 import { incubators2026 } from '@/data/incubators-2026'
 import { grants2026 } from '@/data/grants-2026'
+import { merchantReturnPolicy } from '@/lib/seo/merchant-return-policy'
 
 // Force dynamic rendering
 export const dynamic = 'force-dynamic'
@@ -410,7 +411,8 @@ export default async function SingleDealPage({ params }: PageProps) {
         price: '0',
         priceCurrency: 'USD',
         availability: 'https://schema.org/InStock',
-        url: `https://www.foundersprime.com/deals/${params.slug}`
+        url: `https://www.foundersprime.com/deals/${params.slug}`,
+        hasMerchantReturnPolicy: merchantReturnPolicy
       }
     }
 

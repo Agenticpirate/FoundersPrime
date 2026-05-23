@@ -86,7 +86,7 @@ body {
 /* Fonts loaded via <link> in app/layout.tsx — no @import needed here */
 
 body {
-  font-family: "IBM Plex Sans", sans-serif;
+  font-family: var(--font-sans), "IBM Plex Sans", sans-serif;
   -webkit-font-smoothing: antialiased;
   background-color: #f6f8f8;
   color: #1a1a1a;
@@ -697,4 +697,57 @@ p > a, li > a, span > a {
   .included-card-mandala-spin {
     animation: none;
   }
+}
+
+
+/* ─── Dashboard mandala animations ─── */
+@keyframes dashboardMandalaSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+@keyframes dashboardMandalaSpinReverse {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(-360deg); }
+}
+.dashboard-upgrade-mandala-spin {
+  animation: dashboardMandalaSpin 80s linear infinite;
+  transform-origin: center;
+}
+.dashboard-tip-mandala-spin {
+  animation: dashboardMandalaSpinReverse 100s linear infinite;
+  transform-origin: center;
+}
+.dashboard-community-mandala-spin {
+  animation: dashboardMandalaSpin 70s linear infinite;
+  transform-origin: center;
+}
+@media (prefers-reduced-motion: reduce) {
+  .dashboard-upgrade-mandala-spin,
+  .dashboard-tip-mandala-spin,
+  .dashboard-community-mandala-spin {
+    animation: none;
+  }
+}
+
+
+/* ─── Ad Credits page ambient mandalas ─── */
+@keyframes adPageMandalaSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+@keyframes adPageMandalaSpinReverse {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(-360deg); }
+}
+.ad-page-mandala-spin {
+  animation: adPageMandalaSpin 140s linear infinite;
+  transform-origin: center;
+}
+.ad-page-mandala-spin-reverse {
+  animation: adPageMandalaSpinReverse 160s linear infinite;
+  transform-origin: center;
+}
+@media (prefers-reduced-motion: reduce) {
+  .ad-page-mandala-spin,
+  .ad-page-mandala-spin-reverse { animation: none; }
 }

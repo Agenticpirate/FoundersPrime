@@ -1,30 +1,143 @@
+/**
+ * Premium loading splash — neo-brutalist mark with a slow rotating mandala
+ * halo and animated progress sweep. Pure CSS animations, zero runtime cost.
+ *
+ * Used as the suspense fallback for app routes. Keep it lightweight: no
+ * remote assets, no client-side state.
+ */
 export default function BrandedLoader() {
   return (
-    <div className="min-h-screen bg-background-light flex items-center justify-center">
-      <div className="flex flex-col items-center gap-6">
-        <div className="w-12 h-12 border-3 border-black bg-white flex items-center justify-center shadow-[4px_4px_0px_#111]">
-          <img src="/logo.svg" alt="" className="w-7 h-7 object-contain animate-pulse" />
+    <div className="relative min-h-screen overflow-hidden bg-background-light flex items-center justify-center px-6">
+      {/* Subtle grid backdrop */}
+      <div
+        className="absolute inset-0 opacity-[0.04] pointer-events-none"
+        style={{
+          backgroundImage:
+            'linear-gradient(#000 1px, transparent 1px), linear-gradient(90deg, #000 1px, transparent 1px)',
+          backgroundSize: '32px 32px',
+        }}
+        aria-hidden="true"
+      />
+      {/* Soft yellow glow */}
+      <div
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[420px] h-[420px] bg-accent-yellow/10 rounded-full blur-3xl pointer-events-none"
+        aria-hidden="true"
+      />
+
+      <div className="relative flex flex-col items-center gap-6">
+        {/* Logo + rotating mandala halo */}
+        <div className="relative w-28 h-28 flex items-center justify-center">
+          {/* Outer mandala — clockwise */}
+          <svg
+            viewBox="0 0 200 200"
+            className="absolute inset-0 w-full h-full text-black/20 splash-mandala-spin"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="0.6"
+            aria-hidden="true"
+          >
+            <circle cx="100" cy="100" r="80" strokeDasharray="2 6" />
+            <circle cx="100" cy="100" r="65" strokeDasharray="1 4" />
+            {[0, 45, 90, 135, 180, 225, 270, 315].map((deg) => (
+              <g key={deg} transform={`rotate(${deg} 100 100)`}>
+                <line x1="100" y1="20" x2="100" y2="35" />
+                <circle cx="100" cy="20" r="2" fill="currentColor" />
+              </g>
+            ))}
+          </svg>
+
+          {/* Inner mandala — counter-clockwise */}
+          <svg
+            viewBox="0 0 200 200"
+            className="absolute inset-0 w-full h-full text-accent-yellow/40 splash-mandala-spin-reverse"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="0.7"
+            aria-hidden="true"
+          >
+            <circle cx="100" cy="100" r="50" strokeDasharray="3 3" />
+            {[0, 60, 120, 180, 240, 300].map((deg) => (
+              <g key={deg} transform={`rotate(${deg} 100 100)`}>
+                <line x1="100" y1="50" x2="100" y2="60" strokeWidth="1" />
+              </g>
+            ))}
+          </svg>
+
+          {/* Logo tile */}
+          <div className="relative w-12 h-12 bg-white border-2 border-black flex items-center justify-center shadow-[3px_3px_0px_#111] splash-logo-pulse">
+            <img
+              src="/logo.svg"
+              alt=""
+              className="w-7 h-7 object-contain"
+              aria-hidden="true"
+            />
+          </div>
         </div>
-        <div className="font-mono text-lg font-bold tracking-tight text-black">
+
+        {/* Wordmark */}
+        <div className="font-mono text-base font-black tracking-[0.18em] text-black uppercase">
           <span>FOUNDERS</span>
-          <span className="text-blue-600">[</span>
+          <span className="text-accent-yellow">[</span>
           <span>PRIME</span>
-          <span className="text-blue-600">]</span>
+          <span className="text-accent-yellow">]</span>
         </div>
-        <div className="w-32 h-0.5 bg-gray-200 rounded-full overflow-hidden">
-          <div className="h-full bg-black rounded-full animate-loading-bar" />
+
+        {/* Progress bar */}
+        <div className="relative w-40 h-[3px] bg-black/10 overflow-hidden rounded-full">
+          <div className="absolute inset-y-0 left-0 w-1/3 bg-gradient-to-r from-transparent via-black to-transparent splash-progress-sweep" />
         </div>
-        <style>{`
-          @keyframes loading-bar {
-            0% { width: 0%; margin-left: 0; }
-            50% { width: 60%; margin-left: 20%; }
-            100% { width: 0%; margin-left: 100%; }
-          }
-          .animate-loading-bar {
-            animation: loading-bar 1.2s ease-in-out infinite;
-          }
-        `}</style>
+
+        {/* Loading text — accessibility */}
+        <p className="font-mono text-[10px] font-bold uppercase tracking-[0.18em] text-gray-500" aria-live="polite">
+          Loading
+          <span className="splash-dot-1">.</span>
+          <span className="splash-dot-2">.</span>
+          <span className="splash-dot-3">.</span>
+        </p>
       </div>
+
+      {/* Pure-CSS keyframes — no JS, no client hydration */}
+      <style>{`
+        @keyframes splashMandalaSpin {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
+        @keyframes splashMandalaSpinReverse {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(-360deg); }
+        }
+        @keyframes splashLogoPulse {
+          0%, 100% { transform: scale(1); }
+          50% { transform: scale(1.05); }
+        }
+        @keyframes splashProgressSweep {
+          0% { transform: translateX(-100%); }
+          100% { transform: translateX(400%); }
+        }
+        @keyframes splashDot {
+          0%, 20% { opacity: 0; }
+          50% { opacity: 1; }
+          100% { opacity: 0; }
+        }
+        .splash-mandala-spin { animation: splashMandalaSpin 8s linear infinite; transform-origin: center; }
+        .splash-mandala-spin-reverse { animation: splashMandalaSpinReverse 6s linear infinite; transform-origin: center; }
+        .splash-logo-pulse { animation: splashLogoPulse 1.6s ease-in-out infinite; }
+        .splash-progress-sweep { animation: splashProgressSweep 1.4s ease-in-out infinite; }
+        .splash-dot-1 { animation: splashDot 1.2s ease-in-out infinite; }
+        .splash-dot-2 { animation: splashDot 1.2s ease-in-out infinite 0.2s; }
+        .splash-dot-3 { animation: splashDot 1.2s ease-in-out infinite 0.4s; }
+        @media (prefers-reduced-motion: reduce) {
+          .splash-mandala-spin,
+          .splash-mandala-spin-reverse,
+          .splash-logo-pulse,
+          .splash-progress-sweep,
+          .splash-dot-1,
+          .splash-dot-2,
+          .splash-dot-3 {
+            animation: none;
+          }
+        }
+      `}</style>
     </div>
   )
 }

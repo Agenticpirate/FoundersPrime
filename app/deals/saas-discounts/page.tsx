@@ -13,11 +13,11 @@ export const metadata: Metadata = {
 
 export default function SaasDiscountsPage() {
   return (
-    <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden bg-background-light">
+    <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden bg-gray-50">
       <Header />
       <main className="flex-1 text-[#111111]">
         {/* Main Layout */}
-        <div className="max-w-[1600px] mx-auto px-4 lg:px-6 py-2 lg:py-4">
+        <div className="max-w-[1600px] mx-auto px-4 lg:px-6 py-4 lg:py-5">
           <SaasHeader />
           <SaasHero />
           <SaasStrategy />

@@ -305,7 +305,7 @@ export default function Header() {
                         Admin Panel
                       </Link>
                     )}
-                    <Link href="/billing" className={dropdownItemClasses}>
+                    <Link href="/dashboard?tab=billing" className={dropdownItemClasses}>
                       <span className="material-symbols-outlined text-base text-green-400">credit_card</span>
                       Billing
                     </Link>
