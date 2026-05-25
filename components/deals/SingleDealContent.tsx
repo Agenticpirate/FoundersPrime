@@ -200,7 +200,8 @@ export default function SingleDealContent({ deal, freeAccess = false, basePath =
     setClaimError(null)
 
     if (freeAccess) {
-      window.open(applicationUrl, '_blank')
+      const w = window.open(applicationUrl, '_blank')
+      if (w) w.opener = null
       return
     }
 
@@ -209,30 +210,58 @@ export default function SingleDealContent({ deal, freeAccess = false, basePath =
       return
     }
 
+    // Fast path — Pro/admin users have no limits to track. Open the tab
+    // directly inside the click gesture (no popup blocker issues, no
+    // current-tab navigation surprise) and don't bother awaiting the
+    // server claim. We can still record the click in the background.
+    if (isPro) {
+      const w = window.open(applicationUrl, '_blank')
+      if (w) w.opener = null
+      // Fire-and-forget tracking — best effort, ignore failures
+      claimDeal(deal.id, applicationUrl).catch(() => {})
+      return
+    }
+
+    // NextFounder users — must validate weekly/monthly limits before opening.
+    // Open a placeholder synchronously inside the click gesture (without
+    // `noopener` so we KEEP the window reference; we set `opener=null`
+    // ourselves once redirected). On server response, redirect the
+    // placeholder. On error, close it and surface the error in-page.
+    const placeholder = window.open('about:blank', '_blank')
+
     setIsClaiming(true)
     try {
-        const result = await claimDeal(deal.id, applicationUrl)
-        if (result.success && result.url) {
-            window.open(result.url, '_blank')
-            // Show usage alert for Explorer users
-            if (result.usage) {
-                const { weeklyUsed, weeklyLimit, monthlyUsed, monthlyLimit } = result.usage
-                const weeklyLeft = weeklyLimit - weeklyUsed
-                const monthlyLeft = monthlyLimit - monthlyUsed
-                if (weeklyLeft <= 2 || monthlyLeft <= 5) {
-                    setClaimError(`⚡ ${weeklyLeft} claims left this week · ${monthlyLeft} left this month`)
-                }
-            }
-        } else {
-            setClaimError(result.error || 'Failed to apply.')
-            if (result.limitReached) {
-                setShowUpgradeModal(true)
-            }
+      const result = await claimDeal(deal.id, applicationUrl)
+      if (result.success && result.url) {
+        if (placeholder && !placeholder.closed) {
+          try { placeholder.opener = null } catch {}
+          placeholder.location.href = result.url
         }
+        // If popup was blocked entirely, just surface the URL — DON'T
+        // navigate the current tab away.
+        if (!placeholder) {
+          setClaimError('Popup blocked. Please allow popups for this site and try again.')
+        }
+        if (result.usage) {
+          const { weeklyUsed, weeklyLimit, monthlyUsed, monthlyLimit } = result.usage
+          const weeklyLeft = weeklyLimit - weeklyUsed
+          const monthlyLeft = monthlyLimit - monthlyUsed
+          if (weeklyLeft <= 2 || monthlyLeft <= 5) {
+            setClaimError(`⚡ ${weeklyLeft} claims left this week · ${monthlyLeft} left this month`)
+          }
+        }
+      } else {
+        if (placeholder && !placeholder.closed) placeholder.close()
+        setClaimError(result.error || 'Failed to apply.')
+        if (result.limitReached) {
+          setShowUpgradeModal(true)
+        }
+      }
     } catch (err) {
-        setClaimError('An unexpected error occurred.')
+      if (placeholder && !placeholder.closed) placeholder.close()
+      setClaimError('An unexpected error occurred.')
     } finally {
-        setIsClaiming(false)
+      setIsClaiming(false)
     }
   }
 

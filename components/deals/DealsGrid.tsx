@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useRouter, useSearchParams, usePathname } from 'next/navigation'
 import { Deal, getAllCategories } from '@/lib/deals-database'
 import { getStartupProgramUrl } from '@/lib/comprehensive-startup-urls'
@@ -87,15 +87,69 @@ export default function DealsGrid({ filters }: DealsGridProps) {
 
     // Apply filters
     if (filters) {
-      // Search filter
-      if (filters.search) {
-        const searchTerm = filters.search.toLowerCase()
-        result = result.filter(deal =>
-          deal.title?.toLowerCase().includes(searchTerm) ||
-          deal.description?.toLowerCase().includes(searchTerm) ||
-          deal.provider?.toLowerCase().includes(searchTerm) ||
-          deal.tags?.some((tag: string) => tag.toLowerCase().includes(searchTerm))
-        )
+      // Search filter — multi-token relevance scoring
+      // Tokens are AND-matched (all must appear), each token searches across
+      // title / provider / category / subcategory / shortDescription / description / tags.
+      // Matches contribute to a relevance score so the most relevant result floats up.
+      let searchScores: Map<string, number> | null = null
+      if (filters.search && filters.search.trim()) {
+        const raw = filters.search.toLowerCase().trim()
+        const tokens = raw.split(/\s+/).filter(t => t.length > 0)
+        searchScores = new Map<string, number>()
+
+        result = result.filter(deal => {
+          const title = deal.title?.toLowerCase() || ''
+          const provider = deal.provider?.toLowerCase() || ''
+          const category = (deal.category || '').toLowerCase().replace(/-/g, ' ')
+          const subcategory = (deal.subcategory || '').toLowerCase().replace(/-/g, ' ')
+          const shortDesc = deal.shortDescription?.toLowerCase() || ''
+          const desc = deal.description?.toLowerCase() || ''
+          const tagsLc = (deal.tags || []).map(t => t.toLowerCase())
+
+          // Every token must match somewhere — otherwise drop the deal
+          const allTokensMatch = tokens.every(token =>
+            title.includes(token) ||
+            provider.includes(token) ||
+            category.includes(token) ||
+            subcategory.includes(token) ||
+            shortDesc.includes(token) ||
+            desc.includes(token) ||
+            tagsLc.some(tag => tag.includes(token))
+          )
+          if (!allTokensMatch) return false
+
+          // Score this deal — higher = more relevant
+          let score = 0
+          for (const token of tokens) {
+            // Strong: exact title or provider equals query token
+            if (title === token || provider === token) score += 100
+            // Strong: title starts with token (e.g. "aws" → "AWS Activate")
+            if (title.startsWith(token) || provider.startsWith(token)) score += 50
+            // Title contains token
+            if (title.includes(token)) score += 25
+            // Provider contains token
+            if (provider.includes(token)) score += 20
+            // Tag match
+            if (tagsLc.some(tag => tag === token)) score += 15
+            else if (tagsLc.some(tag => tag.includes(token))) score += 8
+            // Category / subcategory match
+            if (category.includes(token)) score += 12
+            if (subcategory.includes(token)) score += 12
+            // Description matches (less weight)
+            if (shortDesc.includes(token)) score += 4
+            else if (desc.includes(token)) score += 2
+          }
+
+          // Bonus: full phrase appears in title
+          if (tokens.length > 1 && title.includes(raw)) score += 60
+
+          // Recommended/featured deals get a small tiebreaker boost
+          if (deal.recommended) score += 3
+          if (deal.featured) score += 2
+
+          searchScores!.set(deal.slug, score)
+          return true
+        })
       }
 
       // Category filter
@@ -114,8 +168,9 @@ export default function DealsGrid({ filters }: DealsGridProps) {
           const otherDeals = result.filter(deal => !deal.recommended)
           result = [...recommendedDeals.slice(0, 6), ...otherDeals]
         }
-      } else {
+      } else if (!searchScores) {
         // Exclude accelerators and incubators if no category is selected (All Deals)
+        // — but keep them when the user is searching, so search can find them.
         result = result.filter(deal => 
           deal.category !== 'startup-programs' && 
           deal.subcategory !== 'accelerators' && 
@@ -148,8 +203,17 @@ export default function DealsGrid({ filters }: DealsGridProps) {
         })
       }
 
-      // Sort filter
-      switch (filters.sort) {
+      // Sort filter — when there's an active search, score-based relevance
+      // wins over the default brand-priority sort.
+      if (searchScores && (filters.sort === 'relevance' || !filters.sort)) {
+        result.sort((a, b) => {
+          const sa = searchScores!.get(a.slug) || 0
+          const sb = searchScores!.get(b.slug) || 0
+          if (sa !== sb) return sb - sa
+          return a.title.localeCompare(b.title)
+        })
+      } else {
+        switch (filters.sort) {
         case 'newest':
           result.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
           break
@@ -231,6 +295,7 @@ export default function DealsGrid({ filters }: DealsGridProps) {
             })
           }
       }
+      }
     }
 
     setFilteredDeals(result)
@@ -305,17 +370,40 @@ export default function DealsGrid({ filters }: DealsGridProps) {
     }
   }
 
-  // Pagination Logic using fast local state to skip slow server payload fetch
+  // Pagination — local state synced to URL so back navigation restores
+  // page + filter state.
   const [localPage, setLocalPage] = useState(1)
+  const lastFiltersRef = useRef<string>('')
 
+  // On mount or when filter identity changes (not when same filters are
+  // re-applied via URL restore), reset page to 1. When filters are unchanged
+  // but `searchParams` shifts (e.g. user hits back from deal page), respect
+  // the URL `page` value.
   useEffect(() => {
-    const pageParam = searchParams.get('page')
-    if (pageParam && !filters?.category && !filters?.search) {
-      setLocalPage(Number(pageParam) || 1)
-    } else {
+    const filterKey = `${filters?.search || ''}|${filters?.category || ''}|${filters?.subcategory || ''}|${filters?.value || ''}|${filters?.sort || ''}`
+    const pageParam = Number(searchParams.get('page')) || 1
+    const filtersChanged = lastFiltersRef.current !== '' && lastFiltersRef.current !== filterKey
+
+    if (filtersChanged) {
+      // User changed a filter — start at page 1
       setLocalPage(1)
+    } else {
+      // Initial mount or back-navigation — honor the URL page
+      setLocalPage(pageParam)
     }
+    lastFiltersRef.current = filterKey
   }, [filters, searchParams])
+
+  // Listen for browser back/forward to re-sync page from URL
+  useEffect(() => {
+    const handlePopState = () => {
+      const params = new URLSearchParams(window.location.search)
+      const pageParam = Number(params.get('page')) || 1
+      setLocalPage(pageParam)
+    }
+    window.addEventListener('popstate', handlePopState)
+    return () => window.removeEventListener('popstate', handlePopState)
+  }, [])
 
   const totalPages = Math.ceil(filteredDeals.length / dealsPerPage) || 1
   const currentPage = Math.min(Math.max(1, localPage), totalPages)
@@ -326,9 +414,11 @@ export default function DealsGrid({ filters }: DealsGridProps) {
 
   const handlePageChange = (page: number) => {
     setLocalPage(page)
-    const params = new URLSearchParams(searchParams)
+    // pushState (not replaceState) so browser Back works correctly when the
+    // user clicks a deal and returns — they get back to the same page.
+    const params = new URLSearchParams(searchParams.toString())
     params.set('page', page.toString())
-    window.history.replaceState(null, '', pathname + '?' + params.toString())
+    window.history.pushState(null, '', pathname + '?' + params.toString())
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
