@@ -113,17 +113,17 @@ export default function Footer() {
 
       {/* ── Newsletter row ── */}
       <div className="relative border-b border-white/10">
-        <div className="max-w-[1600px] mx-auto px-4 sm:px-8 py-8 md:py-12 flex flex-col md:flex-row items-start md:items-center justify-between gap-5 md:gap-8">
+        <div className="max-w-[1600px] mx-auto px-4 sm:px-8 py-5 md:py-12 flex flex-col md:flex-row items-start md:items-center justify-between gap-3 md:gap-8">
           <div className="max-w-md">
-            <span className="inline-flex items-center gap-1.5 bg-accent-yellow text-black font-mono text-[9px] md:text-[10px] font-black uppercase tracking-widest px-2.5 py-1 border border-black mb-3">
-              <span className="material-symbols-outlined text-[12px]">mark_email_unread</span>
+            <span className="inline-flex items-center gap-1.5 bg-accent-yellow text-black font-mono text-[9px] md:text-[10px] font-black uppercase tracking-widest px-2 md:px-2.5 py-0.5 md:py-1 border border-black mb-2 md:mb-3">
+              <span className="material-symbols-outlined !text-[11px] md:!text-[12px]">mark_email_unread</span>
               The Founder Brief · Free
             </span>
-            <h3 className="font-mono text-lg md:text-2xl font-black uppercase leading-tight mb-1">
+            <h3 className="font-mono text-base md:text-2xl font-black uppercase leading-tight mb-1">
               The next $50K deal lands<br className="hidden md:block" /> in your inbox Monday.
             </h3>
-            <p className="text-gray-400 text-xs md:text-sm">
-              One email a week. Fresh credits. Closing deadlines. Grants you'll never see on Twitter.
+            <p className="text-gray-400 text-[12px] md:text-sm leading-snug">
+              One email a week. Fresh credits. Closing deadlines. Grants you&apos;ll never see on Twitter.
             </p>
           </div>
 
@@ -136,11 +136,16 @@ export default function Footer() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12">
           {/* Brand Column */}
           <div className="lg:col-span-3 flex flex-col gap-4">
-            <Link href="/" className="inline-flex items-center gap-2 no-underline w-fit group">
-              <div className="w-7 h-7 bg-accent-yellow border-2 border-white/20 flex items-center justify-center group-hover:rotate-6 transition-transform">
-                <span className="font-mono font-black text-black text-sm">FP</span>
+            <Link href="/" className="inline-flex items-center gap-2.5 no-underline w-fit group">
+              <div className="relative w-8 h-8 flex-shrink-0">
+                <span className="absolute inset-0 rounded-sm bg-accent-yellow/20 blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-300" aria-hidden="true" />
+                <img
+                  src="/logo-white.svg"
+                  alt="FoundersPrime"
+                  className="relative w-full h-full object-contain group-hover:rotate-6 transition-transform duration-300"
+                />
               </div>
-              <span className="font-mono font-black text-base tracking-widest text-white uppercase">
+              <span className="font-mono font-black text-base tracking-[0.18em] text-white uppercase whitespace-nowrap">
                 FOUNDERS<span className="text-accent-yellow">[</span>PRIME<span className="text-accent-yellow">]</span>
               </span>
             </Link>

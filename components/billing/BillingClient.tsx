@@ -31,9 +31,9 @@ const PLAN_LABELS: Record<string, string> = {
 }
 
 const PLAN_PRICES: Record<string, string> = {
-  nextfounder: '$29.99/year',
-  founder: '$69/year',
-  legend: '$149 one-time',
+  nextfounder: '$59/year',
+  founder: '$149/year',
+  legend: '$299 one-time',
 }
 
 export default function BillingClient({

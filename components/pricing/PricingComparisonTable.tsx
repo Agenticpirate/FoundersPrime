@@ -28,7 +28,6 @@ export default function PricingComparisonTable() {
             category: "Resources & Support",
             items: [
                 { name: "Master Resources Library", nextfounder: "—", founder: "✓", legend: "✓" },
-                { name: "Support Level", nextfounder: "Standard", founder: "Priority", legend: "1:1 Dedicated" },
                 { name: "All Future Updates", nextfounder: "✓", founder: "✓", legend: "✓" },
                 { name: "Lifetime Access", nextfounder: "—", founder: "—", legend: "✓ One-time" },
             ]

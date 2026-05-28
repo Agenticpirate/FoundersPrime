@@ -387,8 +387,8 @@ export default function PricingPageContent() {
                     {[
                         { icon: 'speed', q: 'How fast will I see savings?', a: 'Most founders claim their first deal within 3 minutes. A single cloud credit can save $5K–$100K instantly.' },
                         { icon: 'verified', q: 'Are deals actually verified?', a: 'Every deal is manually verified weekly. Broken links removed, expired offers flagged, new deals added constantly.' },
-                        { icon: 'school', q: 'I am a student — which plan is for me?', a: 'Next\'Founder ($29.99/yr) is built for active students, indie hackers, and early builders. You get premium AI & SaaS credits, hackathons, internships, fellowships, grants, and the Opportunity Hub. Tailored for student builders.' },
-                        { icon: 'savings', q: 'What if I only need one deal?', a: 'Even one deal pays for your membership 10x over. Founder at $69/yr gets you full unlimited access immediately.' },
+                        { icon: 'school', q: 'I am a student — which plan is for me?', a: 'Next\'Founder ($59/yr) is built for active students, indie hackers, and early builders. You get premium AI & SaaS credits, hackathons, internships, fellowships, grants, and the Opportunity Hub. Tailored for student builders.' },
+                        { icon: 'savings', q: 'What if I only need one deal?', a: 'Even one deal pays for your membership several times over. Founder at $149/yr gets you full unlimited access immediately.' },
                         { icon: 'cancel', q: 'Can I cancel anytime? What about refunds?', a: 'Yes, you can cancel anytime — no contracts, no lock-in. Cancel from your dashboard in one click and you keep access until your billing period ends. Please note: all payments are non-refundable. Once a subscription or lifetime plan is purchased, the amount paid cannot be returned. We recommend reviewing the plan details before checkout.' },
                     ].map((faq) => (
                         <details

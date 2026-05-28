@@ -82,7 +82,18 @@ export default function DealCard({ deal, basePath = '/deals', overrideHref }: De
   const domain = providerToDomain(cleanProvider)
   const displayTitle = title.length > 40 ? title.substring(0, 40) + '…' : title
 
+  // Prefer the deal's own logoUrl when it points at a real image. Skip
+  // generic placeholders (rocket emoji, ui-avatars) so we still hit the
+  // brand favicon fallback for those.
+  const hasOwnLogo =
+    typeof logo === 'string' &&
+    logo.trim().length > 0 &&
+    /^https?:\/\//i.test(logo) &&
+    !logo.includes('ui-avatars') &&
+    !logo.includes('rocket')
+
   const fallbackChain = [
+    ...(hasOwnLogo ? [logo] : []),
     `https://www.google.com/s2/favicons?domain=${domain}&sz=128`,
     `https://logo.clearbit.com/${domain}`,
     `https://ui-avatars.com/api/?name=${encodeURIComponent(cleanProvider)}&background=f3f4f6&color=374151&bold=true&size=128`

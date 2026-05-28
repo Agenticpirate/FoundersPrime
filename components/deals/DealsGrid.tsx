@@ -372,13 +372,12 @@ export default function DealsGrid({ filters }: DealsGridProps) {
 
   // Pagination — local state synced to URL so back navigation restores
   // page + filter state.
-  const [localPage, setLocalPage] = useState(1)
+  const [localPage, setLocalPage] = useState(() => Number(searchParams.get('page')) || 1)
   const lastFiltersRef = useRef<string>('')
 
-  // On mount or when filter identity changes (not when same filters are
-  // re-applied via URL restore), reset page to 1. When filters are unchanged
-  // but `searchParams` shifts (e.g. user hits back from deal page), respect
-  // the URL `page` value.
+  // When filters change OR searchParams change (e.g. user hits browser
+  // back from a single-deal page), re-derive the page. Filter changes
+  // reset to page 1; pure URL changes (back/forward) honor the URL.
   useEffect(() => {
     const filterKey = `${filters?.search || ''}|${filters?.category || ''}|${filters?.subcategory || ''}|${filters?.value || ''}|${filters?.sort || ''}`
     const pageParam = Number(searchParams.get('page')) || 1
@@ -394,17 +393,6 @@ export default function DealsGrid({ filters }: DealsGridProps) {
     lastFiltersRef.current = filterKey
   }, [filters, searchParams])
 
-  // Listen for browser back/forward to re-sync page from URL
-  useEffect(() => {
-    const handlePopState = () => {
-      const params = new URLSearchParams(window.location.search)
-      const pageParam = Number(params.get('page')) || 1
-      setLocalPage(pageParam)
-    }
-    window.addEventListener('popstate', handlePopState)
-    return () => window.removeEventListener('popstate', handlePopState)
-  }, [])
-
   const totalPages = Math.ceil(filteredDeals.length / dealsPerPage) || 1
   const currentPage = Math.min(Math.max(1, localPage), totalPages)
 
@@ -414,11 +402,12 @@ export default function DealsGrid({ filters }: DealsGridProps) {
 
   const handlePageChange = (page: number) => {
     setLocalPage(page)
-    // pushState (not replaceState) so browser Back works correctly when the
-    // user clicks a deal and returns — they get back to the same page.
+    // router.push (not raw pushState) so Next.js's App Router knows about
+    // the URL change. Otherwise browser back skips over the page param
+    // and lands the user on page 1 instead of the page they came from.
     const params = new URLSearchParams(searchParams.toString())
     params.set('page', page.toString())
-    window.history.pushState(null, '', pathname + '?' + params.toString())
+    router.push(`${pathname}?${params.toString()}`, { scroll: false })
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 

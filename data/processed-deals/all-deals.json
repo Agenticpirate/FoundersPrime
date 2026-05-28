@@ -301,96 +301,6 @@
     "sortOrder": 2
   },
   {
-    "id": "deal-google-cloud-startups-1769515662784",
-    "slug": "google-for-startups-cloud-program",
-    "title": "Google for Startups Cloud Program – Google Cloud Credits",
-    "provider": "Google Cloud",
-    "category": "cloud-credits",
-    "subcategory": "cloud-computing",
-    "tags": [
-      "cloud-credits",
-      "google-cloud",
-      "gcp",
-      "ai",
-      "ml",
-      "infrastructure",
-      "saas",
-      "web3"
-    ],
-    "value": "$200,000+ in cloud credits",
-    "savings": "$200,000+",
-    "savingsAmount": 200000,
-    "shortDescription": "Cloud credits, technical training, and business support to help startups build and scale on Google Cloud. Up to $350,000 for AI startups.",
-    "description": "Google for Startups Cloud Program provides cloud credits, technical training, and business support to help startups build and scale on Google Cloud. The program offers tiered benefits based on your startup's funding stage, with eligible startups receiving substantial cloud credits over 2 years.\n\nProgram Tiers:\n\nStart Tier - For unfunded startups:\n• Up to $2,000 USD in Google Cloud credits (valid for 1 year)\n• $200 in Google Cloud Skills Boost credits for training\n• Access to global Google Cloud Startup Community\n\nScale Tier - For funded startups (Pre-seed to Series A):\n• Year 1: 100% coverage up to $100,000 USD in Google Cloud credits\n• Year 2: 20% coverage up to additional $100,000 USD in credits\n• $500 in Google Cloud Skills Boost credits\n• $12,000 USD in Enhanced Support credits for 1 year\n• Access to Startup Success Manager and Customer Engineers\n• Co-marketing opportunities for select startups\n\nAI Startups Bonus:\n• Up to $350,000 total in Google Cloud credits (for AI-focused companies)\n• Dedicated AI training, resources, and expert access\n\nWhat's Included:\n• Google Cloud and Firebase usage credits\n• Technical training through hands-on labs and courses\n• Technical support via Enhanced Support credits\n• Access to dedicated Startup Customer Engineers\n• Startup Success Manager for guidance\n• Global Google Cloud Startup Community access\n• 12 months free Google Workspace Business Plus (for new signups)\n• $600 monthly Google Maps Platform credits for 12 months\n• Up to 10K Google Maps API calls per SKU per month at no cost\n• Co-marketing opportunities (select startups)\n• Google-wide discounts and perks\n\nBest for:\n• Technology startups building on cloud infrastructure\n• SaaS and AI/ML companies\n• Web3 and blockchain projects\n• Early-stage startups needing to extend runway\n• International founders wanting US cloud infrastructure\n\nNot ideal for:\n• Companies that have IPO'd or been acquired\n• Educational institutions, government entities, nonprofits\n• Dev shops, consultancies, or agencies\n• Cryptocurrency mining companies\n• Personal blogs or content sites",
-    "eligibility": [
-      "Start Tier: Technology startup not yet funded by an institutional investor",
-      "Start Tier: Founded within the last 5 years",
-      "Start Tier: Not yet received Google Cloud credits (beyond free trial)",
-      "Scale Tier: Received startup equity funding from pre-seed to Series A by institutional investor",
-      "Scale Tier: If Series A, raised within the last 12 months",
-      "Scale Tier: Founded within the last 10 years",
-      "Scale Tier: Not yet received more than $5,000 in Google Cloud credits",
-      "AI Startups: Use AI as core technology for primary products/solutions",
-      "Web3 Startups: Use blockchain technology for primary products/solutions"
-    ],
-    "applicationProcess": [
-      "Fill out the online application with your contact information, startup details, and Google Cloud Billing Account ID",
-      "Provide information about your startup's funding stage and founding date. Applications are reviewed for appropriate program tier",
-      "Applications typically reviewed within 3-5 business days. New billing accounts may take 7-10 additional days to process",
-      "Once approved, credits are automatically deposited into your Google Cloud Billing Account ID. Start building immediately"
-    ],
-    "benefits": [
-      "Up to $200,000 in Google Cloud credits ($350,000 for AI startups)",
-      "Google Cloud and Firebase usage credits",
-      "Technical training through hands-on labs",
-      "$12,000 in Enhanced Support credits",
-      "Startup Success Manager access",
-      "12 months free Google Workspace Business Plus",
-      "$600 monthly Google Maps Platform credits",
-      "Co-marketing opportunities"
-    ],
-    "faqs": [
-      {
-        "question": "Who is eligible for this program?",
-        "answer": "Technology startups founded within the last 5-10 years (depending on tier) that haven't received significant prior Google Cloud credits. Scale tier requires verified equity funding from institutional investors."
-      },
-      {
-        "question": "When will I hear back about my application?",
-        "answer": "You can expect a response within 3-5 business days for most applications. New Google Cloud Platform Billing Accounts may require 7-10 additional days to process."
-      },
-      {
-        "question": "What can I use the credits for?",
-        "answer": "Credits can be applied toward Google Cloud Platform Services and Select Google Cloud offerings. They cannot be used for Google Workspace, Google Ads, or Google Maps Platform beyond the specific perks included."
-      },
-      {
-        "question": "Do I need a Google Cloud Billing Account before applying?",
-        "answer": "Yes, you must create a Google Cloud Billing Account and provide the Billing Account ID when applying. The email associated with this account should match your startup's domain."
-      },
-      {
-        "question": "Can I apply if I'm outside the United States?",
-        "answer": "Yes! The program is available to startups in 140+ countries. Your company's billing entity must be based in a Google Cloud supported territory."
-      }
-    ],
-    "applicationUrl": "https://cloud.google.com/startup/apply",
-    "providerWebsite": "https://cloud.google.com/startup",
-    "logoUrl": "https://cdn.simpleicons.org/googlecloud/4285F4",
-    "verified": true,
-    "featured": true,
-    "recommended": true,
-    "status": "active",
-    "timeToApply": "30 minutes",
-    "approvalTime": "3-10 business days",
-    "difficulty": "medium",
-    "successRate": "80%+",
-    "createdAt": "2026-01-27T12:07:42.784Z",
-    "updatedAt": "2026-01-27T12:07:42.787Z",
-    "lastVerified": "2026-01-27",
-    "appliedCount": 1000,
-    "dataSource": "manual",
-    "sourceVerified": true,
-    "sortOrder": 2
-  },
-  {
     "id": "airtable-for-startups",
     "slug": "airtable-for-startups",
     "title": "Airtable for Startups — $1,000 in Credits",
@@ -2279,8 +2189,8 @@
     ],
     "status": "active",
     "applicationUrl": "https://forbusiness.snapchat.com/en-US/get-snapchat-advertising-credits",
-    "logoUrl": "https://www.snapchat.com/favicon.ico",
-    "brandIcon": "https://www.snapchat.com/favicon.ico",
+    "logoUrl": "https://upload.wikimedia.org/wikipedia/en/c/c4/Snapchat_logo.svg",
+    "brandIcon": "https://upload.wikimedia.org/wikipedia/en/c/c4/Snapchat_logo.svg",
     "featured": true,
     "verified": true,
     "recommended": true,
@@ -2374,7 +2284,7 @@
       "startups"
     ],
     "status": "active",
-    "applicationUrl": "https://resources.github.com/startups/",
+    "applicationUrl": "https://github.com/enterprise/startups",
     "logoUrl": "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png",
     "brandIcon": "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png",
     "featured": true,
@@ -5747,62 +5657,6 @@
     "sortOrder": 112
   },
   {
-    "id": "deal-1768918863875-q0kn9u2wy",
-    "slug": "acumbamail-522",
-    "title": "Acumbamail",
-    "provider": "Acumbamail",
-    "category": "saas-discounts",
-    "subcategory": "marketing-tools",
-    "description": "Simple email marketing",
-    "shortDescription": "Simple email marketing",
-    "value": "50% off for 6 months",
-    "originalPrice": "",
-    "savings": "Save up to $741",
-    "savingsAmount": 741,
-    "eligibility": [
-      "Startups under 5 years old",
-      "Less than $10M in funding",
-      "Active business"
-    ],
-    "requirements": [
-      "Business email",
-      "Company details",
-      "Brief company description"
-    ],
-    "applicationProcess": [
-      "Visit the deal page",
-      "Click \"Apply Now\"",
-      "Fill out the application form",
-      "Submit required documentation",
-      "Wait for approval (typically 1-2 weeks)"
-    ],
-    "proTips": [
-      "Apply early for best availability",
-      "Have your pitch deck ready",
-      "Highlight your traction and growth"
-    ],
-    "tags": [
-      "marketing",
-      "email-marketing",
-      "Acumbamail"
-    ],
-    "status": "active",
-    "applicationUrl": "https://acumbamail.com/startups",
-    "logoUrl": "https://acumbamail.com/favicon.ico",
-    "featured": false,
-    "verified": true,
-    "difficulty": "medium",
-    "timeToApply": "15 minutes",
-    "lastUpdated": "2026-01-20",
-    "createdAt": "2026-01-20",
-    "updatedAt": "2026-01-20",
-    "sourceVerified": true,
-    "icon": "📈",
-    "recommended": false,
-    "brandIcon": "https://acumbamail.com/favicon.ico",
-    "sortOrder": 9999
-  },
-  {
     "id": "deal-1768918863876-dji326mjq",
     "slug": "adcreative-ai-722",
     "title": "AdCreative.ai",
@@ -5856,64 +5710,6 @@
     "icon": "🤖",
     "recommended": false,
     "brandIcon": "https://www.adcreative.ai/favicon.ico",
-    "sortOrder": 9999
-  },
-  {
-    "id": "deal-1768918863873-p3jj9s0ok",
-    "slug": "alibaba-cloud-162",
-    "title": "Alibaba Cloud",
-    "provider": "Alibaba Cloud",
-    "category": "saas-discounts",
-    "subcategory": "productivity",
-    "description": "Powering global innovation in the cloud",
-    "shortDescription": "Powering global innovation in the cloud",
-    "value": "$300 credit upon signup and 50% off core cloud products (up to $100)",
-    "originalPrice": "",
-    "savings": "Save up to $400",
-    "savingsAmount": 400,
-    "eligibility": [
-      "Startups under 5 years old",
-      "Less than $10M in funding",
-      "Active business"
-    ],
-    "requirements": [
-      "Business email",
-      "Company details",
-      "Brief company description"
-    ],
-    "applicationProcess": [
-      "Visit the deal page",
-      "Click \"Apply Now\"",
-      "Fill out the application form",
-      "Submit required documentation",
-      "Wait for approval (typically 1-2 weeks)"
-    ],
-    "proTips": [
-      "Apply early for best availability",
-      "Have your pitch deck ready",
-      "Highlight your traction and growth"
-    ],
-    "tags": [
-      "data",
-      "cloud-computing",
-      "Alibaba Cloud"
-    ],
-    "status": "active",
-    "applicationUrl": "https://www.alibabacloud.com/startup",
-    "logoUrl": "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https%3A%2F%2Fwww.alibabacloud.com%2Fstartup&size=128",
-    "featured": false,
-    "verified": true,
-    "difficulty": "medium",
-    "timeToApply": "15 minutes",
-    "lastUpdated": "2026-01-20",
-    "createdAt": "2026-01-20",
-    "updatedAt": "2026-01-20",
-    "sourceVerified": true,
-    "icon": "☁️",
-    "recommended": false,
-    "detailedDescription": "Deals",
-    "enhancedValue": "$12,000",
-    "brandIcon": "https://img.alicdn.com/tfs/TB1Ly5oS3HqK1RjSZFPXXcwapXa-238-54.png",
     "sortOrder": 9999
   },
   {
@@ -9401,7 +9197,7 @@
     ],
     "status": "active",
     "applicationUrl": "https://www.leadsquared.com/startup-crm-plan/",
-    "logoUrl": "https://squareup.com/favicon.ico",
+    "logoUrl": "https://www.leadsquared.com/favicon.ico",
     "featured": false,
     "verified": true,
     "difficulty": "medium",
@@ -9412,7 +9208,7 @@
     "sourceVerified": true,
     "icon": "🏢",
     "recommended": false,
-    "brandIcon": "https://squareup.com/favicon.ico",
+    "brandIcon": "https://www.leadsquared.com/favicon.ico",
     "sortOrder": 9999
   },
   {
@@ -11679,7 +11475,7 @@
     ],
     "status": "active",
     "applicationUrl": "https://business.google.com/us/google-ads/",
-    "logoUrl": "",
+    "logoUrl": "https://www.gstatic.com/images/branding/product/2x/ads_48dp.png",
     "featured": false,
     "verified": true,
     "difficulty": "medium",
@@ -11692,7 +11488,7 @@
     "recommended": false,
     "detailedDescription": "Deals",
     "enhancedValue": "$12,000",
-    "brandIcon": "https://searchads.com/favicon.ico",
+    "brandIcon": "https://www.gstatic.com/images/branding/product/2x/ads_48dp.png",
     "sortOrder": 9999
   },
   {
@@ -12330,62 +12126,6 @@
     "sortOrder": 9999
   },
   {
-    "id": "deal-1768918863876-skuj6ot1z",
-    "slug": "starter-story-674",
-    "title": "Starter Story",
-    "provider": "Starter Story",
-    "category": "saas-discounts",
-    "subcategory": "productivity",
-    "description": "Inspiring entrepreneurs, one story at a time",
-    "shortDescription": "Inspiring entrepreneurs, one story at a time",
-    "value": "20% off",
-    "originalPrice": "",
-    "savings": "Save up to $548",
-    "savingsAmount": 548,
-    "eligibility": [
-      "Startups under 5 years old",
-      "Less than $10M in funding",
-      "Active business"
-    ],
-    "requirements": [
-      "Business email",
-      "Company details",
-      "Brief company description"
-    ],
-    "applicationProcess": [
-      "Visit the deal page",
-      "Click \"Apply Now\"",
-      "Fill out the application form",
-      "Submit required documentation",
-      "Wait for approval (typically 1-2 weeks)"
-    ],
-    "proTips": [
-      "Apply early for best availability",
-      "Have your pitch deck ready",
-      "Highlight your traction and growth"
-    ],
-    "tags": [
-      "business",
-      "business-process",
-      "Starter Story"
-    ],
-    "status": "active",
-    "applicationUrl": "https://google.com/search?q=Starter%20Story%20startup%20program",
-    "logoUrl": "",
-    "featured": false,
-    "verified": true,
-    "difficulty": "medium",
-    "timeToApply": "15 minutes",
-    "lastUpdated": "2026-01-20",
-    "createdAt": "2026-01-20",
-    "updatedAt": "2026-01-20",
-    "sourceVerified": true,
-    "icon": "🏢",
-    "recommended": false,
-    "brandIcon": "https://starterstory.com/favicon.ico",
-    "sortOrder": 9999
-  },
-  {
     "id": "deal-1768918863874-fk4zw68iy",
     "slug": "superprofile-196",
     "title": "SuperProfile",
@@ -12426,7 +12166,7 @@
       "SuperProfile"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=SuperProfile%20startup%20program",
+    "applicationUrl": "https://superprofile.bio?referralCode=hIkbqc&referralType=creatorReferral&source=referralPage",
     "logoUrl": "",
     "featured": false,
     "verified": true,
@@ -12497,62 +12237,6 @@
     "detailedDescription": "Deals",
     "enhancedValue": "$12,000",
     "brandIcon": "https://surveysparrow.com/favicon.ico",
-    "sortOrder": 9999
-  },
-  {
-    "id": "deal-1768918863877-he02ogu1f",
-    "slug": "sweet-show-888",
-    "title": "Sweet Show",
-    "provider": "Sweet Show",
-    "category": "saas-discounts",
-    "subcategory": "productivity",
-    "description": "Track your prospects’ interest in your offers in real time.",
-    "shortDescription": "Track your prospects’ interest in your offers in real time.",
-    "value": "6 months free",
-    "originalPrice": "",
-    "savings": "Save up to $210",
-    "savingsAmount": 210,
-    "eligibility": [
-      "Startups under 5 years old",
-      "Less than $10M in funding",
-      "Active business"
-    ],
-    "requirements": [
-      "Business email",
-      "Company details",
-      "Brief company description"
-    ],
-    "applicationProcess": [
-      "Visit the deal page",
-      "Click \"Apply Now\"",
-      "Fill out the application form",
-      "Submit required documentation",
-      "Wait for approval (typically 1-2 weeks)"
-    ],
-    "proTips": [
-      "Apply early for best availability",
-      "Have your pitch deck ready",
-      "Highlight your traction and growth"
-    ],
-    "tags": [
-      "business",
-      "business-process",
-      "Sweet Show"
-    ],
-    "status": "active",
-    "applicationUrl": "https://google.com/search?q=Sweet%20Show%20startup%20program",
-    "logoUrl": "",
-    "featured": false,
-    "verified": true,
-    "difficulty": "medium",
-    "timeToApply": "15 minutes",
-    "lastUpdated": "2026-01-20",
-    "createdAt": "2026-01-20",
-    "updatedAt": "2026-01-20",
-    "sourceVerified": true,
-    "icon": "🏢",
-    "recommended": false,
-    "brandIcon": "https://sweetshow.com/favicon.ico",
     "sortOrder": 9999
   },
   {
@@ -12844,64 +12528,6 @@
     "sortOrder": 9999
   },
   {
-    "id": "deal-1768918863874-bzg31vxyp",
-    "slug": "uber-for-business-218",
-    "title": "Uber for Business",
-    "provider": "Uber for Business",
-    "category": "saas-discounts",
-    "subcategory": "productivity",
-    "description": "Seamless business travel worldwide",
-    "shortDescription": "Seamless business travel worldwide",
-    "value": "Up to 10% off your first 5 rides (only available to US customers)",
-    "originalPrice": "",
-    "savings": "Save up to $50",
-    "savingsAmount": 50,
-    "eligibility": [
-      "Startups under 5 years old",
-      "Less than $10M in funding",
-      "Active business"
-    ],
-    "requirements": [
-      "Business email",
-      "Company details",
-      "Brief company description"
-    ],
-    "applicationProcess": [
-      "Visit the deal page",
-      "Click \"Apply Now\"",
-      "Fill out the application form",
-      "Submit required documentation",
-      "Wait for approval (typically 1-2 weeks)"
-    ],
-    "proTips": [
-      "Apply early for best availability",
-      "Have your pitch deck ready",
-      "Highlight your traction and growth"
-    ],
-    "tags": [
-      "business",
-      "business-process",
-      "Uber for Business"
-    ],
-    "status": "active",
-    "applicationUrl": "https://google.com/search?q=Uber%20for%20Business%20startup%20program",
-    "logoUrl": "",
-    "featured": false,
-    "verified": true,
-    "difficulty": "medium",
-    "timeToApply": "15 minutes",
-    "lastUpdated": "2026-01-20",
-    "createdAt": "2026-01-20",
-    "updatedAt": "2026-01-20",
-    "sourceVerified": true,
-    "icon": "🏢",
-    "recommended": false,
-    "detailedDescription": "Deals",
-    "enhancedValue": "$12,000",
-    "brandIcon": "https://uberforbusiness.com/favicon.ico",
-    "sortOrder": 9999
-  },
-  {
     "id": "deal-1768918863877-h2db5uywa",
     "slug": "visible-vc-846",
     "title": "Visible.vc",
@@ -12942,7 +12568,7 @@
       "Visible.vc"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=Visible.vc%20startup%20program",
+    "applicationUrl": "https://visible.vc/partners/",
     "logoUrl": "",
     "featured": false,
     "verified": true,
@@ -12957,350 +12583,6 @@
     "detailedDescription": "Deals",
     "enhancedValue": "$12,000",
     "brandIcon": "https://visible.vc.com/favicon.ico",
-    "sortOrder": 9999
-  },
-  {
-    "id": "deal-1768918863874-akey4z0y8",
-    "slug": "vista-social-286",
-    "title": "Vista Social",
-    "provider": "Vista Social",
-    "category": "saas-discounts",
-    "subcategory": "ai-tools",
-    "description": "AI-powered web development, redefined",
-    "shortDescription": "AI-powered web development, redefined",
-    "value": "20% off monthly plans or additional 20% off annual plans",
-    "originalPrice": "",
-    "savings": "Save up to $727",
-    "savingsAmount": 727,
-    "eligibility": [
-      "Startups under 5 years old",
-      "Less than $10M in funding",
-      "Active business"
-    ],
-    "requirements": [
-      "Business email",
-      "Company details",
-      "Brief company description"
-    ],
-    "applicationProcess": [
-      "Visit the deal page",
-      "Click \"Apply Now\"",
-      "Fill out the application form",
-      "Submit required documentation",
-      "Wait for approval (typically 1-2 weeks)"
-    ],
-    "proTips": [
-      "Apply early for best availability",
-      "Have your pitch deck ready",
-      "Highlight your traction and growth"
-    ],
-    "tags": [
-      "ai",
-      "ai-productivity",
-      "Vista Social"
-    ],
-    "status": "active",
-    "applicationUrl": "https://google.com/search?q=Vista%20Social%20startup%20program",
-    "logoUrl": "",
-    "featured": false,
-    "verified": true,
-    "difficulty": "medium",
-    "timeToApply": "15 minutes",
-    "lastUpdated": "2026-01-20",
-    "createdAt": "2026-01-20",
-    "updatedAt": "2026-01-20",
-    "sourceVerified": true,
-    "icon": "🤖",
-    "recommended": false,
-    "detailedDescription": "Deals",
-    "enhancedValue": "$12,000",
-    "brandIcon": "https://vistasocial.com/favicon.ico",
-    "sortOrder": 9999
-  },
-  {
-    "id": "deal-1768918863875-h1ifvdybg",
-    "slug": "vistaprint-452",
-    "title": "VistaPrint",
-    "provider": "VistaPrint",
-    "category": "saas-discounts",
-    "subcategory": "productivity",
-    "description": "Affordable prints, premium quality",
-    "shortDescription": "Affordable prints, premium quality",
-    "value": "Free economy shipping on orders $100+",
-    "originalPrice": "",
-    "savings": "Save up to $80",
-    "savingsAmount": 80,
-    "eligibility": [
-      "Startups under 5 years old",
-      "Less than $10M in funding",
-      "Active business"
-    ],
-    "requirements": [
-      "Business email",
-      "Company details",
-      "Brief company description"
-    ],
-    "applicationProcess": [
-      "Visit the deal page",
-      "Click \"Apply Now\"",
-      "Fill out the application form",
-      "Submit required documentation",
-      "Wait for approval (typically 1-2 weeks)"
-    ],
-    "proTips": [
-      "Apply early for best availability",
-      "Have your pitch deck ready",
-      "Highlight your traction and growth"
-    ],
-    "tags": [
-      "business",
-      "business-process",
-      "VistaPrint"
-    ],
-    "status": "active",
-    "applicationUrl": "https://google.com/search?q=VistaPrint%20startup%20program",
-    "logoUrl": "",
-    "featured": false,
-    "verified": true,
-    "difficulty": "medium",
-    "timeToApply": "15 minutes",
-    "lastUpdated": "2026-01-20",
-    "createdAt": "2026-01-20",
-    "updatedAt": "2026-01-20",
-    "sourceVerified": true,
-    "icon": "🏢",
-    "recommended": false,
-    "detailedDescription": "Deals",
-    "enhancedValue": "$12,000",
-    "brandIcon": "https://vistaprint.com/favicon.ico",
-    "sortOrder": 9999
-  },
-  {
-    "id": "deal-1768918863877-iju7mya0t",
-    "slug": "waalaxy-ex-prospectin-862",
-    "title": "Waalaxy (ex. ProspectIn)",
-    "provider": "Waalaxy (ex. ProspectIn)",
-    "category": "saas-discounts",
-    "subcategory": "productivity",
-    "description": "Connect with and prospect your leads effectively",
-    "shortDescription": "Connect with and prospect your leads effectively",
-    "value": "7 days free + 50% off annual plans",
-    "originalPrice": "",
-    "savings": "Save up to $170",
-    "savingsAmount": 170,
-    "eligibility": [
-      "Startups under 5 years old",
-      "Less than $10M in funding",
-      "Active business"
-    ],
-    "requirements": [
-      "Business email",
-      "Company details",
-      "Brief company description"
-    ],
-    "applicationProcess": [
-      "Visit the deal page",
-      "Click \"Apply Now\"",
-      "Fill out the application form",
-      "Submit required documentation",
-      "Wait for approval (typically 1-2 weeks)"
-    ],
-    "proTips": [
-      "Apply early for best availability",
-      "Have your pitch deck ready",
-      "Highlight your traction and growth"
-    ],
-    "tags": [
-      "customer",
-      "lead-management",
-      "Waalaxy (ex. ProspectIn)"
-    ],
-    "status": "active",
-    "applicationUrl": "https://google.com/search?q=Waalaxy%20(ex.%20ProspectIn)%20startup%20program",
-    "logoUrl": "",
-    "featured": false,
-    "verified": true,
-    "difficulty": "medium",
-    "timeToApply": "15 minutes",
-    "lastUpdated": "2026-01-20",
-    "createdAt": "2026-01-20",
-    "updatedAt": "2026-01-20",
-    "sourceVerified": true,
-    "icon": "👥",
-    "recommended": false,
-    "detailedDescription": "Deals",
-    "enhancedValue": "$12,000",
-    "brandIcon": "https://waalaxy.com/favicon.ico",
-    "sortOrder": 9999
-  },
-  {
-    "id": "deal-1768918863875-mf10myjkn",
-    "slug": "wetransact-406",
-    "title": "WeTransact",
-    "provider": "WeTransact",
-    "category": "saas-discounts",
-    "subcategory": "productivity",
-    "description": "Accelerate your Microsoft Marketplace journey",
-    "shortDescription": "Accelerate your Microsoft Marketplace journey",
-    "value": "1 year free listing on Microsoft Marketplace",
-    "originalPrice": "",
-    "savings": "Save up to $11,000",
-    "savingsAmount": 11000,
-    "eligibility": [
-      "Startups under 5 years old",
-      "Less than $10M in funding",
-      "Active business"
-    ],
-    "requirements": [
-      "Business email",
-      "Company details",
-      "Brief company description"
-    ],
-    "applicationProcess": [
-      "Visit the deal page",
-      "Click \"Apply Now\"",
-      "Fill out the application form",
-      "Submit required documentation",
-      "Wait for approval (typically 1-2 weeks)"
-    ],
-    "proTips": [
-      "Apply early for best availability",
-      "Have your pitch deck ready",
-      "Highlight your traction and growth"
-    ],
-    "tags": [
-      "business",
-      "business-process",
-      "WeTransact"
-    ],
-    "status": "active",
-    "applicationUrl": "https://google.com/search?q=WeTransact%20startup%20program",
-    "logoUrl": "",
-    "featured": false,
-    "verified": true,
-    "difficulty": "medium",
-    "timeToApply": "15 minutes",
-    "lastUpdated": "2026-01-20",
-    "createdAt": "2026-01-20",
-    "updatedAt": "2026-01-20",
-    "sourceVerified": true,
-    "icon": "🏢",
-    "recommended": false,
-    "brandIcon": "https://wetransact.com/favicon.ico",
-    "sortOrder": 9999
-  },
-  {
-    "id": "deal-1768918863876-x4jqmnzt4",
-    "slug": "wing-assistant-544",
-    "title": "Wing Assistant",
-    "provider": "Wing Assistant",
-    "category": "saas-discounts",
-    "subcategory": "productivity",
-    "description": "Delegate more, achieve more.",
-    "shortDescription": "Delegate more, achieve more.",
-    "value": "$1,000 in credits for Full-Time Services ($500 in credits for Part-Time)",
-    "originalPrice": "",
-    "savings": "Save up to $1,000",
-    "savingsAmount": 1000,
-    "eligibility": [
-      "Startups under 5 years old",
-      "Less than $10M in funding",
-      "Active business"
-    ],
-    "requirements": [
-      "Business email",
-      "Company details",
-      "Brief company description"
-    ],
-    "applicationProcess": [
-      "Visit the deal page",
-      "Click \"Apply Now\"",
-      "Fill out the application form",
-      "Submit required documentation",
-      "Wait for approval (typically 1-2 weeks)"
-    ],
-    "proTips": [
-      "Apply early for best availability",
-      "Have your pitch deck ready",
-      "Highlight your traction and growth"
-    ],
-    "tags": [
-      "business",
-      "business-process",
-      "Wing Assistant"
-    ],
-    "status": "active",
-    "applicationUrl": "https://google.com/search?q=Wing%20Assistant%20startup%20program",
-    "logoUrl": "",
-    "featured": false,
-    "verified": true,
-    "difficulty": "medium",
-    "timeToApply": "15 minutes",
-    "lastUpdated": "2026-01-20",
-    "createdAt": "2026-01-20",
-    "updatedAt": "2026-01-20",
-    "sourceVerified": true,
-    "icon": "🏢",
-    "recommended": false,
-    "brandIcon": "https://wingassistant.com/favicon.ico",
-    "sortOrder": 9999
-  },
-  {
-    "id": "deal-1768918863874-bx45f5hhp",
-    "slug": "winston-ai-280",
-    "title": "Winston AI",
-    "provider": "Winston AI",
-    "category": "saas-discounts",
-    "subcategory": "ai-tools",
-    "description": "Keep your content authentic",
-    "shortDescription": "Keep your content authentic",
-    "value": "30% off monthly or annual plans for 1 year",
-    "originalPrice": "",
-    "savings": "Save up to $176",
-    "savingsAmount": 176,
-    "eligibility": [
-      "Startups under 5 years old",
-      "Less than $10M in funding",
-      "Active business"
-    ],
-    "requirements": [
-      "Business email",
-      "Company details",
-      "Brief company description"
-    ],
-    "applicationProcess": [
-      "Visit the deal page",
-      "Click \"Apply Now\"",
-      "Fill out the application form",
-      "Submit required documentation",
-      "Wait for approval (typically 1-2 weeks)"
-    ],
-    "proTips": [
-      "Apply early for best availability",
-      "Have your pitch deck ready",
-      "Highlight your traction and growth"
-    ],
-    "tags": [
-      "ai",
-      "ai-marketing",
-      "Winston AI"
-    ],
-    "status": "active",
-    "applicationUrl": "https://google.com/search?q=Winston%20AI%20startup%20program",
-    "logoUrl": "",
-    "featured": false,
-    "verified": true,
-    "difficulty": "medium",
-    "timeToApply": "15 minutes",
-    "lastUpdated": "2026-01-20",
-    "createdAt": "2026-01-20",
-    "updatedAt": "2026-01-20",
-    "sourceVerified": true,
-    "icon": "🤖",
-    "recommended": false,
-    "detailedDescription": "Deals",
-    "enhancedValue": "$12,000",
-    "brandIcon": "https://winstonai.com/favicon.ico",
     "sortOrder": 9999
   },
   {
@@ -13598,7 +12880,7 @@
     ],
     "status": "active",
     "applicationUrl": "https://ads.tiktok.com/business/en-US/new-advertiser-offer",
-    "logoUrl": "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https%3A%2F%2Fgetstarted.tiktok.com%2Fttam-partners&size=128",
+    "logoUrl": "https://upload.wikimedia.org/wikipedia/en/a/a9/TikTok_logo.svg",
     "brandIcon": "https://cdn.worldvectorlogo.com/logos/tiktok-icon-2.svg",
     "featured": true,
     "verified": true,
@@ -13888,49 +13170,6 @@
     "verified": true
   },
   {
-    "title": "Google Ads",
-    "provider": "Google",
-    "value": "$500 Credits",
-    "savings": "$500",
-    "description": "Start your advertising journey with $500 in free ad credits when you spend $500. Reach potential customers across Search, YouTube, and Display networks.",
-    "shortDescription": "Get $500 in free ad credits when you spend $500 on Google Ads.",
-    "applicationUrl": "https://business.google.com/en-all/google-ads/",
-    "slug": "google-ads",
-    "category": "ad-credits",
-    "subcategory": "search-ads",
-    "status": "active",
-    "featured": true,
-    "recommended": true,
-    "eligibility": [
-      "New Google Ads accounts only",
-      "Must be applied within 14 days of account creation"
-    ],
-    "tags": [
-      "Search",
-      "PPC",
-      "Marketing",
-      "Google"
-    ],
-    "logoUrl": "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://ads.google.com&size=128",
-    "steps": [
-      {
-        "title": "Create Account",
-        "description": "Sign up for a new Google Ads account."
-      },
-      {
-        "title": "Apply Code",
-        "description": "Enter the promotional code within 14 days of account creation."
-      },
-      {
-        "title": "Spend Budget",
-        "description": "Spend $500 on ads within 60 days to trigger the credit."
-      }
-    ],
-    "id": "google-ads",
-    "createdAt": "2026-01-29T19:46:12.488Z",
-    "updatedAt": "2026-01-29T19:46:12.495Z"
-  },
-  {
     "title": "Microsoft Advertising",
     "provider": "Microsoft",
     "value": "$500 Credits",
@@ -13954,7 +13193,7 @@
       "B2B",
       "Marketing"
     ],
-    "logoUrl": "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://ads.microsoft.com&size=128",
+    "logoUrl": "https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg",
     "steps": [
       {
         "title": "Sign Up",
@@ -13971,50 +13210,8 @@
     ],
     "id": "microsoft-ads",
     "createdAt": "2026-01-29T19:46:12.495Z",
-    "updatedAt": "2026-01-29T19:46:12.495Z"
-  },
-  {
-    "title": "LinkedIn Ads",
-    "provider": "LinkedIn",
-    "value": "$500 Credits",
-    "savings": "$500+",
-    "description": "Reach decision-makers and professionals. LinkedIn offers various ad credit programs for startups and B2B businesses, often starting at $100-$500.",
-    "shortDescription": "Target professionals with up to $500 in free ad credits.",
-    "applicationUrl": "https://business.linkedin.com/advertise/ads",
-    "slug": "linkedin-ads",
-    "category": "ad-credits",
-    "subcategory": "social-ads",
-    "status": "active",
-    "featured": true,
-    "recommended": true,
-    "eligibility": [
-      "New ad accounts",
-      "B2B Focus"
-    ],
-    "tags": [
-      "Social",
-      "B2B",
-      "Professional",
-      "Marketing"
-    ],
-    "logoUrl": "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://business.linkedin.com&size=128",
-    "steps": [
-      {
-        "title": "Create Page",
-        "description": "Ensure you have a LinkedIn Company Page."
-      },
-      {
-        "title": "Open Ad Account",
-        "description": "Open a new Campaign Manager account."
-      },
-      {
-        "title": "Claim Offer",
-        "description": "Look for specific promotional links or email offers to claim credits."
-      }
-    ],
-    "id": "linkedin-ads",
-    "createdAt": "2026-01-29T19:46:12.495Z",
-    "updatedAt": "2026-01-29T19:46:12.495Z"
+    "updatedAt": "2026-01-29T19:46:12.495Z",
+    "brandIcon": "https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg"
   },
   {
     "title": "TikTok Ads Manager",
@@ -14040,7 +13237,7 @@
       "Viral",
       "Mobile"
     ],
-    "logoUrl": "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://ads.tiktok.com&size=128",
+    "logoUrl": "https://upload.wikimedia.org/wikipedia/en/a/a9/TikTok_logo.svg",
     "steps": [
       {
         "title": "Register",
@@ -14057,7 +13254,8 @@
     ],
     "id": "tiktok-ads",
     "createdAt": "2026-01-29T19:46:12.495Z",
-    "updatedAt": "2026-01-29T19:46:12.495Z"
+    "updatedAt": "2026-01-29T19:46:12.495Z",
+    "brandIcon": "https://cdn.worldvectorlogo.com/logos/tiktok-icon-2.svg"
   },
   {
     "title": "Yelp Ads",
@@ -14083,7 +13281,7 @@
       "Review",
       "Small Business"
     ],
-    "logoUrl": "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://biz.yelp.com&size=128",
+    "logoUrl": "https://www.yelp.com/favicon.ico",
     "steps": [
       {
         "title": "Claim Business",
@@ -14100,7 +13298,8 @@
     ],
     "id": "yelp-ads",
     "createdAt": "2026-01-29T19:46:12.495Z",
-    "updatedAt": "2026-01-29T19:46:12.495Z"
+    "updatedAt": "2026-01-29T19:46:12.495Z",
+    "brandIcon": "https://www.yelp.com/favicon.ico"
   },
   {
     "title": "Apple Search Ads",
@@ -14109,7 +13308,7 @@
     "savings": "$100",
     "description": "Drive app installs directly from the App Store. Apple offers a $100 credit for new Apple Search Ads accounts to help you get discovered.",
     "shortDescription": "$100 free credit to promote your iOS app.",
-    "applicationUrl": "https://ads.apple.com/",
+    "applicationUrl": "https://ads.apple.com/app-store/help/billing/0032-apple-ads-promo-credit",
     "slug": "apple-search-ads",
     "category": "ad-credits",
     "subcategory": "search-ads",
@@ -14126,7 +13325,7 @@
       "App Store",
       "ASO"
     ],
-    "logoUrl": "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://searchads.apple.com&size=128",
+    "logoUrl": "https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg",
     "steps": [
       {
         "title": "Log In",
@@ -14143,7 +13342,8 @@
     ],
     "id": "apple-search-ads",
     "createdAt": "2026-01-29T19:46:12.495Z",
-    "updatedAt": "2026-01-29T19:46:12.495Z"
+    "updatedAt": "2026-01-29T19:46:12.495Z",
+    "brandIcon": "https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg"
   },
   {
     "title": "Pinterest Ads",
@@ -14169,7 +13369,7 @@
       "Social",
       "Inspiration"
     ],
-    "logoUrl": "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://ads.pinterest.com&size=128",
+    "logoUrl": "https://upload.wikimedia.org/wikipedia/commons/0/08/Pinterest-logo.png",
     "steps": [
       {
         "title": "Create Business Account",
@@ -14186,7 +13386,8 @@
     ],
     "id": "pinterest-ads",
     "createdAt": "2026-01-29T19:46:12.495Z",
-    "updatedAt": "2026-01-29T19:46:12.495Z"
+    "updatedAt": "2026-01-29T19:46:12.495Z",
+    "brandIcon": "https://s.pinimg.com/webapp/favicon-54a5b2af.png"
   },
   {
     "title": "Reddit Ads",
@@ -14211,7 +13412,7 @@
       "Niche",
       "Discussion"
     ],
-    "logoUrl": "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://ads.reddit.com&size=128",
+    "logoUrl": "https://www.redditstatic.com/desktop2x/img/favicon/android-icon-192x192.png",
     "steps": [
       {
         "title": "Sign Up",
@@ -14228,7 +13429,8 @@
     ],
     "id": "reddit-ads",
     "createdAt": "2026-01-29T19:46:12.495Z",
-    "updatedAt": "2026-01-29T19:46:12.495Z"
+    "updatedAt": "2026-01-29T19:46:12.495Z",
+    "brandIcon": "https://www.redditstatic.com/desktop2x/img/favicon/android-icon-192x192.png"
   },
   {
     "title": "Spotify Ad Studio",
@@ -14253,7 +13455,7 @@
       "Music",
       "Podcast"
     ],
-    "logoUrl": "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://ads.spotify.com&size=128",
+    "logoUrl": "https://upload.wikimedia.org/wikipedia/commons/1/19/Spotify_logo_without_text.svg",
     "steps": [
       {
         "title": "Create Account",
@@ -14270,7 +13472,8 @@
     ],
     "id": "spotify-ads",
     "createdAt": "2026-01-29T19:46:12.496Z",
-    "updatedAt": "2026-01-29T19:46:12.496Z"
+    "updatedAt": "2026-01-29T19:46:12.496Z",
+    "brandIcon": "https://upload.wikimedia.org/wikipedia/commons/1/19/Spotify_logo_without_text.svg"
   },
   {
     "title": "Quora Ads",
@@ -14296,7 +13499,7 @@
       "Search",
       "Knowledge"
     ],
-    "logoUrl": "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://business.quora.com&size=128",
+    "logoUrl": "https://upload.wikimedia.org/wikipedia/commons/9/91/Quora_logo_2015.svg",
     "steps": [
       {
         "title": "Start Account",
@@ -14313,6 +13516,7 @@
     ],
     "id": "quora-ads",
     "createdAt": "2026-01-29T19:46:12.496Z",
-    "updatedAt": "2026-01-29T19:46:12.496Z"
+    "updatedAt": "2026-01-29T19:46:12.496Z",
+    "brandIcon": "https://www.quora.com/favicon.ico"
   }
 ]

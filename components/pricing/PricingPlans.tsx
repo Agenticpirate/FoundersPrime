@@ -79,7 +79,6 @@ export default function PricingPlans({ currency }: PricingPlansProps) {
         'Early-stage grants & founder communities',
         'Tools and credits matched to your stage',
         'Career & opportunity hub',
-        "Next'Founder community access",
       ],
       footnote: 'Built for active student builders shipping their first product.',
       cta: "Start Building Smarter",
@@ -98,7 +97,7 @@ export default function PricingPlans({ currency }: PricingPlansProps) {
       period: founderPricing.period,
       headline: 'Everything you need to scale.',
       subline: 'Full catalog access while you ship and grow your startup.',
-      monthlySub: 'Just $5.75/month, billed yearly',
+      monthlySub: 'About $12.42/month, billed yearly',
       valueAnchor: null,
       features: [
         "Everything in Next'Founder, plus:",
@@ -108,8 +107,6 @@ export default function PricingPlans({ currency }: PricingPlansProps) {
         'Funding & grant programs filtered to your stage',
         'Incubators, Accelerators & Programs database',
         'Verified Startups + Startup Ideas database',
-        'Private Founder community on Discord',
-        'Priority support — answers in hours, not days',
       ],
       footnote: null,
       cta: 'Scale as a Founder',
@@ -135,7 +132,6 @@ export default function PricingPlans({ currency }: PricingPlansProps) {
         'Pay once, never charged again',
         'Every future update included',
         'Founding member perks',
-        'Direct line to the team',
         'Lock in launch pricing forever',
       ],
       footnote: null,
@@ -302,7 +298,7 @@ function PlanCard({
 
   // Accent colors per plan
   const accent = {
-    gray: { iconChip: 'bg-gray-100', iconColor: 'text-gray-700', check: 'text-gray-700', badgeBg: 'bg-gray-100', badgeText: 'text-gray-800', headerStripe: 'bg-gray-300' },
+    gray: { iconChip: 'bg-gray-100', iconColor: 'text-gray-700', check: 'text-gray-700', badgeBg: 'bg-red-600', badgeText: 'text-white', headerStripe: 'bg-gray-300' },
     sky: { iconChip: 'bg-sky-100', iconColor: 'text-sky-700', check: 'text-sky-600', badgeBg: 'bg-red-500', badgeText: 'text-white', headerStripe: 'bg-accent-yellow' },
     amber: { iconChip: 'bg-amber-100', iconColor: 'text-amber-700', check: 'text-amber-700', badgeBg: 'bg-amber-200', badgeText: 'text-amber-900', headerStripe: 'bg-amber-400' },
   }[plan.accent as 'gray' | 'sky' | 'amber']

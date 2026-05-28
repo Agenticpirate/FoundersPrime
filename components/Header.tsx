@@ -372,8 +372,10 @@ export default function Header() {
                         className="flex-1 flex items-center gap-2.5 py-3 text-xs font-mono font-black uppercase text-white transition-colors"
                       >
                         <span
-                          className={`w-7 h-7 flex items-center justify-center bg-white/5 border border-white/15 transition-transform duration-300 ${
-                            expandedSection === section.id ? 'scale-110 rotate-[-4deg] bg-accent-yellow text-black border-accent-yellow' : 'text-accent-yellow'
+                          className={`w-7 h-7 flex items-center justify-center border transition-transform duration-300 ${
+                            expandedSection === section.id
+                              ? 'scale-110 rotate-[-4deg] bg-accent-yellow text-black border-accent-yellow shadow-[0_0_12px_rgba(255,221,0,0.45)]'
+                              : 'bg-white/5 border-white/15 text-accent-yellow'
                           }`}
                         >
                           <span className="material-symbols-outlined text-[16px]">{section.icon}</span>

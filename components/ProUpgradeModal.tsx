@@ -118,7 +118,7 @@ export default function ProUpgradeModal({ isOpen, onClose }: ProUpgradeModalProp
                             {[
                                 'Unlimited deal claims across every category',
                                 'Grants, accelerators, and incubator programs',
-                                'Priority support — answers in hours',
+                                'Verified Startups + Startup Ideas database',
                             ].map((item) => (
                                 <li key={item} className="flex items-start gap-2.5">
                                     <span

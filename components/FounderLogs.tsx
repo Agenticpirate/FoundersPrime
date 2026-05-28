@@ -83,7 +83,7 @@ const testimonials = [
     image: "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80",
   },
   {
-    quote: "I subscribed for $69/yr and applied to 3 grants in week one. Insane value.",
+    quote: "I subscribed for $149/yr and applied to 3 grants in week one. Insane value.",
     name: "Sofia R.",
     title: "Founder, Lumen",
     image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80",

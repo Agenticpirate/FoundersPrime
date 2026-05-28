@@ -346,8 +346,8 @@ function OverviewTab({
         </div>
       </section>
 
-      {/* Tip + Community */}
-      <section className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5">
+      {/* Tip */}
+      <section>
         <div className="relative bg-white border-2 border-black shadow-[3px_3px_0px_#111] rounded-sm p-5 overflow-hidden">
           <div className="absolute -bottom-10 -left-10 w-32 h-32 pointer-events-none opacity-[0.07]" aria-hidden="true">
             <svg viewBox="0 0 200 200" className="w-full h-full text-gray-900 dashboard-tip-mandala-spin" fill="none" stroke="currentColor" strokeWidth="0.6">
@@ -369,41 +369,6 @@ function OverviewTab({
               Most providers approve faster when the application email matches your domain. Set up{' '}
               <span className="font-bold text-black">name@yourstartup.com</span> before you claim deals.
             </p>
-          </div>
-        </div>
-
-        <div className="relative bg-gradient-to-br from-gray-900 to-black text-white border-2 border-black shadow-[3px_3px_0px_#FFD500] rounded-sm p-5 overflow-hidden">
-          <div className="absolute -top-10 -right-10 w-40 h-40 pointer-events-none opacity-[0.18]" aria-hidden="true">
-            <svg viewBox="0 0 200 200" className="w-full h-full text-accent-yellow dashboard-community-mandala-spin" fill="none" stroke="currentColor" strokeWidth="0.7">
-              <circle cx="100" cy="100" r="40" />
-              <circle cx="100" cy="100" r="60" strokeDasharray="2 4" />
-              {[0, 60, 120, 180, 240, 300].map((deg) => (
-                <g key={deg} transform={`rotate(${deg} 100 100)`}>
-                  <line x1="100" y1="40" x2="100" y2="20" />
-                  <circle cx="100" cy="20" r="2" fill="currentColor" />
-                </g>
-              ))}
-              <circle cx="100" cy="100" r="3" fill="currentColor" />
-            </svg>
-          </div>
-          <div className="relative">
-            <p className="font-mono text-[10px] font-black uppercase tracking-[0.16em] text-accent-yellow mb-2 inline-flex items-center gap-1.5">
-              <span className="w-1 h-1 rounded-full bg-accent-yellow animate-pulse" />
-              Founder Community
-            </p>
-            <h3 className="font-mono text-base font-black uppercase leading-tight mb-2">
-              Build alongside other founders.
-            </h3>
-            <p className="text-[12.5px] text-gray-300 leading-relaxed mb-3.5">
-              Private Discord for Founder &amp; Legend members. Share what&apos;s working, ask for feedback, ship faster.
-            </p>
-            <Link
-              href={isPro ? '/community' : '/pricing'}
-              className="inline-flex items-center gap-1.5 bg-accent-yellow text-black font-mono font-black text-[10.5px] uppercase tracking-[0.1em] px-3 py-1.5 border-2 border-black rounded-sm shadow-[2px_2px_0px_#111] hover:bg-amber-300 hover:shadow-[3px_3px_0px_#111] hover:-translate-x-px hover:-translate-y-px transition-all"
-            >
-              {isPro ? 'Open Discord' : 'Unlock Access'}
-              <span className="material-symbols-outlined !text-[12px]">arrow_forward</span>
-            </Link>
           </div>
         </div>
       </section>

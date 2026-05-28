@@ -27,33 +27,30 @@ export interface PricingConfig {
 export const PRICING_CONFIG: PricingConfig = {
     nextfounder: {
         USD: {
-            actual: 59,
-            discounted: 29.99,
-            savings: 29,
+            actual: null,
+            discounted: 59,
+            savings: null,
             symbol: '$',
-            period: '/yr',
-            badge: 'SAVE $29'
+            period: '/yr'
         }
     },
     founder: {
         USD: {
-            actual: 149,
-            discounted: 69,
-            savings: 80,
+            actual: null,
+            discounted: 149,
+            savings: null,
             symbol: '$',
             period: '/yr',
-            monthlyEquivalent: 5.75,
-            badge: 'SAVE $80'
+            monthlyEquivalent: 12.42
         }
     },
     legend: {
         USD: {
-            actual: 299,
-            discounted: 149,
-            savings: 150,
+            actual: null,
+            discounted: 299,
+            savings: null,
             symbol: '$',
-            period: '/once',
-            badge: 'SAVE $150'
+            period: '/once'
         }
     }
 }

@@ -4,9 +4,9 @@ import { useEffect, useState } from 'react'
 
 const MESSAGES = [
   '47 new deals added this week',
-  'Founder Yearly · $69 · was $149 — limited time',
+  'Founder Yearly · $149/yr · unlimited deal access',
   '500+ verified credits, grants & accelerators inside',
-  'NextFounder $29.99/yr · exclusive perks for student builders',
+  "Next'Founder $59/yr · built for student builders",
 ]
 
 export default function AnnouncementBar() {

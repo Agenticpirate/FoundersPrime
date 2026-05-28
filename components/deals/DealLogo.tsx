@@ -95,10 +95,20 @@ export default function DealLogo({ logoUrl, brandIcon, provider, size = 'md' }: 
     lg: 'w-24 h-24',
   }
 
-  // Get domain from provider name (ignore stored logo URLs)
+  // Get domain from provider name (used as fallback if logoUrl isn't usable)
   const domain = providerToDomain(provider)
-  
+
+  // Prefer caller-provided logoUrl / brandIcon when they look like real
+  // image URLs. Skip generic placeholders.
+  const isUsable = (s?: string) =>
+    !!s &&
+    /^https?:\/\//i.test(s) &&
+    !s.includes('ui-avatars') &&
+    !s.includes('rocket')
+
   const fallbackChain = [
+    ...(isUsable(logoUrl) ? [logoUrl as string] : []),
+    ...(isUsable(brandIcon) && brandIcon !== logoUrl ? [brandIcon as string] : []),
     `https://www.google.com/s2/favicons?domain=${domain}&sz=128`,
     `https://logo.clearbit.com/${domain}`,
   ]

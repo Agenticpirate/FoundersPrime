@@ -35,7 +35,7 @@ export default function AdminDashboard() {
           { label: 'Total Users', value: '2', change: 'Early stage', accent: 'bg-primary' },
           { label: 'Paid Subs', value: '1', change: 'Founder Yearly', accent: 'bg-accent-yellow' },
           { label: 'Lifetime', value: '0', change: '—', accent: 'bg-blue-500' },
-          { label: 'Revenue', value: '$69', change: 'USD excl. tax', accent: 'bg-black', dark: true },
+          { label: 'Revenue', value: '$149', change: 'USD excl. tax', accent: 'bg-black', dark: true },
         ].map((s) => (
           <div key={s.label} className={`${s.dark ? 'bg-black text-white' : 'bg-white'} p-3 border-2 border-black shadow-[2px_2px_0px_#111] relative overflow-hidden`}>
             <div className={`absolute -right-4 -top-4 w-12 h-12 ${s.accent} rounded-full ${s.dark ? 'border-white/20' : 'border-black'} border opacity-30`} />
@@ -86,7 +86,7 @@ export default function AdminDashboard() {
             {/* Summary */}
             <div className="w-full bg-gray-50 border-2 border-dashed border-gray-300 mb-3 p-4 md:p-6 text-center">
               <p className="font-mono text-[10px] text-gray-400 uppercase mb-1">Total Revenue to Date</p>
-              <p className="font-black text-3xl md:text-4xl font-mono text-green-700">$69.00</p>
+              <p className="font-black text-3xl md:text-4xl font-mono text-green-700">$149.00</p>
               <p className="font-mono text-[10px] text-gray-500 mt-1">1 × Founder Yearly (excl. tax)</p>
             </div>
 
@@ -103,7 +103,7 @@ export default function AdminDashboard() {
               <tbody>
                 {[
                   { src: 'Explorer Monthly', users: '0', rev: '$0', status: 'No subs', color: 'bg-gray-300' },
-                  { src: 'Founder Yearly', users: '1', rev: '$69.00', status: 'Active', color: 'bg-green-500' },
+                  { src: 'Founder Yearly', users: '1', rev: '$149.00', status: 'Active', color: 'bg-green-500' },
                   { src: 'Legend Lifetime', users: '0', rev: '$0', status: 'No subs', color: 'bg-gray-300' },
                 ].map((r) => (
                   <tr key={r.src} className="border-b border-gray-100 hover:bg-gray-50">
@@ -135,7 +135,7 @@ export default function AdminDashboard() {
                 </div>
                 <div className="text-right flex-shrink-0">
                   <span className="bg-accent-yellow text-black text-[8px] font-bold px-2 py-0.5 border border-black">FOUNDER</span>
-                  <p className="font-mono text-[9px] text-gray-400 mt-0.5">$69/yr</p>
+                  <p className="font-mono text-[9px] text-gray-400 mt-0.5">$149/yr</p>
                 </div>
               </div>
             </div>
@@ -177,7 +177,7 @@ export default function AdminDashboard() {
             <div className="flex flex-col gap-3 relative">
               <div className="absolute left-[15px] top-2 bottom-2 w-px bg-white/15" />
               {[
-                { time: 'May 16', text: 'Paid: Sammy Ray — Founder Yearly ($69)', Icon: Award, bg: 'bg-accent-yellow text-black' },
+                { time: 'May 16', text: 'Paid: Sammy Ray — Founder Yearly ($149)', Icon: Award, bg: 'bg-accent-yellow text-black' },
                 { time: 'Recent', text: 'New user: hello@axionxlab.com', Icon: UserPlus, bg: 'bg-white text-black' },
                 { time: 'Setup', text: 'Google Analytics configured', Icon: CheckCircle, bg: 'bg-green-500 text-white' },
               ].map((a, i) => (

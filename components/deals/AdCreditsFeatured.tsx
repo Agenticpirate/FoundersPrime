@@ -13,7 +13,7 @@ export default function AdCreditsFeatured() {
       ],
       value: '$20,000 credits',
       validity: '60 days to activate',
-      href: '/deals/google-ads-startup'
+      href: '/deals/google-ads-startup-credits'
     },
     {
       id: 'facebook-ads-startup',
@@ -37,7 +37,7 @@ export default function AdCreditsFeatured() {
       ],
       value: '$10,000 credits',
       validity: 'B2B focused',
-      href: '/deals/linkedin-ads-startup'
+      href: '/deals/linkedin-ads-b2b-credits'
     },
     {
       id: 'tiktok-ads-startup',
@@ -49,7 +49,7 @@ export default function AdCreditsFeatured() {
       ],
       value: '$5,000 credits',
       validity: 'Creative focused',
-      href: '/deals/tiktok-ads-startup'
+      href: '/deals/tiktok-ads'
     }
   ]
 

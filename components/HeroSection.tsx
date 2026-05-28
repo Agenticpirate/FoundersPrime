@@ -39,27 +39,129 @@ const VALUE_STACK = [
 ]
 
 export default function HeroSection() {
-  /* Live "savings tracked" counter */
-  const [savingsEnd, setSavingsEnd] = useState(125_400)
-  const savingsStartRef = useRef(125_400)
+  /* Cumulative "saved by founders so far" counter — single hero metric */
+  const [memberSavingsEnd, setMemberSavingsEnd] = useState(2_847_320)
+  const memberSavingsStartRef = useRef(2_847_320)
+
+  /* Cursor-following yellow fog. We use refs + rAF instead of state so
+     the gradient follows the mouse smoothly on every frame without
+     thrashing React re-renders. Two layered orbs lag behind each other
+     by different easing values for a soft "trailing fog" feel. */
+  const sectionRef = useRef<HTMLElement | null>(null)
+  const fogRef = useRef<HTMLDivElement | null>(null)
+  const fogTrailRef = useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {
     const interval = setInterval(() => {
-      const increase = Math.floor(Math.random() * 46) + 5
-      setSavingsEnd((prev) => {
-        const next = prev + increase >= 1_000_000_000 ? 125_400 : prev + increase
-        savingsStartRef.current = prev
-        return next
+      // Larger jumps so the bigger number actually moves visibly
+      const increase = Math.floor(Math.random() * 480) + 120
+      setMemberSavingsEnd((prev) => {
+        memberSavingsStartRef.current = prev
+        return prev + increase
       })
-    }, 5000)
+    }, 4200)
     return () => clearInterval(interval)
   }, [])
 
+  useEffect(() => {
+    const section = sectionRef.current
+    const fog = fogRef.current
+    const trail = fogTrailRef.current
+    if (!section || !fog || !trail) return
+
+    // Respect prefers-reduced-motion — skip the cursor follow entirely.
+    const reduceMotion =
+      typeof window !== 'undefined' &&
+      window.matchMedia &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (reduceMotion) return
+
+    let targetX = 0
+    let targetY = 0
+    let fogX = 0
+    let fogY = 0
+    let trailX = 0
+    let trailY = 0
+    let raf = 0
+    let active = false
+
+    const onMove = (e: MouseEvent) => {
+      const rect = section.getBoundingClientRect()
+      targetX = e.clientX - rect.left
+      targetY = e.clientY - rect.top
+      if (!active) {
+        active = true
+        fog.style.opacity = '1'
+        trail.style.opacity = '1'
+      }
+    }
+
+    const onLeave = () => {
+      active = false
+      fog.style.opacity = '0'
+      trail.style.opacity = '0'
+    }
+
+    const tick = () => {
+      // Lead orb: snappier ease (0.18). Trail orb: slower (0.08) for fog drift.
+      fogX += (targetX - fogX) * 0.18
+      fogY += (targetY - fogY) * 0.18
+      trailX += (targetX - trailX) * 0.08
+      trailY += (targetY - trailY) * 0.08
+      fog.style.transform = `translate3d(${fogX}px, ${fogY}px, 0) translate(-50%, -50%)`
+      trail.style.transform = `translate3d(${trailX}px, ${trailY}px, 0) translate(-50%, -50%)`
+      raf = requestAnimationFrame(tick)
+    }
+    raf = requestAnimationFrame(tick)
+
+    section.addEventListener('mousemove', onMove)
+    section.addEventListener('mouseleave', onLeave)
+    return () => {
+      section.removeEventListener('mousemove', onMove)
+      section.removeEventListener('mouseleave', onLeave)
+      cancelAnimationFrame(raf)
+    }
+  }, [])
+
   return (
-    <section className="relative min-h-[calc(100dvh-100px)] md:min-h-[calc(100vh-120px)] pt-4 pb-0 md:pt-8 lg:pt-10 overflow-hidden grid-bg flex flex-col">
+    <section
+      ref={sectionRef}
+      className="relative min-h-[calc(100dvh-100px)] md:min-h-[calc(100vh-120px)] pt-3 pb-0 md:pt-5 lg:pt-6 overflow-hidden grid-bg flex flex-col"
+    >
       {/* Soft glow accents */}
       <div className="absolute -top-32 -left-32 w-96 h-96 bg-accent-yellow/15 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute -bottom-40 -right-32 w-[28rem] h-[28rem] bg-blue-300/15 rounded-full blur-3xl pointer-events-none" />
+
+      {/* Cursor-following yellow fog (lead orb) */}
+      <div
+        ref={fogRef}
+        aria-hidden="true"
+        className="hidden md:block pointer-events-none absolute top-0 left-0 z-[1] opacity-0 transition-opacity duration-300"
+        style={{
+          width: '420px',
+          height: '420px',
+          background:
+            'radial-gradient(circle, rgba(255,221,0,0.28) 0%, rgba(255,221,0,0.12) 35%, rgba(255,221,0,0) 70%)',
+          filter: 'blur(28px)',
+          mixBlendMode: 'multiply',
+          willChange: 'transform, opacity',
+        }}
+      />
+      {/* Trailing fog (slower, larger, lower opacity) */}
+      <div
+        ref={fogTrailRef}
+        aria-hidden="true"
+        className="hidden md:block pointer-events-none absolute top-0 left-0 z-[1] opacity-0 transition-opacity duration-500"
+        style={{
+          width: '640px',
+          height: '640px',
+          background:
+            'radial-gradient(circle, rgba(255,221,0,0.16) 0%, rgba(255,221,0,0.06) 40%, rgba(255,221,0,0) 75%)',
+          filter: 'blur(48px)',
+          mixBlendMode: 'multiply',
+          willChange: 'transform, opacity',
+        }}
+      />
 
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full mb-3 md:mb-5 flex-1 flex items-center">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 items-center w-full">
@@ -68,80 +170,91 @@ export default function HeroSection() {
           <div className="lg:col-span-7 flex flex-col justify-center items-start">
 
             {/* Eyebrow — sets the audience clearly */}
-            <div className="inline-flex items-center gap-2 bg-black text-accent-yellow font-mono text-[10px] md:text-xs font-black px-3 py-1 mb-4 uppercase tracking-widest border-2 border-black shadow-[3px_3px_0px_#FFD500] hero-mobile-fade hero-mobile-fade-1">
+            <div className="inline-flex items-center gap-2 bg-black text-accent-yellow font-mono text-[9px] md:text-xs font-black px-2.5 md:px-3 py-1 mb-2.5 md:mb-3.5 uppercase tracking-widest border-2 border-black shadow-[3px_3px_0px_#FFD500] hero-mobile-fade hero-mobile-fade-1">
               <span className="w-1.5 h-1.5 bg-accent-yellow rounded-full animate-pulse" />
               Built for bootstrapped founders
             </div>
 
-            {/* Hero headline — specific, outcome-led */}
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-black tracking-tight mb-3 leading-[1.02] font-mono hero-mobile-fade hero-mobile-fade-2">
-              Save{' '}
-              <span className="relative inline-block">
-                <span className="relative z-10 bg-accent-yellow px-2 border-2 border-black box-decoration-clone hero-highlight-glow">$500K+</span>
+            {/* Hero headline — three-line punch.
+                FREE CREDITS. / REAL GRANTS. / ZERO DILUTION. (highlighted)
+                Sized so the full hero (incl. brand marquee) fits in the
+                viewport on a typical 1080p / 13-inch laptop screen. */}
+            <h1 className="font-black text-black tracking-tight mb-3 md:mb-4 font-mono uppercase hero-mobile-fade hero-mobile-fade-2 w-full">
+              <span className="block leading-[1.05] mb-1.5 md:mb-2 text-3xl sm:text-4xl md:text-5xl lg:text-[60px]">
+                Free Credits.
               </span>
-              <br />
-              in startup credits<br />
-              &amp; grants.
+              <span className="block leading-[1.05] mb-2 md:mb-3 text-3xl sm:text-4xl md:text-5xl lg:text-[60px]">
+                Real Grants.
+              </span>
+              <span className="block leading-[1.05]">
+                <span className="relative inline-block align-middle">
+                  <span className="relative z-10 inline-block bg-accent-yellow px-2.5 md:px-3.5 py-0.5 md:py-1 border-2 md:border-[3px] border-black text-3xl sm:text-4xl md:text-5xl lg:text-[60px] hero-highlight-glow">
+                    Zero Dilution.
+                  </span>
+                  {/* Decorative offset shadow for depth */}
+                  <span aria-hidden="true" className="absolute inset-0 translate-x-1.5 translate-y-1.5 md:translate-x-2 md:translate-y-2 bg-black -z-10 rounded-[1px]" />
+                </span>
+              </span>
             </h1>
 
-            {/* Subhead — process compression + audience clarity */}
-            <p className="text-base md:text-lg text-black mb-3 md:mb-4 font-medium max-w-2xl leading-relaxed hero-mobile-fade hero-mobile-fade-3">
-              500+ verified deals from <strong>AWS, Stripe, OpenAI, HubSpot</strong> &amp; more.
-              Direct apply links. New drops every week.{' '}
-              <span className="font-black border-b-[3px] border-accent-yellow inline-block">
-                Zero equity. Real savings.
-              </span>
+            {/* Subhead — value preview, AWS / Stripe / HubSpot anchored, two-line layout */}
+            <p className="hidden md:block text-[15px] md:text-base text-black mb-3 md:mb-4 font-medium max-w-[640px] leading-relaxed hero-mobile-fade hero-mobile-fade-3">
+              A curated database of founder perks &mdash; up to <strong>$350K</strong> in cloud credits, startup grants, accelerator benefits, and exclusive discounts from <strong>AWS, Stripe, HubSpot</strong> and more.
+            </p>
+            {/* Mobile-only condensed subhead */}
+            <p className="md:hidden text-[13px] text-black mb-3 font-medium leading-snug hero-mobile-fade hero-mobile-fade-3">
+              A curated database of founder perks &mdash; up to <strong>$350K</strong> in cloud credits, grants, accelerators, and discounts from <strong>AWS, Stripe, HubSpot</strong>.
             </p>
 
             {/* Audience split — Founders vs Students */}
-            <div className="flex flex-wrap items-center gap-2 mb-5 md:mb-6 hero-mobile-fade hero-mobile-fade-3">
-              <span className="inline-flex items-center gap-1.5 bg-white border-2 border-black px-2.5 py-1 font-mono text-[10px] md:text-xs font-black uppercase tracking-wider shadow-[2px_2px_0px_#111]">
-                <span className="material-symbols-outlined text-sm">rocket_launch</span>
+            <div className="flex flex-wrap items-center gap-1.5 md:gap-2 mb-3 md:mb-4 hero-mobile-fade hero-mobile-fade-3">
+              <span className="inline-flex items-center gap-1 md:gap-1.5 bg-white border-2 border-black px-2 md:px-2.5 py-0.5 md:py-1 font-mono text-[9px] md:text-xs font-black uppercase tracking-wider shadow-[2px_2px_0px_#111]">
+                <span className="material-symbols-outlined !text-[12px] md:!text-sm">rocket_launch</span>
                 For Founders
               </span>
-              <span className="font-mono text-[10px] md:text-xs text-gray-400 font-bold">+</span>
+              <span className="font-mono text-[9px] md:text-xs text-gray-400 font-bold">+</span>
               <Link
                 href="/pricing"
-                className="inline-flex items-center gap-1.5 bg-accent-yellow border-2 border-black px-2.5 py-1 font-mono text-[10px] md:text-xs font-black uppercase tracking-wider shadow-[2px_2px_0px_#111] hover:-translate-y-0.5 transition-transform"
+                className="inline-flex items-center gap-1 md:gap-1.5 bg-accent-yellow border-2 border-black px-2 md:px-2.5 py-0.5 md:py-1 font-mono text-[9px] md:text-xs font-black uppercase tracking-wider shadow-[2px_2px_0px_#111] hover:-translate-y-0.5 transition-transform"
               >
-                <span className="material-symbols-outlined text-sm">school</span>
-                Next'Founder · for Students
+                <span className="material-symbols-outlined !text-[12px] md:!text-sm">school</span>
+                Next'Founder · Students
               </Link>
             </div>
 
-            {/* CTAs — single focal CTA + low-friction secondary */}
-            <div className="flex flex-col sm:flex-row gap-3 mb-4 w-full max-w-2xl hero-mobile-fade hero-mobile-fade-4">
+            {/* CTAs — mobile: side-by-side compact, desktop: stacked */}
+            <div className="flex flex-row gap-2 md:gap-3 mb-3 md:mb-4 w-full max-w-2xl hero-mobile-fade hero-mobile-fade-4">
               <div className="relative flex-1">
                 <GlowingEffect spread={50} glow={true} disabled={false} proximity={80} inactiveZone={0.01} borderWidth={2} />
                 <Link
                   href="/deals"
-                  className="hero-cta-primary bg-black text-white text-sm md:text-base font-black py-4 px-6 flex items-center justify-center gap-2 transition-all hover:bg-accent-yellow hover:text-black shadow-[5px_5px_0px_0px_rgba(255,221,0,0.8)] hover:shadow-[2px_2px_0px_0px_rgba(255,221,0,0.8)] hover:translate-x-[3px] hover:translate-y-[3px] w-full font-mono uppercase tracking-wider relative overflow-hidden border-2 border-black"
+                  className="hero-cta-primary bg-black text-white text-[12px] md:text-base font-black py-3 md:py-4 px-3 md:px-6 flex items-center justify-center gap-1.5 md:gap-2 transition-all hover:bg-accent-yellow hover:text-black shadow-[5px_5px_0px_0px_rgba(255,221,0,0.8)] hover:shadow-[2px_2px_0px_0px_rgba(255,221,0,0.8)] hover:translate-x-[3px] hover:translate-y-[3px] w-full font-mono uppercase tracking-wider relative overflow-hidden border-2 border-black"
                 >
-                  <span className="relative z-10 flex items-center gap-2">
-                    <span className="material-symbols-outlined text-base">bolt</span>
-                    Show Me The Deals
-                    <span className="material-symbols-outlined text-base hero-arrow-bounce">arrow_forward</span>
+                  <span className="relative z-10 flex items-center gap-1.5 md:gap-2">
+                    <span className="material-symbols-outlined !text-[14px] md:!text-base">bolt</span>
+                    <span>Unlock the Deals</span>
+                    <span className="material-symbols-outlined !text-[14px] md:!text-base hero-arrow-bounce">arrow_forward</span>
                   </span>
                 </Link>
               </div>
               <Link
                 href="/pricing"
-                className="flex items-center justify-center gap-2 border-2 border-black bg-white text-black font-mono font-black text-sm py-4 px-5 hover:bg-black hover:text-accent-yellow transition-all uppercase tracking-wider whitespace-nowrap"
+                className="flex items-center justify-center gap-1.5 md:gap-2 border-2 border-black bg-white text-black font-mono font-black text-[12px] md:text-sm py-3 md:py-4 px-3 md:px-5 hover:bg-black hover:text-accent-yellow transition-all uppercase tracking-wider whitespace-nowrap"
               >
-                See Plans
-                <span className="material-symbols-outlined text-base">arrow_forward</span>
+                <span>View Pricing</span>
+                <span className="material-symbols-outlined !text-[14px] md:!text-base">arrow_forward</span>
               </Link>
             </div>
 
-            {/* Risk reversal — addresses friction objections */}
-            <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 mb-5 hero-mobile-fade hero-mobile-fade-4">
+            {/* Risk reversal — mobile: 2-col grid, desktop: inline */}
+            <div className="grid grid-cols-2 gap-x-3 gap-y-1 md:flex md:flex-wrap md:items-center md:gap-x-4 md:gap-y-1.5 mb-3 md:mb-3 hero-mobile-fade hero-mobile-fade-4">
               {[
-                { icon: 'verified', text: 'Manually verified weekly' },
+                { icon: 'verified', text: 'Founder-vetted weekly' },
                 { icon: 'flash_on', text: 'Apply in under 3 minutes' },
-                { icon: 'shield', text: '100% non-dilutive' },
+                { icon: 'shield', text: 'Zero equity. Ever.' },
               ].map((item) => (
-                <span key={item.text} className="inline-flex items-center gap-1 text-[11px] md:text-xs font-mono font-bold text-gray-700">
-                  <span className="material-symbols-outlined text-sm text-green-600" style={{ fontVariationSettings: "'FILL' 1" }}>
+                <span key={item.text} className="inline-flex items-center gap-1 text-[10.5px] md:text-xs font-mono font-bold text-gray-700">
+                  <span className="material-symbols-outlined !text-[12px] md:!text-sm text-green-600" style={{ fontVariationSettings: "'FILL' 1" }}>
                     check_circle
                   </span>
                   {item.text}
@@ -150,8 +263,8 @@ export default function HeroSection() {
             </div>
 
             {/* Social proof: brand wall above the fold */}
-            <div className="hidden md:block w-full max-w-2xl border-t-2 border-black/10 pt-4 hero-mobile-fade hero-mobile-fade-5">
-              <p className="font-mono text-[10px] font-black uppercase tracking-widest text-gray-500 mb-2.5">
+            <div className="hidden md:block w-full max-w-2xl border-t-2 border-black/10 pt-3 hero-mobile-fade hero-mobile-fade-5">
+              <p className="font-mono text-[10px] font-black uppercase tracking-widest text-gray-500 mb-2">
                 Credits &amp; deals from
               </p>
               <div className="flex items-center gap-2 flex-wrap">
@@ -171,18 +284,18 @@ export default function HeroSection() {
             </div>
 
             {/* Mobile-only highlight cards */}
-            <div className="md:hidden grid grid-cols-3 gap-1.5 mt-3 w-full hero-mobile-fade hero-mobile-fade-5">
-              <div className="bg-sky-100 border-2 border-black p-2 text-center shadow-[2px_2px_0px_#111]">
+            <div className="md:hidden grid grid-cols-3 gap-1.5 mt-2 w-full hero-mobile-fade hero-mobile-fade-5">
+              <div className="bg-sky-100 border-2 border-black p-1.5 text-center shadow-[2px_2px_0px_#111]">
                 <div className="text-[7px] font-mono font-bold uppercase leading-tight text-sky-900">Cloud Credits</div>
-                <div className="text-sm font-mono font-black leading-tight">$200K+</div>
+                <div className="text-[13px] font-mono font-black leading-tight">$200K+</div>
               </div>
-              <div className="bg-green-100 border-2 border-black p-2 text-center shadow-[2px_2px_0px_#111]">
+              <div className="bg-green-100 border-2 border-black p-1.5 text-center shadow-[2px_2px_0px_#111]">
                 <div className="text-[7px] font-mono font-bold uppercase leading-tight text-green-900">Grants</div>
-                <div className="text-sm font-mono font-black leading-tight">$10M+</div>
+                <div className="text-[13px] font-mono font-black leading-tight">$10M+</div>
               </div>
-              <div className="bg-accent-yellow border-2 border-black p-2 text-center shadow-[2px_2px_0px_#111]">
+              <div className="bg-accent-yellow border-2 border-black p-1.5 text-center shadow-[2px_2px_0px_#111]">
                 <div className="text-[7px] font-mono font-bold uppercase leading-tight">Accelerators</div>
-                <div className="text-sm font-mono font-black leading-tight">50+</div>
+                <div className="text-[13px] font-mono font-black leading-tight">50+</div>
               </div>
             </div>
           </div>
@@ -201,46 +314,51 @@ export default function HeroSection() {
                 </span>
               </div>
 
-              <div className="p-4 bg-white flex flex-col gap-3">
-                {/* Live counter — proof that things are happening */}
-                <div className="bg-gradient-to-br from-gray-50 to-white border-2 border-black p-4 relative overflow-hidden">
-                  <div className="absolute -top-6 -right-6 w-24 h-24 bg-accent-yellow/40 rounded-full blur-2xl pointer-events-none" />
+              <div className="p-3 bg-white flex flex-col gap-2">
+                {/* Hero counter — the single, biggest social-proof metric */}
+                <div className="bg-gradient-to-br from-black via-black to-gray-900 text-white border-2 border-black p-3 relative overflow-hidden shadow-[3px_3px_0px_#FFD500]">
+                  <div className="absolute -top-10 -right-10 w-40 h-40 bg-accent-yellow/30 rounded-full blur-3xl pointer-events-none" />
+                  <div className="absolute -bottom-12 -left-12 w-32 h-32 bg-sky-500/15 rounded-full blur-2xl pointer-events-none" />
                   <div className="relative">
-                    <div className="text-[10px] font-mono font-black uppercase tracking-widest text-gray-500 mb-1">
-                      Savings tracked this week
+                    <div className="flex items-center justify-between mb-0.5">
+                      <p className="font-mono text-[10px] font-black uppercase tracking-[0.16em] text-gray-400">
+                        Saved by founders so far
+                      </p>
+                      <span className="inline-flex items-center gap-1 font-mono text-[9px] font-black uppercase tracking-widest text-accent-yellow">
+                        <span className="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse" />
+                        live
+                      </span>
                     </div>
-                    <div className="text-2xl md:text-3xl font-mono font-black text-black">
+                    <p className="font-mono font-black text-2xl md:text-[28px] text-accent-yellow tabular-nums leading-none">
                       $
                       <CountUp
-                        start={savingsStartRef.current}
-                        end={savingsEnd}
-                        duration={1}
+                        start={memberSavingsStartRef.current}
+                        end={memberSavingsEnd}
+                        duration={1.4}
                         separator=","
-                        decimals={2}
-                        decimal="."
                       />
-                    </div>
-                    <div className="text-[10px] font-mono font-bold text-green-600 mt-1 flex items-center gap-1">
-                      <span className="material-symbols-outlined text-sm" style={{ fontVariationSettings: "'FILL' 1" }}>
+                    </p>
+                    <p className="font-mono text-[10px] text-gray-300 mt-1 flex items-center gap-1">
+                      <span className="material-symbols-outlined !text-[12px] text-green-400" style={{ fontVariationSettings: "'FILL' 1" }}>
                         trending_up
                       </span>
-                      live · auto-updating
-                    </div>
+                      across cloud credits, grants &amp; SaaS deals
+                    </p>
                   </div>
                 </div>
 
                 {/* Value stack — Hormozi-style itemized offer */}
-                <div className="grid grid-cols-2 gap-2">
+                <div className="grid grid-cols-2 gap-1.5">
                   {VALUE_STACK.map((item) => (
                     <div
                       key={item.label}
-                      className={`${item.color} border-2 border-black p-2.5 shadow-[2px_2px_0px_#111] flex items-center gap-2 hover:-translate-y-0.5 transition-transform`}
+                      className={`${item.color} border-2 border-black p-2 shadow-[2px_2px_0px_#111] flex items-center gap-2 hover:-translate-y-0.5 transition-transform`}
                     >
-                      <span className={`material-symbols-outlined text-lg ${item.accent} flex-shrink-0`}>
+                      <span className={`material-symbols-outlined !text-[18px] ${item.accent} flex-shrink-0`}>
                         {item.icon}
                       </span>
                       <div className="min-w-0 flex-1">
-                        <p className={`font-mono font-black text-sm ${item.accent} leading-none`}>{item.value}</p>
+                        <p className={`font-mono font-black text-[13px] ${item.accent} leading-none`}>{item.value}</p>
                         <p className="font-mono text-[9px] text-gray-700 uppercase tracking-wider mt-0.5 truncate">
                           {item.label}
                         </p>
@@ -249,20 +367,14 @@ export default function HeroSection() {
                   ))}
                 </div>
 
-                {/* Total value vs. price — the close (no price shown) */}
-                <div className="bg-black text-white border-2 border-black p-3 flex items-center justify-between shadow-[3px_3px_0px_#FFD500]">
-                  <div>
-                    <p className="font-mono text-[10px] font-bold uppercase tracking-widest text-gray-400">Total value unlocked</p>
-                    <p className="font-mono font-black text-2xl text-accent-yellow">$500K+</p>
-                  </div>
-                  <Link
-                    href="/pricing"
-                    className="bg-accent-yellow text-black border-2 border-accent-yellow px-3 py-2 font-mono font-black text-xs uppercase tracking-wider hover:bg-white hover:border-white transition-colors flex items-center gap-1.5"
-                  >
-                    View plans
-                    <span className="material-symbols-outlined text-base">arrow_forward</span>
-                  </Link>
-                </div>
+                {/* Close — single CTA strip, no second number */}
+                <Link
+                  href="/pricing"
+                  className="group bg-accent-yellow text-black border-2 border-black px-3 py-2 font-mono font-black text-[11px] uppercase tracking-[0.16em] hover:bg-black hover:text-accent-yellow transition-colors flex items-center justify-center gap-2 shadow-[3px_3px_0px_#111]"
+                >
+                  Unlock the Full Catalog
+                  <span className="material-symbols-outlined !text-[14px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                </Link>
               </div>
             </div>
             {/* Decorative offset border */}
@@ -272,7 +384,7 @@ export default function HeroSection() {
       </div>
 
       {/* ─── Marquee Ticker — keeps urgency at the edge ─── */}
-      <div className="hidden md:block bg-black py-2 overflow-hidden border-t-2 border-b-2 border-black w-full relative z-20">
+      <div className="hidden md:block bg-black py-2 overflow-hidden border-t-2 border-b-2 border-black w-full relative z-20 mt-auto">
         <div className="marquee flex items-center gap-8 md:gap-12 whitespace-nowrap">
           {[
             { text: 'AWS ACTIVATE // $100K CREDITS', icon: 'terminal', color: 'text-accent-yellow' },

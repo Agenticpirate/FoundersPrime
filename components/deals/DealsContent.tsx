@@ -41,11 +41,17 @@ export default function DealsContent() {
   // Initialize from URL so deep-linked / back-navigated state is preserved
   const [filters, setFilters] = useState<FilterState>(() => readFiltersFromUrl(new URLSearchParams(searchParams.toString())))
   const [mobileCategoryOpen, setMobileCategoryOpen] = useState(false)
+  // Track the last URL we wrote so we can tell URL changes that came from
+  // OUR setFilters effect from URL changes that came from elsewhere
+  // (browser back/forward, deep-link). When the change is external, we
+  // re-sync local state from URL without firing the URL-write effect.
+  const lastWrittenUrlRef = useRef<string>(searchParams.toString())
   const isFirstSync = useRef(true)
 
-  // Sync filters → URL (without breaking the page param). Use replaceState
-  // for filter changes so the browser back stack stays clean — pagination
-  // pushes its own history entries via DealsGrid.
+  // Sync filters → URL via Next.js router (replace, no scroll). This
+  // ensures Next.js's history stack stays consistent so browser
+  // back/forward from a single-deal page restores both filters AND the
+  // pagination page param.
   useEffect(() => {
     if (isFirstSync.current) {
       isFirstSync.current = false
@@ -61,24 +67,69 @@ export default function DealsContent() {
     writeOrDelete('subcategory', filters.subcategory)
     writeOrDelete('value', filters.value)
     writeOrDelete('sort', filters.sort, 'relevance')
-    // When filters change we want to start on page 1
+
+    // Compare the FILTER-RELEVANT parts of URL — not the full URL — so
+    // a `?page=5` that already exists doesn't make this effect run and
+    // reset the page param. Only when filter values genuinely change do
+    // we reset pagination.
+    const currentFilterKey = [
+      searchParams.get('q') || '',
+      searchParams.get('category') || '',
+      searchParams.get('subcategory') || '',
+      searchParams.get('value') || '',
+      searchParams.get('sort') || 'relevance',
+    ].join('|')
+    const newFilterKey = [
+      filters.search,
+      filters.category,
+      filters.subcategory,
+      filters.value,
+      filters.sort,
+    ].join('|')
+
+    if (currentFilterKey === newFilterKey) {
+      // Filters already match URL — nothing to write. This is the case
+      // when the URL update came from pagination (router.push with
+      // ?page=N) and our filter state was simply re-synced via the URL
+      // change effect below.
+      return
+    }
+
+    // Genuine filter change — drop the page param so we go to page 1.
     params.delete('page')
     const next = params.toString()
+    lastWrittenUrlRef.current = next
     const url = next ? `${pathname}?${next}` : pathname
-    window.history.replaceState(null, '', url)
+    router.replace(url, { scroll: false })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filters.search, filters.category, filters.subcategory, filters.value, filters.sort])
 
-  // When the user hits browser back/forward, the searchParams change —
-  // re-read them so filter state reflects the URL.
+  // When the URL changes from outside our control (browser back/forward,
+  // direct nav, or a `router.push` from DealsGrid pagination), re-read
+  // filters into local state. We compare both the raw URL string AND the
+  // filter-relevant fields so a `?page=5` change alone does NOT cause us
+  // to setFilters (which would trigger the URL-write effect and wipe the
+  // page param).
   useEffect(() => {
-    const handlePopState = () => {
-      const fromUrl = readFiltersFromUrl(new URLSearchParams(window.location.search))
-      setFilters(fromUrl)
-    }
-    window.addEventListener('popstate', handlePopState)
-    return () => window.removeEventListener('popstate', handlePopState)
-  }, [])
+    const current = searchParams.toString()
+    if (current === lastWrittenUrlRef.current) return
+    lastWrittenUrlRef.current = current
+    const fromUrl = readFiltersFromUrl(new URLSearchParams(current))
+    setFilters(prev => {
+      // Only return a new object if a filter field actually differs —
+      // otherwise we'd cause the URL-write effect to fire and drop ?page.
+      if (
+        prev.search === fromUrl.search &&
+        prev.category === fromUrl.category &&
+        prev.subcategory === fromUrl.subcategory &&
+        prev.value === fromUrl.value &&
+        prev.sort === fromUrl.sort
+      ) {
+        return prev
+      }
+      return fromUrl
+    })
+  }, [searchParams])
 
   const handleFilterChange = useCallback((newFilters: FilterState) => {
     setFilters(newFilters)
