@@ -4,6 +4,7 @@ import { Suspense, useState } from 'react'
 import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
+import Mandala from '@/components/ui/Mandala'
 
 function LoginContent() {
   const [email, setEmail] = useState('')
@@ -50,6 +51,9 @@ function LoginContent() {
       {/* Left Panel — Branding */}
       <div className="hidden lg:flex lg:w-[45%] bg-black text-white flex-col justify-between p-10 xl:p-14 relative overflow-hidden">
         <div className="absolute inset-0 opacity-[0.04] pointer-events-none" style={{ backgroundImage: 'linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)', backgroundSize: '24px 24px' }} />
+        {/* Ambient mandala ornaments */}
+        <Mandala variant="rings" colorClass="text-accent-yellow" opacity={0.12} speed={90} direction="cw" className="absolute -top-24 -right-24 w-80 h-80" />
+        <Mandala variant="orbital" colorClass="text-white" opacity={0.08} speed={120} direction="ccw" className="absolute -bottom-28 -left-24 w-96 h-96" />
         <div className="relative z-10">
           <Link href="/" className="inline-flex items-center gap-2 mb-16">
             <img src="/logo.svg" alt="FoundersPrime" className="w-7 h-7 invert" />
@@ -85,9 +89,12 @@ function LoginContent() {
       </div>
 
       {/* Right Panel — Login Form */}
-      <div className="flex-1 flex flex-col bg-white">
+      <div className="flex-1 flex flex-col bg-white relative overflow-hidden grid-bg">
+        {/* Mobile-only ambient mandalas (desktop uses the left branding panel) */}
+        <Mandala variant="rings" colorClass="text-black" opacity={0.05} speed={90} direction="cw" className="lg:hidden absolute -top-20 -right-20 w-72 h-72" />
+        <Mandala variant="petal" colorClass="text-accent-yellow" opacity={0.14} speed={110} direction="ccw" className="lg:hidden absolute -bottom-24 -left-24 w-80 h-80" />
         {/* Mobile header */}
-        <div className="lg:hidden flex items-center justify-between px-4 py-3 border-b border-gray-200">
+        <div className="lg:hidden flex items-center justify-between px-4 py-3 border-b-2 border-black relative z-10 bg-white">
           <Link href="/" className="inline-flex items-center gap-2">
             <img src="/logo.svg" alt="FoundersPrime" className="w-6 h-6" />
             <span className="font-mono font-bold text-sm tracking-widest uppercase">FOUNDERS<span className="text-blue-600">[</span>PRIME<span className="text-blue-600">]</span></span>
@@ -95,10 +102,22 @@ function LoginContent() {
           <Link href="/" className="text-xs font-mono font-bold text-gray-500 hover:text-black uppercase">← Back</Link>
         </div>
 
-        <div className="flex-1 flex items-center justify-center px-6 py-8 md:px-12">
-          <div className="w-full max-w-sm">
+        <div className="flex-1 flex items-center justify-center px-6 py-8 md:px-12 relative z-10">
+          <div className="w-full max-w-sm login-fade-up">
+            {/* Mobile-only value banner */}
+            <div className="lg:hidden mb-5 bg-black text-white border-2 border-black shadow-[4px_4px_0px_#FFD500] p-3 flex items-center gap-2.5">
+              <span className="material-symbols-outlined text-accent-yellow text-xl flex-shrink-0" style={{ fontVariationSettings: "'FILL' 1" }}>bolt</span>
+              <p className="font-mono text-[11px] leading-snug font-bold">
+                <span className="text-accent-yellow">$500K+</span> in verified credits, grants &amp; tools. Join <span className="text-accent-yellow">5,000+</span> founders.
+              </p>
+            </div>
+
             <div className="mb-6">
-              <h1 className="text-2xl font-black uppercase font-mono mb-1">Welcome back</h1>
+              <div className="inline-flex items-center gap-1.5 bg-accent-yellow text-black font-mono text-[9px] font-black px-2.5 py-1 mb-3 uppercase tracking-widest border-2 border-black shadow-[2px_2px_0px_#111]">
+                <span className="w-1.5 h-1.5 bg-black rounded-full animate-pulse" />
+                Members area
+              </div>
+              <h1 className="text-2xl md:text-3xl font-black uppercase font-mono mb-1 tracking-tight">Welcome back</h1>
               <p className="text-gray-500 text-sm">Sign in to your account to continue</p>
             </div>
 
@@ -165,6 +184,21 @@ function LoginContent() {
           </div>
         </div>
       </div>
+
+      <style jsx>{`
+        @keyframes loginFadeUp {
+          from { opacity: 0; transform: translateY(14px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        .login-fade-up {
+          animation: loginFadeUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .login-fade-up {
+            animation: none;
+          }
+        }
+      `}</style>
     </div>
   )
 }

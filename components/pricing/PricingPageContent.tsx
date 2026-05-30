@@ -10,8 +10,33 @@ import { Currency } from '@/utils/currency'
 export default function PricingPageContent() {
     const currency: Currency = 'USD'
 
+    const faqs = [
+        { icon: 'speed', q: 'How fast will I see savings?', a: 'Most founders claim their first deal within 3 minutes. A single cloud credit can save $5K–$100K instantly.' },
+        { icon: 'verified', q: 'Are deals actually verified?', a: 'Every deal is manually verified weekly. Broken links removed, expired offers flagged, new deals added constantly.' },
+        { icon: 'school', q: 'I am a student — which plan is for me?', a: 'Next\'Founder ($59/yr) is built for active students, indie hackers, and early builders. You get premium AI & SaaS credits, hackathons, internships, fellowships, grants, and the Opportunity Hub. Tailored for student builders.' },
+        { icon: 'savings', q: 'What if I only need one deal?', a: 'Even one deal pays for your membership several times over. Founder at $149/yr gets you full unlimited access immediately.' },
+        { icon: 'cancel', q: 'Can I cancel anytime? What about refunds?', a: 'Yes, you can cancel anytime — no contracts, no lock-in. Cancel from your dashboard in one click and you keep access until your billing period ends. Please note: all payments are non-refundable. Once a subscription or lifetime plan is purchased, the amount paid cannot be returned. We recommend reviewing the plan details before checkout.' },
+    ]
+
+    const faqStructuredData = {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: faqs.map((faq) => ({
+            '@type': 'Question',
+            name: faq.q,
+            acceptedAnswer: {
+                '@type': 'Answer',
+                text: faq.a,
+            },
+        })),
+    }
+
     return (
         <main className="bg-white min-h-screen pb-12">
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(faqStructuredData) }}
+            />
             {/* ── Compact Hero — designed to fit pricing cards above the fold ── */}
             <div className="relative bg-black text-white border-b-2 border-accent-yellow overflow-hidden">
                 {/* Grid pattern */}
@@ -87,15 +112,15 @@ export default function PricingPageContent() {
                             ].map((stat) => (
                                 <div
                                     key={stat.label}
-                                    className="relative flex items-center gap-2 bg-white/5 backdrop-blur-sm border border-white/15 px-2.5 py-2 rounded-sm hover:bg-white/10 transition-colors flex-1 lg:flex-none lg:min-w-[120px]"
+                                    className="relative flex flex-col items-center text-center sm:flex-row sm:text-left gap-1 sm:gap-2 bg-white/5 backdrop-blur-sm border border-white/15 px-2 py-2 sm:px-2.5 rounded-sm hover:bg-white/10 transition-colors flex-1 lg:flex-none lg:min-w-[120px]"
                                 >
-                                    <span className={`material-symbols-outlined !text-[18px] ${stat.color} flex-shrink-0`}>{stat.icon}</span>
+                                    <span className={`material-symbols-outlined !text-[16px] sm:!text-[18px] ${stat.color} flex-shrink-0`}>{stat.icon}</span>
                                     <div className="min-w-0">
-                                        <p className={`font-mono text-[13px] md:text-base font-black ${stat.color} leading-none tabular-nums`}>
+                                        <p className={`font-mono text-[12px] sm:text-[13px] md:text-base font-black ${stat.color} leading-none tabular-nums`}>
                                             {stat.value}
                                         </p>
-                                        <p className="text-[8.5px] md:text-[9px] text-gray-400 font-bold uppercase mt-0.5 tracking-[0.1em] flex items-center gap-1">
-                                            <span className={`w-1 h-1 rounded-full ${stat.dot}`} />
+                                        <p className="text-[8px] sm:text-[8.5px] md:text-[9px] text-gray-400 font-bold uppercase mt-0.5 tracking-[0.08em] sm:tracking-[0.1em] flex items-center justify-center sm:justify-start gap-1">
+                                            <span className={`hidden sm:inline-block w-1 h-1 rounded-full ${stat.dot}`} />
                                             {stat.label}
                                         </p>
                                     </div>
@@ -384,13 +409,7 @@ export default function PricingPageContent() {
                     <h2 className="font-mono text-lg md:text-3xl font-black uppercase">Got Questions?</h2>
                 </div>
                 <div className="space-y-2.5">
-                    {[
-                        { icon: 'speed', q: 'How fast will I see savings?', a: 'Most founders claim their first deal within 3 minutes. A single cloud credit can save $5K–$100K instantly.' },
-                        { icon: 'verified', q: 'Are deals actually verified?', a: 'Every deal is manually verified weekly. Broken links removed, expired offers flagged, new deals added constantly.' },
-                        { icon: 'school', q: 'I am a student — which plan is for me?', a: 'Next\'Founder ($59/yr) is built for active students, indie hackers, and early builders. You get premium AI & SaaS credits, hackathons, internships, fellowships, grants, and the Opportunity Hub. Tailored for student builders.' },
-                        { icon: 'savings', q: 'What if I only need one deal?', a: 'Even one deal pays for your membership several times over. Founder at $149/yr gets you full unlimited access immediately.' },
-                        { icon: 'cancel', q: 'Can I cancel anytime? What about refunds?', a: 'Yes, you can cancel anytime — no contracts, no lock-in. Cancel from your dashboard in one click and you keep access until your billing period ends. Please note: all payments are non-refundable. Once a subscription or lifetime plan is purchased, the amount paid cannot be returned. We recommend reviewing the plan details before checkout.' },
-                    ].map((faq) => (
+                    {faqs.map((faq) => (
                         <details
                             key={faq.q}
                             className="group border-2 border-black bg-white shadow-[3px_3px_0px_#111] hover:shadow-[5px_5px_0px_#111] hover:-translate-y-0.5 transition-all open:bg-yellow-50"

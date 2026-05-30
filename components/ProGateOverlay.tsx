@@ -235,11 +235,11 @@ export default function ProGateOverlay({
                                 <span className="material-symbols-outlined" style={{ fontSize: 18, fontVariationSettings: "'FILL' 1" }}>
                                     workspace_premium
                                 </span>
-                                Unlock All {label} — Join Founder Plan
+                                Unlock All {label}
                             </Link>
                         </div>
 
-                        {/* Fine print */}
+                        {/* Fine print — no specific price (kept in sync with pricing page) */}
                         <p
                             style={{
                                 fontFamily: 'IBM Plex Mono, monospace',
@@ -250,8 +250,7 @@ export default function ProGateOverlay({
                                 letterSpacing: '0.02em',
                             }}
                         >
-                            Starts from{' '}
-                            <strong style={{ color: '#111111' }}>$89.99/year</strong> — that&apos;s less than $7.50/mo
+                            Cancel anytime · Instant access · See plans &amp; pricing
                         </p>
                     </div>
                 </div>

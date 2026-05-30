@@ -9,6 +9,9 @@ import Footer from '@/components/Footer'
 export const metadata: Metadata = {
   title: 'Ad Credits',
   description: 'Paid acquisition without the paid part. Access free ad credits from Google, Meta, TikTok, LinkedIn, and more.',
+  alternates: {
+    canonical: 'https://www.foundersprime.com/deals/ad-credits',
+  },
 }
 
 export default function AdCreditsPage() {

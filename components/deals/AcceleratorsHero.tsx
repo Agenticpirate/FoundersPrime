@@ -1,28 +1,54 @@
+'use client'
+
+import SectionHero from '@/components/ui/SectionHero'
+
 export default function AcceleratorsHero() {
   return (
-    <div className="mb-3 md:mb-5">
-      <div className="mb-2">
-        <div className="inline-block border border-black bg-accent-yellow px-1.5 py-0.5 font-mono text-[9px] font-bold uppercase tracking-wide rounded-sm mb-1.5">
-          Funding + Mentorship
-        </div>
-        <h1 className="font-mono text-lg md:text-3xl font-bold tracking-tight text-black mb-1 leading-tight">
-          Startup Accelerators
-        </h1>
-        <p className="text-xs md:text-sm text-gray-600 max-w-2xl">
-          Get funded and mentored through top programs. Access <span className="font-bold text-black">$250K+</span> in funding from YC, Techstars, and global programs.
-        </p>
-      </div>
-
-      <div className="grid grid-cols-2 gap-1.5 md:gap-3">
-        <div className="bg-black text-white border-2 border-black shadow-[2px_2px_0px_#111] p-2 md:p-3">
-          <p className="font-mono text-[8px] md:text-[10px] font-bold text-gray-500 uppercase">Avg Investment</p>
-          <p className="font-mono text-lg md:text-2xl font-bold">$250K</p>
-        </div>
-        <div className="bg-white border-2 border-black shadow-[2px_2px_0px_#111] p-2 md:p-3">
-          <p className="font-mono text-[8px] md:text-[10px] font-bold text-gray-400 uppercase">Acceptance</p>
-          <p className="font-mono text-lg md:text-2xl font-bold text-black">~2%</p>
-        </div>
-      </div>
-    </div>
+    <SectionHero
+      eyebrowIcon="rocket_launch"
+      eyebrowText="Accelerator Programs"
+      eyebrowClass="bg-orange-100 border-orange-300 text-orange-900"
+      eyebrowAccentClass="text-orange-600"
+      mandalaColorClass="text-orange-500"
+      statsMinWidth="lg:min-w-[520px]"
+      title={<>Accelerators that move you forward.</>}
+      subtitle={
+        <>
+          Funding, mentorship, and demo-day networks from{' '}
+          <span className="font-bold text-gray-900 bg-orange-100 px-1 rounded-sm">YC, Techstars, 500 Global</span>{' '}
+          and 280+ programs &mdash; verified terms, deadlines, and equity in one place.
+        </>
+      }
+      stats={[
+        {
+          label: 'Programs',
+          value: '280+',
+          delta: 'Global coverage',
+          icon: 'rocket_launch',
+          iconColor: 'text-orange-600',
+          iconBg: 'bg-orange-100',
+        },
+        {
+          label: 'Avg Investment',
+          value: '$250K',
+          delta: 'Pre-seed to seed',
+          icon: 'payments',
+          iconColor: 'text-amber-700',
+          iconBg: 'bg-amber-100',
+          highlight: true,
+          accent: '255,165,68',
+          valueGradient: 'from-orange-300 to-amber-200',
+          ornamentColor: 'text-orange-300',
+        },
+        {
+          label: 'Acceptance',
+          value: '~2%',
+          delta: 'Top programs',
+          icon: 'filter_alt',
+          iconColor: 'text-rose-600',
+          iconBg: 'bg-rose-100',
+        },
+      ]}
+    />
   )
 }

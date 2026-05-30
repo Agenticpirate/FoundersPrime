@@ -154,7 +154,7 @@ export default function PricingPlans({ currency }: PricingPlansProps) {
       </div>
 
       {/* ═══ Mobile Stacked View ═══ */}
-      <div className="md:hidden flex flex-col gap-5 pb-2 relative">
+      <div className="md:hidden flex flex-col gap-6 pb-2 relative">
         {plans.map((plan, index) => (
           <PlanCard
             key={index}
@@ -331,16 +331,16 @@ function PlanCard({
         <div className={`absolute top-0 left-0 right-0 h-1.5 ${accent.headerStripe}`} />
 
         {/* Header */}
-        <div className="px-6 pt-8 pb-6 border-b-2 border-black border-dashed relative">
-          <div className="flex items-center justify-between mb-4">
+        <div className="px-4 pt-6 pb-4 sm:px-6 sm:pt-8 sm:pb-6 border-b-2 border-black border-dashed relative">
+          <div className="flex items-center justify-between mb-3 sm:mb-4">
             <div className="flex items-center gap-2.5">
-              <div className={`w-10 h-10 rounded-sm border-2 border-black ${accent.iconChip} flex items-center justify-center shadow-[2px_2px_0px_#111]`}>
-                <span className={`material-symbols-outlined !text-[20px] ${accent.iconColor}`}>
+              <div className={`w-9 h-9 sm:w-10 sm:h-10 rounded-sm border-2 border-black ${accent.iconChip} flex items-center justify-center shadow-[2px_2px_0px_#111]`}>
+                <span className={`material-symbols-outlined !text-[18px] sm:!text-[20px] ${accent.iconColor}`}>
                   {plan.icon}
                 </span>
               </div>
               <div>
-                <h3 className="font-mono text-[14px] font-black uppercase tracking-[0.06em] text-black leading-none">
+                <h3 className="font-mono text-[13px] sm:text-[14px] font-black uppercase tracking-[0.06em] text-black leading-none">
                   {plan.name}
                 </h3>
               </div>
@@ -355,19 +355,19 @@ function PlanCard({
           </div>
 
           {/* Outcome headline (Hormozi style) */}
-          <h4 className="font-mono text-[16px] md:text-[17px] font-black text-black leading-[1.25] mb-2">
+          <h4 className="font-mono text-[15px] sm:text-[16px] md:text-[17px] font-black text-black leading-[1.25] mb-1.5 sm:mb-2">
             {plan.headline}
           </h4>
-          <p className="text-[12.5px] text-gray-600 leading-relaxed mb-5">{plan.subline}</p>
+          <p className="text-[12px] sm:text-[12.5px] text-gray-600 leading-relaxed mb-4 sm:mb-5">{plan.subline}</p>
 
           {/* Price */}
           <div className="flex items-baseline gap-2 mb-3">
             {plan.originalPrice && (
-              <span className="font-sans text-lg text-gray-400 line-through">
+              <span className="font-sans text-base sm:text-lg text-gray-400 line-through">
                 {plan.originalPrice}
               </span>
             )}
-            <span className="font-mono text-[44px] md:text-[48px] font-black tracking-tight text-black leading-none tabular-nums">
+            <span className="font-mono text-[38px] sm:text-[44px] md:text-[48px] font-black tracking-tight text-black leading-none tabular-nums">
               {plan.price}
             </span>
             <span className="font-mono text-[11px] font-bold uppercase tracking-wide text-gray-500">
@@ -376,7 +376,7 @@ function PlanCard({
           </div>
 
           {plan.monthlySub && (
-            <div className="inline-flex items-center gap-1 bg-black text-accent-yellow font-mono font-black text-[10.5px] px-2.5 py-1 border-2 border-black rounded-sm shadow-[2px_2px_0px_rgba(255,221,0,0.4)]">
+            <div className="inline-flex items-center gap-1 bg-black text-accent-yellow font-mono font-black text-[10px] sm:text-[10.5px] px-2.5 py-1 border-2 border-black rounded-sm shadow-[2px_2px_0px_rgba(255,221,0,0.4)]">
               <span className="material-symbols-outlined !text-[12px]">bolt</span>
               {plan.monthlySub}
             </div>
@@ -384,15 +384,15 @@ function PlanCard({
         </div>
 
         {/* Features */}
-        <div className="px-6 py-6 flex-1 flex flex-col bg-gray-50/40">
-          <ul className="space-y-3 mb-6">
+        <div className="px-4 py-5 sm:px-6 sm:py-6 flex-1 flex flex-col bg-gray-50/40">
+          <ul className="space-y-2.5 sm:space-y-3 mb-5 sm:mb-6">
             {plan.features.map((feature: string, idx: number) => {
               // First "Everything in X, plus:" gets bolder treatment
               const isInheritance = feature.endsWith(', plus:') || feature.startsWith('Everything in')
               return (
                 <li key={idx} className="flex items-start gap-2.5">
                   <span
-                    className={`material-symbols-outlined !text-[17px] flex-shrink-0 mt-0.5 ${
+                    className={`material-symbols-outlined !text-[16px] sm:!text-[17px] flex-shrink-0 mt-0.5 ${
                       isInheritance ? 'text-black' : accent.check
                     }`}
                     style={{ fontVariationSettings: "'FILL' 1" }}
@@ -400,8 +400,8 @@ function PlanCard({
                     {isInheritance ? 'add_circle' : 'check_circle'}
                   </span>
                   <span
-                    className={`text-[13px] leading-snug ${
-                      isInheritance ? 'font-mono font-bold uppercase tracking-wide text-black text-[11px]' : 'text-gray-800'
+                    className={`text-[12.5px] sm:text-[13px] leading-snug ${
+                      isInheritance ? 'font-mono font-bold uppercase tracking-wide text-black !text-[11px]' : 'text-gray-800'
                     }`}
                   >
                     {feature}
@@ -412,7 +412,7 @@ function PlanCard({
           </ul>
 
           {plan.footnote && (
-            <div className="mt-auto mb-5 px-3 py-2.5 bg-amber-50 border-2 border-black border-dashed rounded-sm flex items-start gap-2">
+            <div className="mt-auto mb-4 sm:mb-5 px-3 py-2.5 bg-amber-50 border-2 border-black border-dashed rounded-sm flex items-start gap-2">
               <span className="material-symbols-outlined !text-[15px] text-amber-700 mt-0.5 flex-shrink-0">info</span>
               <p className="text-[11.5px] text-amber-900 leading-relaxed">{plan.footnote}</p>
             </div>
@@ -422,7 +422,7 @@ function PlanCard({
           <button
             onClick={onClick}
             disabled={loading}
-            className={`group/cta mt-auto w-full inline-flex items-center justify-center gap-2 py-3.5 px-4 font-mono font-black text-[12px] md:text-[12.5px] uppercase tracking-[0.12em] rounded-sm border-2 border-black transition-all overflow-hidden relative disabled:opacity-60 ${
+            className={`group/cta mt-auto w-full inline-flex items-center justify-center gap-2 py-3 sm:py-3.5 px-4 font-mono font-black text-[12px] md:text-[12.5px] uppercase tracking-[0.12em] rounded-sm border-2 border-black transition-all overflow-hidden relative disabled:opacity-60 ${
               isPopular
                 ? 'bg-accent-yellow text-black shadow-[3px_3px_0px_#111] hover:shadow-[5px_5px_0px_#111] hover:-translate-x-px hover:-translate-y-px'
                 : plan.accent === 'amber'

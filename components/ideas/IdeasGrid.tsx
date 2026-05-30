@@ -1,62 +1,68 @@
 "use client";
 
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import IdeaCard from './IdeaCard';
-import ideasData from "@/data/startup_ideas.json";
 import Pagination from "@/components/Pagination";
-import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 
-export default function IdeasGrid() {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const pathname = usePathname();
+interface IdeasGridProps {
+  ideas: any[]
+}
 
-  const itemsPerPage = 12;
-  const allIdeas = ideasData;
+export default function IdeasGrid({ ideas }: IdeasGridProps) {
+  const itemsPerPage = 10;
+  const [currentPage, setCurrentPage] = useState(1);
 
-  // Pagination Logic
-  const pageParam = searchParams.get('page');
-  const rawPage = Number(pageParam) || 1;
-  const totalPages = Math.ceil(allIdeas.length / itemsPerPage) || 1;
-  const currentPage = Math.min(Math.max(1, rawPage), totalPages);
+  const totalPages = Math.ceil(ideas.length / itemsPerPage) || 1;
 
-  const startIndex = (currentPage - 1) * itemsPerPage;
+  // Reset to page 1 whenever the filtered set shrinks below current page.
+  useEffect(() => {
+    if (currentPage > totalPages) setCurrentPage(1);
+  }, [ideas.length, totalPages, currentPage]);
+
+  const safePage = Math.min(currentPage, totalPages);
+  const startIndex = (safePage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  const currentIdeas = allIdeas.slice(startIndex, endIndex);
+  const currentIdeas = ideas.slice(startIndex, endIndex);
 
   const handlePageChange = (page: number) => {
-    const params = new URLSearchParams(searchParams);
-    params.set('page', page.toString());
-    router.push(pathname + '?' + params.toString(), { scroll: false });
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    setCurrentPage(page);
+    window.scrollTo({ top: 200, behavior: 'smooth' });
   };
+
+  if (ideas.length === 0) {
+    return (
+      <div className="text-center py-12 bg-white border-2 border-black shadow-[4px_4px_0px_0px_#111] rounded-sm">
+        <span className="material-symbols-outlined text-5xl text-gray-300 mb-3 block">search_off</span>
+        <p className="font-mono text-base font-bold text-gray-700">No ideas match your filters</p>
+        <p className="font-sans text-sm text-gray-500 mt-1">Try a different category, source, or search term.</p>
+      </div>
+    )
+  }
 
   return (
     <div>
       {/* Results Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 gap-3 sm:gap-0">
-        <div className="flex flex-wrap items-center gap-3">
-          <h2 className="font-mono text-lg md:text-2xl font-bold">
-            Showing {startIndex + 1}-{Math.min(endIndex, allIdeas.length)} of {allIdeas.length} ideas
-          </h2>
-          <span className="bg-gray-200 px-2 py-1 font-mono text-[10px] md:text-xs rounded-sm border border-black whitespace-nowrap">
-            Page {currentPage} of {totalPages}
-          </span>
-        </div>
+      <div className="flex flex-wrap items-center gap-2 mb-4">
+        <h2 className="font-mono text-base md:text-xl font-bold text-black">
+          Showing {startIndex + 1}–{Math.min(endIndex, ideas.length)} of {ideas.length} ideas
+        </h2>
+        <span className="bg-accent-yellow/30 px-2 py-0.5 font-mono text-[10px] md:text-xs rounded-sm border border-black whitespace-nowrap">
+          Page {safePage} of {totalPages}
+        </span>
       </div>
 
       {/* Ideas Grid */}
-      <div className="space-y-6">
+      <div className="space-y-3 md:space-y-4">
         {currentIdeas.map((idea: any, index: number) => (
-          <IdeaCard key={startIndex + index} idea={idea} />
+          <IdeaCard key={startIndex + index} idea={idea} index={index} />
         ))}
       </div>
 
       {/* Pagination */}
       {totalPages > 1 && (
-        <div className="mt-12">
+        <div className="mt-8 md:mt-10">
           <Pagination
-            currentPage={currentPage}
+            currentPage={safePage}
             totalPages={totalPages}
             onPageChange={handlePageChange}
           />

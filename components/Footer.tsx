@@ -111,8 +111,8 @@ export default function Footer() {
       <div className="absolute -top-32 -left-32 w-96 h-96 bg-accent-yellow/10 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute -bottom-40 -right-32 w-[28rem] h-[28rem] bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />
 
-      {/* ── Newsletter row ── */}
-      <div className="relative border-b border-white/10">
+      {/* ── Newsletter row (desktop only — mobile uses FinalCTA above) ── */}
+      <div className="relative border-b border-white/10 hidden md:block">
         <div className="max-w-[1600px] mx-auto px-4 sm:px-8 py-5 md:py-12 flex flex-col md:flex-row items-start md:items-center justify-between gap-3 md:gap-8">
           <div className="max-w-md">
             <span className="inline-flex items-center gap-1.5 bg-accent-yellow text-black font-mono text-[9px] md:text-[10px] font-black uppercase tracking-widest px-2 md:px-2.5 py-0.5 md:py-1 border border-black mb-2 md:mb-3">
@@ -132,8 +132,8 @@ export default function Footer() {
       </div>
 
       {/* ── Main grid ── */}
-      <div className="relative max-w-[1600px] mx-auto px-4 sm:px-8 pt-10 md:pt-14 pb-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12">
+      <div className="relative max-w-[1600px] mx-auto px-4 sm:px-8 pt-8 md:pt-14 pb-8">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
           {/* Brand Column */}
           <div className="lg:col-span-3 flex flex-col gap-4">
             <Link href="/" className="inline-flex items-center gap-2.5 no-underline w-fit group">
@@ -206,19 +206,22 @@ export default function Footer() {
           </div>
 
           {/* Mobile Accordion Links */}
-          <div className="md:hidden flex flex-col w-full gap-1">
+          <div className="md:hidden flex flex-col w-full -mx-1">
             {footerSections.map((section) => (
-              <details key={section.title} className="group border-b border-white/10">
-                <summary className="flex justify-between items-center font-mono text-[11px] font-black tracking-widest uppercase text-accent-yellow cursor-pointer list-none py-3 outline-none">
+              <details key={section.title} className="group border-b border-white/10 last:border-b-0">
+                <summary className="flex justify-between items-center font-mono text-[11px] font-black tracking-[0.2em] uppercase text-gray-200 group-open:text-accent-yellow cursor-pointer list-none py-3.5 px-1 outline-none transition-colors">
                   {section.title}
-                  <span className="material-symbols-outlined text-base text-gray-400 transition-transform group-open:rotate-180">
+                  <span className="material-symbols-outlined text-lg text-gray-500 group-open:text-accent-yellow transition-all duration-300 group-open:rotate-180">
                     expand_more
                   </span>
                 </summary>
-                <ul className="flex flex-col gap-3 pb-3 pl-1 list-none m-0">
+                <ul className="flex flex-col gap-0.5 pb-2 list-none m-0">
                   {section.links.map((link, linkIndex) => (
                     <li key={linkIndex}>
-                      <Link href={link.href} className="font-sans text-sm text-gray-400 no-underline">
+                      <Link
+                        href={link.href}
+                        className="block font-sans text-sm text-gray-400 no-underline py-2 px-1 rounded-sm active:bg-white/5 active:text-white transition-colors"
+                      >
                         {link.text}
                       </Link>
                     </li>
@@ -232,8 +235,8 @@ export default function Footer() {
 
       {/* ── Bottom bar ── */}
       <div className="relative border-t border-white/10 bg-black/40 backdrop-blur-sm">
-        <div className="max-w-[1600px] mx-auto px-4 sm:px-8 py-3 md:py-4 flex flex-col sm:flex-row justify-between items-center gap-3">
-          <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4">
+        <div className="max-w-[1600px] mx-auto px-4 sm:px-8 py-4 flex flex-col-reverse sm:flex-row justify-between items-center gap-3">
+          <div className="flex flex-col sm:flex-row items-center gap-1 sm:gap-4">
             <span className="font-mono text-[10px] md:text-[11px] text-gray-500 text-center sm:text-left">
               © 2026 FoundersPrime · Built by founders, for founders.
             </span>

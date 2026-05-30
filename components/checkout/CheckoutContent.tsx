@@ -51,12 +51,12 @@ export default function CheckoutContent() {
     }, [plan, period])
 
     return (
-        <div className="max-w-md w-full bg-white border-3 border-black shadow-[6px_6px_0px_#111111] p-8 text-center">
-            <div className="mb-6">
-                <span className="material-symbols-outlined text-6xl text-primary animate-pulse">sync_alt</span>
+        <div className="max-w-md w-full mx-4 bg-white border-2 md:border-[3px] border-black shadow-[4px_4px_0px_#111111] md:shadow-[6px_6px_0px_#111111] p-6 md:p-8 text-center">
+            <div className="mb-5 md:mb-6">
+                <span className="material-symbols-outlined text-5xl md:text-6xl text-primary animate-pulse">sync_alt</span>
             </div>
 
-            <h1 className="text-2xl font-black uppercase mb-4">Redirecting to Secure Checkout...</h1>
+            <h1 className="text-xl md:text-2xl font-black uppercase mb-3 md:mb-4">Redirecting to Secure Checkout...</h1>
 
             {error ? (
                 <div className="p-4 bg-red-100 border-2 border-red-600 text-red-900 rounded-sm">

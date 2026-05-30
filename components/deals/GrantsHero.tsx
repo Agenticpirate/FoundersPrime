@@ -1,28 +1,54 @@
+'use client'
+
+import SectionHero from '@/components/ui/SectionHero'
+
 export default function GrantsHero() {
   return (
-    <div className="mb-3 md:mb-5">
-      <div className="mb-2">
-        <div className="inline-block border border-black bg-accent-yellow px-1.5 py-0.5 font-mono text-[9px] font-bold uppercase tracking-wide rounded-sm mb-1.5">
-          Non-Dilutive Funding
-        </div>
-        <h1 className="font-mono text-lg md:text-3xl font-bold tracking-tight text-black mb-1 leading-tight">
-          Startup Grants & Competitions
-        </h1>
-        <p className="text-xs md:text-sm text-gray-600 max-w-2xl">
-          Get funded without giving up equity. Verified grants from government agencies, foundations, and competitions.
-        </p>
-      </div>
-
-      <div className="grid grid-cols-2 gap-1.5 md:gap-3">
-        <div className="bg-black text-white border-2 border-black shadow-[2px_2px_0px_#111] p-2 md:p-3">
-          <p className="font-mono text-[8px] md:text-[10px] font-bold text-gray-500 uppercase">Total Funding</p>
-          <p className="font-mono text-lg md:text-2xl font-bold">$237M+</p>
-        </div>
-        <div className="bg-white border-2 border-black shadow-[2px_2px_0px_#111] p-2 md:p-3">
-          <p className="font-mono text-[8px] md:text-[10px] font-bold text-gray-400 uppercase">Equity Required</p>
-          <p className="font-mono text-lg md:text-2xl font-bold text-black">0%</p>
-        </div>
-      </div>
-    </div>
+    <SectionHero
+      eyebrowIcon="payments"
+      eyebrowText="Non-Dilutive Funding"
+      eyebrowClass="bg-emerald-100 border-emerald-300 text-emerald-900"
+      eyebrowAccentClass="text-emerald-700"
+      mandalaColorClass="text-emerald-500"
+      statsMinWidth="lg:min-w-[520px]"
+      title={<>Get funded. Keep your equity.</>}
+      subtitle={
+        <>
+          Verified grants, competitions, and{' '}
+          <span className="font-bold text-gray-900 bg-emerald-100 px-1 rounded-sm">non-dilutive capital</span>{' '}
+          from government agencies, foundations, and global programs &mdash; eligibility, deadlines, and award sizes in one place.
+        </>
+      }
+      stats={[
+        {
+          label: 'Tracked Funding',
+          value: '$237M+',
+          delta: 'Across programs',
+          icon: 'account_balance',
+          iconColor: 'text-emerald-600',
+          iconBg: 'bg-emerald-100',
+          highlight: true,
+          accent: '52,211,153',
+          valueGradient: 'from-emerald-300 to-green-200',
+          ornamentColor: 'text-emerald-300',
+        },
+        {
+          label: 'Equity Taken',
+          value: '0%',
+          delta: 'Fully non-dilutive',
+          icon: 'shield',
+          iconColor: 'text-green-700',
+          iconBg: 'bg-green-100',
+        },
+        {
+          label: 'Sources',
+          value: 'Gov · Foundation',
+          delta: 'Vetted issuers',
+          icon: 'verified',
+          iconColor: 'text-teal-600',
+          iconBg: 'bg-teal-100',
+        },
+      ]}
+    />
   )
 }

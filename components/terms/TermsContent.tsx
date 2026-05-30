@@ -303,22 +303,22 @@ export default function TermsContent() {
   ]
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 md:space-y-6">
       {sections.map((section, index) => (
-        <div key={index} id={section.id} className="bg-white border-2 border-black shadow-[3px_3px_0px_0px_#1a1a1a] rounded-sm p-6">
-          <h2 className="font-mono text-xl font-bold text-black mb-4">
+        <div key={index} id={section.id} className="scroll-mt-20 bg-white border-2 border-black shadow-[3px_3px_0px_0px_#1a1a1a] rounded-sm p-4 md:p-6">
+          <h2 className="font-mono text-lg md:text-xl font-bold text-black mb-3 md:mb-4">
             {section.title}
           </h2>
           <div
-            className="prose prose-lg max-w-none [&_h3]:font-mono [&_h3]:text-lg [&_h3]:font-bold [&_h3]:text-black [&_h3]:mt-6 [&_h3]:mb-3 [&_p]:font-sans [&_p]:text-sm [&_p]:text-gray-800 [&_p]:mb-3 [&_p]:leading-relaxed [&_ul]:my-3 [&_ul]:pl-4 [&_li]:font-sans [&_li]:text-sm [&_li]:text-gray-800 [&_li]:mb-1 [&_li]:leading-relaxed [&_strong]:font-bold [&_strong]:text-black"
+            className="prose prose-sm md:prose-lg max-w-none [&_h3]:font-mono [&_h3]:text-base md:[&_h3]:text-lg [&_h3]:font-bold [&_h3]:text-black [&_h3]:mt-4 md:[&_h3]:mt-6 [&_h3]:mb-2 md:[&_h3]:mb-3 [&_p]:font-sans [&_p]:text-sm [&_p]:text-gray-800 [&_p]:mb-3 [&_p]:leading-relaxed [&_ul]:my-3 [&_ul]:pl-4 [&_li]:font-sans [&_li]:text-sm [&_li]:text-gray-800 [&_li]:mb-1 [&_li]:leading-relaxed [&_strong]:font-bold [&_strong]:text-black"
             dangerouslySetInnerHTML={{ __html: section.content }}
           />
         </div>
       ))}
 
       {/* Contact Information */}
-      <div className="bg-accent-yellow/5 border-2 border-black shadow-[3px_3px_0px_0px_#1a1a1a] rounded-sm p-6">
-        <h2 className="font-mono text-xl font-bold text-black mb-4">
+      <div className="bg-accent-yellow/5 border-2 border-black shadow-[3px_3px_0px_0px_#1a1a1a] rounded-sm p-4 md:p-6">
+        <h2 className="font-mono text-lg md:text-xl font-bold text-black mb-4">
           Questions About These Terms?
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

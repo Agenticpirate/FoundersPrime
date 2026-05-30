@@ -130,7 +130,7 @@ function convertBenefitToDeal(benefit: StudentBenefit, allBenefits: StudentBenef
         similarDeals: similarDeals,
         verification: {
             lastVerified: new Date().toISOString().split('T')[0],
-            appliedCount: Math.floor(Math.random() * 5000) + 1000
+            appliedCount: null
         },
         applicationUrl: benefit.claimUrl || benefit.url,
         actualDealUrl: benefit.url,

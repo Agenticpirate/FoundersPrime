@@ -4,7 +4,7 @@ import SingleDealContent from '@/components/deals/SingleDealContent'
 import SingleDealSidebar from '@/components/deals/SingleDealSidebar'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
-import { createClient } from '@/lib/supabase/server'
+import DealProBadge from '@/components/deals/DealProBadge'
 import DealLogo from '@/components/deals/DealLogo'
 import { getAllCategories } from '@/lib/deals-database'
 import { getStartupProgramUrl } from '@/lib/comprehensive-startup-urls'
@@ -15,8 +15,11 @@ import { incubators2026 } from '@/data/incubators-2026'
 import { grants2026 } from '@/data/grants-2026'
 import { merchantReturnPolicy } from '@/lib/seo/merchant-return-policy'
 
-// Force dynamic rendering
-export const dynamic = 'force-dynamic'
+// Statically generate deal pages and refresh them periodically (ISR).
+// Content is identical for every visitor — the only per-user element (the
+// "Pro" lock chip) is resolved client-side via <DealProBadge />.
+export const revalidate = 3600 // re-generate at most once per hour
+export const dynamicParams = true // allow slugs not returned by generateStaticParams
 
 // Generate Metadata
 export async function generateMetadata(
@@ -28,7 +31,7 @@ export async function generateMetadata(
 
   let title = 'Deal Not Found'
   let description = ''
-  let image = 'https://www.foundersprime.com/og-image.jpg'
+  let image = 'https://www.foundersprime.com/og-image.png'
 
   if (deal) {
     title = `${deal.title} Deal - ${deal.value} Value`
@@ -62,6 +65,9 @@ export async function generateMetadata(
   return {
     title,
     description,
+    alternates: {
+      canonical: `https://www.foundersprime.com/deals/${params.slug}`,
+    },
     openGraph: {
       title,
       description,
@@ -147,8 +153,8 @@ function convertDealForDisplay(deal: any, displaySimilarDeals: any[]) {
     ],
     similarDeals: displaySimilarDeals,
     verification: {
-      lastVerified: deal.lastUpdated || new Date().toISOString().split('T')[0],
-      appliedCount: Math.floor(Math.random() * 1000) + 100
+      lastVerified: deal.lastUpdated || deal.lastVerified || new Date().toISOString().split('T')[0],
+      appliedCount: typeof deal.appliedCount === 'number' ? deal.appliedCount : null
     },
     applicationUrl: deal.applicationUrl,
     actualDealUrl: deal.actualDealUrl,
@@ -371,50 +377,90 @@ export default async function SingleDealPage({ params }: PageProps) {
 
     const deal = convertDealForDisplay(dealData, similarDeals)
 
-    // Check if user is logged in & pro/admin
-    const supabase = createClient()
-    const { data: { user } } = await supabase.auth.getUser()
-
-    let isPro = false
-    let isAdmin = false
-
-    if (user) {
-      const { data: adminUser } = await supabase
-        .from('admin_users')
-        .select('role')
-        .eq('email', user.email)
-        .single()
-
-      const PRO_USERS = ['raviteja.journal@gmail.com']
-      isAdmin = !!adminUser
-      isPro = !!adminUser || PRO_USERS.includes(user.email || '')
-    }
-
-    // Determine if we should lock the content
-    // For now, let's say all deals require Pro to *apply* (viewing is free)
-    // Or maybe we can have a logic: isPro ? 'Apply' : 'Upgrade to Access'
-    const isLocked = !isPro
-
     // Structured Data (JSON-LD)
-    const jsonLd = {
-      '@context': 'https://schema.org',
-      '@type': 'Product',
-      name: deal.title,
-      description: deal.description,
-      image: dealData.logoUrl || `https://www.foundersprime.com/logos/${deal.provider.toLowerCase().replace(/\s+/g, '-')}.png`,
-      brand: {
-        '@type': 'Brand',
-        name: deal.provider
-      },
-      offers: {
-        '@type': 'Offer',
-        price: '0',
-        priceCurrency: 'USD',
-        availability: 'https://schema.org/InStock',
-        url: `https://www.foundersprime.com/deals/${params.slug}`,
-        hasMerchantReturnPolicy: merchantReturnPolicy
+    const dealUrl = `https://www.foundersprime.com/deals/${params.slug}`
+    const dealImage = dealData.logoUrl || `https://www.foundersprime.com/logos/${deal.provider.toLowerCase().replace(/\s+/g, '-')}.png`
+
+    // Primary entity schema — typed by category so we describe each listing
+    // accurately instead of forcing everything into Product (which mis-flags
+    // free programs as shippable merchandise). Grants → MonetaryGrant,
+    // accelerators/incubators → the offering Organization, and genuine
+    // software offers (SaaS/cloud/ad credits) → Product + Offer.
+    const cat = dealData.category
+    let primarySchema: Record<string, any>
+
+    if (cat === 'grants') {
+      primarySchema = {
+        '@context': 'https://schema.org',
+        '@type': 'MonetaryGrant',
+        name: deal.title,
+        description: deal.description,
+        url: dealUrl,
+        funder: {
+          '@type': 'Organization',
+          name: deal.provider,
+        },
+      }
+    } else if (cat === 'accelerators' || cat === 'incubators') {
+      primarySchema = {
+        '@context': 'https://schema.org',
+        '@type': 'Organization',
+        name: deal.provider,
+        description: deal.description,
+        url: dealUrl,
+        ...(dealImage ? { logo: dealImage } : {}),
+      }
+    } else {
+      // SaaS discounts, cloud credits, ad credits, etc. — genuine offers on
+      // digital services. Product + Offer is the accurate representation.
+      primarySchema = {
+        '@context': 'https://schema.org',
+        '@type': 'Product',
+        name: deal.title,
+        description: deal.description,
+        image: dealImage,
+        brand: {
+          '@type': 'Brand',
+          name: deal.provider,
+        },
+        offers: {
+          '@type': 'Offer',
+          price: '0',
+          priceCurrency: 'USD',
+          availability: 'https://schema.org/InStock',
+          url: dealUrl,
+          hasMerchantReturnPolicy: merchantReturnPolicy,
+        },
       }
     }
+
+    // Breadcrumb trail — helps Google render breadcrumb rich results
+    const breadcrumbSchema = {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.foundersprime.com' },
+        { '@type': 'ListItem', position: 2, name: 'Deals', item: 'https://www.foundersprime.com/deals' },
+        { '@type': 'ListItem', position: 3, name: deal.category, item: `https://www.foundersprime.com/deals?category=${encodeURIComponent(dealData.category)}` },
+        { '@type': 'ListItem', position: 4, name: deal.title, item: dealUrl },
+      ],
+    }
+
+    // FAQ schema — built from the deal's own (data-derived) Q&A
+    const faqSchema = {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: deal.faq.map((f: { question: string; answer: string }) => ({
+        '@type': 'Question',
+        name: f.question,
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: f.answer,
+        },
+      })),
+    }
+
+    const jsonLd = [primarySchema, breadcrumbSchema, faqSchema]
 
     return (
       <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden bg-gray-50">
@@ -515,12 +561,7 @@ export default async function SingleDealPage({ params }: PageProps) {
                     <span className="inline-flex items-center rounded-sm px-2.5 py-0.5 font-mono text-[10px] font-black uppercase tracking-wide bg-sky-100 text-black border-2 border-black shadow-[1px_1px_0px_#111]">
                       {deal.category}
                     </span>
-                    {isLocked && (
-                      <span className="inline-flex items-center gap-1 rounded-sm px-2.5 py-0.5 font-mono text-[10px] font-black uppercase tracking-wide bg-accent-yellow text-black border-2 border-black shadow-[1px_1px_0px_#111]">
-                        <span className="material-symbols-outlined text-[12px]">lock</span>
-                        Pro
-                      </span>
-                    )}
+                    <DealProBadge />
                   </div>
                   <h1 className="font-mono text-xl sm:text-2xl lg:text-[34px] font-black tracking-tight text-black leading-[1.1] mb-1.5">
                     {deal.title}
@@ -564,4 +605,27 @@ export default async function SingleDealPage({ params }: PageProps) {
     console.error('Error rendering deal page:', error)
     notFound()
   }
+}
+
+// Pre-render all known deal/program slugs at build time. Combined with
+// `revalidate`, pages are served statically and refreshed hourly. Unknown
+// slugs (e.g. newly added deals) are generated on first request via
+// `dynamicParams` and then cached.
+export async function generateStaticParams() {
+  const slugs = new Set<string>()
+
+  for (const deal of getAllDeals()) {
+    if (deal?.slug) slugs.add(deal.slug)
+  }
+  for (const a of accelerators2026) {
+    if (a?.slug) slugs.add(a.slug)
+  }
+  for (const i of incubators2026) {
+    if (i?.slug) slugs.add(i.slug)
+  }
+  for (const g of grants2026) {
+    if (g?.slug) slugs.add(g.slug)
+  }
+
+  return Array.from(slugs).map((slug) => ({ slug }))
 }

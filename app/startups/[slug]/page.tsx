@@ -26,11 +26,14 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   const title = `${startup.name} | Verified Startups`
   const description = startup.one_liner || (startup.long_description ? startup.long_description.substring(0, 160) : '')
-  const image = startup.small_logo_thumb_url || 'https://www.foundersprime.com/og-image.jpg'
+  const image = startup.small_logo_thumb_url || 'https://www.foundersprime.com/og-image.png'
 
   return {
     title,
     description,
+    alternates: {
+      canonical: `https://www.foundersprime.com/startups/${startup.slug}`,
+    },
     openGraph: {
       title,
       description,
@@ -64,27 +67,38 @@ export default function StartupDetailPage({ params }: PageProps) {
     notFound()
   }
 
-  const jsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'Organization',
-    name: startup.name,
-    url: startup.website || `https://www.foundersprime.com/startups/${startup.slug}`,
-    logo: startup.small_logo_thumb_url || 'https://www.foundersprime.com/logo.svg',
-    description: startup.one_liner || (startup.long_description ? startup.long_description.substring(0, 160) : ''),
-    sameAs: [
-      startup.linkedin_url,
-      startup.twitter_url,
-      startup.crunchbase_url
-    ].filter(Boolean),
-    foundingDate: startup.launched_at ? new Date(startup.launched_at * 1000).getFullYear().toString() : undefined,
-    address: startup.all_locations ? {
-      '@type': 'PostalAddress',
-      addressLocality: startup.all_locations
-    } : undefined
-  }
+  const jsonLd = [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'Organization',
+      name: startup.name,
+      url: startup.website || `https://www.foundersprime.com/startups/${startup.slug}`,
+      logo: startup.small_logo_thumb_url || 'https://www.foundersprime.com/logo.svg',
+      description: startup.one_liner || (startup.long_description ? startup.long_description.substring(0, 160) : ''),
+      sameAs: [
+        startup.linkedin_url,
+        startup.twitter_url,
+        startup.crunchbase_url
+      ].filter(Boolean),
+      foundingDate: startup.launched_at ? new Date(startup.launched_at * 1000).getFullYear().toString() : undefined,
+      address: startup.all_locations ? {
+        '@type': 'PostalAddress',
+        addressLocality: startup.all_locations
+      } : undefined
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.foundersprime.com' },
+        { '@type': 'ListItem', position: 2, name: 'Verified Startups', item: 'https://www.foundersprime.com/startups' },
+        { '@type': 'ListItem', position: 3, name: startup.name, item: `https://www.foundersprime.com/startups/${startup.slug}` },
+      ],
+    },
+  ]
 
   return (
-    <div className="relative flex min-h-screen w-full flex-col bg-background-light">
+    <div className="relative flex min-h-screen w-full flex-col bg-gray-50">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

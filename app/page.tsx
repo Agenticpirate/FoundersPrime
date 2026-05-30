@@ -18,6 +18,9 @@ const ProviderSection = dynamic(() => import('@/components/ProviderSection'))
 export const metadata: Metadata = {
   title: 'FoundersPrime | Verified Startup Deals & Grants',
   description: 'Join thousands of founders saving millions with our verified database of startup credits, grants, and software deals.',
+  alternates: {
+    canonical: 'https://www.foundersprime.com',
+  },
 }
 
 const jsonLd = [

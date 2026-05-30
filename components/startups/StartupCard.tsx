@@ -24,6 +24,7 @@ const FounderAvatar = ({ founder }: { founder: { name: string, avatar?: string }
           fill 
           sizes="(max-width: 768px) 24px, 32px" 
           className="object-cover"
+          unoptimized
           onError={() => setError(true)}
         />
       ) : (
@@ -34,47 +35,48 @@ const FounderAvatar = ({ founder }: { founder: { name: string, avatar?: string }
 };
 
 export default function StartupCard({ company }: StartupCardProps) {
-  const getInitialLogoSrc = () => {
-    // Priority: small_logo_thumb_url → Google Favicon from website → null
-    if (company.small_logo_thumb_url) return company.small_logo_thumb_url
-    if (company.website) {
-      try {
-        const domain = new URL(company.website).hostname.replace('www.', '')
-        return `https://www.google.com/s2/favicons?domain=${domain}&sz=128`
-      } catch { return null }
+  // Build a resilient fallback chain of logo sources. We load these with a
+  // plain optimization bypass (unoptimized) so production doesn't route every
+  // third-party favicon through the Next.js image optimizer — that proxy
+  // frequently rate-limits/time-outs against Google favicons & logo CDNs,
+  // which is what caused blank/broken logos once deployed.
+  const getDomain = () => {
+    if (!company.website) return null
+    try {
+      return new URL(company.website).hostname.replace('www.', '')
+    } catch {
+      return null
     }
-    return null
   }
 
-  const [imgSrc, setImgSrc] = useState<string | null>(getInitialLogoSrc())
+  const buildFallbackChain = () => {
+    const chain: string[] = []
+    if (company.small_logo_thumb_url) chain.push(company.small_logo_thumb_url)
+    const domain = getDomain()
+    if (domain) {
+      chain.push(`https://www.google.com/s2/favicons?domain=${domain}&sz=128`)
+      chain.push(`https://logo.clearbit.com/${domain}`)
+      chain.push(`https://icons.duckduckgo.com/ip3/${domain}.ico`)
+    }
+    // Guaranteed-visible final fallback — initials avatar, never 404s.
+    chain.push(
+      `https://ui-avatars.com/api/?name=${encodeURIComponent(company.name)}&background=f3f4f6&color=111111&bold=true&size=128`
+    )
+    return chain
+  }
+
+  const fallbackChain = buildFallbackChain()
+
   const [fallbackIndex, setFallbackIndex] = useState(0)
 
   useEffect(() => {
-    setImgSrc(getInitialLogoSrc())
     setFallbackIndex(0)
   }, [company.small_logo_thumb_url, company.website])
 
+  const imgSrc = fallbackChain[fallbackIndex] ?? null
+
   const handleImageError = () => {
-    if (company.website) {
-      try {
-        const domain = new URL(company.website).hostname.replace('www.', '')
-        const fallbacks = [
-          `https://www.google.com/s2/favicons?domain=${domain}&sz=128`,
-          `https://logo.clearbit.com/${domain}`,
-        ]
-        const nextIndex = fallbackIndex + 1
-        if (nextIndex < fallbacks.length) {
-          setImgSrc(fallbacks[nextIndex])
-          setFallbackIndex(nextIndex)
-        } else {
-          setImgSrc(null)
-        }
-      } catch {
-        setImgSrc(null)
-      }
-    } else {
-      setImgSrc(null)
-    }
+    setFallbackIndex((prev) => Math.min(prev + 1, fallbackChain.length - 1))
   }
 
   return (
@@ -85,20 +87,19 @@ export default function StartupCard({ company }: StartupCardProps) {
       className="flex flex-col bg-white border-2 md:border-4 border-black shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] md:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[5px_5px_0px_0px_rgba(0,0,0,1)] md:hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all duration-200 overflow-hidden group relative h-full"
     >
       {/* Header with Logo and Title */}
-      <div className="px-3 md:px-4 pt-4 md:pt-6 pb-2 md:pb-3">
+      <div className="px-3 md:px-4 pt-3 md:pt-6 pb-2 md:pb-3">
         <div className="flex items-center gap-3 md:gap-4">
-          <div className="w-12 h-12 md:w-16 md:h-16 bg-white border-2 border-black flex items-center justify-center p-1 md:p-2 flex-shrink-0 group-hover:bg-yellow-50 transition-colors">
+          <div className="w-12 h-12 md:w-16 md:h-16 bg-white border-2 border-black flex items-center justify-center p-1 md:p-2 flex-shrink-0 group-hover:bg-yellow-50 transition-colors overflow-hidden">
             {imgSrc ? (
-              <div className="relative w-full h-full">
-                <Image
-                  src={imgSrc}
-                  alt={`${company.name} logo`}
-                  fill
-                  sizes="(max-width: 768px) 32px, 48px"
-                  className="object-contain"
-                  onError={handleImageError}
-                />
-              </div>
+              <img
+                src={imgSrc}
+                alt={`${company.name} logo`}
+                width={64}
+                height={64}
+                loading="lazy"
+                className="w-full h-full object-contain"
+                onError={handleImageError}
+              />
             ) : (
               <span className="text-xl md:text-2xl font-bold text-gray-400">
                 {company.name.charAt(0)}
@@ -121,7 +122,7 @@ export default function StartupCard({ company }: StartupCardProps) {
 
       {/* Description */}
       <div className="px-3 md:px-4 pb-2 md:pb-3 flex-grow">
-        <p className="text-xs md:text-sm text-gray-700 leading-relaxed line-clamp-3 md:line-clamp-3 font-medium">
+        <p className="text-xs md:text-sm text-gray-700 leading-relaxed line-clamp-2 md:line-clamp-3 font-medium">
           {company.one_liner}
         </p>
       </div>

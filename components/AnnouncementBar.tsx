@@ -4,9 +4,9 @@ import { useEffect, useState } from 'react'
 
 const MESSAGES = [
   '47 new deals added this week',
-  'Founder Yearly · $149/yr · unlimited deal access',
-  '500+ verified credits, grants & accelerators inside',
-  "Next'Founder $59/yr · built for student builders",
+  'Founder Yearly · $149/yr · unlimited deals',
+  '500+ credits, grants & accelerators',
+  "Next'Founder · $59/yr for students",
 ]
 
 export default function AnnouncementBar() {
@@ -18,7 +18,7 @@ export default function AnnouncementBar() {
   }, [])
 
   return (
-    <div className="relative bg-black text-white text-[11px] md:text-xs font-mono py-2 px-4 text-center border-b-2 border-black tracking-wide overflow-hidden">
+    <div className="relative bg-black text-white text-[10px] sm:text-[11px] md:text-xs font-mono py-2 px-3 sm:px-4 text-center border-b-2 border-black tracking-wide overflow-hidden whitespace-nowrap">
       <div
         className="absolute inset-0 opacity-20 pointer-events-none"
         style={{
@@ -27,12 +27,12 @@ export default function AnnouncementBar() {
           animation: 'announcementShimmer 4s linear infinite',
         }}
       />
-      <span className="relative z-10 inline-flex items-center gap-2">
-        <span className="text-accent-yellow font-black">⚡</span>
-        <span className="hidden sm:inline text-gray-400 text-[10px] uppercase tracking-widest">Live</span>
-        <span className="hidden sm:inline text-gray-700">·</span>
-        <span key={idx} className="inline-block animate-fadeIn font-semibold">{MESSAGES[idx]}</span>
-        <span className="text-accent-yellow font-black">⚡</span>
+      <span className="relative z-10 inline-flex items-center gap-2 max-w-full whitespace-nowrap">
+        <span className="text-accent-yellow font-black flex-shrink-0">⚡</span>
+        <span className="hidden sm:inline text-gray-400 text-[10px] uppercase tracking-widest flex-shrink-0">Live</span>
+        <span className="hidden sm:inline text-gray-700 flex-shrink-0">·</span>
+        <span key={idx} className="inline-block animate-fadeIn font-semibold whitespace-nowrap overflow-hidden text-ellipsis">{MESSAGES[idx]}</span>
+        <span className="text-accent-yellow font-black flex-shrink-0">⚡</span>
       </span>
 
       <style jsx>{`

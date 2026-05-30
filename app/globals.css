@@ -631,6 +631,87 @@ p > a, li > a, span > a {
 }
 
 
+/* ─── Shared Mandala primitive (components/ui/Mandala.tsx) ─── */
+/* Duration is set inline per-instance; direction via class. */
+@keyframes mandalaSpinCW {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+@keyframes mandalaSpinCCW {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(-360deg); }
+}
+.mandala-spin-cw {
+  animation: mandalaSpinCW 80s linear infinite;
+  transform-origin: center;
+}
+.mandala-spin-ccw {
+  animation: mandalaSpinCCW 80s linear infinite;
+  transform-origin: center;
+}
+@media (prefers-reduced-motion: reduce) {
+  .mandala-spin-cw,
+  .mandala-spin-ccw { animation: none !important; }
+}
+
+/* ─── Premium shared utilities ─── */
+/* Soft entrance for sections/cards as they mount. */
+@keyframes fpFadeUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.fp-fade-up {
+  animation: fpFadeUp 0.55s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+}
+
+/* Premium dark surface used for highlighted cards/CTAs. */
+.fp-surface-dark {
+  background: linear-gradient(135deg, #111827 0%, #0d181b 60%, #000000 100%);
+}
+
+/* Hairline gradient accent — top edge of premium cards. */
+.fp-top-accent {
+  position: relative;
+}
+.fp-top-accent::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 12px;
+  right: 12px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 221, 0, 0.5), transparent);
+  pointer-events: none;
+}
+
+/* Sheen sweep used on premium CTAs. */
+@keyframes fpSheen {
+  0% { transform: translateX(-120%); }
+  60%, 100% { transform: translateX(220%); }
+}
+.fp-sheen {
+  position: relative;
+  overflow: hidden;
+}
+.fp-sheen::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 40%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.18), transparent);
+  transform: translateX(-120%);
+}
+.fp-sheen:hover::after {
+  animation: fpSheen 0.9s ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fp-fade-up { animation: none; }
+  .fp-sheen:hover::after { animation: none; }
+}
+
 /* ─── Pricing page mandala animations ─── */
 @keyframes pricingMandalaSpin {
   from { transform: rotate(0deg); }

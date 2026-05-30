@@ -6,6 +6,27 @@ import startupsData from '@/data/yc_companies_2024_2026.json'
 import fs from 'fs'
 import path from 'path'
 
+// Single build-time timestamp — stable across all static routes within one
+// deploy, instead of a fresh `new Date()` per entry (which makes every URL
+// look "just modified" on every build and erodes the lastmod trust signal).
+const BUILD_DATE = new Date()
+
+// Parse a date-ish value into a Date, falling back to BUILD_DATE when the
+// value is missing or invalid. Keeps real per-item dates from the data so
+// Google sees accurate freshness signals.
+function toDate(value: unknown): Date {
+    if (typeof value === 'string' || typeof value === 'number') {
+        const d = new Date(value)
+        if (!isNaN(d.getTime())) return d
+    }
+    return BUILD_DATE
+}
+
+// Pick the most recent meaningful date from a record.
+function lastModifiedFor(item: any): Date {
+    return toDate(item?.updatedAt || item?.lastUpdated || item?.lastVerified || item?.createdAt)
+}
+
 // Helper to get all deals from JSON
 function getAllDeals() {
     try {
@@ -53,7 +74,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
         '/signup',
     ].map((route) => ({
         url: `${baseUrl}${route}`,
-        lastModified: new Date(),
+        lastModified: BUILD_DATE,
         changeFrequency: 'weekly' as const,
         priority: route === '' ? 1.0 : 0.8,
     }))
@@ -62,7 +83,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     const allDeals = getAllDeals()
     const dealRoutes = allDeals.map((deal: any) => ({
         url: `${baseUrl}/deals/${deal.slug}`,
-        lastModified: new Date(),
+        lastModified: lastModifiedFor(deal),
         changeFrequency: 'weekly' as const,
         priority: 0.7,
     }))
@@ -70,7 +91,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     // 3. Dynamic Accelerator Routes
     const acceleratorRoutes = accelerators2026.map((accelerator) => ({
         url: `${baseUrl}/deals/${accelerator.slug}`,
-        lastModified: new Date(),
+        lastModified: lastModifiedFor(accelerator),
         changeFrequency: 'monthly' as const,
         priority: 0.9,
     }))
@@ -78,7 +99,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     // 4. Dynamic Incubator Routes
     const incubatorRoutes = incubators2026.map((incubator) => ({
         url: `${baseUrl}/deals/${incubator.slug}`,
-        lastModified: new Date(),
+        lastModified: lastModifiedFor(incubator),
         changeFrequency: 'monthly' as const,
         priority: 0.8,
     }))
@@ -86,7 +107,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     // 5. Dynamic Grant Routes
     const grantRoutes = grants2026.map((grant) => ({
         url: `${baseUrl}/deals/${grant.slug}`,
-        lastModified: new Date(),
+        lastModified: lastModifiedFor(grant),
         changeFrequency: 'weekly' as const,
         priority: 0.8,
     }))
@@ -94,7 +115,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     // 6. Dynamic Startup Routes
     const startupRoutes = startupsData.map((startup: any) => ({
         url: `${baseUrl}/startups/${startup.slug}`,
-        lastModified: new Date(),
+        lastModified: lastModifiedFor(startup),
         changeFrequency: 'monthly' as const,
         priority: 0.7,
     }))

@@ -102,23 +102,23 @@ export default function WorkflowProtocol() {
     <section className="relative py-8 md:py-14 border-b-2 border-black bg-gradient-to-b from-white to-gray-50 overflow-hidden grid-bg">
       <div className="relative max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="text-center mb-6 md:mb-10">
+        <div className="text-center mb-5 md:mb-10">
           <span className="inline-flex items-center gap-1.5 bg-black text-accent-yellow font-mono text-[9px] md:text-[10px] font-black uppercase tracking-widest px-2.5 py-1 border border-black mb-3">
             <span className="material-symbols-outlined text-[12px]">route</span>
             How it works
           </span>
-          <h2 className="text-2xl md:text-4xl lg:text-5xl font-black text-black mb-2 leading-tight font-mono uppercase">
+          <h2 className="text-xl md:text-4xl lg:text-5xl font-black text-black mb-2 leading-tight font-mono uppercase">
             From scrolling Twitter<br className="md:hidden" /> to closing $50K credits<br />
             <span className="bg-gradient-to-r from-accent-yellow via-yellow-300 to-orange-400 bg-clip-text text-transparent">
               in three steps.
             </span>
           </h2>
-          <p className="text-sm md:text-base text-gray-600 max-w-xl mx-auto font-sans">
+          <p className="text-[13px] md:text-base text-gray-600 max-w-xl mx-auto font-sans leading-snug">
             No demos. No sales calls. No 14-day trials. Just direct apply links and deadlines you can actually hit.
           </p>
         </div>
 
-        <div className="relative grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-5">
+        <div className="relative grid grid-cols-1 md:grid-cols-3 gap-2.5 md:gap-5">
           {/* Connector dotted line on desktop */}
           <div
             className="hidden md:block absolute top-12 left-[16%] right-[16%] h-1 -z-0"
@@ -132,7 +132,7 @@ export default function WorkflowProtocol() {
           {steps.map((step, i) => (
             <div key={step.number} className="relative">
               <div
-                className={`relative ${step.bg} border-2 border-black p-5 md:p-6 shadow-[4px_4px_0px_#111] hover:-translate-y-1 hover:shadow-[6px_6px_0px_#111] transition-all overflow-hidden group h-full flex flex-col`}
+                className={`relative ${step.bg} border-2 border-black p-4 md:p-6 shadow-[3px_3px_0px_#111] md:shadow-[4px_4px_0px_#111] hover:-translate-y-1 hover:shadow-[6px_6px_0px_#111] transition-all overflow-hidden group h-full flex flex-col`}
               >
                 {/* Decorative blob */}
                 <div
@@ -141,33 +141,33 @@ export default function WorkflowProtocol() {
 
                 {/* Minimalist tech mandala — visible, slow rotation */}
                 <div
-                  className={`absolute -bottom-14 -right-14 w-52 h-52 ${step.mandalaColor} opacity-[0.32] group-hover:opacity-[0.5] group-hover:rotate-[18deg] transition-all duration-700 ease-out pointer-events-none mandala-spin-workflow`}
+                  className={`absolute -bottom-10 -right-10 w-36 h-36 md:-bottom-14 md:-right-14 md:w-52 md:h-52 ${step.mandalaColor} opacity-[0.32] group-hover:opacity-[0.5] group-hover:rotate-[18deg] transition-all duration-700 ease-out pointer-events-none mandala-spin-workflow`}
                 >
                   {stepMandalas[step.number]}
                 </div>
 
                 {/* Number + icon row */}
-                <div className="relative flex items-start justify-between mb-3">
-                  <div className="w-12 h-12 md:w-14 md:h-14 bg-black border-2 border-black flex items-center justify-center shadow-[3px_3px_0px_#111]">
-                    <span className="material-symbols-outlined text-xl md:text-2xl text-accent-yellow">{step.icon}</span>
+                <div className="relative flex items-start justify-between mb-2 md:mb-3">
+                  <div className="w-10 h-10 md:w-14 md:h-14 bg-black border-2 border-black flex items-center justify-center shadow-[2px_2px_0px_#111] md:shadow-[3px_3px_0px_#111]">
+                    <span className="material-symbols-outlined text-lg md:text-2xl text-accent-yellow">{step.icon}</span>
                   </div>
-                  <span className="font-mono text-3xl md:text-5xl font-black text-black/15 leading-none">
+                  <span className="font-mono text-2xl md:text-5xl font-black text-black/15 leading-none">
                     {step.number}
                   </span>
                 </div>
 
                 {/* Title */}
-                <h3 className="relative font-mono font-black text-lg md:text-2xl uppercase text-black mb-1.5">
+                <h3 className="relative font-mono font-black text-base md:text-2xl uppercase text-black mb-1 md:mb-1.5">
                   {step.title}
                 </h3>
 
                 {/* Headline */}
-                <p className="relative font-sans font-bold text-sm md:text-base text-black mb-2">
+                <p className="relative font-sans font-bold text-[13px] md:text-base text-black mb-1.5 md:mb-2">
                   {step.headline}
                 </p>
 
                 {/* Description */}
-                <p className="relative font-sans text-xs md:text-sm text-gray-700 leading-relaxed">
+                <p className="relative font-sans text-xs md:text-sm text-gray-700 leading-snug md:leading-relaxed">
                   {step.description}
                 </p>
               </div>

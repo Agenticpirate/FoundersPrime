@@ -44,7 +44,7 @@ interface Deal {
   }>
   verification: {
     lastVerified: string
-    appliedCount: number
+    appliedCount: number | null
   }
   applicationUrl: string
   providerWebsite?: string
@@ -431,13 +431,27 @@ export default function SingleDealContent({ deal, freeAccess = false, basePath =
               <p className="font-mono text-[9px] font-bold uppercase tracking-[0.14em] text-accent-yellow mb-2">
                 · Trust Signal
               </p>
-              <p className="font-mono text-2xl font-black leading-none text-white mb-1.5 tabular-nums">
-                {deal.verification.appliedCount.toLocaleString()}+
-              </p>
-              <p className="text-[11.5px] text-gray-400 leading-relaxed mb-3">
-                Founders applied through FoundersPrime. Last verified{' '}
-                {new Date(deal.verification.lastVerified).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}.
-              </p>
+              {typeof deal.verification.appliedCount === 'number' && deal.verification.appliedCount > 0 ? (
+                <>
+                  <p className="font-mono text-2xl font-black leading-none text-white mb-1.5 tabular-nums">
+                    {deal.verification.appliedCount.toLocaleString()}+
+                  </p>
+                  <p className="text-[11.5px] text-gray-400 leading-relaxed mb-3">
+                    Founders applied through FoundersPrime. Last verified{' '}
+                    {new Date(deal.verification.lastVerified).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}.
+                  </p>
+                </>
+              ) : (
+                <>
+                  <p className="font-mono text-2xl font-black leading-none text-white mb-1.5 tabular-nums">
+                    Verified
+                  </p>
+                  <p className="text-[11.5px] text-gray-400 leading-relaxed mb-3">
+                    Manually checked by the FoundersPrime team. Last verified{' '}
+                    {new Date(deal.verification.lastVerified).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}.
+                  </p>
+                </>
+              )}
               <div className="flex items-center gap-1.5 text-[10px] font-mono font-bold uppercase tracking-wide text-accent-yellow">
                 <span className="material-symbols-outlined !text-[14px]">verified</span>
                 <span>Hand-verified deal</span>

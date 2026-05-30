@@ -114,35 +114,41 @@ export default function SubmitDealPage() {
         <div className="min-h-screen bg-background-light flex flex-col font-mono">
             <Header />
 
-            <main className="flex-grow py-4 md:py-8 px-4">
+            <main className="flex-grow py-5 md:py-8 px-4 grid-bg">
                 <div className="max-w-3xl mx-auto">
-                    <div className="mb-4 md:mb-6 text-center">
-                        <h1 className="text-2xl md:text-4xl font-bold mb-3 md:mb-4 uppercase">Submit Your Deal</h1>
-                        <p className="text-sm md:text-base text-gray-600 max-w-xl mx-auto">
+                    <div className="mb-5 md:mb-8 text-center">
+                        <div className="inline-flex items-center gap-1.5 bg-black text-accent-yellow font-mono text-[9px] md:text-[10px] font-black uppercase tracking-widest px-3 py-1 border-2 border-black mb-3 shadow-[2px_2px_0px_#111]">
+                            <span className="w-1.5 h-1.5 rounded-full bg-accent-yellow animate-pulse" />
+                            Now accepting submissions
+                        </div>
+                        <h1 className="text-[26px] leading-[1.05] md:text-4xl font-black uppercase mb-2 md:mb-3 tracking-tight">Submit Your Deal</h1>
+                        <p className="text-[13px] md:text-base text-gray-600 max-w-xl mx-auto leading-relaxed">
                             Reach thousands of verified founders. We only list high-value, exclusive deals.
-                            <div className="bg-accent-yellow px-2 py-0.5 mt-2 md:mt-0 md:inline-block border border-black font-bold text-black border-2 text-sm">Zero fees.</div>
+                            <span className="inline-block bg-accent-yellow px-2 py-0.5 mt-2 md:ml-1.5 md:mt-0 border-2 border-black font-bold text-black text-xs md:text-sm">Zero fees.</span>
                         </p>
                     </div>
 
                     {submissionStatus === 'success' ? (
-                        <div className="bg-green-100 border-2 border-green-500 p-8 text-center shadow-[8px_8px_0px_0px_#22c55e]">
-                            <span className="material-symbols-outlined text-6xl text-green-600 mb-4">check_circle</span>
-                            <h2 className="text-2xl font-bold mb-2 uppercase">Submission Received!</h2>
-                            <p className="mb-6">Thanks for submitting your deal. Our team will review it within 48 hours.</p>
+                        <div className="bg-white border-[3px] border-black p-6 md:p-8 text-center shadow-[4px_4px_0px_0px_#000] md:shadow-[8px_8px_0px_0px_#000]">
+                            <div className="inline-flex items-center justify-center w-16 h-16 md:w-20 md:h-20 bg-green-100 border-2 border-green-600 mb-4">
+                                <span className="material-symbols-outlined text-5xl md:text-6xl text-green-600" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
+                            </div>
+                            <h2 className="text-xl md:text-2xl font-black mb-2 uppercase tracking-tight">Submission Received!</h2>
+                            <p className="text-sm md:text-base text-gray-600 mb-6 max-w-md mx-auto leading-relaxed">Thanks for submitting your deal. Our team will review it within 48 hours.</p>
                             <button
                                 onClick={() => setSubmissionStatus('idle')}
-                                className="px-6 py-2 bg-black text-white font-bold uppercase hover:bg-gray-800 transition-colors"
+                                className="px-6 py-3 bg-black text-white font-mono font-bold text-sm uppercase border-2 border-black hover:bg-accent-yellow hover:text-black transition-colors shadow-[3px_3px_0px_#888]"
                             >
                                 Submit Another Deal
                             </button>
                         </div>
                     ) : (
-                        <form className="bg-white border-[3px] border-black shadow-[4px_4px_0px_0px_#000] md:shadow-[8px_8px_0px_0px_#000] p-4 md:p-8 space-y-5 md:space-y-8" onSubmit={handleSubmit}>
+                        <form className="bg-white border-[3px] border-black shadow-[4px_4px_0px_0px_#000] md:shadow-[8px_8px_0px_0px_#000] p-4 md:p-8 space-y-6 md:space-y-8" onSubmit={handleSubmit}>
 
                             {/* Section 1: Provider Info */}
                             <div className="space-y-3 md:space-y-4">
-                                <h2 className="text-lg md:text-xl font-bold uppercase border-b-2 border-black pb-2 flex items-center gap-2">
-                                    <span className="bg-black text-white w-5 h-5 md:w-6 md:h-6 flex items-center justify-center text-xs md:text-sm rounded-none">1</span>
+                                <h2 className="text-base md:text-xl font-black uppercase border-b-2 border-black pb-2 flex items-center gap-2 tracking-tight">
+                                    <span className="bg-black text-accent-yellow w-6 h-6 md:w-7 md:h-7 flex items-center justify-center text-xs md:text-sm font-black shadow-[2px_2px_0px_#111]">1</span>
                                     Provider Details
                                </h2>
 
@@ -167,18 +173,18 @@ export default function SubmitDealPage() {
                                 <div>
                                     <label className="block text-xs font-bold uppercase mb-2">Logo Upload *</label>
 
-                                    <div className="flex gap-4 mb-2 text-xs font-bold">
+                                    <div className="flex gap-2 mb-2 text-xs font-bold">
                                         <button
                                             type="button"
                                             onClick={() => setLogoMethod('url')}
-                                            className={`px-3 py-1 border-2 border-black ${logoMethod === 'url' ? 'bg-black text-white' : 'bg-white text-black'}`}
+                                            className={`px-3 py-1.5 border-2 border-black uppercase tracking-wide transition-colors ${logoMethod === 'url' ? 'bg-black text-accent-yellow shadow-[2px_2px_0px_#111]' : 'bg-white text-black hover:bg-gray-100'}`}
                                         >
                                             Use URL
                                         </button>
                                         <button
                                             type="button"
                                             onClick={() => setLogoMethod('upload')}
-                                            className={`px-3 py-1 border-2 border-black ${logoMethod === 'upload' ? 'bg-black text-white' : 'bg-white text-black'}`}
+                                            className={`px-3 py-1.5 border-2 border-black uppercase tracking-wide transition-colors ${logoMethod === 'upload' ? 'bg-black text-accent-yellow shadow-[2px_2px_0px_#111]' : 'bg-white text-black hover:bg-gray-100'}`}
                                         >
                                             Upload File
                                         </button>
@@ -235,8 +241,8 @@ export default function SubmitDealPage() {
 
                             {/* Section 2: Deal Info */}
                             <div className="space-y-3 md:space-y-4">
-                                <h2 className="text-lg md:text-xl font-bold uppercase border-b-2 border-black pb-2 flex items-center gap-2">
-                                    <span className="bg-black text-white w-5 h-5 md:w-6 md:h-6 flex items-center justify-center text-xs md:text-sm rounded-none">2</span>
+                                <h2 className="text-base md:text-xl font-black uppercase border-b-2 border-black pb-2 flex items-center gap-2 tracking-tight">
+                                    <span className="bg-black text-accent-yellow w-6 h-6 md:w-7 md:h-7 flex items-center justify-center text-xs md:text-sm font-black shadow-[2px_2px_0px_#111]">2</span>
                                     Deal Configuration
                                 </h2>
 
@@ -291,11 +297,11 @@ export default function SubmitDealPage() {
                             </div>
 
                             {/* Section 3: Exclusivity */}
-                            <div className="bg-accent-yellow/20 border-2 border-black p-3 md:p-4">
-                                <label className="flex items-start gap-2 md:gap-3 cursor-pointer">
-                                    <input name="is_exclusive" type="checkbox" className="mt-1 w-4 h-4 md:w-5 md:h-5 accent-black border-2 border-black" required />
+                            <div className="bg-accent-yellow/20 border-2 border-black p-3 md:p-4 shadow-[2px_2px_0px_#111]">
+                                <label className="flex items-start gap-2.5 md:gap-3 cursor-pointer">
+                                    <input name="is_exclusive" type="checkbox" className="mt-0.5 w-5 h-5 accent-black border-2 border-black flex-shrink-0" required />
                                     <div>
-                                        <span className="font-bold uppercase block text-xs md:text-sm">Exclusivity Confirmation *</span>
+                                        <span className="font-bold uppercase block text-xs md:text-sm tracking-wide">Exclusivity Confirmation *</span>
                                         <span className="text-[11px] md:text-xs text-gray-800 tracking-tight md:tracking-normal leading-snug block mt-0.5">
                                             I confirm this deal offers a <span className="font-bold underline">special benefit</span> to FoundersPrime users (e.g., extra credits, extended trial, or higher discount) compared to our public pricing. We do not list generic referral links.
                                         </span>
@@ -305,8 +311,8 @@ export default function SubmitDealPage() {
 
                             {/* Section 4: Tier Selection */}
                             <div className="space-y-3 md:space-y-4">
-                                <h2 className="text-lg md:text-xl font-bold uppercase border-b-2 border-black pb-2 flex items-center gap-2">
-                                    <span className="bg-black text-white w-5 h-5 md:w-6 md:h-6 flex items-center justify-center text-xs md:text-sm rounded-none">4</span>
+                                <h2 className="text-base md:text-xl font-black uppercase border-b-2 border-black pb-2 flex items-center gap-2 tracking-tight">
+                                    <span className="bg-black text-accent-yellow w-6 h-6 md:w-7 md:h-7 flex items-center justify-center text-xs md:text-sm font-black shadow-[2px_2px_0px_#111]">3</span>
                                     Listing Tier
                                 </h2>
 
@@ -400,25 +406,26 @@ export default function SubmitDealPage() {
                             </div>
 
                             {/* Section 5: Security Check */}
-                            <div className="border-t-2 border-black pt-3 md:pt-4">
-                                <label className="block text-xs font-bold uppercase mb-2">Security Verification *</label>
-                                <div className="bg-gray-100 p-3 md:p-4 border-2 border-black flex flex-col md:flex-row items-center justify-between md:justify-start gap-3 md:gap-4">
-                                    <span className="font-mono text-base md:text-lg font-bold">Please solve: {challenge.num1} + {challenge.num2} = ?</span>
+                            <div className="border-t-2 border-black pt-4 md:pt-5">
+                                <label className="block text-xs font-bold uppercase mb-2 tracking-wide">Security Verification *</label>
+                                <div className="bg-gray-50 p-3 md:p-4 border-2 border-black flex items-center justify-between gap-3 shadow-[2px_2px_0px_#111]">
+                                    <span className="font-mono text-sm md:text-lg font-black">{challenge.num1} + {challenge.num2} = ?</span>
                                     <div className="flex items-center gap-2">
+                                        {isHuman && (
+                                            <div className="flex items-center text-green-600 font-bold gap-1">
+                                                <span className="material-symbols-outlined text-[18px]" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
+                                                <span className="text-xs md:text-sm hidden sm:inline">Verified</span>
+                                            </div>
+                                        )}
                                         <input
                                             type="text"
+                                            inputMode="numeric"
                                             placeholder="?"
-                                            className={`w-16 p-2 text-sm md:text-base border-2 border-black text-center font-bold outline-none ring-2 ${isHuman ? 'ring-green-500 border-green-500' : 'ring-transparent'}`}
+                                            className={`w-16 p-2 text-base border-2 border-black text-center font-black outline-none ring-2 bg-white ${isHuman ? 'ring-green-500 border-green-500' : 'ring-transparent'}`}
                                             value={securityAnswer}
                                             onChange={(e) => checkSecurity(e.target.value)}
                                             maxLength={3}
                                         />
-                                        {isHuman && (
-                                            <div className="flex items-center text-green-600 font-bold gap-1 mt-0">
-                                                <span className="material-symbols-outlined text-[18px]">check_circle</span>
-                                                <span className="text-xs md:text-sm">Verified</span>
-                                            </div>
-                                        )}
                                     </div>
                                 </div>
                             </div>
@@ -427,13 +434,13 @@ export default function SubmitDealPage() {
                                 <button
                                     type="submit"
                                     disabled={!isHuman || isSubmitting}
-                                    className={`w-full font-mono font-bold text-base md:text-lg uppercase py-3 md:py-4 border-[3px] border-[#101622] flex items-center justify-center gap-2 transition-all shadow-[4px_4px_0px_0px_#888] md:shadow-[6px_6px_0px_0px_#888]
+                                    className={`w-full font-mono font-black text-base md:text-lg uppercase tracking-wide py-3.5 md:py-4 border-[3px] border-[#101622] flex items-center justify-center gap-2 transition-all shadow-[4px_4px_0px_0px_#888] md:shadow-[6px_6px_0px_0px_#888]
                                     ${isHuman && !isSubmitting
-                                            ? 'bg-[#101622] text-white hover:bg-white hover:text-[#101622] cursor-pointer'
+                                            ? 'bg-[#101622] text-white hover:bg-accent-yellow hover:text-[#101622] cursor-pointer active:translate-x-1 active:translate-y-1 active:shadow-none'
                                             : 'bg-gray-300 text-gray-500 cursor-not-allowed border-gray-400 shadow-none'
                                         }`}
                                 >
-                                    {isSubmitting ? 'Submitting...' : 'Submit'} <span className="material-symbols-outlined text-[18px] md:text-base">send</span>
+                                    {isSubmitting ? 'Submitting...' : 'Submit Deal'} <span className="material-symbols-outlined text-[18px] md:text-base">send</span>
                                 </button>
                                 <p className="text-center text-[9px] md:text-[10px] text-gray-500 mt-3 md:mt-4 uppercase font-bold">
                                     {submissionStatus === 'error' && (

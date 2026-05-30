@@ -6,11 +6,14 @@ import StartupsContent from '@/components/startups/StartupsContent'
 export const metadata: Metadata = {
   title: 'Verified Startups Database',
   description: 'Browse verified startups for acquisition. Real revenue, real metrics, real opportunities from TrustMRR and Acquire.com.',
+  alternates: {
+    canonical: 'https://www.foundersprime.com/startups',
+  },
 }
 
 export default function StartupsPage() {
   return (
-    <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden bg-background-light">
+    <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden bg-gray-50">
       <Header />
       <main className="flex-1">
         <StartupsContent />

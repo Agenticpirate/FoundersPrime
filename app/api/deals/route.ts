@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { revalidatePath } from 'next/cache'
 import { createClient } from '@/lib/supabase/server'
 import { Deal } from '@/lib/deals-database'
 import fs from 'fs'
@@ -61,6 +62,22 @@ async function assertAdmin(): Promise<NextResponse | null> {
     return NextResponse.json({ success: false, error: 'Forbidden' }, { status: 403 })
   }
   return null // authorised
+}
+
+// Flush ISR cache for affected deal pages after a write so admin edits go live
+// immediately instead of waiting for the hourly `revalidate` window. Always
+// refreshes the deals listing; refreshes specific deal detail pages when slugs
+// are known. Never throws — revalidation is best-effort.
+function revalidateDeals(slugs: (string | undefined)[] = []) {
+  try {
+    revalidatePath('/deals')
+    const unique = Array.from(new Set(slugs.filter((s): s is string => !!s)))
+    for (const slug of unique) {
+      revalidatePath(`/deals/${slug}`)
+    }
+  } catch (err) {
+    console.error('Deal revalidation failed (non-fatal):', err)
+  }
 }
 
 // GET - Fetch all deals (from Supabase if configured, otherwise from local JSON)
@@ -227,6 +244,8 @@ export async function POST(request: NextRequest) {
       const { error, data } = await supabase.from('deals').upsert(newDeals, { onConflict: 'slug' }).select();
       if (error) throw error;
 
+      revalidateDeals(newDeals.map((d: any) => d.slug));
+
       return NextResponse.json({
         success: true,
         message: `Processed bulk import of ${newDeals.length} deals`,
@@ -245,6 +264,8 @@ export async function POST(request: NextRequest) {
       }
       throw error;
     }
+
+    revalidateDeals([data?.slug]);
 
     return NextResponse.json({
       success: true,
@@ -285,6 +306,8 @@ export async function PUT(request: NextRequest) {
 
     if (error) throw error;
 
+    revalidateDeals([updatedDeal?.slug, slug])
+
     return NextResponse.json({
       success: true,
       deal: formatDealFromDB(updatedDeal),
@@ -311,8 +334,12 @@ export async function DELETE(request: NextRequest) {
 
     if (ids) {
       const idsToDelete = ids.split(',');
+      // Capture slugs before deletion so we can flush their detail pages.
+      const { data: toDelete } = await supabase.from('deals').select('slug').in('id', idsToDelete);
       const { error } = await supabase.from('deals').delete().in('id', idsToDelete);
       if (error) throw error;
+
+      revalidateDeals((toDelete || []).map((d: any) => d.slug));
 
       return NextResponse.json({ success: true, message: `Deleted ${idsToDelete.length} deals` });
     }
@@ -321,12 +348,21 @@ export async function DELETE(request: NextRequest) {
       return NextResponse.json({ success: false, error: 'Deal ID or slug is required' }, { status: 400 });
     }
 
+    // Resolve the slug (for revalidation) when only an id was provided.
+    let deletedSlug: string | undefined = slug || undefined
+    if (!deletedSlug && id) {
+      const { data: found } = await supabase.from('deals').select('slug').eq('id', id).single()
+      deletedSlug = found?.slug
+    }
+
     let query = supabase.from('deals').delete();
     if (id) query = query.eq('id', id);
     else if (slug) query = query.eq('slug', slug);
 
     const { error } = await query;
     if (error) throw error;
+
+    revalidateDeals([deletedSlug])
 
     return NextResponse.json({ success: true, message: 'Deal deleted successfully' });
   } catch (error: any) {

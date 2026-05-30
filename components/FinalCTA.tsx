@@ -38,10 +38,19 @@ export default function FinalCTA() {
               Every Monday: the freshest credits, accelerator deadlines, and grants &mdash; curated for founders who actually ship. No filler.
             </p>
 
-            <div className="flex flex-wrap gap-x-3 gap-y-1 md:gap-3 text-[9px] md:text-xs text-gray-500 font-mono uppercase tracking-widest">
+            {/* Trust — mobile: single minimal line */}
+            <div className="flex md:hidden items-center gap-2 text-[9px] text-gray-500 font-mono uppercase tracking-[0.15em]">
+              <span className="material-symbols-outlined !text-[12px] text-green-400">verified</span>
+              <span>1 email / week</span>
+              <span className="text-gray-700">·</span>
+              <span>Unsubscribe anytime</span>
+            </div>
+
+            {/* Trust — desktop: pills */}
+            <div className="hidden md:flex flex-wrap gap-3 text-xs text-gray-500 font-mono uppercase tracking-widest">
               {['1 email/wk', 'Unsubscribe anytime', 'Curated by founders'].map((t) => (
                 <span key={t} className="flex items-center gap-1">
-                  <span className="material-symbols-outlined !text-[12px] md:!text-sm text-green-400">check_circle</span>
+                  <span className="material-symbols-outlined !text-sm text-green-400">check_circle</span>
                   {t}
                 </span>
               ))}

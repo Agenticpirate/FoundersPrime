@@ -1,7 +1,6 @@
 'use client'
 
 import { Suspense } from 'react'
-import Head from 'next/head'
 import AcceleratorsHeader from '@/components/deals/AcceleratorsHeader'
 import AcceleratorsHero from '@/components/deals/AcceleratorsHero'
 import AcceleratorsStrategy from '@/components/deals/AcceleratorsStrategy'
@@ -10,91 +9,8 @@ import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 
 export default function AcceleratorsPage() {
- // SEO and Structured Data
- const pageTitle = "Startup Accelerators | Top Programs"
- const pageDescription = "Discover top startup accelerators worldwide. Get $250K+ in funding, mentorship, and connections. Y Combinator, Techstars, 500 Global & more. Updated recently."
- const pageUrl = "https://foundersprime.com/programs/accelerators"
- const ogImage = "https://foundersprime.com/og-accelerators.jpg"
-
- const structuredData = {
- "@context": "https://schema.org",
- "@type": "CollectionPage",
- "name": "Startup Accelerators",
- "description": pageDescription,
- "url": pageUrl,
- "mainEntity": {
- "@type": "ItemList",
- "numberOfItems": 280,
- "itemListElement": [
- {
- "@type": "ListItem",
- "position": 1,
- "item": {
- "@type": "Organization",
- "name": "Y Combinator",
- "description": "The Gold Standard of accelerators",
- "url": "https://www.ycombinator.com/"
- }
- }
- ]
- },
- "breadcrumb": {
- "@type": "BreadcrumbList",
- "itemListElement": [
- {
- "@type": "ListItem",
- "position": 1,
- "name": "Home",
- "item": "https://foundersprime.com"
- },
- {
- "@type": "ListItem",
- "position": 2,
- "name": "Programs",
- "item": "https://foundersprime.com/programs"
- },
- {
- "@type": "ListItem",
- "position": 3,
- "name": "Accelerators",
- "item": pageUrl
- }
- ]
- }
- }
-
  return (
  <>
- {/* SEO Meta Tags */}
- <Head>
- <title>{pageTitle}</title>
- <meta name="description" content={pageDescription} />
- <meta name="keywords" content="startup accelerators, Y Combinator, Techstars, 500 Global, startup funding, seed funding, accelerator programs" />
-
- {/* Open Graph */}
- <meta property="og:type" content="website" />
- <meta property="og:title" content={pageTitle} />
- <meta property="og:description" content={pageDescription} />
- <meta property="og:url" content={pageUrl} />
- <meta property="og:image" content={ogImage} />
- <meta property="og:site_name" content="FoundersPrime" />
-
- {/* Twitter Card */}
- <meta name="twitter:card" content="summary_large_image" />
- <meta name="twitter:title" content={pageTitle} />
- <meta name="twitter:description" content={pageDescription} />
- <meta name="twitter:image" content={ogImage} />
-
- {/* Canonical URL */}
- <link rel="canonical" href={pageUrl} />
-
- {/* Structured Data */}
- <script
- type="application/ld+json"
- dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
- />
- </Head>
-
  <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden bg-background-light">
  <Header />
  <main className="flex-1">

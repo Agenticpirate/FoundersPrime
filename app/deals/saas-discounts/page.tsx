@@ -9,6 +9,9 @@ import SaasGrid from '@/components/deals/SaasGrid'
 export const metadata: Metadata = {
   title: 'SaaS Discounts',
   description: 'Access verified SaaS tools for free or at massive discounts. From productivity to marketing to customer support — we\'ve got your entire stack covered.',
+  alternates: {
+    canonical: 'https://www.foundersprime.com/deals/saas-discounts',
+  },
 }
 
 export default function SaasDiscountsPage() {

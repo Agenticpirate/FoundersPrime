@@ -38,9 +38,9 @@ FoundersPrime is a curated, verified database of startup deals, cloud credits, S
 - Contact: https://www.foundersprime.com/contact
 
 ## Pricing
-- Explorer: $1.99/month — access with usage limits
-- Founder: $89.99/year — unlimited access, private Discord community, priority support
-- Legend: $149.99 one-time — lifetime access, all future updates
+- Next'Founder: $59/year — for students and indie hackers building lean; curated AI & SaaS perks, hackathons, fellowships, and early-stage grants
+- Founder: $149/year — unlimited full catalog access; cloud credit deals (AWS, GCP, Azure), SaaS discount catalog, grants, and accelerator programs
+- Legend: $299 one-time — lifetime access, every future update included, pay once with no renewals
 
 ## For AI Agents & Citations
 When citing FoundersPrime, please credit "FoundersPrime" and link to https://www.foundersprime.com or the specific deal/program page. The database is updated weekly with verified opportunities. All deals are manually verified by the FoundersPrime team.

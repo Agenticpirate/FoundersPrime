@@ -28,7 +28,7 @@ export default function ProviderSection() {
       <div className="relative max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="border-2 border-black shadow-[5px_5px_0px_#111] bg-[#fdfbf7] grid grid-cols-1 lg:grid-cols-2 overflow-hidden">
           {/* Left Content */}
-          <div className="relative p-6 md:p-10 lg:p-12 flex flex-col justify-center border-b-2 lg:border-b-0 lg:border-r-2 border-black overflow-hidden">
+          <div className="relative p-5 sm:p-6 md:p-10 lg:p-12 flex flex-col justify-center border-b-2 lg:border-b-0 lg:border-r-2 border-black overflow-hidden">
             {/* Minimalist tech mandala — sits behind content */}
             <div className="absolute -bottom-20 -left-16 w-72 h-72 text-accent-yellow opacity-[0.18] pointer-events-none mandala-spin-slow">
               <svg viewBox="0 0 200 200" className="w-full h-full" fill="none" stroke="currentColor" strokeWidth="0.7">
@@ -69,28 +69,28 @@ export default function ProviderSection() {
               ].map((s) => (
                 <div
                   key={s.label}
-                  className="bg-white border-2 border-black px-2 py-1.5 shadow-[2px_2px_0px_#111] flex items-center gap-1.5 hover:-translate-y-0.5 transition-transform"
+                  className="bg-white border-2 border-black px-2 py-2 shadow-[2px_2px_0px_#111] flex flex-col items-start gap-0.5 sm:flex-row sm:items-center sm:gap-1.5 sm:py-1.5 hover:-translate-y-0.5 transition-transform"
                 >
                   <span className="material-symbols-outlined text-sm text-black flex-shrink-0">{s.icon}</span>
                   <div className="min-w-0">
                     <p className="font-mono font-black text-xs leading-none">{s.value}</p>
-                    <p className="font-mono text-[8px] uppercase tracking-widest text-gray-500 mt-0.5 truncate">{s.label}</p>
+                    <p className="font-mono text-[8px] uppercase tracking-tight sm:tracking-widest text-gray-500 mt-0.5 truncate">{s.label}</p>
                   </div>
                 </div>
               ))}
             </div>
 
-            <div className="relative flex flex-wrap gap-3">
+            <div className="relative flex flex-col sm:flex-row sm:flex-wrap gap-2.5 sm:gap-3">
               <Link
                 href="/submit-deal"
-                className="bg-black text-white border-2 border-black px-5 py-3 font-mono font-black uppercase text-xs tracking-wider flex items-center gap-2 hover:bg-accent-yellow hover:text-black transition-colors shadow-[3px_3px_0px_rgba(0,0,0,0.2)] hover:-translate-y-0.5 hover:shadow-[5px_5px_0px_rgba(0,0,0,0.2)]"
+                className="bg-black text-white border-2 border-black px-5 py-3 font-mono font-black uppercase text-xs tracking-wider flex items-center justify-center sm:justify-start gap-2 hover:bg-accent-yellow hover:text-black transition-colors shadow-[3px_3px_0px_rgba(0,0,0,0.2)] hover:-translate-y-0.5 hover:shadow-[5px_5px_0px_rgba(0,0,0,0.2)]"
               >
                 Submit your deal
                 <span className="material-symbols-outlined text-base">arrow_forward</span>
               </Link>
               <a
                 href="mailto:partners@foundersprime.com"
-                className="bg-white text-black border-2 border-black px-5 py-3 font-mono font-black uppercase text-xs tracking-wider flex items-center gap-2 hover:bg-black hover:text-white transition-colors shadow-[3px_3px_0px_rgba(0,0,0,0.2)] hover:-translate-y-0.5 hover:shadow-[5px_5px_0px_rgba(0,0,0,0.2)]"
+                className="bg-white text-black border-2 border-black px-5 py-3 font-mono font-black uppercase text-xs tracking-wider flex items-center justify-center sm:justify-start gap-2 hover:bg-black hover:text-white transition-colors shadow-[3px_3px_0px_rgba(0,0,0,0.2)] hover:-translate-y-0.5 hover:shadow-[5px_5px_0px_rgba(0,0,0,0.2)]"
               >
                 <span className="material-symbols-outlined text-base">mail</span>
                 Talk to us

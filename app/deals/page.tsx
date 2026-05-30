@@ -25,4 +25,7 @@ export default function DealsPage() {
 export const metadata = {
   title: 'All Deals',
   description: 'Browse verified startup deals, cloud credits, grants, SaaS discounts and accelerator programs.',
+  alternates: {
+    canonical: 'https://www.foundersprime.com/deals',
+  },
 }

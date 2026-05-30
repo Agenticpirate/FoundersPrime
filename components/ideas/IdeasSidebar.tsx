@@ -1,141 +1,139 @@
-export default function IdeasSidebar() {
-  const topCategories = [
-    { name: 'AI/ML', count: 487, growth: '+67%' },
-    { name: 'FinTech', count: 342, growth: '+23%' },
-    { name: 'HealthTech', count: 298, growth: '+45%' },
-    { name: 'Climate', count: 234, growth: '+89%' },
-    { name: 'B2B Tools', count: 189, growth: '+34%' },
-    { name: 'Consumer', count: 156, growth: '+12%' }
-  ]
+"use client";
 
-  const trendingIdeas = [
-    { title: 'AI Code Review Assistant', score: 8.7, category: 'AI/ML' },
-    { title: 'Remote Team Wellness', score: 8.1, category: 'B2B Tools' },
-    { title: 'Local Food Rescue', score: 8.4, category: 'Consumer' },
-    { title: 'Meeting Insights AI', score: 9.1, category: 'AI/ML' }
-  ]
+import { useState } from 'react'
+import Mandala from '@/components/ui/Mandala'
 
-  const quickStats = [
-    { label: 'High Demand (8+)', value: '847', icon: 'trending_up' },
-    { label: 'Low Competition', value: '1,234', icon: 'sports_score' },
-    { label: 'Quick MVP (&lt;3mo)', value: '923', icon: 'speed' },
-    { label: 'Large Market ($1B+)', value: '456', icon: 'public' }
+interface CategoryCount {
+  name: string
+  count: number
+}
+
+interface IdeasSidebarProps {
+  categories: CategoryCount[]
+  selectedCategory: string
+  onSelectCategory: (category: string) => void
+  totalIdeas: number
+}
+
+export default function IdeasSidebar({
+  categories,
+  selectedCategory,
+  onSelectCategory,
+  totalIdeas,
+}: IdeasSidebarProps) {
+  const [showAll, setShowAll] = useState(false)
+  const visibleCategories = showAll ? categories : categories.slice(0, 8)
+
+  const validationSteps = [
+    'Search volume analysis across Google, social media, and forums',
+    'Competitor funding and market traction research',
+    'Technical feasibility and cost estimation',
+    'Market size and monetization potential analysis',
   ]
 
   return (
-    <div className="space-y-6">
-      {/* Quick Stats */}
-      <div className="bg-white border-3 border-black shadow-[6px_6px_0px_0px_#1a1a1a] rounded-sm p-6">
-        <h3 className="font-mono text-lg font-bold mb-4 flex items-center gap-2">
-          <span className="material-symbols-outlined">analytics</span>
-          Quick Stats
-        </h3>
-        <div className="space-y-3">
-          {quickStats.map((stat, index) => (
-            <div key={index} className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <span className="material-symbols-outlined text-sm text-gray-500">{stat.icon}</span>
-                <span className="font-mono text-sm" dangerouslySetInnerHTML={{ __html: stat.label }}></span>
-              </div>
-              <span className="font-mono text-sm font-bold">{stat.value}</span>
-            </div>
-          ))}
+    <div className="space-y-4 lg:sticky lg:top-20">
+      {/* Top Categories — real, clickable */}
+      <div className="relative bg-white border-2 border-black shadow-[4px_4px_0px_0px_#111] rounded-sm p-4 md:p-5 overflow-hidden">
+        <Mandala
+          variant="rings"
+          colorClass="text-gray-900"
+          opacity={0.05}
+          speed={95}
+          className="absolute -top-12 -right-12 w-40 h-40"
+        />
+        <div className="relative">
+          <h3 className="font-mono text-sm font-black uppercase tracking-[0.08em] mb-3 flex items-center gap-2">
+            <span className="material-symbols-outlined text-[18px] text-accent-yellow">category</span>
+            Browse Categories
+          </h3>
+          <div className="space-y-1">
+            {visibleCategories.map((category) => {
+              const active = selectedCategory === category.name
+              return (
+                <button
+                  key={category.name}
+                  onClick={() => onSelectCategory(category.name)}
+                  className={`w-full flex items-center justify-between px-2.5 py-1.5 rounded-lg text-left transition-all ${
+                    active
+                      ? 'bg-gray-900 text-white'
+                      : 'hover:bg-gray-50 text-gray-700'
+                  }`}
+                >
+                  <span className="font-mono text-[12px] font-semibold truncate">{category.name}</span>
+                  <span className={`font-mono text-[11px] tabular-nums flex-shrink-0 ml-2 px-1.5 py-0.5 rounded-full ${
+                    active ? 'bg-accent-yellow text-black' : 'bg-gray-100 text-gray-500'
+                  }`}>
+                    {category.count}
+                  </span>
+                </button>
+              )
+            })}
+          </div>
+          {categories.length > 8 && (
+            <button
+              onClick={() => setShowAll(v => !v)}
+              className="w-full mt-3 py-1.5 text-[11px] font-mono font-bold uppercase tracking-wide bg-gray-50 hover:bg-gray-100 border border-gray-200 rounded-lg transition-colors"
+            >
+              {showAll ? 'Show Less' : `View All ${categories.length} Categories`}
+            </button>
+          )}
         </div>
-      </div>
-
-      {/* Top Categories */}
-      <div className="bg-white border-3 border-black shadow-[6px_6px_0px_0px_#1a1a1a] rounded-sm p-6">
-        <h3 className="font-mono text-lg font-bold mb-4 flex items-center gap-2">
-          <span className="material-symbols-outlined">category</span>
-          Top Categories
-        </h3>
-        <div className="space-y-3">
-          {topCategories.map((category, index) => (
-            <div key={index} className="flex items-center justify-between">
-              <div>
-                <span className="font-mono text-sm font-bold">{category.name}</span>
-                <span className="text-xs text-green-600 ml-2">{category.growth}</span>
-              </div>
-              <span className="font-mono text-sm text-gray-600">{category.count}</span>
-            </div>
-          ))}
-        </div>
-        <button className="w-full mt-4 py-2 text-sm bg-gray-100 hover:bg-gray-200 border-2 border-black font-mono rounded-sm transition-colors">
-          View All Categories
-        </button>
-      </div>
-
-      {/* Trending Ideas */}
-      <div className="bg-black text-white border-3 border-black shadow-[6px_6px_0px_0px_#1a1a1a] rounded-sm p-6">
-        <h3 className="font-mono text-lg font-bold mb-4 flex items-center gap-2 text-primary">
-          <span className="material-symbols-outlined">whatshot</span>
-          Trending Ideas
-        </h3>
-        <div className="space-y-4">
-          {trendingIdeas.map((idea, index) => (
-            <div key={index} className="border-b border-gray-700 pb-3 last:border-b-0">
-              <div className="flex justify-between items-start mb-1">
-                <span className="font-mono text-sm font-bold text-white">{idea.title}</span>
-                <span className="font-mono text-xs text-primary">{idea.score}/10</span>
-              </div>
-              <span className="font-mono text-xs text-gray-400">{idea.category}</span>
-            </div>
-          ))}
-        </div>
-        <button className="w-full mt-4 py-2 text-sm bg-primary hover:bg-white hover:text-black border-2 border-white text-black font-mono rounded-sm transition-colors">
-          View All Trending
-        </button>
       </div>
 
       {/* Validation Methodology */}
-      <div className="bg-white border-3 border-black shadow-[6px_6px_0px_0px_#1a1a1a] rounded-sm p-6">
-        <h3 className="font-mono text-lg font-bold mb-3 flex items-center gap-2">
-          <span className="material-symbols-outlined">science</span>
-          How We Validate
-        </h3>
-        <div className="space-y-3 text-sm">
-          <div className="flex items-start gap-3">
-            <div className="bg-primary text-black size-6 flex items-center justify-center text-xs font-bold rounded-sm flex-shrink-0">
-              1
-            </div>
-            <p className="font-sans text-gray-700">Search volume analysis across Google, social media, and forums</p>
-          </div>
-          <div className="flex items-start gap-3">
-            <div className="bg-primary text-black size-6 flex items-center justify-center text-xs font-bold rounded-sm flex-shrink-0">
-              2
-            </div>
-            <p className="font-sans text-gray-700">Competitor funding and market traction research</p>
-          </div>
-          <div className="flex items-start gap-3">
-            <div className="bg-primary text-black size-6 flex items-center justify-center text-xs font-bold rounded-sm flex-shrink-0">
-              3
-            </div>
-            <p className="font-sans text-gray-700">Technical feasibility and cost estimation</p>
-          </div>
-          <div className="flex items-start gap-3">
-            <div className="bg-primary text-black size-6 flex items-center justify-center text-xs font-bold rounded-sm flex-shrink-0">
-              4
-            </div>
-            <p className="font-sans text-gray-700">Market size and monetization potential analysis</p>
+      <div className="relative bg-gradient-to-br from-gray-900 via-gray-900 to-black text-white border-2 border-black shadow-[4px_4px_0px_0px_#111] rounded-sm p-4 md:p-5 overflow-hidden">
+        <Mandala
+          variant="orbital"
+          colorClass="text-accent-yellow"
+          opacity={0.1}
+          speed={75}
+          direction="ccw"
+          className="absolute -bottom-12 -right-12 w-40 h-40"
+        />
+        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-accent-yellow/50 to-transparent" />
+        <div className="relative">
+          <h3 className="font-mono text-sm font-black uppercase tracking-[0.08em] mb-3 flex items-center gap-2 text-accent-yellow">
+            <span className="material-symbols-outlined text-[18px]">science</span>
+            How We Validate
+          </h3>
+          <div className="space-y-2.5">
+            {validationSteps.map((step, i) => (
+              <div key={i} className="flex items-start gap-2.5">
+                <div className="bg-accent-yellow text-black size-5 flex items-center justify-center text-[10px] font-black rounded-sm flex-shrink-0 mt-0.5 border border-black">
+                  {i + 1}
+                </div>
+                <p className="font-sans text-[12px] text-gray-300 leading-snug">{step}</p>
+              </div>
+            ))}
           </div>
         </div>
       </div>
 
       {/* Newsletter Signup */}
-      <div className="bg-white border-3 border-black shadow-[6px_6px_0px_0px_#1a1a1a] rounded-sm p-6">
-        <h3 className="font-mono text-lg font-bold mb-3">Weekly Ideas Digest</h3>
-        <p className="font-sans text-sm text-gray-600 mb-4">
-          Get 5 new validated startup ideas delivered to your inbox every week.
-        </p>
-        <div className="space-y-3">
-          <input 
-            className="w-full bg-gray-50 border-2 border-black text-black px-3 py-2 font-mono text-sm focus:outline-none focus:border-primary focus:ring-0 placeholder:text-gray-500 rounded-sm" 
-            placeholder="your@email.com" 
-            type="email"
-          />
-          <button className="w-full py-2 text-sm bg-primary hover:bg-black hover:text-white border-2 border-black text-black font-mono font-bold rounded-sm transition-colors">
-            Subscribe
-          </button>
+      <div className="relative bg-white border-2 border-black shadow-[4px_4px_0px_0px_#111] rounded-sm p-4 md:p-5 overflow-hidden">
+        <Mandala
+          variant="petal"
+          colorClass="text-gray-900"
+          opacity={0.05}
+          speed={110}
+          className="absolute -bottom-10 -left-10 w-36 h-36"
+        />
+        <div className="relative">
+          <h3 className="font-mono text-sm font-black uppercase tracking-[0.08em] mb-1.5">Weekly Ideas Digest</h3>
+          <p className="font-sans text-[12px] text-gray-600 mb-3 leading-relaxed">
+            Get fresh validated startup ideas delivered to your inbox every week.
+          </p>
+          <div className="space-y-2">
+            <input
+              className="w-full h-9 bg-gray-50 hover:bg-white focus:bg-white border border-gray-200 text-black px-3 font-mono text-[12.5px] focus:outline-none focus:ring-2 focus:ring-accent-yellow/40 focus:border-accent-yellow placeholder:text-gray-400 rounded-lg transition-colors"
+              placeholder="your@email.com"
+              type="email"
+            />
+            <button className="w-full py-2 text-[12px] bg-black text-white hover:bg-accent-yellow hover:text-black border-2 border-black font-mono font-bold rounded-lg transition-colors">
+              Subscribe
+            </button>
+          </div>
         </div>
       </div>
     </div>

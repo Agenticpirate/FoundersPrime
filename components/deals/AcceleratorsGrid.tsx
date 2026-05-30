@@ -117,71 +117,157 @@ export default function AcceleratorsGrid() {
 
  return (
  <div className="w-full">
- {/* Header */}
- <div className="flex flex-col sm:flex-row sm:items-center gap-2 mb-3 border-b-2 border-black pb-2">
- <div className="flex-1">
- <h2 className="font-mono text-lg md:text-2xl font-bold text-black">Top Programs</h2>
- <span className="font-mono text-[10px] md:text-xs text-gray-500 mt-0.5 block">
- Verified terms and deadlines
+ {/* ─── Premium Toolbar ─── */}
+ <div className="relative bg-white border-2 border-black shadow-[3px_3px_0px_#111] rounded-sm overflow-hidden mb-4">
+ {/* Decorative mandala */}
+ <div className="absolute -top-12 -right-12 w-44 h-44 pointer-events-none opacity-[0.05]" aria-hidden="true">
+ <svg viewBox="0 0 200 200" className="w-full h-full text-orange-700 accel-toolbar-mandala-spin" fill="none" stroke="currentColor" strokeWidth="0.7">
+ <circle cx="100" cy="100" r="40" />
+ <circle cx="100" cy="100" r="60" strokeDasharray="2 4" />
+ <circle cx="100" cy="100" r="80" strokeDasharray="1 6" />
+ {[0, 60, 120, 180, 240, 300].map((deg) => (
+ <g key={deg} transform={`rotate(${deg} 100 100)`}>
+ <line x1="100" y1="40" x2="100" y2="20" />
+ <circle cx="100" cy="20" r="2" fill="currentColor" />
+ </g>
+ ))}
+ <circle cx="100" cy="100" r="3" fill="currentColor" />
+ </svg>
+ </div>
+
+ <div className="relative p-3 md:p-4">
+ {/* Header row — title + count + view toggle */}
+ <div className="flex items-center justify-between gap-3 mb-3 pb-3 border-b-2 border-black border-dashed">
+ <div className="flex items-center gap-2.5 min-w-0">
+ <span className="inline-flex items-center justify-center w-7 h-7 bg-orange-100 border-2 border-black rounded-sm shadow-[1px_1px_0px_#111] flex-shrink-0">
+ <span className="material-symbols-outlined !text-[14px] text-orange-700">rocket_launch</span>
  </span>
+ <div className="min-w-0">
+ <h2 className="font-mono text-[13px] md:text-sm font-black uppercase tracking-[0.06em] text-black leading-none truncate">
+ Top Programs
+ </h2>
+ <p className="font-mono text-[10px] text-gray-500 mt-1 leading-none flex items-center gap-1.5">
+ <span className="font-bold text-black tabular-nums">{filteredAndSearchedDeals.length}</span>
+ <span className="text-gray-400">·</span>
+ Verified terms &amp; deadlines
+ </p>
+ </div>
  </div>
  <ViewToggle onViewChange={setViewMode} />
  </div>
 
- {/* Search Bar */}
- <div className="mb-6">
+ {/* Search row */}
+ <div className="mb-3">
  <AcceleratorsSearch onSearch={handleSearch} />
  </div>
 
- {/* Filters and Sorting */}
- <div className="flex flex-col gap-3 mb-4 md:mb-6">
- {/* Region Filters - always horizontal scroll */}
+ {/* Filter + Sort row */}
+ <div className="flex flex-col md:flex-row md:items-end gap-2.5 md:gap-3">
+ {/* Region pills */}
+ <div className="flex-1 min-w-0">
+ <div className="flex items-center gap-1.5 mb-1.5">
+ <span className="font-mono text-[9px] font-black uppercase tracking-[0.14em] text-gray-500">
+ Region
+ </span>
+ <span className="h-px flex-1 bg-gray-200" />
+ </div>
  <div className="flex gap-1.5 overflow-x-auto mobile-scroll-hide pb-0.5">
- {regions.map(region => (
+ {regions.map((region) => {
+ const active = filterRegion === region
+ return (
  <button
  key={region}
  onClick={() => setFilterRegion(region)}
- className={`px-2 py-0.5 font-mono text-[10px] border border-black rounded-sm whitespace-nowrap transition-all flex-shrink-0 ${filterRegion === region
- ? 'bg-black text-white'
- : 'bg-white text-black hover:bg-gray-100'
+ className={`px-2.5 py-1 font-mono text-[10.5px] font-black uppercase tracking-wider border-2 border-black rounded-sm whitespace-nowrap flex-shrink-0 transition-all ${
+ active
+ ? 'bg-black text-accent-yellow shadow-[2px_2px_0px_#FFD500]'
+ : 'bg-white text-black hover:bg-gray-50 hover:shadow-[2px_2px_0px_#111] hover:-translate-x-px hover:-translate-y-px'
  }`}
- aria-pressed={filterRegion === region}
+ aria-pressed={active}
  >
  {region}
  </button>
- ))}
+ )
+ })}
+ </div>
  </div>
 
- {/* Sort */}
+ {/* Sort dropdown */}
+ <div className="md:w-52 flex-shrink-0">
+ <div className="flex items-center gap-1.5 mb-1.5">
+ <span className="font-mono text-[9px] font-black uppercase tracking-[0.14em] text-gray-500">
+ Sort
+ </span>
+ <span className="h-px flex-1 bg-gray-200" />
+ </div>
+ <div className="relative">
  <select
  id="sort-select"
  value={sortBy}
  onChange={(e) => setSortBy(e.target.value as SortOption)}
- className="w-full md:w-48 px-2 py-1.5 font-mono text-xs bg-white border-2 border-black rounded-sm focus:outline-none"
+ className="w-full appearance-none px-3 py-2 pr-9 font-mono text-[11px] font-bold bg-white border-2 border-black rounded-sm focus:outline-none focus:shadow-[3px_3px_0px_#FFD500] hover:shadow-[2px_2px_0px_#111] transition-all cursor-pointer"
  aria-label="Sort accelerators"
  >
- <option value="name">Name (A-Z)</option>
- <option value="investment">Investment (High to Low)</option>
- <option value="equity">Equity (Low to High)</option>
+ <option value="name">Name (A&ndash;Z)</option>
+ <option value="investment">Investment · High to Low</option>
+ <option value="equity">Equity · Low to High</option>
  <option value="deadline">Application Status</option>
  </select>
+ <span className="material-symbols-outlined !text-[16px] absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none text-gray-500">
+ expand_more
+ </span>
+ </div>
+ </div>
  </div>
 
- {/* Results Count and Clear Filters */}
- <div className="flex items-center justify-between mb-3 pb-1.5 border-b border-dashed border-gray-300">
- <div className="font-mono text-[10px] md:text-xs text-gray-600">
- <span className="font-bold text-black">{filteredAndSearchedDeals.length}</span> programs
- </div>
+ {/* Active filters chip row */}
  {hasActiveFilters && (
+ <div className="mt-3 pt-3 border-t border-dashed border-gray-300 flex items-center justify-between gap-2 flex-wrap">
+ <div className="flex items-center gap-1.5 flex-wrap">
+ <span className="font-mono text-[9px] font-black uppercase tracking-[0.14em] text-gray-500">
+ Active
+ </span>
+ {filterRegion !== 'All' && (
+ <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-accent-yellow border-2 border-black rounded-sm font-mono text-[10px] font-black uppercase tracking-wider">
+ {filterRegion}
+ </span>
+ )}
+ {searchQuery.trim() && (
+ <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-white border-2 border-black rounded-sm font-mono text-[10px] font-black uppercase tracking-wider max-w-[200px] truncate">
+ &ldquo;{searchQuery}&rdquo;
+ </span>
+ )}
+ {sortBy !== 'name' && (
+ <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-white border-2 border-black rounded-sm font-mono text-[10px] font-black uppercase tracking-wider">
+ {sortBy}
+ </span>
+ )}
+ </div>
  <button
  onClick={handleClearFilters}
- className="px-2 py-0.5 font-mono text-[10px] font-bold bg-white border border-black rounded-sm hover:bg-gray-100 flex items-center gap-0.5"
+ className="inline-flex items-center gap-1 px-2.5 py-1 font-mono text-[10px] font-black uppercase tracking-wider bg-white border-2 border-black rounded-sm shadow-[1px_1px_0px_#111] hover:bg-black hover:text-white transition-all"
  aria-label="Clear all filters"
  >
- <span className="material-symbols-outlined text-[10px]">close</span>
- Clear
+ <span className="material-symbols-outlined !text-[12px]">close</span>
+ Clear all
  </button>
+ </div>
  )}
+ </div>
+
+ <style jsx>{`
+ @keyframes accelToolbarMandalaSpin {
+ from { transform: rotate(0deg); }
+ to { transform: rotate(360deg); }
+ }
+ :global(.accel-toolbar-mandala-spin) {
+ animation: accelToolbarMandalaSpin 110s linear infinite;
+ transform-origin: center;
+ }
+ @media (prefers-reduced-motion: reduce) {
+ :global(.accel-toolbar-mandala-spin) { animation: none; }
+ }
+ `}</style>
  </div>
 
  {/* Grid/List View */}

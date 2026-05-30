@@ -140,37 +140,77 @@ export default function StudentFundingGrid() {
 
     return (
         <div className="w-full">
-            {/* Search Bar */}
-            <div className="mb-3">
-                <AcceleratorsSearch onSearch={handleSearch} placeholder="Search grants, scholarships..." />
-            </div>
-
-            {/* Filters and Sorting */}
-            <div className="flex flex-col gap-1.5 mb-3">
-                <div className="flex gap-1 overflow-x-auto mobile-scroll-hide pb-0.5">
-                    {types.map(type => (
-                        <button
-                            key={type}
-                            onClick={() => { setFundingType(type); setCurrentPage(1); }}
-                            className={`px-2 py-0.5 font-mono text-[10px] border border-black rounded-sm whitespace-nowrap flex-shrink-0 transition-all ${fundingType === type
-                                ? 'bg-black text-white'
-                                : 'bg-white text-black hover:bg-gray-100'
-                                }`}
-                        >
-                            {type}
-                        </button>
-                    ))}
+            {/* Premium filter panel — mirrors DealsFilterBar */}
+            <div className="relative bg-white border border-gray-200 rounded-xl p-3 md:p-3.5 shadow-sm overflow-hidden mb-3">
+                {/* Decorative mandala — top-right corner */}
+                <div className="absolute -top-10 -right-10 w-32 h-32 pointer-events-none opacity-[0.05]" aria-hidden="true">
+                    <svg viewBox="0 0 200 200" className="w-full h-full text-gray-900 funding-mandala-spin" fill="none" stroke="currentColor" strokeWidth="0.6">
+                        <circle cx="100" cy="100" r="40" />
+                        <circle cx="100" cy="100" r="60" strokeDasharray="2 4" />
+                        {[...Array(8)].map((_, i) => (
+                            <line
+                                key={i}
+                                x1="100"
+                                y1="100"
+                                x2={100 + Math.cos((i * Math.PI) / 4) * 80}
+                                y2={100 + Math.sin((i * Math.PI) / 4) * 80}
+                            />
+                        ))}
+                        <circle cx="100" cy="100" r="2" fill="currentColor" />
+                    </svg>
                 </div>
 
-                <select
-                    value={sortBy}
-                    onChange={(e) => setSortBy(e.target.value as SortOption)}
-                    className="w-full md:w-48 px-2 py-1.5 font-mono text-xs bg-white border-2 border-black rounded-sm focus:outline-none"
-                >
-                    <option value="relevance">Top Programs</option>
-                    <option value="value">Value (High→Low)</option>
-                    <option value="alphabetical">A-Z</option>
-                </select>
+                <div className="relative">
+                    {/* Search Bar */}
+                    <div className="mb-2.5">
+                        <AcceleratorsSearch onSearch={handleSearch} placeholder="Search grants, scholarships…" />
+                    </div>
+
+                    {/* Type chips + sort */}
+                    <div className="flex flex-col md:flex-row md:items-center gap-2">
+                        <div className="flex gap-1.5 overflow-x-auto mobile-scroll-hide flex-1 min-w-0">
+                            {types.map(type => (
+                                <button
+                                    key={type}
+                                    onClick={() => { setFundingType(type); setCurrentPage(1); }}
+                                    className={`px-2.5 py-1 text-[11px] font-semibold rounded-full transition-all whitespace-nowrap flex-shrink-0 ${fundingType === type
+                                        ? 'bg-gray-900 text-white shadow-sm'
+                                        : 'bg-gray-50 text-gray-600 border border-gray-200 hover:bg-white hover:border-gray-300 hover:text-gray-900'
+                                        }`}
+                                >
+                                    {type}
+                                </button>
+                            ))}
+                        </div>
+
+                        <div className="relative md:w-44 flex-shrink-0">
+                            <select
+                                value={sortBy}
+                                onChange={(e) => setSortBy(e.target.value as SortOption)}
+                                className="h-9 w-full appearance-none border border-gray-200 bg-white pl-2.5 pr-7 text-[12px] text-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-yellow/40 focus:border-accent-yellow cursor-pointer hover:border-gray-300 transition-colors font-medium"
+                            >
+                                <option value="relevance">Top Programs</option>
+                                <option value="value">Value (High→Low)</option>
+                                <option value="alphabetical">A–Z</option>
+                            </select>
+                            <span className="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 text-[16px] pointer-events-none">expand_more</span>
+                        </div>
+                    </div>
+                </div>
+
+                <style jsx>{`
+                    @keyframes fundingMandalaSpin {
+                        from { transform: rotate(0deg); }
+                        to { transform: rotate(360deg); }
+                    }
+                    :global(.funding-mandala-spin) {
+                        animation: fundingMandalaSpin 70s linear infinite;
+                        transform-origin: center;
+                    }
+                    @media (prefers-reduced-motion: reduce) {
+                        :global(.funding-mandala-spin) { animation: none; }
+                    }
+                `}</style>
             </div>
 
             {/* Results Count */}

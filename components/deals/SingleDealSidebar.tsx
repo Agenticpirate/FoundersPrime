@@ -35,7 +35,7 @@ interface Deal {
   }>
   verification: {
     lastVerified: string
-    appliedCount: number
+    appliedCount: number | null
   }
 }
 

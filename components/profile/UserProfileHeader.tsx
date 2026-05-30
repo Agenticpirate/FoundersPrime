@@ -70,29 +70,29 @@ export default function UserProfileHeader({ user }: UserProfileHeaderProps) {
       </div>
 
       {/* Profile Header */}
-      <div className="bg-white border-3 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] p-8">
-        <div className="flex flex-col md:flex-row gap-6">
+      <div className="bg-white border-2 md:border-[3px] border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] md:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] p-5 md:p-8">
+        <div className="flex flex-col md:flex-row gap-5 md:gap-6">
           {/* Avatar and Basic Info */}
-          <div className="flex items-start gap-6">
-            <div className="bg-[#13b6ec] border-3 border-black p-6 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] flex-shrink-0">
-              <span className="text-white font-bold text-3xl">{user.avatar}</span>
+          <div className="flex items-start gap-4 md:gap-6">
+            <div className="bg-[#13b6ec] border-2 md:border-[3px] border-black p-4 md:p-6 shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] md:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] flex-shrink-0">
+              <span className="text-white font-bold text-2xl md:text-3xl">{user.avatar}</span>
             </div>
 
-            <div className="flex-1">
-              <div className="flex items-center gap-3 mb-2">
-                <h1 className="text-3xl font-bold font-mono text-black">
+            <div className="flex-1 min-w-0">
+              <div className="flex flex-wrap items-center gap-2 md:gap-3 mb-2">
+                <h1 className="text-2xl md:text-3xl font-bold font-mono text-black break-words">
                   {user.displayName}
                 </h1>
-                <span className={`px-3 py-1 text-sm font-bold border-2 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] ${getBadgeColor(user.badge)}`}>
+                <span className={`px-2.5 md:px-3 py-0.5 md:py-1 text-xs md:text-sm font-bold border-2 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] ${getBadgeColor(user.badge)}`}>
                   {user.badge}
                 </span>
               </div>
 
-              <p className="text-gray-600 text-lg mb-2">@{user.username}</p>
-              <p className="text-gray-800 font-medium mb-4">{user.title}</p>
+              <p className="text-gray-600 text-base md:text-lg mb-2">@{user.username}</p>
+              <p className="text-gray-800 font-medium text-sm md:text-base mb-3 md:mb-4">{user.title}</p>
 
               {/* Location and Links */}
-              <div className="flex flex-wrap items-center gap-4 text-sm text-gray-600 mb-4">
+              <div className="flex flex-wrap items-center gap-3 md:gap-4 text-xs md:text-sm text-gray-600 mb-3 md:mb-4">
                 <div className="flex items-center gap-1">
                   <MapPin className="w-4 h-4" />
                   <span>{user.location}</span>
@@ -161,40 +161,40 @@ export default function UserProfileHeader({ user }: UserProfileHeaderProps) {
         </div>
 
         {/* Stats Grid */}
-        <div className="mt-4 md:mt-6 pt-8 border-t-3 border-gray-200">
-          <h3 className="text-lg font-bold font-mono text-black mb-4">
+        <div className="mt-5 md:mt-6 pt-5 md:pt-8 border-t-2 md:border-t-[3px] border-gray-200">
+          <h3 className="text-base md:text-lg font-bold font-mono text-black mb-3 md:mb-4">
             COMMUNITY_STATS
           </h3>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-            <div className="bg-blue-50 border-3 border-blue-500 p-4 shadow-[3px_3px_0px_0px_rgba(59,130,246,1)] text-center">
-              <div className="text-2xl font-bold text-blue-800 mb-1">{user.stats.points.toLocaleString()}</div>
-              <div className="text-xs font-bold text-blue-600 uppercase">Points</div>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-2.5 md:gap-4">
+            <div className="bg-blue-50 border-2 md:border-[3px] border-blue-500 p-3 md:p-4 shadow-[3px_3px_0px_0px_rgba(59,130,246,1)] text-center">
+              <div className="text-xl md:text-2xl font-bold text-blue-800 mb-1">{user.stats.points.toLocaleString()}</div>
+              <div className="text-[10px] md:text-xs font-bold text-blue-600 uppercase">Points</div>
             </div>
 
-            <div className="bg-green-50 border-3 border-green-500 p-4 shadow-[3px_3px_0px_0px_rgba(34,197,94,1)] text-center">
-              <div className="text-2xl font-bold text-green-800 mb-1">{user.stats.discussions}</div>
-              <div className="text-xs font-bold text-green-600 uppercase">Discussions</div>
+            <div className="bg-green-50 border-2 md:border-[3px] border-green-500 p-3 md:p-4 shadow-[3px_3px_0px_0px_rgba(34,197,94,1)] text-center">
+              <div className="text-xl md:text-2xl font-bold text-green-800 mb-1">{user.stats.discussions}</div>
+              <div className="text-[10px] md:text-xs font-bold text-green-600 uppercase">Discussions</div>
             </div>
 
-            <div className="bg-yellow-50 border-3 border-yellow-500 p-4 shadow-[3px_3px_0px_0px_rgba(234,179,8,1)] text-center">
-              <div className="text-2xl font-bold text-yellow-800 mb-1">{user.stats.comments}</div>
-              <div className="text-xs font-bold text-yellow-600 uppercase">Comments</div>
+            <div className="bg-yellow-50 border-2 md:border-[3px] border-yellow-500 p-3 md:p-4 shadow-[3px_3px_0px_0px_rgba(234,179,8,1)] text-center">
+              <div className="text-xl md:text-2xl font-bold text-yellow-800 mb-1">{user.stats.comments}</div>
+              <div className="text-[10px] md:text-xs font-bold text-yellow-600 uppercase">Comments</div>
             </div>
 
-            <div className="bg-purple-50 border-3 border-purple-500 p-4 shadow-[3px_3px_0px_0px_rgba(147,51,234,1)] text-center">
-              <div className="text-2xl font-bold text-purple-800 mb-1">{user.stats.helpfulAnswers}</div>
-              <div className="text-xs font-bold text-purple-600 uppercase">Helpful</div>
+            <div className="bg-purple-50 border-2 md:border-[3px] border-purple-500 p-3 md:p-4 shadow-[3px_3px_0px_0px_rgba(147,51,234,1)] text-center">
+              <div className="text-xl md:text-2xl font-bold text-purple-800 mb-1">{user.stats.helpfulAnswers}</div>
+              <div className="text-[10px] md:text-xs font-bold text-purple-600 uppercase">Helpful</div>
             </div>
 
-            <div className="bg-red-50 border-3 border-red-500 p-4 shadow-[3px_3px_0px_0px_rgba(239,68,68,1)] text-center">
-              <div className="text-2xl font-bold text-red-800 mb-1">{user.stats.dealsApplied}</div>
-              <div className="text-xs font-bold text-red-600 uppercase">Deals Applied</div>
+            <div className="bg-red-50 border-2 md:border-[3px] border-red-500 p-3 md:p-4 shadow-[3px_3px_0px_0px_rgba(239,68,68,1)] text-center">
+              <div className="text-xl md:text-2xl font-bold text-red-800 mb-1">{user.stats.dealsApplied}</div>
+              <div className="text-[10px] md:text-xs font-bold text-red-600 uppercase">Deals Applied</div>
             </div>
 
-            <div className="bg-gray-50 border-3 border-gray-500 p-4 shadow-[3px_3px_0px_0px_rgba(107,114,128,1)] text-center">
-              <div className="text-2xl font-bold text-gray-800 mb-1">{user.stats.creditsSecured}</div>
-              <div className="text-xs font-bold text-gray-600 uppercase">Credits Secured</div>
+            <div className="bg-gray-50 border-2 md:border-[3px] border-gray-500 p-3 md:p-4 shadow-[3px_3px_0px_0px_rgba(107,114,128,1)] text-center">
+              <div className="text-xl md:text-2xl font-bold text-gray-800 mb-1">{user.stats.creditsSecured}</div>
+              <div className="text-[10px] md:text-xs font-bold text-gray-600 uppercase">Credits Secured</div>
             </div>
           </div>
         </div>

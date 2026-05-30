@@ -5,6 +5,7 @@ import Link from 'next/link'
 import CountUp from 'react-countup'
 import { GlowingEffect } from '@/components/ui/GlowingEffect'
 import BrandLogo from '@/components/ui/BrandLogo'
+import Mandala from '@/components/ui/Mandala'
 
 /* ─── Brand wall (proof above the fold) ─── */
 const BRANDS = [
@@ -167,7 +168,7 @@ export default function HeroSection() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 items-center w-full">
 
           {/* ─── LEFT: Message + CTAs ─── */}
-          <div className="lg:col-span-7 flex flex-col justify-center items-start">
+          <div className="lg:col-span-7 flex flex-col justify-center items-start w-full">
 
             {/* Eyebrow — sets the audience clearly */}
             <div className="inline-flex items-center gap-2 bg-black text-accent-yellow font-mono text-[9px] md:text-xs font-black px-2.5 md:px-3 py-1 mb-2.5 md:mb-3.5 uppercase tracking-widest border-2 border-black shadow-[3px_3px_0px_#FFD500] hero-mobile-fade hero-mobile-fade-1">
@@ -206,8 +207,8 @@ export default function HeroSection() {
               A curated database of founder perks &mdash; up to <strong>$350K</strong> in cloud credits, grants, accelerators, and discounts from <strong>AWS, Stripe, HubSpot</strong>.
             </p>
 
-            {/* Audience split — Founders vs Students */}
-            <div className="flex flex-wrap items-center gap-1.5 md:gap-2 mb-3 md:mb-4 hero-mobile-fade hero-mobile-fade-3">
+            {/* Audience split — Founders vs Students (desktop only; declutters mobile) */}
+            <div className="hidden md:flex flex-wrap items-center gap-1.5 md:gap-2 mb-3 md:mb-4 hero-mobile-fade hero-mobile-fade-3">
               <span className="inline-flex items-center gap-1 md:gap-1.5 bg-white border-2 border-black px-2 md:px-2.5 py-0.5 md:py-1 font-mono text-[9px] md:text-xs font-black uppercase tracking-wider shadow-[2px_2px_0px_#111]">
                 <span className="material-symbols-outlined !text-[12px] md:!text-sm">rocket_launch</span>
                 For Founders
@@ -246,18 +247,21 @@ export default function HeroSection() {
               </Link>
             </div>
 
-            {/* Risk reversal — mobile: 2-col grid, desktop: inline */}
-            <div className="grid grid-cols-2 gap-x-3 gap-y-1 md:flex md:flex-wrap md:items-center md:gap-x-4 md:gap-y-1.5 mb-3 md:mb-3 hero-mobile-fade hero-mobile-fade-4">
+            {/* Risk reversal — premium pill chips, evenly aligned to match hero */}
+            <div className="grid grid-cols-1 sm:flex sm:flex-wrap justify-start items-stretch gap-1.5 md:gap-2 mb-3 md:mb-3 w-full hero-mobile-fade hero-mobile-fade-4">
               {[
                 { icon: 'verified', text: 'Founder-vetted weekly' },
-                { icon: 'flash_on', text: 'Apply in under 3 minutes' },
+                { icon: 'flash_on', text: 'Apply in under 3 min' },
                 { icon: 'shield', text: 'Zero equity. Ever.' },
               ].map((item) => (
-                <span key={item.text} className="inline-flex items-center gap-1 text-[10.5px] md:text-xs font-mono font-bold text-gray-700">
-                  <span className="material-symbols-outlined !text-[12px] md:!text-sm text-green-600" style={{ fontVariationSettings: "'FILL' 1" }}>
-                    check_circle
+                <span
+                  key={item.text}
+                  className="inline-flex items-center gap-1.5 md:gap-2 bg-white border-2 border-black px-2.5 md:px-3 py-1.5 text-[11px] md:text-xs font-mono font-bold text-gray-800 shadow-[2px_2px_0px_#111] hover:-translate-y-0.5 hover:shadow-[3px_3px_0px_#111] transition-all"
+                >
+                  <span className="material-symbols-outlined !text-[13px] md:!text-base text-green-600 flex-shrink-0" style={{ fontVariationSettings: "'FILL' 1" }}>
+                    {item.icon === 'flash_on' ? 'flash_on' : 'check_circle'}
                   </span>
-                  {item.text}
+                  <span className="whitespace-nowrap">{item.text}</span>
                 </span>
               ))}
             </div>
@@ -283,20 +287,36 @@ export default function HeroSection() {
               </div>
             </div>
 
-            {/* Mobile-only highlight cards */}
-            <div className="md:hidden grid grid-cols-3 gap-1.5 mt-2 w-full hero-mobile-fade hero-mobile-fade-5">
-              <div className="bg-sky-100 border-2 border-black p-1.5 text-center shadow-[2px_2px_0px_#111]">
-                <div className="text-[7px] font-mono font-bold uppercase leading-tight text-sky-900">Cloud Credits</div>
-                <div className="text-[13px] font-mono font-black leading-tight">$200K+</div>
-              </div>
-              <div className="bg-green-100 border-2 border-black p-1.5 text-center shadow-[2px_2px_0px_#111]">
-                <div className="text-[7px] font-mono font-bold uppercase leading-tight text-green-900">Grants</div>
-                <div className="text-[13px] font-mono font-black leading-tight">$10M+</div>
-              </div>
-              <div className="bg-accent-yellow border-2 border-black p-1.5 text-center shadow-[2px_2px_0px_#111]">
-                <div className="text-[7px] font-mono font-bold uppercase leading-tight">Accelerators</div>
-                <div className="text-[13px] font-mono font-black leading-tight">50+</div>
-              </div>
+            {/* Mobile-only highlight cards — distinct from subhead copy (cloud credits lives there) */}
+            <div className="md:hidden grid grid-cols-3 gap-2 mt-3 w-full hero-mobile-fade hero-mobile-fade-5">
+              {[
+                { label: 'Per Founder', value: '$10K+', prefix: 'Avg. Saved', icon: 'savings', bg: 'bg-green-100', accent: 'text-green-700', mandala: 'rings' as const, dir: 'cw' as const },
+                { label: 'Resources', value: 'Premium', prefix: 'Unlock', icon: 'workspace_premium', bg: 'bg-purple-100', accent: 'text-purple-700', mandala: 'petal' as const, dir: 'ccw' as const },
+                { label: 'Accelerators', value: '50+', prefix: 'Up to', icon: 'rocket_launch', bg: 'bg-orange-100', accent: 'text-orange-700', mandala: 'orbital' as const, dir: 'cw' as const },
+              ].map((c) => (
+                <div
+                  key={c.label}
+                  className={`${c.bg} relative overflow-hidden border-2 border-black px-1.5 pt-3 pb-2.5 shadow-[3px_3px_0px_#111] flex flex-col items-center text-center gap-1.5`}
+                >
+                  {/* Decorative spinning mandala backdrop */}
+                  <Mandala
+                    variant={c.mandala}
+                    direction={c.dir}
+                    colorClass={c.accent}
+                    opacity={0.12}
+                    speed={70}
+                    className="absolute -right-5 -top-5 w-20 h-20"
+                  />
+                  <span className={`material-symbols-outlined !text-[20px] ${c.accent} relative z-10`} style={{ fontVariationSettings: "'FILL' 1" }}>
+                    {c.icon}
+                  </span>
+                  <div className="relative z-10 flex flex-col items-center leading-none">
+                    <span className="text-[7px] font-mono font-bold uppercase tracking-[0.14em] text-gray-500">{c.prefix}</span>
+                    <span className="text-[16px] font-mono font-black leading-tight mt-1">{c.value}</span>
+                  </div>
+                  <span className="relative z-10 text-[8px] font-mono font-bold uppercase tracking-wide text-gray-700 leading-tight min-h-[10px] flex items-center">{c.label}</span>
+                </div>
+              ))}
             </div>
           </div>
 

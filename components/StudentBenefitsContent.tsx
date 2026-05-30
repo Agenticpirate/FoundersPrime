@@ -119,50 +119,93 @@ export default function StudentBenefitsContent({ benefits, title, description }:
 
             {/* Main Content */}
             <div className="flex-1 min-w-0 w-full">
-                {/* Pro Tip Alert */}
-                <div className="mb-3 bg-blue-50 border border-blue-200 px-3 py-2 rounded-lg flex items-center gap-2">
-                    <span className="material-symbols-outlined text-blue-600 text-base flex-shrink-0">school</span>
-                    <p className="text-xs text-blue-800 font-medium">
-                        <span className="font-bold">Student Tip:</span> Use your .edu email to unlock all benefits.
-                    </p>
-                </div>
-
-                {/* Filter Bar */}
-                <div className="flex flex-row gap-2 mb-3 md:mb-6">
-                    {/* Search */}
-                    <div className="relative flex-1">
-                        <span className="material-symbols-outlined absolute left-2.5 top-1/2 -translate-y-1/2 text-gray-400 text-base">search</span>
-                        <input
-                            type="text"
-                            placeholder="Search..."
-                            value={search}
-                            onChange={(e) => { setSearch(e.target.value); resetPage(); }}
-                            className="w-full pl-9 pr-2 py-1.5 md:py-2 bg-white border border-gray-300 rounded-lg focus:border-black focus:ring-1 focus:ring-black outline-none text-xs md:text-sm transition-colors"
-                        />
+                {/* Premium filter panel — mirrors DealsFilterBar */}
+                <div className="relative bg-white border border-gray-200 rounded-xl p-3 md:p-3.5 shadow-sm overflow-hidden mb-3">
+                    {/* Decorative mandala — top-right corner */}
+                    <div className="absolute -top-10 -right-10 w-32 h-32 pointer-events-none opacity-[0.05]" aria-hidden="true">
+                        <svg viewBox="0 0 200 200" className="w-full h-full text-gray-900 benefits-mandala-spin" fill="none" stroke="currentColor" strokeWidth="0.6">
+                            <circle cx="100" cy="100" r="40" />
+                            <circle cx="100" cy="100" r="60" strokeDasharray="2 4" />
+                            {[...Array(8)].map((_, i) => (
+                                <line
+                                    key={i}
+                                    x1="100"
+                                    y1="100"
+                                    x2={100 + Math.cos((i * Math.PI) / 4) * 80}
+                                    y2={100 + Math.sin((i * Math.PI) / 4) * 80}
+                                />
+                            ))}
+                            <circle cx="100" cy="100" r="2" fill="currentColor" />
+                        </svg>
                     </div>
 
-                    {/* Sort */}
-                    <select
-                        value={sort}
-                        onChange={(e) => setSort(e.target.value)}
-                        className="px-2 py-1.5 md:py-2 bg-white border border-gray-300 rounded-lg text-xs md:text-sm focus:border-black outline-none cursor-pointer"
-                    >
-                        <option value="relevance">Sort</option>
-                        <option value="value-high">Value ↓</option>
-                        <option value="alphabetical">A-Z</option>
-                    </select>
+                    <div className="relative">
+                        {/* Pro Tip Alert */}
+                        <div className="mb-2.5 bg-accent-yellow/15 border border-accent-yellow/40 px-3 py-2 rounded-lg flex items-center gap-2">
+                            <span className="material-symbols-outlined text-amber-600 text-base flex-shrink-0">school</span>
+                            <p className="text-xs text-gray-800 font-medium">
+                                <span className="font-bold">Student Tip:</span> Use your .edu email to unlock all benefits.
+                            </p>
+                        </div>
 
-                    {/* Mobile Category Dropdown */}
-                    <select
-                        value={selectedCategory}
-                        onChange={(e) => handleCategoryChange(e.target.value)}
-                        className="lg:hidden px-2 py-1.5 bg-white border border-gray-300 rounded-lg text-xs focus:border-black outline-none cursor-pointer"
-                    >
-                        <option value="">All</option>
-                        {categories.map(cat => (
-                            <option key={cat.name} value={cat.name}>{cat.name}</option>
-                        ))}
-                    </select>
+                        {/* Filter Bar */}
+                        <div className="flex flex-row gap-2">
+                            {/* Search */}
+                            <div className="relative flex-1">
+                                <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-[18px] pointer-events-none">search</span>
+                                <input
+                                    type="text"
+                                    placeholder="Search tools by name or provider…"
+                                    value={search}
+                                    onChange={(e) => { setSearch(e.target.value); resetPage(); }}
+                                    className="w-full h-9 pl-10 pr-3 bg-gray-50 hover:bg-white focus:bg-white border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-yellow/40 focus:border-accent-yellow text-[12.5px] transition-colors placeholder:text-gray-400"
+                                />
+                            </div>
+
+                            {/* Sort */}
+                            <div className="relative flex-shrink-0">
+                                <select
+                                    value={sort}
+                                    onChange={(e) => setSort(e.target.value)}
+                                    className="h-9 appearance-none pl-2.5 pr-7 bg-white border border-gray-200 rounded-lg text-[12px] text-gray-700 font-medium focus:outline-none focus:ring-2 focus:ring-accent-yellow/40 focus:border-accent-yellow cursor-pointer hover:border-gray-300 transition-colors"
+                                >
+                                    <option value="relevance">Sort</option>
+                                    <option value="value-high">Value ↓</option>
+                                    <option value="alphabetical">A–Z</option>
+                                </select>
+                                <span className="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 text-[16px] pointer-events-none">expand_more</span>
+                            </div>
+
+                            {/* Mobile Category Dropdown */}
+                            <div className="relative flex-shrink-0 lg:hidden">
+                                <select
+                                    value={selectedCategory}
+                                    onChange={(e) => handleCategoryChange(e.target.value)}
+                                    className="h-9 appearance-none pl-2.5 pr-7 bg-white border border-gray-200 rounded-lg text-[12px] text-gray-700 font-medium focus:outline-none focus:ring-2 focus:ring-accent-yellow/40 focus:border-accent-yellow cursor-pointer hover:border-gray-300 transition-colors"
+                                >
+                                    <option value="">All</option>
+                                    {categories.map(cat => (
+                                        <option key={cat.name} value={cat.name}>{cat.name}</option>
+                                    ))}
+                                </select>
+                                <span className="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 text-[16px] pointer-events-none">expand_more</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <style jsx>{`
+                        @keyframes benefitsMandalaSpin {
+                            from { transform: rotate(0deg); }
+                            to { transform: rotate(360deg); }
+                        }
+                        :global(.benefits-mandala-spin) {
+                            animation: benefitsMandalaSpin 70s linear infinite;
+                            transform-origin: center;
+                        }
+                        @media (prefers-reduced-motion: reduce) {
+                            :global(.benefits-mandala-spin) { animation: none; }
+                        }
+                    `}</style>
                 </div>
 
                 {/* Grid */}

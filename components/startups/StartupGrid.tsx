@@ -3,7 +3,7 @@
 import { useState, useMemo, useEffect } from "react";
 import { YCCompany } from "@/types/startup";
 import StartupCard from "./StartupCard";
-import { Search, Filter } from "lucide-react";
+import { Search } from "lucide-react";
 import startupsData from "@/data/yc_companies_2024_2026.json";
 import Pagination from "@/components/Pagination";
 import { useRouter, useSearchParams, usePathname } from 'next/navigation';
@@ -81,35 +81,51 @@ export default function StartupGrid() {
 
     return (
         <div className="w-full">
-            {/* Search and Filter Header */}
-            <div className="mb-0">
-                {/* Search Bar */}
-                <div className="mb-6 relative">
-                    <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4">
-                        <Search className="h-5 w-5 text-gray-400" />
-                    </div>
-                    <input
-                        type="text"
-                        className="block w-full border-2 border-black bg-white py-3 pl-12 pr-4 text-base font-mono placeholder-gray-500 focus:border-black focus:outline-none focus:ring-0 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all"
-                        placeholder="Search via name, description, or tags..."
-                        value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                    />
+            {/* Premium filter panel — mirrors DealsFilterBar */}
+            <div className="relative bg-white border-2 border-black rounded-sm shadow-[3px_3px_0px_0px_#111] md:border md:border-gray-200 md:rounded-xl md:shadow-sm p-2 md:p-3.5 overflow-hidden mb-3 md:mb-4">
+                {/* Decorative mandala — top-right corner */}
+                <div className="absolute -top-10 -right-10 w-32 h-32 pointer-events-none opacity-[0.05]" aria-hidden="true">
+                    <svg viewBox="0 0 200 200" className="w-full h-full text-gray-900 startups-mandala-spin" fill="none" stroke="currentColor" strokeWidth="0.6">
+                        <circle cx="100" cy="100" r="40" />
+                        <circle cx="100" cy="100" r="60" strokeDasharray="2 4" />
+                        {[...Array(8)].map((_, i) => (
+                            <line
+                                key={i}
+                                x1="100"
+                                y1="100"
+                                x2={100 + Math.cos((i * Math.PI) / 4) * 80}
+                                y2={100 + Math.sin((i * Math.PI) / 4) * 80}
+                            />
+                        ))}
+                        <circle cx="100" cy="100" r="2" fill="currentColor" />
+                    </svg>
                 </div>
 
-                {/* Industry Filters (Pill Buttons) */}
-                <div className="mb-4 md:mb-6">
-                    <label className="font-mono text-xs font-bold text-gray-600 uppercase mb-3 block">
-                        Filter by Industry
-                    </label>
-                    <div className="flex gap-2 overflow-x-auto pb-4 scrollbar-hide">
+                <div className="relative">
+                    {/* Search Bar */}
+                    <div className="relative mb-2 md:mb-2.5">
+                        <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-2.5 md:pl-3">
+                            <Search className="h-4 w-4 md:h-[18px] md:w-[18px] text-gray-400" />
+                        </div>
+                        <input
+                            type="text"
+                            className="block w-full h-9 md:h-9 border-2 border-black rounded-sm bg-white md:border md:border-gray-200 md:bg-gray-50 md:rounded-lg hover:bg-white focus:bg-white pl-8 md:pl-10 pr-3 text-[12px] md:text-[12.5px] placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-accent-yellow/40 focus:border-accent-yellow transition-colors"
+                            placeholder="Search name, tags…"
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                        />
+                    </div>
+
+                    {/* Industry Filters (Pill Buttons) */}
+                    <div className="flex items-center gap-1 md:gap-1.5 overflow-x-auto mobile-scroll-hide">
+                        <span className="hidden md:inline-flex font-mono text-[10px] font-bold uppercase tracking-[0.1em] text-gray-400 mr-1 flex-shrink-0">Industry:</span>
                         {industries.map((industry) => (
                             <button
                                 key={industry}
                                 onClick={() => setSelectedIndustry(industry)}
-                                className={`px-4 py-2 font-mono text-xs font-bold border-2 border-black whitespace-nowrap transition-all ${selectedIndustry === industry
-                                        ? 'bg-black text-white shadow-[2px_2px_0px_0px_rgba(0,0,0,0.3)]'
-                                        : 'bg-white text-black hover:bg-gray-100'
+                                className={`px-2.5 py-0.5 md:py-1 text-[10px] md:text-[11px] font-semibold rounded-full transition-all whitespace-nowrap flex-shrink-0 border md:border ${selectedIndustry === industry
+                                    ? 'bg-gray-900 text-white border-black md:border-transparent shadow-sm'
+                                    : 'bg-white text-gray-600 border-black/15 md:border-gray-200 hover:bg-white hover:border-gray-300 hover:text-gray-900'
                                     }`}
                             >
                                 {industry}
@@ -117,11 +133,25 @@ export default function StartupGrid() {
                         ))}
                     </div>
                 </div>
+
+                <style jsx>{`
+                    @keyframes startupsMandalaSpin {
+                        from { transform: rotate(0deg); }
+                        to { transform: rotate(360deg); }
+                    }
+                    :global(.startups-mandala-spin) {
+                        animation: startupsMandalaSpin 70s linear infinite;
+                        transform-origin: center;
+                    }
+                    @media (prefers-reduced-motion: reduce) {
+                        :global(.startups-mandala-spin) { animation: none; }
+                    }
+                `}</style>
             </div>
 
             {/* Results Count and Clear Filters */}
-            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 md:mb-6 pb-4 border-b-2 border-dashed border-gray-300 gap-4">
-                <div className="font-mono text-sm text-gray-600">
+            <div className="flex flex-row items-center justify-between mb-3 md:mb-6 pb-2.5 md:pb-3 border-b border-dashed border-gray-300 gap-2">
+                <div className="font-mono text-[11px] md:text-sm text-gray-600">
                     Showing <span className="font-bold text-black">{currentStartups.length > 0 ? startIndex + 1 : 0}-{Math.min(endIndex, filteredStartups.length)}</span> of{' '}
                     <span className="font-bold text-black">{filteredStartups.length}</span> startups
                 </div>
@@ -129,17 +159,17 @@ export default function StartupGrid() {
                 {hasActiveFilters && (
                     <button
                         onClick={handleClearFilters}
-                        className="px-3 py-1.5 font-mono text-xs font-bold bg-white border-2 border-black hover:bg-gray-100 transition-colors flex items-center gap-2 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]"
+                        className="px-2.5 py-1 font-mono text-[10px] md:text-[11px] font-bold bg-white border border-gray-300 rounded-full hover:bg-gray-50 hover:border-gray-400 transition-colors flex items-center gap-1 flex-shrink-0"
                     >
-                        <span className="material-symbols-outlined text-sm">close</span>
-                        Clear Filters
+                        <span className="material-symbols-outlined text-[14px]">close</span>
+                        Clear
                     </button>
                 )}
             </div>
 
             {/* Grid */}
             {currentStartups.length > 0 ? (
-                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                <div className="grid grid-cols-1 gap-3 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                     {currentStartups.map((startup) => (
                         <StartupCard key={startup.id} company={startup} />
                     ))}

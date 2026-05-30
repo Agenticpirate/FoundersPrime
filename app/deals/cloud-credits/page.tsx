@@ -8,6 +8,9 @@ import Footer from '@/components/Footer'
 export const metadata = {
   title: 'Cloud Credits',
   description: 'Verified cloud credit programs for startups — AWS, Google Cloud, Azure, DigitalOcean, and more. Eligibility, application steps, and tips, all in one place.',
+  alternates: {
+    canonical: 'https://www.foundersprime.com/deals/cloud-credits',
+  },
 }
 
 export default function CloudCreditsPage() {

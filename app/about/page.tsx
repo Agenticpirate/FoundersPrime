@@ -1,11 +1,15 @@
 import { Metadata } from 'next'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
+import Mandala from '@/components/ui/Mandala'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
   title: 'About FoundersPrime — Built by Founders, for Founders',
   description: 'FoundersPrime was built to give every bootstrapped and funded startup the unfair advantage—verified deals, non-dilutive capital, and tools that actually work.',
+  alternates: {
+    canonical: 'https://www.foundersprime.com/about',
+  },
 }
 
 export default function AboutPage() {
@@ -15,11 +19,18 @@ export default function AboutPage() {
       <main className="flex-1">
 
         {/* ── HERO ─────────────────────────────────────────────────── */}
-        <section className="bg-white border-b-3 border-black pattern-grid-lg">
-          <div className="mx-auto max-w-[1600px] px-4 md:px-6 lg:px-12 py-5 md:py-6 md:py-28">
+        <section className="relative bg-white border-b-2 border-black pattern-grid-lg overflow-hidden">
+          <Mandala
+            variant="rings"
+            colorClass="text-gray-900"
+            opacity={0.05}
+            speed={90}
+            className="absolute -top-16 -right-16 w-80 h-80 hidden md:block"
+          />
+          <div className="relative mx-auto max-w-[1600px] px-4 md:px-6 lg:px-12 py-10 md:py-20 lg:py-24">
             <div className="flex flex-col md:flex-row gap-8 md:gap-14 items-center">
-              <div className="flex-1">
-                <div className="inline-flex items-center gap-2 bg-accent-yellow border-2 border-black px-3 py-1 mb-4 md:mb-6 shadow-neo-sm">
+              <div className="flex-1 fp-fade-up">
+                <div className="inline-flex items-center gap-2 bg-accent-yellow border-2 border-black px-3 py-1 mb-4 md:mb-6 shadow-[3px_3px_0px_#111]">
                   <span className="material-symbols-outlined text-sm">bolt</span>
                   <span className="font-mono text-xs font-bold uppercase tracking-wider">Our Mission</span>
                 </div>
@@ -27,27 +38,37 @@ export default function AboutPage() {
                   Built by Founders,<br />
                   <span className="bg-black text-primary px-2">For Founders</span>
                 </h1>
-                <p className="font-mono text-sm md:text-base lg:text-lg leading-relaxed text-gray-700 border-l-4 border-primary pl-4 md:pl-5 max-w-xl">
+                <p className="font-sans text-sm md:text-base lg:text-lg leading-relaxed text-gray-700 border-l-4 border-primary pl-4 md:pl-5 max-w-xl">
                   FoundersPrime is the unfair advantage for bootstrapped and funded startups. We give you the verified deals, non-dilutive capital sources, and battle-tested tools that others hide behind paywalls or consultants.
                 </p>
               </div>
 
               {/* Stats card */}
-              <div className="w-full md:w-[360px] shrink-0">
-                <div className="bg-black border-2 md:border-3 border-black shadow-[5px_5px_0px_#ffd700] md:shadow-[8px_8px_0px_#ffd700] p-5 md:p-8">
-                  <p className="font-mono text-xs text-gray-400 uppercase tracking-widest mb-4 md:mb-6">Impact So Far</p>
-                  <div className="grid grid-cols-2 md:grid-cols-1 gap-0 md:space-y-5">
-                    {[
-                      { value: '$4.2M+', label: 'Tracked in savings' },
-                      { value: '—', label: 'Startups in network' },
-                      { value: '—', label: 'Verified deals listed' },
-                      { value: '43+', label: 'Countries reached' },
-                    ].map(({ value, label }) => (
-                      <div key={label} className="flex flex-col md:flex-row md:items-baseline md:justify-between border-b border-white/10 pb-3 md:pb-5 last:border-0 last:pb-0 pt-3 md:pt-0 first:pt-0">
-                        <span className="font-mono text-2xl md:text-3xl font-black text-primary">{value}</span>
-                        <span className="font-mono text-[10px] md:text-xs text-gray-400 uppercase tracking-wide">{label}</span>
-                      </div>
-                    ))}
+              <div className="w-full md:w-[360px] shrink-0 fp-fade-up" style={{ animationDelay: '0.1s' }}>
+                <div className="relative bg-gradient-to-br from-gray-900 via-gray-900 to-black border-2 border-black shadow-[6px_6px_0px_#ffd700] md:shadow-[8px_8px_0px_#ffd700] p-5 md:p-8 overflow-hidden">
+                  <Mandala
+                    variant="orbital"
+                    colorClass="text-accent-yellow"
+                    opacity={0.14}
+                    speed={70}
+                    strokeWidth={0.7}
+                    className="absolute -top-10 -right-10 w-40 h-40"
+                  />
+                  <div className="relative">
+                    <p className="font-mono text-xs text-gray-400 uppercase tracking-widest mb-4 md:mb-6">Impact So Far</p>
+                    <div className="grid grid-cols-2 md:grid-cols-1 gap-0 md:space-y-5">
+                      {[
+                        { value: '$4.2M+', label: 'Tracked in savings' },
+                        { value: '—', label: 'Startups in network' },
+                        { value: '—', label: 'Verified deals listed' },
+                        { value: '43+', label: 'Countries reached' },
+                      ].map(({ value, label }) => (
+                        <div key={label} className="flex flex-col md:flex-row md:items-baseline md:justify-between border-b border-white/10 pb-3 md:pb-5 last:border-0 last:pb-0 pt-3 md:pt-0 first:pt-0">
+                          <span className="font-mono text-2xl md:text-3xl font-black text-primary">{value}</span>
+                          <span className="font-mono text-[10px] md:text-xs text-gray-400 uppercase tracking-wide">{label}</span>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -56,7 +77,7 @@ export default function AboutPage() {
         </section>
 
         {/* ── THE STORY ────────────────────────────────────────────── */}
-        <section className="py-5 md:py-6 md:py-5 md:py-6 md:py-14 bg-background-light border-b-3 border-black">
+        <section className="py-12 md:py-16 bg-background-light border-b-2 border-black">
           <div className="mx-auto max-w-4xl px-4 md:px-6 lg:px-12">
             <div className="flex items-center gap-2 md:gap-3 mb-6 md:mb-10">
               <span className="material-symbols-outlined text-2xl md:text-4xl">history_edu</span>
@@ -80,13 +101,13 @@ export default function AboutPage() {
         </section>
 
         {/* ── HOW WE MAINTAIN QUALITY ──────────────────────────────── */}
-        <section className="py-5 md:py-6 md:py-5 md:py-6 md:py-14 bg-white border-b-3 border-black">
+        <section className="py-12 md:py-16 bg-white border-b-2 border-black">
           <div className="mx-auto max-w-[1600px] px-4 md:px-6 lg:px-12">
-            <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-4 md:mb-6 md:mb-14 gap-3 md:gap-6">
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 md:mb-14 gap-3 md:gap-6">
               <h2 className="font-mono text-2xl md:text-4xl lg:text-5xl font-black uppercase tracking-tight max-w-xl">
                 How We Maintain Quality
               </h2>
-              <div className="font-mono text-xs md:text-sm border-2 border-black px-2 py-1 md:px-3 md:py-1.5 bg-white flex items-center gap-2 self-start">
+              <div className="font-mono text-xs md:text-sm border-2 border-black px-2 py-1 md:px-3 md:py-1.5 bg-white flex items-center gap-2 self-start shadow-[3px_3px_0px_#111]">
                 <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse inline-block"></span>
                 System Status: <span className="text-green-600 font-bold ml-1">OPERATIONAL</span>
               </div>
@@ -98,7 +119,7 @@ export default function AboutPage() {
                 { num: '03', icon: 'update', color: 'text-green-600', bg: 'bg-green-50', title: 'Update', desc: 'Dead links are removed weekly. If it\'s listed on FoundersPrime, it works. No 404s allowed.' },
                 { num: '04', icon: 'visibility', color: 'text-accent-red', bg: 'bg-red-50', title: 'Add Context', desc: 'We translate legalese into plain English so you know exactly what the catch is — before you apply.' },
               ].map(({ num, icon, color, bg, title, desc }) => (
-                <div key={num} className="neo-brutal-box p-4 md:p-6 bg-white relative group hover:translate-x-[-2px] hover:translate-y-[-2px] transition-transform">
+                <div key={num} className="relative bg-white border-2 border-black shadow-[5px_5px_0px_#111] p-4 md:p-6 group hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[7px_7px_0px_#111] transition-all">
                   <div className="absolute -top-3 -left-2 md:-top-4 md:-left-3 bg-black text-white font-mono text-xs md:text-sm font-bold px-2 py-1 md:px-3 md:py-1.5 border-2 border-black">
                     {num}
                   </div>
@@ -114,10 +135,10 @@ export default function AboutPage() {
         </section>
 
         {/* ── COMPARISON TABLE ─────────────────────────────────────── */}
-        <section className="py-5 md:py-6 md:py-5 md:py-6 md:py-14 bg-background-light border-b-3 border-black">
+        <section className="py-12 md:py-16 bg-background-light border-b-2 border-black">
           <div className="mx-auto max-w-[1600px] px-4 md:px-6 lg:px-12">
-            <h2 className="font-mono text-xl md:text-3xl font-black uppercase mb-6 md:mb-6 md:mb-4 md:mb-6 text-center">What Makes Us Different</h2>
-            <div className="neo-brutal-box p-0 overflow-x-auto">
+            <h2 className="font-mono text-xl md:text-3xl font-black uppercase mb-8 md:mb-12 text-center">What Makes Us Different</h2>
+            <div className="bg-white border-2 border-black shadow-[6px_6px_0px_#111] p-0 overflow-x-auto">
               <table className="w-full text-left border-collapse">
                 <thead>
                   <tr className="bg-black text-white font-mono text-xs uppercase">
@@ -135,7 +156,7 @@ export default function AboutPage() {
                     ['Plain-English Context', 'Every listing', 'Basic info only', 'None'],
                     ['Updated Frequency', 'Weekly', 'Monthly / never', 'Abandoned'],
                   ].map(([feature, us, them, sheet], i) => (
-                    <tr key={i} className="border-b-2 border-black/10 hover:bg-white transition-colors">
+                    <tr key={i} className="border-b-2 border-black/10 hover:bg-gray-50 transition-colors">
                       <td className="p-4 border-r-2 border-black font-bold">{feature}</td>
                       <td className="p-4 border-r-2 border-black bg-primary/10 font-bold text-black">{us}</td>
                       <td className="p-4 border-r-2 border-black text-gray-500">{them}</td>
@@ -149,17 +170,17 @@ export default function AboutPage() {
         </section>
 
         {/* ── PRINCIPLES ───────────────────────────────────────────── */}
-        <section className="py-5 md:py-6 md:py-5 md:py-6 md:py-14 bg-white border-b-3 border-black">
+        <section className="py-12 md:py-16 bg-white border-b-2 border-black">
           <div className="mx-auto max-w-[1600px] px-4 md:px-6 lg:px-12">
-            <h2 className="font-mono text-xl md:text-3xl font-black uppercase mb-6 md:mb-6 md:mb-4 md:mb-6">Our Principles</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 border-3 border-black">
+            <h2 className="font-mono text-xl md:text-3xl font-black uppercase mb-8 md:mb-12">Our Principles</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 border-2 border-black shadow-[6px_6px_0px_#111]">
               {[
                 { icon: 'target', color: 'bg-primary/15 text-primary', label: '01', title: 'Accuracy Over Quantity', desc: "We'd rather list 50 grants that actually pay out than 5,000 that are expired or scams. Quality is our single metric." },
                 { icon: 'person', color: 'bg-accent-yellow/20 text-yellow-700', label: '02', title: 'Founder-First', desc: 'We build for the founder with 2 months of runway left. Every resource is vetted for speed, utility, and zero friction.' },
                 { icon: 'visibility', color: 'bg-green-100 text-green-700', label: '03', title: 'Radical Transparency', desc: "If we earn a commission on a tool, we say so. If a grant is hard to get, we say so. No surprises. Ever." },
                 { icon: 'block', color: 'bg-red-100 text-red-700', label: '04', title: 'No Bullshit', desc: 'Zero hype. Zero growth-hacking buzzwords. Just verified tools and money to build your company.' },
               ].map(({ icon, color, label, title, desc }, i) => (
-                <div key={i} className={`p-5 md:p-8 hover:bg-background-light transition-colors ${i < 2 ? 'border-b-3 md:border-b-3' : ''} ${i % 2 === 0 ? 'md:border-r-3' : ''} border-black`}>
+                <div key={i} className={`p-5 md:p-8 hover:bg-background-light transition-colors ${i < 2 ? 'border-b-2' : ''} ${i % 2 === 0 ? 'md:border-r-2' : ''} border-black`}>
                   <div className={`inline-flex items-center gap-2 mb-3 md:mb-4 px-2 py-0.5 md:px-3 md:py-1 ${color} border border-current/30`}>
                     <span className="material-symbols-outlined text-xs md:text-sm">{icon}</span>
                     <span className="font-mono text-[10px] md:text-xs font-bold uppercase">Principle {label}</span>
@@ -173,7 +194,7 @@ export default function AboutPage() {
         </section>
 
         {/* ── FOUNDER + CONTACT ─────────────────────────────────────── */}
-        <section className="py-5 md:py-6 md:py-5 md:py-6 md:py-14 bg-background-light">
+        <section className="py-12 md:py-16 bg-background-light">
           <div className="mx-auto max-w-[1600px] px-4 md:px-6 lg:px-12">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12">
 
@@ -183,9 +204,9 @@ export default function AboutPage() {
                   <span className="material-symbols-outlined">groups</span>
                   The Team
                 </h2>
-                <div className="neo-brutal-box bg-white p-8 flex flex-col items-center text-center">
+                <div className="bg-white border-2 border-black shadow-[6px_6px_0px_#111] p-8 flex flex-col items-center text-center">
                   {/* Branded avatar — no external image */}
-                  <div className="w-24 h-24 bg-black border-3 border-black shadow-[4px_4px_0px_#ffd700] flex items-center justify-center mb-5">
+                  <div className="w-24 h-24 bg-black border-2 border-black shadow-[4px_4px_0px_#ffd700] flex items-center justify-center mb-5">
                     <span className="font-mono text-3xl font-black text-primary">FP</span>
                   </div>
                   <h3 className="font-mono text-xl font-black mb-1">Ravi Teja</h3>
@@ -196,7 +217,7 @@ export default function AboutPage() {
                   <div className="w-full space-y-3">
                     <a
                       href="mailto:support@foundersprime.com"
-                      className="neo-button w-full py-2.5 flex items-center justify-center gap-2 bg-black text-white font-mono text-xs uppercase hover:bg-primary hover:text-black transition-colors"
+                      className="w-full py-2.5 flex items-center justify-center gap-2 bg-black text-white border-2 border-black shadow-[3px_3px_0px_#111] font-mono text-xs uppercase hover:bg-primary hover:text-black transition-colors"
                     >
                       <span className="material-symbols-outlined text-sm">mail</span>
                       Get in Touch
@@ -205,7 +226,7 @@ export default function AboutPage() {
                       href="https://twitter.com/foundersprime"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="neo-button w-full py-2.5 flex items-center justify-center gap-2 bg-white font-mono text-xs uppercase hover:bg-accent-yellow transition-colors"
+                      className="w-full py-2.5 flex items-center justify-center gap-2 bg-white border-2 border-black shadow-[3px_3px_0px_#111] font-mono text-xs uppercase hover:bg-accent-yellow transition-colors"
                     >
                       <span className="material-symbols-outlined text-sm">alternate_email</span>
                       @FoundersPrime
@@ -227,7 +248,7 @@ export default function AboutPage() {
                     { label: 'Press & Media', hover: 'hover:bg-accent-blue hover:text-white' },
                     { label: 'Partnerships & Deals', hover: 'hover:bg-black hover:text-white' },
                   ].map(({ label, hover }) => (
-                    <a key={label} href="mailto:support@foundersprime.com" className={`neo-brutal-box p-5 group transition-colors ${hover}`}>
+                    <a key={label} href="mailto:support@foundersprime.com" className={`bg-white border-2 border-black shadow-[4px_4px_0px_#111] p-5 group transition-colors hover:-translate-x-0.5 hover:-translate-y-0.5 ${hover}`}>
                       <span className="font-mono text-xs font-bold uppercase text-gray-500 group-hover:text-current block mb-1">{label}</span>
                       <span className="font-mono text-sm font-bold">support@foundersprime.com</span>
                     </a>
@@ -235,14 +256,22 @@ export default function AboutPage() {
                 </div>
 
                 {/* CTA strip */}
-                <div className="border-3 border-black bg-black p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-                  <div>
+                <div className="relative border-2 border-black bg-gradient-to-br from-gray-900 via-gray-900 to-black p-6 flex flex-col sm:flex-row items-center justify-between gap-4 overflow-hidden shadow-[6px_6px_0px_#ffd700]">
+                  <Mandala
+                    variant="orbital"
+                    colorClass="text-accent-yellow"
+                    opacity={0.12}
+                    speed={70}
+                    strokeWidth={0.7}
+                    className="absolute -top-8 -right-8 w-36 h-36"
+                  />
+                  <div className="relative">
                     <p className="font-mono text-white font-black text-lg uppercase">Ready to save money?</p>
                     <p className="font-mono text-gray-400 text-sm mt-1">Start with our verified deals — free, no credit card.</p>
                   </div>
                   <Link
                     href="/deals"
-                    className="shrink-0 inline-flex items-center gap-2 bg-primary text-black font-mono font-black text-sm uppercase px-6 py-3 border-2 border-primary hover:bg-accent-yellow transition-colors shadow-[4px_4px_0px_#ffd700] hover:shadow-[2px_2px_0px_#ffd700]"
+                    className="relative shrink-0 inline-flex items-center gap-2 bg-primary text-black font-mono font-black text-sm uppercase px-6 py-3 border-2 border-black hover:bg-accent-yellow transition-colors shadow-[4px_4px_0px_#ffd700] hover:shadow-[2px_2px_0px_#ffd700]"
                   >
                     Browse Deals
                     <span className="material-symbols-outlined text-base">arrow_forward</span>
