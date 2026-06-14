@@ -80,7 +80,7 @@ export default function AdCreditsPage() {
           </div>
         </div>
 
-        <div className="relative max-w-[1600px] mx-auto px-4 lg:px-6 py-4 lg:py-5">
+        <div className="relative max-w-[1600px] mx-auto px-4 lg:px-6 pt-6 md:pt-8 pb-4 lg:pb-5">
           <AdCreditsHeader />
           <AdCreditsHero />
           <AdCreditsStrategy />

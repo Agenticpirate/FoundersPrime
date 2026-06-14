@@ -11,6 +11,9 @@ function LoginContent() {
   const [password, setPassword] = useState('')
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
+  const [needsVerification, setNeedsVerification] = useState(false)
+  const [resending, setResending] = useState(false)
+  const [resendMsg, setResendMsg] = useState<string | null>(null)
   const router = useRouter()
   const searchParams = useSearchParams()
   const redirect = searchParams.get('redirect') || '/dashboard'
@@ -33,17 +36,47 @@ function LoginContent() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError(null)
+    setNeedsVerification(false)
+    setResendMsg(null)
     setLoading(true)
     if (!email.trim()) { setError('Email is required'); setLoading(false); return }
     if (!password) { setError('Password is required'); setLoading(false); return }
     try {
       const supabase = createClient()
       const { error } = await supabase.auth.signInWithPassword({ email, password })
-      if (error) { setError(error.message); return }
+      if (error) {
+        const msg = error.message || ''
+        if (/email not confirmed|not confirmed|confirm/i.test(msg)) {
+          setNeedsVerification(true)
+          setError('Your email isn\'t verified yet. Check your inbox, or resend the verification email below.')
+        } else if (/invalid login credentials|invalid/i.test(msg)) {
+          setError('Invalid email or password. Please try again.')
+        } else {
+          setError(msg || 'Unable to sign in. Please try again.')
+        }
+        return
+      }
       router.push(redirect)
       router.refresh()
     } catch { setError('An unexpected error occurred') }
     finally { setLoading(false) }
+  }
+
+  const handleResendVerification = async () => {
+    if (!email.trim()) { setError('Enter your email above first, then resend.'); return }
+    setResending(true)
+    setResendMsg(null)
+    try {
+      const supabase = createClient()
+      const { error } = await supabase.auth.resend({
+        type: 'signup',
+        email: email.trim(),
+        options: { emailRedirectTo: `${window.location.origin}/auth/callback` },
+      })
+      if (error) { setError(error.message) }
+      else { setResendMsg('Verification email sent. Please check your inbox (and spam folder).') }
+    } catch { setError('Could not resend the verification email. Please try again.') }
+    finally { setResending(false) }
   }
 
   return (
@@ -56,8 +89,8 @@ function LoginContent() {
         <Mandala variant="orbital" colorClass="text-white" opacity={0.08} speed={120} direction="ccw" className="absolute -bottom-28 -left-24 w-96 h-96" />
         <div className="relative z-10">
           <Link href="/" className="inline-flex items-center gap-2 mb-16">
-            <img src="/logo.svg" alt="FoundersPrime" className="w-7 h-7 invert" />
-            <span className="font-mono font-bold text-lg tracking-widest uppercase">FOUNDERS<span className="text-blue-400">[</span>PRIME<span className="text-blue-400">]</span></span>
+            <img src="/logo-icon.png" alt="FoundersPrime" className="h-9 w-auto object-contain" onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }} />
+            <span className="font-mono font-bold text-lg tracking-widest uppercase">FOUNDERS<span className="text-accent-yellow">[</span>PRIME<span className="text-accent-yellow">]</span></span>
           </Link>
           <h2 className="font-mono text-3xl xl:text-4xl font-black leading-tight mb-4">
             The unfair<br />advantage for<br /><span className="text-accent-yellow">modern founders.</span>
@@ -96,8 +129,8 @@ function LoginContent() {
         {/* Mobile header */}
         <div className="lg:hidden flex items-center justify-between px-4 py-3 border-b-2 border-black relative z-10 bg-white">
           <Link href="/" className="inline-flex items-center gap-2">
-            <img src="/logo.svg" alt="FoundersPrime" className="w-6 h-6" />
-            <span className="font-mono font-bold text-sm tracking-widest uppercase">FOUNDERS<span className="text-blue-600">[</span>PRIME<span className="text-blue-600">]</span></span>
+            <img src="/logo-icon.png" alt="FoundersPrime" className="h-7 w-auto object-contain" onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }} />
+            <span className="font-mono font-bold text-sm tracking-widest uppercase">FOUNDERS<span className="text-accent-yellow">[</span>PRIME<span className="text-accent-yellow">]</span></span>
           </Link>
           <Link href="/" className="text-xs font-mono font-bold text-gray-500 hover:text-black uppercase">← Back</Link>
         </div>
@@ -144,9 +177,28 @@ function LoginContent() {
             </div>
 
             {(error || errorParam) && (
-              <div className="mb-4 p-3 bg-red-50 border-2 border-red-400 text-red-700 text-xs flex items-center gap-2">
+              <div className="mb-4 p-3 bg-red-50 border-2 border-red-400 text-red-700 text-xs flex items-start gap-2">
                 <span className="material-symbols-outlined text-sm">error</span>
-                {error || errorParam}
+                <div className="flex-1">
+                  <p>{error || errorParam}</p>
+                  {needsVerification && (
+                    <button
+                      type="button"
+                      onClick={handleResendVerification}
+                      disabled={resending}
+                      className="mt-2 inline-flex items-center gap-1.5 font-bold underline hover:no-underline disabled:opacity-50"
+                    >
+                      {resending ? 'Sending…' : 'Resend verification email'}
+                    </button>
+                  )}
+                </div>
+              </div>
+            )}
+
+            {resendMsg && (
+              <div className="mb-4 p-3 bg-green-50 border-2 border-green-400 text-green-700 text-xs flex items-center gap-2">
+                <span className="material-symbols-outlined text-sm">mark_email_read</span>
+                {resendMsg}
               </div>
             )}
 

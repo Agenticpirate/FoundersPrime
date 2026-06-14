@@ -135,9 +135,7 @@ export default function SignupPage() {
         <div className="w-full max-w-md">
           <div className="border-3 border-black bg-white shadow-[6px_6px_0px_#111111] p-8">
             <div className="text-center mb-4 md:mb-6">
-              <div className="w-12 h-12 bg-primary text-black flex items-center justify-center mx-auto mb-4 border-2 border-black">
-                <span className="material-symbols-outlined">rocket_launch</span>
-              </div>
+              <img src="/logo-icon.png" alt="FoundersPrime" className="h-12 w-auto object-contain mx-auto mb-4" onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }} />
               <h1 className="text-2xl font-black uppercase">Join FoundersPrime</h1>
               <p className="text-gray-600 text-sm mt-2">Start saving on tools and resources</p>
             </div>

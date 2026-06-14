@@ -95,7 +95,7 @@ export default function DealsFilterBar({ onFilterChange, currentFilters }: Deals
         <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-[18px] pointer-events-none">search</span>
         <input
           className="w-full h-9 pl-10 pr-9 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-yellow/40 focus:border-accent-yellow text-[12.5px] bg-gray-50 hover:bg-white focus:bg-white transition-colors placeholder:text-gray-400"
-          placeholder="Search 500+ deals by name, provider or category…"
+          placeholder="Search hundreds of deals by name, provider or category…"
           type="text"
           value={filters.search}
           onChange={(e) => handleFilterChange('search', e.target.value)}

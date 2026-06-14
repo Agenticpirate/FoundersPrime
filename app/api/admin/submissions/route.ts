@@ -134,21 +134,35 @@ export async function POST(request: Request) {
                 ? submission.featured_until
                 : null
 
+            // Coupon-code redemptions: the "Apply" button must point at a real
+            // URL (the provider site), with the code surfaced in the description.
+            // Link redemptions: use the redemption link directly.
+            const isCode = (submission.redemption_method || 'link') === 'code'
+            const applyUrl = isCode
+                ? (submission.website_url || submission.redemption_link)
+                : submission.redemption_link
+            const codeNote = isCode && submission.redemption_link
+                ? ` Use code: ${submission.redemption_link} at checkout.`
+                : ''
+            const fullDescription = `${submission.benefit_description || ''}${codeNote}`.trim()
+
             const { error: insertError } = await supabase.from('deals').insert({
                 slug,
                 title: `${submission.company_name} Deal`,
                 provider: submission.company_name,
                 category: submission.category,
-                description: submission.benefit_description,
-                short_description: submission.benefit_description?.slice(0, 150),
+                description: fullDescription,
+                short_description: fullDescription.slice(0, 150),
                 value: submission.deal_value,
-                application_url: submission.redemption_link,
+                application_url: applyUrl,
                 logo_url: submission.logo_url,
                 provider_website: submission.website_url,
                 status: 'active',
                 eligibility: ['Startups'],
                 requirements: ['Valid business email'],
-                application_process: ['Click "Get Deal"', 'Follow instructions on provider site'],
+                application_process: isCode
+                    ? ['Click "Get Deal" to visit the provider', `Apply code ${submission.redemption_link} at checkout`]
+                    : ['Click "Get Deal"', 'Follow instructions on provider site'],
                 source_verified: true,
                 data_source: 'submission',
                 featured: !!featuredUntil,

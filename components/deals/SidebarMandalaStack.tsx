@@ -52,7 +52,7 @@ export default function SidebarMandalaStack() {
             Curated Catalog
           </p>
           <p className="font-mono text-2xl font-black leading-none text-white mb-2 tabular-nums stack-counter-fade">
-            500+
+            Hundreds
           </p>
           <p className="text-[11.5px] text-gray-300 leading-relaxed">
             Each opportunity is reviewed by our team before it goes live, with eligibility and terms summarized for clarity.

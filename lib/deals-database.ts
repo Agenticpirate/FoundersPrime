@@ -38,6 +38,7 @@ export interface Deal {
   sourceVerified: boolean
   dataSource: 'manual' | 'api' | 'import' | 'bulk-import' | 'manual-update'
   icon?: string
+  brandIcon?: string
 }
 
 export interface DealCategory {

@@ -1,5 +1,8 @@
+import IdeaSaveButton, { ideaIdFromTitle } from './IdeaSaveButton'
+
 interface SingleIdeaSidebarProps {
   idea: {
+    title?: string
     category: string
     complexity: string
     demandScore: number
@@ -153,10 +156,7 @@ export default function SingleIdeaSidebar({ idea }: SingleIdeaSidebarProps) {
       <div className="bg-white border-3 border-black shadow-[6px_6px_0px_0px_#1a1a1a] rounded-sm p-6">
         <h3 className="font-mono text-lg font-bold mb-4">Actions</h3>
         <div className="space-y-3">
-          <button className="w-full py-3 bg-primary hover:bg-black hover:text-white border-2 border-black text-black font-mono font-bold rounded-sm transition-all flex items-center justify-center gap-2">
-            <span className="material-symbols-outlined text-sm">bookmark</span>
-            Save Idea
-          </button>
+          <IdeaSaveButton ideaId={ideaIdFromTitle(idea.title || '')} variant="full" />
           <button className="w-full py-3 bg-white hover:bg-gray-100 border-2 border-black text-black font-mono font-bold rounded-sm transition-colors flex items-center justify-center gap-2">
             <span className="material-symbols-outlined text-sm">download</span>
             Export Analysis

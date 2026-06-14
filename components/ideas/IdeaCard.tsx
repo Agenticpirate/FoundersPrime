@@ -11,6 +11,8 @@ interface IdeaCardProps {
   index?: number
 }
 
+import IdeaSaveButton, { ideaIdFromTitle } from './IdeaSaveButton'
+
 export default function IdeaCard({ idea, index = 0 }: IdeaCardProps) {
   return (
     <div
@@ -65,12 +67,7 @@ export default function IdeaCard({ idea, index = 0 }: IdeaCardProps) {
           </div>
 
           <div className="flex gap-1.5 flex-shrink-0">
-            <button
-              className="p-1.5 border-2 border-black bg-white hover:bg-accent-yellow rounded-sm transition-colors"
-              aria-label="Bookmark idea"
-            >
-              <span className="material-symbols-outlined text-sm md:text-base align-middle">bookmark_border</span>
-            </button>
+            <IdeaSaveButton ideaId={ideaIdFromTitle(idea.title)} variant="icon" />
             <button className="inline-flex items-center gap-0.5 px-2.5 md:px-3 py-1 md:py-1.5 bg-black text-white hover:bg-accent-yellow hover:text-black border-2 border-black font-mono text-[10px] md:text-xs font-bold rounded-sm transition-all whitespace-nowrap shadow-[2px_2px_0px_#333] hover:shadow-[3px_3px_0px_#111]">
               Explore
               <span className="material-symbols-outlined text-[12px] group-hover:translate-x-0.5 transition-transform">arrow_forward</span>

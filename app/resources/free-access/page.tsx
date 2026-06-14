@@ -19,7 +19,7 @@ export default function FreeAccessPage() {
     <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden bg-gray-50">
       <Header />
       <main className="flex-1">
-        <div className="max-w-[1600px] mx-auto px-4 lg:px-6 py-4 lg:py-5">
+        <div className="max-w-[1600px] mx-auto px-4 lg:px-6 pt-6 md:pt-8 pb-4 lg:pb-5">
           <ResourcesHeader
             currentSection="Campus Edge"
             parentSection={{ name: 'Students', href: '/student-benefits' }}

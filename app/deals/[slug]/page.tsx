@@ -7,6 +7,7 @@ import Footer from '@/components/Footer'
 import DealProBadge from '@/components/deals/DealProBadge'
 import DealLogo from '@/components/deals/DealLogo'
 import { getAllCategories } from '@/lib/deals-database'
+import { fetchDealBySlugFromDB, fetchAllDealSlugsFromDB, isDealsDbConfigured } from '@/lib/deals-server'
 import { getStartupProgramUrl } from '@/lib/comprehensive-startup-urls'
 import fs from 'fs'
 import path from 'path'
@@ -26,8 +27,14 @@ export async function generateMetadata(
   { params }: PageProps,
   parent: ResolvingMetadata
 ): Promise<Metadata> {
-  const allDeals = getAllDeals()
-  let deal = allDeals.find((d: any) => d.slug === params.slug)
+  // Supabase is the source of truth (same source as the deals list). Read it
+  // first. Only fall back to the local JSON subset when the DB isn't
+  // configured (pure local mode) — otherwise the stale JSON could resurrect
+  // deleted deals or show outdated links.
+  let deal = await fetchDealBySlugFromDB(params.slug)
+  if (!deal && !isDealsDbConfigured()) {
+    deal = getAllDeals().find((d: any) => d.slug === params.slug)
+  }
 
   let title = 'Deal Not Found'
   let description = ''
@@ -203,14 +210,14 @@ export default async function SingleDealPage({ params }: PageProps) {
     // Log for debugging slug lookups
 
 
-    // Strict exact match - ensure we only match the exact slug
-    let dealData = allDeals.find((d: any) => {
-      const isMatch = d.slug === params.slug
-      if (isMatch) {
-        // console.log(`[Deal Lookup] Found exact match: "${d.slug}" -> "${d.title}" (ID: ${d.id})`)
-      }
-      return isMatch
-    })
+    // Supabase is the source of truth (same as the deals list). Read it first
+    // so admin edits/removals are reflected. Only fall back to the local JSON
+    // subset when the DB isn't configured (pure local mode); otherwise the
+    // stale JSON would resurrect deleted deals.
+    let dealData = await fetchDealBySlugFromDB(params.slug)
+    if (!dealData && !isDealsDbConfigured()) {
+      dealData = allDeals.find((d: any) => d.slug === params.slug)
+    }
 
     // Check accelerators if not found in regular deals
     if (!dealData) {
@@ -236,8 +243,16 @@ export default async function SingleDealPage({ params }: PageProps) {
           requirements: ['Early Stage Startup', accelerator.founderStage],
           tags: accelerator.features || [],
           timeToApply: accelerator.applicationDeadline ? `Deadline: ${accelerator.applicationDeadline}` : 'Rolling',
-          difficulty: 'Hard',
-          successRate: 'Competitive'
+          difficulty: 'hard',
+          successRate: 'Competitive',
+          applicationProcess: [],
+          recommended: true,
+          verified: true,
+          lastUpdated: new Date().toISOString(),
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+          sourceVerified: true,
+          dataSource: 'manual'
         }
       }
     }
@@ -266,8 +281,16 @@ export default async function SingleDealPage({ params }: PageProps) {
           requirements: ['Early Stage Startup', incubator.founderStage],
           tags: incubator.features || [],
           timeToApply: incubator.applicationDeadline ? `Deadline: ${incubator.applicationDeadline}` : 'Rolling',
-          difficulty: 'Medium',
-          successRate: 'Moderate'
+          difficulty: 'medium',
+          successRate: 'Moderate',
+          applicationProcess: [],
+          recommended: true,
+          verified: true,
+          lastUpdated: new Date().toISOString(),
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+          sourceVerified: true,
+          dataSource: 'manual'
         }
       }
     }
@@ -296,8 +319,16 @@ export default async function SingleDealPage({ params }: PageProps) {
           requirements: [grant.eligibility],
           tags: grant.features || [],
           timeToApply: grant.deadline ? `Deadline: ${grant.deadline}` : 'Rolling',
-          difficulty: 'Varies',
-          successRate: 'Competitive'
+          difficulty: 'hard',
+          successRate: 'Competitive',
+          applicationProcess: [],
+          recommended: true,
+          verified: true,
+          lastUpdated: new Date().toISOString(),
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+          sourceVerified: true,
+          dataSource: 'manual'
         }
       }
     }
@@ -616,6 +647,10 @@ export async function generateStaticParams() {
 
   for (const deal of getAllDeals()) {
     if (deal?.slug) slugs.add(deal.slug)
+  }
+  // Include deals that live only in Supabase (the JSON file is a subset).
+  for (const slug of await fetchAllDealSlugsFromDB()) {
+    if (slug) slugs.add(slug)
   }
   for (const a of accelerators2026) {
     if (a?.slug) slugs.add(a.slug)

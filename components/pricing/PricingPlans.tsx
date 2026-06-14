@@ -430,7 +430,6 @@ function PlanCard({
                   : 'bg-white text-black shadow-[3px_3px_0px_#111] hover:bg-gray-50 hover:shadow-[5px_5px_0px_#111] hover:-translate-x-px hover:-translate-y-px'
             }`}
           >
-            <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover/cta:translate-x-full transition-transform duration-700 pointer-events-none" />
             <span className="relative">
               {loading ? 'Redirecting…' : plan.cta}
             </span>

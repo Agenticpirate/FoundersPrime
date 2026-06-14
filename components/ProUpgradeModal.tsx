@@ -101,10 +101,10 @@ export default function ProUpgradeModal({ isOpen, onClose }: ProUpgradeModalProp
                         </div>
 
                         <h3 className="font-mono text-base md:text-lg font-black uppercase text-center mb-1.5 leading-tight tracking-tight text-black">
-                            One step from the full catalog.
+                            Unlock the entire founder catalog.
                         </h3>
                         <p className="text-center text-gray-600 leading-relaxed text-[12.5px] md:text-[13px] max-w-sm">
-                            This deal is part of the Founder plan. Upgrade now to unlock it — plus every credit, grant, and program in the dashboard.
+                            This deal is reserved for Founder members. Upgrade now to claim it instantly — plus every credit, grant, and program in the dashboard.
                         </p>
                     </div>
 
@@ -139,8 +139,7 @@ export default function ProUpgradeModal({ isOpen, onClose }: ProUpgradeModalProp
                         onClick={onClose}
                         className="group/cta relative flex items-center justify-center w-full bg-accent-yellow text-black font-mono font-black text-[12px] md:text-[13px] uppercase tracking-[0.1em] py-3 md:py-3.5 border-2 border-black shadow-[3px_3px_0px_#111] hover:bg-amber-300 hover:shadow-[5px_5px_0px_#111] hover:-translate-x-px hover:-translate-y-px transition-all gap-2 overflow-hidden rounded-sm"
                     >
-                        <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover/cta:translate-x-full transition-transform duration-700" aria-hidden="true" />
-                        <span className="relative">Scale as a Founder</span>
+                        <span className="relative">Unlock Full Access</span>
                         <span className="material-symbols-outlined relative !text-[16px] group-hover/cta:translate-x-1 transition-transform">arrow_forward</span>
                     </Link>
 

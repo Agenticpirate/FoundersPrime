@@ -124,16 +124,13 @@ export default function Header() {
               href="/"
               className="inline-flex items-center gap-2.5 no-underline group"
             >
-              <div className="relative w-8 h-8 flex-shrink-0">
-                <span className="absolute inset-0 rounded-sm bg-accent-yellow/20 blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-300" aria-hidden="true" />
-                <img
-                  src="/logo-white.svg"
-                  alt="FoundersPrime"
-                  className="relative w-full h-full object-contain group-hover:rotate-6 transition-transform duration-300"
-                  onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
-                />
-              </div>
-              <span className="font-mono font-black text-base md:text-[17px] tracking-[0.18em] text-white uppercase whitespace-nowrap">
+              <img
+                src="/logo-icon.png"
+                alt="FoundersPrime"
+                className="h-10 md:h-12 w-auto object-contain group-hover:scale-105 transition-transform duration-300"
+                onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
+              />
+              <span className="font-mono font-black text-xl md:text-2xl tracking-[0.18em] text-white uppercase whitespace-nowrap">
                 FOUNDERS<span className="text-accent-yellow">[</span>PRIME<span className="text-accent-yellow">]</span>
               </span>
             </Link>
@@ -331,7 +328,6 @@ export default function Header() {
                   href="/pricing"
                   className="relative group bg-accent-yellow text-black font-mono font-black py-2 px-4 text-[12px] uppercase tracking-[0.1em] flex items-center gap-1.5 rounded-md hover:bg-white transition-all overflow-hidden shadow-[0_4px_20px_-4px_rgba(255,221,0,0.5)] hover:shadow-[0_8px_30px_-4px_rgba(255,221,0,0.7)]"
                 >
-                  <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" aria-hidden="true" />
                   <span className="relative">Get Started</span>
                   <span className="material-symbols-outlined text-sm relative group-hover:translate-x-0.5 transition-transform">arrow_forward</span>
                 </Link>

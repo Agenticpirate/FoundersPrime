@@ -20,7 +20,7 @@ export default function SaasDiscountsPage() {
       <Header />
       <main className="flex-1 text-[#111111]">
         {/* Main Layout */}
-        <div className="max-w-[1600px] mx-auto px-4 lg:px-6 py-4 lg:py-5">
+        <div className="max-w-[1600px] mx-auto px-4 lg:px-6 pt-6 md:pt-8 pb-4 lg:pb-5">
           <SaasHeader />
           <SaasHero />
           <SaasStrategy />

@@ -106,7 +106,7 @@ export default function PricingPageContent() {
                         {/* Right: inline stat strip */}
                         <div className="flex gap-2 lg:gap-2.5 lg:flex-shrink-0">
                             {[
-                                { value: '500+', label: 'Vetted deals', icon: 'inventory_2', color: 'text-accent-yellow', dot: 'bg-accent-yellow' },
+                                { value: 'Hundreds', label: 'Vetted deals', icon: 'inventory_2', color: 'text-accent-yellow', dot: 'bg-accent-yellow' },
                                 { value: 'Weekly', label: 'New listings', icon: 'update', color: 'text-pink-300', dot: 'bg-pink-400' },
                                 { value: '1-click', label: 'Apply flow', icon: 'rocket_launch', color: 'text-emerald-400', dot: 'bg-emerald-400' },
                             ].map((stat) => (

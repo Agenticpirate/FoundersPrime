@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import IdeaSaveButton, { ideaIdFromTitle } from './IdeaSaveButton'
 
 interface SingleIdeaHeaderProps {
   idea: {
@@ -84,9 +85,7 @@ export default function SingleIdeaHeader({ idea }: SingleIdeaHeaderProps) {
             </div>
             
             <div className="flex gap-3">
-              <button className="p-3 border-2 border-black bg-white hover:bg-gray-100 rounded-sm transition-colors">
-                <span className="material-symbols-outlined text-xl">bookmark_border</span>
-              </button>
+              <IdeaSaveButton ideaId={ideaIdFromTitle(idea.title)} variant="icon" className="p-3 border-2 border-black bg-white hover:bg-gray-100 rounded-sm transition-colors disabled:opacity-60" />
               <button className="p-3 border-2 border-black bg-white hover:bg-gray-100 rounded-sm transition-colors">
                 <span className="material-symbols-outlined text-xl">share</span>
               </button>

@@ -5,6 +5,23 @@ import { Deal } from '@/lib/deals-database'
 import fs from 'fs'
 import path from 'path'
 
+// Defensive upper bound on how many rows a single list request will ever
+// load/serialize. The /deals UI fetches the whole catalog (client-side
+// search/sort/pagination), so there is intentionally no offset pagination —
+// but this cap guarantees the route degrades gracefully (bounded memory +
+// payload) instead of crashing if the table ever grows unexpectedly large.
+const LIST_HARD_CAP = 5000
+
+// Priority brands marked as "recommended". Hoisted to module scope so it is
+// allocated once per process instead of rebuilt on every request.
+const RECOMMENDED_KEYWORDS = [
+  'github', 'airtable', 'aws', 'google for startups', 'microsoft for startups',
+  'microsoft founders hub', 'linear', 'stripe', 'notion', 'webflow',
+  'alibaba', 'algolia', 'auth0', 'cloudflare', 'customer.io', 'datadog',
+  'databricks', 'devrev', 'digitalocean', 'document360', 'elevenlabs', 'eleven labs',
+  'flippa', 'framer', 'gitlab', 'heroku', 'instatus', 'intercom', 'linkedin ads'
+] as const
+
 // Check if Supabase is properly configured (not placeholder values)
 function isSupabaseConfigured(): boolean {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL
@@ -120,7 +137,13 @@ export async function GET(request: NextRequest) {
         }
       }
 
-      if (limit) query = query.limit(parseInt(limit));
+      if (limit) {
+        query = query.limit(parseInt(limit))
+      } else if (!isSingleLookup) {
+        // No explicit limit on a list query — apply the defensive cap so the
+        // response stays bounded under heavy growth.
+        query = query.limit(LIST_HARD_CAP)
+      }
 
       const { data: rawDeals, error } = await query;
       if (error) throw error;
@@ -154,6 +177,8 @@ export async function GET(request: NextRequest) {
       }
       if (limit) {
         allDeals = allDeals.slice(0, parseInt(limit));
+      } else if (!slug && !id) {
+        allDeals = allDeals.slice(0, LIST_HARD_CAP);
       }
 
       deals = allDeals as Deal[];
@@ -171,17 +196,10 @@ export async function GET(request: NextRequest) {
     }
 
     // Override: no deals are featured, mark priority deals as recommended
-    const recommendedKeywords = [
-      'github', 'airtable', 'aws', 'google for startups', 'microsoft for startups',
-      'microsoft founders hub', 'linear', 'stripe', 'notion', 'webflow',
-      'alibaba', 'algolia', 'auth0', 'cloudflare', 'customer.io', 'datadog',
-      'databricks', 'devrev', 'digitalocean', 'document360', 'elevenlabs', 'eleven labs',
-      'flippa', 'framer', 'gitlab', 'heroku', 'instatus', 'intercom', 'linkedin ads'
-    ];
     deals = deals.map(d => {
       const titleLower = (d.title || '').toLowerCase();
       const providerLower = (d.provider || '').toLowerCase();
-      const isRecommended = recommendedKeywords.some(kw => titleLower.includes(kw) || providerLower.includes(kw));
+      const isRecommended = RECOMMENDED_KEYWORDS.some(kw => titleLower.includes(kw) || providerLower.includes(kw));
       return { ...d, featured: false, recommended: isRecommended } as Deal;
     });
 
@@ -213,7 +231,8 @@ export async function GET(request: NextRequest) {
       { success: true, deals, count: deals.length, stats },
       {
         headers: {
-          'Cache-Control': 'public, s-maxage=120, stale-while-revalidate=600',
+          'Cache-Control': 'public, s-maxage=300, stale-while-revalidate=3600',
+          'CDN-Cache-Control': 'public, s-maxage=300, stale-while-revalidate=3600',
           'Vary': 'Accept-Encoding',
         }
       }

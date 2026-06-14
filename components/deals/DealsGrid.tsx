@@ -11,6 +11,10 @@ import { checkProStatus } from '@/lib/auth/user-context'
 
 let globalDealsCache: Deal[] | null = null;
 let globalDealsPromise: Promise<Deal[]> | null = null;
+let globalDealsCacheTime = 0;
+// Refresh the in-memory deal list periodically so admin edits/removals show
+// up within a session without needing a hard refresh.
+const DEALS_CACHE_TTL = 60_000; // 60s
 
 interface FilterState {
   search: string
@@ -45,15 +49,21 @@ export default function DealsGrid({ filters }: DealsGridProps) {
   useEffect(() => {
     if (authLoading) return
 
-    const fetchDeals = globalDealsCache
-      ? Promise.resolve(globalDealsCache)
+    const cacheValid = globalDealsCache && (Date.now() - globalDealsCacheTime < DEALS_CACHE_TTL)
+    const fetchDeals = cacheValid
+      ? Promise.resolve(globalDealsCache as Deal[])
       : (() => {
           if (!globalDealsPromise) {
-            globalDealsPromise = fetch('/api/deals')
+            // `no-store` so the browser always revalidates (a stale browser
+            // copy would keep showing deleted deals). The CDN still serves
+            // cached responses via s-maxage, so this stays scalable.
+            globalDealsPromise = fetch('/api/deals', { cache: 'no-store' })
               .then(res => res.json())
               .then(data => {
                 const result = data.success ? data.deals : []
                 globalDealsCache = result
+                globalDealsCacheTime = Date.now()
+                globalDealsPromise = null // clear so the TTL can trigger a refetch later
                 return result
               })
               .catch(err => {
@@ -79,7 +89,11 @@ export default function DealsGrid({ filters }: DealsGridProps) {
       setLoading(false)
       setCheckingAccess(false)
     })
-  }, [authLoading, user])
+    // Key on the stable user id, not the user object. Supabase emits a new
+    // user object reference on token refresh / tab refocus; depending on the
+    // object would re-run this effect and re-fetch deals + access on every
+    // focus, causing a visible flicker for logged-in users.
+  }, [authLoading, user?.id])
 
 
   useEffect(() => {
@@ -183,7 +197,7 @@ export default function DealsGrid({ filters }: DealsGridProps) {
       // Value filter
       if (filters.value) {
         result = result.filter(deal => {
-          const value = deal.value.replace(/[^0-9]/g, '')
+          const value = (deal.value || '').replace(/[^0-9]/g, '')
           const numValue = parseInt(value) || 0
 
           switch (filters.value) {
@@ -219,15 +233,15 @@ export default function DealsGrid({ filters }: DealsGridProps) {
           break
         case 'value-high':
           result.sort((a, b) => {
-            const aValue = parseInt(a.value.replace(/[^0-9]/g, '')) || 0
-            const bValue = parseInt(b.value.replace(/[^0-9]/g, '')) || 0
+            const aValue = parseInt((a.value || '').replace(/[^0-9]/g, '')) || 0
+            const bValue = parseInt((b.value || '').replace(/[^0-9]/g, '')) || 0
             return bValue - aValue
           })
           break
         case 'value-low':
           result.sort((a, b) => {
-            const aValue = parseInt(a.value.replace(/[^0-9]/g, '')) || 0
-            const bValue = parseInt(b.value.replace(/[^0-9]/g, '')) || 0
+            const aValue = parseInt((a.value || '').replace(/[^0-9]/g, '')) || 0
+            const bValue = parseInt((b.value || '').replace(/[^0-9]/g, '')) || 0
             return aValue - bValue
           })
           break
@@ -264,8 +278,8 @@ export default function DealsGrid({ filters }: DealsGridProps) {
                 'document360', 'elevenlabs', 'flippa', 'framer', 'gitlab', 'heroku',
                 'instatus', 'intercom', 'linkedin'
               ];
-              const aIdx = priorityBrands.findIndex(brand => a.title.toLowerCase().includes(brand) || a.provider.toLowerCase().includes(brand));
-              const bIdx = priorityBrands.findIndex(brand => b.title.toLowerCase().includes(brand) || b.provider.toLowerCase().includes(brand));
+              const aIdx = priorityBrands.findIndex(brand => (a.title || '').toLowerCase().includes(brand) || (a.provider || '').toLowerCase().includes(brand));
+              const bIdx = priorityBrands.findIndex(brand => (b.title || '').toLowerCase().includes(brand) || (b.provider || '').toLowerCase().includes(brand));
               const aPriority = aIdx >= 0 ? aIdx : 9999;
               const bPriority = bIdx >= 0 ? bIdx : 9999;
               if (aPriority !== bPriority) return aPriority - bPriority;
@@ -439,7 +453,15 @@ export default function DealsGrid({ filters }: DealsGridProps) {
             }
           </p>
           <button
-            onClick={() => window.location.reload()}
+            onClick={() => {
+              if (deals.length === 0) {
+                window.location.reload()
+              } else {
+                // Clear all query params (filters + page) — DealsContent
+                // re-syncs filter state from the URL.
+                router.push(pathname, { scroll: false })
+              }
+            }}
             className="px-6 py-2 bg-primary text-white border-2 border-ink font-bold hover:bg-primary-dark transition-colors"
           >
             {deals.length === 0 ? "Refresh Page" : "Reset Filters"}
@@ -479,12 +501,12 @@ export default function DealsGrid({ filters }: DealsGridProps) {
       {!loading && !authLoading && !checkingAccess && filteredDeals.length > 0 && (() => {
         // Enforce pagination limits based on plan and category
         let isLocked = false;
-        let lockTitle = "Don't Leave $50K On The Table";
+        let lockTitle = "Don't Leave Deals On The Table";
         let lockSubtitle = "Members-only access";
-        let lockMessage = "You're one click from cloud credits, SaaS discounts, and grants worth six figures. Founders who unlock the catalog typically stack $25K–$200K in their first month.";
+        let lockMessage = "You're one click from cloud credits, SaaS discounts, and verified grants. Founders who unlock the catalog start stacking savings in their first month.";
         let bullets: string[] = [
-          'Stack $200K+ in cloud credits across AWS, GCP and Azure',
-          '500+ vetted SaaS discounts (Notion, Linear, HubSpot, more)',
+          'Stack cloud credits across AWS, GCP and Azure',
+          'Hundreds of vetted SaaS discounts (Notion, Linear, HubSpot, more)',
           'Grant programs reviewed and matched to your stage',
         ];
         let primaryCta = "See Plans · Unlock Now";
@@ -518,14 +540,14 @@ export default function DealsGrid({ filters }: DealsGridProps) {
              }
           } else {
              // Free plan limits
-             isLocked = currentPage > 3;
+             isLocked = currentPage > 1;
              if (isLocked) {
-               lockTitle = "Don't Leave $50K On The Table";
+               lockTitle = "Don't Leave Deals On The Table";
                lockSubtitle = "Members-only access";
-               lockMessage = "You're one click from cloud credits, SaaS discounts, and grants worth six figures. Founders who unlock the catalog typically stack $25K–$200K in their first month.";
+               lockMessage = "You're one click from cloud credits, SaaS discounts, and verified grants. Founders who unlock the catalog start stacking savings in their first month.";
                bullets = [
-                 'Stack $200K+ in cloud credits across AWS, GCP and Azure',
-                 '500+ vetted SaaS discounts (Notion, Linear, HubSpot, more)',
+                 'Stack cloud credits across AWS, GCP and Azure',
+                 'Hundreds of vetted SaaS discounts (Notion, Linear, HubSpot, more)',
                  'Grant programs reviewed and matched to your stage',
                ];
              }

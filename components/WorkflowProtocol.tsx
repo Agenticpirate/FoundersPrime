@@ -71,7 +71,7 @@ export default function WorkflowProtocol() {
       icon: 'search',
       title: 'See it',
       headline: 'Every deal that matters, in one place.',
-      description: '500+ verified credits, grants, and programs — sorted by category, stage, and intent. No more 40 open tabs.',
+      description: 'Hundreds of verified credits, grants, and programs — sorted by category, stage, and intent. No more 40 open tabs.',
       bg: 'bg-accent-yellow',
       accent: 'bg-orange-400',
       mandalaColor: 'text-orange-700',

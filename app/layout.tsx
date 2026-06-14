@@ -65,13 +65,16 @@ export const metadata: Metadata = {
     images: ['/og-image.png'],
   },
   icons: {
-    icon: '/icon.svg',
-    shortcut: '/icon.svg',
-    apple: '/icon.svg',
-    other: {
-      rel: 'apple-touch-icon-precomposed',
-      url: '/icon.svg',
-    },
+    icon: [
+      { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
+      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+      { url: '/favicon-48x48.png', sizes: '48x48', type: 'image/png' },
+      { url: '/favicon-192x192.png', sizes: '192x192', type: 'image/png' },
+    ],
+    shortcut: '/favicon-32x32.png',
+    apple: [
+      { url: '/apple-icon.png', sizes: '180x180', type: 'image/png' },
+    ],
   },
 }
 
@@ -82,7 +85,7 @@ const jsonLd = {
   name: 'FoundersPrime',
   alternateName: ['Founders Prime', 'FoundersPrime Terminal'],
   url: 'https://www.foundersprime.com',
-  logo: 'https://www.foundersprime.com/icon.svg',
+  logo: 'https://www.foundersprime.com/logo-fp.png',
   sameAs: [
     'https://twitter.com/foundersprime',
     'https://linkedin.com/company/foundersprime'

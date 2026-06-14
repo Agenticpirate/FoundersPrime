@@ -56,14 +56,14 @@ export default function ProviderSection() {
             </h2>
 
             <p className="relative text-sm md:text-base text-gray-700 mb-4 leading-relaxed max-w-lg font-sans">
-              500+ verified deals. 4.2x baseline claim rate. Zero listing fees.
+              Hundreds of verified deals. 4.2x baseline claim rate. Zero listing fees.
               We put your offer in front of high-intent founders — not tire kickers.
             </p>
 
             {/* Compact stat strip — sits in the previously-empty space */}
             <div className="relative grid grid-cols-3 gap-2 mb-4 max-w-md">
               {[
-                { value: '500+', label: 'Deals listed', icon: 'inventory_2' },
+                { value: 'Hundreds', label: 'Deals listed', icon: 'inventory_2' },
                 { value: '4.2x', label: 'Claim rate', icon: 'trending_up' },
                 { value: '$0', label: 'Listing fee', icon: 'sell' },
               ].map((s) => (

@@ -14,7 +14,7 @@ export default function AcceleratorsPage() {
  <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden bg-background-light">
  <Header />
  <main className="flex-1">
- <div className="max-w-[1600px] mx-auto px-4 lg:px-6 py-2 lg:py-4">
+ <div className="max-w-[1600px] mx-auto px-4 lg:px-6 pt-6 md:pt-8 pb-2 lg:pb-4">
  <AcceleratorsHeader />
 
  <Suspense fallback={<HeroSkeleton />}>

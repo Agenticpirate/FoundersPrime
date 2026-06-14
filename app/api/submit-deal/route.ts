@@ -15,6 +15,18 @@ function isValidUrl(url: string): boolean {
     }
 }
 
+// Accept bare domains by prepending https:// so common user input
+// ("example.com") doesn't fail validation. Leaves coupon codes untouched.
+function normalizeUrl(value: any): any {
+    if (typeof value !== 'string') return value
+    const v = value.trim()
+    if (!v) return v
+    if (/^https?:\/\//i.test(v)) return v
+    // Looks like a domain/path (has a dot, no spaces) → assume https
+    if (/^[^\s]+\.[^\s]+$/.test(v) && !v.includes(' ')) return `https://${v}`
+    return v
+}
+
 function sanitize(s: any, max = 500): string {
     if (typeof s !== 'string') return ''
     return s.trim().slice(0, max)
@@ -38,15 +50,23 @@ function validateSubmission(data: any): string | null {
     if (!data.deal_value || data.deal_value.length > 100) {
         return 'Deal value is required (max 100 characters)'
     }
-    if (!data.redemption_link || !isValidUrl(data.redemption_link)) {
-        return 'A valid redemption link is required'
+    // Redemption can be a URL ("link") or a coupon code ("code"). Only require a
+    // valid URL when the method is link; codes are free-form text.
+    const method = (data.redemption_method || 'link').toString()
+    if (!data.redemption_link || data.redemption_link.toString().trim().length === 0) {
+        return 'A redemption link or coupon code is required'
+    }
+    if (data.redemption_link.length > 300) {
+        return 'Redemption link/code is too long (max 300 characters)'
+    }
+    if (method === 'link' && !isValidUrl(data.redemption_link)) {
+        return 'Enter a valid redemption URL (must start with https://), or switch the method to Coupon Code'
     }
     if (data.submitter_email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.submitter_email)) {
         return 'Invalid submitter email format'
     }
-    if (data.logo_url && data.logo_url.length > 0 && !isValidUrl(data.logo_url)) {
-        return 'Logo URL must be valid'
-    }
+    // Logo is optional. Invalid/blob URLs are ignored at insert time rather than
+    // failing the whole submission (see payload below).
     return null
 }
 
@@ -89,10 +109,20 @@ export async function POST(request: NextRequest) {
             return NextResponse.json({ success: true }, { status: 201 })
         }
 
+        // Normalize bare-domain URLs (prepend https://) so legitimate input
+        // like "example.com" doesn't fail validation. Coupon codes are left as-is.
+        body.website_url = normalizeUrl(body.website_url)
+        if ((body.redemption_method || 'link') === 'link') {
+            body.redemption_link = normalizeUrl(body.redemption_link)
+        }
+        if (body.logo_url) body.logo_url = normalizeUrl(body.logo_url)
+
         // ── Anti-bot layer 2: minimum time to submit ──
-        // The form sends a 'submitted_at' relative to when the form was loaded.
-        // Real users take >3 seconds to fill the form; bots submit in <1s.
-        if (typeof body.fill_time_ms === 'number' && body.fill_time_ms < 3000) {
+        // Real users take more than a second to fill the form + solve the
+        // captcha; instant submissions are bots. Kept conservative to avoid
+        // false-positives for fast legitimate users (honeypot is the primary
+        // defense).
+        if (typeof body.fill_time_ms === 'number' && body.fill_time_ms < 1200) {
             console.warn('Too-fast submission from IP:', ip, 'ms:', body.fill_time_ms)
             return NextResponse.json(
                 { error: 'Please take a moment before submitting.' },
@@ -119,7 +149,7 @@ export async function POST(request: NextRequest) {
         const payload = {
             company_name: sanitize(body.company_name, 120),
             website_url: sanitize(body.website_url, 500),
-            logo_url: body.logo_url ? sanitize(body.logo_url, 500) : null,
+            logo_url: (body.logo_url && isValidUrl(body.logo_url)) ? sanitize(body.logo_url, 500) : null,
             benefit_description: sanitize(body.benefit_description, 2000),
             category: sanitize(body.category, 50),
             deal_value: sanitize(body.deal_value, 100),
