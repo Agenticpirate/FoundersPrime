@@ -1,5 +1,71 @@
 [
   {
+    "id": "deal-airwallex-startups-1768294531269",
+    "slug": "airwallex-for-startups",
+    "title": "Airwallex for Startups",
+    "provider": "Airwallex",
+    "category": "saas-discounts",
+    "subcategory": "finance-legal",
+    "description": "Airwallex for Startups is a free program built for venture-backed, globally-minded founders who need banking that keeps up with international ambitions. It combines Airwallex's cross-border financial platform with hands-on support so you can extend your runway, simplify global operations, and scale across currencies and markets.\n\nOffers by stage (Australia):\n\n• Pre-seed\n  - Free access to the Airwallex Explore tier for 3 months\n\n• Seed Stage\n  - Free access to the Airwallex Grow tier for 3 months (no fees)\n  - Collect payments up to AUD$100,000 and pay no fees\n  - Earn competitive returns on USD and AUD funds with Airwallex Yield\n  - Fee-free FX for the first AUD$100,000 worth of conversions\n\n• Series A and beyond\n  - Contact the Airwallex team for tailored support\n\nWhat you get with the platform:\n• Go global from day one — open multi-currency accounts in minutes and hold funds in the currencies you raise and earn\n• Win customers everywhere — accept payments with 160+ local payment methods and local currency pricing\n• Stay in control as you scale — issue cards, track spend in real-time, and automate reporting\n• AI Sandbox — a fast track for selected founders to build a proof of concept with Airwallex teams, test in live conditions, and access operating data and feedback\n• Ecosystem perks — additional offers across OpenAI, Google for Startups Cloud Program, productivity and collaboration tools, and more\n\nNew customers only. Eligibility requirements apply. Terms and conditions apply.",
+    "shortDescription": "A free startup program for venture-backed founders. Seed-stage startups get 3 months of Airwallex Grow free, fee-free payments on the first AUD$100,000, Yield returns on AUD/USD, and fee-free FX on the first AUD$100,000 of conversions.",
+    "value": "3 months free + AUD$100,000 fee-free",
+    "savings": "AUD$100,000+ in waived fees",
+    "savingsAmount": 100000,
+    "eligibility": [
+      "Venture-backed startups with global ambitions (pre-seed, seed, or Series A)",
+      "New Airwallex customers only",
+      "Active Airwallex account required",
+      "Designed for globally-minded, venture-backed founders"
+    ],
+    "requirements": [
+      "Active Airwallex account",
+      "Business details",
+      "Proof of venture backing / funding stage"
+    ],
+    "applicationProcess": [
+      "Click \"Apply now\" on the Airwallex for Startups page",
+      "Create or log in to your Airwallex account",
+      "Complete the startup program application with your company and funding details",
+      "Once approved, your stage-based offers are applied to your account"
+    ],
+    "proTips": [
+      "Seed-stage startups get the most value — combine the fee-free AUD$100,000 payment collection with fee-free FX conversions",
+      "Use Airwallex Yield to earn returns on idle AUD and USD funds while extending your runway"
+    ],
+    "tags": [
+      "fintech",
+      "banking",
+      "payments",
+      "fx",
+      "multi-currency",
+      "cross-border",
+      "finance"
+    ],
+    "status": "active",
+    "applicationUrl": "https://www.airwallex.com/au/startups",
+    "logoUrl": "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https%3A%2F%2Fwww.airwallex.com%2Fau%2Fstartups&size=128",
+    "featured": false,
+    "verified": true,
+    "difficulty": "medium",
+    "timeToApply": "15 minutes",
+    "lastUpdated": "2026-06-15",
+    "createdAt": "2026-06-15",
+    "updatedAt": "2026-06-15T00:00:00.000Z",
+    "sourceVerified": true,
+    "dataSource": "manual-import",
+    "providerWebsite": "https://www.airwallex.com/au/startups",
+    "recommended": false,
+    "benefits": [
+      "3 months free access to Airwallex Grow tier (seed stage)",
+      "Collect payments up to AUD$100,000 with no fees",
+      "Fee-free FX on the first AUD$100,000 of conversions",
+      "Earn competitive returns on AUD and USD funds with Airwallex Yield",
+      "Multi-currency accounts and 160+ local payment methods",
+      "Access to AI Sandbox and partner ecosystem perks"
+    ],
+    "sortOrder": 0
+  },
+  {
     "id": "bulk-1768294531268-4",
     "slug": "notion",
     "title": "Notion for Startups",

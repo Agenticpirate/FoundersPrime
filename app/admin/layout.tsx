@@ -5,6 +5,11 @@ import AdminAuthGuard from '../../components/admin/AdminAuthGuard'
 export const metadata: Metadata = {
   title: 'Admin Panel',
   description: 'Administrative interface for managing FoundersPrime platform.',
+  robots: {
+    index: false,
+    follow: false,
+    googleBot: { index: false, follow: false },
+  },
 }
 
 export default function AdminLayout({

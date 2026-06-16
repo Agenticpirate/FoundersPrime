@@ -5,7 +5,7 @@ import { useRouter, useSearchParams, usePathname } from 'next/navigation'
 import DealsFilterBar from './DealsFilterBar'
 import DealsGrid from './DealsGrid'
 import DealsCategorySidebar from './DealsCategorySidebar'
-import SidebarMandalaStack from './SidebarMandalaStack'
+import FeaturedSlot from './featured/FeaturedSlot'
 
 interface FilterState {
   search: string
@@ -148,6 +148,9 @@ export default function DealsContent() {
 
   return (
     <div className="max-w-[1600px] mx-auto">
+      {/* Header Featured Banner — rotating, full width, shown on all sizes */}
+      <FeaturedSlot variant="banner" count={1} intervalMs={5000} offset={0} className="mb-4" />
+
       {/* Mobile Category Filter Button */}
       <div className="lg:hidden mb-3">
         <button
@@ -200,18 +203,38 @@ export default function DealsContent() {
       <div className="flex gap-5 lg:gap-6 items-start">
         {/* Left Column: Category Sidebar - Desktop only */}
         <div className="w-60 flex-shrink-0 hidden lg:block">
+          <FeaturedSlot variant="rail" count={3} intervalMs={6000} offset={0} className="mb-4" />
           <DealsCategorySidebar
             onCategorySelect={handleCategorySelect}
             selectedCategory={filters.category}
             selectedSubcategory={filters.subcategory}
           />
-          <SidebarMandalaStack />
+          <div className="mt-4 space-y-3">
+            <FeaturedSlot variant="rail" count={1} intervalMs={7200} offset={9} showHeader={false} dense />
+            <FeaturedSlot variant="rail" count={1} intervalMs={8200} offset={10} showHeader={false} dense />
+            <FeaturedSlot variant="rail" count={1} intervalMs={9200} offset={11} showHeader={false} dense />
+          </div>
         </div>
 
         {/* Right Column: Filters & Grid */}
         <div className="flex-1 min-w-0 flex flex-col gap-4">
           <DealsFilterBar onFilterChange={handleFilterChange} currentFilters={filters} />
           <DealsGrid filters={filters} />
+        </div>
+
+        {/* Right Rail: stack of Featured slots filling the column — wide
+            screens only (xl+) so the grid isn't squeezed on smaller laptops.
+            Sticky so the ads stay in view while scrolling the long grid.
+            Each slot rotates independently; when deals > slots they spin. */}
+        <div className="w-60 flex-shrink-0 hidden xl:block">
+          <div className="sticky top-4 space-y-3">
+            <FeaturedSlot variant="rail" count={1} intervalMs={6500} offset={3} dense />
+            <FeaturedSlot variant="rail" count={1} intervalMs={7500} offset={4} showHeader={false} dense />
+            <FeaturedSlot variant="rail" count={1} intervalMs={7000} offset={5} showHeader={false} dense />
+            <FeaturedSlot variant="rail" count={1} intervalMs={8000} offset={6} showHeader={false} dense />
+            <FeaturedSlot variant="rail" count={1} intervalMs={8500} offset={7} showHeader={false} dense />
+            <FeaturedSlot variant="rail" count={1} intervalMs={9000} offset={8} showHeader={false} dense />
+          </div>
         </div>
       </div>
     </div>

@@ -2,6 +2,7 @@ import { createClient } from '@/lib/supabase/server'
 import { createClient as createServiceClient } from '@supabase/supabase-js'
 import { NextResponse } from 'next/server'
 import DodoPayments from 'dodopayments'
+import { getFeaturedPlanConfig, resolveProductId, normalizeFeaturedPlan } from '@/lib/featured-plans'
 
 /* ─── Helpers ─── */
 async function verifyAdmin() {
@@ -41,7 +42,7 @@ export async function POST(request: Request) {
         const auth = await verifyAdmin()
         if (!auth.ok) return NextResponse.json({ error: auth.error }, { status: auth.status })
 
-        const { submissionId } = await request.json()
+        const { submissionId, plan: planOverride } = await request.json()
         if (!submissionId) {
             return NextResponse.json({ error: 'submissionId is required' }, { status: 400 })
         }
@@ -80,9 +81,14 @@ export async function POST(request: Request) {
             return NextResponse.json({ error: 'Dodo Payments not configured' }, { status: 503 })
         }
 
-        const productId = process.env.DODO_PRODUCT_FEATURED_LISTING
+        // Resolve the chosen plan: an explicit admin override wins, otherwise
+        // use the plan the submitter selected (defaults to 'monthly').
+        const planConfig = getFeaturedPlanConfig(
+            planOverride ? normalizeFeaturedPlan(planOverride) : submission.featured_plan
+        )
+        const productId = resolveProductId(planConfig)
         if (!productId) {
-            return NextResponse.json({ error: 'DODO_PRODUCT_FEATURED_LISTING not configured' }, { status: 503 })
+            return NextResponse.json({ error: `Dodo product for ${planConfig.plan} plan not configured` }, { status: 503 })
         }
 
         const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://www.foundersprime.com'
@@ -97,6 +103,7 @@ export async function POST(request: Request) {
                 type: 'featured_listing',
                 submission_id: submissionId,
                 company_name: submission.company_name,
+                featured_plan: planConfig.plan,
             },
         }
 
@@ -112,7 +119,8 @@ export async function POST(request: Request) {
             .from('deal_submissions')
             .update({
                 featured_payment_id: session.session_id,
-                featured_amount_cents: 9900,
+                featured_amount_cents: planConfig.amountCents,
+                featured_plan: planConfig.plan,
                 updated_at: new Date().toISOString(),
             })
             .eq('id', submissionId)
@@ -120,6 +128,7 @@ export async function POST(request: Request) {
         return NextResponse.json({
             url: session.checkout_url,
             session_id: session.session_id,
+            plan: planConfig.plan,
         })
     } catch (err: any) {
         console.error('❌ Featured payment link error:', err)

@@ -6,11 +6,11 @@ import HeroSection from '@/components/HeroSection'
 import ProblemSection from '@/components/ProblemSection'
 import SystemModules from '@/components/SystemModules'
 import WorkflowProtocol from '@/components/WorkflowProtocol'
-import FinalCTA from '@/components/FinalCTA'
 import Footer from '@/components/Footer'
 
 /* ─── Below-fold: lazy-loaded to reduce initial JS parse cost ─── */
 const TopWeeklyDeals = dynamic(() => import('@/components/TopWeeklyDeals'))
+const FeaturedAdSpot = dynamic(() => import('@/components/FeaturedAdSpot'))
 const VerifiedIdeasAndFundedDB = dynamic(() => import('@/components/VerifiedIdeasAndFundedDB'))
 const FounderLogs = dynamic(() => import('@/components/FounderLogs'))
 const ProviderSection = dynamic(() => import('@/components/ProviderSection'))
@@ -77,12 +77,11 @@ export default function Home() {
         <SystemModules />
         <WorkflowProtocol />
         <TopWeeklyDeals />
+        <FeaturedAdSpot />
         <VerifiedIdeasAndFundedDB />
         <FounderLogs />
 
         <ProviderSection />
-
-        <FinalCTA />
       </main>
       <Footer />
     </>

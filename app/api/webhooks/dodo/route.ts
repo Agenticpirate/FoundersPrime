@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import DodoPayments from 'dodopayments';
 import { createClient } from '@/lib/supabase/server';
 import { createClient as createServiceClient } from '@supabase/supabase-js';
+import { getPlanByProductId, getFeaturedPlanConfig } from '@/lib/featured-plans';
 
 const client = process.env.DODO_PAYMENTS_API_KEY
   ? new DodoPayments({
@@ -11,7 +12,6 @@ const client = process.env.DODO_PAYMENTS_API_KEY
   : null;
 
 const WEBHOOK_SECRET = process.env.DODO_PAYMENTS_WEBHOOK_SECRET;
-const FEATURED_LISTING_PRODUCT_ID = process.env.DODO_PRODUCT_FEATURED_LISTING || 'pdt_0NfKKpeNPl8Np5GDyluVq';
 
 // Map Dodo Product IDs → our plan names
 const PRODUCT_TO_PLAN: Record<string, 'nextfounder' | 'founder' | 'legend'> = {
@@ -29,8 +29,9 @@ function getServiceRoleClient() {
   });
 }
 
-// Activate a Featured Listing — mark submission paid, set 30d expiry, propagate to deal if exists
-async function activateFeaturedListing(data: any) {
+// Activate a Featured Listing — mark submission paid, set expiry based on the
+// purchased plan (7 or 30 days), propagate to deal if exists
+async function activateFeaturedListing(data: any, durationDays: number) {
   const supabase = getServiceRoleClient();
   if (!supabase) {
     console.error('⚠️ Featured listing activate failed — service role not configured');
@@ -63,7 +64,7 @@ async function activateFeaturedListing(data: any) {
     return;
   }
 
-  const featuredUntil = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString();
+  const featuredUntil = new Date(Date.now() + durationDays * 24 * 60 * 60 * 1000).toISOString();
   const paymentRefId =
     data?.payment_id || data?.transaction_id || sessionId || null;
 
@@ -113,12 +114,14 @@ async function activatePlan({
   periodEnd,
   dodoSubscriptionId,
   dodoCustomerId,
+  amountCents,
 }: {
   email: string;
   plan: 'nextfounder' | 'founder' | 'legend';
   periodEnd?: string | null;
   dodoSubscriptionId?: string | null;
   dodoCustomerId?: string | null;
+  amountCents?: number | null;
 }) {
   const supabase = createClient();
 
@@ -148,20 +151,33 @@ async function activatePlan({
     return;
   }
 
-  // Insert the new active subscription
-  const { error: insertError } = await supabase
-    .from('user_subscriptions')
-    .insert({
-      user_id: user.id,
-      plan,
-      status: 'active',
-      period_start: new Date().toISOString(),
-      period_end: periodEnd || null,
-      stripe_customer_id: dodoCustomerId || null,
-      stripe_subscription_id: dodoSubscriptionId || null,
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString(),
-    });
+  // Base row (always-present columns)
+  const baseRow: Record<string, any> = {
+    user_id: user.id,
+    plan,
+    status: 'active',
+    period_start: new Date().toISOString(),
+    period_end: periodEnd || null,
+    stripe_customer_id: dodoCustomerId || null,
+    stripe_subscription_id: dodoSubscriptionId || null,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+  };
+
+  // Store the real charged amount (pre-tax, in cents) when available.
+  // Retry without the column if the schema hasn't been migrated yet, so a
+  // missing `amount_cents` column never blocks payment activation.
+  let insertError = null as any;
+  if (typeof amountCents === 'number') {
+    ({ error: insertError } = await supabase
+      .from('user_subscriptions')
+      .insert({ ...baseRow, amount_cents: amountCents }));
+    if (insertError && /amount_cents/i.test(insertError.message || '')) {
+      ({ error: insertError } = await supabase.from('user_subscriptions').insert(baseRow));
+    }
+  } else {
+    ({ error: insertError } = await supabase.from('user_subscriptions').insert(baseRow));
+  }
 
   if (insertError) {
     console.error('Error inserting subscription:', insertError);
@@ -219,9 +235,18 @@ export async function POST(request: Request) {
       case 'payment.succeeded': {
         const productId = data?.product_cart?.[0]?.product_id;
 
-        // Featured Listing flow — no plan activation, just pin the deal
-        if (productId && productId === FEATURED_LISTING_PRODUCT_ID) {
-          await activateFeaturedListing(data);
+        // Featured Listing flow — no plan activation, just pin the deal.
+        // Match against either configured featured product (weekly / monthly)
+        // and derive the pin duration from whichever was purchased.
+        const featuredCfg = getPlanByProductId(productId);
+        if (featuredCfg) {
+          // Prefer the plan recorded in checkout metadata when present (handles
+          // an admin override), otherwise fall back to the purchased product.
+          const metaPlan = data?.metadata?.featured_plan || data?.payload?.metadata?.featured_plan;
+          const durationDays = metaPlan
+            ? getFeaturedPlanConfig(metaPlan).durationDays
+            : featuredCfg.durationDays;
+          await activateFeaturedListing(data, durationDays);
           break;
         }
 
@@ -239,6 +264,7 @@ export async function POST(request: Request) {
             plan,
             periodEnd: null, // lifetime — no expiry
             dodoCustomerId: data?.customer?.customer_id,
+            amountCents: typeof data?.recurring_pre_tax_amount === 'number' ? data.recurring_pre_tax_amount : null,
           });
         }
         break;
@@ -262,6 +288,7 @@ export async function POST(request: Request) {
             periodEnd: data?.next_billing_date || null,
             dodoSubscriptionId: data?.subscription_id,
             dodoCustomerId: data?.customer?.customer_id,
+            amountCents: typeof data?.recurring_pre_tax_amount === 'number' ? data.recurring_pre_tax_amount : null,
           });
         }
         break;
@@ -283,6 +310,7 @@ export async function POST(request: Request) {
             periodEnd: data?.next_billing_date || null,
             dodoSubscriptionId: data?.subscription_id,
             dodoCustomerId: data?.customer?.customer_id,
+            amountCents: typeof data?.recurring_pre_tax_amount === 'number' ? data.recurring_pre_tax_amount : null,
           });
         }
         break;

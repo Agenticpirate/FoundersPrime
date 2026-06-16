@@ -43,19 +43,67 @@ export default function AdminAuthGuard({ children, requiredPermission }: AdminAu
   // Loading state
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="bg-white border-3 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] p-8 text-center">
-          <div className="bg-[#13b6ec] border-3 border-black p-4 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] inline-block mb-6">
-            <Shield className="w-8 h-8 text-white animate-pulse" />
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4 overflow-hidden">
+        <div className="relative bg-white border-[3px] border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] p-8 sm:p-10 text-center w-full max-w-sm">
+          {/* top scan line */}
+          <div className="absolute top-0 left-0 right-0 h-1 overflow-hidden">
+            <div className="h-full w-1/3 bg-[#13b6ec]" style={{ animation: 'agScan 1.4s ease-in-out infinite' }} />
           </div>
-          <h2 className="text-xl font-bold font-mono text-black mb-2">
+
+          {/* shield with expanding pulse rings */}
+          <div className="relative inline-flex items-center justify-center mb-6">
+            <span className="absolute inline-flex h-20 w-20 rounded-full bg-[#13b6ec]/30" style={{ animation: 'agPing 1.8s cubic-bezier(0,0,0.2,1) infinite' }} />
+            <span className="absolute inline-flex h-20 w-20 rounded-full bg-[#13b6ec]/20" style={{ animation: 'agPing 1.8s cubic-bezier(0,0,0.2,1) infinite', animationDelay: '0.6s' }} />
+            <div className="relative bg-[#13b6ec] border-[3px] border-black p-4 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+              <Shield className="w-8 h-8 text-white animate-pulse" />
+            </div>
+          </div>
+
+          <h2 className="text-xl font-black font-mono text-black mb-2 tracking-tight">
             VERIFYING_ACCESS
+            <span className="text-[#13b6ec]" style={{ animation: 'agBlink 1s step-end infinite' }}>_</span>
           </h2>
-          <p className="text-gray-600">Checking administrative privileges...</p>
-          <div className="mt-4 flex justify-center">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-black"></div>
+          <p className="text-gray-600 font-mono text-sm mb-6">
+            Checking administrative privileges
+            <span style={{ animation: 'agBlink 1.2s step-end infinite' }}>.</span>
+            <span style={{ animation: 'agBlink 1.2s step-end infinite', animationDelay: '0.2s' }}>.</span>
+            <span style={{ animation: 'agBlink 1.2s step-end infinite', animationDelay: '0.4s' }}>.</span>
+          </p>
+
+          {/* live status checklist */}
+          <div className="text-left font-mono text-[11px] space-y-2 mb-6">
+            {[
+              'Establishing secure session',
+              'Authenticating identity',
+              'Resolving admin privileges',
+            ].map((line, i) => (
+              <div
+                key={line}
+                className="flex items-center gap-2 text-gray-700"
+                style={{ animation: 'agFade 0.5s ease both', animationDelay: `${i * 0.35}s` }}
+              >
+                <span className="w-3.5 h-3.5 border-2 border-black border-t-transparent rounded-full inline-block animate-spin" />
+                {line}
+              </div>
+            ))}
+          </div>
+
+          {/* indeterminate progress bar */}
+          <div className="relative h-2 w-full border-2 border-black bg-white overflow-hidden">
+            <div className="absolute inset-y-0 w-1/3 bg-black" style={{ animation: 'agBar 1.3s ease-in-out infinite' }} />
           </div>
         </div>
+
+        <style jsx global>{`
+          @keyframes agPing { 0% { transform: scale(1); opacity: 0.6 } 80%, 100% { transform: scale(1.9); opacity: 0 } }
+          @keyframes agBlink { 0%, 50% { opacity: 1 } 50.01%, 100% { opacity: 0 } }
+          @keyframes agFade { from { opacity: 0; transform: translateY(4px) } to { opacity: 1; transform: none } }
+          @keyframes agScan { 0% { transform: translateX(-100%) } 100% { transform: translateX(400%) } }
+          @keyframes agBar { 0% { left: -35% } 100% { left: 100% } }
+          @media (prefers-reduced-motion: reduce) {
+            [style*="agPing"], [style*="agBlink"], [style*="agScan"], [style*="agBar"] { animation: none !important }
+          }
+        `}</style>
       </div>
     )
   }

@@ -4,8 +4,8 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useState } from 'react'
 import {
-  LayoutDashboard, Handshake, Building2, Lightbulb, Users,
-  MessageSquare, BarChart3, Settings, FileText, Menu, X, ExternalLink
+  LayoutDashboard, Handshake, Users,
+  BarChart3, FileText, Menu, X, ExternalLink
 } from 'lucide-react'
 
 interface NavItem { name: string; href: string; icon: any }
@@ -14,11 +14,7 @@ const navigation: NavItem[] = [
   { name: 'Dashboard', href: '/admin', icon: LayoutDashboard },
   { name: 'Submissions', href: '/admin/submissions', icon: FileText },
   { name: 'Deals', href: '/admin/deals', icon: Handshake },
-  { name: 'Startups', href: '/admin/startups', icon: Building2 },
-  { name: 'Ideas', href: '/admin/ideas', icon: Lightbulb },
-  { name: 'Resources', href: '/admin/resources', icon: FileText },
   { name: 'Users', href: '/admin/users', icon: Users },
-  { name: 'Comments', href: '/admin/comments', icon: MessageSquare },
   { name: 'Analytics', href: '/admin/analytics', icon: BarChart3 },
 ]
 
@@ -56,18 +52,10 @@ export default function AdminSidebar() {
         <Link
           href="/"
           onClick={() => setMobileOpen(false)}
-          className="flex items-center gap-2.5 px-3 py-2 rounded-sm hover:bg-blue-50 font-mono text-xs font-medium text-blue-600 hover:text-blue-800 transition-all mb-1"
+          className="flex items-center gap-2.5 px-3 py-2 rounded-sm hover:bg-blue-50 font-mono text-xs font-medium text-blue-600 hover:text-blue-800 transition-all"
         >
           <ExternalLink className="w-4 h-4 flex-shrink-0" />
           <span className="uppercase tracking-wide">View Live Site</span>
-        </Link>
-        <Link
-          href="/admin/settings"
-          onClick={() => setMobileOpen(false)}
-          className="flex items-center gap-2.5 px-3 py-2 rounded-sm hover:bg-gray-100 font-mono text-xs font-medium text-black/60 hover:text-black transition-all"
-        >
-          <Settings className="w-4 h-4 flex-shrink-0" />
-          <span className="uppercase tracking-wide">Settings</span>
         </Link>
       </div>
     </div>

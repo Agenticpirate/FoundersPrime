@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useRef, useEffect } from 'react'
+import { motion } from 'framer-motion'
 import Header from '@/components/Header'
 
 export default function SubmitDealPage() {
@@ -39,11 +40,36 @@ export default function SubmitDealPage() {
     const [submissionStatus, setSubmissionStatus] = useState<'idle' | 'success' | 'error'>('idle')
     const [errorMessage, setErrorMessage] = useState<string>('')
     const [tier, setTier] = useState<'standard' | 'featured'>('standard')
+    const [featuredPlan, setFeaturedPlan] = useState<'weekly' | 'monthly'>('weekly')
+    // Snapshot of what the user submitted, so the success screen can show the
+    // correct "what happens next" path even after the form is reset.
+    const [submittedTier, setSubmittedTier] = useState<'standard' | 'featured'>('standard')
+    const [submittedPrice, setSubmittedPrice] = useState<string>('$25')
+    const [submittedDuration, setSubmittedDuration] = useState<string>('7 days')
+
+    // Display values driven by the selected featured plan
+    const featuredPrice = featuredPlan === 'weekly' ? '$25' : '$99'
+    const featuredAnchor = featuredPlan === 'weekly' ? '$99' : '$299'
+    const featuredDuration = featuredPlan === 'weekly' ? '7 days' : '30 days'
 
     // Track when the form was first rendered (for anti-bot fill-time check)
     const formLoadedAt = useRef<number>(Date.now())
     useEffect(() => {
         formLoadedAt.current = Date.now()
+    }, [])
+
+    // Pre-select the Featured tier when arriving from a "Get featured" CTA
+    // (e.g. /submit-deal?tier=featured). Read from the URL directly to avoid
+    // requiring a Suspense boundary around useSearchParams.
+    useEffect(() => {
+        const params = new URLSearchParams(window.location.search)
+        if (params.get('tier') === 'featured') {
+            setTier('featured')
+        }
+        const plan = params.get('plan')
+        if (plan === 'weekly' || plan === 'monthly') {
+            setFeaturedPlan(plan)
+        }
     }, [])
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -59,7 +85,11 @@ export default function SubmitDealPage() {
         setSubmissionStatus('idle')
         setErrorMessage('')
 
-        const formData = new FormData(e.currentTarget)
+        // Capture the form element now — `e.currentTarget` becomes null after
+        // the first `await` below, so referencing it later would throw and get
+        // mislabeled as a network error.
+        const form = e.currentTarget
+        const formData = new FormData(form)
         const data = {
             company_name: formData.get('company_name'),
             website_url: formData.get('website_url'),
@@ -72,6 +102,7 @@ export default function SubmitDealPage() {
             is_exclusive: formData.get('is_exclusive') === 'on',
             submitter_email: formData.get('submitter_email'),
             featured_requested: tier === 'featured',
+            featured_plan: featuredPlan,
             // Anti-bot signals
             website_link: formData.get('website_link'), // honeypot — should be empty
             fill_time_ms: Date.now() - formLoadedAt.current,
@@ -89,8 +120,12 @@ export default function SubmitDealPage() {
             const result = await response.json().catch(() => ({}))
 
             if (response.ok) {
+                // Snapshot the submitted tier/plan for the success screen before resetting.
+                setSubmittedTier(tier)
+                setSubmittedPrice(featuredPrice)
+                setSubmittedDuration(featuredDuration)
                 setSubmissionStatus('success')
-                e.currentTarget.reset()
+                form.reset()
                 setPreviewUrl('')
                 setIsHuman(false)
                 setSecurityAnswer('')
@@ -129,19 +164,132 @@ export default function SubmitDealPage() {
                     </div>
 
                     {submissionStatus === 'success' ? (
-                        <div className="bg-white border-[3px] border-black p-6 md:p-8 text-center shadow-[4px_4px_0px_0px_#000] md:shadow-[8px_8px_0px_0px_#000]">
-                            <div className="inline-flex items-center justify-center w-16 h-16 md:w-20 md:h-20 bg-green-100 border-2 border-green-600 mb-4">
-                                <span className="material-symbols-outlined text-5xl md:text-6xl text-green-600" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
+                        <motion.div
+                            initial={{ opacity: 0, y: 24, scale: 0.96 }}
+                            animate={{ opacity: 1, y: 0, scale: 1 }}
+                            transition={{ type: 'spring', stiffness: 220, damping: 22 }}
+                            className="relative bg-white border-[3px] border-black p-6 md:p-10 text-center shadow-[4px_4px_0px_0px_#000] md:shadow-[8px_8px_0px_0px_#000] overflow-hidden"
+                        >
+                            {/* Sleek accent particles bursting from the check */}
+                            <div className="pointer-events-none absolute inset-0 flex items-start justify-center">
+                                {[...Array(8)].map((_, i) => {
+                                    const angle = (i / 8) * Math.PI * 2
+                                    return (
+                                        <motion.span
+                                            key={i}
+                                            className="absolute top-[64px] md:top-[80px] w-2 h-2 bg-accent-yellow border border-black"
+                                            initial={{ opacity: 0, x: 0, y: 0, scale: 0 }}
+                                            animate={{
+                                                opacity: [0, 1, 0],
+                                                x: Math.cos(angle) * 90,
+                                                y: Math.sin(angle) * 90,
+                                                scale: [0, 1, 0.4],
+                                            }}
+                                            transition={{ duration: 0.9, delay: 0.25 + i * 0.02, ease: 'easeOut' }}
+                                        />
+                                    )
+                                })}
                             </div>
-                            <h2 className="text-xl md:text-2xl font-black mb-2 uppercase tracking-tight">Submission Received!</h2>
-                            <p className="text-sm md:text-base text-gray-600 mb-6 max-w-md mx-auto leading-relaxed">Thanks for submitting your deal. Our team will review it within 48 hours.</p>
-                            <button
+
+                            {/* Animated check badge */}
+                            <motion.div
+                                initial={{ scale: 0, rotate: -25 }}
+                                animate={{ scale: 1, rotate: 0 }}
+                                transition={{ type: 'spring', stiffness: 260, damping: 14, delay: 0.1 }}
+                                className="relative inline-flex items-center justify-center w-16 h-16 md:w-20 md:h-20 bg-green-100 border-2 border-green-600 mb-4"
+                            >
+                                <motion.span
+                                    className="material-symbols-outlined text-5xl md:text-6xl text-green-600"
+                                    style={{ fontVariationSettings: "'FILL' 1" }}
+                                    initial={{ scale: 0 }}
+                                    animate={{ scale: 1 }}
+                                    transition={{ type: 'spring', stiffness: 300, damping: 12, delay: 0.32 }}
+                                >
+                                    check_circle
+                                </motion.span>
+                            </motion.div>
+
+                            <motion.h2
+                                initial={{ opacity: 0, y: 10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 0.36 }}
+                                className="text-xl md:text-2xl font-black mb-2 uppercase tracking-tight"
+                            >
+                                Submission Received!
+                            </motion.h2>
+                            <motion.p
+                                initial={{ opacity: 0, y: 10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 0.44 }}
+                                className="text-sm md:text-base text-gray-600 mb-6 max-w-md mx-auto leading-relaxed"
+                            >
+                                Thanks for submitting your deal. Here's exactly what happens next.
+                            </motion.p>
+
+                            {/* What happens next — staggered timeline */}
+                            <motion.ol
+                                initial="hidden"
+                                animate="show"
+                                variants={{
+                                    hidden: {},
+                                    show: { transition: { staggerChildren: 0.12, delayChildren: 0.5 } },
+                                }}
+                                className="text-left max-w-md mx-auto space-y-3 mb-6"
+                            >
+                                {(submittedTier === 'featured'
+                                    ? [
+                                        { n: '1', t: 'We review your deal', d: 'Priority review within ~24 hours.' },
+                                        { n: '2', t: 'Approval email', d: `If approved, we email you a secure ${submittedPrice} payment link.` },
+                                        { n: '3', t: 'You pay & go live', d: `After payment, your deal is pinned with a Featured badge for ${submittedDuration}.` },
+                                        { n: '4', t: 'Auto-refund safety net', d: 'Not approved? Your payment is automatically refunded.' },
+                                    ]
+                                    : [
+                                        { n: '1', t: 'We review your deal', d: 'Our team reviews within ~48 hours.' },
+                                        { n: '2', t: 'Status email', d: "We'll email you once it's approved or if we need changes." },
+                                        { n: '3', t: 'It goes live', d: 'Approved deals are listed for thousands of verified founders.' },
+                                    ]
+                                ).map((step) => (
+                                    <motion.li
+                                        key={step.n}
+                                        variants={{
+                                            hidden: { opacity: 0, x: -16 },
+                                            show: { opacity: 1, x: 0 },
+                                        }}
+                                        className="flex items-start gap-3 bg-gray-50 border-2 border-black p-3 shadow-[2px_2px_0px_#111]"
+                                    >
+                                        <span className="bg-black text-accent-yellow w-6 h-6 flex items-center justify-center text-xs font-black shrink-0 shadow-[2px_2px_0px_#111]">
+                                            {step.n}
+                                        </span>
+                                        <div>
+                                            <p className="font-black uppercase text-xs md:text-sm tracking-tight">{step.t}</p>
+                                            <p className="text-[11px] md:text-xs text-gray-600 leading-snug">{step.d}</p>
+                                        </div>
+                                    </motion.li>
+                                ))}
+                            </motion.ol>
+
+                            <motion.div
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                transition={{ delay: 1 }}
+                                className="text-[11px] md:text-xs text-gray-500 bg-amber-50 border border-amber-200 px-3 py-2 max-w-md mx-auto mb-6 leading-snug"
+                            >
+                                <span className="font-bold">Heads up:</span> all status updates are sent to the email
+                                you provided. If you didn't add one, check back here for your listing.
+                            </motion.div>
+
+                            <motion.button
+                                initial={{ opacity: 0, y: 10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 1.05 }}
+                                whileHover={{ y: -2 }}
+                                whileTap={{ y: 1 }}
                                 onClick={() => setSubmissionStatus('idle')}
                                 className="px-6 py-3 bg-black text-white font-mono font-bold text-sm uppercase border-2 border-black hover:bg-accent-yellow hover:text-black transition-colors shadow-[3px_3px_0px_#888]"
                             >
                                 Submit Another Deal
-                            </button>
-                        </div>
+                            </motion.button>
+                        </motion.div>
                     ) : (
                         <form className="bg-white border-[3px] border-black shadow-[4px_4px_0px_0px_#000] md:shadow-[8px_8px_0px_0px_#000] p-4 md:p-8 space-y-6 md:space-y-8" onSubmit={handleSubmit}>
 
@@ -383,12 +531,12 @@ export default function SubmitDealPage() {
                                                         Featured
                                                     </span>
                                                     <span className="flex items-baseline gap-1">
-                                                        <span className="font-mono text-xs font-bold line-through text-gray-400">$299</span>
-                                                        <span className="font-mono text-base md:text-lg font-black">$99</span>
+                                                        <span className="font-mono text-xs font-bold line-through text-gray-400">{featuredAnchor}</span>
+                                                        <span className="font-mono text-base md:text-lg font-black">{featuredPrice}</span>
                                                     </span>
                                                 </div>
                                                 <ul className="text-[10px] md:text-xs text-gray-700 leading-snug space-y-0.5 mt-1">
-                                                    <li>· Pinned at top for 30 days</li>
+                                                    <li>· Pinned at top for {featuredDuration}</li>
                                                     <li>· ⭐ Featured badge on listing</li>
                                                     <li>· Priority admin review</li>
                                                     <li>· Auto-refund if not approved</li>
@@ -399,9 +547,47 @@ export default function SubmitDealPage() {
                                 </div>
 
                                 {tier === 'featured' && (
-                                    <p className="text-[10px] md:text-xs text-gray-600 bg-amber-50 border border-amber-200 px-3 py-2 leading-snug">
-                                        <span className="font-bold">How it works:</span> Submit free → we review within 24 hours → if approved, you'll get a payment link for $99 → after payment, your deal goes live with the Featured badge for 30 days.
-                                    </p>
+                                    <div className="space-y-2">
+                                        <p className="text-[10px] md:text-xs font-bold uppercase tracking-wide text-gray-700">Choose duration</p>
+                                        <div className="grid grid-cols-2 gap-2">
+                                            <button
+                                                type="button"
+                                                onClick={() => setFeaturedPlan('weekly')}
+                                                className={`border-2 p-2.5 text-left transition-all ${
+                                                    featuredPlan === 'weekly'
+                                                        ? 'border-black bg-accent-yellow/40 shadow-[2px_2px_0px_#111]'
+                                                        : 'border-gray-300 bg-white hover:border-black'
+                                                }`}
+                                            >
+                                                <div className="flex items-baseline justify-between gap-1">
+                                                    <span className="font-mono text-xs md:text-sm font-black uppercase">1 Week</span>
+                                                    <span className="font-mono text-sm md:text-base font-black">$25</span>
+                                                </div>
+                                                <p className="text-[9px] md:text-[10px] text-gray-600 mt-0.5">Test it for a week</p>
+                                            </button>
+                                            <button
+                                                type="button"
+                                                onClick={() => setFeaturedPlan('monthly')}
+                                                className={`relative border-2 p-2.5 text-left transition-all ${
+                                                    featuredPlan === 'monthly'
+                                                        ? 'border-black bg-accent-yellow/40 shadow-[2px_2px_0px_#111]'
+                                                        : 'border-gray-300 bg-white hover:border-black'
+                                                }`}
+                                            >
+                                                <span className="absolute -top-2 -right-2 bg-black text-accent-yellow border border-black px-1.5 py-0.5 font-mono text-[8px] font-black uppercase tracking-widest">
+                                                    Best value
+                                                </span>
+                                                <div className="flex items-baseline justify-between gap-1">
+                                                    <span className="font-mono text-xs md:text-sm font-black uppercase">30 Days</span>
+                                                    <span className="font-mono text-sm md:text-base font-black">$99</span>
+                                                </div>
+                                                <p className="text-[9px] md:text-[10px] text-gray-600 mt-0.5">Full month of exposure</p>
+                                            </button>
+                                        </div>
+                                        <p className="text-[10px] md:text-xs text-gray-600 bg-amber-50 border border-amber-200 px-3 py-2 leading-snug">
+                                            <span className="font-bold">How it works:</span> Submit free → we review within 24 hours → if approved, you'll get a payment link for {featuredPrice} → after payment, your deal goes live with the Featured badge for {featuredDuration}.
+                                        </p>
+                                    </div>
                                 )}
                             </div>
 

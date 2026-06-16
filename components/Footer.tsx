@@ -111,8 +111,8 @@ export default function Footer() {
       <div className="absolute -top-32 -left-32 w-96 h-96 bg-accent-yellow/10 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute -bottom-40 -right-32 w-[28rem] h-[28rem] bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />
 
-      {/* ── Newsletter row (desktop only — mobile uses FinalCTA above) ── */}
-      <div className="relative border-b border-white/10 hidden md:block">
+      {/* ── Newsletter row ── */}
+      <div className="relative border-b border-white/10 block">
         <div className="max-w-[1600px] mx-auto px-4 sm:px-8 py-5 md:py-12 flex flex-col md:flex-row items-start md:items-center justify-between gap-3 md:gap-8">
           <div className="max-w-md">
             <span className="inline-flex items-center gap-1.5 bg-accent-yellow text-black font-mono text-[9px] md:text-[10px] font-black uppercase tracking-widest px-2 md:px-2.5 py-0.5 md:py-1 border border-black mb-2 md:mb-3">

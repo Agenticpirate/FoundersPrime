@@ -132,31 +132,64 @@ export default function DashboardClient({
             </div>
           </div>
 
-          {/* Stat strip */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5 md:gap-3 mt-6">
+          {/* Stat strip — actionable quick-glance cards */}
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-2.5 md:gap-3 mt-6">
             {[
-              { label: 'Deals Claimed', value: '0', icon: 'rocket_launch', color: 'text-accent-yellow' },
-              { label: 'Estimated Savings', value: '$0', icon: 'savings', color: 'text-emerald-400' },
-              { label: 'Saved for Later', value: String(savedDealSlugs.length), icon: 'bookmark', color: 'text-sky-400' },
-              { label: 'Active Plan', value: planLabel, icon: 'workspace_premium', color: 'text-pink-400' },
-            ].map((stat) => (
-              <div
-                key={stat.label}
-                className="flex items-center gap-2.5 px-3 py-2.5 bg-white/5 backdrop-blur-sm border border-white/15 rounded-sm hover:bg-white/10 transition-colors"
-              >
-                <div className="w-8 h-8 bg-white/10 border border-white/20 rounded-sm flex items-center justify-center flex-shrink-0">
-                  <span className={`material-symbols-outlined !text-[16px] ${stat.color}`}>{stat.icon}</span>
-                </div>
-                <div className="min-w-0">
-                  <p className="font-mono text-[8.5px] font-bold uppercase tracking-[0.12em] text-gray-400 truncate">
-                    {stat.label}
-                  </p>
-                  <p className={`font-mono text-base font-black leading-none mt-0.5 tabular-nums ${stat.color}`}>
-                    {stat.value}
-                  </p>
-                </div>
-              </div>
-            ))}
+              {
+                label: 'Saved for Later',
+                value: String(savedDealSlugs.length),
+                icon: 'bookmark',
+                color: 'text-sky-400',
+                hint: savedDealSlugs.length > 0 ? 'View saved' : 'Start saving',
+                onClick: () => handleTabChange('overview'),
+              },
+              {
+                label: 'Active Plan',
+                value: planLabel,
+                icon: 'workspace_premium',
+                color: 'text-pink-400',
+                hint: 'Manage billing',
+                onClick: () => handleTabChange('billing'),
+              },
+              {
+                label: 'Member Since',
+                value: memberSince,
+                icon: 'calendar_today',
+                color: 'text-accent-yellow',
+                hint: null,
+                onClick: null,
+              },
+            ].map((stat) => {
+              const interactive = !!stat.onClick
+              const Tag: any = interactive ? 'button' : 'div'
+              return (
+                <Tag
+                  key={stat.label}
+                  {...(interactive ? { onClick: stat.onClick, type: 'button' } : {})}
+                  className={`group/stat flex items-center gap-2.5 px-3 py-2.5 bg-white/5 backdrop-blur-sm border border-white/15 rounded-sm text-left transition-colors ${
+                    interactive ? 'hover:bg-white/10 hover:border-white/30 cursor-pointer' : ''
+                  } ${stat.label === 'Member Since' ? 'col-span-2 md:col-span-1' : ''}`}
+                >
+                  <div className="w-8 h-8 bg-white/10 border border-white/20 rounded-sm flex items-center justify-center flex-shrink-0">
+                    <span className={`material-symbols-outlined !text-[16px] ${stat.color}`}>{stat.icon}</span>
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <p className="font-mono text-[8.5px] font-bold uppercase tracking-[0.12em] text-gray-400 truncate">
+                      {stat.label}
+                    </p>
+                    <p className={`font-mono text-base font-black leading-none mt-0.5 tabular-nums ${stat.color}`}>
+                      {stat.value}
+                    </p>
+                  </div>
+                  {stat.hint && (
+                    <span className="hidden md:inline-flex items-center gap-0.5 font-mono text-[8.5px] font-bold uppercase tracking-[0.1em] text-gray-500 group-hover/stat:text-white transition-colors flex-shrink-0">
+                      {stat.hint}
+                      <span className="material-symbols-outlined !text-[12px] group-hover/stat:translate-x-0.5 transition-transform">arrow_forward</span>
+                    </span>
+                  )}
+                </Tag>
+              )
+            })}
           </div>
         </div>
       </section>
@@ -282,7 +315,7 @@ function OverviewTab({
       )}
 
       {/* Saved Deals */}
-      {savedDealSlugs.length > 0 && (
+      {savedDealSlugs.length > 0 ? (
         <section>
           <div className="flex items-center justify-between mb-3">
             <h2 className="font-mono text-[11px] font-black uppercase tracking-[0.16em] text-gray-700 inline-flex items-center gap-1.5">
@@ -298,6 +331,35 @@ function OverviewTab({
             </Link>
           </div>
           <SavedDealsSection savedDealSlugs={savedDealSlugs} />
+        </section>
+      ) : (
+        <section>
+          <div className="flex items-center justify-between mb-3">
+            <h2 className="font-mono text-[11px] font-black uppercase tracking-[0.16em] text-gray-700 inline-flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-accent-yellow" />
+              Your Saved Deals
+            </h2>
+          </div>
+          <div className="relative bg-white border-2 border-dashed border-gray-300 rounded-sm p-6 md:p-7 flex flex-col md:flex-row items-center gap-4 md:gap-5 text-center md:text-left">
+            <div className="w-12 h-12 bg-sky-100 border-2 border-black rounded-sm flex items-center justify-center flex-shrink-0 shadow-[2px_2px_0px_#111]">
+              <span className="material-symbols-outlined !text-[22px] text-black">bookmark_add</span>
+            </div>
+            <div className="flex-1 min-w-0">
+              <h3 className="font-mono text-sm md:text-base font-black uppercase text-black leading-tight">
+                No saved deals yet
+              </h3>
+              <p className="text-[12px] md:text-[13px] text-gray-600 leading-relaxed mt-1">
+                Tap the bookmark on any deal to pin it here for quick access later.
+              </p>
+            </div>
+            <Link
+              href="/deals"
+              className="group/cta inline-flex items-center gap-2 bg-black text-white font-mono font-black text-[11px] uppercase tracking-[0.1em] px-4 py-2.5 border-2 border-black rounded-sm hover:bg-accent-yellow hover:text-black transition-colors flex-shrink-0"
+            >
+              Browse Deals
+              <span className="material-symbols-outlined !text-[15px] group-hover/cta:translate-x-0.5 transition-transform">arrow_forward</span>
+            </Link>
+          </div>
         </section>
       )}
 

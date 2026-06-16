@@ -8,6 +8,11 @@ import { createClient } from '@/lib/supabase/server'
 export const metadata: Metadata = {
   title: 'Dashboard',
   description: 'Your FoundersPrime dashboard - manage your account, deals, and subscription.',
+  robots: {
+    index: false,
+    follow: false,
+    googleBot: { index: false, follow: false },
+  },
 }
 
 export default async function DashboardPage({

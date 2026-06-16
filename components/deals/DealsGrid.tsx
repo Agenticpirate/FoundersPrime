@@ -6,6 +6,7 @@ import { Deal, getAllCategories } from '@/lib/deals-database'
 import { getStartupProgramUrl } from '@/lib/comprehensive-startup-urls'
 import DealCard from './DealCard'
 import Pagination from '@/components/Pagination'
+import FeaturedSlot from './featured/FeaturedSlot'
 import { useAuth } from '@/lib/auth/hooks'
 import { checkProStatus } from '@/lib/auth/user-context'
 
@@ -563,9 +564,32 @@ export default function DealsGrid({ filters }: DealsGridProps) {
               aria-hidden={isLocked}
               style={isLocked ? { filter: 'blur(7px) saturate(0.8)' } : undefined}
             >
-              {currentDeals.map((deal) => (
-                <DealCard key={deal.id} deal={convertDealToCardFormat(deal)} />
-              ))}
+              {(() => {
+                // Interleave rotating Featured ad cells into the grid on page 1
+                // (skipped when the grid is locked/blurred for non-members).
+                const items: React.ReactNode[] = currentDeals.map((deal) => (
+                  <DealCard key={deal.id} deal={convertDealToCardFormat(deal)} />
+                ))
+                if (currentPage === 1 && !isLocked) {
+                  const adPositions = [4, 10] // insert after the 4th and 10th cards
+                  adPositions.forEach((pos, idx) => {
+                    const insertAt = Math.min(pos + idx, items.length)
+                    items.splice(
+                      insertAt,
+                      0,
+                      <FeaturedSlot
+                        key={`featured-ad-${idx}`}
+                        variant="inline"
+                        count={1}
+                        intervalMs={5500}
+                        offset={6 + idx * 3}
+                        className="h-full"
+                      />
+                    )
+                  })
+                }
+                return items
+              })()}
             </div>
 
             {/* Lock overlay — content remains visible but blurred underneath */}

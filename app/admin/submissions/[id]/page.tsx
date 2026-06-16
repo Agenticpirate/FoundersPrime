@@ -95,6 +95,12 @@ export default function AdminSubmissionDetail() {
     if (loading) return <div className="p-8 font-mono">Loading details...</div>
     if (!submission) return <div className="p-8 font-mono">Submission not found.</div>
 
+    // Featured plan display values (defaults to monthly for legacy rows)
+    const isWeekly = submission.featured_plan === 'weekly'
+    const featuredPlanPrice = isWeekly ? '$25' : '$99'
+    const featuredPlanDuration = isWeekly ? '7 days' : '30 days'
+    const featuredPlanLabel = isWeekly ? '1 Week' : '30 Days'
+
     return (
         <div className="min-h-screen bg-background-light p-8 font-mono text-[#111]">
             <div className="max-w-4xl mx-auto">
@@ -243,8 +249,14 @@ export default function AdminSubmissionDetail() {
                                     )}
                                 </div>
 
+                                <div className="mb-3 flex items-center gap-2">
+                                    <span className="bg-black text-accent-yellow border border-black px-2 py-0.5 text-[10px] font-black uppercase tracking-wide">
+                                        {featuredPlanLabel} · {featuredPlanPrice}
+                                    </span>
+                                </div>
+
                                 <p className="text-xs text-gray-600 mb-3 leading-snug">
-                                    Submitter requested a Featured listing ($99 / 30 days).
+                                    Submitter requested a Featured listing ({featuredPlanPrice} / {featuredPlanDuration}).
                                     {submission.status === 'pending' && ' Approve the submission first, then generate the payment link.'}
                                 </p>
 
@@ -278,7 +290,7 @@ export default function AdminSubmissionDetail() {
                                                         Copy
                                                     </button>
                                                     <a
-                                                        href={`mailto:${submission.submitter_email || ''}?subject=${encodeURIComponent('Your Featured Listing payment link')}&body=${encodeURIComponent(`Hi,\n\nThanks for choosing Featured listing for ${submission.company_name} on FoundersPrime.\n\nPay $99 here to activate your 30-day pinned placement:\n\n${paymentLink}\n\n— FoundersPrime`)}`}
+                                                        href={`mailto:${submission.submitter_email || ''}?subject=${encodeURIComponent('Your Featured Listing payment link')}&body=${encodeURIComponent(`Hi,\n\nThanks for choosing Featured listing for ${submission.company_name} on FoundersPrime.\n\nPay ${featuredPlanPrice} here to activate your ${featuredPlanDuration} pinned placement:\n\n${paymentLink}\n\n— FoundersPrime`)}`}
                                                         className="px-2 py-1.5 bg-blue-500 text-white font-bold uppercase text-[10px] border-2 border-black hover:bg-blue-600 text-center"
                                                     >
                                                         Email it

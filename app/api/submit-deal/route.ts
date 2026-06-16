@@ -81,6 +81,17 @@ function getServiceRoleClient() {
     })
 }
 
+// Insert a submission, retrying without `featured_plan` if that column hasn't
+// been migrated yet — so a missing column never blocks a submission.
+async function insertSubmission(supabase: any, payload: Record<string, any>) {
+    let result = await supabase.from('deal_submissions').insert(payload).select('id').single()
+    if (result.error && /featured_plan/i.test(result.error.message || '')) {
+        const { featured_plan, ...rest } = payload
+        result = await supabase.from('deal_submissions').insert(rest).select('id').single()
+    }
+    return { data: result.data, error: result.error }
+}
+
 export async function POST(request: NextRequest) {
     try {
         // Rate limit by IP
@@ -161,13 +172,13 @@ export async function POST(request: NextRequest) {
             user_agent: userAgent.slice(0, 500),
             status: 'pending' as const,
             featured_requested: !!body.featured_requested,
+            // Only meaningful when featured_requested is true. 'weekly' | 'monthly'.
+            featured_plan: body.featured_requested
+                ? (body.featured_plan === 'weekly' ? 'weekly' : 'monthly')
+                : 'monthly',
         }
 
-        const { data, error: dbError } = await supabase
-            .from('deal_submissions')
-            .insert(payload)
-            .select('id')
-            .single()
+        const { data, error: dbError } = await insertSubmission(supabase, payload)
 
         if (dbError) {
             console.error('❌ deal_submissions insert error:', dbError)

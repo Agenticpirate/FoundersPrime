@@ -64,6 +64,22 @@ const nextConfig = {
         source: '/(.*)',
         headers: securityHeaders,
       },
+      // Keep private/non-content routes out of the search index.
+      // X-Robots-Tag is read by Googlebot even on JSON API responses that
+      // can't carry an HTML <meta> tag, and it lets Google drop already-
+      // indexed URLs (unlike a robots.txt block, which only hides content).
+      {
+        source: '/api/:path*',
+        headers: [{ key: 'X-Robots-Tag', value: 'noindex, nofollow' }],
+      },
+      {
+        source: '/admin/:path*',
+        headers: [{ key: 'X-Robots-Tag', value: 'noindex, nofollow' }],
+      },
+      {
+        source: '/dashboard/:path*',
+        headers: [{ key: 'X-Robots-Tag', value: 'noindex, nofollow' }],
+      },
     ]
   },
   async redirects() {

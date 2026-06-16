@@ -66,9 +66,9 @@ export default function BrandedLoader() {
           {/* Logo tile */}
           <div className="relative w-12 h-12 bg-white border-2 border-black flex items-center justify-center shadow-[3px_3px_0px_#111] splash-logo-pulse">
             <img
-              src="/logo.svg"
+              src="/FPLogo.png"
               alt=""
-              className="w-7 h-7 object-contain"
+              className="w-9 h-9 object-contain"
               aria-hidden="true"
             />
           </div>

@@ -5,9 +5,27 @@ import { useAuth } from '@/lib/auth/hooks'
 import { useEffect, useRef, useState } from 'react'
 import { checkProStatus } from '@/lib/auth/user-context'
 
+type PlanType = 'free' | 'nextfounder' | 'founder' | 'legend'
+
+// Maps a paid plan to its display badge (label + styling).
+const PLAN_BADGES: Record<Exclude<PlanType, 'free'>, { label: string; className: string }> = {
+  nextfounder: {
+    label: 'Next Founder',
+    className: 'bg-sky-400 text-black',
+  },
+  founder: {
+    label: 'Founder',
+    className: 'bg-accent-yellow text-black',
+  },
+  legend: {
+    label: 'Legend',
+    className: 'bg-gradient-to-r from-amber-400 to-orange-500 text-black',
+  },
+}
+
 export default function Header() {
   const { user, loading, signOut } = useAuth()
-  const [isPro, setIsPro] = useState(false)
+  const [plan, setPlan] = useState<PlanType>('free')
   const [isAdmin, setIsAdmin] = useState(false)
   const hasCheckedRef = useRef<string | null>(null)
 
@@ -15,17 +33,19 @@ export default function Header() {
     const checkAccess = async () => {
       if (user && hasCheckedRef.current !== user.id) {
         hasCheckedRef.current = user.id
-        const { isPro: hasProAccess, isAdmin: hasAdminAccess } = await checkProStatus()
-        setIsPro(hasProAccess)
+        const { isAdmin: hasAdminAccess, user: profile } = await checkProStatus()
+        setPlan(profile?.plan ?? 'free')
         setIsAdmin(hasAdminAccess)
       } else if (!user) {
         hasCheckedRef.current = null
-        setIsPro(false)
+        setPlan('free')
         setIsAdmin(false)
       }
     }
     checkAccess()
   }, [user])
+
+  const planBadge = plan !== 'free' ? PLAN_BADGES[plan] : null
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [expandedSection, setExpandedSection] = useState<string | null>(null)
@@ -278,9 +298,9 @@ export default function Header() {
                 <button className="bg-white/[0.04] border border-white/10 hover:border-accent-yellow/40 text-white font-mono font-bold py-2 px-3 text-[12px] rounded-md transition-all uppercase tracking-[0.06em] flex items-center gap-2 hover:bg-white/[0.08]">
                   <span className="material-symbols-outlined text-base text-accent-yellow">account_circle</span>
                   <span className="hidden lg:inline">{user.user_metadata?.full_name?.split(' ')[0] || user.email?.split('@')[0]}</span>
-                  {isPro && (
-                    <span className="bg-accent-yellow text-black text-[9px] px-1.5 py-0.5 font-bold uppercase ml-0.5 rounded-sm tracking-wider">
-                      PRO
+                  {planBadge && (
+                    <span className={`${planBadge.className} text-[9px] px-1.5 py-0.5 font-bold uppercase ml-0.5 rounded-sm tracking-wider`}>
+                      {planBadge.label}
                     </span>
                   )}
                   {isAdmin && (
@@ -433,9 +453,9 @@ export default function Header() {
                       <span className="text-xs font-mono font-bold truncate text-white">
                         {user.user_metadata?.full_name?.split(' ')[0] || user.email?.split('@')[0]}
                       </span>
-                      {isPro && (
-                        <span className="bg-accent-yellow text-black text-[9px] px-1.5 py-0.5 font-bold uppercase border border-black">
-                          PRO
+                      {planBadge && (
+                        <span className={`${planBadge.className} text-[9px] px-1.5 py-0.5 font-bold uppercase border border-black`}>
+                          {planBadge.label}
                         </span>
                       )}
                     </div>

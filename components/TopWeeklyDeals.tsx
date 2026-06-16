@@ -16,6 +16,23 @@ interface Deal {
   shortDescription?: string
 }
 
+// Curated line-up for the homepage showcase. Order is intentional, and an
+// optional `value` overrides the source value purely for display here.
+const FEATURED_DEALS: { slug: string; value?: string }[] = [
+  { slug: 'notion' },
+  { slug: 'microsoft-for-startups-founders-hub', value: '$150,000 in Azure credits' },
+  { slug: 'stripe-startups' },
+  { slug: 'google-for-startups-cloud' },
+  { slug: 'airtable-for-startups' },
+  { slug: 'aws-activate' },
+]
+
+// Prefix every value with "Up to" unless it already leads with it.
+function formatValue(value: string): string {
+  if (!value) return value
+  return /^up to\b/i.test(value.trim()) ? value : `Up to ${value}`
+}
+
 export default function TopWeeklyDeals() {
   const [deals, setDeals] = useState<Deal[]>([])
   const [loading, setLoading] = useState(true)
@@ -26,13 +43,18 @@ export default function TopWeeklyDeals() {
     async function loadDeals() {
       try {
         const response = await fetch('/data/all-deals.json')
-        const allDeals = await response.json()
-        const priorityProviders = ['github', 'airtable', 'aws', 'google', 'microsoft', 'linear', 'stripe', 'notion', 'webflow', 'cloudflare', 'datadog', 'intercom']
-        const withLogos = allDeals.filter((d: Deal) => d.provider && d.value && d.logoUrl)
-        const priority = withLogos.filter((d: Deal) => priorityProviders.some(p => d.provider.toLowerCase().includes(p)))
-        const rest = withLogos.filter((d: Deal) => !priorityProviders.some(p => d.provider.toLowerCase().includes(p)))
-        const topDeals = [...priority, ...rest].slice(0, 6)
-        setDeals(topDeals)
+        const allDeals: Deal[] = await response.json()
+        const bySlug = new Map(allDeals.map((d) => [d.slug, d]))
+
+        // Build the curated list, falling back to any valid deals if a slug is missing.
+        const curated = FEATURED_DEALS
+          .map(({ slug, value }) => {
+            const deal = bySlug.get(slug)
+            return deal ? { ...deal, value: value ?? deal.value } : null
+          })
+          .filter((d): d is Deal => d !== null && !!d.provider && !!d.value && !!d.logoUrl)
+
+        setDeals(curated.slice(0, 6))
       } catch (error) {
         console.error('Failed to load deals:', error)
       } finally {
@@ -141,7 +163,7 @@ export default function TopWeeklyDeals() {
                 )}
                 <div className="bg-black text-accent-yellow font-mono font-black text-base px-2.5 py-1.5 mb-3 inline-flex items-center gap-1.5">
                   <span className="material-symbols-outlined text-base">savings</span>
-                  {deal.value}
+                  {formatValue(deal.value)}
                 </div>
                 <Link
                   href={`/deals/${deal.slug}`}
@@ -214,7 +236,7 @@ export default function TopWeeklyDeals() {
                 )}
                 <div className="bg-black text-accent-yellow font-mono font-black text-xl px-3 py-2 mb-5 inline-flex items-center gap-2 border-2 border-black">
                   <span className="material-symbols-outlined text-xl">savings</span>
-                  {deal.value}
+                  {formatValue(deal.value)}
                 </div>
                 <Link
                   href={`/deals/${deal.slug}`}

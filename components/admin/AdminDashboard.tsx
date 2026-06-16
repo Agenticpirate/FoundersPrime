@@ -1,42 +1,107 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import {
-  Plus, Rocket, Lightbulb, Mail, BarChart3,
-  CheckCircle, Clock, Calendar, AlertTriangle,
-  UserPlus, Award, Flag, MessageCircle
+  Handshake, FileText, Users, BarChart3,
+  CheckCircle, Clock, Calendar, Award, ArrowRight,
 } from 'lucide-react'
 import Link from 'next/link'
 
+type PlanRow = { plan: string; label: string; subscribers: number; revenue: number }
+type Stats = {
+  totalSubscribers: number
+  revenue: number
+  planBreakdown: PlanRow[]
+  recentSubscribers: { plan: string; label: string; price: number; createdAt: string | null }[]
+}
+
 export default function AdminDashboard() {
-  const [timeRange, setTimeRange] = useState('MRR')
+  const [deals, setDeals] = useState({ total: 0, active: 0, expired: 0 })
+  const [subs, setSubs] = useState({ total: 0, pending: 0, approved: 0 })
+  const [stats, setStats] = useState<Stats | null>(null)
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    let alive = true
+    const load = async () => {
+      const [dealsRes, subRes, statsRes] = await Promise.allSettled([
+        fetch('/api/deals').then((r) => r.json()),
+        fetch('/api/admin/submissions').then((r) => r.json()),
+        fetch('/api/admin/stats').then((r) => r.json()),
+      ])
+      if (!alive) return
+
+      if (dealsRes.status === 'fulfilled' && Array.isArray(dealsRes.value?.deals)) {
+        const d = dealsRes.value.deals as { status?: string }[]
+        setDeals({
+          total: d.length,
+          active: d.filter((x) => x.status === 'active').length,
+          expired: d.filter((x) => x.status === 'expired').length,
+        })
+      }
+      if (subRes.status === 'fulfilled' && Array.isArray(subRes.value?.submissions)) {
+        const s = subRes.value.submissions as { status?: string }[]
+        setSubs({
+          total: s.length,
+          pending: s.filter((x) => x.status === 'pending').length,
+          approved: s.filter((x) => x.status === 'approved').length,
+        })
+      }
+      if (statsRes.status === 'fulfilled' && statsRes.value && !statsRes.value.error) {
+        setStats(statsRes.value as Stats)
+      }
+      setLoading(false)
+    }
+    load()
+    return () => { alive = false }
+  }, [])
+
+  const fmt = (n: number) => (loading ? '—' : String(n))
+  const money = (n: number) => (loading ? '—' : `$${n.toLocaleString('en-US')}`)
+
+  const overview = [
+    { label: 'Paid Subscribers', value: fmt(stats?.totalSubscribers ?? 0), change: 'Active', accent: 'bg-primary' },
+    { label: 'Revenue', value: money(stats?.revenue ?? 0), change: 'USD excl. tax', accent: 'bg-accent-yellow' },
+    { label: 'Active Deals', value: fmt(deals.active), change: `${deals.total} total`, accent: 'bg-blue-500' },
+    { label: 'Pending Review', value: fmt(subs.pending), change: 'Submissions', accent: 'bg-black', dark: true },
+  ]
+
+  const quickStats = [
+    { label: 'Total Deals', value: fmt(deals.total), Icon: CheckCircle, bg: 'bg-white', text: 'text-black' },
+    { label: 'Pending Subs', value: fmt(subs.pending), Icon: Clock, bg: 'bg-accent-yellow', text: 'text-black' },
+    { label: 'Expired Deals', value: fmt(deals.expired), Icon: Calendar, bg: 'bg-white', text: 'text-black' },
+    { label: 'Approved Subs', value: fmt(subs.approved), Icon: Award, bg: 'bg-green-500', text: 'text-white' },
+  ]
+
+  const actions = [
+    { label: 'Manage Deals', href: '/admin/deals', icon: Handshake, bg: 'bg-primary' },
+    { label: 'Review Submissions', href: '/admin/submissions', icon: FileText, bg: 'bg-accent-yellow', badge: subs.pending },
+    { label: 'Users', href: '/admin/users', icon: Users, bg: 'bg-white' },
+    { label: 'Analytics', href: '/admin/analytics', icon: BarChart3, bg: 'bg-black text-white' },
+  ]
 
   return (
     <div className="p-3 md:p-6 flex-1 bg-[url('https://www.transparenttextures.com/patterns/grid-me.png')]">
-      {/* Quick Actions */}
+      {/* Quick Actions — all link to real pages */}
       <div className="mb-4 md:mb-6 flex flex-wrap gap-2">
-        {[
-          { label: 'Add Deal', icon: Plus, bg: 'bg-primary' },
-          { label: 'Add Startup', icon: Rocket, bg: 'bg-accent-yellow' },
-          { label: 'Add Idea', icon: Lightbulb, bg: 'bg-white' },
-          { label: 'Newsletter', icon: Mail, bg: 'bg-blue-500 text-white' },
-          { label: 'Analytics', icon: BarChart3, bg: 'bg-black text-white' },
-        ].map((a) => (
-          <button key={a.label} className={`${a.bg} px-3 py-2 font-mono font-bold text-[10px] md:text-xs border-2 border-black shadow-[2px_2px_0px_#111] hover:shadow-none hover:translate-x-0.5 hover:translate-y-0.5 transition-all flex items-center gap-1.5`}>
+        {actions.map((a) => (
+          <Link
+            key={a.label}
+            href={a.href}
+            className={`${a.bg} relative px-3 py-2 font-mono font-bold text-[10px] md:text-xs border-2 border-black shadow-[2px_2px_0px_#111] hover:shadow-none hover:translate-x-0.5 hover:translate-y-0.5 transition-all flex items-center gap-1.5`}
+          >
             <a.icon className="w-3.5 h-3.5" />
             {a.label.toUpperCase()}
-          </button>
+            {!!a.badge && a.badge > 0 && (
+              <span className="ml-1 bg-red-500 text-white text-[8px] font-black px-1.5 py-0.5 border border-black">{a.badge}</span>
+            )}
+          </Link>
         ))}
       </div>
 
-      {/* Stats Overview — Real Data */}
+      {/* Stats Overview — real data */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 md:gap-3 mb-4 md:mb-6">
-        {[
-          { label: 'Total Users', value: '2', change: 'Early stage', accent: 'bg-primary' },
-          { label: 'Paid Subs', value: '1', change: 'Founder Yearly', accent: 'bg-accent-yellow' },
-          { label: 'Lifetime', value: '0', change: '—', accent: 'bg-blue-500' },
-          { label: 'Revenue', value: '$149', change: 'USD excl. tax', accent: 'bg-black', dark: true },
-        ].map((s) => (
+        {overview.map((s) => (
           <div key={s.label} className={`${s.dark ? 'bg-black text-white' : 'bg-white'} p-3 border-2 border-black shadow-[2px_2px_0px_#111] relative overflow-hidden`}>
             <div className={`absolute -right-4 -top-4 w-12 h-12 ${s.accent} rounded-full ${s.dark ? 'border-white/20' : 'border-black'} border opacity-30`} />
             <p className={`font-mono font-bold text-[9px] md:text-[10px] ${s.dark ? 'text-white/60' : 'text-black/50'} uppercase mb-0.5 relative z-10`}>{s.label}</p>
@@ -50,12 +115,7 @@ export default function AdminDashboard() {
 
       {/* Quick Stats */}
       <div className="grid grid-cols-4 gap-2 mb-4 md:mb-6">
-        {[
-          { label: 'Active Deals', value: '—', Icon: CheckCircle, bg: 'bg-white', text: 'text-black' },
-          { label: 'Pending', value: '0', Icon: Clock, bg: 'bg-accent-yellow', text: 'text-black' },
-          { label: 'Expiring', value: '0', Icon: Calendar, bg: 'bg-white', text: 'text-black' },
-          { label: 'Issues', value: '0', Icon: AlertTriangle, bg: 'bg-green-500', text: 'text-white' },
-        ].map((s) => (
+        {quickStats.map((s) => (
           <div key={s.label} className={`${s.bg} ${s.text} p-2 md:p-3 border-2 border-black shadow-[2px_2px_0px_#111]`}>
             <div className="flex justify-between items-start mb-1">
               <span className="font-mono text-[8px] md:text-[10px] font-bold uppercase">{s.label}</span>
@@ -70,132 +130,94 @@ export default function AdminDashboard() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 md:gap-6">
         {/* Left Column */}
         <div className="lg:col-span-2 flex flex-col gap-3 md:gap-6">
-          {/* Revenue Section */}
+          {/* Revenue by plan — real data */}
           <section className="bg-white border-2 border-black shadow-[3px_3px_0px_#111] p-3 md:p-5">
             <div className="flex justify-between items-center mb-3 border-b-2 border-black pb-2">
-              <h3 className="font-mono font-bold text-sm md:text-lg uppercase">Revenue</h3>
-              <div className="flex gap-1">
-                {['ARR', 'ALL TIME'].map((t) => (
-                  <button key={t} onClick={() => setTimeRange(t)} className={`px-2 py-0.5 font-mono text-[10px] font-bold border-2 border-black ${timeRange === t ? 'bg-black text-white' : 'bg-white text-black'}`}>
-                    {t}
-                  </button>
-                ))}
-              </div>
+              <h3 className="font-mono font-bold text-sm md:text-lg uppercase">Revenue by Plan</h3>
+              <span className="font-mono text-[10px] font-bold text-gray-400 uppercase">Active subs</span>
             </div>
 
-            {/* Summary */}
             <div className="w-full bg-gray-50 border-2 border-dashed border-gray-300 mb-3 p-4 md:p-6 text-center">
-              <p className="font-mono text-[10px] text-gray-400 uppercase mb-1">Total Revenue to Date</p>
-              <p className="font-black text-3xl md:text-4xl font-mono text-green-700">$149.00</p>
-              <p className="font-mono text-[10px] text-gray-500 mt-1">1 × Founder Yearly (excl. tax)</p>
+              <p className="font-mono text-[10px] text-gray-400 uppercase mb-1">Realized Revenue</p>
+              <p className="font-black text-3xl md:text-4xl font-mono text-green-700">{money(stats?.revenue ?? 0)}</p>
+              <p className="font-mono text-[10px] text-gray-500 mt-1">{fmt(stats?.totalSubscribers ?? 0)} active subscriber(s), excl. tax</p>
             </div>
 
-            {/* Table */}
             <table className="w-full text-left font-mono text-[11px] md:text-xs">
               <thead className="border-b-2 border-black bg-gray-50">
                 <tr>
                   <th className="p-2 font-bold uppercase">Plan</th>
                   <th className="p-2 font-bold uppercase">Subscribers</th>
                   <th className="p-2 font-bold uppercase">Revenue</th>
-                  <th className="p-2 font-bold uppercase hidden sm:table-cell">Status</th>
                 </tr>
               </thead>
               <tbody>
-                {[
-                  { src: 'Explorer Monthly', users: '0', rev: '$0', status: 'No subs', color: 'bg-gray-300' },
-                  { src: 'Founder Yearly', users: '1', rev: '$149.00', status: 'Active', color: 'bg-green-500' },
-                  { src: 'Legend Lifetime', users: '0', rev: '$0', status: 'No subs', color: 'bg-gray-300' },
-                ].map((r) => (
-                  <tr key={r.src} className="border-b border-gray-100 hover:bg-gray-50">
-                    <td className="p-2 font-bold">{r.src}</td>
-                    <td className="p-2">{r.users}</td>
-                    <td className="p-2 font-bold text-green-700">{r.rev}</td>
-                    <td className="p-2 hidden sm:table-cell">
-                      <span className={`w-2 h-2 inline-block ${r.color} border border-black mr-1`} />{r.status}
-                    </td>
+                {(stats?.planBreakdown ?? []).map((r) => (
+                  <tr key={r.plan} className="border-b border-gray-100 hover:bg-gray-50">
+                    <td className="p-2 font-bold">{r.label}</td>
+                    <td className="p-2">{r.subscribers}</td>
+                    <td className="p-2 font-bold text-green-700">${r.revenue.toLocaleString('en-US')}</td>
                   </tr>
                 ))}
+                {!loading && (stats?.planBreakdown ?? []).length === 0 && (
+                  <tr><td colSpan={3} className="p-4 text-center text-gray-400 font-bold">No subscription data.</td></tr>
+                )}
               </tbody>
             </table>
           </section>
 
-          {/* Paid Users */}
+          {/* Submissions snapshot — real data */}
           <section className="bg-white border-2 border-black shadow-[3px_3px_0px_#111] p-3 md:p-5">
             <div className="flex justify-between items-center mb-3">
-              <h3 className="font-mono font-bold text-sm md:text-lg uppercase">Paid Users</h3>
+              <h3 className="font-mono font-bold text-sm md:text-lg uppercase">Submissions</h3>
+              <Link href="/admin/submissions" className="font-mono text-[10px] font-bold uppercase inline-flex items-center gap-1 hover:text-primary">
+                Open <ArrowRight className="w-3 h-3" />
+              </Link>
             </div>
-            <div className="flex flex-col gap-1.5">
-              <div className="flex items-center gap-3 p-3 border border-black bg-green-50">
-                <div className="w-8 h-8 bg-accent-yellow border border-black flex items-center justify-center font-mono font-black text-sm">
-                  S
-                </div>
-                <div className="flex-1 min-w-0">
-                  <p className="font-mono font-bold text-xs">Sammy Ray</p>
-                  <p className="font-mono text-[10px] text-gray-500 truncate">hello@axionxlab.com</p>
-                </div>
-                <div className="text-right flex-shrink-0">
-                  <span className="bg-accent-yellow text-black text-[8px] font-bold px-2 py-0.5 border border-black">FOUNDER</span>
-                  <p className="font-mono text-[9px] text-gray-400 mt-0.5">$149/yr</p>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          {/* Tasks */}
-          <section className="bg-white border-2 border-black shadow-[3px_3px_0px_#111] p-3 md:p-5">
-            <div className="flex justify-between items-center mb-3">
-              <h3 className="font-mono font-bold text-sm md:text-lg uppercase">Tasks</h3>
-            </div>
-            <div className="flex flex-col gap-1.5">
+            <div className="grid grid-cols-3 gap-2">
               {[
-                { text: 'Set up Supabase env vars for production', priority: 'HIGH', bg: 'bg-accent-yellow', done: false },
-                { text: 'Configure Dodo Payments webhook for live mode', priority: 'HIGH', bg: 'bg-accent-yellow', done: false },
-                { text: 'Add more deals to the database', priority: 'MED', bg: 'bg-primary', done: false },
-                { text: 'Google Analytics integration', priority: 'DONE', bg: 'bg-gray-200', done: true },
-              ].map((t, i) => (
-                <label key={i} className="flex items-center gap-2 md:gap-3 p-2 border border-black hover:bg-gray-50 cursor-pointer group transition-colors">
-                  <input
-                    className="w-4 h-4 border-2 border-black rounded-none bg-white checked:bg-black"
-                    type="checkbox"
-                    defaultChecked={t.done}
-                  />
-                  <span className={`flex-1 font-mono text-[11px] md:text-xs ${t.done ? 'line-through opacity-40' : 'group-hover:font-bold'}`}>{t.text}</span>
-                  <span className={`${t.bg} text-black text-[8px] md:text-[10px] font-bold px-1.5 py-0.5 border border-black`}>{t.priority}</span>
-                </label>
+                { label: 'Pending', value: fmt(subs.pending), bg: 'bg-accent-yellow' },
+                { label: 'Approved', value: fmt(subs.approved), bg: 'bg-green-100' },
+                { label: 'Total', value: fmt(subs.total), bg: 'bg-gray-100' },
+              ].map((s) => (
+                <div key={s.label} className={`${s.bg} border border-black p-3 text-center`}>
+                  <p className="font-black text-xl font-mono">{s.value}</p>
+                  <p className="font-mono text-[9px] font-bold uppercase text-black/60">{s.label}</p>
+                </div>
               ))}
             </div>
           </section>
         </div>
 
-        {/* Right Column: Activity */}
+        {/* Right Column: Recent subscribers — real data */}
         <div className="lg:col-span-1">
           <section className="bg-black text-white border-2 border-black shadow-[3px_3px_0px_#111] p-3 md:p-5">
             <div className="flex items-center gap-2 mb-3 border-b border-white/20 pb-2">
               <span className="w-2 h-2 bg-green-500 rounded-full" />
-              <h3 className="font-mono font-bold text-sm uppercase">Recent Activity</h3>
+              <h3 className="font-mono font-bold text-sm uppercase">Recent Subscriptions</h3>
             </div>
-            <div className="flex flex-col gap-3 relative">
-              <div className="absolute left-[15px] top-2 bottom-2 w-px bg-white/15" />
-              {[
-                { time: 'May 16', text: 'Paid: Sammy Ray — Founder Yearly ($149)', Icon: Award, bg: 'bg-accent-yellow text-black' },
-                { time: 'Recent', text: 'New user: hello@axionxlab.com', Icon: UserPlus, bg: 'bg-white text-black' },
-                { time: 'Setup', text: 'Google Analytics configured', Icon: CheckCircle, bg: 'bg-green-500 text-white' },
-              ].map((a, i) => (
-                <div key={i} className="flex gap-3 relative">
-                  <div className={`w-8 h-8 shrink-0 ${a.bg} border border-white/30 flex items-center justify-center z-10`}>
-                    <a.Icon className="w-3.5 h-3.5" />
+            <div className="flex flex-col gap-3">
+              {(stats?.recentSubscribers ?? []).map((sub, i) => (
+                <div key={i} className="flex gap-3 items-center">
+                  <div className="w-8 h-8 shrink-0 bg-accent-yellow text-black border border-white/30 flex items-center justify-center">
+                    <Award className="w-3.5 h-3.5" />
                   </div>
-                  <div className="pt-0.5 min-w-0">
-                    <p className="font-mono text-[9px] text-primary">{a.time}</p>
-                    <p className="font-bold text-[11px] leading-tight truncate">{a.text}</p>
+                  <div className="min-w-0 flex-1">
+                    <p className="font-bold text-[11px] leading-tight">{sub.label} · ${sub.price}</p>
+                    <p className="font-mono text-[9px] text-primary">
+                      {sub.createdAt ? new Date(sub.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : '—'}
+                    </p>
                   </div>
                 </div>
               ))}
-            </div>
-            <div className="mt-4 pt-3 border-t border-white/20">
-              <p className="text-center text-[10px] font-mono text-white/40 uppercase">
-                Activity log will populate as users interact
-              </p>
+              {!loading && (stats?.recentSubscribers ?? []).length === 0 && (
+                <p className="text-center text-[10px] font-mono text-white/40 uppercase py-4">
+                  No paid subscriptions yet
+                </p>
+              )}
+              {loading && (
+                <p className="text-center text-[10px] font-mono text-white/40 uppercase py-4">Loading…</p>
+              )}
             </div>
           </section>
         </div>
