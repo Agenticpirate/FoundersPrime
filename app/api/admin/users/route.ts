@@ -1,25 +1,6 @@
-import { createClient } from '@/lib/supabase/server'
 import { createClient as createServiceClient } from '@supabase/supabase-js'
 import { NextResponse } from 'next/server'
-
-// ─── Helper: verify admin access ──────────────────────────────────────────────
-async function verifyAdmin(): Promise<{ ok: boolean; error?: string; status?: number }> {
-  const supabase = createClient()
-  const { data: { user } } = await supabase.auth.getUser()
-  if (!user) return { ok: false, error: 'Unauthorized: Login required', status: 401 }
-
-  const { data: adminUser } = await supabase
-    .from('admin_users')
-    .select('role')
-    .eq('email', user.email)
-    .single()
-
-  if (!adminUser) {
-    console.error(`🚨 Unauthorized admin users access attempt by ${user.email}`)
-    return { ok: false, error: 'Forbidden: Admin access required', status: 403 }
-  }
-  return { ok: true }
-}
+import { verifyAdminServer as verifyAdmin } from '@/lib/admin/verify-admin-server'
 
 // ─── Helper: service-role client (bypasses RLS, can list auth users) ──────────
 function getServiceRoleClient() {

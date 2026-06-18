@@ -1,6 +1,6 @@
-import { createClient } from '@/lib/supabase/server'
 import { createClient as createServiceClient } from '@supabase/supabase-js'
 import { NextResponse } from 'next/server'
+import { verifyAdminServer as verifyAdmin } from '@/lib/admin/verify-admin-server'
 
 // Plan pricing used to compute realized revenue (USD, excl. tax).
 const PLAN_PRICE: Record<string, number> = {
@@ -16,20 +16,7 @@ const PLAN_LABEL: Record<string, string> = {
 }
 
 // ─── Helper: verify admin access ──────────────────────────────────────────────
-async function verifyAdmin(): Promise<{ ok: boolean; status?: number; error?: string }> {
-  const supabase = createClient()
-  const { data: { user } } = await supabase.auth.getUser()
-  if (!user) return { ok: false, error: 'Unauthorized: Login required', status: 401 }
-
-  const { data: adminUser } = await supabase
-    .from('admin_users')
-    .select('role')
-    .eq('email', user.email)
-    .single()
-
-  if (!adminUser) return { ok: false, error: 'Forbidden: Admin access required', status: 403 }
-  return { ok: true }
-}
+// (now centralized in lib/admin/verify-admin-server.ts, which enforces is_active)
 
 function getServiceRoleClient() {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL

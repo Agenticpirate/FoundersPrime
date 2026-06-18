@@ -39,7 +39,7 @@ export default function TermsHeader() {
             <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-6 text-xs md:text-sm">
               <div className="flex items-center gap-2">
                 <span className="material-symbols-outlined !text-[16px] md:!text-base text-primary">schedule</span>
-                <span className="font-mono text-gray-600">Last updated: January 8, 2024</span>
+                <span className="font-mono text-gray-600">Last updated: June 17, 2026</span>
               </div>
               <div className="flex items-center gap-2">
                 <span className="material-symbols-outlined !text-[16px] md:!text-base text-primary">gavel</span>
@@ -71,10 +71,10 @@ export default function TermsHeader() {
             </div>
           </div>
           <div className="flex items-start gap-3">
-            <span className="material-symbols-outlined text-blue-600 mt-0.5 md:mt-1">copyright</span>
+            <span className="material-symbols-outlined text-blue-600 mt-0.5 md:mt-1">verified</span>
             <div>
-              <h3 className="font-mono text-sm font-bold text-black mb-1">Intellectual Property</h3>
-              <p className="font-sans text-sm text-gray-700">Respect for content ownership and usage rights.</p>
+              <h3 className="font-mono text-sm font-bold text-black mb-1">Deals & Eligibility</h3>
+              <p className="font-sans text-sm text-gray-700">We curate and list third-party deals. We don't guarantee their availability, eligibility, or terms.</p>
             </div>
           </div>
         </div>

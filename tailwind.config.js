@@ -39,6 +39,7 @@ module.exports = {
         "mono": ["var(--font-mono)", "IBM Plex Mono", "monospace"],
         "display": ["var(--font-display)", "Space Grotesk", "sans-serif"],
         "body": ["var(--font-display)", "Space Grotesk", "sans-serif"],
+        "heading": ["var(--font-heading)", "Archivo", "Arial Black", "sans-serif"],
       },
       borderRadius: {
         "DEFAULT": "0px",

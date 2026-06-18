@@ -27,9 +27,9 @@ export default function TermsContent() {
       title: '2. Description of Service',
       content: `
         <h3>What We Provide</h3>
-        <p>FoundersPrime is a platform that provides:</p>
+        <p>FoundersPrime is a discovery and aggregation platform built for founders. We research, curate, and organize offers made available by third parties and present them in a single, easy-to-browse dashboard. In short, <strong>we help you find deals — we do not create or provide them.</strong> The Service includes:</p>
         <ul>
-          <li><strong>Deal Aggregation:</strong> Curated startup deals, credits, and discounts</li>
+          <li><strong>Deal Aggregation:</strong> Curated startup deals, credits, discounts, grants, and perks sourced from third-party providers</li>
           <li><strong>Startup Database:</strong> Information about funded startups and their metrics</li>
           <li><strong>Idea Validation:</strong> Startup ideas with market analysis and validation data</li>
           <li><strong>Resource Library:</strong> Templates, guides, and tools for entrepreneurs</li>
@@ -37,15 +37,65 @@ export default function TermsContent() {
         </ul>
 
         <h3>Service Availability</h3>
-        <p>We strive to maintain 99.9% uptime, but we do not guarantee uninterrupted access to the Service. We may temporarily suspend the Service for maintenance, updates, or other operational reasons.</p>
+        <p>We strive to maintain high availability, but we do not guarantee uninterrupted or error-free access to the Service. We may temporarily suspend the Service for maintenance, updates, or other operational reasons.</p>
 
         <h3>Third-Party Services</h3>
-        <p>Our Service may contain links to third-party websites or services. We are not responsible for the content, privacy policies, or practices of third-party services.</p>
+        <p>Our Service contains links to third-party websites, offers, and services. We are not responsible for the content, availability, privacy policies, or practices of any third party. See Section 3 for important details about how deals and offers work.</p>
+      `
+    },
+    {
+      id: 'deals-offers-eligibility',
+      title: '3. Deals, Offers & Eligibility (Important)',
+      content: `
+        <h3>We Are Not the Provider</h3>
+        <p>We do not own, operate, sponsor, fund, or control any of the deals, credits, grants, discounts, or offers listed on the Service. Every offer is created, owned, and administered by an independent third-party provider (for example, a cloud platform, software company, accelerator, or grant program). Any participation in an offer is a transaction strictly between you and that provider, governed by the provider's own terms.</p>
+
+        <h3>No Guarantee of Availability, Eligibility, or Terms</h3>
+        <p>We make no guarantee, representation, or warranty of any kind about any deal listed on the Service. In particular, we do <strong>not</strong> guarantee:</p>
+        <ul>
+          <li><strong>Availability:</strong> that any offer is currently active or will remain available.</li>
+          <li><strong>Eligibility:</strong> that you or your company will qualify. Eligibility is determined solely by the provider and may depend on your location, company stage, funding, age of business, industry, or other criteria.</li>
+          <li><strong>Terms &amp; Value:</strong> that the discount, credit amount, duration, pricing, or other terms are accurate, current, or will be honored. Any estimated values shown are approximate and are set by, or inferred from, the provider.</li>
+          <li><strong>Approval &amp; Timing:</strong> that an application will be accepted, or processed within any particular timeframe.</li>
+        </ul>
+        <p>Providers may add, change, pause, or withdraw any offer at any time, without notice to us or to you. <strong>Always confirm the current terms, eligibility, and availability directly with the provider before relying on, applying for, or making any decision based on an offer.</strong></p>
+
+        <h3>Eligibility Depends Entirely on You and the Provider</h3>
+        <p>Whether you can claim any offer depends on a combination of the provider's rules and your own circumstances &mdash; not on FoundersPrime. We do not assess, pre-qualify, vet, or approve you for any offer, and listing a deal is not a statement that you are eligible for it. Each provider sets and enforces its own eligibility criteria and verification process, which may include (without limitation) your country or region, company stage, incorporation status and legal entity type, funding history, revenue, age of the business, industry, whether you are a new or existing customer, and documentation requirements. You are solely responsible for reading and meeting those criteria. If you do not qualify, are rejected, or are later disqualified by a provider, FoundersPrime has no responsibility or liability for that outcome and owes you no refund or compensation.</p>
+
+        <h3>Limited, Capped &amp; Time-Sensitive Offers</h3>
+        <p>Many offers are limited in nature. We do <strong>not</strong> promise that any limited offer will be available to you. An offer may, for example:</p>
+        <ul>
+          <li>Have a fixed number of slots, seats, or credits that can run out;</li>
+          <li>Be offered on a first-come, first-served basis;</li>
+          <li>Be restricted to a limited promotional window or expire on short notice;</li>
+          <li>Be capped by budget, region, or per-applicant limits set by the provider; or</li>
+          <li>Be discontinued or fully claimed before you apply.</li>
+        </ul>
+        <p>The fact that an offer appears on the Service does not mean any slots, credits, or capacity remain. Availability can change at any moment and is controlled entirely by the provider.</p>
+
+        <h3>We Accept No Responsibility for Outcomes</h3>
+        <p>To the fullest extent permitted by law, FoundersPrime accepts <strong>no responsibility or liability</strong> for: whether you qualify for or are granted any offer; the conduct, decisions, performance, or non-performance of any provider; any offer that is unavailable, sold out, expired, denied, delayed, reduced, or withdrawn; any change to an offer's terms, value, or conditions; or any loss, cost, or damage you incur from applying for, relying on, or using any offer. Your dealings with any provider, including any disputes, are solely between you and that provider.</p>
+
+        <h3>Accuracy of Listings</h3>
+        <p>We work to keep listings accurate and up to date, but information is gathered from third-party and public sources and may be incomplete, outdated, or contain errors. You are responsible for independently verifying every detail with the provider before acting on it.</p>
+
+        <h3>No Affiliation or Endorsement</h3>
+        <p>Listing a provider or offer does not imply any partnership, affiliation, sponsorship, or endorsement between FoundersPrime and that provider unless we explicitly state otherwise. Third-party names, logos, and trademarks are the property of their respective owners and are used for identification purposes only.</p>
+
+        <h3>Affiliate &amp; Referral Links</h3>
+        <p>Some links on the Service are affiliate or referral links. We may earn a commission or referral credit if you sign up through them, at no additional cost to you. This does not change the price or terms you receive from the provider, and it does not influence whether you qualify for an offer.</p>
+
+        <h3>Global &amp; Regional Availability</h3>
+        <p>FoundersPrime serves founders worldwide, including in the United States, United Kingdom, Australia, Canada, and other regions. Offers are made available by providers under their own rules and may not exist, or may differ, in your country or region. Some offers are restricted to specific countries, currencies, or types of legal entity. It is your responsibility to ensure that participating in any offer is permitted under, and compliant with, the laws and regulations that apply to you.</p>
+
+        <h3>What Your Subscription Covers</h3>
+        <p>Any subscription fee you pay to FoundersPrime is for access to our curated dashboard, discovery tools, and related platform features &mdash; <strong>not</strong> for the deals themselves. Your subscription does not purchase, reserve, or entitle you to any specific deal, credit, discount, or outcome, all of which remain at the sole discretion of the third-party provider.</p>
       `
     },
     {
       id: 'user-accounts',
-      title: '3. User Accounts',
+      title: '4. User Accounts',
       content: `
         <h3>Account Creation</h3>
         <p>To access certain features, you must create an account. You agree to:</p>
@@ -71,7 +121,7 @@ export default function TermsContent() {
     },
     {
       id: 'acceptable-use',
-      title: '4. Acceptable Use Policy',
+      title: '5. Acceptable Use Policy',
       content: `
         <h3>Permitted Uses</h3>
         <p>You may use the Service for legitimate business and personal purposes related to entrepreneurship and startup activities.</p>
@@ -101,7 +151,7 @@ export default function TermsContent() {
     },
     {
       id: 'subscription-billing',
-      title: '5. Subscription and Billing',
+      title: '6. Subscription and Billing',
       content: `
         <h3>Subscription Plans</h3>
         <p>We offer various subscription plans with different features and pricing. Current plans and pricing are available on our pricing page.</p>
@@ -129,7 +179,7 @@ export default function TermsContent() {
     },
     {
       id: 'intellectual-property',
-      title: '6. Intellectual Property Rights',
+      title: '7. Intellectual Property Rights',
       content: `
         <h3>Our Content</h3>
         <p>The Service and its content, including but not limited to text, graphics, logos, images, and software, are owned by FoundersPrime and protected by intellectual property laws.</p>
@@ -155,7 +205,7 @@ export default function TermsContent() {
     },
     {
       id: 'privacy-data',
-      title: '7. Privacy and Data Protection',
+      title: '8. Privacy and Data Protection',
       content: `
         <h3>Privacy Policy</h3>
         <p>Your privacy is important to us. Our Privacy Policy explains how we collect, use, and protect your information. By using the Service, you consent to our privacy practices.</p>
@@ -178,7 +228,7 @@ export default function TermsContent() {
     },
     {
       id: 'disclaimers-warranties',
-      title: '8. Disclaimers and Warranties',
+      title: '9. Disclaimers and Warranties',
       content: `
         <h3>Service Disclaimer</h3>
         <p>The Service is provided "as is" and "as available" without warranties of any kind, either express or implied, including but not limited to:</p>
@@ -189,19 +239,19 @@ export default function TermsContent() {
           <li>Uninterrupted or error-free operation</li>
         </ul>
 
-        <h3>Third-Party Content</h3>
-        <p>We do not endorse or guarantee the accuracy of third-party content, deals, or information provided through the Service. Users should verify all information independently.</p>
+        <h3>Third-Party Content &amp; Deals</h3>
+        <p>We do not endorse or guarantee the accuracy, availability, eligibility, or terms of any third-party content, deals, credits, grants, or offers provided through the Service. All offers belong to and are administered by independent providers and may change or be withdrawn at any time. Users must verify all information directly with the provider. See Section 3 (Deals, Offers &amp; Eligibility) for full details.</p>
 
         <h3>Investment Disclaimer</h3>
-        <p>Information provided through the Service is for educational purposes only and does not constitute investment, legal, or financial advice. Consult with qualified professionals before making business decisions.</p>
+        <p>Information provided through the Service is for educational and informational purposes only and does not constitute investment, legal, tax, or financial advice. Consult qualified professionals before making business decisions.</p>
 
         <h3>Deal Availability</h3>
-        <p>We do not guarantee the availability, terms, or conditions of any deals or offers listed on the Service. Deal terms may change without notice.</p>
+        <p>We do not guarantee the availability, eligibility, value, terms, or conditions of any deal or offer listed on the Service, and we are not responsible if a provider changes, denies, delays, reduces, or withdraws an offer. Many offers are limited, capped, time-sensitive, or first-come, first-served, and may be fully claimed or expire without notice &mdash; we do not promise that any such offer will be available to you. Deal terms and eligibility are set and enforced solely by the provider and depend on your individual circumstances. FoundersPrime accepts no responsibility or liability for whether you qualify for, are granted, or are able to use any offer.</p>
       `
     },
     {
       id: 'limitation-liability',
-      title: '9. Limitation of Liability',
+      title: '10. Limitation of Liability',
       content: `
         <h3>Liability Limits</h3>
         <p>To the maximum extent permitted by law, FoundersPrime shall not be liable for any indirect, incidental, special, consequential, or punitive damages, including but not limited to:</p>
@@ -227,7 +277,7 @@ export default function TermsContent() {
     },
     {
       id: 'indemnification',
-      title: '10. Indemnification',
+      title: '11. Indemnification',
       content: `
         <h3>Your Indemnification Obligations</h3>
         <p>You agree to indemnify, defend, and hold harmless FoundersPrime, its officers, directors, employees, and agents from any claims, damages, losses, or expenses arising from:</p>
@@ -248,7 +298,7 @@ export default function TermsContent() {
     },
     {
       id: 'termination',
-      title: '11. Termination',
+      title: '12. Termination',
       content: `
         <h3>Termination by You</h3>
         <p>You may terminate your account and stop using the Service at any time by:</p>
@@ -279,7 +329,7 @@ export default function TermsContent() {
     },
     {
       id: 'governing-law',
-      title: '12. Governing Law and Disputes',
+      title: '13. Governing Law and Disputes',
       content: `
         <h3>Governing Law</h3>
         <p>These Terms are governed by the laws of the State of California, United States, without regard to conflict of law principles.</p>

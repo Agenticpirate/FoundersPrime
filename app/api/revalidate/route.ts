@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { revalidatePath } from 'next/cache'
+import { safeSecretEqual, getBearerToken } from '@/lib/auth/secret-compare'
 
 /**
  * On-demand ISR revalidation endpoint.
@@ -8,13 +9,14 @@ import { revalidatePath } from 'next/cache'
  * (hourly). This endpoint lets you flush a specific path immediately after
  * editing a deal, instead of waiting for the hourly window.
  *
- * SECURITY: This mutates server cache, so it is protected by a bearer secret.
- * Set REVALIDATION_SECRET in your environment. (Falls back to
- * SUPABASE_SERVICE_ROLE_KEY so it still works before the new var is added.)
+ * SECURITY: This mutates server cache, so it is protected by a dedicated bearer
+ * secret. Set REVALIDATION_SECRET in your environment. The service role key is
+ * intentionally NOT accepted here — that key bypasses all RLS and must never be
+ * passed in request headers.
  *
  * Usage:
  *   POST /api/revalidate
- *   Authorization: Bearer <secret>
+ *   Authorization: Bearer <REVALIDATION_SECRET>
  *   Body: { "path": "/deals/notion" }   // or { "slug": "notion" }
  *   Body (multiple): { "paths": ["/deals/notion", "/deals/aws-activate"] }
  */
@@ -22,10 +24,10 @@ import { revalidatePath } from 'next/cache'
 export const dynamic = 'force-dynamic'
 
 function isAuthorized(request: Request): boolean {
-  const expected = process.env.REVALIDATION_SECRET || process.env.SUPABASE_SERVICE_ROLE_KEY
+  const expected = process.env.REVALIDATION_SECRET
   if (!expected) return false
-  const authHeader = request.headers.get('authorization')
-  return authHeader === `Bearer ${expected}`
+  const token = getBearerToken(request.headers.get('authorization'))
+  return safeSecretEqual(token, expected)
 }
 
 // Normalize a slug or path into a concrete app route under /deals.

@@ -2,6 +2,7 @@ import { Metadata } from 'next'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import StartupsContent from '@/components/startups/StartupsContent'
+import { getStartupCards, getStartupCount } from '@/lib/startups-data'
 
 export const metadata: Metadata = {
   title: 'Verified Startups Database',
@@ -12,11 +13,14 @@ export const metadata: Metadata = {
 }
 
 export default function StartupsPage() {
+  const startups = getStartupCards()
+  const count = getStartupCount()
+
   return (
     <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden bg-gray-50">
       <Header />
       <main className="flex-1">
-        <StartupsContent />
+        <StartupsContent startups={startups} count={count} />
       </main>
       <Footer />
     </div>

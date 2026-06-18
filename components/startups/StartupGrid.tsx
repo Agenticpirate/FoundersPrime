@@ -1,17 +1,18 @@
 "use client";
 
 import { useState, useMemo, useEffect } from "react";
-import { YCCompany } from "@/types/startup";
 import StartupCard from "./StartupCard";
 import { Search } from "lucide-react";
-import startupsData from "@/data/yc_companies_2024_2026.json";
+import { StartupCardData } from "@/lib/startups-data";
 import Pagination from "@/components/Pagination";
 import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 
-// Type assertion for the imported JSON
-const allStartups = startupsData as unknown as YCCompany[];
+interface StartupGridProps {
+    startups: StartupCardData[];
+}
 
-export default function StartupGrid() {
+export default function StartupGrid({ startups }: StartupGridProps) {
+    const allStartups = startups;
     const router = useRouter();
     const searchParams = useSearchParams();
     const pathname = usePathname();
@@ -24,7 +25,7 @@ export default function StartupGrid() {
     const industries = useMemo(() => {
         const uniqueIndustries = new Set(allStartups.map((s) => s.industry).filter(Boolean));
         return ["All", ...Array.from(uniqueIndustries).sort()];
-    }, []);
+    }, [allStartups]);
 
     // Filter startups based on search and industry
     const filteredStartups = useMemo(() => {
@@ -39,7 +40,7 @@ export default function StartupGrid() {
 
             return matchesSearch && matchesIndustry;
         });
-    }, [searchQuery, selectedIndustry]);
+    }, [searchQuery, selectedIndustry, allStartups]);
 
     // Pagination Logic
     const pageParam = searchParams.get('page');

@@ -1,21 +1,6 @@
-import { createClient } from '@/lib/supabase/server'
 import { createClient as createServiceClient } from '@supabase/supabase-js'
 import { NextResponse } from 'next/server'
-
-async function verifyAdmin() {
-    const supabase = createClient()
-    const { data: { user } } = await supabase.auth.getUser()
-    if (!user) return { ok: false, error: 'Unauthorized', status: 401 }
-
-    const { data: adminUser } = await supabase
-        .from('admin_users')
-        .select('role')
-        .eq('email', user.email)
-        .single()
-
-    if (!adminUser) return { ok: false, error: 'Forbidden', status: 403 }
-    return { ok: true }
-}
+import { verifyAdminServer as verifyAdmin } from '@/lib/admin/verify-admin-server'
 
 function getServiceRoleClient() {
     const url = process.env.NEXT_PUBLIC_SUPABASE_URL

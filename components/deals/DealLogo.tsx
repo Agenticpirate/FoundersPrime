@@ -95,6 +95,8 @@ export default function DealLogo({ logoUrl, brandIcon, provider, size = 'md' }: 
     lg: 'w-24 h-24',
   }
 
+  const sizePx = { sm: 48, md: 80, lg: 96 }[size]
+
   // Get domain from provider name (used as fallback if logoUrl isn't usable)
   const domain = providerToDomain(provider)
 
@@ -128,6 +130,10 @@ export default function DealLogo({ logoUrl, brandIcon, provider, size = 'md' }: 
         <img
           src={fallbackChain[fallbackIndex]}
           alt={`${provider} logo`}
+          width={sizePx}
+          height={sizePx}
+          loading="lazy"
+          decoding="async"
           className="object-contain w-full h-full p-2"
           onError={handleError}
         />

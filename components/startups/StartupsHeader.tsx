@@ -2,12 +2,15 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import startupsData from "@/data/yc_companies_2024_2026.json";
 import SectionHero from '@/components/ui/SectionHero';
 import Mandala from '@/components/ui/Mandala';
 
-export default function StartupsHeader() {
-  const activeStartupsCount = (startupsData as any[]).length || 0;
+interface StartupsHeaderProps {
+  count: number;
+}
+
+export default function StartupsHeader({ count }: StartupsHeaderProps) {
+  const activeStartupsCount = count || 0;
   const [showInsights, setShowInsights] = useState(false);
 
   const trends = [

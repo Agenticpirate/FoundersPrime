@@ -2,7 +2,6 @@
 
 import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
-import { GlowingEffect } from '@/components/ui/GlowingEffect'
 
 interface Deal {
   id: string
@@ -198,7 +197,6 @@ export default function TopWeeklyDeals() {
               key={deal.id || index}
               className="relative bg-white border-2 border-black p-0 group shadow-[5px_5px_0px_rgba(255,221,0,0.6)] hover:shadow-[7px_7px_0px_rgba(255,221,0,0.8)] hover:-translate-y-1 transition-all"
             >
-              <GlowingEffect spread={30} glow={false} disabled={false} proximity={64} inactiveZone={0.01} borderWidth={2} />
               <div className="p-4 border-b-2 border-black flex justify-between items-center bg-gradient-to-r from-gray-50 to-white">
                 <div className="flex items-center gap-3">
                   <div className="w-12 h-12 bg-white border-2 border-black flex items-center justify-center overflow-hidden shadow-[2px_2px_0px_#111]">

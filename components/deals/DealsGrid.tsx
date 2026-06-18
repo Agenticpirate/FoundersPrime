@@ -415,6 +415,21 @@ export default function DealsGrid({ filters }: DealsGridProps) {
   const endIndex = startIndex + dealsPerPage
   const currentDeals = filteredDeals.slice(startIndex, endIndex)
 
+  // ── "Free resource" marketing unlock ──────────────────────────────────
+  // A shareable URL like /deals?page=3&unlock=<slug> surfaces specific
+  // deal(s) as fully visible, grabbable cards ABOVE the (otherwise blurred)
+  // grid. This lets non-members claim one featured freebie and get a taste
+  // of the catalog, nudging them to unlock the rest. Multiple slugs can be
+  // comma-separated. Sourced from the full filtered list (not just the
+  // current page) so the shared link always shows the deal.
+  const unlockParam = searchParams.get('unlock') || ''
+  const unlockSlugs = new Set(
+    unlockParam.split(',').map(s => s.trim().toLowerCase()).filter(Boolean)
+  )
+  const freeResourceDeals = unlockSlugs.size > 0
+    ? filteredDeals.filter(d => unlockSlugs.has((d.slug || '').toLowerCase()))
+    : []
+
   const handlePageChange = (page: number) => {
     setLocalPage(page)
     // router.push (not raw pushState) so Next.js's App Router knows about
@@ -497,6 +512,24 @@ export default function DealsGrid({ filters }: DealsGridProps) {
         </div>
       )}
 
+
+      {/* Free resource strip — visible & grabbable even on gated pages.
+          Shown only when a shareable ?unlock=<slug> link targets a deal. */}
+      {!loading && !authLoading && !checkingAccess && freeResourceDeals.length > 0 && (
+        <div className="mb-5 bg-emerald-50 border-2 border-black rounded-sm shadow-[3px_3px_0px_#111] p-3 md:p-4">
+          <div className="flex items-center gap-2 mb-3">
+            <span className="material-symbols-outlined !text-[18px] text-emerald-700">redeem</span>
+            <span className="font-mono text-[11px] md:text-[12px] font-black uppercase tracking-[0.12em] text-black">
+              Free resource — grab it, no membership needed
+            </span>
+          </div>
+          <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
+            {freeResourceDeals.map((deal) => (
+              <DealCard key={`free-${deal.id ?? deal.slug}`} deal={convertDealToCardFormat(deal)} />
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* Deals Grid (with blur lock overlay if needed) */}
       {!loading && !authLoading && !checkingAccess && filteredDeals.length > 0 && (() => {

@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
+import { safeSecretEqual, getBearerToken } from '@/lib/auth/secret-compare';
 import { accelerators2026 } from '@/data/accelerators-2026';
 import { grants2026 } from '@/data/grants-2026';
 import { incubators2026 } from '@/data/incubators-2026';
@@ -51,13 +52,16 @@ import { createClient } from '@supabase/supabase-js';
 // ... (skipping up to the GET function)
 
 export async function GET(request: Request) {
-  // 🔒 SECURITY VULNERABILITY PATCH: Prevent unauthorized access to destructive migration endpoints
-  if (process.env.NODE_ENV === 'production') {
-    const authHeader = request.headers.get('authorization')
-    // We check against the service role key as a secure secret (do NOT pass this in URL query params)
-    if (!authHeader || authHeader !== `Bearer ${process.env.SUPABASE_SERVICE_ROLE_KEY}`) {
-      return NextResponse.json({ error: 'Forbidden: Migration endpoint is locked in production.' }, { status: 403 })
-    }
+  // 🔒 Destructive endpoint: requires a dedicated secret in ALL environments.
+  // MIGRATION_SECRET must be set; the service role key is intentionally NOT
+  // accepted (it bypasses RLS and must never travel in request headers).
+  const expected = process.env.MIGRATION_SECRET
+  const token = getBearerToken(request.headers.get('authorization'))
+  if (!expected || !safeSecretEqual(token, expected)) {
+    return NextResponse.json(
+      { error: 'Forbidden: migration endpoint requires a valid MIGRATION_SECRET bearer token.' },
+      { status: 403 }
+    )
   }
 
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;

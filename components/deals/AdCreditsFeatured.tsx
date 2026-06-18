@@ -38,18 +38,6 @@ export default function AdCreditsFeatured() {
       value: '$10,000 credits',
       validity: 'B2B focused',
       href: '/deals/linkedin-ads-b2b-credits'
-    },
-    {
-      id: 'tiktok-ads-startup',
-      title: 'TikTok Ads',
-      gradient: 'from-pink-500 to-red-600',
-      icon: 'music_note',
-      tags: [
-        { label: 'VIDEO', color: 'bg-gray-100' }
-      ],
-      value: '$5,000 credits',
-      validity: 'Creative focused',
-      href: '/deals/tiktok-ads'
     }
   ]
 

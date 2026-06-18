@@ -2,13 +2,13 @@
 
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { YCCompany } from "@/types/startup";
+import { StartupCardData } from "@/lib/startups-data";
 import { Users, Globe, MapPin } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 
 interface StartupCardProps {
-  company: YCCompany;
+  company: StartupCardData;
 }
 
 // Internal component to handle founder image errors

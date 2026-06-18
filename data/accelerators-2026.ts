@@ -21,7 +21,49 @@ export interface Accelerator {
 }
 
 export const accelerators2026: Accelerator[] = [
+ // Europe
+ {
+ id: 'hec-paris-ai-startup-accelerator',
+ name: 'HEC Paris AI Startup Accelerator',
+ slug: 'hec-paris-ai-startup-accelerator',
+ logo: 'https://www.google.com/s2/favicons?domain=hec.edu&sz=128',
+ location: 'Station F, Paris, France',
+ region: 'Europe',
+ investment: 'Equity-free acceleration + Station F offices',
+ equity: 'No equity',
+ fees: 'No fee',
+ focusArea: 'Open-source AI for mobility, accessibility, automation & ecological transition',
+ founderStage: 'Startups with a tangible product built on open-source AI',
+ programDuration: '6 months',
+ applicationDeadline: 'Oct 31, 2025',
+ applicationStatus: 'Closed',
+ website: 'https://www.hec.edu/en/institutes-and-centers-expertise/innovation-entrepreneurship/our-centers/incubation-et-acceleration-center/ai-startup-accelerator',
+ applicationLink: 'https://hecparis.notion.site/ai-startup-accelerator',
+ description: '3rd edition of the AI Startup Accelerator at Station F, bringing together Meta, SNCF Connect & Tech, Hugging Face, and the HEC Paris Incubation & Acceleration Center to support French startups building the future of mobility through open-source AI. Over 6 months you collaborate with partner experts, test on real-world use cases, access real datasets, and get strategic and technical mentorship.',
+ operationalAnalysis: 'Equity-free corporate/school accelerator. Expert coaching from HEC Paris, technical guidance from SNCF Connect & Tech and Meta, and monthly sessions with Hugging Face. Includes Station F offices, access to 1,000+ mentors and VCs, and a Demo Day in front of partners and investors.',
+ features: ['Open-source AI', 'Station F', 'Meta & Hugging Face']
+ },
  // Global & Multi-Regional
+ {
+ id: 'snowflake-startup-accelerator',
+ name: 'Snowflake Startup Accelerator',
+ slug: 'snowflake-startup-accelerator',
+ logo: 'https://www.google.com/s2/favicons?domain=snowflake.com&sz=128',
+ location: 'Virtual (Global)',
+ region: 'Global',
+ investment: 'Free Snowflake credits + investor access',
+ equity: 'No equity',
+ fees: 'No fee',
+ focusArea: 'AI, Data Apps, Native Apps on the Snowflake AI Data Cloud',
+ founderStage: 'Startups building customer-facing apps on Snowflake',
+ programDuration: 'Up to 6 months (self-paced; many finish in under 3 months)',
+ applicationStatus: 'Rolling',
+ website: 'https://www.snowflake.com/en/why-snowflake/startup-program/startup-accelerator/',
+ applicationLink: 'https://www.snowflake.com/en/why-snowflake/startup-program/startup-accelerator/',
+ description: 'Selective, virtual accelerator for startups building customer-facing applications on the Snowflake AI Data Cloud. Provides dedicated Partner Engineers, free Snowflake credits, guaranteed go-to-market support, and access to top VC firms including Snowflake Ventures, Redpoint, and Altimeter.',
+ operationalAnalysis: 'Rolling admissions with a self-paced design → build → launch track. Strong GTM motion: co-marketing, access to Snowflake sales teams, and VC Demo Days that unlock investment opportunities.',
+ features: ['Technical Mentors', 'Free Credits', 'VC Demo Days']
+ },
  {
  id: '500-global',
  name: '500 Global',

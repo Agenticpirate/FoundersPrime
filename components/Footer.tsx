@@ -1,6 +1,5 @@
 import Link from 'next/link'
 import GoogleTranslate from './GoogleTranslate'
-import FooterNewsletter from './FooterNewsletter'
 
 export default function Footer() {
   const footerSections = [
@@ -110,26 +109,6 @@ export default function Footer() {
       {/* Glow blobs */}
       <div className="absolute -top-32 -left-32 w-96 h-96 bg-accent-yellow/10 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute -bottom-40 -right-32 w-[28rem] h-[28rem] bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />
-
-      {/* ── Newsletter row ── */}
-      <div className="relative border-b border-white/10 block">
-        <div className="max-w-[1600px] mx-auto px-4 sm:px-8 py-5 md:py-12 flex flex-col md:flex-row items-start md:items-center justify-between gap-3 md:gap-8">
-          <div className="max-w-md">
-            <span className="inline-flex items-center gap-1.5 bg-accent-yellow text-black font-mono text-[9px] md:text-[10px] font-black uppercase tracking-widest px-2 md:px-2.5 py-0.5 md:py-1 border border-black mb-2 md:mb-3">
-              <span className="material-symbols-outlined !text-[11px] md:!text-[12px]">mark_email_unread</span>
-              The Founder Brief · Free
-            </span>
-            <h3 className="font-mono text-base md:text-2xl font-black uppercase leading-tight mb-1">
-              The next big deal lands<br className="hidden md:block" /> straight in your inbox.
-            </h3>
-            <p className="text-gray-400 text-[12px] md:text-sm leading-snug">
-              One email a week. Fresh credits. Closing deadlines. Grants you&apos;ll never see on Twitter.
-            </p>
-          </div>
-
-          <FooterNewsletter />
-        </div>
-      </div>
 
       {/* ── Main grid ── */}
       <div className="relative max-w-[1600px] mx-auto px-4 sm:px-8 pt-8 md:pt-14 pb-8">

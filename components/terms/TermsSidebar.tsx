@@ -2,6 +2,7 @@ export default function TermsSidebar() {
   const tableOfContents = [
     { title: 'Acceptance of Terms', anchor: '#acceptance-of-terms' },
     { title: 'Description of Service', anchor: '#description-of-service' },
+    { title: 'Deals, Offers & Eligibility', anchor: '#deals-offers-eligibility' },
     { title: 'User Accounts', anchor: '#user-accounts' },
     { title: 'Acceptable Use Policy', anchor: '#acceptable-use' },
     { title: 'Subscription & Billing', anchor: '#subscription-billing' },
@@ -23,9 +24,9 @@ export default function TermsSidebar() {
 
   const keyDates = [
     { event: 'Terms Effective', date: 'January 1, 2024' },
-    { event: 'Last Updated', date: 'January 8, 2024' },
-    { event: 'Next Review', date: 'July 1, 2024' },
-    { event: 'Version', date: '3.1' }
+    { event: 'Last Updated', date: 'June 17, 2026' },
+    { event: 'Next Review', date: 'December 1, 2026' },
+    { event: 'Version', date: '3.2' }
   ]
 
   const legalCompliance = [
@@ -226,10 +227,10 @@ export default function TermsSidebar() {
       {/* Version History */}
       <div className="bg-gray-50 border-2 border-black rounded-sm p-4 text-center">
         <p className="font-mono text-sm text-gray-600 mb-2">
-          Terms Version 3.1
+          Terms Version 3.2
         </p>
         <p className="font-sans text-xs text-gray-500">
-          Last updated: January 8, 2024<br />
+          Last updated: June 17, 2026<br />
           Effective: January 1, 2024
         </p>
       </div>

@@ -5,465 +5,310 @@ import Link from 'next/link'
 import CountUp from 'react-countup'
 import { GlowingEffect } from '@/components/ui/GlowingEffect'
 import BrandLogo from '@/components/ui/BrandLogo'
-import Mandala from '@/components/ui/Mandala'
 
-/* ─── Brand wall (proof above the fold) ─── */
-const BRANDS = [
+/* ─── Trusted-by logos (bottom proof bar) ─── */
+const TRUSTED_BRANDS = [
   { name: 'AWS', domain: 'aws.amazon.com' },
   { name: 'Google Cloud', domain: 'cloud.google.com' },
-  { name: 'Stripe', domain: 'stripe.com' },
-  { name: 'Notion', domain: 'notion.so' },
-  { name: 'OpenAI', domain: 'openai.com' },
   { name: 'HubSpot', domain: 'hubspot.com' },
-  { name: 'Airtable', domain: 'airtable.com' },
-  { name: 'Figma', domain: 'figma.com' },
-  { name: 'Vercel', domain: 'vercel.com' },
-  { name: 'Linear', domain: 'linear.app' },
-  { name: 'Supabase', domain: 'supabase.com' },
-  { name: 'Discord', domain: 'discord.com' },
-  { name: 'Cloudflare', domain: 'cloudflare.com' },
-  { name: 'MongoDB', domain: 'mongodb.com' },
-  { name: 'Microsoft', domain: 'microsoft.com' },
-  { name: 'Y Combinator', domain: 'ycombinator.com' },
+  { name: 'OpenAI', domain: 'openai.com' },
+  { name: 'DigitalOcean', domain: 'digitalocean.com' },
 ]
 
-const BRANDS_LOOP = [...BRANDS, ...BRANDS]
-
-/* ─── Value stack (Hormozi-style, visible above the fold) ─── */
-const VALUE_STACK = [
-  { label: 'Cloud Credits', value: '$200K+', icon: 'cloud', color: 'bg-sky-100', accent: 'text-sky-700' },
-  { label: 'Grants Database', value: '$10M+', icon: 'payments', color: 'bg-green-100', accent: 'text-green-700' },
-  { label: 'SaaS Deals', value: '200+', icon: 'apps', color: 'bg-purple-100', accent: 'text-purple-700' },
-  { label: 'Ad Credits', value: '$50K+', icon: 'campaign', color: 'bg-pink-100', accent: 'text-pink-700' },
-  { label: 'Accelerators', value: '50+', icon: 'rocket_launch', color: 'bg-orange-100', accent: 'text-orange-700' },
-  { label: 'Verified Startups', value: '1K+', icon: 'verified', color: 'bg-blue-100', accent: 'text-blue-700' },
+/* ─── Stat grid inside the dark "total saved" card (2 × 3) ─── */
+const STAT_CARDS = [
+  { value: '$200K+', label: 'Cloud Credits', icon: 'cloud', href: '/deals/cloud-credits' },
+  { value: '$100K+', label: 'Grants Database', icon: 'redeem', href: '/deals/grants' },
+  { value: '$50K+', label: 'Ad Credits', icon: 'ad', href: '/deals/ad-credits' },
+  { value: '200+', label: 'SaaS Deals', icon: 'apps', href: '/deals/saas-discounts' },
+  { value: '50+', label: 'Accelerators', icon: 'rocket_launch', href: '/deals/accelerators' },
+  { value: '1K+', label: 'Verified Startups', icon: 'verified_user', href: '/startups' },
 ]
+
+/* ─── Trust line (risk reversal) ─── */
+const TRUST_POINTS = ['Founder-vetted weekly', 'Apply in under 3 min', 'Zero equity. Ever.']
+
+/* Chamfered-corner clip paths (brutalist notch detail) */
+const CARD_CLIP = 'polygon(30px 0, 100% 0, 100% 100%, 0 100%, 0 30px)'
+const TILE_CLIP = 'polygon(0 0, 100% 0, 100% calc(100% - 18px), calc(100% - 18px) 100%, 0 100%)'
+
+/* Small blueprint-style crosshair "+" mark */
+function PlusMark({ className = '' }: { className?: string }) {
+  return (
+    <span aria-hidden="true" className={`pointer-events-none text-gray-300 ${className}`}>
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+        <path d="M8 0v16M0 8h16" stroke="currentColor" strokeWidth="1.5" />
+      </svg>
+    </span>
+  )
+}
+
+/* Single stat tile inside the dark card — bordered chamfered corner,
+   green icon, "UP TO" eyebrow, value, label, and twin corner arrows. */
+function StatTile({ stat }: { stat: (typeof STAT_CARDS)[number] }) {
+  return (
+    <Link href={stat.href} className="group relative block">
+      {/* Border layer (light edge, follows the chamfer) */}
+      <span
+        aria-hidden="true"
+        className="absolute inset-0 bg-white/30 group-hover:bg-accent-yellow/70 transition-colors"
+        style={{ clipPath: TILE_CLIP }}
+      />
+      {/* Fill layer (black, inset 1.5px so the border peeks through) */}
+      <span
+        aria-hidden="true"
+        className="absolute inset-[1.5px] bg-black group-hover:bg-[#0c0c0c] transition-colors"
+        style={{ clipPath: TILE_CLIP }}
+      />
+
+      {/* Content */}
+      <div className="relative z-10 p-3.5 md:p-4 pb-6">
+        {/* Top-right outward arrow */}
+        <span className="material-symbols-outlined absolute top-3 right-3 !text-[16px] text-gray-300 group-hover:text-accent-yellow group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all">
+          arrow_outward
+        </span>
+
+        <span className="material-symbols-outlined !text-[26px] text-green-400 mb-3 block">
+          {stat.icon}
+        </span>
+
+        <p className="font-mono text-[7px] md:text-[8px] font-bold uppercase tracking-[0.2em] text-green-400/80 mb-1">
+          Up to
+        </p>
+        <p className="font-mono font-black text-xl md:text-2xl text-white leading-none">{stat.value}</p>
+        <p className="font-mono text-[8px] md:text-[9px] text-gray-400 uppercase tracking-wider mt-2 leading-tight">
+          {stat.label}
+        </p>
+      </div>
+
+      {/* Small arrow seated in the chamfered bottom-right notch */}
+      <span className="material-symbols-outlined absolute bottom-1 right-1 z-10 !text-[13px] text-gray-400 group-hover:text-accent-yellow rotate-90 transition-colors">
+        arrow_outward
+      </span>
+    </Link>
+  )
+}
 
 export default function HeroSection() {
-  /* Cumulative "saved by founders so far" counter — single hero metric */
-  const [memberSavingsEnd, setMemberSavingsEnd] = useState(2_847_320)
-  const memberSavingsStartRef = useRef(2_847_320)
-
-  /* Cursor-following yellow fog. We use refs + rAF instead of state so
-     the gradient follows the mouse smoothly on every frame without
-     thrashing React re-renders. Two layered orbs lag behind each other
-     by different easing values for a soft "trailing fog" feel. */
-  const sectionRef = useRef<HTMLElement | null>(null)
-  const fogRef = useRef<HTMLDivElement | null>(null)
-  const fogTrailRef = useRef<HTMLDivElement | null>(null)
+  /* Live "total saved by founders" counter — single hero metric */
+  const [savedEnd, setSavedEnd] = useState(3_055_362)
+  const savedStartRef = useRef(3_055_362)
 
   useEffect(() => {
     const interval = setInterval(() => {
-      // Larger jumps so the bigger number actually moves visibly
       const increase = Math.floor(Math.random() * 480) + 120
-      setMemberSavingsEnd((prev) => {
-        memberSavingsStartRef.current = prev
+      setSavedEnd((prev) => {
+        savedStartRef.current = prev
         return prev + increase
       })
     }, 4200)
     return () => clearInterval(interval)
   }, [])
 
-  useEffect(() => {
-    const section = sectionRef.current
-    const fog = fogRef.current
-    const trail = fogTrailRef.current
-    if (!section || !fog || !trail) return
-
-    // Respect prefers-reduced-motion — skip the cursor follow entirely.
-    const reduceMotion =
-      typeof window !== 'undefined' &&
-      window.matchMedia &&
-      window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    if (reduceMotion) return
-
-    let targetX = 0
-    let targetY = 0
-    let fogX = 0
-    let fogY = 0
-    let trailX = 0
-    let trailY = 0
-    let raf = 0
-    let active = false
-
-    const onMove = (e: MouseEvent) => {
-      const rect = section.getBoundingClientRect()
-      targetX = e.clientX - rect.left
-      targetY = e.clientY - rect.top
-      if (!active) {
-        active = true
-        fog.style.opacity = '1'
-        trail.style.opacity = '1'
-      }
-    }
-
-    const onLeave = () => {
-      active = false
-      fog.style.opacity = '0'
-      trail.style.opacity = '0'
-    }
-
-    const tick = () => {
-      // Lead orb: snappier ease (0.18). Trail orb: slower (0.08) for fog drift.
-      fogX += (targetX - fogX) * 0.18
-      fogY += (targetY - fogY) * 0.18
-      trailX += (targetX - trailX) * 0.08
-      trailY += (targetY - trailY) * 0.08
-      fog.style.transform = `translate3d(${fogX}px, ${fogY}px, 0) translate(-50%, -50%)`
-      trail.style.transform = `translate3d(${trailX}px, ${trailY}px, 0) translate(-50%, -50%)`
-      raf = requestAnimationFrame(tick)
-    }
-    raf = requestAnimationFrame(tick)
-
-    section.addEventListener('mousemove', onMove)
-    section.addEventListener('mouseleave', onLeave)
-    return () => {
-      section.removeEventListener('mousemove', onMove)
-      section.removeEventListener('mouseleave', onLeave)
-      cancelAnimationFrame(raf)
-    }
-  }, [])
-
   return (
-    <section
-      ref={sectionRef}
-      className="relative min-h-[calc(100dvh-100px)] md:min-h-[calc(100vh-120px)] pt-3 pb-0 md:pt-5 lg:pt-6 overflow-hidden grid-bg flex flex-col"
-    >
+    <section className="relative overflow-hidden grid-bg bg-paper pt-8 md:pt-12 pb-0">
       {/* Soft glow accents */}
       <div className="absolute -top-32 -left-32 w-96 h-96 bg-accent-yellow/15 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute -bottom-40 -right-32 w-[28rem] h-[28rem] bg-blue-300/15 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute -bottom-40 -right-32 w-[28rem] h-[28rem] bg-accent-yellow/10 rounded-full blur-3xl pointer-events-none" />
 
-      {/* Cursor-following yellow fog (lead orb) */}
+      {/* ─── Blueprint detailing: left-edge ruler ticks ─── */}
       <div
-        ref={fogRef}
         aria-hidden="true"
-        className="hidden md:block pointer-events-none absolute top-0 left-0 z-[1] opacity-0 transition-opacity duration-300"
+        className="hidden lg:block absolute left-3 top-24 bottom-24 w-3 pointer-events-none"
         style={{
-          width: '420px',
-          height: '420px',
-          background:
-            'radial-gradient(circle, rgba(255,221,0,0.28) 0%, rgba(255,221,0,0.12) 35%, rgba(255,221,0,0) 70%)',
-          filter: 'blur(28px)',
-          mixBlendMode: 'multiply',
-          willChange: 'transform, opacity',
-        }}
-      />
-      {/* Trailing fog (slower, larger, lower opacity) */}
-      <div
-        ref={fogTrailRef}
-        aria-hidden="true"
-        className="hidden md:block pointer-events-none absolute top-0 left-0 z-[1] opacity-0 transition-opacity duration-500"
-        style={{
-          width: '640px',
-          height: '640px',
-          background:
-            'radial-gradient(circle, rgba(255,221,0,0.16) 0%, rgba(255,221,0,0.06) 40%, rgba(255,221,0,0) 75%)',
-          filter: 'blur(48px)',
-          mixBlendMode: 'multiply',
-          willChange: 'transform, opacity',
+          backgroundImage:
+            'repeating-linear-gradient(to bottom, #00000033 0px, #00000033 1px, transparent 1px, transparent 14px)',
         }}
       />
 
-      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full mb-3 md:mb-5 flex-1 flex items-center">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 items-center w-full">
+      <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
+        {/* Vertical edge label */}
+        <span
+          className="hidden xl:block absolute left-0 top-1/2 -translate-y-1/2 -translate-x-2 font-mono text-[10px] font-bold tracking-[0.3em] text-gray-400 uppercase"
+          style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
+        >
+          FP-2026
+        </span>
+
+        {/* Crosshair "+" marks (blueprint flourish) */}
+        <PlusMark className="hidden md:block absolute -left-1 top-2" />
+        <PlusMark className="hidden md:block absolute right-0 -top-1 lg:left-[58%] lg:right-auto" />
+
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
 
           {/* ─── LEFT: Message + CTAs ─── */}
-          <div className="lg:col-span-7 flex flex-col justify-center items-start w-full">
+          <div className="lg:col-span-7 flex flex-col items-start">
 
-            {/* Eyebrow — sets the audience clearly */}
-            <div className="inline-flex items-center gap-2 bg-black text-accent-yellow font-mono text-[9px] md:text-xs font-black px-2.5 md:px-3 py-1 mb-2.5 md:mb-3.5 uppercase tracking-widest border-2 border-black shadow-[3px_3px_0px_#FFD500] hero-mobile-fade hero-mobile-fade-1">
-              <span className="w-1.5 h-1.5 bg-accent-yellow rounded-full animate-pulse" />
-              Built for bootstrapped founders
+            {/* Eyebrow row with corner-bracket flourishes */}
+            <div className="relative w-full mb-5 md:mb-7">
+              <span aria-hidden="true" className="absolute -top-4 -left-4 w-6 h-6 border-t-2 border-l-2 border-black" />
+              <span aria-hidden="true" className="absolute -top-4 right-0 w-6 h-6 border-t-2 border-r-2 border-black hidden sm:block" />
+              <div className="inline-flex items-center gap-2.5 font-mono text-[10px] md:text-xs font-black uppercase tracking-[0.18em]">
+                <span className="inline-flex items-center gap-1.5 text-black">
+                  <span className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse" />
+                  Live
+                </span>
+                <span className="text-gray-400">Updated Weekly</span>
+              </div>
             </div>
 
-            {/* Hero headline — three-line punch.
-                FREE CREDITS. / REAL GRANTS. / ZERO DILUTION. (highlighted)
-                Sized so the full hero (incl. brand marquee) fits in the
-                viewport on a typical 1080p / 13-inch laptop screen. */}
-            <h1 className="font-black text-black tracking-tight mb-3 md:mb-4 font-mono uppercase hero-mobile-fade hero-mobile-fade-2 w-full">
-              <span className="block leading-[1.05] mb-1.5 md:mb-2 text-3xl sm:text-4xl md:text-5xl lg:text-[60px]">
-                Free Credits.
-              </span>
-              <span className="block leading-[1.05] mb-2 md:mb-3 text-3xl sm:text-4xl md:text-5xl lg:text-[60px]">
-                Real Grants.
-              </span>
-              <span className="block leading-[1.05]">
-                <span className="relative inline-block align-middle">
-                  <span className="relative z-10 inline-block bg-accent-yellow px-2.5 md:px-3.5 py-0.5 md:py-1 border-2 md:border-[3px] border-black text-3xl sm:text-4xl md:text-5xl lg:text-[60px] hero-highlight-glow">
-                    Zero Dilution.
-                  </span>
-                  {/* Decorative offset shadow for depth */}
-                  <span aria-hidden="true" className="absolute inset-0 translate-x-1.5 translate-y-1.5 md:translate-x-2 md:translate-y-2 bg-black -z-10 rounded-[1px]" />
+            {/* Headline — BUILD MORE. / BURN LESS. */}
+            <h1 className="font-heading font-black text-black tracking-[-0.02em] uppercase leading-[0.9] mb-5 md:mb-6">
+              <span className="block text-5xl sm:text-6xl md:text-7xl lg:text-[92px]">Build More.</span>
+              <span className="block text-5xl sm:text-6xl md:text-7xl lg:text-[92px]">
+                Burn{' '}
+                <span className="relative inline-block">
+                  <span className="relative z-10">Less.</span>
+                  <span
+                    aria-hidden="true"
+                    className="absolute left-0 right-0 bottom-1 md:bottom-2 h-3 md:h-5 bg-accent-yellow -z-0"
+                  />
                 </span>
               </span>
             </h1>
 
-            {/* Subhead — value preview, AWS / Stripe / HubSpot anchored, two-line layout */}
-            <p className="hidden md:block text-[15px] md:text-base text-black mb-3 md:mb-4 font-medium max-w-[640px] leading-relaxed hero-mobile-fade hero-mobile-fade-3">
-              A curated database of founder perks &mdash; up to <strong>$350K</strong> in cloud credits, startup grants, accelerator benefits, and exclusive discounts from <strong>AWS, Stripe, HubSpot</strong> and more.
-            </p>
-            {/* Mobile-only condensed subhead */}
-            <p className="md:hidden text-[13px] text-black mb-3 font-medium leading-snug hero-mobile-fade hero-mobile-fade-3">
-              A curated database of founder perks &mdash; up to <strong>$350K</strong> in cloud credits, grants, accelerators, and discounts from <strong>AWS, Stripe, HubSpot</strong>.
+            {/* Sub-headline — offer line */}
+            <p className="font-heading font-extrabold uppercase text-black text-lg sm:text-xl md:text-[26px] tracking-tight leading-[1.15] mb-4 md:mb-5 max-w-xl">
+              Unlock up to{' '}
+              <span className="bg-accent-yellow px-1.5 py-0.5 box-decoration-clone">$500K+</span>{' '}
+              in startup credits &amp; founder perks.
             </p>
 
-            {/* Audience split — Founders vs Students (desktop only; declutters mobile) */}
-            <div className="hidden md:flex flex-wrap items-center gap-1.5 md:gap-2 mb-3 md:mb-4 hero-mobile-fade hero-mobile-fade-3">
-              <span className="inline-flex items-center gap-1 md:gap-1.5 bg-white border-2 border-black px-2 md:px-2.5 py-0.5 md:py-1 font-mono text-[9px] md:text-xs font-black uppercase tracking-wider shadow-[2px_2px_0px_#111]">
-                <span className="material-symbols-outlined !text-[12px] md:!text-sm">rocket_launch</span>
-                For Founders
-              </span>
-              <span className="font-mono text-[9px] md:text-xs text-gray-400 font-bold">+</span>
-              <Link
-                href="/pricing"
-                className="inline-flex items-center gap-1 md:gap-1.5 bg-accent-yellow border-2 border-black px-2 md:px-2.5 py-0.5 md:py-1 font-mono text-[9px] md:text-xs font-black uppercase tracking-wider shadow-[2px_2px_0px_#111] hover:-translate-y-0.5 transition-transform"
-              >
-                <span className="material-symbols-outlined !text-[12px] md:!text-sm">school</span>
-                Next'Founder · Students
-              </Link>
-            </div>
+            {/* Supporting paragraph */}
+            <p className="text-sm md:text-base text-gray-700 font-medium leading-relaxed mb-6 md:mb-8 max-w-md">
+              Money shouldn&apos;t be the barrier. Access founder-vetted credits, grants, and perks &mdash;{' '}
+              <span className="bg-accent-yellow/60 font-bold text-black px-1">zero dilution.</span>
+            </p>
 
-            {/* CTAs — mobile: side-by-side compact, desktop: stacked */}
-            <div className="flex flex-row gap-2 md:gap-3 mb-3 md:mb-4 w-full max-w-2xl hero-mobile-fade hero-mobile-fade-4">
+            {/* CTAs */}
+            <div className="flex flex-col sm:flex-row gap-3 mb-6 md:mb-8 w-full max-w-lg">
               <div className="relative flex-1">
-                <GlowingEffect spread={50} glow={true} disabled={false} proximity={80} inactiveZone={0.01} borderWidth={2} />
-                <Link
-                  href="/deals"
-                  className="hero-cta-primary bg-black text-white text-[12px] md:text-base font-black py-3 md:py-4 px-3 md:px-6 flex items-center justify-center gap-1.5 md:gap-2 transition-all hover:bg-accent-yellow hover:text-black shadow-[5px_5px_0px_0px_rgba(255,221,0,0.8)] hover:shadow-[2px_2px_0px_0px_rgba(255,221,0,0.8)] hover:translate-x-[3px] hover:translate-y-[3px] w-full font-mono uppercase tracking-wider relative overflow-hidden border-2 border-black"
-                >
-                  <span className="relative z-10 flex items-center gap-1.5 md:gap-2">
-                    <span className="material-symbols-outlined !text-[14px] md:!text-base">bolt</span>
-                    <span>Unlock the Deals</span>
-                    <span className="material-symbols-outlined !text-[14px] md:!text-base hero-arrow-bounce">arrow_forward</span>
-                  </span>
-                </Link>
-              </div>
-              <Link
-                href="/pricing"
-                className="flex items-center justify-center gap-1.5 md:gap-2 border-2 border-black bg-white text-black font-mono font-black text-[12px] md:text-sm py-3 md:py-4 px-3 md:px-5 hover:bg-black hover:text-accent-yellow transition-all uppercase tracking-wider whitespace-nowrap"
-              >
-                <span>View Pricing</span>
-                <span className="material-symbols-outlined !text-[14px] md:!text-base">arrow_forward</span>
-              </Link>
-            </div>
-
-            {/* Risk reversal — premium pill chips, evenly aligned to match hero */}
-            <div className="grid grid-cols-1 sm:flex sm:flex-wrap justify-start items-stretch gap-1.5 md:gap-2 mb-3 md:mb-3 w-full hero-mobile-fade hero-mobile-fade-4">
-              {[
-                { icon: 'verified', text: 'Founder-vetted weekly' },
-                { icon: 'flash_on', text: 'Apply in under 3 min' },
-                { icon: 'shield', text: 'Zero equity. Ever.' },
-              ].map((item) => (
-                <span
-                  key={item.text}
-                  className="inline-flex items-center gap-1.5 md:gap-2 bg-white border-2 border-black px-2.5 md:px-3 py-1.5 text-[11px] md:text-xs font-mono font-bold text-gray-800 shadow-[2px_2px_0px_#111] hover:-translate-y-0.5 hover:shadow-[3px_3px_0px_#111] transition-all"
-                >
-                  <span className="material-symbols-outlined !text-[13px] md:!text-base text-green-600 flex-shrink-0" style={{ fontVariationSettings: "'FILL' 1" }}>
-                    {item.icon === 'flash_on' ? 'flash_on' : 'check_circle'}
-                  </span>
-                  <span className="whitespace-nowrap">{item.text}</span>
-                </span>
-              ))}
-            </div>
-
-            {/* Social proof: brand wall above the fold */}
-            <div className="hidden md:block w-full max-w-2xl border-t-2 border-black/10 pt-3 hero-mobile-fade hero-mobile-fade-5">
-              <p className="font-mono text-[10px] font-black uppercase tracking-widest text-gray-500 mb-2">
-                Credits &amp; deals from
-              </p>
-              <div className="flex items-center gap-2 flex-wrap">
-                {BRANDS.slice(0, 8).map((b) => (
-                  <div
-                    key={b.name}
-                    className="w-9 h-9 bg-white border-2 border-black flex items-center justify-center shadow-[2px_2px_0px_#111] p-1.5 hover:-translate-y-0.5 transition-transform"
-                    title={b.name}
-                  >
-                    <BrandLogo name={b.name} domain={b.domain} size="sm" eager />
-                  </div>
-                ))}
-                <span className="font-mono font-black text-xs text-black bg-accent-yellow border-2 border-black px-2 py-1 shadow-[2px_2px_0px_#111]">
-                  +500
-                </span>
-              </div>
-            </div>
-
-            {/* Mobile-only highlight cards — distinct from subhead copy (cloud credits lives there) */}
-            <div className="md:hidden grid grid-cols-3 gap-2 mt-3 w-full hero-mobile-fade hero-mobile-fade-5">
-              {[
-                { label: 'Per Founder', value: '$10K+', prefix: 'Avg. Saved', icon: 'savings', bg: 'bg-green-100', accent: 'text-green-700', mandala: 'rings' as const, dir: 'cw' as const },
-                { label: 'Resources', value: 'Premium', prefix: 'Unlock', icon: 'workspace_premium', bg: 'bg-purple-100', accent: 'text-purple-700', mandala: 'petal' as const, dir: 'ccw' as const },
-                { label: 'Accelerators', value: '50+', prefix: 'Up to', icon: 'rocket_launch', bg: 'bg-orange-100', accent: 'text-orange-700', mandala: 'orbital' as const, dir: 'cw' as const },
-              ].map((c) => (
-                <div
-                  key={c.label}
-                  className={`${c.bg} relative overflow-hidden border-2 border-black px-1.5 pt-3 pb-2.5 shadow-[3px_3px_0px_#111] flex flex-col items-center text-center gap-1.5`}
-                >
-                  {/* Decorative spinning mandala backdrop */}
-                  <Mandala
-                    variant={c.mandala}
-                    direction={c.dir}
-                    colorClass={c.accent}
-                    opacity={0.12}
-                    speed={70}
-                    className="absolute -right-5 -top-5 w-20 h-20"
-                  />
-                  <span className={`material-symbols-outlined !text-[20px] ${c.accent} relative z-10`} style={{ fontVariationSettings: "'FILL' 1" }}>
-                    {c.icon}
-                  </span>
-                  <div className="relative z-10 flex flex-col items-center leading-none">
-                    <span className="text-[7px] font-mono font-bold uppercase tracking-[0.14em] text-gray-500">{c.prefix}</span>
-                    <span className="text-[16px] font-mono font-black leading-tight mt-1">{c.value}</span>
-                  </div>
-                  <span className="relative z-10 text-[8px] font-mono font-bold uppercase tracking-wide text-gray-700 leading-tight min-h-[10px] flex items-center">{c.label}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* ─── RIGHT: Value stack (visible offer breakdown) ─── */}
-          <div className="lg:col-span-5 relative mt-2 lg:mt-0 hidden md:block">
-            <div className="bg-white border-2 border-black shadow-[8px_8px_0px_#111] relative z-10 mx-auto max-w-md lg:max-w-none">
-              <GlowingEffect spread={40} glow={false} disabled={false} proximity={80} inactiveZone={0.01} borderWidth={2} />
-
-              {/* Card header */}
-              <div className="bg-black text-white p-3 text-xs font-mono flex justify-between items-center border-b-2 border-black">
-                <span className="font-black tracking-widest">WHAT YOU GET</span>
-                <span className="flex items-center gap-1.5 text-accent-yellow">
-                  <span className="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse" />
-                  <span className="font-black tracking-widest">VERIFIED</span>
-                </span>
-              </div>
-
-              <div className="p-3 bg-white flex flex-col gap-2">
-                {/* Hero counter — the single, biggest social-proof metric */}
-                <div className="bg-gradient-to-br from-black via-black to-gray-900 text-white border-2 border-black p-3 relative overflow-hidden shadow-[3px_3px_0px_#FFD500]">
-                  <div className="absolute -top-10 -right-10 w-40 h-40 bg-accent-yellow/30 rounded-full blur-3xl pointer-events-none" />
-                  <div className="absolute -bottom-12 -left-12 w-32 h-32 bg-sky-500/15 rounded-full blur-2xl pointer-events-none" />
-                  <div className="relative">
-                    <div className="flex items-center justify-between mb-0.5">
-                      <p className="font-mono text-[10px] font-black uppercase tracking-[0.16em] text-gray-400">
-                        Saved by founders so far
-                      </p>
-                      <span className="inline-flex items-center gap-1 font-mono text-[9px] font-black uppercase tracking-widest text-accent-yellow">
-                        <span className="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse" />
-                        live
-                      </span>
-                    </div>
-                    <p className="font-mono font-black text-2xl md:text-[28px] text-accent-yellow tabular-nums leading-none">
-                      $
-                      <CountUp
-                        start={memberSavingsStartRef.current}
-                        end={memberSavingsEnd}
-                        duration={1.4}
-                        separator=","
-                      />
-                    </p>
-                    <p className="font-mono text-[10px] text-gray-300 mt-1 flex items-center gap-1">
-                      <span className="material-symbols-outlined !text-[12px] text-green-400" style={{ fontVariationSettings: "'FILL' 1" }}>
-                        trending_up
-                      </span>
-                      across cloud credits, grants &amp; SaaS deals
-                    </p>
-                  </div>
-                </div>
-
-                {/* Value stack — Hormozi-style itemized offer */}
-                <div className="grid grid-cols-2 gap-1.5">
-                  {VALUE_STACK.map((item) => (
-                    <div
-                      key={item.label}
-                      className={`${item.color} border-2 border-black p-2 shadow-[2px_2px_0px_#111] flex items-center gap-2 hover:-translate-y-0.5 transition-transform`}
-                    >
-                      <span className={`material-symbols-outlined !text-[18px] ${item.accent} flex-shrink-0`}>
-                        {item.icon}
-                      </span>
-                      <div className="min-w-0 flex-1">
-                        <p className={`font-mono font-black text-[13px] ${item.accent} leading-none`}>{item.value}</p>
-                        <p className="font-mono text-[9px] text-gray-700 uppercase tracking-wider mt-0.5 truncate">
-                          {item.label}
-                        </p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Close — single CTA strip, no second number */}
+                <GlowingEffect spread={50} glow disabled={false} proximity={80} inactiveZone={0.01} borderWidth={2} />
                 <Link
                   href="/pricing"
-                  className="group bg-accent-yellow text-black border-2 border-black px-3 py-2 font-mono font-black text-[11px] uppercase tracking-[0.16em] hover:bg-black hover:text-accent-yellow transition-colors flex items-center justify-center gap-2 shadow-[3px_3px_0px_#111]"
+                  className="bg-accent-yellow text-black text-sm md:text-base font-black py-3.5 md:py-4 px-5 md:px-6 flex items-center justify-center gap-2 transition-all hover:bg-black hover:text-accent-yellow shadow-[5px_5px_0px_0px_rgba(0,0,0,1)] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[3px] hover:translate-y-[3px] w-full font-mono uppercase tracking-wider border-2 border-black"
                 >
-                  Unlock the Full Catalog
-                  <span className="material-symbols-outlined !text-[14px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                  <span className="material-symbols-outlined !text-[18px]">bolt</span>
+                  Unlock Founder Perks
                 </Link>
               </div>
+              <Link
+                href="/pricing"
+                className="flex items-center justify-center gap-2 border-2 border-black bg-white text-black font-mono font-black text-sm md:text-base py-3.5 md:py-4 px-5 md:px-6 hover:bg-black hover:text-white transition-all uppercase tracking-wider whitespace-nowrap shadow-[5px_5px_0px_0px_rgba(0,0,0,1)] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[3px] hover:translate-y-[3px]"
+              >
+                See Pricing
+                <span className="material-symbols-outlined !text-[18px]">arrow_forward</span>
+              </Link>
             </div>
-            {/* Decorative offset border */}
-            <div className="absolute -top-4 -right-4 w-full h-full border-2 border-black bg-transparent z-0 pointer-events-none" />
+
+            {/* Trust line */}
+            <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
+              {TRUST_POINTS.map((text) => (
+                <span key={text} className="inline-flex items-center gap-1.5 text-xs md:text-[13px] font-mono font-bold text-gray-600">
+                  <span
+                    className="material-symbols-outlined !text-[16px] text-green-600 flex-shrink-0"
+                    style={{ fontVariationSettings: "'FILL' 1" }}
+                  >
+                    check_circle
+                  </span>
+                  {text}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          {/* ─── RIGHT: Dark "total saved" card ─── */}
+          <div className="lg:col-span-5 relative">
+            {/* Double stacked yellow offset blocks (brutalist depth) */}
+            <div aria-hidden="true" className="absolute inset-0 translate-x-6 translate-y-6 bg-accent-yellow/80 pointer-events-none hidden md:block" />
+            <div aria-hidden="true" className="absolute inset-0 translate-x-3 translate-y-3 bg-accent-yellow pointer-events-none hidden md:block" />
+
+            <div
+              className="relative z-10 bg-black p-6 md:p-7"
+              style={{ clipPath: CARD_CLIP }}
+            >
+              {/* Card header */}
+              <div className="flex items-center justify-between mb-3">
+                <span className="font-mono text-xs md:text-sm font-black uppercase tracking-[0.18em] text-white">
+                  Total Saved By Founders
+                </span>
+                <span className="inline-flex items-center gap-2 font-mono text-xs md:text-sm font-black uppercase tracking-[0.16em] text-white">
+                  <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
+                  Live
+                </span>
+              </div>
+
+              {/* Live counter */}
+              <p className="font-mono font-black text-[44px] md:text-[58px] text-accent-yellow tabular-nums leading-none mb-2.5">
+                $
+                <CountUp start={savedStartRef.current} end={savedEnd} duration={1.4} separator="," />
+              </p>
+              <p className="font-mono text-[11px] md:text-[13px] text-gray-300 flex items-center gap-1.5">
+                <span
+                  className="material-symbols-outlined !text-[15px] text-green-400"
+                  style={{ fontVariationSettings: "'FILL' 1" }}
+                >
+                  trending_up
+                </span>
+                Across cloud credits, grants &amp; SaaS deals
+              </p>
+
+              {/* Divider */}
+              <div className="h-px bg-white/15 my-5" />
+
+              {/* Stat grid 2×3 */}
+              <div className="grid grid-cols-3 gap-3 mb-5">
+                {STAT_CARDS.map((s) => (
+                  <StatTile key={s.label} stat={s} />
+                ))}
+              </div>
+
+              {/* Catalog CTA */}
+              <Link
+                href="/deals"
+                className="group relative overflow-hidden bg-accent-yellow text-black px-5 py-3.5 font-mono font-black text-sm md:text-base uppercase tracking-[0.12em] hover:bg-white transition-colors flex items-center gap-3"
+              >
+                Browse The Full Catalog
+                <span className="material-symbols-outlined !text-[20px] group-hover:translate-x-1 transition-transform">
+                  arrow_forward
+                </span>
+                {/* Diagonal hatch corner (twin slashes) */}
+                <span
+                  aria-hidden="true"
+                  className="absolute bottom-0 right-0 w-14 h-full pointer-events-none"
+                  style={{
+                    backgroundImage:
+                      'repeating-linear-gradient(-45deg, #000 0px, #000 2px, transparent 2px, transparent 9px)',
+                    clipPath: 'polygon(100% 0, 100% 100%, 30% 100%)',
+                  }}
+                />
+              </Link>
+            </div>
           </div>
         </div>
       </div>
 
-      {/* ─── Marquee Ticker — keeps urgency at the edge ─── */}
-      <div className="hidden md:block bg-black py-2 overflow-hidden border-t-2 border-b-2 border-black w-full relative z-20 mt-auto">
-        <div className="marquee flex items-center gap-8 md:gap-12 whitespace-nowrap">
-          {[
-            { text: 'AWS ACTIVATE // $100K CREDITS', icon: 'terminal', color: 'text-accent-yellow' },
-            { text: 'GITHUB // ENTERPRISE PACK FREE', icon: 'code', color: 'text-accent-cyan' },
-            { text: 'NOTION // 6 MONTHS FREE', icon: 'dataset', color: 'text-primary' },
-            { text: 'STRIPE // ZERO FEES UP TO $20K', icon: 'attach_money', color: 'text-accent-red' },
-            { text: 'HUBSPOT // 90% OFF YEAR ONE', icon: 'hub', color: 'text-accent-yellow' },
-            { text: 'DIGITALOCEAN // $500 CREDIT', icon: 'dns', color: 'text-accent-cyan' },
-            { text: 'OPENAI // FOUNDER CREDITS', icon: 'psychology', color: 'text-primary' },
-            { text: 'GOOGLE CLOUD // UP TO $200K', icon: 'cloud', color: 'text-accent-red' },
-          ].concat([
-            { text: 'AWS ACTIVATE // $100K CREDITS', icon: 'terminal', color: 'text-accent-yellow' },
-            { text: 'GITHUB // ENTERPRISE PACK FREE', icon: 'code', color: 'text-accent-cyan' },
-            { text: 'NOTION // 6 MONTHS FREE', icon: 'dataset', color: 'text-primary' },
-            { text: 'STRIPE // ZERO FEES UP TO $20K', icon: 'attach_money', color: 'text-accent-red' },
-            { text: 'HUBSPOT // 90% OFF YEAR ONE', icon: 'hub', color: 'text-accent-yellow' },
-            { text: 'DIGITALOCEAN // $500 CREDIT', icon: 'dns', color: 'text-accent-cyan' },
-            { text: 'OPENAI // FOUNDER CREDITS', icon: 'psychology', color: 'text-primary' },
-            { text: 'GOOGLE CLOUD // UP TO $200K', icon: 'cloud', color: 'text-accent-red' },
-          ]).map((d, i) => (
-            <span key={i} className="text-white font-mono text-xs md:text-sm font-bold flex items-center gap-1.5 md:gap-2">
-              <span className={`material-symbols-outlined text-sm md:text-base ${d.color}`}>{d.icon}</span>
-              {d.text}
-            </span>
-          ))}
-        </div>
-      </div>
-
-      {/* Mobile-only bottom-anchored brand wall */}
-      <div className="md:hidden w-full px-4 pb-3 mt-auto hero-mobile-fade hero-mobile-fade-5">
-        <p className="text-[8px] font-mono font-black uppercase tracking-widest text-gray-500 mb-1 mt-4">Credits &amp; grants from</p>
-        <div
-          className="relative w-full overflow-hidden mb-2"
-          style={{
-            maskImage: 'linear-gradient(to right,transparent,black 12%,black 88%,transparent)',
-            WebkitMaskImage: 'linear-gradient(to right,transparent,black 12%,black 88%,transparent)',
-          }}
-        >
-          <div className="mobile-brand-marquee flex items-center gap-5 whitespace-nowrap">
-            {BRANDS_LOOP.map((b, i) => (
-              <div key={`brand-${i}`} className="flex flex-col items-center gap-0.5 flex-shrink-0">
-                <div className="w-8 h-8 bg-white border-2 border-black flex items-center justify-center shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] p-1">
-                  <BrandLogo name={b.name} domain={b.domain} size="sm" eager />
-                </div>
-                <span className="text-[7px] font-mono text-gray-500 font-bold uppercase truncate max-w-[32px] text-center">
-                  {b.name.split(' ')[0]}
+      {/* ─── Trusted-by bar ─── */}
+      <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 mt-10 md:mt-14 mb-8 md:mb-12 relative z-10">
+        <div className="border-2 border-black bg-white px-5 md:px-8 py-4 md:py-5 shadow-[4px_4px_0px_rgba(0,0,0,1)] flex flex-col lg:flex-row items-center gap-4 lg:gap-8">
+          <span className="font-mono text-[10px] md:text-xs font-black uppercase tracking-[0.16em] text-gray-500 flex items-center gap-2 flex-shrink-0">
+            Trusted by founders using
+            <span className="material-symbols-outlined !text-[16px]">arrow_forward</span>
+          </span>
+          <div className="flex flex-wrap items-center justify-center gap-6 md:gap-10 flex-1">
+            {TRUSTED_BRANDS.map((b) => (
+              <div key={b.name} className="flex items-center gap-2 grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition-all">
+                <BrandLogo name={b.name} domain={b.domain} size="sm" eager />
+                <span className="font-mono text-xs md:text-sm font-bold text-gray-700 whitespace-nowrap hidden sm:inline">
+                  {b.name}
                 </span>
               </div>
             ))}
+            <span className="font-mono text-[10px] md:text-xs font-bold text-gray-400 uppercase tracking-wider whitespace-nowrap">
+              And 100+ More
+            </span>
           </div>
         </div>
-
-        <div className="flex justify-center mt-2">
-          <span className="material-symbols-outlined text-black/20 text-lg animate-bounce">expand_more</span>
-        </div>
-      </div>
-
-      <div className="md:hidden w-full" aria-hidden="true">
-        <div className="h-[3px] bg-black/10 w-full" />
       </div>
     </section>
   )

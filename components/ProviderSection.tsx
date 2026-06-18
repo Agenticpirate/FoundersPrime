@@ -1,236 +1,300 @@
-'use client'
-
 import Link from 'next/link'
-import { useState, useEffect } from 'react'
+import Mandala from '@/components/ui/Mandala'
+
+/* ─── Left column — value props ─── */
+const leftFeatures = [
+  { icon: 'groups', text: 'Reach 50K+ founders every month' },
+  { icon: 'ads_click', text: 'High-intent audience actively searching' },
+  { icon: 'verified_user', text: 'Trusted by the founder community' },
+  { icon: 'monitoring', text: 'Boost visibility. Drive more signups.' },
+]
+
+/* ─── The exact perks shown on the live featured slot ─── */
+const slotPerks = ['Pinned above all listings', '⭐ Featured badge', 'Auto-refund if not approved']
+
+/* ─── Regular listings shown beneath the featured slot (for context) ─── */
+const regularRows = [
+  { icon: 'cloud', name: 'Cloud Credits Program', value: 'Up to $100K' },
+  { icon: 'rocket_launch', name: 'Accelerator Access', value: '$25K+ perks' },
+]
+
+/* ─── Middle preview — live performance stats ─── */
+const livePerf = [
+  { icon: 'groups', value: '50K+', label: 'Monthly Views' },
+  { icon: 'trending_up', value: '3X', label: 'More Visibility' },
+  { icon: 'workspace_premium', value: 'TOP 1%', label: 'Placement' },
+  { icon: 'bolt', value: '24H', label: 'Approval' },
+]
+
+/* ─── Right card — what the featured slot includes ─── */
+const yellowFeatures = [
+  'Pinned to the top of the homepage & deals feed',
+  'Featured badge that signals trust',
+  'Permanent dofollow backlink for SEO',
+  'Priority spot in the weekly founder newsletter',
+  'Live views & clicks analytics on your listing',
+  'Auto-refund if your deal is not approved',
+]
+
+/* ─── Spinning orbital ornament (matches the live featured slot) ─── */
+function Orbital({ className = '' }: { className?: string }) {
+  return (
+    <div className={`pointer-events-none ${className}`} aria-hidden="true">
+      <svg viewBox="0 0 200 200" className="w-full h-full text-accent-yellow mandala-spin-cw" fill="none" stroke="currentColor" strokeWidth="0.8">
+        <circle cx="100" cy="100" r="45" />
+        <circle cx="100" cy="100" r="70" strokeDasharray="2 5" />
+        {[0, 72, 144, 216, 288].map((deg) => (
+          <g key={deg} transform={`rotate(${deg} 100 100)`}>
+            <line x1="100" y1="45" x2="100" y2="25" />
+            <circle cx="100" cy="25" r="2.5" fill="currentColor" />
+          </g>
+        ))}
+        <circle cx="100" cy="100" r="3" fill="currentColor" />
+      </svg>
+    </div>
+  )
+}
 
 export default function ProviderSection() {
-  const [mounted, setMounted] = useState(false)
-
-  useEffect(() => {
-    setMounted(true)
-  }, [])
-
-  if (!mounted) {
-    return (
-      <section className="py-8 md:py-14 border-b-2 border-black bg-gradient-to-b from-gray-50 to-white">
-        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="border-2 border-black shadow-[5px_5px_0px_#111] bg-white h-[200px] md:h-[400px] flex items-center justify-center">
-            <span className="font-mono animate-pulse text-sm">Loading...</span>
-          </div>
-        </div>
-      </section>
-    )
-  }
-
   return (
-    <section className="relative py-8 md:py-14 border-b-2 border-black bg-gradient-to-b from-gray-50 to-white overflow-hidden grid-bg">
+    <section className="relative overflow-hidden bg-[#FAF9F5] py-10 md:py-12 border-y border-black/5">
+      {/* ─── Ambient ornament (decorative, subtle) ─── */}
+      <Mandala
+        variant="rings"
+        colorClass="text-black"
+        opacity={0.035}
+        speed={150}
+        direction="cw"
+        className="hidden lg:block absolute -bottom-40 -left-32 w-[26rem] h-[26rem]"
+      />
 
-      <div className="relative max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="border-2 border-black shadow-[5px_5px_0px_#111] bg-[#fdfbf7] grid grid-cols-1 lg:grid-cols-2 overflow-hidden">
-          {/* Left Content */}
-          <div className="relative p-5 sm:p-6 md:p-10 lg:p-12 flex flex-col justify-center border-b-2 lg:border-b-0 lg:border-r-2 border-black overflow-hidden">
-            {/* Minimalist tech mandala — sits behind content */}
-            <div className="absolute -bottom-20 -left-16 w-72 h-72 text-accent-yellow opacity-[0.18] pointer-events-none mandala-spin-slow">
-              <svg viewBox="0 0 200 200" className="w-full h-full" fill="none" stroke="currentColor" strokeWidth="0.7">
-                <circle cx="100" cy="100" r="40" />
-                <circle cx="100" cy="100" r="60" strokeDasharray="2 4" />
-                <circle cx="100" cy="100" r="80" strokeDasharray="1 6" />
-                {[0, 60, 120, 180, 240, 300].map((deg) => (
-                  <g key={deg} transform={`rotate(${deg} 100 100)`}>
-                    <line x1="100" y1="40" x2="100" y2="20" />
-                    <circle cx="100" cy="20" r="2.5" fill="currentColor" />
-                  </g>
-                ))}
-                <circle cx="100" cy="100" r="3" fill="currentColor" />
-              </svg>
+      <div className="relative z-10 max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.35fr_1.05fr] gap-6 items-start">
+
+          {/* ══════════ LEFT — pitch ══════════ */}
+          <div className="fp-fade-up">
+            {/* tag with yellow underline */}
+            <div className="inline-block mb-5">
+              <span className="inline-flex items-center gap-1.5 border border-black/15 bg-white/70 px-2.5 py-1 rounded-[3px] font-mono text-[9px] font-black uppercase tracking-[0.12em] text-black/70">
+                <span className="material-symbols-outlined !text-[12px] text-black">campaign</span>
+                More visibility. More founders. More growth.
+              </span>
+              <span className="block h-[3px] bg-accent-yellow rounded-full mt-1.5" />
             </div>
 
-            <span className="relative inline-flex items-center gap-1.5 bg-black text-accent-yellow font-mono text-[9px] md:text-[10px] font-black uppercase tracking-widest px-2.5 py-1 border border-black mb-4 self-start">
-              <span className="material-symbols-outlined text-[12px]">handshake</span>
-              For SaaS, grants & programs
+            {/* headline */}
+            <h2 className="font-mono font-black uppercase text-black tracking-tight leading-[1.05] text-[24px] sm:text-[28px]">
+              Founders are looking.
+            </h2>
+            <span className="mt-2 inline-block bg-accent-yellow text-black font-mono font-black uppercase tracking-tight leading-none text-[24px] sm:text-[28px] px-2.5 py-1.5">
+              Be findable.
             </span>
 
-            <h2 className="relative text-2xl md:text-4xl font-black text-black font-mono mb-3 uppercase tracking-tight leading-tight">
-              Founders are looking.<br />
-              <span className="bg-accent-yellow px-2 border-2 border-black inline-block mt-2">Be findable.</span>
-            </h2>
-
-            <p className="relative text-sm md:text-base text-gray-700 mb-4 leading-relaxed max-w-lg font-sans">
-              Hundreds of verified deals. 4.2x baseline claim rate. Zero listing fees.
-              We put your offer in front of high-intent founders — not tire kickers.
+            {/* body */}
+            <p className="mt-4 font-sans text-sm text-gray-600 leading-relaxed max-w-sm">
+              Put your program in front of thousands of founders actively searching for resources like yours.
             </p>
 
-            {/* Compact stat strip — sits in the previously-empty space */}
-            <div className="relative grid grid-cols-3 gap-2 mb-4 max-w-md">
-              {[
-                { value: 'Hundreds', label: 'Deals listed', icon: 'inventory_2' },
-                { value: '4.2x', label: 'Claim rate', icon: 'trending_up' },
-                { value: '$0', label: 'Listing fee', icon: 'sell' },
-              ].map((s) => (
-                <div
-                  key={s.label}
-                  className="bg-white border-2 border-black px-2 py-2 shadow-[2px_2px_0px_#111] flex flex-col items-start gap-0.5 sm:flex-row sm:items-center sm:gap-1.5 sm:py-1.5 hover:-translate-y-0.5 transition-transform"
-                >
-                  <span className="material-symbols-outlined text-sm text-black flex-shrink-0">{s.icon}</span>
-                  <div className="min-w-0">
-                    <p className="font-mono font-black text-xs leading-none">{s.value}</p>
-                    <p className="font-mono text-[8px] uppercase tracking-tight sm:tracking-widest text-gray-500 mt-0.5 truncate">{s.label}</p>
-                  </div>
-                </div>
+            {/* feature list */}
+            <ul className="mt-5 space-y-2.5">
+              {leftFeatures.map((f) => (
+                <li key={f.text} className="flex items-center gap-3">
+                  <span className="w-6 h-6 rounded-md bg-accent-yellow flex items-center justify-center flex-shrink-0">
+                    <span className="material-symbols-outlined !text-[14px] text-black">{f.icon}</span>
+                  </span>
+                  <span className="font-sans font-bold text-[13px] text-black leading-snug">{f.text}</span>
+                </li>
               ))}
-            </div>
+            </ul>
 
-            <div className="relative flex flex-col sm:flex-row sm:flex-wrap gap-2.5 sm:gap-3">
-              <Link
-                href="/submit-deal"
-                className="bg-black text-white border-2 border-black px-5 py-3 font-mono font-black uppercase text-xs tracking-wider flex items-center justify-center sm:justify-start gap-2 hover:bg-accent-yellow hover:text-black transition-colors shadow-[3px_3px_0px_rgba(0,0,0,0.2)] hover:-translate-y-0.5 hover:shadow-[5px_5px_0px_rgba(0,0,0,0.2)]"
-              >
-                Submit your deal
-                <span className="material-symbols-outlined text-base">arrow_forward</span>
-              </Link>
-              <a
-                href="mailto:partners@foundersprime.com"
-                className="bg-white text-black border-2 border-black px-5 py-3 font-mono font-black uppercase text-xs tracking-wider flex items-center justify-center sm:justify-start gap-2 hover:bg-black hover:text-white transition-colors shadow-[3px_3px_0px_rgba(0,0,0,0.2)] hover:-translate-y-0.5 hover:shadow-[5px_5px_0px_rgba(0,0,0,0.2)]"
-              >
-                <span className="material-symbols-outlined text-base">mail</span>
-                Talk to us
-              </a>
-            </div>
+            {/* CTA */}
+            <Link
+              href="/submit-deal"
+              className="group mt-6 inline-flex items-center gap-2 rounded-lg border-2 border-black bg-black text-white px-5 py-2.5 font-mono font-black uppercase text-[11px] tracking-[0.12em] shadow-[4px_4px_0_#111] hover:-translate-y-0.5 hover:shadow-[6px_6px_0_#111] transition-all"
+            >
+              List your program
+              <span className="material-symbols-outlined !text-[16px] transition-transform group-hover:translate-x-0.5">arrow_forward</span>
+            </Link>
 
-            {/* Tiny live indicator at the bottom */}
-            <div className="relative mt-3 flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
-              <span className="font-mono text-[9px] md:text-[10px] uppercase tracking-widest text-gray-500">
-                Reviewing submissions weekly
-              </span>
+            {/* dots ornament */}
+            <div className="mt-7 flex items-center gap-1.5" aria-hidden="true">
+              {[0.2, 0.3, 0.55, 0.3, 0.2].map((o, i) => (
+                <span key={i} className="w-1.5 h-1.5 rounded-full bg-black" style={{ opacity: o }} />
+              ))}
+              <span className="ml-2 h-px w-16 bg-black/15" />
             </div>
           </div>
 
-          {/* Right: Decorative card */}
-          <div className="relative flex bg-[#fdfbf7] p-6 md:p-10 flex-col items-center justify-center overflow-hidden group">
-            <div className="absolute top-0 right-0 w-48 h-48 bg-accent-yellow/30 rounded-full blur-3xl -mr-10 -mt-10 pointer-events-none" />
-            <div className="absolute bottom-0 left-0 w-48 h-48 bg-blue-400/15 rounded-full blur-3xl -ml-10 -mb-10 pointer-events-none" />
+          {/* ══════════ MIDDLE — live deals-feed preview ══════════ */}
+          <div className="fp-fade-up space-y-3.5" style={{ animationDelay: '0.08s' }}>
+            {/* toolbar */}
+            <div className="flex items-center gap-2">
+              <div className="flex-1 inline-flex items-center gap-2 rounded-lg border border-black/10 bg-white px-3 py-2 shadow-sm min-w-0">
+                <span className="material-symbols-outlined !text-[15px] text-gray-400">search</span>
+                <span className="font-sans text-[11.5px] text-gray-400 truncate">Search startup programs, founder deals...</span>
+              </div>
+              <div className="hidden sm:inline-flex items-center gap-1.5 rounded-lg border border-black/10 bg-white px-3 py-2 shadow-sm flex-shrink-0">
+                <span className="font-sans text-[11.5px] text-gray-500 whitespace-nowrap">All Categories</span>
+                <span className="material-symbols-outlined !text-[15px] text-gray-400">expand_more</span>
+              </div>
+            </div>
 
-            <div className="relative z-10 w-full max-w-[340px] transform group-hover:-translate-y-1 group-hover:rotate-1 transition-transform duration-500">
-              <div className="absolute -top-3 -right-3 bg-accent-yellow text-black border-2 border-black px-3 py-0.5 font-mono font-black text-[10px] uppercase tracking-wider shadow-[2px_2px_0px_#111] z-20 rotate-3">
-                Verified Partner
+            {/* the deals feed — featured slot pinned above regular listings */}
+            <div className="relative rounded-xl border border-black/10 bg-white/60 p-3 shadow-[0_10px_30px_rgba(0,0,0,0.05)]">
+              {/* pinned label */}
+              <div className="flex items-center justify-between px-0.5 mb-2">
+                <span className="inline-flex items-center gap-1.5 font-mono text-[8.5px] font-black uppercase tracking-[0.14em] text-gray-500">
+                  <span className="material-symbols-outlined !text-[12px] text-amber-500" style={{ fontVariationSettings: "'FILL' 1" }}>push_pin</span>
+                  Pinned to top
+                </span>
+                <span className="font-mono text-[8px] font-bold uppercase tracking-[0.1em] text-gray-400">Ad</span>
               </div>
 
-              <div className="bg-white border-2 border-black shadow-[5px_5px_0px_#111] p-5 flex flex-col gap-3">
-                <div className="flex items-center gap-3 border-b-2 border-dashed border-gray-200 pb-3">
-                  <div className="w-12 h-12 bg-black flex items-center justify-center border-2 border-black shadow-[2px_2px_0px_#111]">
-                    <span className="material-symbols-outlined text-accent-yellow text-2xl">rocket_launch</span>
+              {/* ★ THE ACTUAL FEATURED SLOT (matches the live deals page) */}
+              <div className="relative overflow-hidden rounded-lg border-2 border-black bg-gradient-to-br from-gray-900 via-gray-900 to-black text-white shadow-[4px_4px_0_#111] p-4">
+                <Orbital className="absolute -top-8 -right-8 w-28 h-28 opacity-[0.16]" />
+                <div className="relative">
+                  <span className="inline-flex items-center gap-1.5 bg-accent-yellow text-black font-mono text-[8px] font-black uppercase tracking-[0.12em] px-2 py-0.5 border border-black mb-2.5">
+                    <span className="w-1 h-1 rounded-full bg-black animate-pulse" />
+                    Open Slot
+                  </span>
+                  <p className="font-mono font-black uppercase leading-tight text-base mb-1">Your deal here</p>
+                  <p className="text-gray-300 leading-relaxed text-[11px] mb-3 max-w-[34ch]">
+                    Pin your offer to the top and get seen first by thousands of verified founders.
+                  </p>
+                  <ul className="space-y-1 mb-3.5">
+                    {slotPerks.map((b) => (
+                      <li key={b} className="flex items-center gap-1.5 text-gray-200 text-[10.5px]">
+                        <span className="material-symbols-outlined text-accent-yellow !text-[13px]">check</span>
+                        {b}
+                      </li>
+                    ))}
+                  </ul>
+                  <div className="flex items-center justify-between">
+                    <span className="font-mono text-[10px] text-gray-400 uppercase tracking-wide">
+                      From <span className="text-accent-yellow font-black text-xs">$25</span>/wk
+                    </span>
+                    <span className="inline-flex items-center gap-1 bg-accent-yellow text-black font-mono text-[10px] font-black uppercase tracking-wide px-2.5 py-1 border border-black">
+                      Get Featured
+                      <span className="material-symbols-outlined !text-[13px]">arrow_forward</span>
+                    </span>
                   </div>
-                  <div>
-                    <p className="font-mono font-black text-sm uppercase tracking-tight">Your Product</p>
-                    <p className="font-mono text-[10px] text-gray-500 uppercase tracking-widest">Verified · Featured</p>
+                </div>
+              </div>
+
+              {/* regular listings beneath (dimmed, for context) */}
+              <div className="grid grid-cols-2 gap-2 mt-2 opacity-80">
+                {regularRows.map((r) => (
+                  <div key={r.name} className="rounded-lg border border-black/10 bg-white p-2.5">
+                    <div className="flex items-center gap-2">
+                      <span className="w-7 h-7 flex-shrink-0 rounded-md border border-black/10 bg-gray-50 flex items-center justify-center">
+                        <span className="material-symbols-outlined !text-[15px] text-gray-300">{r.icon}</span>
+                      </span>
+                      <p className="font-sans font-bold text-[10.5px] text-gray-700 leading-tight truncate">{r.name}</p>
+                    </div>
+                    <div className="mt-2 flex items-center justify-between">
+                      <span className="font-mono text-[9px] font-black text-emerald-600">{r.value}</span>
+                      <span className="font-mono text-[7.5px] font-black uppercase tracking-wide text-gray-400 border border-black/10 rounded px-1.5 py-0.5">View</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* live performance */}
+            <div>
+              <span className="inline-flex items-center bg-black text-white font-mono text-[9px] font-black uppercase tracking-[0.15em] px-2.5 py-1 rounded-[3px]">
+                Live Performance
+              </span>
+              <div className="mt-2.5 grid grid-cols-4 rounded-xl border border-black/10 bg-white shadow-sm divide-x divide-black/10 overflow-hidden">
+                {livePerf.map((s) => (
+                  <div key={s.label} className="flex flex-col items-center text-center px-2 py-3">
+                    <span className="material-symbols-outlined !text-[16px] text-black mb-1" style={{ fontVariationSettings: "'FILL' 1" }}>{s.icon}</span>
+                    <p className="font-mono font-black text-[15px] text-black leading-none">{s.value}</p>
+                    <p className="font-mono text-[8px] uppercase tracking-wide text-gray-400 leading-tight mt-1">{s.label}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* ══════════ RIGHT — featured ad slot offer ══════════ */}
+          <div className="fp-fade-up" style={{ animationDelay: '0.16s' }}>
+            <div className="relative rounded-2xl border-2 border-black bg-accent-yellow shadow-[6px_6px_0_#111] overflow-hidden">
+              {/* most visibility tab */}
+              <div className="absolute top-0 right-0 z-10 flex items-center gap-1 bg-black text-accent-yellow px-2.5 py-1.5 rounded-bl-lg font-mono text-[8.5px] font-black uppercase tracking-[0.12em]">
+                <span className="material-symbols-outlined !text-[11px]" style={{ fontVariationSettings: "'FILL' 1" }}>bolt</span>
+                Most Visibility
+              </div>
+              {/* halftone dots */}
+              <div
+                className="pointer-events-none absolute top-11 right-4 w-20 h-14 text-black/20"
+                style={{ backgroundImage: 'radial-gradient(currentColor 1px, transparent 1px)', backgroundSize: '7px 7px' }}
+                aria-hidden="true"
+              />
+
+              <div className="relative p-5">
+                {/* slot pill */}
+                <span className="inline-flex items-center gap-1.5 bg-black text-accent-yellow font-mono text-[9px] font-black uppercase tracking-[0.12em] px-2.5 py-1 rounded-[3px] mb-3">
+                  <span className="material-symbols-outlined !text-[12px]" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
+                  Featured Ad Slot
+                </span>
+
+                {/* headline */}
+                <h3 className="font-mono font-black uppercase text-black tracking-tight leading-[1.1] text-xl mb-3.5">
+                  Get the top spot — without the{' '}
+                  <span className="text-accent-red">$1,499/mo</span> price tag.
+                </h3>
+
+                {/* price boxes */}
+                <div className="grid grid-cols-2 gap-2.5 mb-3.5">
+                  <div className="rounded-lg border border-black/15 bg-white px-3 py-2.5">
+                    <p className="font-mono text-[8px] font-bold uppercase tracking-widest text-gray-400">Typical Directory</p>
+                    <p className="font-mono font-black text-[15px] text-black/70 line-through decoration-accent-red decoration-2 my-1">$500 – $1,500</p>
+                    <p className="font-mono text-[8px] uppercase tracking-widest text-gray-400">/ Month</p>
+                  </div>
+                  <div className="rounded-lg bg-black px-3 py-2.5">
+                    <p className="font-mono text-[8px] font-bold uppercase tracking-widest text-accent-yellow">FoundersPrime</p>
+                    <p className="font-mono font-black leading-none my-1.5 flex items-baseline gap-1">
+                      <span className="text-[9px] uppercase tracking-widest text-white/70">From</span>
+                      <span className="text-accent-yellow text-2xl">$25</span>
+                    </p>
+                    <p className="font-mono text-[8px] uppercase tracking-widest text-white/50">/ Week &nbsp;or&nbsp; $99/mo</p>
                   </div>
                 </div>
 
-                <div className="space-y-2.5 py-1">
-                  {[
-                    { icon: 'check_circle', label: 'Direct founder access' },
-                    { icon: 'check_circle', label: 'Zero listing fees' },
-                    { icon: 'check_circle', label: 'High-intent traffic' },
-                    { icon: 'check_circle', label: 'Verified partner badge' },
-                  ].map((item) => (
-                    <div key={item.label} className="flex items-center gap-2">
-                      <span
-                        className="material-symbols-outlined text-green-500 text-base"
-                        style={{ fontVariationSettings: "'FILL' 1" }}
-                      >
-                        {item.icon}
+                {/* feature rows */}
+                <div className="border-y border-black/15 divide-y divide-black/15 mb-4">
+                  {yellowFeatures.map((f) => (
+                    <div key={f} className="flex items-center gap-2.5 py-1.5">
+                      <span className="w-4 h-4 flex-shrink-0 rounded-[3px] bg-black flex items-center justify-center">
+                        <span className="material-symbols-outlined !text-[11px] text-accent-yellow" style={{ fontVariationSettings: "'FILL' 1" }}>check</span>
                       </span>
-                      <span className="font-sans font-bold text-sm text-gray-800">{item.label}</span>
+                      <span className="flex-1 font-sans text-[11.5px] text-black leading-tight">{f}</span>
+                      <span className="material-symbols-outlined !text-[15px] text-black flex-shrink-0" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
                     </div>
                   ))}
                 </div>
 
-                <div className="bg-black p-3 border-2 border-black flex items-center justify-between text-white group-hover:bg-accent-yellow group-hover:text-black transition-colors duration-300">
-                  <span className="font-mono text-[10px] font-black uppercase tracking-widest">Avg. claim rate</span>
-                  <span className="font-mono text-base font-black">4.2x baseline</span>
-                </div>
-              </div>
-            </div>
+                {/* CTA */}
+                <Link
+                  href="/submit-deal?tier=featured"
+                  className="group fp-sheen flex items-center justify-center gap-2 w-full rounded-lg border-2 border-black bg-black text-white px-5 py-3 font-mono font-black uppercase text-[11px] tracking-[0.12em] hover:bg-[#1a1a1a] transition-colors"
+                >
+                  <span className="material-symbols-outlined !text-[15px] text-accent-yellow" style={{ fontVariationSettings: "'FILL' 1" }}>bolt</span>
+                  Claim Featured Spot
+                </Link>
 
-            <div className="mt-6 text-center relative z-10">
-              <p className="font-mono text-[10px] font-black text-gray-400 uppercase tracking-widest mb-3">
-                Join Top Tier Providers
-              </p>
-              <div className="flex justify-center -space-x-2">
-                {[
-                  { name: 'Stripe', domain: 'stripe.com' },
-                  { name: 'AWS', domain: 'amazon.com' },
-                  { name: 'Google', domain: 'google.com' },
-                  { name: 'HubSpot', domain: 'hubspot.com' },
-                  { name: 'Notion', domain: 'notion.so' },
-                ].map((brand, i) => (
-                  <ProviderAvatar key={i} brand={brand} />
-                ))}
-                <div className="w-9 h-9 rounded-full border-2 border-white bg-black text-accent-yellow flex items-center justify-center text-[10px] font-mono font-black shadow-[1px_1px_0px_#111] relative z-0">
-                  +50
-                </div>
+                {/* footer */}
+                <p className="mt-3 text-center font-mono text-[8.5px] font-black uppercase tracking-[0.12em] text-black/60">
+                  Limited Slots • Founding Rate While It Lasts
+                </p>
               </div>
             </div>
           </div>
+
         </div>
       </div>
-
-      <style jsx>{`
-        @keyframes mandalaSpinSlow {
-          from { transform: rotate(0deg); }
-          to { transform: rotate(360deg); }
-        }
-        .mandala-spin-slow {
-          animation: mandalaSpinSlow 80s linear infinite;
-        }
-        @media (prefers-reduced-motion: reduce) {
-          .mandala-spin-slow {
-            animation: none;
-          }
-        }
-      `}</style>
     </section>
-  )
-}
-
-function ProviderAvatar({ brand }: { brand: { name: string; domain: string } }) {
-  const [fallbackIndex, setFallbackIndex] = useState(0)
-  const [loaded, setLoaded] = useState(false)
-  const [failed, setFailed] = useState(false)
-
-  const fallbackChain = [
-    `https://www.google.com/s2/favicons?domain=${brand.domain}&sz=128`,
-    `https://logo.clearbit.com/${brand.domain}`,
-  ]
-
-  const handleError = () => {
-    const nextIndex = fallbackIndex + 1
-    if (nextIndex < fallbackChain.length) {
-      setFallbackIndex(nextIndex)
-      setLoaded(false)
-    } else {
-      setFailed(true)
-    }
-  }
-
-  return (
-    <div
-      className={`w-9 h-9 rounded-full border-2 border-white flex items-center justify-center overflow-hidden ring-1 ring-transparent group-hover:ring-black transition-all relative z-0 hover:z-10 hover:-translate-y-1 shadow-[1px_1px_0px_#111] ${
-        failed ? 'bg-black text-white' : 'bg-white'
-      }`}
-    >
-      {failed ? (
-        <span className="text-[10px] font-black">{brand.name[0]}</span>
-      ) : (
-        <img
-          src={fallbackChain[fallbackIndex]}
-          alt={brand.name}
-          className={`w-full h-full object-contain p-1 transition-opacity duration-200 ${loaded ? 'opacity-100' : 'opacity-0'}`}
-          onLoad={() => setLoaded(true)}
-          onError={handleError}
-        />
-      )}
-    </div>
   )
 }

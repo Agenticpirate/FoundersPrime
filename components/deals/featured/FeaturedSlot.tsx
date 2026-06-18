@@ -15,7 +15,7 @@ interface FeaturedSlotProps {
     intervalMs?: number
     /** Stagger so different slots don't show the same deal simultaneously. */
     offset?: number
-    /** Show the "Featured / Ad" header label (set false for stacked extras). */
+    /** Show the "Pinned / Ad" header label (set false for stacked extras). */
     showHeader?: boolean
     /** Slimmer rail promo — for stacking multiple spots in a column. */
     compact?: boolean
@@ -52,7 +52,7 @@ function DealView({ deal, variant }: { deal: Deal; variant: Variant }) {
                 className="group relative flex items-center gap-4 bg-gradient-to-r from-gray-900 via-gray-900 to-black text-white border-2 border-black rounded-xl px-4 py-3 shadow-[3px_3px_0px_#111] hover:shadow-[5px_5px_0px_#111] hover:-translate-y-px transition-all overflow-hidden"
             >
                 <span className="absolute -top-1.5 -left-1.5 bg-amber-400 text-black border border-black px-1.5 py-0.5 font-mono text-[8px] font-black uppercase tracking-wider rotate-[-3deg]">
-                    ⭐ Featured
+                    📌 Pinned to top
                 </span>
                 <LogoTile deal={deal} size="w-12 h-12" />
                 <div className="min-w-0 flex-1">
@@ -80,7 +80,7 @@ function DealView({ deal, variant }: { deal: Deal; variant: Variant }) {
             >
                 <div className="px-3 pt-2.5">
                     <span className="inline-block px-1.5 py-0.5 bg-amber-400 text-black text-[8px] font-black uppercase tracking-wider rounded-sm">
-                        ⭐ Featured
+                        📌 Pinned to top
                     </span>
                 </div>
                 <div className="flex items-center gap-2.5 px-3 pt-2 pb-2">
@@ -112,7 +112,7 @@ function DealView({ deal, variant }: { deal: Deal; variant: Variant }) {
             className="group relative block bg-white border-2 border-black rounded-lg p-3 shadow-[3px_3px_0px_#111] hover:shadow-[5px_5px_0px_#111] hover:-translate-x-px hover:-translate-y-px transition-all overflow-hidden"
         >
             <span className="absolute -top-1.5 -right-1.5 bg-amber-400 text-black border border-black px-1.5 py-0.5 font-mono text-[8px] font-black uppercase tracking-wider shadow-[1px_1px_0px_#111] rotate-3">
-                ⭐ Featured
+                📌 Pinned
             </span>
             <div className="flex items-center gap-2.5">
                 <LogoTile deal={deal} size="w-9 h-9" />
@@ -147,7 +147,7 @@ function Promo({ variant, compact = false, dense = false }: { variant: Variant; 
                     </div>
                     <div className="min-w-0 flex-1">
                         <p className="font-mono text-[12px] font-black leading-tight">Your deal here</p>
-                        <p className="text-[10px] text-gray-400 truncate">Feature your offer</p>
+                        <p className="text-[10px] text-gray-400 truncate">Pin it to the top</p>
                     </div>
                 </div>
                 <div className="mt-2 flex items-center justify-between">
@@ -155,7 +155,7 @@ function Promo({ variant, compact = false, dense = false }: { variant: Variant; 
                         From <span className="text-accent-yellow font-black">$25</span>
                     </span>
                     <span className="inline-flex items-center gap-0.5 bg-accent-yellow text-black font-mono text-[9px] font-black uppercase tracking-wide px-2 py-0.5 border border-black">
-                        Get Featured
+                        Get Pinned
                         <span className="material-symbols-outlined !text-[11px] group-hover:translate-x-0.5 transition-transform">arrow_forward</span>
                     </span>
                 </div>
@@ -169,16 +169,24 @@ function Promo({ variant, compact = false, dense = false }: { variant: Variant; 
                 href="/submit-deal"
                 className="group relative flex items-center gap-4 bg-gradient-to-r from-gray-900 via-gray-900 to-black text-white border-2 border-black rounded-xl px-4 py-3 shadow-[3px_3px_0px_#111] hover:shadow-[5px_5px_0px_#111] hover:-translate-y-px transition-all overflow-hidden"
             >
-                <span className="inline-flex items-center gap-1.5 bg-accent-yellow text-black font-mono text-[8px] font-black uppercase tracking-[0.12em] px-2 py-0.5 border border-black whitespace-nowrap">
+                {/* Decorative megaphone watermark */}
+                <span
+                    aria-hidden="true"
+                    className="material-symbols-outlined pointer-events-none select-none absolute top-1/2 right-[32%] -translate-y-1/2 -rotate-12 hidden lg:block z-0 text-accent-yellow opacity-[0.16] !text-[72px]"
+                    style={{ fontVariationSettings: "'FILL' 1" }}
+                >
+                    campaign
+                </span>
+                <span className="relative z-10 inline-flex items-center gap-1.5 bg-accent-yellow text-black font-mono text-[8px] font-black uppercase tracking-[0.12em] px-2 py-0.5 border border-black whitespace-nowrap">
                     <span className="w-1 h-1 rounded-full bg-black animate-pulse" />
                     Open Slot
                 </span>
-                <div className="min-w-0 flex-1">
-                    <p className="font-mono text-sm md:text-base font-black leading-tight">Feature your deal right here</p>
-                    <p className="text-[11px] text-gray-300 truncate">Pin your offer to the top of the catalog — seen first by thousands of founders.</p>
+                <div className="relative z-10 min-w-0 flex-1">
+                    <p className="font-mono text-sm md:text-base font-black leading-tight">Pin your deal to the top</p>
+                    <p className="text-[11px] text-gray-300 truncate">Jump above every listing — seen first by thousands of founders.</p>
                 </div>
-                <span className="inline-flex items-center gap-1 bg-accent-yellow text-black font-mono text-[10px] md:text-[11px] font-black uppercase tracking-wide px-3 py-1.5 border-2 border-black whitespace-nowrap">
-                    From $25 · Get Featured
+                <span className="relative z-10 inline-flex items-center gap-1 bg-accent-yellow text-black font-mono text-[10px] md:text-[11px] font-black uppercase tracking-wide px-3 py-1.5 border-2 border-black whitespace-nowrap">
+                    From $25 · Get Pinned
                     <span className="material-symbols-outlined !text-[13px] group-hover:translate-x-0.5 transition-transform">arrow_forward</span>
                 </span>
             </Link>
@@ -195,7 +203,7 @@ function Promo({ variant, compact = false, dense = false }: { variant: Variant; 
                     Open Slot
                 </span>
                 <p className="font-mono text-sm font-black uppercase leading-tight mb-1">Your deal here</p>
-                <p className="text-[10.5px] text-gray-300 leading-snug mb-3">Get pinned with a ⭐ Featured badge.</p>
+                <p className="text-[10.5px] text-gray-300 leading-snug mb-3">Get pinned to the top with a 📌 badge.</p>
                 <span className="inline-flex items-center gap-1 bg-accent-yellow text-black font-mono text-[10px] font-black uppercase tracking-wide px-2.5 py-1 border border-black">
                     From $25
                     <span className="material-symbols-outlined !text-[12px] group-hover:translate-x-0.5 transition-transform">arrow_forward</span>
@@ -233,7 +241,7 @@ function Promo({ variant, compact = false, dense = false }: { variant: Variant; 
                     Pin your offer to the top and get seen first by thousands of verified founders.
                 </p>
                 <ul className={`${dense ? 'space-y-0.5 mb-2.5' : 'space-y-1 mb-3.5'}`}>
-                    {['Pinned above all listings', '⭐ Featured badge', 'Auto-refund if not approved'].map((b) => (
+                    {['Pinned above all listings', '📌 Pinned-to-top badge', 'Auto-refund if not approved'].map((b) => (
                         <li key={b} className={`flex items-center gap-1.5 text-gray-200 ${dense ? 'text-[9.5px]' : 'text-[10.5px]'}`}>
                             <span className={`material-symbols-outlined text-accent-yellow ${dense ? '!text-[12px]' : '!text-[13px]'}`}>check</span>
                             {b}
@@ -245,7 +253,7 @@ function Promo({ variant, compact = false, dense = false }: { variant: Variant; 
                         From <span className={`text-accent-yellow font-black ${dense ? 'text-[11px]' : 'text-xs'}`}>$25</span>/wk
                     </span>
                     <span className={`inline-flex items-center gap-1 bg-accent-yellow text-black font-mono font-black uppercase tracking-wide border border-black group-hover:gap-2 transition-all ${dense ? 'text-[9px] px-2 py-0.5' : 'text-[10px] px-2.5 py-1'}`}>
-                        Get Featured
+                        Get Pinned
                         <span className={`material-symbols-outlined group-hover:translate-x-0.5 transition-transform ${dense ? '!text-[12px]' : '!text-[13px]'}`}>arrow_forward</span>
                     </span>
                 </div>
@@ -282,8 +290,8 @@ export default function FeaturedSlot({
             {showHeader && (variant === 'rail' || variant === 'banner') && (
                 <div className="flex items-center justify-between mb-2 px-0.5">
                     <span className="inline-flex items-center gap-1.5 font-mono text-[9px] font-black uppercase tracking-[0.14em] text-gray-500">
-                        <span className="material-symbols-outlined !text-[13px] text-amber-500" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
-                        Featured
+                        <span className="material-symbols-outlined !text-[13px] text-amber-500" style={{ fontVariationSettings: "'FILL' 1" }}>push_pin</span>
+                        Pinned
                     </span>
                     <span className="font-mono text-[8px] font-bold uppercase tracking-[0.1em] text-gray-400">Ad</span>
                 </div>
@@ -313,7 +321,7 @@ export default function FeaturedSlot({
                     href="/submit-deal"
                     className="block text-center font-mono text-[9px] font-bold uppercase tracking-[0.12em] text-gray-500 hover:text-black transition-colors pt-2"
                 >
-                    + Feature your deal here
+                    + Pin your deal to the top
                 </Link>
             )}
         </div>

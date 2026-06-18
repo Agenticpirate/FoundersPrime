@@ -27,13 +27,18 @@ export interface SessionActivity {
 
 /**
  * Get current session information (server-side)
+ *
+ * SECURITY: authenticates with getUser() (which revalidates the token against
+ * the Supabase Auth server) rather than trusting getSession()'s cookie-decoded
+ * claims. Session metadata (expiry) is read only for display after the user is
+ * confirmed authentic.
  */
 export async function getSession(): Promise<SessionInfo> {
   try {
     const supabase = createClient()
-    const { data: { session }, error } = await supabase.auth.getSession()
+    const { data: { user }, error } = await supabase.auth.getUser()
 
-    if (error || !session) {
+    if (error || !user) {
       return {
         user: null,
         session: null,
@@ -41,12 +46,15 @@ export async function getSession(): Promise<SessionInfo> {
       }
     }
 
+    // User is verified; pull session only for non-authoritative expiry metadata.
+    const { data: { session } } = await supabase.auth.getSession()
+
     return {
-      user: session.user,
-      session: session,
+      user,
+      session: session ?? null,
       isAuthenticated: true,
-      expiresAt: session.expires_at ? new Date(session.expires_at * 1000) : undefined,
-      createdAt: session.user.created_at ? new Date(session.user.created_at) : undefined
+      expiresAt: session?.expires_at ? new Date(session.expires_at * 1000) : undefined,
+      createdAt: user.created_at ? new Date(user.created_at) : undefined
     }
   } catch {
     return {

@@ -141,7 +141,10 @@ export default function DealCard({ deal, basePath = '/deals', overrideHref }: De
                 alt={`${cleanProvider} logo`}
                 className="w-full h-full object-contain"
                 src={currentSrc}
+                width={40}
+                height={40}
                 loading="lazy"
+                decoding="async"
                 onLoad={() => setLoaded(true)}
                 onError={handleError}
               />

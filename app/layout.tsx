@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import Script from 'next/script'
-import { IBM_Plex_Sans, IBM_Plex_Mono, Space_Grotesk } from 'next/font/google'
+import { IBM_Plex_Sans, IBM_Plex_Mono, Space_Grotesk, Archivo } from 'next/font/google'
 import './globals.css'
 import CookieConsentProvider from '@/components/cookie/CookieConsentProvider'
 
@@ -30,6 +30,15 @@ const spaceGrotesk = Space_Grotesk({
   display: 'swap',
   variable: '--font-display',
   preload: false,
+})
+
+// Heavy display grotesque for the hero tagline ("BUILD MORE. BURN LESS.")
+const archivo = Archivo({
+  subsets: ['latin'],
+  weight: ['700', '800', '900'],
+  display: 'swap',
+  variable: '--font-heading',
+  preload: true,
 })
 
 export const metadata: Metadata = {
@@ -99,7 +108,7 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  const fontVariables = `${ibmPlexSans.variable} ${ibmPlexMono.variable} ${spaceGrotesk.variable}`
+  const fontVariables = `${ibmPlexSans.variable} ${ibmPlexMono.variable} ${spaceGrotesk.variable} ${archivo.variable}`
 
   return (
     <html lang="en" className={`light ${fontVariables}`}>
@@ -121,6 +130,13 @@ export default function RootLayout({
         {/* Material Symbols icons — async load so it doesn't block first paint */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        {/* Warm up connections to the third-party CDNs that serve deal brand
+            logos (favicons) and testimonial avatars, so image fetches don't pay
+            a fresh DNS+TLS handshake on first paint. */}
+        <link rel="preconnect" href="https://www.google.com" />
+        <link rel="dns-prefetch" href="https://logo.clearbit.com" />
+        <link rel="dns-prefetch" href="https://images.unsplash.com" />
+        <link rel="dns-prefetch" href="https://lh3.googleusercontent.com" />
         <link
           rel="preload"
           as="style"
