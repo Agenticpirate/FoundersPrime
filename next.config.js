@@ -89,6 +89,25 @@ const nextConfig = {
         destination: '/llms.txt',
         permanent: true,
       },
+      // Cloud Credits no longer has a dedicated landing page — send old
+      // links/bookmarks/SEO to the filtered All Deals view instead of 404.
+      {
+        source: '/deals/cloud-credits',
+        destination: '/deals?category=cloud-credits',
+        permanent: true,
+      },
+      // SaaS Discounts likewise folded into the filtered All Deals view.
+      {
+        source: '/deals/saas-discounts',
+        destination: '/deals?category=saas-discounts',
+        permanent: true,
+      },
+      // Ad Credits likewise folded into the filtered All Deals view.
+      {
+        source: '/deals/ad-credits',
+        destination: '/deals?category=ad-credits',
+        permanent: true,
+      },
     ]
   },
 }

@@ -74,9 +74,9 @@ export default function Header() {
       icon: 'local_offer',
       children: [
         { label: 'All Deals', href: '/deals', icon: 'grid_view' },
-        { label: 'Cloud Credits', href: '/deals/cloud-credits', icon: 'cloud' },
-        { label: 'SaaS Discounts', href: '/deals/saas-discounts', icon: 'apps' },
-        { label: 'Ad Credits', href: '/deals/ad-credits', icon: 'campaign' },
+        { label: 'Cloud Credits', href: '/deals?category=cloud-credits', icon: 'cloud' },
+        { label: 'SaaS Discounts', href: '/deals?category=saas-discounts', icon: 'apps' },
+        { label: 'Ad Credits', href: '/deals?category=ad-credits', icon: 'campaign' },
       ],
     },
     {
@@ -173,15 +173,15 @@ export default function Header() {
                     <span className="material-symbols-outlined text-base text-accent-yellow">grid_view</span>
                     All Deals
                   </Link>
-                  <Link href="/deals/cloud-credits" className={dropdownItemClasses}>
+                  <Link href="/deals?category=cloud-credits" className={dropdownItemClasses}>
                     <span className="material-symbols-outlined text-base text-sky-400">cloud</span>
                     Cloud Credits
                   </Link>
-                  <Link href="/deals/saas-discounts" className={dropdownItemClasses}>
+                  <Link href="/deals?category=saas-discounts" className={dropdownItemClasses}>
                     <span className="material-symbols-outlined text-base text-purple-400">apps</span>
                     SaaS Discounts
                   </Link>
-                  <Link href="/deals/ad-credits" className={dropdownItemClasses}>
+                  <Link href="/deals?category=ad-credits" className={dropdownItemClasses}>
                     <span className="material-symbols-outlined text-base text-pink-400">campaign</span>
                     Ad Credits
                   </Link>

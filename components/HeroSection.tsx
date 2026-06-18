@@ -17,10 +17,10 @@ const TRUSTED_BRANDS = [
 
 /* ─── Stat grid inside the dark "total saved" card (2 × 3) ─── */
 const STAT_CARDS = [
-  { value: '$200K+', label: 'Cloud Credits', icon: 'cloud', href: '/deals/cloud-credits' },
+  { value: '$200K+', label: 'Cloud Credits', icon: 'cloud', href: '/deals?category=cloud-credits' },
   { value: '$100K+', label: 'Grants Database', icon: 'redeem', href: '/deals/grants' },
-  { value: '$50K+', label: 'Ad Credits', icon: 'ad', href: '/deals/ad-credits' },
-  { value: '200+', label: 'SaaS Deals', icon: 'apps', href: '/deals/saas-discounts' },
+  { value: '$50K+', label: 'Ad Credits', icon: 'ad', href: '/deals?category=ad-credits' },
+  { value: '200+', label: 'SaaS Deals', icon: 'apps', href: '/deals?category=saas-discounts' },
   { value: '50+', label: 'Accelerators', icon: 'rocket_launch', href: '/deals/accelerators' },
   { value: '1K+', label: 'Verified Startups', icon: 'verified_user', href: '/startups' },
 ]

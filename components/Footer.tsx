@@ -7,10 +7,10 @@ export default function Footer() {
       title: "Deals",
       links: [
         { text: "All Deals", href: "/deals" },
-        { text: "Cloud Credits", href: "/deals/cloud-credits" },
-        { text: "SaaS Discounts", href: "/deals/saas-discounts" },
+        { text: "Cloud Credits", href: "/deals?category=cloud-credits" },
+        { text: "SaaS Discounts", href: "/deals?category=saas-discounts" },
         { text: "Grants", href: "/deals/grants" },
-        { text: "Ad Credits", href: "/deals/ad-credits" },
+        { text: "Ad Credits", href: "/deals?category=ad-credits" },
       ]
     },
     {

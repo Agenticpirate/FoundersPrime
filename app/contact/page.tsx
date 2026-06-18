@@ -19,9 +19,9 @@ export default function ContactPage() {
     <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden bg-background-light">
       <Header />
       <main className="flex-1 pattern-grid-lg">
-        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-8 py-8 md:py-10">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-5 md:py-7">
           <ContactHero />
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-4">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 md:gap-4 mb-3 md:mb-4">
             <div className="lg:col-span-2">
               <ContactForm />
             </div>

@@ -544,9 +544,9 @@ export default async function SingleDealPage({ params }: PageProps) {
                   'accelerators': { label: 'Accelerators', href: '/deals/accelerators', parentLabel: 'Programs' },
                   'incubators': { label: 'Incubators', href: '/deals/incubators', parentLabel: 'Programs' },
                   'grants': { label: 'Grants', href: '/deals/grants', parentLabel: 'Programs' },
-                  'cloud-credits': { label: 'Cloud Credits', href: '/deals/cloud-credits', parentLabel: 'Deals' },
-                  'saas-discounts': { label: 'SaaS Discounts', href: '/deals/saas-discounts', parentLabel: 'Deals' },
-                  'ad-credits': { label: 'Ad Credits', href: '/deals/ad-credits', parentLabel: 'Deals' },
+                  'cloud-credits': { label: 'Cloud Credits', href: '/deals?category=cloud-credits', parentLabel: 'Deals' },
+                  'saas-discounts': { label: 'SaaS Discounts', href: '/deals?category=saas-discounts', parentLabel: 'Deals' },
+                  'ad-credits': { label: 'Ad Credits', href: '/deals?category=ad-credits', parentLabel: 'Deals' },
                 }
                 const sub = subcategoryMap[dealData.category]
 

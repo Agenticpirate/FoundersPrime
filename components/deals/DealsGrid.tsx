@@ -546,45 +546,31 @@ export default function DealsGrid({ filters }: DealsGridProps) {
         let primaryCta = "See Plans · Unlock Now";
         let reassurance = "Cancel anytime · Instant access · No risk";
 
-        const isAcceleratorOrIncubator = filters?.category === 'accelerators' || filters?.category === 'incubators';
-
-        if (!isPro) {
+        // Gate: only the first page of the catalog is open. Every page beyond
+        // page 1 is locked for all non-Pro members — applied uniformly across
+        // All Deals AND every category filter (cloud credits, SaaS, ad credits,
+        // accelerators…), so the limit can't be bypassed by entering through a
+        // subcategory. Pro (paid) members keep unlimited access.
+        if (!isPro && currentPage > 1) {
+          isLocked = true;
           if (isNextFounder) {
-            // NextFounder plan limits
-             if (isAcceleratorOrIncubator && currentPage > 1) {
-                isLocked = true;
-                lockTitle = "Skip the Application Maze";
-                lockSubtitle = "Founder plan unlocks all programs";
-                lockMessage = "Most founders waste 40+ hours hunting accelerators. Founder unlocks every program in the catalog so you apply to the right ones in minutes.";
-                bullets = [
-                  'Full access to YC, Techstars, 500 Global, and 80+ more',
-                  'Incubator partnerships matched to your stage and sector',
-                  'Application tips from founders who got in',
-                ];
-             } else if (currentPage > 10) {
-                isLocked = true;
-                lockTitle = "Unlock The Rest Of Your Stack";
-                lockSubtitle = "Founder plan removes the limit";
-                lockMessage = "You've already saved on the basics. Upgrade to Founder and unlock the deals that compound — six-figure cloud credits, premium SaaS, and grant programs.";
-                bullets = [
-                  '$200K+ in additional cloud and infra credits',
-                  'Premium SaaS deals reserved for funded founders',
-                  'Grant programs filtered to your stage',
-                ];
-             }
+            lockTitle = "Unlock The Full Catalog";
+            lockSubtitle = "Founder plan removes the limit";
+            lockMessage = "You're on page one of the catalog. Upgrade to Founder to unlock every page — six-figure cloud credits, premium SaaS, accelerators, and grant programs.";
+            bullets = [
+              '$200K+ in additional cloud and infra credits',
+              'Premium SaaS deals reserved for funded founders',
+              'Accelerators, incubators, and grants matched to your stage',
+            ];
           } else {
-             // Free plan limits
-             isLocked = currentPage > 1;
-             if (isLocked) {
-               lockTitle = "Don't Leave Deals On The Table";
-               lockSubtitle = "Members-only access";
-               lockMessage = "You're one click from cloud credits, SaaS discounts, and verified grants. Founders who unlock the catalog start stacking savings in their first month.";
-               bullets = [
-                 'Stack cloud credits across AWS, GCP and Azure',
-                 'Hundreds of vetted SaaS discounts (Notion, Linear, HubSpot, more)',
-                 'Grant programs reviewed and matched to your stage',
-               ];
-             }
+            lockTitle = "Don't Leave Deals On The Table";
+            lockSubtitle = "Members-only access";
+            lockMessage = "You're one click from cloud credits, SaaS discounts, and verified grants. Founders who unlock the catalog start stacking savings in their first month.";
+            bullets = [
+              'Stack cloud credits across AWS, GCP and Azure',
+              'Hundreds of vetted SaaS discounts (Notion, Linear, HubSpot, more)',
+              'Grant programs reviewed and matched to your stage',
+            ];
           }
         }
 

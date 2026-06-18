@@ -37,7 +37,7 @@ export default function DealsSidebar() {
           <h4 className="font-bold font-display uppercase tracking-widest text-sm">Popular Categories</h4>
         </div>
         <div className="p-4 flex flex-col gap-3">
-          <a className="flex justify-between items-center group" href="/deals/cloud-credits">
+          <a className="flex justify-between items-center group" href="/deals?category=cloud-credits">
             <span className="text-sm font-medium group-hover:underline decoration-2 underline-offset-2">1. Cloud Credits</span>
             <span className="bg-ink text-white text-xs px-2 py-0.5 font-mono rounded-sm">67</span>
           </a>

@@ -68,7 +68,7 @@ export default function ContactForm() {
   }
 
   return (
-    <div className="relative bg-white border-2 border-black shadow-[6px_6px_0px_#111] p-5 md:p-7 overflow-hidden fp-fade-up">
+    <div className="relative bg-white border-2 border-black shadow-[5px_5px_0px_#111] p-4 md:p-5 overflow-hidden fp-fade-up">
       <Mandala
         variant="radial"
         colorClass="text-gray-900"
@@ -77,23 +77,23 @@ export default function ContactForm() {
         className="absolute -bottom-16 -right-16 w-56 h-56 hidden md:block"
       />
 
-      <div className="relative mb-5 flex items-center gap-2.5">
+      <div className="relative mb-4 flex items-center gap-2.5">
         <div className="size-9 bg-accent-yellow border-2 border-black flex items-center justify-center shadow-[2px_2px_0px_#111]">
           <span className="material-symbols-outlined !text-[18px] text-black">edit_note</span>
         </div>
         <div>
           <h2 className="font-mono text-base md:text-lg font-black text-black uppercase leading-none">
-            Send a Message
+            Send Us a Message
           </h2>
-          <p className="font-sans text-[11px] text-gray-500 mt-0.5">Fields marked * are required</p>
+          <p className="font-sans text-[11px] text-gray-500 mt-0.5">All fields marked * are required</p>
         </div>
       </div>
 
-      <form onSubmit={handleSubmit} className="relative space-y-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <form onSubmit={handleSubmit} className="relative space-y-3.5">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
           <div>
             <label className="block font-mono text-[10px] font-bold text-black mb-1.5 uppercase tracking-wide">
-              Name *
+              Full Name *
             </label>
             <div className="relative">
               <span className="material-symbols-outlined !text-[16px] text-gray-400 absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none">person</span>
@@ -143,7 +143,7 @@ export default function ContactForm() {
                   aria-pressed={active}
                   className={`inline-flex items-center gap-1.5 px-3 py-1.5 border-2 border-black font-mono text-[10px] font-bold uppercase tracking-wide transition-all ${
                     active
-                      ? 'bg-primary text-black shadow-[3px_3px_0px_#111] -translate-x-0.5 -translate-y-0.5'
+                      ? 'bg-accent-yellow text-black shadow-[3px_3px_0px_#111] -translate-x-0.5 -translate-y-0.5'
                       : 'bg-white text-gray-600 hover:bg-gray-50 shadow-[2px_2px_0px_#111]'
                   }`}
                 >
@@ -182,7 +182,7 @@ export default function ContactForm() {
             value={formData.message}
             onChange={handleChange}
             required
-            rows={6}
+            rows={5}
             className="w-full px-3 py-2.5 text-xs border-2 border-black font-mono resize-none focus:outline-none focus:shadow-[4px_4px_0px_#111] focus:-translate-x-0.5 focus:-translate-y-0.5 transition-all bg-white placeholder:text-gray-400"
             placeholder="Tell us what you need..."
           />
@@ -190,10 +190,10 @@ export default function ContactForm() {
 
         <button
           type="submit"
-          className="group w-full px-6 py-3.5 bg-primary hover:bg-accent-yellow border-2 border-black text-black font-mono text-sm font-black uppercase tracking-wide shadow-[4px_4px_0px_#111] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all flex items-center justify-center gap-2"
+          className="group w-full px-6 py-3.5 bg-gray-900 hover:bg-black border-2 border-black text-white font-mono text-sm font-black uppercase tracking-wide shadow-[4px_4px_0px_#111] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all flex items-center justify-center gap-2"
         >
           Send Message
-          <span className="material-symbols-outlined !text-[18px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
+          <span className="material-symbols-outlined !text-[18px] text-accent-yellow group-hover:translate-x-1 transition-transform">arrow_forward</span>
         </button>
       </form>
     </div>

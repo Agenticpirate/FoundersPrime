@@ -379,7 +379,7 @@ function OverviewTab({
             { href: '/startups', icon: 'verified', label: 'Verified Startups', sub: 'Funded companies', color: 'bg-sky-200', tag: 'Research' },
             { href: '/ideas', icon: 'emoji_objects', label: 'Startup Ideas', sub: 'Validated opportunities', color: 'bg-yellow-200', tag: 'Inspiration' },
             { href: '/resources', icon: 'folder_open', label: 'Resources', sub: 'Templates & guides', color: 'bg-purple-200', tag: 'Library' },
-            { href: '/deals/saas-discounts', icon: 'apps', label: 'SaaS Stack', sub: 'Tools at founder rates', color: 'bg-pink-200', tag: 'Stack' },
+            { href: '/deals?category=saas-discounts', icon: 'apps', label: 'SaaS Stack', sub: 'Tools at founder rates', color: 'bg-pink-200', tag: 'Stack' },
             { href: '/submit-deal', icon: 'add_circle', label: 'Submit Deal', sub: 'Share with founders', color: 'bg-gray-200', tag: 'Contribute' },
           ].map((a) => (
             <Link

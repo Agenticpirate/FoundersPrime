@@ -13972,5 +13972,1315 @@
     "createdAt": "2026-01-29T19:46:12.496Z",
     "updatedAt": "2026-01-29T19:46:12.496Z",
     "brandIcon": "https://www.quora.com/favicon.ico"
+  },
+  {
+    "id": "render-startup-program",
+    "slug": "render-startup-program",
+    "title": "Render Startup Program — Cloud Hosting Credits",
+    "provider": "Render",
+    "category": "cloud-credits",
+    "subcategory": "cloud-computing",
+    "value": "Cloud hosting credits",
+    "enhancedValue": "Cloud hosting credits",
+    "shortDescription": "Cloud hosting credits and startup-friendly pricing for early-stage teams building on Render's managed cloud (web services, databases, cron jobs).",
+    "description": "Render is a unified cloud that lets teams deploy web apps, APIs, static sites, managed Postgres, Redis, cron jobs, and background workers without managing infrastructure. The Render Startup Program offers hosting credits and onboarding support for eligible early-stage startups so you can scale without large upfront infra costs.\n\nExact credit amounts and eligibility are set by Render and may vary by partner/accelerator. Apply via the program page to confirm your offer.",
+    "detailedDescription": "Render is a unified cloud that lets teams deploy web apps, APIs, static sites, managed Postgres, Redis, cron jobs, and background workers without managing infrastructure. The Render Startup Program offers hosting credits and onboarding support for eligible early-stage startups so you can scale without large upfront infra costs.\n\nExact credit amounts and eligibility are set by Render and may vary by partner/accelerator. Apply via the program page to confirm your offer.",
+    "benefits": [
+      "Cloud hosting credits for eligible startups",
+      "Managed Postgres, Redis, web services & cron jobs",
+      "Zero-DevOps deploys from Git",
+      "Autoscaling and managed TLS"
+    ],
+    "eligibility": [
+      "Early-stage startup",
+      "New or qualifying Render customer",
+      "Eligibility and credit amount confirmed by Render"
+    ],
+    "requirements": [
+      "Valid company/business details",
+      "Apply through the official program link"
+    ],
+    "applicationProcess": [
+      "Open the Render Startup Program page",
+      "Submit the startup application with company details",
+      "Get approved and receive credits applied to your account"
+    ],
+    "faqs": [
+      {
+        "question": "How much credit do I get?",
+        "answer": "Credit amounts are set by Render and can vary by accelerator/partner. Confirm your specific offer on the program page."
+      }
+    ],
+    "tags": [
+      "cloud",
+      "hosting",
+      "paas",
+      "startups",
+      "render"
+    ],
+    "status": "active",
+    "applicationUrl": "https://render.com/startups",
+    "providerWebsite": "https://render.com",
+    "logoUrl": "https://cdn.simpleicons.org/render",
+    "brandIcon": "https://cdn.simpleicons.org/render",
+    "featured": false,
+    "verified": true,
+    "recommended": false,
+    "savings": "Free hosting credits",
+    "savingsAmount": 0,
+    "difficulty": "easy",
+    "timeToApply": "10-15 minutes",
+    "lastUpdated": "2026-06-18",
+    "createdAt": "2026-06-18",
+    "updatedAt": "2026-06-18",
+    "sourceVerified": true,
+    "dataSource": "manual-update",
+    "icon": "☁️",
+    "sortOrder": 100
+  },
+  {
+    "id": "supabase-for-startups",
+    "slug": "supabase-for-startups",
+    "title": "Supabase for Startups — Pro Plan Credits",
+    "provider": "Supabase",
+    "category": "cloud-credits",
+    "subcategory": "database",
+    "value": "Pro plan credits",
+    "enhancedValue": "Pro plan credits",
+    "shortDescription": "Postgres database, auth, storage, and edge functions with startup credits for eligible teams — the open-source Firebase alternative.",
+    "description": "Supabase is an open-source backend platform built on Postgres: a managed database, authentication, file storage, realtime subscriptions, and edge functions. Supabase for Startups provides credits and support for qualifying early-stage companies, typically through accelerator and VC partners.\n\nCredit value and eligibility are determined by Supabase and partner programs — confirm details on the program page.",
+    "detailedDescription": "Supabase is an open-source backend platform built on Postgres: a managed database, authentication, file storage, realtime subscriptions, and edge functions. Supabase for Startups provides credits and support for qualifying early-stage companies, typically through accelerator and VC partners.\n\nCredit value and eligibility are determined by Supabase and partner programs — confirm details on the program page.",
+    "benefits": [
+      "Supabase credits for eligible startups",
+      "Managed Postgres with row-level security",
+      "Built-in auth, storage & realtime",
+      "Edge functions and auto-generated APIs"
+    ],
+    "eligibility": [
+      "Early-stage startup",
+      "Often via an accelerator/VC partner",
+      "Eligibility confirmed by Supabase"
+    ],
+    "requirements": [
+      "Valid company/business details",
+      "Apply through the official program link"
+    ],
+    "applicationProcess": [
+      "Open the Supabase for Startups page",
+      "Apply directly or through your accelerator/VC partner",
+      "Receive credits on approval"
+    ],
+    "faqs": [
+      {
+        "question": "Is this the open-source plan?",
+        "answer": "Supabase is open source; the startup program provides credits toward the managed Pro plan and support. Confirm specifics on the program page."
+      }
+    ],
+    "tags": [
+      "database",
+      "postgres",
+      "backend",
+      "auth",
+      "startups",
+      "supabase"
+    ],
+    "status": "active",
+    "applicationUrl": "https://supabase.com/solutions/startups",
+    "providerWebsite": "https://supabase.com",
+    "logoUrl": "https://cdn.simpleicons.org/supabase",
+    "brandIcon": "https://cdn.simpleicons.org/supabase",
+    "featured": false,
+    "verified": true,
+    "recommended": false,
+    "savings": "Free Supabase credits",
+    "savingsAmount": 0,
+    "difficulty": "easy",
+    "timeToApply": "10-15 minutes",
+    "lastUpdated": "2026-06-18",
+    "createdAt": "2026-06-18",
+    "updatedAt": "2026-06-18",
+    "sourceVerified": true,
+    "dataSource": "manual-update",
+    "icon": "🗄️",
+    "sortOrder": 101
+  },
+  {
+    "id": "vercel-for-startups",
+    "slug": "vercel-for-startups",
+    "title": "Vercel for Startups — Platform Credits",
+    "provider": "Vercel",
+    "category": "cloud-credits",
+    "subcategory": "cloud-computing",
+    "value": "Platform credits",
+    "enhancedValue": "Platform credits",
+    "shortDescription": "Frontend cloud and deployment platform credits for startups building with Next.js and modern web frameworks.",
+    "description": "Vercel is the platform for frontend developers, providing instant deploys, global edge delivery, serverless functions, and first-class Next.js support. Vercel for Startups offers platform credits and resources to eligible early-stage teams, usually through partner accelerators and VCs.\n\nCredit amount and eligibility are set by Vercel and its partners; confirm on the program page.",
+    "detailedDescription": "Vercel is the platform for frontend developers, providing instant deploys, global edge delivery, serverless functions, and first-class Next.js support. Vercel for Startups offers platform credits and resources to eligible early-stage teams, usually through partner accelerators and VCs.\n\nCredit amount and eligibility are set by Vercel and its partners; confirm on the program page.",
+    "benefits": [
+      "Vercel platform credits for startups",
+      "Global edge network & instant rollbacks",
+      "Serverless & edge functions",
+      "First-class Next.js support"
+    ],
+    "eligibility": [
+      "Early-stage startup",
+      "Typically via accelerator/VC partner",
+      "Eligibility confirmed by Vercel"
+    ],
+    "requirements": [
+      "Valid company/business details",
+      "Apply through the official program link"
+    ],
+    "applicationProcess": [
+      "Open the Vercel for Startups page",
+      "Apply directly or via your partner program",
+      "Receive credits on approval"
+    ],
+    "faqs": [
+      {
+        "question": "Do I need to use Next.js?",
+        "answer": "No. Vercel supports many frameworks, though Next.js is first-class. Credit details are set by Vercel."
+      }
+    ],
+    "tags": [
+      "hosting",
+      "frontend",
+      "nextjs",
+      "edge",
+      "startups",
+      "vercel"
+    ],
+    "status": "active",
+    "applicationUrl": "https://vercel.com/startups",
+    "providerWebsite": "https://vercel.com",
+    "logoUrl": "https://cdn.simpleicons.org/vercel",
+    "brandIcon": "https://cdn.simpleicons.org/vercel",
+    "featured": false,
+    "verified": true,
+    "recommended": false,
+    "savings": "Free Vercel credits",
+    "savingsAmount": 0,
+    "difficulty": "easy",
+    "timeToApply": "10-15 minutes",
+    "lastUpdated": "2026-06-18",
+    "createdAt": "2026-06-18",
+    "updatedAt": "2026-06-18",
+    "sourceVerified": true,
+    "dataSource": "manual-update",
+    "icon": "▲",
+    "sortOrder": 102
+  },
+  {
+    "id": "vercel-ai-accelerator",
+    "slug": "vercel-ai-accelerator",
+    "title": "Vercel AI Accelerator — Program for AI Startups",
+    "provider": "Vercel",
+    "category": "startup-programs",
+    "subcategory": "accelerators",
+    "value": "Credits, mentorship & partner perks",
+    "enhancedValue": "Credits, mentorship & partner perks",
+    "shortDescription": "An accelerator for AI startups offering compute credits, mentorship from AI leaders, and partner perks across the AI tooling ecosystem.",
+    "description": "The Vercel AI Accelerator is a cohort-based program for startups building AI products. Participants typically receive compute and platform credits, mentorship from industry leaders, and a bundle of partner perks (model providers, infra, and tooling).\n\nProgram structure, perks, and eligibility are defined by Vercel and change per cohort — apply on the program page for current details.",
+    "detailedDescription": "The Vercel AI Accelerator is a cohort-based program for startups building AI products. Participants typically receive compute and platform credits, mentorship from industry leaders, and a bundle of partner perks (model providers, infra, and tooling).\n\nProgram structure, perks, and eligibility are defined by Vercel and change per cohort — apply on the program page for current details.",
+    "benefits": [
+      "Compute & platform credits",
+      "Mentorship from AI leaders",
+      "Partner perks across the AI stack",
+      "Cohort community & demo opportunities"
+    ],
+    "eligibility": [
+      "AI-focused startup",
+      "Application reviewed per cohort",
+      "Eligibility/terms set by Vercel"
+    ],
+    "requirements": [
+      "Valid company/business details",
+      "Apply through the official program link"
+    ],
+    "applicationProcess": [
+      "Open the Vercel AI Accelerator page",
+      "Submit the cohort application",
+      "Interview/selection per cohort",
+      "Join the program if accepted"
+    ],
+    "faqs": [
+      {
+        "question": "Is it equity-free?",
+        "answer": "Program terms vary by cohort. Check the current program page for details on perks and any terms."
+      }
+    ],
+    "tags": [
+      "accelerator",
+      "ai",
+      "startups",
+      "credits",
+      "vercel"
+    ],
+    "status": "active",
+    "applicationUrl": "https://vercel.com/ai-accelerator",
+    "providerWebsite": "https://vercel.com",
+    "logoUrl": "https://cdn.simpleicons.org/vercel",
+    "brandIcon": "https://cdn.simpleicons.org/vercel",
+    "featured": false,
+    "verified": true,
+    "recommended": false,
+    "savings": "Program perks & credits",
+    "savingsAmount": 0,
+    "difficulty": "hard",
+    "timeToApply": "10-15 minutes",
+    "lastUpdated": "2026-06-18",
+    "createdAt": "2026-06-18",
+    "updatedAt": "2026-06-18",
+    "sourceVerified": true,
+    "dataSource": "manual-update",
+    "icon": "🚀",
+    "sortOrder": 103
+  },
+  {
+    "id": "twilio-segment-startup-program",
+    "slug": "twilio-segment-startup-program",
+    "title": "Twilio Segment Startup Program — Up to $50,000 in Credits",
+    "provider": "Twilio Segment",
+    "category": "saas-discounts",
+    "subcategory": "productivity",
+    "value": "Up to $50,000 in Segment credits",
+    "enhancedValue": "$50,000",
+    "shortDescription": "Customer data platform (CDP) credits for startups — up to $50,000 in Segment credits plus access to partner tools and support.",
+    "description": "Twilio Segment is a customer data platform that collects, cleans, and routes first-party customer data to the tools your team uses. The Segment Startup Program offers eligible early-stage startups significant platform credits (commonly up to $50,000), partner perks, and onboarding support.\n\nExact credit and eligibility are set by Twilio Segment and may vary by partner — confirm on the program page.",
+    "detailedDescription": "Twilio Segment is a customer data platform that collects, cleans, and routes first-party customer data to the tools your team uses. The Segment Startup Program offers eligible early-stage startups significant platform credits (commonly up to $50,000), partner perks, and onboarding support.\n\nExact credit and eligibility are set by Twilio Segment and may vary by partner — confirm on the program page.",
+    "benefits": [
+      "Up to $50,000 in Segment credits",
+      "Customer data platform (CDP) for unified data",
+      "Hundreds of destination integrations",
+      "Partner perks & onboarding support"
+    ],
+    "eligibility": [
+      "Early-stage startup (typically <2 yrs, under a funding cap)",
+      "New Segment customer",
+      "Eligibility confirmed by Twilio Segment"
+    ],
+    "requirements": [
+      "Valid company/business details",
+      "Apply through the official program link"
+    ],
+    "applicationProcess": [
+      "Open the Segment Startup Program page",
+      "Apply with company and funding details",
+      "Get approved and redeem credits"
+    ],
+    "faqs": [
+      {
+        "question": "How long do credits last?",
+        "answer": "Segment startup credits are typically valid for a set period (often up to 2 years). Confirm the current terms on the program page."
+      }
+    ],
+    "tags": [
+      "analytics",
+      "cdp",
+      "data",
+      "startups",
+      "segment",
+      "twilio"
+    ],
+    "status": "active",
+    "applicationUrl": "https://segment.com/partners/startups",
+    "providerWebsite": "https://segment.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=segment.com&sz=128",
+    "brandIcon": "https://www.google.com/s2/favicons?domain=segment.com&sz=128",
+    "featured": false,
+    "verified": true,
+    "recommended": false,
+    "savings": "Up to $50,000",
+    "savingsAmount": 50000,
+    "difficulty": "medium",
+    "timeToApply": "10-15 minutes",
+    "lastUpdated": "2026-06-18",
+    "createdAt": "2026-06-18",
+    "updatedAt": "2026-06-18",
+    "sourceVerified": true,
+    "dataSource": "manual-update",
+    "icon": "📊",
+    "sortOrder": 104
+  },
+  {
+    "id": "amplitude-startup-scholarship",
+    "slug": "amplitude-startup-scholarship",
+    "title": "Amplitude Startup Scholarship — 1 Year Free",
+    "provider": "Amplitude",
+    "category": "saas-discounts",
+    "subcategory": "productivity",
+    "value": "1 year free (Growth plan)",
+    "enhancedValue": "1 year free (Growth plan)",
+    "shortDescription": "Product analytics free for up to a year for eligible startups via the Amplitude Startup Scholarship.",
+    "description": "Amplitude is a digital analytics platform for understanding product usage, retention, and growth. The Amplitude Startup Scholarship gives eligible early-stage startups access to a paid plan free for up to a year, helping you make data-driven product decisions from day one.\n\nPlan tier, duration, and eligibility are set by Amplitude — confirm on the program page.",
+    "detailedDescription": "Amplitude is a digital analytics platform for understanding product usage, retention, and growth. The Amplitude Startup Scholarship gives eligible early-stage startups access to a paid plan free for up to a year, helping you make data-driven product decisions from day one.\n\nPlan tier, duration, and eligibility are set by Amplitude — confirm on the program page.",
+    "benefits": [
+      "Up to 12 months free on a paid plan",
+      "Behavioral product analytics",
+      "Funnels, retention & cohort analysis",
+      "Experimentation & feature insights"
+    ],
+    "eligibility": [
+      "Early-stage startup",
+      "Under Amplitude's funding/size thresholds",
+      "Eligibility confirmed by Amplitude"
+    ],
+    "requirements": [
+      "Valid company/business details",
+      "Apply through the official program link"
+    ],
+    "applicationProcess": [
+      "Open the Amplitude for Startups page",
+      "Apply with company details",
+      "Get approved and activate your plan"
+    ],
+    "faqs": [
+      {
+        "question": "Which plan is included?",
+        "answer": "The scholarship typically covers a Growth/paid tier for a limited period. Confirm the current offer on Amplitude's program page."
+      }
+    ],
+    "tags": [
+      "analytics",
+      "product-analytics",
+      "startups",
+      "amplitude"
+    ],
+    "status": "active",
+    "applicationUrl": "https://amplitude.com/startup",
+    "providerWebsite": "https://amplitude.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=amplitude.com&sz=128",
+    "brandIcon": "https://www.google.com/s2/favicons?domain=amplitude.com&sz=128",
+    "featured": false,
+    "verified": true,
+    "recommended": false,
+    "savings": "Up to 12 months free",
+    "savingsAmount": 0,
+    "difficulty": "medium",
+    "timeToApply": "10-15 minutes",
+    "lastUpdated": "2026-06-18",
+    "createdAt": "2026-06-18",
+    "updatedAt": "2026-06-18",
+    "sourceVerified": true,
+    "dataSource": "manual-update",
+    "icon": "📈",
+    "sortOrder": 105
+  },
+  {
+    "id": "help-scout-for-startups",
+    "slug": "help-scout-for-startups",
+    "title": "Help Scout for Startups — Discounted Support Platform",
+    "provider": "Help Scout",
+    "category": "saas-discounts",
+    "subcategory": "sales-crm",
+    "value": "Startup discount + credits",
+    "enhancedValue": "Startup discount + credits",
+    "shortDescription": "Customer support and shared inbox platform with discounted startup pricing for eligible early-stage teams.",
+    "description": "Help Scout is a customer support platform with shared inboxes, help center/knowledge base, live chat (Beacon), and reporting that feels personal rather than ticket-y. Help Scout for Startups offers discounted access and credits for eligible early-stage companies.\n\nDiscount/credit and eligibility are set by Help Scout — confirm on the program page.",
+    "detailedDescription": "Help Scout is a customer support platform with shared inboxes, help center/knowledge base, live chat (Beacon), and reporting that feels personal rather than ticket-y. Help Scout for Startups offers discounted access and credits for eligible early-stage companies.\n\nDiscount/credit and eligibility are set by Help Scout — confirm on the program page.",
+    "benefits": [
+      "Discounted plans / credits for startups",
+      "Shared inbox & collaboration",
+      "Knowledge base & live chat (Beacon)",
+      "Customer-friendly reporting"
+    ],
+    "eligibility": [
+      "Early-stage startup",
+      "New Help Scout customer",
+      "Eligibility confirmed by Help Scout"
+    ],
+    "requirements": [
+      "Valid company/business details",
+      "Apply through the official program link"
+    ],
+    "applicationProcess": [
+      "Open the Help Scout for Startups page",
+      "Apply with company details",
+      "Receive your discount/credit on approval"
+    ],
+    "faqs": [
+      {
+        "question": "What's the discount?",
+        "answer": "Help Scout sets the startup discount and any credit value; confirm the current offer on the program page."
+      }
+    ],
+    "tags": [
+      "customer-support",
+      "helpdesk",
+      "shared-inbox",
+      "startups",
+      "helpscout"
+    ],
+    "status": "active",
+    "applicationUrl": "https://www.helpscout.com/startups/",
+    "providerWebsite": "https://www.helpscout.com",
+    "logoUrl": "https://cdn.simpleicons.org/helpscout",
+    "brandIcon": "https://cdn.simpleicons.org/helpscout",
+    "featured": false,
+    "verified": true,
+    "recommended": false,
+    "savings": "Discounted plans",
+    "savingsAmount": 0,
+    "difficulty": "easy",
+    "timeToApply": "10-15 minutes",
+    "lastUpdated": "2026-06-18",
+    "createdAt": "2026-06-18",
+    "updatedAt": "2026-06-18",
+    "sourceVerified": true,
+    "dataSource": "manual-update",
+    "icon": "💬",
+    "sortOrder": 106
+  },
+  {
+    "id": "drift-for-startups",
+    "slug": "drift-for-startups",
+    "title": "Drift for Startups — Conversational Marketing",
+    "provider": "Drift",
+    "category": "saas-discounts",
+    "subcategory": "sales-crm",
+    "value": "Startup pricing & perks",
+    "enhancedValue": "Startup pricing & perks",
+    "shortDescription": "Conversational marketing and sales chat platform with a startup program offering discounted access for eligible teams.",
+    "description": "Drift (a Salesloft company) provides conversational marketing and sales — live chat, chatbots, and meeting booking that turn website visits into pipeline. Drift for Startups offers eligible early-stage companies discounted access and onboarding.\n\nProgram availability, discount, and eligibility are set by Drift/Salesloft — confirm on the program page.",
+    "detailedDescription": "Drift (a Salesloft company) provides conversational marketing and sales — live chat, chatbots, and meeting booking that turn website visits into pipeline. Drift for Startups offers eligible early-stage companies discounted access and onboarding.\n\nProgram availability, discount, and eligibility are set by Drift/Salesloft — confirm on the program page.",
+    "benefits": [
+      "Discounted startup access",
+      "Conversational chatbots & live chat",
+      "Meeting booking & routing",
+      "Pipeline acceleration tools"
+    ],
+    "eligibility": [
+      "Early-stage startup",
+      "Eligibility confirmed by Drift/Salesloft"
+    ],
+    "requirements": [
+      "Valid company/business details",
+      "Apply through the official program link"
+    ],
+    "applicationProcess": [
+      "Open the Drift for Startups page",
+      "Submit the application",
+      "Receive startup pricing on approval"
+    ],
+    "faqs": [
+      {
+        "question": "Is Drift still a standalone program?",
+        "answer": "Drift is now part of Salesloft; program terms may change. Confirm the current offer on the linked page."
+      }
+    ],
+    "tags": [
+      "conversational-marketing",
+      "chat",
+      "sales",
+      "startups",
+      "drift"
+    ],
+    "status": "active",
+    "applicationUrl": "https://www.drift.com/startups/",
+    "providerWebsite": "https://www.drift.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=drift.com&sz=128",
+    "brandIcon": "https://www.google.com/s2/favicons?domain=drift.com&sz=128",
+    "featured": false,
+    "verified": true,
+    "recommended": false,
+    "savings": "Discounted access",
+    "savingsAmount": 0,
+    "difficulty": "medium",
+    "timeToApply": "10-15 minutes",
+    "lastUpdated": "2026-06-18",
+    "createdAt": "2026-06-18",
+    "updatedAt": "2026-06-18",
+    "sourceVerified": true,
+    "dataSource": "manual-update",
+    "icon": "💬",
+    "sortOrder": 107
+  },
+  {
+    "id": "sendgrid-accelerate",
+    "slug": "sendgrid-accelerate",
+    "title": "SendGrid Accelerate — Email for Startups",
+    "provider": "SendGrid (Twilio)",
+    "category": "saas-discounts",
+    "subcategory": "marketing-tools",
+    "value": "Credits + free email volume",
+    "enhancedValue": "Credits + free email volume",
+    "shortDescription": "Twilio SendGrid's startup program offering email-sending credits and resources for eligible early-stage companies.",
+    "description": "Twilio SendGrid is a leading email delivery platform for transactional and marketing email at scale. SendGrid Accelerate is its program for eligible early-stage startups, offering sending credits, discounts, and deliverability resources.\n\nCredit/discount and eligibility are set by Twilio SendGrid — confirm on the program page.",
+    "detailedDescription": "Twilio SendGrid is a leading email delivery platform for transactional and marketing email at scale. SendGrid Accelerate is its program for eligible early-stage startups, offering sending credits, discounts, and deliverability resources.\n\nCredit/discount and eligibility are set by Twilio SendGrid — confirm on the program page.",
+    "benefits": [
+      "Email-sending credits / discounts",
+      "High-deliverability transactional email",
+      "Marketing campaigns & templates",
+      "Analytics & deliverability tooling"
+    ],
+    "eligibility": [
+      "Early-stage startup",
+      "New SendGrid customer",
+      "Eligibility confirmed by Twilio SendGrid"
+    ],
+    "requirements": [
+      "Valid company/business details",
+      "Apply through the official program link"
+    ],
+    "applicationProcess": [
+      "Open the SendGrid Accelerate page",
+      "Apply with company details",
+      "Receive credits/discount on approval"
+    ],
+    "faqs": [
+      {
+        "question": "Transactional or marketing email?",
+        "answer": "SendGrid supports both. Program perks are set by Twilio SendGrid; confirm current terms on the page."
+      }
+    ],
+    "tags": [
+      "email",
+      "transactional-email",
+      "deliverability",
+      "startups",
+      "sendgrid",
+      "twilio"
+    ],
+    "status": "active",
+    "applicationUrl": "https://sendgrid.com/partner-programs/accelerate",
+    "providerWebsite": "https://sendgrid.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=sendgrid.com&sz=128",
+    "brandIcon": "https://www.google.com/s2/favicons?domain=sendgrid.com&sz=128",
+    "featured": false,
+    "verified": true,
+    "recommended": false,
+    "savings": "Free/discounted email",
+    "savingsAmount": 0,
+    "difficulty": "easy",
+    "timeToApply": "10-15 minutes",
+    "lastUpdated": "2026-06-18",
+    "createdAt": "2026-06-18",
+    "updatedAt": "2026-06-18",
+    "sourceVerified": true,
+    "dataSource": "manual-update",
+    "icon": "✉️",
+    "sortOrder": 108
+  },
+  {
+    "id": "postmark-startup-credit",
+    "slug": "postmark-startup-credit",
+    "title": "Postmark for Startups — Transactional Email",
+    "provider": "Postmark",
+    "category": "saas-discounts",
+    "subcategory": "marketing-tools",
+    "value": "Startup-friendly email pricing",
+    "enhancedValue": "Startup sending credit",
+    "shortDescription": "Fast, reliable transactional email with startup credits for eligible early-stage teams.",
+    "description": "Postmark (by ActiveCampaign) is known for fast, reliable transactional email and strong deliverability. The Postmark startup offer provides sending credits for eligible early-stage companies to cover early email volume.\n\nCredit value and eligibility are set by Postmark — confirm on the program page.",
+    "detailedDescription": "Postmark (by ActiveCampaign) is known for fast, reliable transactional email and strong deliverability. The Postmark startup offer provides sending credits for eligible early-stage companies to cover early email volume.\n\nCredit value and eligibility are set by Postmark — confirm on the program page.",
+    "benefits": [
+      "Transactional email sending credit",
+      "Industry-leading deliverability & speed",
+      "Detailed message tracking",
+      "Templates & APIs"
+    ],
+    "eligibility": [
+      "Early-stage startup",
+      "New Postmark customer",
+      "Eligibility confirmed by Postmark"
+    ],
+    "requirements": [
+      "Valid company/business details",
+      "Apply through the official program link"
+    ],
+    "applicationProcess": [
+      "Open the Postmark for Startups page",
+      "Apply with company details",
+      "Receive credit on approval"
+    ],
+    "faqs": [
+      {
+        "question": "Does Postmark do marketing email?",
+        "answer": "Postmark focuses on transactional email (with a separate stream for broadcasts). Confirm the startup credit terms on the page."
+      }
+    ],
+    "tags": [
+      "email",
+      "transactional-email",
+      "deliverability",
+      "startups",
+      "postmark"
+    ],
+    "status": "active",
+    "applicationUrl": "https://postmarkapp.com/for/startups",
+    "providerWebsite": "https://postmarkapp.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=postmarkapp.com&sz=128",
+    "brandIcon": "https://www.google.com/s2/favicons?domain=postmarkapp.com&sz=128",
+    "featured": false,
+    "verified": true,
+    "recommended": false,
+    "savings": "Discounted transactional email",
+    "savingsAmount": 0,
+    "difficulty": "easy",
+    "timeToApply": "10-15 minutes",
+    "lastUpdated": "2026-06-18",
+    "createdAt": "2026-06-18",
+    "updatedAt": "2026-06-18",
+    "sourceVerified": true,
+    "dataSource": "manual-update",
+    "icon": "📮",
+    "sortOrder": 109
+  },
+  {
+    "id": "twilio-for-startups",
+    "slug": "twilio-for-startups",
+    "title": "Twilio for Startups — Communications Credits",
+    "provider": "Twilio",
+    "category": "saas-discounts",
+    "subcategory": "dev-tools",
+    "value": "Communications credits & perks",
+    "enhancedValue": "Communications credits & perks",
+    "shortDescription": "Programmable SMS, voice, email, and WhatsApp APIs with startup credits and perks for eligible early-stage companies.",
+    "description": "Twilio provides programmable communications APIs — SMS, voice, WhatsApp, verify/2FA, and email (via SendGrid). Twilio for Startups offers eligible early-stage companies platform credits, partner perks, and resources to build customer communications.\n\nCredit amount and eligibility are set by Twilio and partner programs — confirm on the program page.",
+    "detailedDescription": "Twilio provides programmable communications APIs — SMS, voice, WhatsApp, verify/2FA, and email (via SendGrid). Twilio for Startups offers eligible early-stage companies platform credits, partner perks, and resources to build customer communications.\n\nCredit amount and eligibility are set by Twilio and partner programs — confirm on the program page.",
+    "benefits": [
+      "Twilio platform credits for startups",
+      "SMS, voice, WhatsApp & verify APIs",
+      "Partner perks bundle",
+      "Developer resources & support"
+    ],
+    "eligibility": [
+      "Early-stage startup",
+      "Often via accelerator/VC partner",
+      "Eligibility confirmed by Twilio"
+    ],
+    "requirements": [
+      "Valid company/business details",
+      "Apply through the official program link"
+    ],
+    "applicationProcess": [
+      "Open the Twilio for Startups page",
+      "Apply directly or through a partner",
+      "Receive credits on approval"
+    ],
+    "faqs": [
+      {
+        "question": "What can I build?",
+        "answer": "SMS/voice notifications, 2FA, WhatsApp messaging, and more. Credit details are set by Twilio."
+      }
+    ],
+    "tags": [
+      "communications",
+      "sms",
+      "voice",
+      "api",
+      "startups",
+      "twilio"
+    ],
+    "status": "active",
+    "applicationUrl": "https://www.twilio.com/solutions/startups",
+    "providerWebsite": "https://www.twilio.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=twilio.com&sz=128",
+    "brandIcon": "https://www.google.com/s2/favicons?domain=twilio.com&sz=128",
+    "featured": false,
+    "verified": true,
+    "recommended": false,
+    "savings": "Free Twilio credits",
+    "savingsAmount": 0,
+    "difficulty": "medium",
+    "timeToApply": "10-15 minutes",
+    "lastUpdated": "2026-06-18",
+    "createdAt": "2026-06-18",
+    "updatedAt": "2026-06-18",
+    "sourceVerified": true,
+    "dataSource": "manual-update",
+    "icon": "📱",
+    "sortOrder": 110
+  },
+  {
+    "id": "exotel-for-startups",
+    "slug": "exotel-for-startups",
+    "title": "Exotel for Startups — Cloud Telephony",
+    "provider": "Exotel",
+    "category": "saas-discounts",
+    "subcategory": "dev-tools",
+    "value": "Startup credits & pricing",
+    "enhancedValue": "Startup credits & pricing",
+    "shortDescription": "Cloud telephony and customer communication APIs (voice, SMS) with a startup program for eligible teams, popular across India and emerging markets.",
+    "description": "Exotel is a customer engagement and cloud communication platform offering cloud telephony, voice, SMS, and conversational tools widely used across India and Southeast Asia. Exotel for Startups provides credits and startup-friendly pricing for eligible early-stage companies.\n\nCredit/discount and eligibility are set by Exotel — confirm on the program page.",
+    "detailedDescription": "Exotel is a customer engagement and cloud communication platform offering cloud telephony, voice, SMS, and conversational tools widely used across India and Southeast Asia. Exotel for Startups provides credits and startup-friendly pricing for eligible early-stage companies.\n\nCredit/discount and eligibility are set by Exotel — confirm on the program page.",
+    "benefits": [
+      "Startup credits / discounted pricing",
+      "Cloud telephony (IVR, call center)",
+      "Voice & SMS APIs",
+      "Regional coverage (India/SEA)"
+    ],
+    "eligibility": [
+      "Early-stage startup",
+      "Eligibility confirmed by Exotel"
+    ],
+    "requirements": [
+      "Valid company/business details",
+      "Apply through the official program link"
+    ],
+    "applicationProcess": [
+      "Open the Exotel for Startups page",
+      "Apply with company details",
+      "Receive credits/pricing on approval"
+    ],
+    "faqs": [
+      {
+        "question": "Is this India-focused?",
+        "answer": "Exotel is strong in India and SEA but serves multiple regions. Confirm coverage and the startup offer on the page."
+      }
+    ],
+    "tags": [
+      "telephony",
+      "voice",
+      "sms",
+      "communications",
+      "startups",
+      "exotel",
+      "india"
+    ],
+    "status": "active",
+    "applicationUrl": "https://exotel.com/exotel-for-startups",
+    "providerWebsite": "https://exotel.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=exotel.com&sz=128",
+    "brandIcon": "https://www.google.com/s2/favicons?domain=exotel.com&sz=128",
+    "featured": false,
+    "verified": true,
+    "recommended": false,
+    "savings": "Discounted telephony",
+    "savingsAmount": 0,
+    "difficulty": "easy",
+    "timeToApply": "10-15 minutes",
+    "lastUpdated": "2026-06-18",
+    "createdAt": "2026-06-18",
+    "updatedAt": "2026-06-18",
+    "sourceVerified": true,
+    "dataSource": "manual-update",
+    "icon": "📞",
+    "sortOrder": 111
+  },
+  {
+    "id": "msg91-for-startups",
+    "slug": "msg91-for-startups",
+    "title": "MSG91 for Startups — Messaging & OTP APIs",
+    "provider": "MSG91",
+    "category": "saas-discounts",
+    "subcategory": "dev-tools",
+    "value": "Startup credits & pricing",
+    "enhancedValue": "Startup credits & pricing",
+    "shortDescription": "Communication APIs for SMS, email, OTP/verification, and WhatsApp with a startup program for eligible early-stage teams.",
+    "description": "MSG91 is a communication platform-as-a-service offering SMS, email, OTP/verification, voice, and WhatsApp APIs. MSG91 for Startups provides credits and startup pricing for eligible early-stage companies building messaging into their products.\n\nCredit/discount and eligibility are set by MSG91 — confirm on the program page.",
+    "detailedDescription": "MSG91 is a communication platform-as-a-service offering SMS, email, OTP/verification, voice, and WhatsApp APIs. MSG91 for Startups provides credits and startup pricing for eligible early-stage companies building messaging into their products.\n\nCredit/discount and eligibility are set by MSG91 — confirm on the program page.",
+    "benefits": [
+      "Messaging credits for startups",
+      "SMS, OTP & verification APIs",
+      "Email & WhatsApp messaging",
+      "Developer-friendly APIs"
+    ],
+    "eligibility": [
+      "Early-stage startup",
+      "Eligibility confirmed by MSG91"
+    ],
+    "requirements": [
+      "Valid company/business details",
+      "Apply through the official program link"
+    ],
+    "applicationProcess": [
+      "Open the MSG91 for Startups page",
+      "Apply with company details",
+      "Receive credits/pricing on approval"
+    ],
+    "faqs": [
+      {
+        "question": "Does MSG91 support OTP?",
+        "answer": "Yes — OTP/verification is a core feature alongside SMS, email and WhatsApp. Confirm startup terms on the page."
+      }
+    ],
+    "tags": [
+      "messaging",
+      "sms",
+      "otp",
+      "api",
+      "startups",
+      "msg91",
+      "india"
+    ],
+    "status": "active",
+    "applicationUrl": "https://msg91.com/startups",
+    "providerWebsite": "https://msg91.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=msg91.com&sz=128",
+    "brandIcon": "https://www.google.com/s2/favicons?domain=msg91.com&sz=128",
+    "featured": false,
+    "verified": true,
+    "recommended": false,
+    "savings": "Messaging credits",
+    "savingsAmount": 0,
+    "difficulty": "easy",
+    "timeToApply": "10-15 minutes",
+    "lastUpdated": "2026-06-18",
+    "createdAt": "2026-06-18",
+    "updatedAt": "2026-06-18",
+    "sourceVerified": true,
+    "dataSource": "manual-update",
+    "icon": "💬",
+    "sortOrder": 112
+  },
+  {
+    "id": "myoperator-startup-program",
+    "slug": "myoperator-startup-program",
+    "title": "MyOperator Startup Program — Cloud Call Management",
+    "provider": "MyOperator",
+    "category": "saas-discounts",
+    "subcategory": "dev-tools",
+    "value": "Startup credits & pricing",
+    "enhancedValue": "Startup credits & pricing",
+    "shortDescription": "Cloud-based call management and business telephony (IVR, virtual numbers, call tracking) with a startup program for eligible Indian startups.",
+    "description": "MyOperator is a cloud communications platform offering call management, IVR, virtual numbers, and call tracking for businesses. The MyOperator Startup Program provides credits and startup-friendly pricing for eligible early-stage companies.\n\nCredit/discount and eligibility are set by MyOperator — confirm on the program page.",
+    "detailedDescription": "MyOperator is a cloud communications platform offering call management, IVR, virtual numbers, and call tracking for businesses. The MyOperator Startup Program provides credits and startup-friendly pricing for eligible early-stage companies.\n\nCredit/discount and eligibility are set by MyOperator — confirm on the program page.",
+    "benefits": [
+      "Startup credits / discounted pricing",
+      "Cloud IVR & virtual numbers",
+      "Call tracking & analytics",
+      "WhatsApp Business API options"
+    ],
+    "eligibility": [
+      "Early-stage startup (India-focused)",
+      "Eligibility confirmed by MyOperator"
+    ],
+    "requirements": [
+      "Valid company/business details",
+      "Apply through the official program link"
+    ],
+    "applicationProcess": [
+      "Open the MyOperator Startup Program page",
+      "Apply with company details",
+      "Receive credits/pricing on approval"
+    ],
+    "faqs": [
+      {
+        "question": "Who is this best for?",
+        "answer": "Startups needing business call management/IVR, especially in India. Confirm the offer on the program page."
+      }
+    ],
+    "tags": [
+      "telephony",
+      "ivr",
+      "call-management",
+      "startups",
+      "myoperator",
+      "india"
+    ],
+    "status": "active",
+    "applicationUrl": "https://myoperator.com/startup-program",
+    "providerWebsite": "https://myoperator.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=myoperator.com&sz=128",
+    "brandIcon": "https://www.google.com/s2/favicons?domain=myoperator.com&sz=128",
+    "featured": false,
+    "verified": true,
+    "recommended": false,
+    "savings": "Discounted call management",
+    "savingsAmount": 0,
+    "difficulty": "easy",
+    "timeToApply": "10-15 minutes",
+    "lastUpdated": "2026-06-18",
+    "createdAt": "2026-06-18",
+    "updatedAt": "2026-06-18",
+    "sourceVerified": true,
+    "dataSource": "manual-update",
+    "icon": "☎️",
+    "sortOrder": 113
+  },
+  {
+    "id": "razorpay-zero-plan",
+    "slug": "razorpay-zero-plan",
+    "title": "Razorpay — Low & Zero-Fee Payments for Startups",
+    "provider": "Razorpay",
+    "category": "saas-discounts",
+    "subcategory": "finance-legal",
+    "value": "0% on UPI + low transaction fees",
+    "enhancedValue": "Zero/low transaction fees",
+    "shortDescription": "Payment gateway for Indian startups with a zero/low-fee plan on supported payment methods to reduce early transaction costs.",
+    "description": "Razorpay is a full-stack payments and banking platform for Indian businesses, covering payment gateway, payouts, subscriptions, and more. The Razorpay Zero plan helps startups reduce or eliminate transaction fees on supported methods during their early growth phase.\n\nFee structure, supported methods, and eligibility are set by Razorpay — confirm on the program page.",
+    "detailedDescription": "Razorpay is a full-stack payments and banking platform for Indian businesses, covering payment gateway, payouts, subscriptions, and more. The Razorpay Zero plan helps startups reduce or eliminate transaction fees on supported methods during their early growth phase.\n\nFee structure, supported methods, and eligibility are set by Razorpay — confirm on the program page.",
+    "benefits": [
+      "Zero/low fees on supported payment methods",
+      "Payment gateway with 100+ methods",
+      "Subscriptions, payouts & invoicing",
+      "Developer-friendly APIs"
+    ],
+    "eligibility": [
+      "Indian business/startup",
+      "Subject to Razorpay's plan terms",
+      "Eligibility confirmed by Razorpay"
+    ],
+    "requirements": [
+      "Valid company/business details",
+      "Apply through the official program link"
+    ],
+    "applicationProcess": [
+      "Open the Razorpay Zero page",
+      "Sign up / apply for the plan",
+      "Complete KYC and start accepting payments"
+    ],
+    "faqs": [
+      {
+        "question": "Are all methods zero-fee?",
+        "answer": "The zero/low fee applies to specific methods per Razorpay's terms; others may carry standard fees. Confirm on the page."
+      }
+    ],
+    "tags": [
+      "payments",
+      "fintech",
+      "gateway",
+      "startups",
+      "razorpay",
+      "india"
+    ],
+    "status": "active",
+    "applicationUrl": "https://razorpay.com/payment-gateway/",
+    "providerWebsite": "https://razorpay.com",
+    "logoUrl": "https://cdn.simpleicons.org/razorpay",
+    "brandIcon": "https://cdn.simpleicons.org/razorpay",
+    "featured": false,
+    "verified": true,
+    "recommended": false,
+    "savings": "Save on payment fees",
+    "savingsAmount": 0,
+    "difficulty": "easy",
+    "timeToApply": "10-15 minutes",
+    "lastUpdated": "2026-06-18",
+    "createdAt": "2026-06-18",
+    "updatedAt": "2026-06-18",
+    "sourceVerified": true,
+    "dataSource": "manual-update",
+    "icon": "💳",
+    "sortOrder": 114
+  },
+  {
+    "id": "sarvam-ai-startup-program",
+    "slug": "sarvam-ai-startup-program",
+    "title": "Sarvam AI Startup Program — India-First AI Models",
+    "provider": "Sarvam AI",
+    "category": "saas-discounts",
+    "subcategory": "ai-tools",
+    "value": "API credits & support",
+    "enhancedValue": "API credits & support",
+    "shortDescription": "API credits and support for startups building with Sarvam AI's India-first large language and speech models.",
+    "description": "Sarvam AI builds India-first generative AI — large language and speech models tuned for Indian languages and use cases. The Sarvam AI Startup Program offers eligible startups API credits, early access, and support to build localized AI products.\n\nCredit amount and eligibility are set by Sarvam AI — confirm on the program page.",
+    "detailedDescription": "Sarvam AI builds India-first generative AI — large language and speech models tuned for Indian languages and use cases. The Sarvam AI Startup Program offers eligible startups API credits, early access, and support to build localized AI products.\n\nCredit amount and eligibility are set by Sarvam AI — confirm on the program page.",
+    "benefits": [
+      "API credits for eligible startups",
+      "India-first LLM & speech models",
+      "Multilingual (Indic language) support",
+      "Early access & technical support"
+    ],
+    "eligibility": [
+      "Early-stage startup",
+      "Building with Sarvam AI APIs",
+      "Eligibility confirmed by Sarvam AI"
+    ],
+    "requirements": [
+      "Valid company/business details",
+      "Apply through the official program link"
+    ],
+    "applicationProcess": [
+      "Open the Sarvam AI Startup Program page",
+      "Apply with company and use-case details",
+      "Receive credits/access on approval"
+    ],
+    "faqs": [
+      {
+        "question": "Which languages are supported?",
+        "answer": "Sarvam focuses on Indian languages and multilingual use cases. Confirm model coverage and credits on the page."
+      }
+    ],
+    "tags": [
+      "ai",
+      "llm",
+      "speech",
+      "indic-languages",
+      "startups",
+      "sarvam"
+    ],
+    "status": "active",
+    "applicationUrl": "https://www.sarvam.ai/startup-program",
+    "providerWebsite": "https://www.sarvam.ai",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=sarvam.ai&sz=128",
+    "brandIcon": "https://www.google.com/s2/favicons?domain=sarvam.ai&sz=128",
+    "featured": false,
+    "verified": true,
+    "recommended": false,
+    "savings": "Free AI credits",
+    "savingsAmount": 0,
+    "difficulty": "medium",
+    "timeToApply": "10-15 minutes",
+    "lastUpdated": "2026-06-18",
+    "createdAt": "2026-06-18",
+    "updatedAt": "2026-06-18",
+    "sourceVerified": true,
+    "dataSource": "manual-update",
+    "icon": "🤖",
+    "sortOrder": 115
+  },
+  {
+    "id": "esri-startup-program",
+    "slug": "esri-startup-program",
+    "title": "Esri Startup Program — Mapping & GIS",
+    "provider": "Esri",
+    "category": "saas-discounts",
+    "subcategory": "dev-tools",
+    "value": "Free GIS software & credits",
+    "enhancedValue": "Free GIS software & credits",
+    "shortDescription": "Free ArcGIS mapping and location-analytics software, credits, training, and support for eligible startups for up to three years.",
+    "description": "Esri's ArcGIS is the industry standard for mapping, spatial analytics, and location intelligence. The Esri Startup Program gives eligible early-stage companies free access to ArcGIS software, service credits, training, and developer tools (typically for up to three years).\n\nProgram inclusions and eligibility are set by Esri — confirm on the program page.",
+    "detailedDescription": "Esri's ArcGIS is the industry standard for mapping, spatial analytics, and location intelligence. The Esri Startup Program gives eligible early-stage companies free access to ArcGIS software, service credits, training, and developer tools (typically for up to three years).\n\nProgram inclusions and eligibility are set by Esri — confirm on the program page.",
+    "benefits": [
+      "Free ArcGIS software for eligible startups",
+      "Service credits & developer tools",
+      "Training & support",
+      "Location analytics & mapping APIs"
+    ],
+    "eligibility": [
+      "Early-stage startup using location/GIS",
+      "Not already an Esri customer",
+      "Eligibility confirmed by Esri"
+    ],
+    "requirements": [
+      "Valid company/business details",
+      "Apply through the official program link"
+    ],
+    "applicationProcess": [
+      "Open the Esri Startup Program page",
+      "Apply with company details",
+      "Get approved and access ArcGIS tools"
+    ],
+    "faqs": [
+      {
+        "question": "How long does the program last?",
+        "answer": "Often up to three years for eligible startups. Confirm the current term and inclusions on the program page."
+      }
+    ],
+    "tags": [
+      "gis",
+      "mapping",
+      "location",
+      "analytics",
+      "startups",
+      "esri"
+    ],
+    "status": "active",
+    "applicationUrl": "https://www.esri.com/startups",
+    "providerWebsite": "https://www.esri.com",
+    "logoUrl": "https://cdn.simpleicons.org/esri",
+    "brandIcon": "https://cdn.simpleicons.org/esri",
+    "featured": false,
+    "verified": true,
+    "recommended": false,
+    "savings": "Free ArcGIS access",
+    "savingsAmount": 0,
+    "difficulty": "medium",
+    "timeToApply": "10-15 minutes",
+    "lastUpdated": "2026-06-18",
+    "createdAt": "2026-06-18",
+    "updatedAt": "2026-06-18",
+    "sourceVerified": true,
+    "dataSource": "manual-update",
+    "icon": "🗺️",
+    "sortOrder": 116
+  },
+  {
+    "id": "matlab-simulink-for-startups",
+    "slug": "matlab-simulink-for-startups",
+    "title": "MATLAB & Simulink for Startups — Discounted Licenses",
+    "provider": "MathWorks",
+    "category": "saas-discounts",
+    "subcategory": "dev-tools",
+    "value": "Discounted MATLAB & Simulink",
+    "enhancedValue": "Discounted MATLAB & Simulink",
+    "shortDescription": "Discounted access to MATLAB, Simulink, and add-on toolboxes for eligible startups in engineering, robotics, and scientific computing.",
+    "description": "MathWorks' MATLAB and Simulink are widely used for numerical computing, modeling, simulation, and engineering design. The MATLAB & Simulink for Startups program offers eligible early-stage companies discounted licenses and access to add-on toolboxes plus support.\n\nPricing and eligibility are set by MathWorks — confirm on the program page.",
+    "detailedDescription": "MathWorks' MATLAB and Simulink are widely used for numerical computing, modeling, simulation, and engineering design. The MATLAB & Simulink for Startups program offers eligible early-stage companies discounted licenses and access to add-on toolboxes plus support.\n\nPricing and eligibility are set by MathWorks — confirm on the program page.",
+    "benefits": [
+      "Discounted MATLAB & Simulink licenses",
+      "Access to add-on toolboxes",
+      "Modeling, simulation & control design",
+      "Onboarding & technical support"
+    ],
+    "eligibility": [
+      "Early-stage startup (engineering/scientific)",
+      "Eligibility confirmed by MathWorks"
+    ],
+    "requirements": [
+      "Valid company/business details",
+      "Apply through the official program link"
+    ],
+    "applicationProcess": [
+      "Open the MATLAB for Startups page",
+      "Apply with company details",
+      "Receive startup pricing on approval"
+    ],
+    "faqs": [
+      {
+        "question": "Which products are included?",
+        "answer": "MATLAB, Simulink, and selected toolboxes at startup pricing. Confirm specifics with MathWorks on the program page."
+      }
+    ],
+    "tags": [
+      "engineering",
+      "simulation",
+      "matlab",
+      "simulink",
+      "startups",
+      "mathworks"
+    ],
+    "status": "active",
+    "applicationUrl": "https://www.mathworks.com/programs/startups.html",
+    "providerWebsite": "https://www.mathworks.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=mathworks.com&sz=128",
+    "brandIcon": "https://www.google.com/s2/favicons?domain=mathworks.com&sz=128",
+    "featured": false,
+    "verified": true,
+    "recommended": false,
+    "savings": "Startup pricing",
+    "savingsAmount": 0,
+    "difficulty": "medium",
+    "timeToApply": "10-15 minutes",
+    "lastUpdated": "2026-06-18",
+    "createdAt": "2026-06-18",
+    "updatedAt": "2026-06-18",
+    "sourceVerified": true,
+    "dataSource": "manual-update",
+    "icon": "📐",
+    "sortOrder": 117
+  },
+  {
+    "id": "chargebee-launch-program",
+    "slug": "chargebee-launch-program",
+    "title": "Chargebee Launch Program — Free Subscription Billing",
+    "provider": "Chargebee",
+    "category": "saas-discounts",
+    "subcategory": "finance-legal",
+    "value": "Free up to $1M cumulative revenue",
+    "enhancedValue": "Free up to $1M cumulative revenue",
+    "shortDescription": "Subscription billing and revenue management free for early-stage startups until you reach a revenue threshold (commonly up to $1M cumulative).",
+    "description": "Chargebee is a subscription billing and revenue management platform handling recurring billing, invoicing, taxes, and revenue analytics. The Chargebee Launch program lets eligible early-stage startups use the platform for free up to a cumulative revenue threshold (commonly up to $1M), so billing scales with you.\n\nThresholds and eligibility are set by Chargebee — confirm on the program page.",
+    "detailedDescription": "Chargebee is a subscription billing and revenue management platform handling recurring billing, invoicing, taxes, and revenue analytics. The Chargebee Launch program lets eligible early-stage startups use the platform for free up to a cumulative revenue threshold (commonly up to $1M), so billing scales with you.\n\nThresholds and eligibility are set by Chargebee — confirm on the program page.",
+    "benefits": [
+      "Free until a cumulative revenue threshold",
+      "Recurring billing & invoicing",
+      "Tax & compliance handling",
+      "Revenue analytics & dunning"
+    ],
+    "eligibility": [
+      "Early-stage startup under the revenue threshold",
+      "New Chargebee customer",
+      "Eligibility confirmed by Chargebee"
+    ],
+    "requirements": [
+      "Valid company/business details",
+      "Apply through the official program link"
+    ],
+    "applicationProcess": [
+      "Open the Chargebee Launch page",
+      "Sign up / apply for the Launch plan",
+      "Start billing; upgrade as you cross the threshold"
+    ],
+    "faqs": [
+      {
+        "question": "What's the free threshold?",
+        "answer": "Commonly up to $1M in cumulative revenue, after which paid plans apply. Confirm the current threshold on the page."
+      }
+    ],
+    "tags": [
+      "billing",
+      "subscriptions",
+      "revenue",
+      "fintech",
+      "startups",
+      "chargebee"
+    ],
+    "status": "active",
+    "applicationUrl": "https://www.chargebee.com/launch/",
+    "providerWebsite": "https://www.chargebee.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=chargebee.com&sz=128",
+    "brandIcon": "https://www.google.com/s2/favicons?domain=chargebee.com&sz=128",
+    "featured": false,
+    "verified": true,
+    "recommended": false,
+    "savings": "Free billing platform",
+    "savingsAmount": 0,
+    "difficulty": "easy",
+    "timeToApply": "10-15 minutes",
+    "lastUpdated": "2026-06-18",
+    "createdAt": "2026-06-18",
+    "updatedAt": "2026-06-18",
+    "sourceVerified": true,
+    "dataSource": "manual-update",
+    "icon": "🧾",
+    "sortOrder": 118
+  },
+  {
+    "id": "freshworks-for-startups",
+    "slug": "freshworks-for-startups",
+    "title": "Freshworks for Startups — Credits Across the Suite",
+    "provider": "Freshworks",
+    "category": "saas-discounts",
+    "subcategory": "sales-crm",
+    "value": "Up to 90% off / credits across the suite",
+    "enhancedValue": "Credits + extended free access",
+    "shortDescription": "CRM, support, and IT software (Freshdesk, Freshsales, Freshservice) with startup credits and extended free access for eligible teams.",
+    "description": "Freshworks builds customer-experience and IT software including Freshdesk (support), Freshsales (CRM), and Freshservice (ITSM). Freshworks for Startups offers eligible early-stage companies credits and extended free access across the suite, often through accelerator and VC partners.\n\nCredit value and eligibility are set by Freshworks — confirm on the program page.",
+    "detailedDescription": "Freshworks builds customer-experience and IT software including Freshdesk (support), Freshsales (CRM), and Freshservice (ITSM). Freshworks for Startups offers eligible early-stage companies credits and extended free access across the suite, often through accelerator and VC partners.\n\nCredit value and eligibility are set by Freshworks — confirm on the program page.",
+    "benefits": [
+      "Credits / extended free access",
+      "Freshdesk support & helpdesk",
+      "Freshsales CRM",
+      "Freshservice ITSM"
+    ],
+    "eligibility": [
+      "Early-stage startup",
+      "Often via accelerator/VC partner",
+      "Eligibility confirmed by Freshworks"
+    ],
+    "requirements": [
+      "Valid company/business details",
+      "Apply through the official program link"
+    ],
+    "applicationProcess": [
+      "Open the Freshworks for Startups page",
+      "Apply directly or through a partner",
+      "Receive credits/access on approval"
+    ],
+    "faqs": [
+      {
+        "question": "Which products are covered?",
+        "answer": "Typically the core suite (Freshdesk, Freshsales, Freshservice). Confirm coverage and credits on the program page."
+      }
+    ],
+    "tags": [
+      "crm",
+      "support",
+      "itsm",
+      "startups",
+      "freshworks"
+    ],
+    "status": "active",
+    "applicationUrl": "https://www.freshworks.com/company/partners/startup-program/",
+    "providerWebsite": "https://www.freshworks.com",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=freshworks.com&sz=128",
+    "brandIcon": "https://www.google.com/s2/favicons?domain=freshworks.com&sz=128",
+    "featured": false,
+    "verified": true,
+    "recommended": false,
+    "savings": "Free Freshworks credits",
+    "savingsAmount": 0,
+    "difficulty": "easy",
+    "timeToApply": "10-15 minutes",
+    "lastUpdated": "2026-06-18",
+    "createdAt": "2026-06-18",
+    "updatedAt": "2026-06-18",
+    "sourceVerified": true,
+    "dataSource": "manual-update",
+    "icon": "🧰",
+    "sortOrder": 119
   }
 ]

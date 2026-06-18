@@ -87,21 +87,21 @@ export default function DealsNavbar() {
               All Deals
             </Link>
             <Link
-              href="/deals/cloud-credits"
+              href="/deals?category=cloud-credits"
               onClick={() => setMobileOpen(false)}
               className="py-3 text-sm font-bold font-mono uppercase tracking-wide text-black hover:text-primary"
             >
               Cloud Credits
             </Link>
             <Link
-              href="/deals/saas-discounts"
+              href="/deals?category=saas-discounts"
               onClick={() => setMobileOpen(false)}
               className="py-3 text-sm font-bold font-mono uppercase tracking-wide text-black hover:text-primary"
             >
               SaaS Discounts
             </Link>
             <Link
-              href="/deals/ad-credits"
+              href="/deals?category=ad-credits"
               onClick={() => setMobileOpen(false)}
               className="py-3 text-sm font-bold font-mono uppercase tracking-wide text-black hover:text-primary"
             >
