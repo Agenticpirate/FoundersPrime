@@ -832,3 +832,49 @@ p > a, li > a, span > a {
   .ad-page-mandala-spin,
   .ad-page-mandala-spin-reverse { animation: none; }
 }
+
+
+/* ─── Flash Deals premium CTA banner ─── */
+@keyframes flashCtaBorderGlow {
+  0%, 100% {
+    box-shadow: 0 0 0 1px rgba(255, 215, 0, 0.30), 0 0 30px -10px rgba(255, 215, 0, 0.25);
+  }
+  50% {
+    box-shadow: 0 0 0 1px rgba(255, 215, 0, 0.55), 0 0 48px -8px rgba(255, 215, 0, 0.45);
+  }
+}
+.flash-cta-glow {
+  animation: flashCtaBorderGlow 4.5s ease-in-out infinite;
+}
+
+@keyframes flashCrownPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.35); transform: translateZ(0); }
+  50% { box-shadow: 0 0 26px 5px rgba(255, 215, 0, 0.30); }
+}
+.flash-crown-glow {
+  animation: flashCrownPulse 3.2s ease-in-out infinite;
+}
+
+/* Slow drifting sheen across the premium CTA surface */
+@keyframes flashCtaSheen {
+  0% { transform: translateX(-130%) skewX(-18deg); }
+  55%, 100% { transform: translateX(260%) skewX(-18deg); }
+}
+.flash-cta-sheen::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 28%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.06), transparent);
+  transform: translateX(-130%) skewX(-18deg);
+  animation: flashCtaSheen 6s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flash-cta-glow,
+  .flash-crown-glow { animation: none; }
+  .flash-cta-sheen::before { animation: none; opacity: 0; }
+}

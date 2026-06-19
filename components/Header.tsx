@@ -274,6 +274,20 @@ export default function Header() {
               </div>
             </div>
 
+            {/* Flash Deals */}
+            <Link
+              href="/flash-deals"
+              className="header-nav-link relative text-gray-200 font-bold hover:text-white flex items-center gap-1.5 px-3 py-2 rounded-md hover:bg-white/[0.05] transition-all"
+            >
+              <span className="header-nav-text flex items-center gap-1.5">
+                <span className="material-symbols-outlined text-[14px] text-accent-yellow" style={{ fontVariationSettings: "'FILL' 1" }}>bolt</span>
+                Flash Deals
+              </span>
+              <span className="inline-flex items-center bg-accent-yellow text-black text-[8px] font-black uppercase tracking-[0.12em] px-1.5 py-0.5 leading-none">
+                New
+              </span>
+            </Link>
+
             {/* Vertical divider */}
             <span className="hidden lg:block w-px h-5 bg-gradient-to-b from-transparent via-white/20 to-transparent mx-2" aria-hidden="true" />
 
@@ -431,6 +445,21 @@ export default function Header() {
                     )}
                   </div>
                 ))}
+
+                {/* Flash Deals standalone */}
+                <Link
+                  href="/flash-deals"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="flex items-center gap-2.5 py-3 text-xs font-mono font-black uppercase text-white"
+                >
+                  <span className="w-7 h-7 flex items-center justify-center bg-accent-yellow text-black border border-accent-yellow">
+                    <span className="material-symbols-outlined text-[16px]">bolt</span>
+                  </span>
+                  Flash Deals
+                  <span className="inline-flex items-center bg-accent-yellow text-black text-[8px] font-black uppercase tracking-[0.12em] px-1.5 py-0.5 leading-none ml-1">
+                    New
+                  </span>
+                </Link>
 
                 {/* Pricing standalone */}
                 <Link

@@ -7,6 +7,7 @@ export default function Footer() {
       title: "Deals",
       links: [
         { text: "All Deals", href: "/deals" },
+        { text: "Flash Deals", href: "/flash-deals", highlight: true },
         { text: "Cloud Credits", href: "/deals?category=cloud-credits" },
         { text: "SaaS Discounts", href: "/deals?category=saas-discounts" },
         { text: "Grants", href: "/deals/grants" },
@@ -170,7 +171,11 @@ export default function Footer() {
                     <li key={linkIndex}>
                       <Link
                         href={link.href}
-                        className="font-sans text-sm text-gray-400 no-underline hover:text-white hover:translate-x-0.5 transition-all inline-block"
+                        className={`font-sans text-sm no-underline hover:translate-x-0.5 transition-all inline-block ${
+                          (link as { highlight?: boolean }).highlight
+                            ? 'text-accent-yellow font-semibold hover:text-yellow-300'
+                            : 'text-gray-400 hover:text-white'
+                        }`}
                       >
                         {link.text}
                       </Link>
@@ -196,7 +201,11 @@ export default function Footer() {
                     <li key={linkIndex}>
                       <Link
                         href={link.href}
-                        className="block font-sans text-sm text-gray-400 no-underline py-2 px-1 rounded-sm active:bg-white/5 active:text-white transition-colors"
+                        className={`block font-sans text-sm no-underline py-2 px-1 rounded-sm active:bg-white/5 transition-colors ${
+                          (link as { highlight?: boolean }).highlight
+                            ? 'text-accent-yellow font-semibold active:text-yellow-300'
+                            : 'text-gray-400 active:text-white'
+                        }`}
                       >
                         {link.text}
                       </Link>
