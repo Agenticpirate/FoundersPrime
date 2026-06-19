@@ -14,6 +14,11 @@ export const metadata = {
   },
 }
 
+// Render per-request (no full-route CDN cache). Flash deals are time-sensitive
+// and the page must never serve a stale snapshot — this also prevents a stuck
+// edge-cached response for the route.
+export const dynamic = 'force-dynamic'
+
 const FEATURES = [
   { icon: 'schedule', title: 'Limited Time Only', sub: "Deals won't last forever" },
   { icon: 'verified_user', title: 'Handpicked Offers', sub: 'Vetted by founders' },
