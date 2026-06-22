@@ -33,13 +33,13 @@ function readFiltersFromUrl(searchParams: URLSearchParams): FilterState {
   }
 }
 
-export default function DealsContent() {
+export default function DealsContent({ initialIsPro, initialFilters }: { initialIsPro?: boolean; initialFilters?: FilterState }) {
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
 
-  // Initialize from URL so deep-linked / back-navigated state is preserved
-  const [filters, setFilters] = useState<FilterState>(() => readFiltersFromUrl(new URLSearchParams(searchParams.toString())))
+  // Initialize from props (SSR safe) fallback to URL search params
+  const [filters, setFilters] = useState<FilterState>(() => initialFilters || readFiltersFromUrl(new URLSearchParams(searchParams.toString())))
   const [mobileCategoryOpen, setMobileCategoryOpen] = useState(false)
   // Track the last URL we wrote so we can tell URL changes that came from
   // OUR setFilters effect from URL changes that came from elsewhere
@@ -155,14 +155,14 @@ export default function DealsContent() {
       <div className="lg:hidden mb-3">
         <button
           onClick={() => setMobileCategoryOpen(true)}
-          className="flex items-center gap-2 px-3.5 py-2.5 border border-gray-200 bg-white rounded-lg font-mono text-[11px] font-semibold uppercase tracking-wide hover:bg-gray-50 transition-all w-full text-gray-700 shadow-sm"
+          className="flex items-center gap-2 px-3.5 py-2.5 border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 rounded-lg font-mono text-[11px] font-semibold uppercase tracking-wide hover:bg-gray-50 dark:hover:bg-white/10 transition-all w-full text-gray-700 dark:text-gray-300 shadow-sm"
         >
-          <span className="material-symbols-outlined text-[18px] text-gray-500">filter_list</span>
+          <span className="material-symbols-outlined text-[18px] text-gray-500 dark:text-gray-400">filter_list</span>
           <span>Filter by Category</span>
           {activeCategory && (
             <span className="ml-auto bg-accent-yellow text-black text-[9px] px-1.5 py-0.5 font-bold rounded-full">1</span>
           )}
-          <span className="material-symbols-outlined text-[18px] text-gray-400">chevron_right</span>
+          <span className="material-symbols-outlined text-[18px] text-gray-400 dark:text-gray-500">chevron_right</span>
         </button>
       </div>
 
@@ -174,7 +174,7 @@ export default function DealsContent() {
         />
       )}
       <div
-        className={`fixed inset-y-0 left-0 z-50 w-[85vw] max-w-sm bg-white overflow-y-auto lg:hidden transition-transform duration-200 ease-out ${
+        className={`fixed inset-y-0 left-0 z-50 w-[85vw] max-w-sm bg-white dark:bg-[#0c0c0c] border-r dark:border-white/10 overflow-y-auto lg:hidden transition-transform duration-200 ease-out ${
           mobileCategoryOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
         aria-hidden={!mobileCategoryOpen}
@@ -219,7 +219,7 @@ export default function DealsContent() {
         {/* Right Column: Filters & Grid */}
         <div className="flex-1 min-w-0 flex flex-col gap-4">
           <DealsFilterBar onFilterChange={handleFilterChange} currentFilters={filters} />
-          <DealsGrid filters={filters} />
+          <DealsGrid filters={filters} initialIsPro={initialIsPro} />
         </div>
 
         {/* Right Rail: stack of Featured slots filling the column — wide

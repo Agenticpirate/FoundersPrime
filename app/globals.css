@@ -3,8 +3,25 @@
 @tailwind utilities;
 
 html {
-  scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
+  scrollbar-gutter: stable;
+  scroll-behavior: smooth;
+}
+
+/* Custom Sleek Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(160, 160, 160, 0.3);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(160, 160, 160, 0.5);
 }
 
 /* Prevent layout shifts from images loading */
@@ -78,18 +95,35 @@ img {
   display: none !important;
 }
 
+:root {
+  --ruler-color: rgba(0, 0, 0, 0.2);
+}
+
+.dark {
+  --ruler-color: rgba(255, 255, 255, 0.15);
+}
+
+/* ─── Light-mode body override ─────────────────────────────────────────────
+   The body defaults to dark (#050505) to prevent a white flash during
+   dark-mode page transitions. When the user switches to light mode the
+   .light class is added to <html> by the ThemeToggle / inline script,
+   and these rules restore the expected light-mode palette.
+   ───────────────────────────────────────────────────────────────────────── */
+.light body,
+html.light body {
+  background-color: #f6f8f8 !important;
+  color: #1a1a1a !important;
+}
+
 body {
   top: 0 !important;
 }
-
 
 /* Fonts loaded via <link> in app/layout.tsx — no @import needed here */
 
 body {
   font-family: var(--font-sans), "IBM Plex Sans", sans-serif;
   -webkit-font-smoothing: antialiased;
-  background-color: #f6f8f8;
-  color: #1a1a1a;
 }
 
 h1,
@@ -139,6 +173,11 @@ h6 {
   background-image:
     linear-gradient(to right, rgba(16, 22, 34, 0.05) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(16, 22, 34, 0.05) 1px, transparent 1px);
+}
+.dark .grid-bg {
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
 }
 
 .grid-bg-dark {
@@ -200,6 +239,13 @@ h6 {
   transform: translate(-1px, -1px);
 }
 
+.dark .neo-box {
+  background-color: #0c0c0c;
+  border-color: rgba(255, 255, 255, 0.15);
+  box-shadow: 6px 6px 0 0 rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+}
+
 .neo-btn {
   background-color: #13b6ec;
   color: #1a1a1a;
@@ -217,6 +263,11 @@ h6 {
 .neo-btn:active {
   transform: translate(4px, 4px);
   box-shadow: 0 0 0 0 #1a1a1a;
+}
+
+.dark .neo-btn {
+  border-color: rgba(255, 255, 255, 0.15);
+  box-shadow: 4px 4px 0 0 rgba(255, 255, 255, 0.15);
 }
 
 .neo-input {
@@ -256,6 +307,12 @@ h6 {
   transition: all 0.2s ease-in-out;
 }
 
+.dark .neo-brutal-box {
+  background-color: #0c0c0c;
+  border-color: rgba(255, 255, 255, 0.15);
+  box-shadow: 6px 6px 0px 0px rgba(255, 255, 255, 0.15);
+}
+
 /* .neo-button and .neo-input canonical definitions below in pricing section */
 
 
@@ -279,6 +336,16 @@ h6 {
   box-shadow: 8px 8px 0px 0px #111111;
 }
 
+.dark .neo-card {
+  background-color: #0c0c0c;
+  border-color: rgba(255, 255, 255, 0.15);
+  box-shadow: 6px 6px 0px 0px rgba(255, 255, 255, 0.15);
+}
+
+.dark .neo-card:hover {
+  box-shadow: 8px 8px 0px 0px rgba(255, 255, 255, 0.15);
+}
+
 .neo-button {
   border: 3px solid #111111;
   box-shadow: 4px 4px 0px 0px #111111;
@@ -290,6 +357,11 @@ h6 {
   box-shadow: 0px 0px 0px 0px #111111;
 }
 
+.dark .neo-button {
+  border-color: rgba(255, 255, 255, 0.15);
+  box-shadow: 4px 4px 0px 0px rgba(255, 255, 255, 0.15);
+}
+
 .neo-input {
   border: 3px solid #111111;
   box-shadow: 4px 4px 0px 0px #111111;
@@ -298,6 +370,13 @@ h6 {
 .neo-input:focus {
   outline: none;
   border-color: #13b6ec;
+}
+
+.dark .neo-input {
+  background-color: #0c0c0c;
+  border-color: rgba(255, 255, 255, 0.15);
+  box-shadow: 4px 4px 0px 0px rgba(255, 255, 255, 0.15);
+  color: #ffffff;
 }
 
 .shadow-neo {
@@ -391,12 +470,22 @@ h6 {
   }
 }
 
-/* Subtle glow on the "ZERO DILUTION" highlight — mobile only */
+/* Subtle glow on the "ZERO DILUTION" highlight */
+.hero-highlight-glow {
+  box-shadow: 0 0 12px rgba(255, 215, 0, 0.2), 2px 2px 0px 0px #101622;
+}
+.dark .hero-highlight-glow {
+  box-shadow: 0 0 16px rgba(255, 215, 0, 0.35), 2px 2px 0px 0px rgba(255, 255, 255, 0.05);
+}
 @media (max-width: 767px) {
   .hero-highlight-glow {
     box-shadow: 0 0 16px rgba(255, 215, 0, 0.35), 2px 2px 0px 0px #101622;
   }
+  .dark .hero-highlight-glow {
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.45), 2px 2px 0px 0px rgba(255, 255, 255, 0.05);
+  }
 }
+
 
 /* Primary CTA shimmer sweep — mobile only */
 @media (max-width: 767px) {
@@ -712,6 +801,37 @@ p > a, li > a, span > a {
   .fp-sheen:hover::after { animation: none; }
 }
 
+/* ─── Premium Shiny CTA Button ─── */
+@keyframes btnShinySweep {
+  0% { transform: translateX(-150%) skewX(-20deg); }
+  100% { transform: translateX(250%) skewX(-20deg); }
+}
+
+.btn-shiny {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-shiny::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 50%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.4),
+    rgba(255, 255, 255, 0.8),
+    rgba(255, 255, 255, 0.4),
+    transparent
+  );
+  transform: translateX(-150%) skewX(-20deg);
+  animation: btnShinySweep 3s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  pointer-events: none;
+}
+
 /* ─── Pricing page mandala animations ─── */
 @keyframes pricingMandalaSpin {
   from { transform: rotate(0deg); }
@@ -878,3 +998,25 @@ p > a, li > a, span > a {
   .flash-crown-glow { animation: none; }
   .flash-cta-sheen::before { animation: none; opacity: 0; }
 }
+
+/* ─── Generic Dark Mode Neo-Brutalist Box Overrides ─── */
+.dark .bg-white.border-2.border-black {
+  background-color: #0c0c0c !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+  box-shadow: 3px 3px 0 0 rgba(255, 255, 255, 0.05) !important;
+  color: #ffffff;
+}
+
+.dark .bg-gray-50.border-2.border-black {
+  background-color: #0c0c0c !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+  box-shadow: 3px 3px 0 0 rgba(255, 255, 255, 0.05) !important;
+  color: #ffffff;
+}
+
+.dark .bg-gray-100.border-2.border-black {
+  background-color: rgba(255, 255, 255, 0.05) !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+  color: #ffffff;
+}
+

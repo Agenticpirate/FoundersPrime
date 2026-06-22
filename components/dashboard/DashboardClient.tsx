@@ -7,6 +7,8 @@ import ProfileManager from './ProfileManager'
 import SavedDealsSection from './SavedDealsSection'
 import DashboardMandala from './DashboardMandala'
 import BillingPanel from './BillingPanel'
+import { createClient } from '@/lib/supabase/client'
+
 
 type Tab = 'overview' | 'billing' | 'account'
 
@@ -374,8 +376,8 @@ function OverviewTab({
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
           {[
             { href: '/deals', icon: 'local_offer', label: 'All Deals', sub: 'Cloud, SaaS, Ad credits', color: 'bg-accent-yellow', tag: 'Browse' },
-            { href: '/deals/grants', icon: 'payments', label: 'Grants', sub: 'Non-dilutive funding', color: 'bg-emerald-200', tag: 'Funding' },
-            { href: '/deals/accelerators', icon: 'rocket_launch', label: 'Accelerators', sub: 'Top global programs', color: 'bg-orange-200', tag: 'Programs' },
+            { href: '/programs?type=grants', icon: 'payments', label: 'Grants', sub: 'Non-dilutive funding', color: 'bg-emerald-200', tag: 'Funding' },
+            { href: '/programs?type=accelerators', icon: 'rocket_launch', label: 'Accelerators', sub: 'Top global programs', color: 'bg-orange-200', tag: 'Programs' },
             { href: '/startups', icon: 'verified', label: 'Verified Startups', sub: 'Funded companies', color: 'bg-sky-200', tag: 'Research' },
             { href: '/ideas', icon: 'emoji_objects', label: 'Startup Ideas', sub: 'Validated opportunities', color: 'bg-yellow-200', tag: 'Inspiration' },
             { href: '/resources', icon: 'folder_open', label: 'Resources', sub: 'Templates & guides', color: 'bg-purple-200', tag: 'Library' },
@@ -450,6 +452,150 @@ function AccountTab({
   memberSince: string
   avatarUrl: string | null
 }) {
+  const [mfaEnabled, setMfaEnabled] = useState(false)
+  const [showEnroll, setShowEnroll] = useState(false)
+  const [qrCode, setQrCode] = useState<string | null>(null)
+  const [mfaSecret, setMfaSecret] = useState<string | null>(null)
+  const [mfaFactorId, setMfaFactorId] = useState<string | null>(null)
+  const [verificationCode, setVerificationCode] = useState('')
+  const [verifying, setVerifying] = useState(false)
+  const [enrollError, setEnrollError] = useState<string | null>(null)
+  const [enrollSuccess, setEnrollSuccess] = useState<string | null>(null)
+
+  useEffect(() => {
+    checkMfaStatus()
+  }, [])
+
+  const checkMfaStatus = async () => {
+    try {
+      const supabase = createClient()
+      const isStub = !process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+      if (isStub) {
+        const isMockMfa = localStorage.getItem('foundersprime_mock_mfa_enabled_' + userEmail.toLowerCase()) === 'true'
+        setMfaEnabled(isMockMfa)
+      } else {
+        const { data: factors, error } = await supabase.auth.mfa.listFactors()
+        if (factors && !error) {
+          const verified = factors.all.some(f => f.status === 'verified')
+          setMfaEnabled(verified)
+        }
+      }
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
+  const startEnrollment = async () => {
+    setEnrollError(null)
+    setEnrollSuccess(null)
+    try {
+      const supabase = createClient()
+      const isStub = !process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+      if (isStub) {
+        const mockSecret = 'JBSWY3DPEHPK3PXP'
+        setMfaSecret(mockSecret)
+        setQrCode(`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=otpauth://totp/FoundersPrime:${userEmail}?secret=${mockSecret}&issuer=FoundersPrime`)
+        setShowEnroll(true)
+      } else {
+        const { data, error } = await supabase.auth.mfa.enroll({ factorType: 'totp' })
+        if (error) {
+          setEnrollError(error.message)
+          return
+        }
+        setMfaFactorId(data.id)
+        setMfaSecret(data.totp.secret)
+        setQrCode(data.totp.qr_code)
+        setShowEnroll(true)
+      }
+    } catch {
+      setEnrollError('Failed to initiate Two-Step verification setup.')
+    }
+  }
+
+  const verifyEnrollment = async () => {
+    setEnrollError(null)
+    setEnrollSuccess(null)
+    if (verificationCode.length !== 6) {
+      setEnrollError('Please enter a 6-digit verification code')
+      return
+    }
+    setVerifying(true)
+    try {
+      const supabase = createClient()
+      const isStub = !process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+      if (isStub) {
+        if (verificationCode !== '123456') {
+          setEnrollError('Invalid code. For testing in local dev, enter "123456".')
+          setVerifying(false)
+          return
+        }
+        localStorage.setItem('foundersprime_mock_mfa_enabled_' + userEmail.toLowerCase(), 'true')
+        setMfaEnabled(true)
+        setEnrollSuccess('Two-Step Verification successfully enabled!')
+        setTimeout(() => {
+          setShowEnroll(false)
+          setVerificationCode('')
+        }, 2000)
+      } else {
+        if (!mfaFactorId) return
+        const { data: challenge, error: challengeErr } = await supabase.auth.mfa.challenge({ factorId: mfaFactorId })
+        if (challengeErr) {
+          setEnrollError(challengeErr.message)
+          setVerifying(false)
+          return
+        }
+        const { error: verifyErr } = await supabase.auth.mfa.verify({
+          factorId: mfaFactorId,
+          challengeId: challenge.id,
+          code: verificationCode,
+        })
+        if (verifyErr) {
+          setEnrollError(verifyErr.message)
+          setVerifying(false)
+          return
+        }
+        setMfaEnabled(true)
+        setEnrollSuccess('Two-Step Verification successfully enabled!')
+        setTimeout(() => {
+          setShowEnroll(false)
+          setVerificationCode('')
+        }, 2000)
+      }
+    } catch {
+      setEnrollError('Verification failed. Please try again.')
+    } finally {
+      setVerifying(false)
+    }
+  }
+
+  const disableMfa = async () => {
+    if (!confirm('Are you sure you want to disable Two-Step Verification?')) return
+    setEnrollError(null)
+    try {
+      const supabase = createClient()
+      const isStub = !process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+      if (isStub) {
+        localStorage.removeItem('foundersprime_mock_mfa_enabled_' + userEmail.toLowerCase())
+        setMfaEnabled(false)
+        alert('Two-Step Verification has been disabled.')
+      } else {
+        const { data: factors } = await supabase.auth.mfa.listFactors()
+        const verifiedFactor = factors?.all?.find(f => f.status === 'verified')
+        if (verifiedFactor) {
+          const { error } = await supabase.auth.mfa.unenroll({ factorId: verifiedFactor.id })
+          if (error) {
+            alert(error.message)
+            return
+          }
+          setMfaEnabled(false)
+          alert('Two-Step Verification has been disabled.')
+        }
+      }
+    } catch {
+      alert('Failed to disable Two-Step Verification.')
+    }
+  }
+
   return (
     <section>
       <div className="flex items-center justify-between mb-3">
@@ -459,13 +605,128 @@ function AccountTab({
         </h2>
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-5">
-        <div className="lg:col-span-2">
+        <div className="lg:col-span-2 space-y-4">
           <ProfileManager
             initialName={userName}
             initialEmail={userEmail}
             initialAvatar={avatarUrl}
             memberSince={memberSince}
           />
+
+          {/* Two-Step Verification enrollment UI */}
+          <div className="bg-white border-2 border-black shadow-[3px_3px_0px_#111] p-5 md:p-6">
+            <div className="flex items-center justify-between mb-4 border-b-2 border-black border-dashed pb-3">
+              <div>
+                <h3 className="font-mono font-black uppercase text-sm text-black">Two-Step Verification</h3>
+                <p className="text-[11px] text-gray-500 font-mono mt-0.5">Secure your terminal with a 2FA passcode</p>
+              </div>
+              <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full font-mono text-[9px] font-black uppercase tracking-wider ${
+                mfaEnabled 
+                  ? 'bg-emerald-100 text-emerald-800 border border-emerald-300' 
+                  : 'bg-rose-100 text-rose-800 border border-rose-300'
+              }`}>
+                <span className={`w-1.5 h-1.5 rounded-full ${mfaEnabled ? 'bg-emerald-600' : 'bg-rose-600 animate-pulse'}`} />
+                {mfaEnabled ? 'Protected' : 'Unprotected'}
+              </span>
+            </div>
+
+            {!showEnroll ? (
+              <div className="space-y-4">
+                <p className="text-xs text-gray-600 leading-relaxed">
+                  Protect your FoundersPrime account from unauthorized access. When enabled, signing in will require both your password and a verification code generated by your authenticator app (such as Google Authenticator, Duo, or 1Password).
+                </p>
+                {mfaEnabled ? (
+                  <button
+                    onClick={disableMfa}
+                    className="h-10 px-4 bg-rose-600 hover:bg-rose-700 text-white font-mono font-black uppercase text-xs tracking-wider rounded-sm border-2 border-black shadow-[2px_2px_0px_#000] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[1px_1px_0px_#000] transition-all"
+                  >
+                    Disable Two-Step
+                  </button>
+                ) : (
+                  <button
+                    onClick={startEnrollment}
+                    className="h-10 px-4 bg-accent-yellow hover:bg-yellow-400 text-black font-mono font-black uppercase text-xs tracking-wider rounded-sm border-2 border-black shadow-[2px_2px_0px_#000] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[1px_1px_0px_#000] transition-all"
+                  >
+                    Enable Two-Step
+                  </button>
+                )}
+              </div>
+            ) : (
+              <div className="space-y-5">
+                {enrollError && (
+                  <div className="p-3 bg-rose-50 border border-rose-200 text-rose-700 text-xs font-mono font-bold flex items-center gap-2">
+                    <span className="material-symbols-outlined text-sm">error</span>
+                    {enrollError}
+                  </div>
+                )}
+                {enrollSuccess && (
+                  <div className="p-3 bg-green-50 border border-green-200 text-green-700 text-xs font-mono font-bold flex items-center gap-2">
+                    <span className="material-symbols-outlined text-sm">check_circle</span>
+                    {enrollSuccess}
+                  </div>
+                )}
+
+                <div className="flex flex-col md:flex-row gap-5 items-center md:items-start bg-gray-50 border border-gray-200 p-4">
+                  <div className="bg-white p-2 border-2 border-black shadow-[2px_2px_0px_#000] flex-shrink-0">
+                    {qrCode ? (
+                      <img src={qrCode} alt="TOTP QR Code" className="w-36 h-36" />
+                    ) : (
+                      <div className="w-36 h-36 bg-gray-100 flex items-center justify-center font-mono text-[10px] text-gray-400">Loading QR...</div>
+                    )}
+                  </div>
+                  <div className="space-y-3 flex-1 min-w-0">
+                    <h4 className="font-mono font-bold text-xs uppercase text-gray-700">1. Scan the QR Code</h4>
+                    <p className="text-[11px] text-gray-600 leading-normal">
+                      Scan this code with your authenticator app. If you cannot scan it, enter the manual secret key below:
+                    </p>
+                    <div className="bg-black/5 border border-black/10 rounded px-2.5 py-1.5 font-mono text-[10.5px] select-all break-all text-gray-800 font-bold">
+                      {mfaSecret}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="space-y-3">
+                  <h4 className="font-mono font-bold text-xs uppercase text-gray-700">2. Verify Verification Code</h4>
+                  <p className="text-[11px] text-gray-600 leading-normal">
+                    Enter the 6-digit verification code generated by your authenticator app below to confirm setup.
+                  </p>
+                  
+                  {/* Test note */}
+                  <div className="p-3 bg-amber-50 border border-amber-200 text-amber-800 text-[10.5px] font-mono leading-normal">
+                    <span className="font-black">TESTING DIRECTIVE:</span> For quick demonstration in local development without scanning the code, enter <span className="font-black text-black underline">123456</span> to successfully verify.
+                  </div>
+
+                  <div className="flex gap-2.5 max-w-[280px]">
+                    <input
+                      type="text"
+                      maxLength={6}
+                      value={verificationCode}
+                      onChange={(e) => setVerificationCode(e.target.value.replace(/\D/g, ''))}
+                      placeholder="000000"
+                      className="w-full h-10 px-3 border-2 border-black font-mono text-center text-sm font-bold placeholder:text-gray-400 focus:shadow-[2px_2px_0px_#000] outline-none transition-all"
+                      disabled={verifying}
+                    />
+                    <button
+                      onClick={verifyEnrollment}
+                      disabled={verifying}
+                      className="h-10 px-4 bg-black text-white hover:bg-gray-800 font-mono font-black uppercase text-xs tracking-wider border-2 border-black shadow-[2px_2px_0px_#000] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[1px_1px_0px_#000] transition-all disabled:opacity-50"
+                    >
+                      {verifying ? 'Verifying...' : 'Verify'}
+                    </button>
+                  </div>
+                </div>
+
+                <div className="pt-2 border-t border-gray-200">
+                  <button
+                    onClick={() => { setShowEnroll(false); setVerificationCode(''); setEnrollError(null); }}
+                    className="font-mono text-xs text-gray-400 hover:text-black uppercase font-bold"
+                  >
+                    Cancel Setup
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
 
         <div className="bg-white border-2 border-black shadow-[3px_3px_0px_#111] rounded-sm overflow-hidden divide-y-2 divide-black divide-dashed">

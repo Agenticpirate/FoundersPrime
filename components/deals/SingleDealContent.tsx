@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import { getStartupProgramUrl } from '@/lib/comprehensive-startup-urls'
 import { useRouter } from 'next/navigation'
-import { isProUser, isNextFounderUser } from '@/lib/auth/user-context'
+import { isProUser, isNextFounderUser, checkProStatus } from '@/lib/auth/user-context'
 import ProUpgradeModal from '@/components/ProUpgradeModal'
 import { claimDeal } from '@/app/actions/deal-actions'
 import RichDescription from './RichDescription'
@@ -62,39 +62,57 @@ interface SingleDealContentProps {
   deal: Deal
   freeAccess?: boolean
   basePath?: string
+  /** Server-resolved pro status — eliminates the client-side loading flash */
+  initialIsPro?: boolean
+  /** Server-resolved next-founder status */
+  initialIsNextFounder?: boolean
 }
 
-export default function SingleDealContent({ deal, freeAccess = false, basePath = '/deals' }: SingleDealContentProps) {
+export default function SingleDealContent({
+  deal,
+  freeAccess = false,
+  basePath = '/deals',
+  initialIsPro = false,
+  initialIsNextFounder = false,
+}: SingleDealContentProps) {
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(null)
   const [isSaved, setIsSaved] = useState(false)
   const [isSaving, setIsSaving] = useState(false)
   const [showShareMenu, setShowShareMenu] = useState(false)
   const [showCopied, setShowCopied] = useState(false)
 
-  // Pro Access State
-  const [isPro, setIsPro] = useState(false)
-  const [isNextFounder, setIsNextFounder] = useState(false)
-  const [isLoadingPro, setIsLoadingPro] = useState(true)
+  // Pro Access State — seed from server-resolved props so there's no flash
+  // The useEffect below still runs to pick up any session changes on this page.
+  const [isPro, setIsPro] = useState(freeAccess ? true : initialIsPro)
+  const [isNextFounder, setIsNextFounder] = useState(freeAccess ? false : initialIsNextFounder)
+  // Only show loading spinner if we have no server-side hint AND not freeAccess
+  const [isLoadingPro, setIsLoadingPro] = useState(freeAccess ? false : !initialIsPro && !initialIsNextFounder)
   const [showUpgradeModal, setShowUpgradeModal] = useState(false)
   const [isClaiming, setIsClaiming] = useState(false)
   const [claimError, setClaimError] = useState<string | null>(null)
 
   const router = useRouter()
 
-  // Check Pro Status on Mount
+  // Verify/refresh Pro status client-side.
+  // If the server already told us the user is pro, we skip the API call
+  // entirely (nothing to refresh). Otherwise we check so free users who
+  // just upgraded in another tab still see the correct state.
   useEffect(() => {
     if (freeAccess) {
-      // Student Benefits are free — no Pro check needed
       setIsPro(true)
+      setIsLoadingPro(false)
+      return
+    }
+    // If server already confirmed pro, trust it — avoid a redundant round-trip
+    if (initialIsPro || initialIsNextFounder) {
       setIsLoadingPro(false)
       return
     }
     const checkStatus = async () => {
       try {
-        const proStatus = await isProUser()
-        setIsPro(proStatus)
-        const nfStatus = await isNextFounderUser()
-        setIsNextFounder(nfStatus)
+        const status = await checkProStatus()
+        setIsPro(status.isPro)
+        setIsNextFounder(!!status.user?.isNextFounder)
       } catch (error) {
         console.error('Error checking pro status:', error)
       } finally {
@@ -102,7 +120,7 @@ export default function SingleDealContent({ deal, freeAccess = false, basePath =
       }
     }
     checkStatus()
-  }, [freeAccess])
+  }, [freeAccess, initialIsPro, initialIsNextFounder])
 
   // Check if deal is saved on mount
   useEffect(() => {
@@ -132,7 +150,7 @@ export default function SingleDealContent({ deal, freeAccess = false, basePath =
         if (data.success) {
           setIsSaved(false)
         } else if (response.status === 401) {
-          router.push('/login')
+          router.push(`/login?redirect=${encodeURIComponent(window.location.pathname)}`)
         }
       } else {
         const response = await fetch('/api/saved-deals', {
@@ -144,7 +162,7 @@ export default function SingleDealContent({ deal, freeAccess = false, basePath =
         if (data.success) {
           setIsSaved(true)
         } else if (response.status === 401) {
-          router.push('/login')
+          router.push(`/login?redirect=${encodeURIComponent(window.location.pathname)}`)
         }
       }
     } catch (error) {
@@ -272,10 +290,10 @@ export default function SingleDealContent({ deal, freeAccess = false, basePath =
         <div className="lg:sticky lg:top-24 space-y-4">
 
           {/* Apply Box — neo-brutalist premium */}
-          <div className="relative rounded-sm border-2 border-black bg-white shadow-[4px_4px_0px_#111] overflow-hidden">
+          <div className="relative rounded-sm border-2 border-black dark:border-white/10 bg-white dark:bg-[#0c0c0c] shadow-[4px_4px_0px_#111] dark:shadow-none overflow-hidden">
             {/* Decorative mandala in top-right */}
             <div className="absolute -top-10 -right-10 w-40 h-40 pointer-events-none opacity-[0.08]" aria-hidden="true">
-              <svg viewBox="0 0 200 200" className="w-full h-full text-gray-900 deal-apply-mandala-spin" fill="none" stroke="currentColor" strokeWidth="0.7">
+              <svg viewBox="0 0 200 200" className="w-full h-full text-gray-900 dark:text-white deal-apply-mandala-spin" fill="none" stroke="currentColor" strokeWidth="0.7">
                 <circle cx="100" cy="100" r="50" />
                 <circle cx="100" cy="100" r="35" strokeDasharray="3 3" />
                 {[...Array(12)].map((_, i) => (
@@ -293,41 +311,41 @@ export default function SingleDealContent({ deal, freeAccess = false, basePath =
 
             <div className="relative p-5">
               {claimError && (
-                <div className={`mb-3 px-3 py-2 text-[11px] font-semibold rounded-sm border-2 ${claimError.startsWith('⚡') ? 'bg-amber-50 text-amber-800 border-amber-400' : 'bg-red-50 text-red-700 border-red-400'}`}>
+                <div className={`mb-3 px-3 py-2 text-[11px] font-semibold rounded-sm border-2 ${claimError.startsWith('⚡') ? 'bg-amber-50 text-amber-800 border-amber-400 dark:bg-amber-950/30 dark:text-amber-300 dark:border-amber-900/50' : 'bg-red-50 text-red-700 border-red-400 dark:bg-red-950/30 dark:text-red-300 dark:border-red-900/50'}`}>
                   {claimError.startsWith('⚡') ? claimError : `⚠️ ${claimError}`}
                 </div>
               )}
 
               {/* Value display */}
-              <div className="mb-4 pb-4 border-b-2 border-black border-dashed">
-                <div className="text-[10px] font-bold uppercase text-gray-500 font-mono tracking-[0.12em] mb-1">Deal Value</div>
-                <div className="text-2xl md:text-3xl font-black font-mono text-black leading-none">
+              <div className="mb-4 pb-4 border-b-2 border-black dark:border-b-white/10 border-dashed">
+                <div className="text-[10px] font-bold uppercase text-gray-500 dark:text-gray-400 font-mono tracking-[0.12em] mb-1">Deal Value</div>
+                <div className="text-2xl md:text-3xl font-black font-mono text-black dark:text-white leading-none">
                   {displayValue}
                 </div>
               </div>
 
               {/* Stat rows */}
-              <div className="space-y-2 mb-4 pb-4 border-b-2 border-black border-dashed">
+              <div className="space-y-2 mb-4 pb-4 border-b-2 border-black dark:border-b-white/10 border-dashed">
                 <div className="flex justify-between items-center text-[12.5px]">
-                  <span className="text-gray-500 inline-flex items-center gap-1.5">
-                    <span className="material-symbols-outlined text-[14px] text-gray-500">timer</span>
+                  <span className="text-gray-500 dark:text-gray-400 inline-flex items-center gap-1.5">
+                    <span className="material-symbols-outlined text-[14px] text-gray-500 dark:text-gray-400">timer</span>
                     Time
                   </span>
-                  <span className="font-bold font-mono text-black">{deal.stats.appTime}</span>
+                  <span className="font-bold font-mono text-black dark:text-white">{deal.stats.appTime}</span>
                 </div>
                 <div className="flex justify-between items-center text-[12.5px]">
-                  <span className="text-gray-500 inline-flex items-center gap-1.5">
-                    <span className="material-symbols-outlined text-[14px] text-gray-500">task_alt</span>
+                  <span className="text-gray-500 dark:text-gray-400 inline-flex items-center gap-1.5">
+                    <span className="material-symbols-outlined text-[14px] text-gray-500 dark:text-gray-400">task_alt</span>
                     Approval
                   </span>
-                  <span className="font-bold font-mono text-black">{deal.stats.approval}</span>
+                  <span className="font-bold font-mono text-black dark:text-white">{deal.stats.approval}</span>
                 </div>
                 <div className="flex justify-between items-center text-[12.5px]">
-                  <span className="text-gray-500 inline-flex items-center gap-1.5">
-                    <span className="material-symbols-outlined text-[14px] text-gray-500">event</span>
+                  <span className="text-gray-500 dark:text-gray-400 inline-flex items-center gap-1.5">
+                    <span className="material-symbols-outlined text-[14px] text-gray-500 dark:text-gray-400">event</span>
                     Deadline
                   </span>
-                  <span className="font-bold font-mono text-emerald-600">Rolling</span>
+                  <span className="font-bold font-mono text-emerald-600 dark:text-emerald-400">Rolling</span>
                 </div>
               </div>
 
@@ -354,10 +372,10 @@ export default function SingleDealContent({ deal, freeAccess = false, basePath =
                 <button
                   onClick={handleSave}
                   disabled={isSaving}
-                  className={`rounded-sm border-2 border-black py-2 font-mono text-[11px] font-bold uppercase tracking-wide transition-all flex items-center justify-center gap-1.5 hover:shadow-[2px_2px_0px_#111] hover:-translate-x-px hover:-translate-y-px ${
+                  className={`rounded-sm border-2 border-black dark:border-white/10 py-2 font-mono text-[11px] font-bold uppercase tracking-wide transition-all flex items-center justify-center gap-1.5 hover:shadow-[2px_2px_0px_#111] dark:hover:shadow-none hover:-translate-x-px hover:-translate-y-px ${
                     isSaved
-                      ? 'bg-accent-yellow text-black'
-                      : 'bg-white text-black hover:bg-gray-50'
+                      ? 'bg-accent-yellow text-black border-black dark:border-black'
+                      : 'bg-white dark:bg-white/5 text-black dark:text-white hover:bg-gray-50 dark:hover:bg-white/10'
                   } ${isSaving ? 'opacity-50 cursor-not-allowed' : ''}`}
                 >
                   <span className="material-symbols-outlined !text-[15px]">{isSaved ? 'bookmark_added' : 'bookmark'}</span>
@@ -366,23 +384,23 @@ export default function SingleDealContent({ deal, freeAccess = false, basePath =
                 <div className="relative">
                   <button
                     onClick={() => setShowShareMenu(!showShareMenu)}
-                    className="w-full rounded-sm border-2 border-black bg-white py-2 font-mono text-[11px] font-bold uppercase tracking-wide text-black hover:bg-gray-50 hover:shadow-[2px_2px_0px_#111] hover:-translate-x-px hover:-translate-y-px transition-all flex items-center justify-center gap-1.5"
+                    className="w-full rounded-sm border-2 border-black dark:border-white/10 bg-white dark:bg-white/5 py-2 font-mono text-[11px] font-bold uppercase tracking-wide text-black dark:text-white hover:bg-gray-50 dark:hover:bg-white/10 hover:shadow-[2px_2px_0px_#111] dark:hover:shadow-none hover:-translate-x-px hover:-translate-y-px transition-all flex items-center justify-center gap-1.5"
                   >
                     <span className="material-symbols-outlined !text-[15px]">ios_share</span> Share
                   </button>
                   {showShareMenu && (
-                    <div className="absolute top-full left-0 right-0 mt-1.5 bg-white border-2 border-black rounded-sm shadow-[3px_3px_0px_#111] z-50 overflow-hidden">
-                      <button onClick={() => handleShare('copy')} className="w-full px-3 py-2 text-left text-[11px] font-bold hover:bg-gray-100 flex items-center gap-2 text-black">
+                    <div className="absolute top-full left-0 right-0 mt-1.5 bg-white dark:bg-[#0c0c0c] border-2 border-black dark:border-white/10 rounded-sm shadow-[3px_3px_0px_#111] dark:shadow-none z-50 overflow-hidden">
+                      <button onClick={() => handleShare('copy')} className="w-full px-3 py-2 text-left text-[11px] font-bold hover:bg-gray-100 dark:hover:bg-white/5 flex items-center gap-2 text-black dark:text-white">
                         <span className="material-symbols-outlined !text-[14px]">content_copy</span>
                         {showCopied ? 'Copied!' : 'Copy Link'}
                       </button>
-                      <button onClick={() => handleShare('twitter')} className="w-full px-3 py-2 text-left text-[11px] font-bold hover:bg-gray-100 flex items-center gap-2 text-black border-t border-gray-200">
+                      <button onClick={() => handleShare('twitter')} className="w-full px-3 py-2 text-left text-[11px] font-bold hover:bg-gray-100 dark:hover:bg-white/5 flex items-center gap-2 text-black dark:text-white border-t border-gray-200 dark:border-t-white/10">
                         <span className="material-symbols-outlined !text-[14px]">share</span>Share on X
                       </button>
-                      <button onClick={() => handleShare('linkedin')} className="w-full px-3 py-2 text-left text-[11px] font-bold hover:bg-gray-100 flex items-center gap-2 text-black border-t border-gray-200">
+                      <button onClick={() => handleShare('linkedin')} className="w-full px-3 py-2 text-left text-[11px] font-bold hover:bg-gray-100 dark:hover:bg-white/5 flex items-center gap-2 text-black dark:text-white border-t border-gray-200 dark:border-t-white/10">
                         <span className="material-symbols-outlined !text-[14px]">work</span>LinkedIn
                       </button>
-                      <button onClick={() => handleShare('email')} className="w-full px-3 py-2 text-left text-[11px] font-bold hover:bg-gray-100 flex items-center gap-2 text-black border-t border-gray-200">
+                      <button onClick={() => handleShare('email')} className="w-full px-3 py-2 text-left text-[11px] font-bold hover:bg-gray-100 dark:hover:bg-white/5 flex items-center gap-2 text-black dark:text-white border-t border-gray-200 dark:border-t-white/10">
                         <span className="material-symbols-outlined !text-[14px]">mail</span>Email
                       </button>
                     </div>
@@ -393,17 +411,17 @@ export default function SingleDealContent({ deal, freeAccess = false, basePath =
           </div>
 
           {/* Quick Links */}
-          <div className="hidden md:block rounded-sm border-2 border-black bg-white p-4 shadow-[3px_3px_0px_#111]">
-            <h4 className="font-mono text-[10px] font-bold uppercase tracking-[0.12em] text-gray-700 mb-3 pb-2 border-b-2 border-black border-dashed">Quick Links</h4>
+          <div className="hidden md:block rounded-sm border-2 border-black dark:border-white/10 bg-white dark:bg-[#0c0c0c] p-4 shadow-[3px_3px_0px_#111] dark:shadow-none">
+            <h4 className="font-mono text-[10px] font-bold uppercase tracking-[0.12em] text-gray-700 dark:text-gray-300 mb-3 pb-2 border-b-2 border-black dark:border-b-white/10 border-dashed">Quick Links</h4>
             <ul className="space-y-1">
               <li>
-                <button onClick={handleApplyClick} className="w-full flex items-center gap-2 text-[12.5px] font-bold text-black hover:bg-accent-yellow/15 rounded-sm px-2 py-1.5 transition-colors">
+                <button onClick={handleApplyClick} className="w-full flex items-center gap-2 text-[12.5px] font-bold text-black dark:text-white hover:bg-accent-yellow/15 dark:hover:bg-white/5 rounded-sm px-2 py-1.5 transition-colors">
                   <span className="material-symbols-outlined !text-[16px] text-accent-yellow">open_in_new</span>
                   Apply for Deal
                 </button>
               </li>
               <li>
-                <a href={`https://www.${deal.provider.toLowerCase().replace(/\s+/g, '')}.com`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-[12.5px] font-bold text-black hover:bg-gray-100 rounded-sm px-2 py-1.5 transition-colors">
+                <a href={`https://www.${deal.provider.toLowerCase().replace(/\s+/g, '')}.com`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-[12.5px] font-bold text-black dark:text-white hover:bg-gray-100 dark:hover:bg-white/5 rounded-sm px-2 py-1.5 transition-colors">
                   <span className="material-symbols-outlined !text-[16px] text-sky-500">info</span>
                   About {deal.provider}
                 </a>
@@ -412,7 +430,7 @@ export default function SingleDealContent({ deal, freeAccess = false, basePath =
           </div>
 
           {/* Trust Stats — neo-brutalist dark with mandala */}
-          <div className="hidden md:block relative rounded-sm bg-black text-white p-5 overflow-hidden border-2 border-black shadow-[3px_3px_0px_rgba(255,221,0,0.5)]">
+          <div className="hidden md:block relative rounded-sm bg-black dark:bg-[#0c0c0c] text-white p-5 overflow-hidden border-2 border-black dark:border-white/10 shadow-[3px_3px_0px_rgba(255,221,0,0.5)] dark:shadow-none">
             <div className="absolute -top-12 -right-12 w-44 h-44 pointer-events-none opacity-[0.18]" aria-hidden="true">
               <svg viewBox="0 0 200 200" className="w-full h-full text-accent-yellow deal-apply-mandala-spin" fill="none" stroke="currentColor" strokeWidth="0.7">
                 <circle cx="100" cy="100" r="40" />
@@ -460,9 +478,9 @@ export default function SingleDealContent({ deal, freeAccess = false, basePath =
           </div>
 
           {/* Bottom mandala tile — premium ornament */}
-          <div className="hidden md:block relative rounded-sm bg-gray-50 border-2 border-black p-5 overflow-hidden shadow-[3px_3px_0px_#111]">
+          <div className="hidden md:block relative rounded-sm bg-gray-50 dark:bg-white/5 border-2 border-black dark:border-white/10 p-5 overflow-hidden shadow-[3px_3px_0px_#111] dark:shadow-none">
             <div className="absolute -bottom-10 -left-10 w-36 h-36 pointer-events-none opacity-[0.10]" aria-hidden="true">
-              <svg viewBox="0 0 200 200" className="w-full h-full text-gray-900 deal-apply-mandala-spin-reverse" fill="none" stroke="currentColor" strokeWidth="0.6">
+              <svg viewBox="0 0 200 200" className="w-full h-full text-gray-900 dark:text-white deal-apply-mandala-spin-reverse" fill="none" stroke="currentColor" strokeWidth="0.6">
                 {[20, 35, 50, 65].map((r, i) => (
                   <ellipse
                     key={i}
@@ -477,11 +495,11 @@ export default function SingleDealContent({ deal, freeAccess = false, basePath =
               </svg>
             </div>
             <div className="relative">
-              <p className="font-mono text-[9px] font-bold uppercase tracking-[0.14em] text-gray-700 mb-1.5">
+              <p className="font-mono text-[9px] font-bold uppercase tracking-[0.14em] text-gray-700 dark:text-gray-300 mb-1.5">
                 · Founder Tip
               </p>
-              <p className="text-[12px] text-gray-700 leading-relaxed">
-                Apply with a <span className="font-bold text-black bg-accent-yellow/40 px-1">company email</span> matching your domain. Approval rates jump <span className="font-bold text-black">3×</span> when emails match.
+              <p className="text-[12px] text-gray-700 dark:text-gray-300 leading-relaxed">
+                Apply with a <span className="font-bold text-black dark:text-white bg-accent-yellow/40 dark:bg-accent-yellow/20 px-1">company email</span> matching your domain. Approval rates jump <span className="font-bold text-black dark:text-white">3×</span> when emails match.
               </p>
             </div>
           </div>
@@ -511,28 +529,28 @@ export default function SingleDealContent({ deal, freeAccess = false, basePath =
         {/* Quick Stats Bar — neo-brutalist tiles */}
         <div className="grid grid-cols-4 gap-2 md:gap-3">
           {[
-            { label: 'Time', value: deal.stats.appTime, icon: 'timer', color: 'text-sky-600', bg: 'bg-sky-100' },
-            { label: 'Approval', value: deal.stats.approval, icon: 'task_alt', color: 'text-indigo-600', bg: 'bg-indigo-100' },
-            { label: 'Difficulty', value: deal.stats.difficulty, icon: 'speed', color: 'text-emerald-600', bg: 'bg-emerald-100' },
-            { label: 'Success', value: deal.stats.successRate, icon: 'trending_up', color: 'text-amber-600', bg: 'bg-amber-100' },
+            { label: 'Time', value: deal.stats.appTime, icon: 'timer', color: 'text-sky-600 dark:text-sky-400', bg: 'bg-sky-100' },
+            { label: 'Approval', value: deal.stats.approval, icon: 'task_alt', color: 'text-indigo-600 dark:text-indigo-400', bg: 'bg-indigo-100' },
+            { label: 'Difficulty', value: deal.stats.difficulty, icon: 'speed', color: 'text-emerald-600 dark:text-emerald-400', bg: 'bg-emerald-100' },
+            { label: 'Success', value: deal.stats.successRate, icon: 'trending_up', color: 'text-amber-600 dark:text-amber-400', bg: 'bg-amber-100' },
           ].map((s) => (
-            <div key={s.label} className="rounded-sm border-2 border-black bg-white p-2.5 md:p-3 shadow-[2px_2px_0px_#111] hover:shadow-[3px_3px_0px_#111] hover:-translate-x-px hover:-translate-y-px transition-all">
+            <div key={s.label} className="rounded-sm border-2 border-black dark:border-white/10 bg-white dark:bg-[#0c0c0c] p-2.5 md:p-3 shadow-[2px_2px_0px_#111] dark:shadow-none hover:shadow-[3px_3px_0px_#111] hover:-translate-x-px hover:-translate-y-px transition-all">
               <div className="flex items-center gap-2 mb-1.5">
-                <div className={`w-6 h-6 rounded-sm border-2 border-black flex items-center justify-center flex-shrink-0 ${s.bg}`}>
+                <div className={`w-6 h-6 rounded-sm border-2 border-black dark:border-white/10 flex items-center justify-center flex-shrink-0 ${s.bg} dark:bg-white/5`}>
                   <span className={`material-symbols-outlined !text-[13px] ${s.color}`}>{s.icon}</span>
                 </div>
-                <div className="text-[9px] md:text-[10px] font-bold uppercase text-gray-600 font-mono tracking-[0.1em]">{s.label}</div>
+                <div className="text-[9px] md:text-[10px] font-bold uppercase text-gray-600 dark:text-gray-400 font-mono tracking-[0.1em]">{s.label}</div>
               </div>
-              <div className="text-[12px] md:text-sm font-black text-black font-mono leading-tight truncate">{s.value}</div>
+              <div className="text-[12px] md:text-sm font-black text-black dark:text-white font-mono leading-tight truncate">{s.value}</div>
             </div>
           ))}
         </div>
 
         {/* Overview Section */}
         {description && description.length > 10 && (
-        <section className="rounded-sm border-2 border-black bg-white p-5 shadow-[3px_3px_0px_#111]">
-          <h2 className="mb-3 flex items-center gap-2 font-mono text-[13px] md:text-sm font-black uppercase tracking-[0.08em] text-black pb-2 border-b-2 border-black border-dashed">
-            <span className="inline-flex items-center justify-center w-7 h-7 rounded-sm bg-accent-yellow border-2 border-black">
+        <section className="rounded-sm border-2 border-black dark:border-white/10 bg-white dark:bg-[#0c0c0c] p-5 shadow-[3px_3px_0px_#111] dark:shadow-none">
+          <h2 className="mb-3 flex items-center gap-2 font-mono text-[13px] md:text-sm font-black uppercase tracking-[0.08em] text-black dark:text-white pb-2 border-b-2 border-black dark:border-b-white/10 border-dashed">
+            <span className="inline-flex items-center justify-center w-7 h-7 rounded-sm bg-accent-yellow border-2 border-black dark:border-white/10">
               <span className="material-symbols-outlined text-black !text-[16px]">info</span>
             </span>
             About This Deal
@@ -550,15 +568,15 @@ export default function SingleDealContent({ deal, freeAccess = false, basePath =
           items={benefits as any[]}
           maxVisible={6}
           renderItem={(item: any, index: number) => (
-            <div key={index} className="flex items-start gap-2 p-2.5 bg-white rounded-sm border-2 border-black shadow-[2px_2px_0px_#111] hover:shadow-[3px_3px_0px_#111] hover:-translate-x-px hover:-translate-y-px transition-all">
-              <span className="material-symbols-outlined text-emerald-600 flex-shrink-0 !text-[16px] mt-0.5">check_circle</span>
+            <div key={index} className="flex items-start gap-2 p-2.5 bg-white dark:bg-[#0c0c0c] rounded-sm border-2 border-black dark:border-white/10 shadow-[2px_2px_0px_#111] dark:shadow-none hover:shadow-[3px_3px_0px_#111] hover:-translate-x-px hover:-translate-y-px transition-all">
+              <span className="material-symbols-outlined text-emerald-600 dark:text-emerald-400 flex-shrink-0 !text-[16px] mt-0.5">check_circle</span>
               <div className="min-w-0">
                 {typeof item === 'string' ? (
-                  <p className="text-[12.5px] font-medium text-gray-800 leading-snug">{item}</p>
+                  <p className="text-[12.5px] font-medium text-gray-800 dark:text-gray-200 leading-snug">{item}</p>
                 ) : (
                   <>
-                    <h3 className="font-bold font-mono text-[12px] text-black mb-0.5">{item.title}</h3>
-                    <p className="text-[11.5px] text-gray-700 leading-snug">{item.description}</p>
+                    <h3 className="font-bold font-mono text-[12px] text-black dark:text-white mb-0.5">{item.title}</h3>
+                    <p className="text-[11.5px] text-gray-700 dark:text-gray-300 leading-snug">{item.description}</p>
                   </>
                 )}
               </div>
@@ -577,9 +595,9 @@ export default function SingleDealContent({ deal, freeAccess = false, basePath =
           items={eligibility as any[]}
           maxVisible={5}
           renderItem={(requirement: string, index: number) => (
-            <li key={index} className="flex items-start gap-2 px-3 py-2 bg-amber-50 rounded-sm border-2 border-black border-l-[6px] border-l-accent-yellow shadow-[2px_2px_0px_#111]">
-              <span className="material-symbols-outlined text-black flex-shrink-0 !text-[14px] mt-0.5">arrow_right</span>
-              <span className="text-[12.5px] font-medium text-gray-800 leading-snug">{requirement}</span>
+            <li key={index} className="flex items-start gap-2 px-3 py-2 bg-amber-50 dark:bg-amber-950/20 rounded-sm border-2 border-black dark:border-white/10 border-l-[6px] border-l-accent-yellow shadow-[2px_2px_0px_#111] dark:shadow-none">
+              <span className="material-symbols-outlined text-black dark:text-white flex-shrink-0 !text-[14px] mt-0.5">arrow_right</span>
+              <span className="text-[12.5px] font-medium text-gray-800 dark:text-gray-200 leading-snug">{requirement}</span>
             </li>
           )}
           listMode="ul"
@@ -589,39 +607,39 @@ export default function SingleDealContent({ deal, freeAccess = false, basePath =
 
         {/* How to Apply — neo-brutalist compact */}
         {instructions && instructions.length > 0 && (
-        <section className="rounded-sm border-2 border-black bg-white p-5 shadow-[3px_3px_0px_#111]">
-          <div className="flex items-center justify-between mb-3 pb-2 border-b-2 border-black border-dashed">
-            <h2 className="flex items-center gap-2 font-mono text-[13px] md:text-sm font-black uppercase tracking-[0.08em] text-black">
-              <span className="inline-flex items-center justify-center w-7 h-7 rounded-sm bg-accent-yellow border-2 border-black">
+        <section className="rounded-sm border-2 border-black dark:border-white/10 bg-white dark:bg-[#0c0c0c] p-5 shadow-[3px_3px_0px_#111] dark:shadow-none">
+          <div className="flex items-center justify-between mb-3 pb-2 border-b-2 border-black dark:border-b-white/10 border-dashed">
+            <h2 className="flex items-center gap-2 font-mono text-[13px] md:text-sm font-black uppercase tracking-[0.08em] text-black dark:text-white">
+              <span className="inline-flex items-center justify-center w-7 h-7 rounded-sm bg-accent-yellow border-2 border-black dark:border-white/10">
                 <span className="material-symbols-outlined text-black !text-[16px]">directions_run</span>
               </span>
               How to Apply
             </h2>
-            <span className="font-mono text-[10px] font-bold uppercase tracking-[0.1em] text-black bg-gray-100 px-2 py-0.5 border-2 border-black rounded-sm">
+            <span className="font-mono text-[10px] font-bold uppercase tracking-[0.1em] text-black dark:text-white bg-gray-100 dark:bg-white/5 px-2 py-0.5 border-2 border-black dark:border-white/10 rounded-sm">
               {instructions.length} steps
             </span>
           </div>
           <ol className="relative space-y-2">
             {/* Vertical connecting rail */}
-            <span className="absolute left-[13px] top-3 bottom-3 w-px bg-black border-l-2 border-dashed" aria-hidden="true" />
+            <span className="absolute left-[13px] top-3 bottom-3 w-px bg-black dark:bg-white/10 border-l-2 border-dashed dark:border-l-white/10" aria-hidden="true" />
             {instructions.map((step, index) => {
               const isString = typeof step === 'string'
               const text = isString ? (step as string) : (step as { description: string }).description
               const title = isString ? null : (step as { title: string }).title
               return (
                 <li key={index} className="relative flex items-start gap-3 pl-0">
-                  <div className={`relative z-10 flex-shrink-0 w-[26px] h-[26px] rounded-sm flex items-center justify-center font-mono text-[11px] font-black tabular-nums border-2 border-black ${
+                  <div className={`relative z-10 flex-shrink-0 w-[26px] h-[26px] rounded-sm flex items-center justify-center font-mono text-[11px] font-black tabular-nums border-2 border-black dark:border-white/10 ${
                     index === 0
-                      ? 'bg-accent-yellow text-black shadow-[2px_2px_0px_#111]'
-                      : 'bg-white text-black shadow-[1px_1px_0px_#111]'
+                      ? 'bg-accent-yellow text-black shadow-[2px_2px_0px_#111] dark:shadow-none'
+                      : 'bg-white dark:bg-white/5 text-black dark:text-white shadow-[1px_1px_0px_#111] dark:shadow-none'
                   }`}>
                     {index + 1}
                   </div>
                   <div className="flex-1 min-w-0 pt-[3px] pb-1">
                     {title && (
-                      <span className="font-mono text-[11px] font-black text-black mr-1.5">{title}.</span>
+                      <span className="font-mono text-[11px] font-black text-black dark:text-white mr-1.5">{title}.</span>
                     )}
-                    <span className="text-[12.5px] text-gray-800 leading-snug">{text}</span>
+                    <span className="text-[12.5px] text-gray-800 dark:text-gray-200 leading-snug">{text}</span>
                   </div>
                 </li>
               )
@@ -629,11 +647,11 @@ export default function SingleDealContent({ deal, freeAccess = false, basePath =
           </ol>
 
           {/* Apply button */}
-          <div className="mt-4 pt-4 border-t-2 border-black border-dashed">
+          <div className="mt-4 pt-4 border-t-2 border-black dark:border-t-white/10 border-dashed">
             <button
               onClick={handleApplyClick}
               disabled={isClaiming}
-              className="group inline-flex items-center gap-2 bg-accent-yellow text-black font-mono font-black px-5 py-2.5 text-[12px] uppercase tracking-[0.1em] rounded-sm border-2 border-black shadow-[3px_3px_0px_#111] hover:bg-amber-300 hover:shadow-[5px_5px_0px_#111] hover:-translate-x-px hover:-translate-y-px transition-all cursor-pointer disabled:opacity-50"
+              className="group inline-flex items-center gap-2 bg-accent-yellow text-black font-mono font-black px-5 py-2.5 text-[12px] uppercase tracking-[0.1em] rounded-sm border-2 border-black dark:border-white/10 shadow-[3px_3px_0px_#111] dark:shadow-none hover:bg-amber-300 hover:shadow-[5px_5px_0px_#111] hover:-translate-x-px hover:-translate-y-px transition-all cursor-pointer disabled:opacity-50"
             >
               <span>{isClaiming ? 'Claiming…' : 'Apply Now'}</span>
               <span className="material-symbols-outlined !text-[16px] group-hover:translate-x-0.5 transition-transform">
@@ -646,29 +664,29 @@ export default function SingleDealContent({ deal, freeAccess = false, basePath =
 
         {/* FAQ Section */}
         {faqs && faqs.length > 0 && (
-        <section className="rounded-sm border-2 border-black bg-white p-5 shadow-[3px_3px_0px_#111]">
-          <h2 className="mb-3 flex items-center gap-2 font-mono text-[13px] md:text-sm font-black uppercase tracking-[0.08em] text-black pb-2 border-b-2 border-black border-dashed">
-            <span className="inline-flex items-center justify-center w-7 h-7 rounded-sm bg-accent-yellow border-2 border-black">
+        <section className="rounded-sm border-2 border-black dark:border-white/10 bg-white dark:bg-[#0c0c0c] p-5 shadow-[3px_3px_0px_#111] dark:shadow-none">
+          <h2 className="mb-3 flex items-center gap-2 font-mono text-[13px] md:text-sm font-black uppercase tracking-[0.08em] text-black dark:text-white pb-2 border-b-2 border-black dark:border-b-white/10 border-dashed">
+            <span className="inline-flex items-center justify-center w-7 h-7 rounded-sm bg-accent-yellow border-2 border-black dark:border-white/10">
               <span className="material-symbols-outlined text-black !text-[16px]">help</span>
             </span>
             FAQ
           </h2>
           <div className="space-y-2">
             {faqs.map((faqItem, index) => (
-              <div key={index} className="rounded-sm border-2 border-black bg-white overflow-hidden shadow-[2px_2px_0px_#111] hover:shadow-[3px_3px_0px_#111] transition-shadow">
+              <div key={index} className="rounded-sm border-2 border-black dark:border-white/10 bg-white dark:bg-[#0c0c0c] overflow-hidden shadow-[2px_2px_0px_#111] dark:shadow-none hover:shadow-[3px_3px_0px_#111] transition-shadow">
                 <button
                   onClick={() => setOpenFaqIndex(openFaqIndex === index ? null : index)}
                   className={`flex items-center justify-between gap-3 px-3.5 py-2.5 w-full text-left transition-colors ${
-                    openFaqIndex === index ? 'bg-accent-yellow/15' : 'hover:bg-gray-50'
+                    openFaqIndex === index ? 'bg-accent-yellow/15 dark:bg-white/5' : 'hover:bg-gray-50 dark:hover:bg-white/5'
                   }`}
                 >
-                  <span className="text-[12.5px] font-bold font-mono text-black pr-2">{faqItem.question}</span>
-                  <span className={`material-symbols-outlined !text-[18px] text-black transition-transform flex-shrink-0 ${openFaqIndex === index ? 'rotate-180' : ''}`}>
+                  <span className="text-[12.5px] font-bold font-mono text-black dark:text-white pr-2">{faqItem.question}</span>
+                  <span className={`material-symbols-outlined !text-[18px] text-black dark:text-white transition-transform flex-shrink-0 ${openFaqIndex === index ? 'rotate-180' : ''}`}>
                     expand_more
                   </span>
                 </button>
                 {openFaqIndex === index && (
-                  <div className="px-3.5 pb-3 pt-2 text-[12.5px] text-gray-700 leading-relaxed bg-gray-50 border-t-2 border-black border-dashed">
+                  <div className="px-3.5 pb-3 pt-2 text-[12.5px] text-gray-700 dark:text-gray-300 leading-relaxed bg-gray-50 dark:bg-white/5 border-t-2 border-black dark:border-t-white/10 border-dashed">
                     {faqItem.answer}
                   </div>
                 )}
@@ -680,9 +698,9 @@ export default function SingleDealContent({ deal, freeAccess = false, basePath =
 
         {/* Tags + decorative footer */}
         {Array.isArray(deal.tags) && deal.tags.length > 0 && (
-        <section className="relative rounded-sm border-2 border-black bg-gray-50 p-5 overflow-hidden shadow-[3px_3px_0px_#111]">
+        <section className="relative rounded-sm border-2 border-black dark:border-white/10 bg-gray-50 dark:bg-[#0c0c0c] p-5 overflow-hidden shadow-[3px_3px_0px_#111] dark:shadow-none">
           <div className="absolute -bottom-12 -right-12 w-44 h-44 pointer-events-none opacity-[0.08]" aria-hidden="true">
-            <svg viewBox="0 0 200 200" className="w-full h-full text-gray-900 deal-tags-mandala-spin" fill="none" stroke="currentColor" strokeWidth="0.6">
+            <svg viewBox="0 0 200 200" className="w-full h-full text-gray-900 dark:text-white deal-tags-mandala-spin" fill="none" stroke="currentColor" strokeWidth="0.6">
               <circle cx="100" cy="100" r="40" />
               <circle cx="100" cy="100" r="60" strokeDasharray="2 4" />
               <circle cx="100" cy="100" r="80" strokeDasharray="1 6" />
@@ -696,8 +714,8 @@ export default function SingleDealContent({ deal, freeAccess = false, basePath =
             </svg>
           </div>
           <div className="relative">
-            <h2 className="mb-3 flex items-center gap-2 font-mono text-[13px] md:text-sm font-black uppercase tracking-[0.08em] text-black pb-2 border-b-2 border-black border-dashed">
-              <span className="inline-flex items-center justify-center w-7 h-7 rounded-sm bg-accent-yellow border-2 border-black">
+            <h2 className="mb-3 flex items-center gap-2 font-mono text-[13px] md:text-sm font-black uppercase tracking-[0.08em] text-black dark:text-white pb-2 border-b-2 border-black dark:border-b-white/10 border-dashed">
+              <span className="inline-flex items-center justify-center w-7 h-7 rounded-sm bg-accent-yellow border-2 border-black dark:border-white/10">
                 <span className="material-symbols-outlined text-black !text-[16px]">tag</span>
               </span>
               Tags &amp; Categories
@@ -706,7 +724,7 @@ export default function SingleDealContent({ deal, freeAccess = false, basePath =
               {deal.tags.map((tag, i) => (
                 <span
                   key={i}
-                  className="inline-flex items-center px-2.5 py-1 text-[11px] font-mono font-bold uppercase tracking-wide text-black bg-white border-2 border-black rounded-sm shadow-[1px_1px_0px_#111] hover:shadow-[2px_2px_0px_#111] hover:-translate-x-px hover:-translate-y-px hover:bg-accent-yellow transition-all"
+                  className="inline-flex items-center px-2.5 py-1 text-[11px] font-mono font-bold uppercase tracking-wide text-black dark:text-white bg-white dark:bg-white/5 border-2 border-black dark:border-white/10 rounded-sm shadow-[1px_1px_0px_#111] dark:shadow-none hover:shadow-[2px_2px_0px_#111] hover:-translate-x-px hover:-translate-y-px hover:bg-accent-yellow transition-all"
                 >
                   #{tag}
                 </span>
@@ -762,15 +780,15 @@ function CollapsibleList({
   const Container: any = listMode === 'ul' ? 'ul' : 'div'
 
   return (
-    <section className="rounded-sm border-2 border-black bg-white p-5 shadow-[3px_3px_0px_#111]">
-      <div className="flex items-center justify-between mb-3 pb-2 border-b-2 border-black border-dashed">
-        <h2 className="flex items-center gap-2 font-mono text-[13px] md:text-sm font-black uppercase tracking-[0.08em] text-black">
-          <span className="inline-flex items-center justify-center w-7 h-7 rounded-sm bg-accent-yellow border-2 border-black">
+    <section className="rounded-sm border-2 border-black dark:border-white/10 bg-white dark:bg-[#0c0c0c] p-5 shadow-[3px_3px_0px_#111] dark:shadow-none">
+      <div className="flex items-center justify-between mb-3 pb-2 border-b-2 border-black dark:border-b-white/10 border-dashed">
+        <h2 className="flex items-center gap-2 font-mono text-[13px] md:text-sm font-black uppercase tracking-[0.08em] text-black dark:text-white">
+          <span className="inline-flex items-center justify-center w-7 h-7 rounded-sm bg-accent-yellow border-2 border-black dark:border-white/10">
             <span className="material-symbols-outlined text-black !text-[16px]">{icon}</span>
           </span>
           {title}
         </h2>
-        <span className="font-mono text-[10px] font-bold uppercase tracking-[0.1em] text-black bg-gray-100 px-2 py-0.5 border-2 border-black rounded-sm">
+        <span className="font-mono text-[10px] font-bold uppercase tracking-[0.1em] text-black dark:text-white bg-gray-100 dark:bg-white/5 px-2 py-0.5 border-2 border-black dark:border-white/10 rounded-sm">
           {count} items
         </span>
       </div>
@@ -778,16 +796,16 @@ function CollapsibleList({
         {visible.map((item, i) => renderItem(item, i))}
       </Container>
       {isLong && (
-        <div className="pt-3 mt-3 border-t-2 border-black border-dashed">
+        <div className="pt-3 mt-3 border-t-2 border-black dark:border-t-white/10 border-dashed">
           <button
             onClick={() => setExpanded((v) => !v)}
-            className="inline-flex items-center gap-1.5 text-[11px] font-mono font-black uppercase tracking-[0.1em] text-black bg-white border-2 border-black px-3 py-1.5 rounded-sm shadow-[2px_2px_0px_#111] hover:bg-accent-yellow hover:shadow-[3px_3px_0px_#111] hover:-translate-x-px hover:-translate-y-px transition-all"
+            className="inline-flex items-center gap-1.5 text-[11px] font-mono font-black uppercase tracking-[0.1em] text-black dark:text-white bg-white dark:bg-white/5 border-2 border-black dark:border-white/10 px-3 py-1.5 rounded-sm shadow-[2px_2px_0px_#111] dark:shadow-none hover:bg-accent-yellow dark:hover:bg-accent-yellow dark:hover:text-black hover:shadow-[3px_3px_0px_#111] dark:hover:shadow-none hover:-translate-x-px hover:-translate-y-px transition-all"
           >
             <span>
               {expanded ? 'Show Less' : `Show All ${count}`}
             </span>
             <span
-              className={`material-symbols-outlined !text-[14px] transition-transform ${
+              className={`material-symbols-outlined !text-[14px] text-black dark:text-white transition-transform ${
                 expanded ? 'rotate-180' : ''
               }`}
             >

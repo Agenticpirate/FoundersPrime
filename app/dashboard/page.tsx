@@ -72,7 +72,7 @@ export default async function DashboardPage({
 
   const isPaymentSuccess = searchParams?.status === 'succeeded' || searchParams?.status === 'completed'
   const PRO_USERS = ['raviteja.journal@gmail.com', 'hello@axionxlab.com']
-  const userEmail = user?.email || 'dev@localhost'
+  const userEmail = user?.email || ''
   const isPro = !!adminUser || PRO_USERS.includes(userEmail) || isPaymentSuccess || isLocalDev || !!subscription
   const isAdmin = !!adminUser || isLocalDev
   const userName = user?.user_metadata?.full_name || userEmail.split('@')[0] || 'Founder'

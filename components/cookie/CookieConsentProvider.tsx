@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react'
 import CookieConsentContext, { CookiePreferences } from '@/context/CookieConsentContext'
 import CookiePreferencesModal from './CookiePreferencesModal'
+import CookieBanner from './CookieBanner'
 
 const DEFAULT_PREFERENCES: CookiePreferences = {
     essential: true,
@@ -57,7 +58,12 @@ export default function CookieConsentProvider({ children }: { children: React.Re
             }}
         >
             {children}
-            {isLoaded && <CookiePreferencesModal />}
+            {isLoaded && (
+                <>
+                    <CookiePreferencesModal />
+                    <CookieBanner />
+                </>
+            )}
         </CookieConsentContext.Provider>
     )
 }

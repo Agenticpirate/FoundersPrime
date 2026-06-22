@@ -114,11 +114,11 @@ export default function StudentBenefitCard({ benefit }: { benefit: StudentBenefi
     return (
         <div className="bg-white border-2 border-black p-3 md:p-5 flex flex-col h-full hover:shadow-[4px_4px_0px_#111111] transition-all duration-200 group relative">
             {/* Tag */}
-            <div className={`absolute top-0 right-0 px-1.5 py-0.5 text-[9px] md:text-[10px] font-mono font-bold uppercase border-l-2 border-b-2 border-black ${benefit.appCategory === 'Free Access' ? 'bg-accent-yellow' :
+            <div className={`absolute top-0 right-0 px-1.5 py-0.5 text-[9px] md:text-[10px] font-mono font-bold uppercase border-l-2 border-b-2 border-black ${benefit.appCategory === 'Software & Tools' ? 'bg-accent-yellow' :
                 benefit.appCategory === 'Credits & Savings' ? 'bg-green-400' :
                     'bg-blue-400 text-white'
                 }`}>
-                {benefit.appCategory === 'Free Access' ? 'FREE' :
+                {benefit.appCategory === 'Software & Tools' ? 'FREE' :
                     benefit.appCategory === 'Credits & Savings' ? 'DEAL' : 'GRANT'}
             </div>
 

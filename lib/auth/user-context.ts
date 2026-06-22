@@ -22,8 +22,87 @@ const PRO_USERS = [
   'hello@axionxlab.com',
 ]
 
+// Memory cache for user status
+let cachedStatus: {
+  isAuthenticated: boolean
+  isPro: boolean
+  isAdmin: boolean
+  user: UserProfile | null
+} | null = null
+
+// Flag to prevent multiple concurrent requests
+let pendingCheckPromise: Promise<{
+  isAuthenticated: boolean
+  isPro: boolean
+  isAdmin: boolean
+  user: UserProfile | null
+}> | null = null
+
+// Initialize listener in browser context
+if (typeof window !== 'undefined') {
+  try {
+    const supabase = createClient()
+    supabase.auth.onAuthStateChange((event) => {
+      if (event === 'SIGNED_OUT' || event === 'USER_UPDATED') {
+        cachedStatus = null
+        try {
+          sessionStorage.removeItem('user_pro_status')
+        } catch {}
+      } else if (event === 'SIGNED_IN') {
+        cachedStatus = null
+        try {
+          sessionStorage.removeItem('user_pro_status')
+        } catch {}
+        // Pre-fetch in background
+        checkProStatus().catch(() => {})
+      }
+    })
+  } catch (err) {
+    console.error('Failed to initialize auth state listener:', err)
+  }
+}
+
 // Check if user has Pro access
 export async function checkProStatus(): Promise<{
+  isAuthenticated: boolean
+  isPro: boolean
+  isAdmin: boolean
+  user: UserProfile | null
+}> {
+  // If cached in memory, return instantly
+  if (cachedStatus) {
+    return cachedStatus
+  }
+
+  // If in browser session storage, parse and use it
+  if (typeof window !== 'undefined') {
+    try {
+      const localData = sessionStorage.getItem('user_pro_status')
+      if (localData) {
+        const parsed = JSON.parse(localData)
+        cachedStatus = parsed
+        // Refresh in background to keep it fresh
+        fetchAndCacheProStatus().catch(() => {})
+        return parsed
+      }
+    } catch {}
+  }
+
+  // Deduplicate inflight requests
+  if (pendingCheckPromise) {
+    return pendingCheckPromise
+  }
+
+  pendingCheckPromise = fetchAndCacheProStatus()
+  try {
+    const result = await pendingCheckPromise
+    return result
+  } finally {
+    pendingCheckPromise = null
+  }
+}
+
+async function fetchAndCacheProStatus(): Promise<{
   isAuthenticated: boolean
   isPro: boolean
   isAdmin: boolean
@@ -36,12 +115,19 @@ export async function checkProStatus(): Promise<{
     const { data: { user }, error: authError } = await supabase.auth.getUser()
     
     if (authError || !user) {
-      return {
+      const emptyResult = {
         isAuthenticated: false,
         isPro: false,
         isAdmin: false,
         user: null
       }
+      if (typeof window !== 'undefined') {
+        cachedStatus = emptyResult
+        try {
+          sessionStorage.setItem('user_pro_status', JSON.stringify(emptyResult))
+        } catch {}
+      }
+      return emptyResult
     }
 
     // Check if user is in Pro users list
@@ -97,20 +183,30 @@ export async function checkProStatus(): Promise<{
       }
     }
 
-    return {
+    const result = {
       isAuthenticated: true,
       isPro,
       isAdmin,
       user: userProfile
     }
+
+    if (typeof window !== 'undefined') {
+      cachedStatus = result
+      try {
+        sessionStorage.setItem('user_pro_status', JSON.stringify(result))
+      } catch {}
+    }
+
+    return result
   } catch (error) {
     console.error('Pro status check error:', error)
-    return {
+    const emptyResult = {
       isAuthenticated: false,
       isPro: false,
       isAdmin: false,
       user: null
     }
+    return emptyResult
   }
 }
 

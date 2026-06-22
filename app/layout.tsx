@@ -111,8 +111,27 @@ export default function RootLayout({
   const fontVariables = `${ibmPlexSans.variable} ${ibmPlexMono.variable} ${spaceGrotesk.variable} ${archivo.variable}`
 
   return (
-    <html lang="en" className={`light ${fontVariables}`}>
+    <html lang="en" className={`dark ${fontVariables}`}>
       <head>
+        {/* Inline theme-switching script to prevent FOUC */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  var theme = localStorage.getItem('theme');
+                  if (theme === 'light') {
+                    document.documentElement.classList.remove('dark');
+                    document.documentElement.classList.add('light');
+                  } else {
+                    document.documentElement.classList.remove('light');
+                    document.documentElement.classList.add('dark');
+                  }
+                } catch (e) {}
+              })();
+            `
+          }}
+        />
         {/* Google Analytics — lazy-load after interactive */}
         <Script
           src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
@@ -147,7 +166,7 @@ export default function RootLayout({
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0..1,0&display=swap"
         />
       </head>
-      <body className="bg-background-light text-black flex flex-col min-h-screen overflow-x-hidden w-full relative">
+      <body className="bg-[#050505] text-white dark:bg-[#050505] dark:text-white transition-colors duration-300 flex flex-col min-h-screen overflow-x-hidden w-full relative">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

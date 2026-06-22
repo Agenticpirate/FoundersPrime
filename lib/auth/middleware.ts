@@ -163,7 +163,7 @@ export function rateLimit(config: RateLimitConfig = { maxRequests: 100, windowMs
 const ALLOWED_ORIGINS = [
   'https://www.foundersprime.com',
   'https://foundersprime.com',
-  'http://localhost:3001',
+  'http://localhost:3000',
   'http://localhost:3001',
 ]
 

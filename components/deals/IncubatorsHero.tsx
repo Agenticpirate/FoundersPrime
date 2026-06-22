@@ -7,15 +7,15 @@ export default function IncubatorsHero() {
     <SectionHero
       eyebrowIcon="lightbulb"
       eyebrowText="Incubators & Venture Studios"
-      eyebrowClass="bg-teal-100 border-teal-300 text-teal-900"
+      eyebrowClass="bg-teal-100 dark:bg-teal-950/20 border-teal-300 dark:border-teal-500/30 text-teal-900 dark:text-teal-300"
       eyebrowAccentClass="text-teal-700"
-      mandalaColorClass="text-teal-500"
+      mandalaColorClass="text-teal-500 dark:text-teal-500/10"
       statsMinWidth="lg:min-w-[520px]"
       title={<>Build before you scale.</>}
       subtitle={
         <>
           Verified incubators, university programs, and venture studios &mdash; many{' '}
-          <span className="font-bold text-gray-900 bg-teal-100 px-1 rounded-sm">equity-free</span>,
+          <span className="font-bold text-gray-900 dark:text-teal-300 bg-teal-100 dark:bg-teal-950/40 px-1 rounded-sm">equity-free</span>,
           offering lab space, co-founders, and 6&ndash;24 months of runway support.
         </>
       }

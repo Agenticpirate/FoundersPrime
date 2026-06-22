@@ -1,3 +1,5 @@
+'use client'
+
 import Link from 'next/link'
 import GoogleTranslate from './GoogleTranslate'
 
@@ -5,32 +7,40 @@ export default function Footer() {
   const footerSections = [
     {
       title: "Deals",
+      summary: "Startup credits, SaaS deals & more",
+      icon: "local_offer",
       links: [
         { text: "All Deals", href: "/deals" },
         { text: "Flash Deals", href: "/flash-deals", highlight: true },
         { text: "Cloud Credits", href: "/deals?category=cloud-credits" },
         { text: "SaaS Discounts", href: "/deals?category=saas-discounts" },
-        { text: "Grants", href: "/deals/grants" },
+        { text: "Grants", href: "/programs?type=grants" },
         { text: "Ad Credits", href: "/deals?category=ad-credits" },
       ]
     },
     {
       title: "Programs",
+      summary: "Grants, incentives & founder perks",
+      icon: "redeem",
       links: [
-        { text: "Accelerators", href: "/deals/accelerators" },
-        { text: "Incubators", href: "/deals/incubators" },
+        { text: "Accelerators", href: "/programs?type=accelerators" },
+        { text: "Incubators", href: "/programs?type=incubators" },
       ]
     },
     {
       title: "Student Benefits",
+      summary: "Exclusive benefits for students",
+      icon: "school",
       links: [
-        { text: "Funding & Opps", href: "/resources/funding-opportunities" },
-        { text: "Campus Edge", href: "/resources/free-access" },
-        { text: "Credits & Savings", href: "/resources/credits-savings" },
+        { text: "Credits & Savings", href: "/student-benefits?type=credits-savings" },
+        { text: "Campus Edge", href: "/student-benefits?type=free-access" },
+        { text: "Funding & Opps", href: "/student-benefits?type=funding" },
       ]
     },
     {
       title: "Discover",
+      summary: "Explore resources & opportunities",
+      icon: "explore",
       links: [
         { text: "Funded Startups", href: "/startups" },
         { text: "Startup Ideas", href: "/ideas" },
@@ -40,6 +50,8 @@ export default function Footer() {
     },
     {
       title: "Company",
+      summary: "About us, careers & press",
+      icon: "domain",
       links: [
         { text: "About", href: "/about" },
         { text: "Pricing", href: "/pricing" },
@@ -49,6 +61,8 @@ export default function Footer() {
     },
     {
       title: "Legal",
+      summary: "Terms, privacy & policies",
+      icon: "gavel",
       links: [
         { text: "Privacy Policy", href: "/privacy" },
         { text: "Terms of Service", href: "/terms" },
@@ -115,7 +129,22 @@ export default function Footer() {
       <div className="relative max-w-[1600px] mx-auto px-4 sm:px-8 pt-8 md:pt-14 pb-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
           {/* Brand Column */}
-          <div className="lg:col-span-3 flex flex-col gap-4">
+          <div className="lg:col-span-3 flex flex-col gap-4 relative">
+            {/* Spinning orbital ornament */}
+            <div className="absolute top-0 right-0 w-28 h-28 opacity-[0.12] pointer-events-none block">
+              <svg viewBox="0 0 200 200" className="w-full h-full text-accent-yellow mandala-spin-cw" fill="none" stroke="currentColor" strokeWidth="0.8">
+                <circle cx="100" cy="100" r="45" />
+                <circle cx="100" cy="100" r="70" strokeDasharray="2 5" />
+                {[0, 72, 144, 216, 288].map((deg) => (
+                  <g key={deg} transform={`rotate(${deg} 100 100)`}>
+                    <line x1="100" y1="45" x2="100" y2="25" />
+                    <circle cx="100" cy="25" r="2.5" fill="currentColor" />
+                  </g>
+                ))}
+                <circle cx="100" cy="100" r="3" fill="currentColor" />
+              </svg>
+            </div>
+
             <Link href="/" className="inline-flex items-center gap-2.5 no-underline w-fit group">
               <img
                 src="/logo-icon.png"
@@ -126,24 +155,30 @@ export default function Footer() {
                 FOUNDERS<span className="text-accent-yellow">[</span>PRIME<span className="text-accent-yellow">]</span>
               </span>
             </Link>
-            <p className="font-sans text-sm text-gray-400 leading-relaxed">
+            <p className="font-sans text-sm text-gray-400 leading-relaxed pr-8">
               The intelligence terminal for bootstrapped founders. Save runway. Skip the dilution. Ship faster.
             </p>
 
-            {/* Trust pills */}
-            <div className="flex flex-wrap gap-1.5 mt-1">
-              <span className="inline-flex items-center gap-1 bg-white/5 border border-white/10 px-2 py-1 font-mono text-[9px] uppercase tracking-wider text-gray-300">
-                <span className="material-symbols-outlined text-[12px] text-accent-yellow">verified</span>
-                Verified deals
-              </span>
-              <span className="inline-flex items-center gap-1 bg-white/5 border border-white/10 px-2 py-1 font-mono text-[9px] uppercase tracking-wider text-gray-300">
-                <span className="material-symbols-outlined text-[12px] text-green-400">lock</span>
-                Secure checkout
-              </span>
+            {/* Trust cards */}
+            <div className="grid grid-cols-2 lg:grid-cols-1 gap-2.5 mt-1">
+              <div className="flex items-center gap-3 bg-white/[0.02] border border-white/10 rounded-xl p-3.5">
+                <span className="material-symbols-outlined text-accent-yellow !text-[20px]" style={{ fontVariationSettings: "'FILL' 1" }}>verified</span>
+                <div className="flex flex-col text-left">
+                  <span className="font-mono text-[10px] font-black uppercase text-white tracking-wider leading-none">Verified Deals</span>
+                  <span className="font-sans text-[8.5px] text-gray-400 mt-1 leading-tight">Handpicked &amp; founder-verified</span>
+                </div>
+              </div>
+              <div className="flex items-center gap-3 bg-white/[0.02] border border-white/10 rounded-xl p-3.5">
+                <span className="material-symbols-outlined text-green-400 !text-[20px]" style={{ fontVariationSettings: "'FILL' 1" }}>lock</span>
+                <div className="flex flex-col text-left">
+                  <span className="font-mono text-[10px] font-black uppercase text-white tracking-wider leading-none">Secure Checkout</span>
+                  <span className="font-sans text-[8.5px] text-gray-400 mt-1 leading-tight">Your data. Always protected.</span>
+                </div>
+              </div>
             </div>
 
-            {/* Socials */}
-            <div className="flex items-center gap-2 mt-2">
+            {/* Socials Grid */}
+            <div className="grid grid-cols-4 gap-2.5 mt-2">
               {socials.map((s) => (
                 <a
                   key={s.label}
@@ -151,7 +186,7 @@ export default function Footer() {
                   aria-label={s.label}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`group w-9 h-9 bg-white/5 border border-white/15 flex items-center justify-center transition-all hover:-translate-y-0.5 hover:border-white/40 ${s.bg}`}
+                  className={`group h-11 bg-white/5 border border-white/15 rounded-xl flex items-center justify-center transition-all hover:-translate-y-0.5 hover:border-white/40 ${s.bg}`}
                 >
                   <span className={`transition-colors ${s.iconColor}`}>{s.svg}</span>
                 </a>
@@ -187,21 +222,33 @@ export default function Footer() {
           </div>
 
           {/* Mobile Accordion Links */}
-          <div className="md:hidden flex flex-col w-full -mx-1">
+          <div className="md:hidden flex flex-col w-full border border-white/10 rounded-xl bg-white/[0.02] overflow-hidden mt-3">
             {footerSections.map((section) => (
               <details key={section.title} className="group border-b border-white/10 last:border-b-0">
-                <summary className="flex justify-between items-center font-mono text-[11px] font-black tracking-[0.2em] uppercase text-gray-200 group-open:text-accent-yellow cursor-pointer list-none py-3.5 px-1 outline-none transition-colors">
-                  {section.title}
-                  <span className="material-symbols-outlined text-lg text-gray-500 group-open:text-accent-yellow transition-all duration-300 group-open:rotate-180">
+                <summary className="flex justify-between items-center cursor-pointer list-none p-2 outline-none transition-colors select-none">
+                  <div className="flex items-center gap-2.5">
+                    <div className="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center flex-shrink-0 text-accent-yellow group-open:bg-accent-yellow group-open:text-black group-open:border-accent-yellow transition-all duration-300">
+                      <span className="material-symbols-outlined !text-[16px]">{section.icon}</span>
+                    </div>
+                    <div className="flex flex-col text-left">
+                      <span className="font-mono text-[10.5px] font-black tracking-wider uppercase text-gray-200 group-open:text-accent-yellow transition-colors leading-tight">
+                        {section.title}
+                      </span>
+                      <span className="font-sans text-[8px] text-gray-400 leading-normal mt-0.5 font-medium">
+                        {section.summary}
+                      </span>
+                    </div>
+                  </div>
+                  <span className="material-symbols-outlined text-base text-gray-500 group-open:text-accent-yellow transition-all duration-300 group-open:rotate-180">
                     expand_more
                   </span>
                 </summary>
-                <ul className="flex flex-col gap-0.5 pb-2 list-none m-0">
+                <ul className="flex flex-col gap-0.5 px-3.5 pb-2.5 pt-1 list-none m-0 bg-black/20 border-t border-white/[0.03]">
                   {section.links.map((link, linkIndex) => (
                     <li key={linkIndex}>
                       <Link
                         href={link.href}
-                        className={`block font-sans text-sm no-underline py-2 px-1 rounded-sm active:bg-white/5 transition-colors ${
+                        className={`block font-sans text-xs no-underline py-1.5 px-1 rounded-sm active:bg-white/5 transition-colors ${
                           (link as { highlight?: boolean }).highlight
                             ? 'text-accent-yellow font-semibold active:text-yellow-300'
                             : 'text-gray-400 active:text-white'
@@ -214,6 +261,47 @@ export default function Footer() {
                 </ul>
               </details>
             ))}
+          </div>
+
+          {/* Newsletter Section */}
+          <div className="lg:col-span-12 relative border border-white/10 rounded-2xl bg-white/[0.02] overflow-hidden p-4 mt-3 flex flex-col md:flex-row items-center justify-between gap-3">
+            {/* Halftone dots ornament */}
+            <div
+              className="pointer-events-none absolute right-4 bottom-4 w-24 h-16 text-accent-yellow/10"
+              style={{ backgroundImage: 'radial-gradient(currentColor 1.2px, transparent 1.2px)', backgroundSize: '7px 7px' }}
+              aria-hidden="true"
+            />
+            
+            <div className="flex items-center gap-3 w-full md:w-auto">
+              <div className="w-10 h-10 rounded-full border border-white/10 bg-white/5 flex items-center justify-center flex-shrink-0 text-accent-yellow">
+                <span className="material-symbols-outlined text-[20px]" style={{ fontVariationSettings: "'FILL' 1" }}>mail</span>
+              </div>
+              <div className="flex flex-col text-left">
+                <span className="font-mono text-[11px] font-black tracking-wider uppercase text-white">
+                  STAY AHEAD. EVERY WEEK.
+                </span>
+                <span className="font-sans text-[9px] text-gray-400 leading-normal mt-0.5">
+                  Get the best founder deals, grants &amp; insights straight to your inbox.
+                </span>
+              </div>
+            </div>
+
+            {/* Form inline */}
+            <form onSubmit={(e) => e.preventDefault()} className="w-full md:w-auto md:min-w-[340px] flex items-center bg-black/60 border border-white/10 rounded-xl p-1 gap-2">
+              <input
+                type="email"
+                required
+                placeholder="Enter your email"
+                className="flex-grow bg-transparent px-3 py-1 font-sans text-xs text-white placeholder-gray-500 focus:outline-none min-w-0"
+              />
+              <button
+                type="submit"
+                className="bg-accent-yellow hover:bg-white text-black font-mono font-black text-[9px] uppercase tracking-wider px-3.5 py-1.5 rounded-lg flex items-center gap-1.5 transition-all flex-shrink-0"
+              >
+                Subscribe
+                <span className="material-symbols-outlined !text-[11px]">arrow_forward</span>
+              </button>
+            </form>
           </div>
         </div>
       </div>

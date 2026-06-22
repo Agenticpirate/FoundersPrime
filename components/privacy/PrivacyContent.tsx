@@ -301,50 +301,50 @@ export default function PrivacyContent() {
   return (
     <div className="space-y-4 md:space-y-6">
       {sections.map((section, index) => (
-        <div key={index} id={section.id} className="scroll-mt-20 bg-white border-2 border-black shadow-[3px_3px_0px_0px_#1a1a1a] rounded-sm p-4 md:p-6">
-          <h2 className="font-mono text-lg md:text-xl font-bold text-black mb-3 md:mb-4">
+        <div key={index} id={section.id} className="scroll-mt-20 bg-white dark:bg-[#09090b]/90 border border-gray-200 dark:border-neutral-900 shadow-sm dark:shadow-[0_8px_30px_rgb(0,0,0,0.5)] rounded-xl backdrop-blur-md p-4 md:p-6 transition-colors duration-300">
+          <h2 className="font-mono text-lg md:text-xl font-bold text-gray-900 dark:text-white mb-3 md:mb-4">
             {section.title}
           </h2>
           <div
-            className="prose prose-sm md:prose-lg max-w-none [&_h3]:font-mono [&_h3]:text-base md:[&_h3]:text-lg [&_h3]:font-bold [&_h3]:text-black [&_h3]:mt-4 md:[&_h3]:mt-6 [&_h3]:mb-2 md:[&_h3]:mb-3 [&_p]:font-sans [&_p]:text-sm [&_p]:text-gray-800 [&_p]:mb-3 [&_p]:leading-relaxed [&_ul]:my-3 [&_ul]:pl-4 [&_li]:font-sans [&_li]:text-sm [&_li]:text-gray-800 [&_li]:mb-1 [&_li]:leading-relaxed [&_strong]:font-bold [&_strong]:text-black"
+            className="prose prose-sm md:prose-lg max-w-none [&_h3]:font-mono [&_h3]:text-base md:[&_h3]:text-lg [&_h3]:font-bold [&_h3]:text-gray-900 dark:[&_h3]:text-white [&_h3]:mt-4 md:[&_h3]:mt-6 [&_h3]:mb-2 md:[&_h3]:mb-3 [&_p]:font-sans [&_p]:text-sm [&_p]:text-gray-800 dark:[&_p]:text-gray-300 [&_p]:mb-3 [&_p]:leading-relaxed [&_ul]:my-3 [&_ul]:pl-4 [&_li]:font-sans [&_li]:text-sm [&_li]:text-gray-800 dark:[&_li]:text-gray-300 [&_li]:mb-1 [&_li]:leading-relaxed [&_strong]:font-bold [&_strong]:text-gray-900 dark:[&_strong]:text-white"
             dangerouslySetInnerHTML={{ __html: section.content }}
           />
         </div>
       ))}
 
       {/* Contact Information */}
-      <div className="bg-accent-yellow/5 border-2 border-black shadow-[3px_3px_0px_0px_#1a1a1a] rounded-sm p-4 md:p-6">
-        <h2 className="font-mono text-lg md:text-xl font-bold text-black mb-4">
+      <div className="bg-gradient-to-r from-accent-yellow/10 to-transparent border border-accent-yellow/20 rounded-xl p-4 md:p-6">
+        <h2 className="font-mono text-lg md:text-xl font-bold text-gray-900 dark:text-white mb-4">
           Contact Us About Privacy
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <h3 className="font-mono text-base font-bold text-black mb-2">Privacy Officer</h3>
+            <h3 className="font-mono text-base font-bold text-gray-900 dark:text-white mb-2">Privacy Officer</h3>
             <div className="space-y-1">
-              <p className="font-sans text-sm text-gray-800">
+              <p className="font-sans text-sm text-gray-800 dark:text-gray-300">
                 <strong>Email:</strong> support@foundersprime.com
               </p>
-              <p className="font-sans text-sm text-gray-800">
+              <p className="font-sans text-sm text-gray-800 dark:text-gray-300">
                 <strong>Response Time:</strong> Within 1–3 business days
               </p>
             </div>
           </div>
           <div>
-            <h3 className="font-mono text-base font-bold text-black mb-2">Data Requests</h3>
+            <h3 className="font-mono text-base font-bold text-gray-900 dark:text-white mb-2">Data Requests</h3>
             <div className="space-y-1">
-              <p className="font-sans text-sm text-gray-800">
+              <p className="font-sans text-sm text-gray-800 dark:text-gray-300">
                 To request access, correction, or deletion of your personal data, email us with the subject line <strong>"Privacy Request"</strong>.
               </p>
             </div>
           </div>
         </div>
 
-        <div className="mt-4 pt-4 border-t-2 border-gray-200">
+        <div className="mt-4 pt-4 border-t border-gray-200 dark:border-neutral-800">
           <div className="flex flex-col sm:flex-row gap-3">
-            <a href="mailto:support@foundersprime.com?subject=Privacy%20Request" className="px-5 py-2.5 bg-accent-yellow hover:bg-black hover:text-white border-2 border-black text-black font-mono text-sm font-bold rounded-sm transition-all shadow-[2px_2px_0px_0px_#1a1a1a] hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px]">
+            <a href="mailto:support@foundersprime.com?subject=Privacy%20Request" className="flex items-center justify-center px-5 py-2.5 bg-gradient-to-r from-[#FFD700] to-[#FDB931] hover:from-[#FDB931] hover:to-[#FFD700] text-black font-mono text-sm font-black rounded-lg transition-all shadow-[0_0_15px_rgba(255,215,0,0.25)] hover:shadow-[0_0_25px_rgba(255,215,0,0.4)] border border-[#FFD700]/40">
               Submit Privacy Request
             </a>
-            <a href="mailto:support@foundersprime.com?subject=Data%20Deletion%20Request" className="px-5 py-2.5 bg-white hover:bg-gray-100 border-2 border-black text-black font-mono text-sm font-bold rounded-sm transition-all shadow-[2px_2px_0px_0px_#1a1a1a] hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px]">
+            <a href="mailto:support@foundersprime.com?subject=Data%20Deletion%20Request" className="flex items-center justify-center px-5 py-2.5 bg-white dark:bg-neutral-900 hover:bg-gray-50 dark:hover:bg-neutral-800 border border-gray-200 dark:border-neutral-700 text-gray-900 dark:text-white font-mono text-sm font-bold rounded-lg transition-all">
               Delete Account
             </a>
           </div>

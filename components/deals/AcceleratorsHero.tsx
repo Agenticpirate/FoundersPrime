@@ -7,15 +7,15 @@ export default function AcceleratorsHero() {
     <SectionHero
       eyebrowIcon="rocket_launch"
       eyebrowText="Accelerator Programs"
-      eyebrowClass="bg-orange-100 border-orange-300 text-orange-900"
+      eyebrowClass="bg-orange-100 dark:bg-orange-950/20 border-orange-300 dark:border-orange-500/30 text-orange-900 dark:text-orange-300"
       eyebrowAccentClass="text-orange-600"
-      mandalaColorClass="text-orange-500"
+      mandalaColorClass="text-orange-500 dark:text-orange-500/10"
       statsMinWidth="lg:min-w-[520px]"
       title={<>Accelerators that move you forward.</>}
       subtitle={
         <>
           Funding, mentorship, and demo-day networks from{' '}
-          <span className="font-bold text-gray-900 bg-orange-100 px-1 rounded-sm">YC, Techstars, 500 Global</span>{' '}
+          <span className="font-bold text-gray-900 dark:text-orange-300 bg-orange-100 dark:bg-orange-950/40 px-1 rounded-sm">YC, Techstars, 500 Global</span>{' '}
           and 280+ programs &mdash; verified terms, deadlines, and equity in one place.
         </>
       }

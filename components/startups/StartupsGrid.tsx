@@ -46,7 +46,7 @@ const FREE_PAGE_LIMIT = 3 // pages 1–3 are visible, page 4+ is gated
 
 function toYCCompany(startup: Startup): YCCompany {
   return {
-    id: parseInt(startup.id) || Math.random(),
+    id: parseInt(startup.id) || startup.slug.split('').reduce((a, b) => a + b.charCodeAt(0), 0),
     name: startup.name,
     slug: startup.slug,
     website: startup.sourceUrl || '#',

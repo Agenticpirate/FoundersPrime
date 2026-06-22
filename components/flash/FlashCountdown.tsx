@@ -91,22 +91,31 @@ export default function FlashCountdown({
   if (variant === 'hero') {
     return (
       <div className="grid grid-cols-4 gap-2 sm:gap-2.5" role="timer" aria-label="Time until next flash deal drop">
-        {units.map((u) => (
-          <div
-            key={u.label}
-            className="rounded-lg bg-black/50 border border-accent-yellow/40 px-1.5 py-2.5 sm:px-2 sm:py-3 text-center"
-          >
-            <div className="font-mono font-black text-2xl sm:text-3xl md:text-[34px] text-white tabular-nums leading-none">
-              {rem ? pad(u.value ?? 0) : '--'}
+        {units.map((u, i) => (
+          <div key={u.label} className="flex flex-col items-center">
+            <div className="w-full bg-black border border-accent-yellow/30 relative overflow-hidden">
+              {/* Inner glow */}
+              <div
+                className="absolute inset-0 pointer-events-none"
+                style={{ background: 'radial-gradient(ellipse at 50% 0%, rgba(255,215,0,0.08) 0%, transparent 70%)' }}
+                aria-hidden="true"
+              />
+              <div className="relative font-mono font-black text-[28px] sm:text-[34px] md:text-[38px] text-white tabular-nums leading-none text-center py-3 px-1">
+                {rem ? pad(u.value ?? 0) : '--'}
+              </div>
             </div>
-            <div className="font-mono text-[8px] sm:text-[9px] font-bold uppercase tracking-[0.16em] text-accent-yellow mt-1.5">
+            <div className="font-mono text-[8px] sm:text-[9px] font-black uppercase tracking-[0.2em] text-accent-yellow mt-1.5">
               {u.label}
             </div>
+            {i < 3 && (
+              <div className="absolute hidden" aria-hidden="true" />
+            )}
           </div>
         ))}
       </div>
     )
   }
+
 
   // inline variant
   return (

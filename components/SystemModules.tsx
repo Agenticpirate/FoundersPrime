@@ -12,8 +12,12 @@ const categories: {
   href: string
   bg: string
   border: string
+  darkBg: string
+  darkBorder: string
   iconColor: string
+  darkIconColor: string
   valueColor: string
+  darkValueColor: string
   mandalaVariant: MandalaVariant
   mandalaColor: string
 }[] = [
@@ -25,8 +29,12 @@ const categories: {
     href: '/deals?category=cloud-credits',
     bg: 'bg-[#EAF1FB]',
     border: 'border-[#D2E2F6]',
+    darkBg: 'dark:bg-blue-950/20',
+    darkBorder: 'dark:border-blue-500/15',
     iconColor: 'text-blue-600',
+    darkIconColor: 'dark:text-blue-400',
     valueColor: 'text-blue-700',
+    darkValueColor: 'dark:text-blue-300',
     mandalaVariant: 'rings',
     mandalaColor: 'text-blue-500',
   },
@@ -35,11 +43,15 @@ const categories: {
     icon: 'redeem',
     value: 'Up to $10M+',
     desc: 'Non-dilutive grants for innovative founders.',
-    href: '/deals/grants',
+    href: '/programs?type=grants',
     bg: 'bg-[#E7F6EC]',
     border: 'border-[#CDEBD6]',
+    darkBg: 'dark:bg-green-950/20',
+    darkBorder: 'dark:border-green-500/15',
     iconColor: 'text-green-600',
+    darkIconColor: 'dark:text-green-400',
     valueColor: 'text-green-700',
+    darkValueColor: 'dark:text-green-300',
     mandalaVariant: 'petal',
     mandalaColor: 'text-green-500',
   },
@@ -51,8 +63,12 @@ const categories: {
     href: '/deals?category=saas-discounts',
     bg: 'bg-[#F2EAFB]',
     border: 'border-[#E2D2F3]',
+    darkBg: 'dark:bg-purple-950/20',
+    darkBorder: 'dark:border-purple-500/15',
     iconColor: 'text-purple-600',
+    darkIconColor: 'dark:text-purple-400',
     valueColor: 'text-purple-700',
+    darkValueColor: 'dark:text-purple-300',
     mandalaVariant: 'radial',
     mandalaColor: 'text-purple-500',
   },
@@ -61,11 +77,15 @@ const categories: {
     icon: 'rocket_launch',
     value: '50+',
     desc: 'Top accelerator perks & benefits.',
-    href: '/deals/accelerators',
+    href: '/programs?type=accelerators',
     bg: 'bg-[#FDF4E3]',
     border: 'border-[#F4E3C0]',
+    darkBg: 'dark:bg-amber-950/20',
+    darkBorder: 'dark:border-amber-500/15',
     iconColor: 'text-amber-500',
+    darkIconColor: 'dark:text-amber-400',
     valueColor: 'text-amber-700',
+    darkValueColor: 'dark:text-amber-300',
     mandalaVariant: 'orbital',
     mandalaColor: 'text-amber-500',
   },
@@ -77,8 +97,12 @@ const categories: {
     href: '/resources',
     bg: 'bg-[#FEFBEA]',
     border: 'border-[#F0E7B5]',
+    darkBg: 'dark:bg-yellow-950/20',
+    darkBorder: 'dark:border-yellow-500/15',
     iconColor: 'text-yellow-500',
+    darkIconColor: 'dark:text-yellow-400',
     valueColor: 'text-yellow-700',
+    darkValueColor: 'dark:text-yellow-300',
     mandalaVariant: 'rings',
     mandalaColor: 'text-yellow-500',
   },
@@ -90,8 +114,12 @@ const categories: {
     href: '/student-benefits',
     bg: 'bg-[#EAF1FB]',
     border: 'border-[#D2E2F6]',
+    darkBg: 'dark:bg-sky-950/20',
+    darkBorder: 'dark:border-sky-500/15',
     iconColor: 'text-sky-600',
+    darkIconColor: 'dark:text-sky-400',
     valueColor: 'text-sky-700',
+    darkValueColor: 'dark:text-sky-300',
     mandalaVariant: 'petal',
     mandalaColor: 'text-sky-500',
   },
@@ -99,11 +127,11 @@ const categories: {
 
 export default function SystemModules() {
   return (
-    <section className="relative overflow-hidden bg-[#FAFAF7] grid-bg py-10 md:py-14 border-y border-black/5">
+    <section className="relative overflow-hidden bg-[#FAFAF7] dark:bg-[#050505] grid-bg dark:grid-bg-dark py-10 md:py-14 border-y border-black/5 dark:border-white/5 transition-colors duration-300">
       {/* ─── Ambient mandala ornaments + glow (decorative) ─── */}
       <Mandala
         variant="rings"
-        colorClass="text-gray-900"
+        colorClass="text-gray-900 dark:text-white"
         opacity={0.05}
         speed={130}
         direction="cw"
@@ -131,14 +159,14 @@ export default function SystemModules() {
               <span className="material-symbols-outlined !text-[12px]">bolt</span>
               Everything you need
             </span>
-            <h2 className="font-mono font-black uppercase text-black tracking-tight leading-[1.05] text-2xl sm:text-3xl lg:text-[34px]">
+            <h2 className="font-mono font-black uppercase text-black dark:text-white tracking-tight leading-[1.05] text-2xl sm:text-3xl lg:text-[34px]">
               Every category. Every advantage.
             </h2>
-            <p className="mt-2.5 font-mono text-[10.5px] md:text-[11px] uppercase tracking-[0.2em] text-gray-400">
+            <p className="mt-2.5 font-mono text-[10.5px] md:text-[11px] uppercase tracking-[0.2em] text-gray-500 dark:text-gray-400">
               <span className="text-accent-yellow/90">//</span> Six curated tracks. One terminal for the entire founder stack.
             </p>
           </div>
-          <span className="hidden md:inline-flex items-center gap-1.5 font-mono text-[10px] font-bold uppercase tracking-widest text-gray-400 flex-shrink-0 pb-1">
+          <span className="hidden md:inline-flex items-center gap-1.5 font-mono text-[10px] font-bold uppercase tracking-widest text-gray-500 dark:text-gray-400 flex-shrink-0 pb-1">
             <span className="relative flex h-1.5 w-1.5">
               <span className="absolute inline-flex h-full w-full rounded-full bg-green-500 opacity-75 animate-ping" />
               <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-green-500" />
@@ -149,60 +177,85 @@ export default function SystemModules() {
 
         {/* ─── Category grid ─── */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 md:gap-4">
-          {categories.map((c, i) => (
-            <div
-              key={c.name}
-              style={{ animationDelay: `${0.08 + i * 0.06}s` }}
-              className={`group fp-fade-up fp-top-accent relative flex flex-col overflow-hidden rounded-2xl border ${c.border} ${c.bg} p-4 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_14px_34px_rgba(0,0,0,0.10)]`}
-            >
-              {/* mandala watermark (decorative) */}
-              <div className="pointer-events-none absolute -bottom-7 -right-7 w-24 h-24 opacity-70 transition-opacity duration-500 group-hover:opacity-100">
-                <Mandala
-                  variant={c.mandalaVariant}
-                  colorClass={c.mandalaColor}
-                  opacity={0.14}
-                  speed={70 + i * 12}
-                  direction={i % 2 === 0 ? 'cw' : 'ccw'}
-                  className="w-full h-full"
-                />
-              </div>
+          {categories.map((c, i) => {
+            const mobileColorMap: Record<string, string> = {
+              'Cloud Credits': 'text-blue-400',
+              'Startup Grants': 'text-green-400',
+              'SaaS & Tools': 'text-purple-400',
+              'Accelerators': 'text-amber-400',
+              'Founders Resources': 'text-yellow-400',
+              'Student Benefits': 'text-sky-400',
+            }
+            const brandCol = mobileColorMap[c.name] || 'text-white'
 
-              {/* index tick */}
-              <span className="absolute top-3 right-3 font-mono text-[9px] font-bold tracking-widest text-black/25">
-                {String(i + 1).padStart(2, '0')}
-              </span>
-
-              {/* icon + name */}
-              <div className="relative flex items-center gap-2 mb-3">
-                <span className="w-7 h-7 rounded-lg bg-white border border-black/5 shadow-sm flex items-center justify-center flex-shrink-0 transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-6">
-                  <span className={`material-symbols-outlined !text-[16px] ${c.iconColor}`}>{c.icon}</span>
-                </span>
-                <h3 className="font-mono text-[10.5px] font-black uppercase tracking-wide text-black leading-tight">
-                  {c.name}
-                </h3>
-              </div>
-
-              {/* value */}
-              <p className={`relative font-mono font-black text-sm mb-1.5 ${c.valueColor}`}>{c.value}</p>
-
-              {/* description */}
-              <p className="relative font-sans text-[12px] text-gray-600 leading-snug mb-4">{c.desc}</p>
-
-              {/* explore */}
-              <Link
-                href={c.href}
-                aria-label={`Explore ${c.name}`}
-                className="relative mt-auto inline-flex items-center gap-1 self-start rounded-md border border-black/15 bg-white/70 px-2.5 py-1 font-mono text-[10px] font-black uppercase tracking-wider text-black backdrop-blur-sm hover:bg-black hover:text-white hover:border-black transition-colors"
+            return (
+              <div
+                key={c.name}
+                style={{ animationDelay: `${0.08 + i * 0.06}s` }}
+                className={`group fp-fade-up relative flex flex-col overflow-hidden rounded-2xl p-4 transition-all duration-300 hover:-translate-y-1 bg-[#0d0d0d] border border-white/10 md:bg-[#FAFAF7] md:dark:bg-[#050505] md:border-t-4 md:border-x-0 md:border-b-0 md:${c.border} md:dark:${c.darkBorder} md:${c.bg} md:dark:${c.darkBg} hover:shadow-[0_14px_34px_rgba(0,0,0,0.10)] dark:hover:shadow-[0_14px_34px_rgba(255,255,255,0.03)]`}
               >
-                Explore
-                <span className="material-symbols-outlined !text-[13px] transition-transform group-hover:translate-x-0.5">arrow_forward</span>
-              </Link>
-            </div>
-          ))}
+                {/* Subtle dots matrix pattern overlay */}
+                <div
+                  aria-hidden="true"
+                  className={`pointer-events-none absolute inset-0 opacity-[0.06] dark:opacity-[0.03] transition-opacity duration-300 group-hover:opacity-[0.12] dark:group-hover:opacity-[0.08] ${c.iconColor} ${c.darkIconColor} hidden md:block`}
+                  style={{
+                    backgroundImage: 'radial-gradient(currentColor 0.75px, transparent 0.75px)',
+                    backgroundSize: '8px 8px',
+                  }}
+                />
+
+                {/* Inset dashed ring */}
+                <div className={`absolute inset-[6px] rounded-[10px] border border-dashed opacity-20 dark:opacity-[0.08] group-hover:opacity-40 transition-opacity ${c.border} ${c.darkBorder} hidden md:block`} aria-hidden="true" />
+
+                {/* mandala watermark (decorative) */}
+                <div className="pointer-events-none absolute -bottom-7 -right-7 w-24 h-24 opacity-70 transition-opacity duration-500 group-hover:opacity-100 hidden md:block">
+                  <Mandala
+                    variant={c.mandalaVariant}
+                    colorClass={c.mandalaColor}
+                    opacity={0.14}
+                    speed={70 + i * 12}
+                    direction={i % 2 === 0 ? 'cw' : 'ccw'}
+                    className="w-full h-full"
+                  />
+                </div>
+
+                {/* index tick */}
+                <span className="absolute top-3 right-3 font-mono text-[9px] font-bold tracking-widest text-white/40 md:text-black/25 md:dark:text-white/20">
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+
+                {/* icon + name */}
+                <div className="relative flex items-center gap-2 mb-3">
+                  <span className={`w-7 h-7 rounded-lg bg-white/5 border border-white/10 ${brandCol} md:bg-white md:dark:bg-white/5 md:border-black/5 md:dark:border-white/10 md:${c.iconColor} md:dark:${c.darkIconColor} shadow-sm flex items-center justify-center flex-shrink-0 transition-all duration-300 group-hover:scale-110 group-hover:-rotate-6`}>
+                    <span className="material-symbols-outlined !text-[16px]">{c.icon}</span>
+                  </span>
+                  <h3 className="font-mono text-[10.5px] font-black uppercase tracking-wide text-white md:text-black md:dark:text-white leading-tight">
+                    {c.name}
+                  </h3>
+                </div>
+
+                {/* value */}
+                <p className={`relative font-mono font-black text-sm mb-1.5 ${brandCol} md:${c.valueColor} md:dark:${c.darkValueColor}`}>{c.value}</p>
+
+                {/* description */}
+                <p className="relative font-sans text-[12px] text-gray-400 md:text-gray-600 md:dark:text-gray-400 leading-snug mb-4">{c.desc}</p>
+
+                {/* explore */}
+                <Link
+                  href={c.href}
+                  aria-label={`Explore ${c.name}`}
+                  className="relative mt-auto inline-flex items-center gap-1 self-start rounded-md border border-white/10 bg-white/5 px-2.5 py-1 font-mono text-[10px] font-black uppercase tracking-wider text-white backdrop-blur-sm hover:bg-white hover:text-black md:border-black/15 md:dark:border-white/10 md:bg-white/70 md:dark:bg-white/5 md:text-black md:dark:text-white md:hover:bg-black md:hover:text-white md:dark:hover:bg-white md:dark:hover:text-black transition-all duration-300"
+                >
+                  Explore
+                  <span className="material-symbols-outlined !text-[13px] transition-transform group-hover:translate-x-0.5">arrow_forward</span>
+                </Link>
+              </div>
+            )
+          })}
         </div>
 
         {/* ─── Bottom CTA banner — premium dark ─── */}
-        <div className="fp-fade-up fp-top-accent relative mt-5 md:mt-6 overflow-hidden rounded-xl fp-surface-dark border border-white/10 px-5 md:px-7 py-4 flex flex-col sm:flex-row items-center justify-between gap-3" style={{ animationDelay: '0.5s' }}>
+        <div className="hidden md:flex fp-fade-up relative mt-5 md:mt-6 overflow-hidden rounded-2xl bg-black dark:bg-[#0c0c0c] border-2 border-black dark:border-white/20 shadow-[4px_4px_0px_#ffd700] dark:shadow-[4px_4px_0px_rgba(255,215,0,0.15)] px-5 md:px-7 py-4.5 flex-col sm:flex-row items-center justify-between gap-3" style={{ animationDelay: '0.5s' }}>
           {/* embedded mandalas */}
           <Mandala
             variant="orbital"
@@ -227,7 +280,7 @@ export default function SystemModules() {
           </p>
           <Link
             href="/pricing"
-            className="group/cta fp-sheen relative inline-flex items-center justify-center gap-1.5 w-full sm:w-auto rounded-lg bg-accent-yellow text-black font-mono font-black text-[11px] md:text-xs uppercase tracking-[0.12em] px-5 py-2.5 hover:bg-white transition-colors whitespace-nowrap"
+            className="group/cta relative inline-flex items-center justify-center gap-1.5 w-full sm:w-auto rounded-md bg-accent-yellow text-black font-mono font-black text-xs uppercase tracking-[0.06em] px-5 py-2.5 border border-black shadow-[2px_2px_0px_#000] hover:bg-white hover:shadow-[3px_3px_0px_#000] hover:translate-x-[1px] hover:translate-y-[1px] transition-all whitespace-nowrap"
           >
             Unlock full access
             <span className="material-symbols-outlined !text-[16px] transition-transform group-hover/cta:translate-x-0.5">arrow_forward</span>

@@ -121,7 +121,7 @@ export default function DealCard({ deal, basePath = '/deals', overrideHref }: De
       <GlowingEffect spread={40} glow={false} disabled={false} proximity={64} inactiveZone={0.01} borderWidth={2} />
       <LinkComponent
         {...linkProps}
-        className="relative flex flex-col bg-white border-2 border-black shadow-[3px_3px_0px_#111] hover:shadow-[5px_5px_0px_#111] hover:-translate-x-px hover:-translate-y-px transition-all duration-200 overflow-hidden group h-full rounded-sm"
+        className="relative flex flex-col bg-white dark:bg-[#0c0c0c] border border-gray-200 dark:border-white/10 shadow-sm hover:shadow-[0_8px_30px_rgb(0,0,0,0.12)] dark:hover:shadow-[0_8px_30px_rgba(255,255,255,0.05)] hover:-translate-y-1 transition-all duration-300 overflow-hidden group h-full rounded-xl text-left"
         aria-label={`View details for ${title}`}
       >
         {/* Badge */}
@@ -134,8 +134,8 @@ export default function DealCard({ deal, basePath = '/deals', overrideHref }: De
         )}
 
         {/* Logo + Title — fixed height */}
-        <div className={`flex items-center gap-2.5 px-3 ${badge ? 'pt-2' : 'pt-3'} pb-2`}>
-          <div className="w-10 h-10 bg-gray-100 border border-gray-200 flex items-center justify-center p-1 flex-shrink-0 rounded-sm overflow-hidden relative">
+        <div className={`flex items-center gap-3 px-4 ${badge ? 'pt-2' : 'pt-4'} pb-2`}>
+          <div className="w-10 h-10 bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 flex items-center justify-center p-1.5 flex-shrink-0 rounded-lg overflow-hidden relative group-hover:bg-gray-100 dark:group-hover:bg-white/10 transition-colors">
             {!failed && (
               <img
                 alt={`${cleanProvider} logo`}
@@ -155,27 +155,27 @@ export default function DealCard({ deal, basePath = '/deals', overrideHref }: De
               </span>
             )}
           </div>
-          <h3 className="text-xs sm:text-sm font-bold text-gray-900 leading-tight group-hover:text-black transition-colors line-clamp-2 min-w-0">
+          <h3 className="text-xs sm:text-sm font-bold text-gray-900 dark:text-white leading-tight group-hover:text-black dark:group-hover:text-accent-yellow transition-colors line-clamp-2 min-w-0">
             {displayTitle}
           </h3>
         </div>
 
         {/* Description — fixed 2 lines */}
-        <div className="px-3 pb-2 flex-grow">
-          <p className="text-[11px] text-gray-500 leading-snug line-clamp-2">{description}</p>
+        <div className="px-4 pb-4 flex-grow">
+          <p className="text-xs text-gray-500 dark:text-gray-400 leading-snug line-clamp-2">{description}</p>
         </div>
 
         {/* Value + CTA — pinned bottom, compact */}
-        <div className="px-3 pb-3 mt-auto border-t border-gray-100 pt-2">
+        <div className="px-4 pb-4 mt-auto border-t border-gray-100 dark:border-white/10 pt-4">
           <div className="flex items-center justify-between gap-1.5">
-            <p className="text-xs sm:text-sm font-bold text-green-600 font-mono line-clamp-1 flex-1 min-w-0">
+            <p className="text-xs sm:text-sm font-bold text-green-600 dark:text-emerald-400 font-mono line-clamp-1 flex-1 min-w-0">
               {truncateValue(value)}
             </p>
-            <div className="relative rounded-sm flex-shrink-0">
+            <div className="relative rounded-lg flex-shrink-0">
               <GlowingEffect spread={30} glow={false} disabled={false} proximity={48} inactiveZone={0.01} borderWidth={1} />
-              <span className="relative inline-flex items-center gap-0.5 bg-black text-white text-[9px] font-bold uppercase px-2.5 py-1.5 rounded-sm group-hover:bg-accent-yellow group-hover:text-black transition-all duration-200 shadow-[2px_2px_0px_#333] group-hover:shadow-[3px_3px_0px_#111]">
+              <span className="relative inline-flex items-center gap-1 bg-gray-900 dark:bg-white text-white dark:text-gray-900 text-[10px] font-bold uppercase px-3 py-1.5 rounded-lg group-hover:bg-accent-yellow dark:group-hover:bg-accent-yellow group-hover:text-black dark:group-hover:text-black transition-all duration-200 shadow-sm">
                 View
-                <span className="material-symbols-outlined text-[10px] group-hover:translate-x-0.5 transition-transform">arrow_forward</span>
+                <span className="material-symbols-outlined text-[12px] group-hover:translate-x-0.5 transition-transform">arrow_forward</span>
               </span>
             </div>
           </div>

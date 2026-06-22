@@ -1,26 +1,5 @@
-'use client'
-
-import IncubatorsHeader from '@/components/deals/IncubatorsHeader'
-import IncubatorsHero from '@/components/deals/IncubatorsHero'
-import IncubatorsStrategy from '@/components/deals/IncubatorsStrategy'
-import IncubatorsGrid from '@/components/deals/IncubatorsGrid'
-import Header from '@/components/Header'
-import Footer from '@/components/Footer'
+import { redirect } from 'next/navigation'
 
 export default function IncubatorsPage() {
-  return (
-    <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden bg-background-light">
-      <Header />
-      <main className="flex-1">
-        <div className="max-w-[1600px] mx-auto px-4 lg:px-6 py-4 lg:py-6">
-          <IncubatorsHeader />
-          <IncubatorsHero />
-          <IncubatorsStrategy />
-          <IncubatorsGrid />
-        </div>
-      </main>
-      <Footer />
-    </div>
-  )
+  redirect('/programs?type=incubators')
 }
-

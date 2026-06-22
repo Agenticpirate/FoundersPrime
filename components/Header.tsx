@@ -4,6 +4,8 @@ import Link from 'next/link'
 import { useAuth } from '@/lib/auth/hooks'
 import { useEffect, useRef, useState } from 'react'
 import { checkProStatus } from '@/lib/auth/user-context'
+import { motion, AnimatePresence } from 'framer-motion'
+import ThemeToggle from './ThemeToggle'
 
 type PlanType = 'free' | 'nextfounder' | 'founder' | 'legend'
 
@@ -73,10 +75,10 @@ export default function Header() {
       href: '/deals',
       icon: 'local_offer',
       children: [
-        { label: 'All Deals', href: '/deals', icon: 'grid_view' },
-        { label: 'Cloud Credits', href: '/deals?category=cloud-credits', icon: 'cloud' },
-        { label: 'SaaS Discounts', href: '/deals?category=saas-discounts', icon: 'apps' },
-        { label: 'Ad Credits', href: '/deals?category=ad-credits', icon: 'campaign' },
+        { label: 'All Deals', href: '/deals', icon: 'grid_view', colorClass: 'text-accent-yellow' },
+        { label: 'Cloud Credits', href: '/deals?category=cloud-credits', icon: 'cloud', colorClass: 'text-sky-400' },
+        { label: 'SaaS Discounts', href: '/deals?category=saas-discounts', icon: 'apps', colorClass: 'text-purple-400' },
+        { label: 'Ad Credits', href: '/deals?category=ad-credits', icon: 'campaign', colorClass: 'text-pink-400' },
       ],
     },
     {
@@ -85,9 +87,9 @@ export default function Header() {
       href: '/deals/accelerators',
       icon: 'rocket_launch',
       children: [
-        { label: 'Accelerators', href: '/deals/accelerators', icon: 'rocket_launch' },
-        { label: 'Incubators', href: '/deals/incubators', icon: 'lightbulb' },
-        { label: 'Grants', href: '/deals/grants', icon: 'payments' },
+        { label: 'Accelerators', href: '/deals/accelerators', icon: 'rocket_launch', colorClass: 'text-orange-400' },
+        { label: 'Incubators', href: '/deals/incubators', icon: 'lightbulb', colorClass: 'text-yellow-400' },
+        { label: 'Grants', href: '/deals/grants', icon: 'payments', colorClass: 'text-green-400' },
       ],
     },
     {
@@ -96,9 +98,9 @@ export default function Header() {
       href: '#',
       icon: 'school',
       children: [
-        { label: 'Funding & Opportunities', href: '/resources/funding-opportunities', icon: 'monetization_on' },
-        { label: 'Campus Edge', href: '/resources/free-access', icon: 'workspace_premium' },
-        { label: 'Credits & Savings', href: '/resources/credits-savings', icon: 'savings' },
+        { label: 'Funding & Opportunities', href: '/resources/funding-opportunities', icon: 'monetization_on', colorClass: 'text-emerald-400' },
+        { label: 'Campus Edge', href: '/resources/free-access', icon: 'workspace_premium', colorClass: 'text-pink-400' },
+        { label: 'Credits & Savings', href: '/resources/credits-savings', icon: 'savings', colorClass: 'text-green-400' },
       ],
     },
     {
@@ -107,16 +109,17 @@ export default function Header() {
       href: '/resources',
       icon: 'folder_open',
       children: [
-        { label: 'Verified Startups', href: '/startups', icon: 'verified' },
-        { label: 'Startup Ideas', href: '/ideas', icon: 'emoji_objects' },
-        { label: 'Templates & Guides', href: '/resources', icon: 'description' },
-        { label: 'Contact', href: '/contact', icon: 'mail' },
+        { label: 'Verified Startups', href: '/startups', icon: 'verified', colorClass: 'text-blue-400' },
+        { label: 'Startup Ideas', href: '/ideas', icon: 'emoji_objects', colorClass: 'text-yellow-400' },
+        { label: 'Templates & Guides', href: '/resources', icon: 'description', colorClass: 'text-cyan-400' },
+        { label: 'Contact', href: '/contact', icon: 'mail', colorClass: 'text-gray-400' },
       ],
     },
   ]
 
   return (
-    <header className="sticky top-0 z-50 bg-[#050505]/95 backdrop-blur-xl text-white border-b border-white/10 shadow-[0_1px_0_0_rgba(255,221,0,0.18),0_8px_30px_-12px_rgba(0,0,0,0.8)] relative overflow-visible">
+    <>
+      <header className="sticky top-0 z-50 bg-[#050505]/95 backdrop-blur-xl text-white border-b border-white/10 shadow-[0_1px_0_0_rgba(255,221,0,0.18),0_8px_30px_-12px_rgba(0,0,0,0.8)] relative overflow-visible">
       {/* Animated gradient sweep on the very top */}
       <div className="absolute top-0 left-0 right-0 h-[1px] overflow-hidden pointer-events-none">
         <div
@@ -305,6 +308,7 @@ export default function Header() {
 
           {/* ─── Right: Auth / CTA ─── */}
           <div className="hidden md:flex items-center gap-3">
+            <ThemeToggle />
             {loading ? (
               <div className="w-24 h-9 bg-white/10 animate-pulse rounded-sm" />
             ) : user ? (
@@ -371,162 +375,16 @@ export default function Header() {
 
           {/* ─── Mobile toggle ─── */}
           <div className="md:hidden flex items-center gap-2">
+            <ThemeToggle />
             <button
-              className="text-white p-2 bg-white/5 border border-white/15 hover:bg-white/10 hover:border-accent-yellow transition-colors"
+              className="text-white p-1.5 bg-white/5 border border-white/15 hover:bg-white/10 hover:border-accent-yellow transition-colors h-8 w-8 flex items-center justify-center !min-h-0 rounded"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               aria-label="Toggle menu"
             >
-              <span className="material-symbols-outlined">{mobileMenuOpen ? 'close' : 'menu'}</span>
+              <span className="material-symbols-outlined !text-[20px]">{mobileMenuOpen ? 'close' : 'menu'}</span>
             </button>
           </div>
         </div>
-
-        {/* ─── Mobile Menu ─── */}
-        {mobileMenuOpen && (
-          <div className="md:hidden absolute left-0 right-0 bg-black text-white border-b-2 border-accent-yellow shadow-[0_8px_24px_rgba(0,0,0,0.4)] z-40 animate-slideDown max-h-[80vh] overflow-y-auto">
-            <div className="px-3 py-2">
-              <div className="flex flex-col divide-y divide-white/10">
-                {mobileNavSections.map((section) => (
-                  <div key={section.id}>
-                    <div className="flex items-center">
-                      <Link
-                        href={section.children && section.children.length > 0 ? '#' : section.href}
-                        onClick={(e) => {
-                          if (section.children && section.children.length > 0) {
-                            e.preventDefault()
-                            toggleSection(section.id)
-                          } else {
-                            setMobileMenuOpen(false)
-                          }
-                        }}
-                        className="flex-1 flex items-center gap-2.5 py-3 text-xs font-mono font-black uppercase text-white transition-colors"
-                      >
-                        <span
-                          className={`w-7 h-7 flex items-center justify-center border transition-transform duration-300 ${
-                            expandedSection === section.id
-                              ? 'scale-110 rotate-[-4deg] bg-accent-yellow text-black border-accent-yellow shadow-[0_0_12px_rgba(255,221,0,0.45)]'
-                              : 'bg-white/5 border-white/15 text-accent-yellow'
-                          }`}
-                        >
-                          <span className="material-symbols-outlined text-[16px]">{section.icon}</span>
-                        </span>
-                        {section.label}
-                      </Link>
-                      {section.children && section.children.length > 0 && (
-                        <button
-                          onClick={() => toggleSection(section.id)}
-                          className="p-3 text-gray-400 hover:bg-white/5 hover:text-accent-yellow"
-                          aria-label={`Expand ${section.label}`}
-                        >
-                          <span
-                            className="material-symbols-outlined text-sm transition-transform duration-300 ease-out"
-                            style={{ transform: expandedSection === section.id ? 'rotate(180deg)' : 'rotate(0deg)' }}
-                          >
-                            expand_more
-                          </span>
-                        </button>
-                      )}
-                    </div>
-
-                    {expandedSection === section.id && section.children && section.children.length > 0 && (
-                      <div className="ml-6 mb-2 flex flex-col bg-white/5 border border-white/10 overflow-hidden animate-slideDown">
-                        {section.children.map((child) => (
-                          <Link
-                            key={child.href}
-                            href={child.href}
-                            onClick={() => setMobileMenuOpen(false)}
-                            className="flex items-center gap-2.5 px-3 py-2.5 text-[11px] font-mono font-bold uppercase text-gray-300 hover:bg-white/10 hover:text-accent-yellow border-b border-white/10 last:border-0 transition-colors"
-                          >
-                            <span className="material-symbols-outlined text-sm text-accent-yellow/70">{child.icon}</span>
-                            {child.label}
-                          </Link>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                ))}
-
-                {/* Flash Deals standalone */}
-                <Link
-                  href="/flash-deals"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-center gap-2.5 py-3 text-xs font-mono font-black uppercase text-white"
-                >
-                  <span className="w-7 h-7 flex items-center justify-center bg-accent-yellow text-black border border-accent-yellow">
-                    <span className="material-symbols-outlined text-[16px]">bolt</span>
-                  </span>
-                  Flash Deals
-                  <span className="inline-flex items-center bg-accent-yellow text-black text-[8px] font-black uppercase tracking-[0.12em] px-1.5 py-0.5 leading-none ml-1">
-                    New
-                  </span>
-                </Link>
-
-                {/* Pricing standalone */}
-                <Link
-                  href="/pricing"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-center gap-2.5 py-3 text-xs font-mono font-black uppercase text-accent-yellow"
-                >
-                  <span className="w-7 h-7 flex items-center justify-center bg-accent-yellow text-black border border-accent-yellow">
-                    <span className="material-symbols-outlined text-[16px]">sell</span>
-                  </span>
-                  Pricing
-                </Link>
-              </div>
-
-              <div className="border-t border-white/10 mt-2 pt-3 pb-1">
-                {user ? (
-                  <div className="flex items-center gap-2">
-                    <div className="flex items-center gap-1.5 flex-1 min-w-0">
-                      <span className="material-symbols-outlined text-base text-accent-yellow">account_circle</span>
-                      <span className="text-xs font-mono font-bold truncate text-white">
-                        {user.user_metadata?.full_name?.split(' ')[0] || user.email?.split('@')[0]}
-                      </span>
-                      {planBadge && (
-                        <span className={`${planBadge.className} text-[9px] px-1.5 py-0.5 font-bold uppercase border border-black`}>
-                          {planBadge.label}
-                        </span>
-                      )}
-                    </div>
-                    <Link
-                      href="/dashboard"
-                      onClick={() => setMobileMenuOpen(false)}
-                      className="text-[11px] font-mono font-bold uppercase px-3 py-1.5 border border-white/30 text-white hover:bg-accent-yellow hover:text-black hover:border-accent-yellow transition-all"
-                    >
-                      Dashboard
-                    </Link>
-                    <button
-                      onClick={() => {
-                        signOut()
-                        setMobileMenuOpen(false)
-                      }}
-                      className="text-[11px] font-mono font-bold uppercase px-3 py-1.5 border border-red-500/40 text-red-400 hover:bg-red-500 hover:text-white hover:border-red-500 transition-all"
-                    >
-                      Out
-                    </button>
-                  </div>
-                ) : (
-                  <div className="grid grid-cols-2 gap-2">
-                    <Link
-                      href="/login"
-                      onClick={() => setMobileMenuOpen(false)}
-                      className="flex items-center justify-center py-3 text-xs font-mono font-bold uppercase border border-white/30 text-white hover:bg-white/10 hover:border-accent-yellow transition-all"
-                    >
-                      Log In
-                    </Link>
-                    <Link
-                      href="/pricing"
-                      onClick={() => setMobileMenuOpen(false)}
-                      className="flex items-center justify-center py-3 text-xs font-mono font-black uppercase border-2 border-accent-yellow bg-accent-yellow text-black hover:bg-white hover:border-white transition-all"
-                    >
-                      Get Started
-                    </Link>
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
-        )}
       </div>
 
       <style jsx>{`
@@ -583,5 +441,169 @@ export default function Header() {
         }
       `}</style>
     </header>
+
+      {/* ─── Mobile Drawer ─── */}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <>
+            {/* Backdrop overlay */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 xl:hidden"
+              onClick={() => setMobileMenuOpen(false)}
+            />
+            {/* Drawer container */}
+            <motion.div
+              initial={{ x: '100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '100%' }}
+              transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+              className="fixed top-0 right-0 bottom-0 w-[70vw] max-w-[270px] bg-[#050505]/95 backdrop-blur-md border-l border-white/10 z-50 xl:hidden flex flex-col shadow-2xl"
+            >
+              {/* Drawer Header */}
+              <div className="flex items-center justify-between px-4 h-14 border-b border-white/10 flex-shrink-0">
+                <span className="font-mono font-black text-xs tracking-widest uppercase text-white">
+                  MENU
+                </span>
+                <button
+                  className="text-gray-400 hover:text-white p-1.5 rounded-lg bg-white/5 transition-colors h-8 w-8 flex items-center justify-center !min-h-0"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  <span className="material-symbols-outlined !text-[18px]">close</span>
+                </button>
+              </div>
+
+              {/* Drawer Content */}
+              <div className="flex-1 overflow-y-auto px-4 py-4">
+                <div className="flex flex-col gap-2">
+                  {mobileNavSections.map((section) => (
+                    <div key={section.id} className="border border-white/10 rounded-xl overflow-hidden bg-white/[0.02]">
+                      <button
+                        onClick={() => toggleSection(section.id)}
+                        className="w-full flex items-center justify-between p-3 text-left font-mono font-bold uppercase text-[10.5px] text-gray-200 transition-colors hover:bg-white/5 !min-h-0"
+                      >
+                        <div className="flex items-center gap-2.5">
+                          <span className="material-symbols-outlined text-accent-yellow !text-base">{section.icon}</span>
+                          {section.label}
+                        </div>
+                        {section.children && (
+                          <span
+                            className="material-symbols-outlined transition-transform duration-300 !text-base text-gray-400"
+                            style={{ transform: expandedSection === section.id ? 'rotate(180deg)' : 'rotate(0deg)' }}
+                          >
+                            expand_more
+                          </span>
+                        )}
+                      </button>
+                      
+                      <AnimatePresence>
+                        {expandedSection === section.id && section.children && (
+                          <motion.div
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: 'auto', opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            className="overflow-hidden bg-black/20"
+                          >
+                            <div className="px-3 pb-3 pt-1 flex flex-col gap-1">
+                              {section.children.map((child) => (
+                                <Link
+                                  key={child.href}
+                                  href={child.href}
+                                  onClick={() => setMobileMenuOpen(false)}
+                                  className="flex items-center gap-2.5 p-2 rounded-lg text-[10px] font-mono font-bold uppercase text-gray-400 hover:text-accent-yellow hover:bg-white/5 transition-colors !min-h-0"
+                                >
+                                  <span className={`material-symbols-outlined text-sm ${child.colorClass || 'text-gray-500'}`}>{child.icon}</span>
+                                  {child.label}
+                                </Link>
+                              ))}
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+                  ))}
+
+                  {/* Flash Deals standalone */}
+                  <Link
+                    href="/flash-deals"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="flex items-center justify-between p-3 rounded-xl font-mono font-bold uppercase text-[10.5px] text-gray-200 border border-white/10 bg-white/[0.02] !min-h-0"
+                  >
+                    <div className="flex items-center gap-2.5">
+                      <span className="material-symbols-outlined text-accent-yellow !text-base">bolt</span>
+                      Flash Deals
+                    </div>
+                    <span className="bg-accent-yellow text-black text-[8px] px-1.5 py-0.5 rounded-sm font-black tracking-wider leading-none">NEW</span>
+                  </Link>
+
+                  {/* Pricing standalone */}
+                  <Link
+                    href="/pricing"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="flex items-center justify-between p-3 rounded-xl font-mono font-bold uppercase text-[10.5px] text-white border border-accent-yellow/50 bg-accent-yellow/5 mt-1 mb-2 !min-h-0"
+                  >
+                    <div className="flex items-center gap-2.5">
+                      <span className="material-symbols-outlined text-accent-yellow !text-base">sell</span>
+                      Pricing
+                    </div>
+                  </Link>
+
+                  {/* Auth Actions (Moved up to fill blank space) */}
+                  {user ? (
+                    <div className="flex flex-col gap-2 mt-2 pt-4 border-t border-white/10">
+                      <div className="flex items-center gap-2.5 p-2 bg-white/5 rounded-xl border border-white/10">
+                        <span className="material-symbols-outlined text-accent-yellow">account_circle</span>
+                        <div className="flex flex-col min-w-0">
+                          <span className="text-[11px] font-mono font-bold truncate text-white">
+                            {user.user_metadata?.full_name?.split(' ')[0] || user.email?.split('@')[0]}
+                          </span>
+                          {planBadge && (
+                            <span className={`text-[8px] font-bold uppercase mt-0.5 ${planBadge.className === 'bg-accent-yellow text-black' ? 'text-accent-yellow' : 'text-sky-400'}`}>
+                              {planBadge.label}
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                      <div className="grid grid-cols-2 gap-2">
+                        <Link
+                          href="/dashboard"
+                          onClick={() => setMobileMenuOpen(false)}
+                          className="flex items-center justify-center gap-2 p-2 rounded-lg bg-[#FFD500] text-black font-mono font-bold text-[10px] uppercase transition-transform active:scale-95 !min-h-0"
+                        >
+                          Dashboard
+                        </Link>
+                        <button
+                          onClick={() => {
+                            signOut()
+                            setMobileMenuOpen(false)
+                          }}
+                          className="flex items-center justify-center gap-2 p-2 rounded-lg border border-white/10 text-red-400 font-mono font-bold text-[10px] uppercase transition-transform active:scale-95 bg-transparent !min-h-0"
+                        >
+                          Sign Out
+                        </button>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="mt-2 pt-4 border-t border-white/10">
+                      <Link
+                        href="/login"
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="flex items-center justify-center h-10 w-full rounded-xl border border-[#FFD500]/50 bg-[#FFD500]/5 hover:bg-[#FFD500]/15 text-[#FFD500] font-mono font-bold text-[11px] uppercase transition-all tracking-wider active:scale-95 !min-h-0"
+                      >
+                        Log In
+                      </Link>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+
+    </>
   )
 }

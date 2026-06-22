@@ -27,17 +27,18 @@ interface FilterState {
 
 interface DealsGridProps {
   filters?: FilterState
+  initialIsPro?: boolean
 }
 
-export default function DealsGrid({ filters }: DealsGridProps) {
+export default function DealsGrid({ filters, initialIsPro }: DealsGridProps) {
   const router = useRouter()
   const searchParams = useSearchParams()
   const pathname = usePathname()
 
   const { user, loading: authLoading } = useAuth()
-  const [isPro, setIsPro] = useState(false)
+  const [isPro, setIsPro] = useState(initialIsPro ?? false)
   const [isNextFounder, setIsNextFounder] = useState(false)
-  const [checkingAccess, setCheckingAccess] = useState(true)
+  const [checkingAccess, setCheckingAccess] = useState(initialIsPro === undefined)
 
   const [deals, setDeals] = useState<Deal[]>(globalDealsCache || [])
   const [filteredDeals, setFilteredDeals] = useState<Deal[]>([])
@@ -48,7 +49,11 @@ export default function DealsGrid({ filters }: DealsGridProps) {
 
   // Run auth check + deals fetch in PARALLEL — no waterfall
   useEffect(() => {
-    if (authLoading) return
+    if (initialIsPro !== undefined) {
+      setIsPro(initialIsPro)
+      setCheckingAccess(false)
+      // Still need to fetch deals if not cached
+    }
 
     const cacheValid = globalDealsCache && (Date.now() - globalDealsCacheTime < DEALS_CACHE_TTL)
     const fetchDeals = cacheValid
@@ -76,6 +81,16 @@ export default function DealsGrid({ filters }: DealsGridProps) {
           return globalDealsPromise
         })()
 
+    if (initialIsPro !== undefined) {
+      fetchDeals.then((dealList) => {
+        setDeals(dealList)
+        setLoading(false)
+      })
+      return
+    }
+
+    if (authLoading) return
+
     const fetchAuth = user
       ? checkProStatus().then(({ isPro: hasPro, user: userProfile }) => ({
           isPro: hasPro,
@@ -94,7 +109,7 @@ export default function DealsGrid({ filters }: DealsGridProps) {
     // user object reference on token refresh / tab refocus; depending on the
     // object would re-run this effect and re-fetch deals + access on every
     // focus, causing a visible flicker for logged-in users.
-  }, [authLoading, user?.id])
+  }, [authLoading, user?.id, initialIsPro])
 
 
   useEffect(() => {
@@ -445,12 +460,12 @@ export default function DealsGrid({ filters }: DealsGridProps) {
     <>
       {/* Results Summary */}
       <div className="mb-3 md:mb-5 flex justify-between items-center gap-2 px-1">
-        <p className="text-xs md:text-[13px] text-gray-600">
-          Showing <span className="font-semibold text-gray-900 tabular-nums">{filteredDeals.length > 0 ? startIndex + 1 : 0}–{Math.min(endIndex, filteredDeals.length)}</span> of{' '}
-          <span className="font-semibold text-gray-900 tabular-nums">{filteredDeals.length}</span> deals
+        <p className="text-xs md:text-[13px] text-gray-600 dark:text-gray-400">
+          Showing <span className="font-semibold text-gray-900 dark:text-white tabular-nums">{filteredDeals.length > 0 ? startIndex + 1 : 0}–{Math.min(endIndex, filteredDeals.length)}</span> of{' '}
+          <span className="font-semibold text-gray-900 dark:text-white tabular-nums">{filteredDeals.length}</span> deals
         </p>
         {filters?.search && (
-          <p className="text-xs md:text-[13px] text-gray-500 truncate flex items-center gap-1">
+          <p className="text-xs md:text-[13px] text-gray-500 dark:text-gray-400 truncate flex items-center gap-1">
             <span className="material-symbols-outlined text-[14px] text-gray-400">search</span>
             <span className="truncate">&ldquo;{filters.search}&rdquo;</span>
           </p>
@@ -459,10 +474,10 @@ export default function DealsGrid({ filters }: DealsGridProps) {
 
       {/* No Results */}
       {!loading && !authLoading && !checkingAccess && filteredDeals.length === 0 && (
-        <div className="text-center py-6 bg-white border-3 border-ink shadow-hard-sm">
-          <span className="material-symbols-outlined text-6xl text-gray-300 mb-4 block">search_off</span>
-          <h3 className="text-xl font-bold text-gray-700 mb-2">No deals found</h3>
-          <p className="text-gray-500 mb-4">
+        <div className="text-center py-6 bg-white dark:bg-[#0c0c0c] border-3 border-ink dark:border-white/10 shadow-hard-sm">
+          <span className="material-symbols-outlined text-6xl text-gray-300 dark:text-gray-600 mb-4 block">search_off</span>
+          <h3 className="text-xl font-bold text-gray-700 dark:text-white mb-2">No deals found</h3>
+          <p className="text-gray-500 dark:text-gray-400 mb-4">
             {deals.length === 0
               ? "No deals have been imported yet. Use the admin panel to import your deals."
               : "Try adjusting your filters or search terms"
@@ -491,22 +506,22 @@ export default function DealsGrid({ filters }: DealsGridProps) {
           {[...Array(12)].map((_, i) => (
             <div
               key={i}
-              className="bg-white border-2 border-gray-100 p-4 animate-pulse"
+              className="bg-white dark:bg-[#0c0c0c] border-2 border-gray-100 dark:border-white/5 p-4 animate-pulse"
               style={{ animationDelay: `${i * 40}ms` }}
             >
               <div className="flex items-center gap-3 mb-3">
-                <div className="w-10 h-10 bg-gray-100 rounded-sm flex-shrink-0" />
+                <div className="w-10 h-10 bg-gray-100 dark:bg-white/5 rounded-sm flex-shrink-0" />
                 <div className="flex-1 space-y-1.5">
-                  <div className="h-3 bg-gray-100 rounded w-3/4" />
-                  <div className="h-2.5 bg-gray-100 rounded w-1/2" />
+                  <div className="h-3 bg-gray-100 dark:bg-white/5 rounded w-3/4" />
+                  <div className="h-2.5 bg-gray-100 dark:bg-white/5 rounded w-1/2" />
                 </div>
               </div>
               <div className="space-y-2 mb-3">
-                <div className="h-2.5 bg-gray-100 rounded w-full" />
-                <div className="h-2.5 bg-gray-100 rounded w-5/6" />
+                <div className="h-2.5 bg-gray-100 dark:bg-white/5 rounded w-full" />
+                <div className="h-2.5 bg-gray-100 dark:bg-white/5 rounded w-5/6" />
               </div>
-              <div className="h-5 bg-gray-100 rounded w-1/3 mb-3" />
-              <div className="h-8 bg-gray-100 rounded-sm w-full" />
+              <div className="h-5 bg-gray-100 dark:bg-white/5 rounded w-1/3 mb-3" />
+              <div className="h-8 bg-gray-100 dark:bg-white/5 rounded-sm w-full" />
             </div>
           ))}
         </div>
@@ -516,10 +531,10 @@ export default function DealsGrid({ filters }: DealsGridProps) {
       {/* Free resource strip — visible & grabbable even on gated pages.
           Shown only when a shareable ?unlock=<slug> link targets a deal. */}
       {!loading && !authLoading && !checkingAccess && freeResourceDeals.length > 0 && (
-        <div className="mb-5 bg-emerald-50 border-2 border-black rounded-sm shadow-[3px_3px_0px_#111] p-3 md:p-4">
+        <div className="mb-5 bg-emerald-50 dark:bg-emerald-950/20 border-2 border-black dark:border-emerald-500/20 rounded-sm shadow-[3px_3px_0px_#111] dark:shadow-[3px_3px_0px_rgba(16,185,129,0.05)] p-3 md:p-4">
           <div className="flex items-center gap-2 mb-3">
-            <span className="material-symbols-outlined !text-[18px] text-emerald-700">redeem</span>
-            <span className="font-mono text-[11px] md:text-[12px] font-black uppercase tracking-[0.12em] text-black">
+            <span className="material-symbols-outlined !text-[18px] text-emerald-700 dark:text-emerald-400">redeem</span>
+            <span className="font-mono text-[11px] md:text-[12px] font-black uppercase tracking-[0.12em] text-black dark:text-emerald-300">
               Free resource — grab it, no membership needed
             </span>
           </div>
@@ -615,13 +630,13 @@ export default function DealsGrid({ filters }: DealsGridProps) {
             {isLocked && (
               <div className="absolute inset-0 z-20 flex items-center justify-center px-3 py-6">
                 {/* Soft fade so blur reads as depth, not noise */}
-                <div className="absolute inset-0 bg-gradient-to-b from-white/40 via-white/65 to-white/40 pointer-events-none" />
+                <div className="absolute inset-0 bg-gradient-to-b from-white/40 via-white/65 to-white/40 dark:from-black/40 dark:via-black/65 dark:to-black/40 pointer-events-none" />
 
                 {/* Card */}
-                <div className="relative w-full max-w-md bg-white border-2 border-black rounded-sm shadow-[5px_5px_0px_#111] overflow-hidden lock-overlay-fade-in">
+                <div className="relative w-full max-w-md bg-white dark:bg-[#0c0c0c] border-2 border-black dark:border-white/10 rounded-sm shadow-[5px_5px_0px_#111] dark:shadow-[5px_5px_0px_rgba(255,255,255,0.05)] overflow-hidden lock-overlay-fade-in">
                   {/* Decorative mandala */}
                   <div className="absolute -top-12 -right-12 w-44 h-44 pointer-events-none opacity-[0.10]" aria-hidden="true">
-                    <svg viewBox="0 0 200 200" className="w-full h-full text-gray-900 lock-overlay-mandala-spin" fill="none" stroke="currentColor" strokeWidth="0.7">
+                    <svg viewBox="0 0 200 200" className="w-full h-full text-gray-900 dark:text-white/10 lock-overlay-mandala-spin" fill="none" stroke="currentColor" strokeWidth="0.7">
                       <circle cx="100" cy="100" r="40" />
                       <circle cx="100" cy="100" r="60" strokeDasharray="2 4" />
                       <circle cx="100" cy="100" r="80" strokeDasharray="1 6" />
@@ -635,30 +650,30 @@ export default function DealsGrid({ filters }: DealsGridProps) {
                     </svg>
                   </div>
 
-                  <div className="relative p-5 md:p-7">
+                  <div className="relative p-5 md:p-7 text-left">
                     {/* Subtitle pill */}
-                    <div className="mb-3 inline-flex items-center gap-1.5 px-2 py-0.5 bg-accent-yellow/20 border-2 border-black rounded-sm">
-                      <span className="material-symbols-outlined !text-[12px] text-black">lock</span>
-                      <span className="font-mono text-[9px] font-black uppercase tracking-[0.12em] text-black">
+                    <div className="mb-3 inline-flex items-center gap-1.5 px-2 py-0.5 bg-accent-yellow/20 border-2 border-black dark:border-accent-yellow/10 rounded-sm">
+                      <span className="material-symbols-outlined !text-[12px] text-black dark:text-accent-yellow">lock</span>
+                      <span className="font-mono text-[9px] font-black uppercase tracking-[0.12em] text-black dark:text-accent-yellow">
                         {lockSubtitle}
                       </span>
                     </div>
 
                     {/* Title */}
-                    <h3 className="font-mono text-lg md:text-xl font-black uppercase text-black mb-1.5 leading-tight">
+                    <h3 className="font-mono text-lg md:text-xl font-black uppercase text-black dark:text-white mb-1.5 leading-tight">
                       {lockTitle}
                     </h3>
 
                     {/* Description */}
-                    <p className="text-[12.5px] md:text-[13px] text-gray-700 leading-relaxed mb-4">
+                    <p className="text-[12.5px] md:text-[13px] text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
                       {lockMessage}
                     </p>
 
                     {/* Quick value props */}
-                    <ul className="space-y-1.5 mb-5 pb-4 border-b-2 border-black border-dashed">
+                    <ul className="space-y-1.5 mb-5 pb-4 border-b-2 border-black dark:border-white/10 border-dashed">
                       {bullets.map((b, i) => (
-                        <li key={i} className="flex items-start gap-2 text-[12px] text-gray-800">
-                          <span className="material-symbols-outlined !text-[14px] text-emerald-600 flex-shrink-0 mt-0.5">check_circle</span>
+                        <li key={i} className="flex items-start gap-2 text-[12px] text-gray-800 dark:text-gray-300">
+                          <span className="material-symbols-outlined !text-[14px] text-emerald-600 dark:text-emerald-400 flex-shrink-0 mt-0.5">check_circle</span>
                           <span>{b}</span>
                         </li>
                       ))}
@@ -675,7 +690,7 @@ export default function DealsGrid({ filters }: DealsGridProps) {
                       </a>
                       <a
                         href="/login"
-                        className="inline-flex items-center justify-center gap-1.5 bg-white text-black font-mono font-black px-4 py-2.5 text-[12px] uppercase tracking-[0.1em] rounded-sm border-2 border-black shadow-[2px_2px_0px_#111] hover:bg-gray-50 hover:shadow-[3px_3px_0px_#111] hover:-translate-x-px hover:-translate-y-px transition-all"
+                        className="inline-flex items-center justify-center gap-1.5 bg-white dark:bg-[#1a1a1a] text-black dark:text-white font-mono font-black px-4 py-2.5 text-[12px] uppercase tracking-[0.1em] rounded-sm border-2 border-black dark:border-white/15 shadow-[2px_2px_0px_#111] dark:shadow-none hover:bg-gray-50 dark:hover:bg-white/5 hover:shadow-[3px_3px_0px_#111] hover:-translate-x-px hover:-translate-y-px transition-all"
                       >
                         Log In
                       </a>

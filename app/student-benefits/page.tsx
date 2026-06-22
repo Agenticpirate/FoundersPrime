@@ -1,63 +1,48 @@
-import DealsHeader from '@/components/deals/DealsHeader'
-import { studentBenefits2026 } from '@/data/student-benefits-2026'
-import StudentBenefitsContent from '@/components/StudentBenefitsContent'
+import { Suspense } from 'react'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
+import DealsHeader from '@/components/deals/DealsHeader'
+import StudentBenefitsHero from '@/components/deals/StudentBenefitsHero'
+import StudentBenefitsUnifiedContent from '@/components/deals/StudentBenefitsUnifiedContent'
 
 export const metadata = {
-    title: 'Student Benefits 2026',
-    description: 'The definitive list of free tools, credits, and funding for student founders.',
+  title: 'Student Benefits 2026 — Free Tools, Credits & Funding',
+  description: 'Browse 450+ verified student benefits: top free software, cloud credits (Figma, GitHub), and funding opportunities (grants, scholarships) in one place.',
+  alternates: {
+    canonical: 'https://www.foundersprime.com/student-benefits',
+  },
 }
 
-export default function StudentBenefitsPage() {
-    // Counts
-    const freeCount = studentBenefits2026.filter(b => b.appCategory === 'Free Access').length;
-    const creditsCount = studentBenefits2026.filter(b => b.appCategory === 'Credits & Savings').length;
-    const fundingCount = studentBenefits2026.filter(b => b.appCategory === 'Funding & Opportunities').length;
+export default function StudentBenefitsPage({ searchParams }: { searchParams: { [key: string]: string | string[] | undefined } }) {
+  const typeParam = typeof searchParams.type === 'string' ? searchParams.type : 'all'
+  const initialFilters = {
+    search: typeof searchParams.q === 'string' ? searchParams.q : '',
+    category: typeof searchParams.category === 'string' ? searchParams.category : 'All',
+    subtype: typeof searchParams.subtype === 'string' ? searchParams.subtype : 'All',
+    sort: typeof searchParams.sort === 'string' ? searchParams.sort : 'relevance',
+    region: typeof searchParams.region === 'string' ? searchParams.region : 'All',
+  }
 
-    const counts = {
-        all: studentBenefits2026.length,
-        free: freeCount,
-        credits: creditsCount,
-        funding: fundingCount
-    }
-
-    return (
-        <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden bg-gray-50">
-            <Header />
-            <main className="flex-1">
-                <div className="max-w-[1600px] mx-auto px-4 lg:px-6 py-4 lg:py-6">
-                    <DealsHeader
-                        currentSection="Student Benefits"
-                    />
-
-                    <div className="mb-3 md:mb-6">
-                        <div className="inline-block border-2 border-black bg-accent-yellow px-2 py-0.5 font-mono text-[10px] font-bold uppercase tracking-wide rounded-sm mb-2">
-                            STUDENT BENEFITS
-                        </div>
-                        <h1 className="text-xl md:text-4xl lg:text-5xl font-black mb-1.5 md:mb-3 font-display uppercase tracking-tight leading-tight">
-                            Student Benefits 2026
-                        </h1>
-                        <p className="text-xs md:text-base text-gray-600 mb-2 md:mb-4 max-w-3xl font-medium">
-                            Over <span className="font-bold text-black">$200k+</span> in free software, cloud credits, and funding opportunities for verified students.
-                        </p>
-
-                        <div className="flex flex-wrap gap-2 text-[10px] md:text-sm font-bold font-mono">
-                            <div className="bg-white border-2 border-black px-2 md:px-3 py-0.5 md:py-1 shadow-[2px_2px_0_0_#000]">
-                                LAST UPDATED: Q1 2026
-                            </div>
-                            <div className="bg-cyan-100 border-2 border-black px-2 md:px-3 py-0.5 md:py-1 shadow-[2px_2px_0_0_#000]">
-                                VERIFIED DEALS
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="mt-6">
-                        <StudentBenefitsContent benefits={studentBenefits2026} title="" />
-                    </div>
-                </div>
-            </main>
-            <Footer />
+  return (
+    <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden bg-gray-50 dark:bg-[#050505] text-[#1a1a1a] dark:text-white transition-colors duration-300">
+      <Header />
+      <main className="flex-1">
+        <div className="max-w-[1600px] mx-auto px-4 lg:px-6 pt-6 md:pt-8 pb-4 lg:pb-5">
+          <DealsHeader
+            parentSection={{ name: 'Student Benefits', href: '/student-benefits' }}
+            currentSection="All Benefits"
+          />
+          <StudentBenefitsHero />
+          <Suspense fallback={
+            <div className="flex items-center justify-center py-16">
+              <div className="animate-spin rounded-full h-10 w-10 border-4 border-cyan-400 border-t-transparent" />
+            </div>
+          }>
+            <StudentBenefitsUnifiedContent initialType={typeParam as any} initialFilters={initialFilters} />
+          </Suspense>
         </div>
-    )
+      </main>
+      <Footer />
+    </div>
+  )
 }

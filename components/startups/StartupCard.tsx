@@ -83,13 +83,12 @@ export default function StartupCard({ company }: StartupCardProps) {
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      className="flex flex-col bg-white border-2 md:border-4 border-black shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] md:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[5px_5px_0px_0px_rgba(0,0,0,1)] md:hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all duration-200 overflow-hidden group relative h-full"
+      className="flex flex-col bg-white dark:bg-[#0c0c0c] border border-gray-200 dark:border-white/10 rounded-xl shadow-sm hover:shadow-[0_8px_30px_rgb(0,0,0,0.12)] dark:hover:shadow-[0_8px_30px_rgba(255,255,255,0.05)] hover:-translate-y-1 transition-all duration-300 overflow-hidden group relative h-full"
     >
       {/* Header with Logo and Title */}
-      <div className="px-3 md:px-4 pt-3 md:pt-6 pb-2 md:pb-3">
+      <div className="px-4 pt-4 pb-3">
         <div className="flex items-center gap-3 md:gap-4">
-          <div className="w-12 h-12 md:w-16 md:h-16 bg-white border-2 border-black flex items-center justify-center p-1 md:p-2 flex-shrink-0 group-hover:bg-yellow-50 transition-colors overflow-hidden">
+          <div className="w-12 h-12 md:w-16 md:h-16 bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-lg flex items-center justify-center p-2 flex-shrink-0 group-hover:bg-gray-100 dark:group-hover:bg-white/10 transition-colors overflow-hidden">
             {imgSrc ? (
               <img
                 src={imgSrc}
@@ -107,7 +106,7 @@ export default function StartupCard({ company }: StartupCardProps) {
             )}
           </div>
           <div className="flex-1 min-w-0">
-            <h3 className="text-base md:text-lg font-bold text-gray-900 leading-tight group-hover:text-orange-600 transition-colors truncate">
+            <h3 className="text-base md:text-lg font-bold text-gray-900 dark:text-white leading-tight group-hover:text-accent-yellow transition-colors truncate">
               <Link href={`/startups/${company.slug}`} className="hover:underline focus:outline-none before:absolute before:inset-0">
                 {company.name}
               </Link>
@@ -121,14 +120,14 @@ export default function StartupCard({ company }: StartupCardProps) {
       </div>
 
       {/* Description */}
-      <div className="px-3 md:px-4 pb-2 md:pb-3 flex-grow">
-        <p className="text-xs md:text-sm text-gray-700 leading-relaxed line-clamp-2 md:line-clamp-3 font-medium">
+      <div className="px-4 pb-4 flex-grow">
+        <p className="text-xs md:text-sm text-gray-600 dark:text-gray-400 leading-relaxed line-clamp-2 md:line-clamp-3 font-medium">
           {company.one_liner}
         </p>
       </div>
 
       {/* Founders & Stats */}
-      <div className="px-3 md:px-4 pb-3 md:pb-4 mt-auto border-t-2 border-gray-100 pt-2 md:pt-3">
+      <div className="px-4 pb-4 mt-auto border-t border-gray-100 dark:border-white/10 pt-4">
         <div className="flex items-center justify-between">
           <div className="flex -space-x-2 overflow-hidden">
             {company.founders_enriched?.slice(0, 3).map((founder, i) => (
@@ -140,7 +139,7 @@ export default function StartupCard({ company }: StartupCardProps) {
             href={company.website}
             target="_blank"
             rel="noopener noreferrer"
-            className="relative z-20 flex items-center gap-1 text-[10px] md:text-xs font-bold text-black border-2 border-black px-1.5 py-0.5 md:px-2 md:py-1 hover:bg-black hover:text-white transition-colors"
+            className="relative z-20 flex items-center gap-1 text-[10px] md:text-xs font-bold bg-gray-900 text-white dark:bg-white dark:text-gray-900 rounded-lg px-3 py-1.5 hover:bg-accent-yellow hover:text-black transition-colors shadow-sm"
           >
             Visit
             <Globe className="h-3 w-3" />
@@ -149,9 +148,9 @@ export default function StartupCard({ company }: StartupCardProps) {
       </div>
 
       {/* Tags Footer */}
-      <div className="px-3 md:px-4 pb-3 md:pb-4 flex flex-wrap gap-1.5 md:gap-2">
+      <div className="px-4 pb-4 flex flex-wrap gap-1.5 md:gap-2">
         {(company.tags || []).slice(0, 2).map((tag, idx) => (
-          <span key={idx} className="text-[8px] md:text-[10px] font-bold uppercase tracking-wide text-gray-600 bg-gray-100 px-1.5 py-0.5 md:px-2 md:py-1 border border-gray-200">
+          <span key={idx} className="text-[9px] md:text-xs font-mono rounded-md text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-white/5 px-2 py-0.5 border border-gray-200 dark:border-white/10">
             {tag}
           </span>
         ))}

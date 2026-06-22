@@ -51,8 +51,8 @@ export default function StatCard({
 }: StatCardProps) {
   return (
     <div
-      className={`stat-card relative group rounded-sm border-2 border-black overflow-hidden transition-all duration-200 stat-card-fade-in hover:-translate-x-px hover:-translate-y-px ${
-        highlight ? 'stat-card--highlight text-white' : 'stat-card--plain bg-white'
+      className={`stat-card relative group rounded-sm border-2 border-black dark:border-white/10 overflow-hidden transition-all duration-200 stat-card-fade-in hover:-translate-x-px hover:-translate-y-px ${
+        highlight ? 'stat-card--highlight text-white' : 'stat-card--plain bg-white dark:bg-[#0c0c0c] text-black dark:text-white dark:shadow-[3px_3px_0px_rgba(255,255,255,0.05)]'
       }`}
       style={
         {
@@ -99,7 +99,9 @@ export default function StatCard({
         <div className="flex items-start gap-2.5">
           {/* Icon tile */}
           <div
-            className={`stat-card-icon relative w-9 h-9 md:w-10 md:h-10 flex items-center justify-center rounded-sm border-2 border-black flex-shrink-0 overflow-hidden ${iconBg}`}
+            className={`stat-card-icon relative w-9 h-9 md:w-10 md:h-10 flex items-center justify-center rounded-sm border-2 border-black dark:border-white/15 flex-shrink-0 overflow-hidden ${
+              highlight ? iconBg : `${iconBg} dark:bg-white/5`
+            }`}
           >
             {/* Black/yellow grid texture inside the badge tile */}
             <div
@@ -111,29 +113,29 @@ export default function StatCard({
               }}
               aria-hidden="true"
             />
-            <span className={`material-symbols-outlined relative !text-[18px] md:!text-[20px] ${iconColor}`}>
+            <span className={`material-symbols-outlined relative !text-[18px] md:!text-[20px] ${highlight ? iconColor : 'text-gray-700 dark:text-gray-300'}`}>
               {icon}
             </span>
           </div>
 
           {/* Text block */}
           <div className="min-w-0 flex-1">
-            <p className={`font-mono text-[8.5px] md:text-[9px] font-bold uppercase tracking-[0.14em] truncate ${highlight ? 'text-gray-400' : 'text-gray-500'}`}>
+            <p className={`font-mono text-[8.5px] md:text-[9px] font-bold uppercase tracking-[0.14em] truncate ${highlight ? 'text-gray-400' : 'text-gray-500 dark:text-gray-400'}`}>
               {label}
             </p>
             <p
               className={`font-mono text-base md:text-lg lg:text-xl font-black leading-tight tabular-nums mt-0.5 ${
                 highlight
                   ? `bg-gradient-to-br ${valueGradient} bg-clip-text text-transparent`
-                  : 'text-black'
+                  : 'text-black dark:text-white'
               }`}
             >
               {value}
             </p>
             {delta && (
-              <p className={`hidden lg:flex items-center gap-1 font-mono text-[9.5px] uppercase tracking-wide font-semibold mt-1 ${highlight ? 'text-gray-400' : 'text-gray-500'}`}>
+              <p className={`hidden lg:flex items-center gap-1 font-mono text-[9.5px] uppercase tracking-wide font-semibold mt-1 ${highlight ? 'text-gray-400' : 'text-gray-500 dark:text-gray-400'}`}>
                 <span
-                  className={`w-1 h-1 rounded-full ${highlight ? `${ornamentColor.replace('text-', 'bg-')} animate-pulse` : 'bg-gray-400'}`}
+                  className={`w-1 h-1 rounded-full ${highlight ? `${ornamentColor.replace('text-', 'bg-')} animate-pulse` : 'bg-gray-400 dark:bg-gray-500'}`}
                 />
                 <span className="truncate">{delta}</span>
               </p>

@@ -7,15 +7,15 @@ export default function GrantsHero() {
     <SectionHero
       eyebrowIcon="payments"
       eyebrowText="Non-Dilutive Funding"
-      eyebrowClass="bg-emerald-100 border-emerald-300 text-emerald-900"
+      eyebrowClass="bg-emerald-100 dark:bg-emerald-950/20 border-emerald-300 dark:border-emerald-500/30 text-emerald-900 dark:text-emerald-300"
       eyebrowAccentClass="text-emerald-700"
-      mandalaColorClass="text-emerald-500"
+      mandalaColorClass="text-emerald-500 dark:text-emerald-500/10"
       statsMinWidth="lg:min-w-[520px]"
       title={<>Get funded. Keep your equity.</>}
       subtitle={
         <>
           Verified grants, competitions, and{' '}
-          <span className="font-bold text-gray-900 bg-emerald-100 px-1 rounded-sm">non-dilutive capital</span>{' '}
+          <span className="font-bold text-gray-900 dark:text-emerald-300 bg-emerald-100 dark:bg-emerald-950/40 px-1 rounded-sm">non-dilutive capital</span>{' '}
           from government agencies, foundations, and global programs &mdash; eligibility, deadlines, and award sizes in one place.
         </>
       }
