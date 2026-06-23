@@ -140,7 +140,7 @@ export default function HeroSection() {
           <div className="inline-flex items-center gap-2 px-3 py-1.5 border border-white/10 rounded-full bg-white/[0.03] w-fit mb-5">
             <span className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse" />
             <span className="font-sans text-[9px] font-black uppercase tracking-[0.18em] text-white">LIVE</span>
-            <span className="font-sans text-[9px] font-bold uppercase tracking-[0.18em] text-gray-400">UPDATED WEEKLY</span>
+            <span className="font-sans text-[9px] font-bold uppercase tracking-[0.18em] text-gray-400">FOUNDER-APPROVED</span>
           </div>
 
           {/* Hero Content */}
@@ -258,7 +258,7 @@ export default function HeroSection() {
                   <span className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse" />
                   Live
                 </span>
-                <span className="text-gray-400">Updated Weekly</span>
+                <span className="text-gray-400">Founder-Approved</span>
               </div>
             </div>
 
