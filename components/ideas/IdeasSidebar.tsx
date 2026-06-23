@@ -56,13 +56,13 @@ export default function IdeasSidebar({
                   onClick={() => onSelectCategory(category.name)}
                   className={`w-full flex items-center justify-between px-2.5 py-1.5 rounded-lg text-left transition-all ${
                     active
-                      ? 'bg-gray-900 text-white'
-                      : 'hover:bg-gray-50 text-gray-700'
+                      ? 'bg-gray-900 text-white dark:bg-zinc-800 dark:text-white'
+                      : 'hover:bg-gray-50 text-gray-700 hover:text-gray-900 dark:text-zinc-400 dark:hover:bg-zinc-900/50 dark:hover:text-zinc-100'
                   }`}
                 >
                   <span className="font-mono text-[12px] font-semibold truncate">{category.name}</span>
                   <span className={`font-mono text-[11px] tabular-nums flex-shrink-0 ml-2 px-1.5 py-0.5 rounded-full ${
-                    active ? 'bg-accent-yellow text-black' : 'bg-gray-100 text-gray-500'
+                    active ? 'bg-accent-yellow text-black' : 'bg-gray-100 text-gray-500 dark:bg-zinc-900 dark:text-zinc-400'
                   }`}>
                     {category.count}
                   </span>
@@ -73,7 +73,7 @@ export default function IdeasSidebar({
           {categories.length > 8 && (
             <button
               onClick={() => setShowAll(v => !v)}
-              className="w-full mt-3 py-1.5 text-[11px] font-mono font-bold uppercase tracking-wide bg-gray-50 hover:bg-gray-100 border border-gray-200 rounded-lg transition-colors"
+              className="w-full mt-3 py-1.5 text-[11px] font-mono font-bold uppercase tracking-wide bg-gray-50 hover:bg-gray-100 border border-gray-200 dark:border-zinc-800 rounded-lg transition-colors text-gray-700 dark:text-zinc-300 dark:bg-zinc-900 dark:hover:bg-zinc-800"
             >
               {showAll ? 'Show Less' : `View All ${categories.length} Categories`}
             </button>
@@ -121,16 +121,16 @@ export default function IdeasSidebar({
         />
         <div className="relative">
           <h3 className="font-mono text-sm font-black uppercase tracking-[0.08em] mb-1.5">Weekly Ideas Digest</h3>
-          <p className="font-sans text-[12px] text-gray-600 mb-3 leading-relaxed">
+          <p className="font-sans text-[12px] text-gray-600 dark:text-zinc-400 mb-3 leading-relaxed">
             Get fresh validated startup ideas delivered to your inbox every week.
           </p>
           <div className="space-y-2">
             <input
-              className="w-full h-9 bg-gray-50 hover:bg-white focus:bg-white border border-gray-200 text-black px-3 font-mono text-[12.5px] focus:outline-none focus:ring-2 focus:ring-accent-yellow/40 focus:border-accent-yellow placeholder:text-gray-400 rounded-lg transition-colors"
+              className="w-full h-9 bg-gray-50 hover:bg-white focus:bg-white border border-gray-200 dark:border-zinc-800 text-black dark:text-white dark:bg-zinc-900 px-3 font-mono text-[12.5px] focus:outline-none focus:ring-2 focus:ring-accent-yellow/40 focus:border-accent-yellow placeholder:text-gray-400 rounded-lg transition-colors"
               placeholder="your@email.com"
               type="email"
             />
-            <button className="w-full py-2 text-[12px] bg-black text-white hover:bg-accent-yellow hover:text-black border-2 border-black font-mono font-bold rounded-lg transition-colors">
+            <button className="w-full py-2 text-[12px] bg-black text-white hover:bg-accent-yellow hover:text-black border-2 border-black dark:border-zinc-800 font-mono font-bold rounded-lg transition-colors">
               Subscribe
             </button>
           </div>
