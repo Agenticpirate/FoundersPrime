@@ -6,15 +6,15 @@ export default function DealsHero() {
     return (
         <SectionHero
             eyebrowText="Verified Opportunities"
-            eyebrowClass="bg-accent-yellow/15 border-accent-yellow/40 text-gray-800"
+            eyebrowClass="bg-accent-yellow/15 border-accent-yellow/40 text-gray-800 dark:text-gray-300 dark:border-accent-yellow/20"
             eyebrowAccentClass="text-accent-yellow"
-            mandalaColorClass="text-gray-900"
+            mandalaColorClass="text-gray-900 dark:text-white/5"
             statsMinWidth="lg:min-w-[560px]"
             title={<>Startup Deals &amp; Credits</>}
             subtitle={
                 <>
                     Verified opportunities to save money and grow faster. Access{' '}
-                    <span className="font-bold text-gray-900 bg-accent-yellow/30 px-1 rounded-sm">$2.4M+</span>{' '}
+                    <span className="font-bold text-gray-900 dark:text-accent-yellow bg-accent-yellow/30 dark:bg-accent-yellow/10 px-1 rounded-sm">$2.4M+</span>{' '}
                     in cloud credits, SaaS discounts, grants, and more.
                 </>
             }

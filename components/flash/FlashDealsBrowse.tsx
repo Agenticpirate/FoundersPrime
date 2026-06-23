@@ -13,38 +13,67 @@ export default function FlashDealsBrowse() {
     [active]
   )
 
+  // Count per category
+  const counts = useMemo(() => {
+    const map: Record<string, number> = { all: flashDeals.length }
+    flashDeals.forEach((d) => {
+      map[d.category] = (map[d.category] ?? 0) + 1
+    })
+    return map
+  }, [])
+
   return (
     <section className="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-12">
-      {/* Heading + view all */}
-      <div className="flex items-center justify-between gap-4 mb-5">
-        <h2 className="font-mono font-black text-[13px] md:text-sm uppercase tracking-[0.16em] text-gray-300">
-          Browse Flash Deals by Category
-        </h2>
+      {/* Heading row */}
+      <div className="flex items-center justify-between gap-4 mb-6">
+        <div className="flex items-center gap-3">
+          {/* Left accent bar */}
+          <span
+            className="hidden sm:block w-[3px] h-5 bg-accent-yellow"
+            aria-hidden="true"
+            style={{ boxShadow: '0 0 8px rgba(255,215,0,0.6)' }}
+          />
+          <h2 className="font-mono font-black text-[12px] md:text-[13px] uppercase tracking-[0.18em] text-gray-300">
+            Browse Flash Deals by Category
+          </h2>
+        </div>
         <Link
           href="/deals"
-          className="flex-shrink-0 inline-flex items-center gap-1 font-mono font-bold text-[11px] uppercase tracking-[0.1em] text-gray-400 hover:text-accent-yellow transition-colors"
+          className="flex-shrink-0 inline-flex items-center gap-1 font-mono font-bold text-[10px] uppercase tracking-[0.12em] text-gray-500 hover:text-accent-yellow transition-colors group"
         >
           View all deals
-          <span className="material-symbols-outlined text-[15px]">arrow_forward</span>
+          <span className="material-symbols-outlined text-[14px] group-hover:translate-x-0.5 transition-transform">
+            arrow_forward
+          </span>
         </Link>
       </div>
 
       {/* Category pills */}
-      <div className="flex flex-wrap gap-2 mb-7">
+      <div className="flex flex-wrap gap-2 mb-8">
         {FLASH_CATEGORIES.map((cat) => {
           const isActive = active === cat.key
+          const count = counts[cat.key] ?? 0
           return (
             <button
               key={cat.key}
               onClick={() => setActive(cat.key)}
-              className={`font-mono font-bold text-[11px] uppercase tracking-[0.08em] px-4 py-1.5 rounded-full border transition-colors ${
+              className={`inline-flex items-center gap-1.5 font-mono font-bold text-[10px] uppercase tracking-[0.08em] px-3.5 py-1.5 border transition-all duration-150 ${
                 isActive
-                  ? 'bg-accent-yellow/10 border-accent-yellow text-accent-yellow'
-                  : 'bg-white/[0.03] border-white/15 text-gray-400 hover:text-white hover:border-white/40'
+                  ? 'bg-accent-yellow text-black border-accent-yellow shadow-[0_0_12px_rgba(255,215,0,0.3)]'
+                  : 'bg-white/[0.03] border-white/10 text-gray-400 hover:text-white hover:border-white/30 hover:bg-white/[0.06]'
               }`}
               aria-pressed={isActive}
             >
               {cat.label}
+              {count > 0 && (
+                <span
+                  className={`text-[9px] font-black px-1 py-px leading-none ${
+                    isActive ? 'bg-black/20 text-black' : 'bg-white/10 text-gray-500'
+                  }`}
+                >
+                  {count}
+                </span>
+              )}
             </button>
           )
         })}
@@ -52,18 +81,23 @@ export default function FlashDealsBrowse() {
 
       {/* Grid */}
       {visible.length > 0 ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
           {visible.map((deal) => (
             <FlashDealCard key={deal.id} deal={deal} />
           ))}
         </div>
       ) : (
-        <div className="border border-dashed border-white/15 py-16 text-center">
-          <span className="material-symbols-outlined text-4xl text-gray-600">bolt</span>
+        <div className="border border-dashed border-white/10 py-20 text-center bg-white/[0.01]">
+          <span
+            className="material-symbols-outlined text-5xl text-accent-yellow/30"
+            style={{ fontVariationSettings: "'FILL' 1" }}
+          >
+            bolt
+          </span>
           <p className="font-mono font-bold text-sm text-gray-400 mt-3 uppercase tracking-wide">
             No flash deals in this category right now
           </p>
-          <p className="font-sans text-[13px] text-gray-500 mt-1">
+          <p className="font-sans text-[13px] text-gray-600 mt-1.5">
             New drops land every Monday &amp; Thursday — check back soon.
           </p>
         </div>

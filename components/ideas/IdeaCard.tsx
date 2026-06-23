@@ -16,7 +16,7 @@ import IdeaSaveButton, { ideaIdFromTitle } from './IdeaSaveButton'
 export default function IdeaCard({ idea, index = 0 }: IdeaCardProps) {
   return (
     <div
-      className="idea-card relative bg-white border-2 border-black shadow-[4px_4px_0px_0px_#111] rounded-sm p-3 md:p-5 hover:shadow-[6px_6px_0px_0px_#111] hover:-translate-x-px hover:-translate-y-px transition-all duration-200 group overflow-hidden"
+      className="idea-card relative bg-white dark:bg-[#0c0c0c] border border-gray-200 dark:border-white/10 shadow-sm rounded-xl p-4 hover:shadow-[0_8px_30px_rgb(0,0,0,0.12)] dark:hover:shadow-[0_8px_30px_rgba(255,255,255,0.05)] hover:-translate-y-1 transition-all duration-300 group overflow-hidden"
       style={{ animationDelay: `${Math.min(index, 8) * 0.05}s` }}
     >
       {/* Hover sheen */}
@@ -29,12 +29,12 @@ export default function IdeaCard({ idea, index = 0 }: IdeaCardProps) {
       <div className="relative">
         {/* Title + Source badge */}
         <div className="flex items-start gap-2 mb-2">
-          <h3 className="font-mono text-sm md:text-lg font-bold text-black leading-tight flex-1 min-w-0 line-clamp-2 group-hover:text-black">
+          <h3 className="font-mono text-sm md:text-lg font-bold text-gray-900 dark:text-white leading-tight flex-1 min-w-0 line-clamp-2 group-hover:text-accent-yellow transition-colors">
             {idea.title}
           </h3>
           {idea.itchScore ? (
             <div className="flex-shrink-0">
-              <div className="inline-flex items-center gap-0.5 bg-accent-yellow text-black px-1.5 py-0.5 font-mono text-[9px] md:text-xs font-bold uppercase border border-black rounded-sm whitespace-nowrap">
+              <div className="inline-flex items-center gap-0.5 bg-accent-yellow text-black px-1.5 py-0.5 font-mono text-[9px] md:text-xs font-bold uppercase rounded-md whitespace-nowrap">
                 <span className="material-symbols-outlined text-[11px]">trending_up</span>
                 {idea.itchScore}
               </div>
@@ -44,11 +44,11 @@ export default function IdeaCard({ idea, index = 0 }: IdeaCardProps) {
 
         {/* Tags */}
         <div className="flex gap-1.5 mb-3 flex-wrap">
-          <span className="bg-accent-yellow/30 text-black px-1.5 py-0.5 font-mono text-[9px] md:text-xs font-bold rounded-sm border border-black">
+          <span className="bg-accent-yellow/20 text-accent-yellow px-2 py-0.5 font-mono text-[9px] md:text-xs font-bold rounded-md border border-accent-yellow/30">
             {idea.category}
           </span>
           {idea.tags && idea.tags.slice(0, 3).map((tag, i) => (
-            <span key={i} className="bg-gray-100 text-gray-700 px-1.5 py-0.5 font-mono text-[9px] md:text-xs rounded-sm border border-gray-300">
+            <span key={i} className="bg-gray-100 dark:bg-white/5 text-gray-700 dark:text-gray-300 px-2 py-0.5 font-mono text-[9px] md:text-xs rounded-md border border-gray-200 dark:border-white/10">
               {tag}
             </span>
           ))}
@@ -60,17 +60,17 @@ export default function IdeaCard({ idea, index = 0 }: IdeaCardProps) {
         </p>
 
         {/* Footer */}
-        <div className="flex items-center justify-between pt-2 md:pt-3 border-t border-gray-200 gap-2">
-          <div className="flex items-center gap-1.5 text-gray-500 text-[10px] md:text-xs min-w-0">
+        <div className="flex items-center justify-between pt-3 md:pt-4 border-t border-gray-100 dark:border-white/10 gap-2">
+          <div className="flex items-center gap-1.5 text-gray-500 dark:text-gray-400 text-[10px] md:text-xs min-w-0">
             <span className="material-symbols-outlined text-[14px] md:text-base flex-shrink-0 text-gray-400">source</span>
             <span className="font-mono truncate">{idea.source}</span>
           </div>
 
           <div className="flex gap-1.5 flex-shrink-0">
             <IdeaSaveButton ideaId={ideaIdFromTitle(idea.title)} variant="icon" />
-            <button className="inline-flex items-center gap-0.5 px-2.5 md:px-3 py-1 md:py-1.5 bg-black text-white hover:bg-accent-yellow hover:text-black border-2 border-black font-mono text-[10px] md:text-xs font-bold rounded-sm transition-all whitespace-nowrap shadow-[2px_2px_0px_#333] hover:shadow-[3px_3px_0px_#111]">
+            <button className="inline-flex items-center gap-1 px-3 py-1.5 bg-gray-900 text-white dark:bg-white dark:text-gray-900 hover:bg-accent-yellow hover:text-black font-mono text-[10px] md:text-xs font-bold rounded-lg transition-all whitespace-nowrap shadow-sm hover:shadow-md">
               Explore
-              <span className="material-symbols-outlined text-[12px] group-hover:translate-x-0.5 transition-transform">arrow_forward</span>
+              <span className="material-symbols-outlined text-[14px] group-hover:translate-x-0.5 transition-transform">arrow_forward</span>
             </button>
           </div>
         </div>

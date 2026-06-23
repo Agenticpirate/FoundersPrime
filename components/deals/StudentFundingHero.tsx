@@ -7,15 +7,15 @@ export default function StudentFundingHero() {
     <SectionHero
       eyebrowIcon="school"
       eyebrowText="Grants + Scholarships"
-      eyebrowClass="bg-accent-yellow/15 border-accent-yellow/40 text-gray-800"
+      eyebrowClass="bg-accent-yellow/15 border-accent-yellow/40 text-gray-800 dark:text-gray-300 dark:border-accent-yellow/20"
       eyebrowAccentClass="text-accent-yellow"
-      mandalaColorClass="text-gray-900"
+      mandalaColorClass="text-gray-900 dark:text-white/5"
       statsMinWidth="lg:min-w-[540px]"
       title={<>Student Funding &amp; Opportunities</>}
       subtitle={
         <>
           Grants, scholarships, and competitions for student founders. Over{' '}
-          <span className="font-bold text-gray-900 bg-accent-yellow/30 px-1 rounded-sm">$500K+</span>{' '}
+          <span className="font-bold text-gray-900 dark:text-accent-yellow bg-accent-yellow/30 dark:bg-accent-yellow/10 px-1 rounded-sm">$500K+</span>{' '}
           in funding available — no equity, no payback.
         </>
       }

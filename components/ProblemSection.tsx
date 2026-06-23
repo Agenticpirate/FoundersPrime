@@ -39,18 +39,31 @@ const promoLogos = [
     { name: 'HubSpot', domain: 'hubspot.com' },
 ]
 
+
 /* Shared header for the four pain/solution cards: icon tile + hairline rule */
-function CardHead({ icon, materialIcon }: { icon?: ReactNode; materialIcon?: string }) {
+function CardHead({ 
+    icon, 
+    materialIcon, 
+    isFeatured = false 
+}: { 
+    icon?: ReactNode; 
+    materialIcon?: string; 
+    isFeatured?: boolean 
+}) {
     return (
         <div className="flex items-center gap-2.5 mb-4">
-            <span className="w-9 h-9 rounded-[10px] border-[1.5px] border-black flex items-center justify-center text-black flex-shrink-0">
+            <span className={`w-9 h-9 rounded-[10px] flex items-center justify-center flex-shrink-0 ${
+                isFeatured 
+                    ? 'bg-accent-yellow text-black border-none' 
+                    : 'border border-white/20 text-white bg-white/5'
+            }`}>
                 {icon ? (
-                    <span className="w-5 h-5">{icon}</span>
+                    <span className="w-5 h-5 flex items-center justify-center">{icon}</span>
                 ) : (
                     <span className="material-symbols-outlined !text-[20px]">{materialIcon}</span>
                 )}
             </span>
-            <span className="h-px w-7 bg-black/20" />
+            <span className={`h-px w-7 ${isFeatured ? 'bg-accent-yellow/20' : 'bg-white/20'}`} />
         </div>
     )
 }
@@ -95,79 +108,89 @@ export default function ProblemSection() {
 
                     {/* ─── RIGHT: pain/solution card grid ─── */}
                     <div className="lg:col-span-7">
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
 
                             {/* Card 1 — Hard to find */}
-                            <div className="rounded-2xl bg-accent-yellow p-5">
-                                <CardHead icon={<Binoculars className="w-5 h-5" />} />
-                                <h3 className="font-sans font-bold text-[15px] text-black leading-snug">
-                                    Hard to find the right perks
-                                </h3>
-                                <p className="mt-2 font-sans text-[13px] text-black/70 leading-relaxed">
-                                    Thousands of programs, but scattered and hard to track.
-                                </p>
+                            <div className="rounded-2xl bg-[#0d0d0d] border border-accent-yellow p-4 md:p-5 flex flex-col justify-between">
+                                <div>
+                                    <CardHead icon={<Binoculars className="w-5 h-5" />} isFeatured={true} />
+                                    <h3 className="font-sans font-bold text-[14px] md:text-[15px] text-accent-yellow leading-snug">
+                                        Hard to find the right perks
+                                    </h3>
+                                    <p className="mt-2 font-sans text-[12px] md:text-[13px] text-gray-400 leading-relaxed">
+                                        Thousands of programs, but scattered and hard to track.
+                                    </p>
+                                </div>
                             </div>
 
                             {/* Card 2 — Manual tracking */}
-                            <div className="rounded-2xl bg-[#E9EDFB] p-5">
-                                <CardHead materialIcon="find_in_page" />
-                                <h3 className="font-sans font-bold text-[15px] text-black leading-snug">
-                                    Manual tracking is painful
-                                </h3>
-                                <p className="mt-2 font-sans text-[13px] text-gray-600 leading-relaxed">
-                                    Deadlines, eligibility, updates &mdash; easy to miss everything.
-                                </p>
+                            <div className="rounded-2xl bg-[#0d0d0d] border border-white/10 p-4 md:p-5 flex flex-col justify-between">
+                                <div>
+                                    <CardHead materialIcon="find_in_page" />
+                                    <h3 className="font-sans font-bold text-[14px] md:text-[15px] text-white leading-snug">
+                                        Manual tracking is painful
+                                    </h3>
+                                    <p className="mt-2 font-sans text-[12px] md:text-[13px] text-gray-400 leading-relaxed">
+                                        Deadlines, eligibility, updates &mdash; easy to miss everything.
+                                    </p>
+                                </div>
                             </div>
 
                             {/* Card 3 — Time lost */}
-                            <div className="rounded-2xl bg-[#DBF5E1] p-5">
-                                <CardHead materialIcon="account_balance_wallet" />
-                                <h3 className="font-sans font-bold text-[15px] text-black leading-snug">
-                                    Time lost = money lost
-                                </h3>
-                                <p className="mt-2 font-sans text-[13px] text-gray-600 leading-relaxed">
-                                    Every missed perk is money out of your pocket.
-                                </p>
+                            <div className="rounded-2xl bg-[#0d0d0d] border border-white/10 p-4 md:p-5 flex flex-col justify-between">
+                                <div>
+                                    <CardHead materialIcon="account_balance_wallet" />
+                                    <h3 className="font-sans font-bold text-[14px] md:text-[15px] text-white leading-snug">
+                                        Time lost = money lost
+                                    </h3>
+                                    <p className="mt-2 font-sans text-[12px] md:text-[13px] text-gray-400 leading-relaxed">
+                                        Every missed perk is money out of your pocket.
+                                    </p>
+                                </div>
                             </div>
 
                             {/* Card 4 — We solve it */}
-                            <div className="rounded-2xl bg-white p-5">
-                                <CardHead materialIcon="shield" />
-                                <h3 className="font-sans font-bold text-[15px] text-black leading-snug">
-                                    We solve it for you
-                                </h3>
-                                <p className="mt-2 font-sans text-[13px] text-gray-600 leading-relaxed">
-                                    Curated. Verified. Updated weekly. So you never miss what matters.
-                                </p>
+                            <div className="rounded-2xl bg-[#0d0d0d] border border-white/10 p-4 md:p-5 flex flex-col justify-between">
+                                <div>
+                                    <CardHead materialIcon="shield" />
+                                    <h3 className="font-sans font-bold text-[14px] md:text-[15px] text-white leading-snug">
+                                        We solve it for you
+                                    </h3>
+                                    <p className="mt-2 font-sans text-[12px] md:text-[13px] text-gray-400 leading-relaxed">
+                                        Curated. Verified. Updated weekly. So you never miss what matters.
+                                    </p>
+                                </div>
                             </div>
 
                             {/* Card 5 — Dark promo (spans two columns) */}
-                            <div className="sm:col-span-2 rounded-2xl bg-black border-[1.5px] border-accent-yellow p-5 md:p-6 flex flex-col">
-                                <div className="flex items-center justify-between">
-                                    <span className="inline-flex items-center gap-2 font-mono text-[10px] font-bold uppercase tracking-widest text-gray-300">
-                                        <span className="w-1.5 h-1.5 rounded-full bg-green-400" />
-                                        Founders are saving big
-                                    </span>
-                                    <span className="material-symbols-outlined !text-[18px] text-white/70">open_in_full</span>
-                                </div>
+                            <div className="col-span-2 rounded-2xl bg-[#0d0d0d] border border-accent-yellow p-4 md:p-5 flex flex-col justify-between">
+                                <div>
+                                    <div className="flex items-center justify-between">
+                                        <span className="inline-flex items-center gap-2 font-mono text-[10px] font-bold uppercase tracking-widest text-gray-300">
+                                            <span className="w-1.5 h-1.5 rounded-full bg-green-400" />
+                                            Founders are saving big
+                                        </span>
+                                        <span className="material-symbols-outlined !text-[18px] text-white/70">open_in_full</span>
+                                    </div>
 
-                                <p className="mt-3 font-mono font-black text-accent-yellow text-3xl md:text-[34px] leading-none">
-                                    $500K+ on tap.
-                                </p>
-                                <p className="mt-2 font-sans text-[13px] md:text-sm text-gray-200">
-                                    Across cloud credits, grants &amp; SaaS perks.
-                                </p>
+                                    <p className="mt-3 font-mono font-black text-accent-yellow text-3xl md:text-[34px] leading-none">
+                                        $500K+ on tap.
+                                    </p>
+                                    <p className="mt-2 font-sans text-[13px] md:text-sm text-gray-200">
+                                        Across cloud credits, grants &amp; SaaS perks.
+                                    </p>
 
-                                <div className="mt-4 flex flex-wrap items-center gap-x-6 gap-y-3">
-                                    {promoLogos.map((logo) => (
-                                        <div key={logo.name} className="flex items-center gap-2">
-                                            <BrandLogo name={logo.name} domain={logo.domain} size="sm" />
-                                            <span className="font-sans text-sm font-semibold text-white whitespace-nowrap">
-                                                {logo.name}
-                                            </span>
-                                        </div>
-                                    ))}
-                                    <span className="font-sans text-sm text-gray-500">and more</span>
+                                    <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2">
+                                        {promoLogos.map((logo) => (
+                                            <div key={logo.name} className="flex items-center gap-1.5">
+                                                <BrandLogo name={logo.name} domain={logo.domain} size="sm" />
+                                                <span className="font-sans text-xs font-semibold text-white whitespace-nowrap">
+                                                    {logo.name}
+                                                </span>
+                                            </div>
+                                        ))}
+                                        <span className="font-sans text-xs text-gray-500">and more</span>
+                                    </div>
                                 </div>
 
                                 <Link

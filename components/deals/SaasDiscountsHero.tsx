@@ -7,15 +7,15 @@ export default function SaasDiscountsHero() {
     <SectionHero
       eyebrowIcon="apps"
       eyebrowText="SaaS Discount Programs"
-      eyebrowClass="bg-indigo-100 border-indigo-300 text-indigo-900"
+      eyebrowClass="bg-indigo-100 dark:bg-indigo-950/20 border-indigo-300 dark:border-indigo-500/30 text-indigo-900 dark:text-indigo-300"
       eyebrowAccentClass="text-indigo-600"
-      mandalaColorClass="text-indigo-500"
+      mandalaColorClass="text-indigo-500 dark:text-indigo-500/10"
       statsMinWidth="lg:min-w-[520px]"
       title={<>SaaS discounts for startups.</>}
       subtitle={
         <>
           Cut your software costs by up to{' '}
-          <span className="font-bold text-gray-900 bg-indigo-100 px-1 rounded-sm">90%</span>{' '}
+          <span className="font-bold text-gray-900 dark:text-indigo-300 bg-indigo-100 dark:bg-indigo-950/40 px-1 rounded-sm">90%</span>{' '}
           with exclusive startup discounts. Access Notion, Figma, Slack, and hundreds of other platforms.
         </>
       }

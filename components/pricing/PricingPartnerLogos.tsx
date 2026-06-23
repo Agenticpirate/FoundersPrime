@@ -61,13 +61,13 @@ const seamlessPartners = [...partners, ...partners]
 
 export default function PricingPartnerLogos() {
     return (
-        <section className="w-full py-2.5 md:py-4 bg-white border-b-2 border-black overflow-hidden relative">
+        <section className="w-full py-4 md:py-6 bg-[#000000] border-y border-[#1b2028] overflow-hidden relative">
             <div className="text-center">
-                <p className="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-gray-400 mb-2">
+                <p className="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-gray-500 mb-3">
                     Access $500K+ in deals from
                 </p>
                 <div className="relative w-full overflow-hidden mask-gradient-x">
-                    <div className="flex gap-6 md:gap-10 animate-marquee-fast whitespace-nowrap items-center">
+                    <div className="flex gap-6 md:gap-10 animate-marquee-fast whitespace-nowrap items-center brightness-90 contrast-125 dark:brightness-100">
                         {seamlessPartners.map((partner, index) => (
                             <div key={`${partner.name}-${index}`} className="flex items-center justify-center w-10 md:w-16 h-8 md:h-10 flex-shrink-0">
                                 <PartnerLogo partner={partner} />
@@ -78,15 +78,15 @@ export default function PricingPartnerLogos() {
             </div>
             <style jsx>{`
                 .animate-marquee-fast {
-                    animation: marquee-fast 12s linear infinite;
+                    animation: marquee-fast 20s linear infinite;
                 }
                 @keyframes marquee-fast {
                     0% { transform: translateX(0); }
                     100% { transform: translateX(-50%); }
                 }
                 .mask-gradient-x {
-                    mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
-                    -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+                    mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+                    -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
                 }
             `}</style>
         </section>

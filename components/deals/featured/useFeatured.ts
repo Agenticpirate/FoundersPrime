@@ -10,6 +10,8 @@ import type { Deal } from '@/lib/deals-database'
  * /api/deals request instead of each fetching independently.
  * ──────────────────────────────────────────────────────────── */
 
+import { useHydratedDeals } from '@/context/FeaturedDealsContext'
+
 let cache: Deal[] | null = null
 let cacheTime = 0
 let inFlight: Promise<Deal[]> | null = null
@@ -42,10 +44,19 @@ function fetchFeatured(): Promise<Deal[]> {
 
 /** Returns the pool of currently-active paid featured deals. */
 export function useFeaturedDeals(): { deals: Deal[]; loading: boolean } {
-    const [deals, setDeals] = useState<Deal[]>(cache || [])
-    const [loading, setLoading] = useState(!cache)
+    const context = useHydratedDeals()
+    
+    // If context is available (loading will be false in the provider), use it
+    const [deals, setDeals] = useState<Deal[]>(context?.loading === false ? context.featuredDeals : (cache || []))
+    const [loading, setLoading] = useState(context?.loading === false ? false : !cache)
 
     useEffect(() => {
+        if (context?.loading === false) {
+            setDeals(context.featuredDeals)
+            setLoading(false)
+            return
+        }
+        
         let active = true
         fetchFeatured().then((d) => {
             if (!active) return
@@ -55,7 +66,7 @@ export function useFeaturedDeals(): { deals: Deal[]; loading: boolean } {
         return () => {
             active = false
         }
-    }, [])
+    }, [context])
 
     return { deals, loading }
 }

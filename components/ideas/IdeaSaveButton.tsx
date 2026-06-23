@@ -42,7 +42,7 @@ export default function IdeaSaveButton({ ideaId, variant = 'icon', className = '
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ ideaId }),
           })
-      if (res.status === 401) { router.push('/login?redirect=/ideas'); return }
+      if (res.status === 401) { router.push(`/login?redirect=${encodeURIComponent(window.location.pathname)}`); return }
       const data = await res.json().catch(() => ({}))
       if (data?.success) setSaved(!saved)
     } catch {

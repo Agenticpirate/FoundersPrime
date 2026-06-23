@@ -27,7 +27,7 @@ interface FeaturedSlotProps {
 /* ─── Logo tile (shared) ─── */
 function LogoTile({ deal, size = 'w-10 h-10' }: { deal: Deal; size?: string }) {
     return (
-        <div className={`${size} flex-shrink-0 border-2 border-black bg-gray-50 flex items-center justify-center overflow-hidden rounded-sm`}>
+        <div className={`${size} flex-shrink-0 border-2 border-black dark:border-white/10 bg-gray-50 dark:bg-white/5 flex items-center justify-center overflow-hidden rounded-sm`}>
             {deal.logoUrl ? (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img
@@ -76,7 +76,7 @@ function DealView({ deal, variant }: { deal: Deal; variant: Variant }) {
         return (
             <Link
                 href={`/deals/${deal.slug}`}
-                className="group relative flex h-full flex-col bg-amber-50 border-2 border-amber-500 rounded-sm shadow-[3px_3px_0px_#b45309] hover:shadow-[5px_5px_0px_#b45309] hover:-translate-x-px hover:-translate-y-px transition-all overflow-hidden"
+                className="group relative flex h-full flex-col bg-amber-50 dark:bg-[#1a1510] border-2 border-amber-500 dark:border-amber-500/50 rounded-sm shadow-[3px_3px_0px_#b45309] dark:shadow-[3px_3px_0px_rgba(245,158,11,0.2)] hover:shadow-[5px_5px_0px_#b45309] dark:hover:shadow-[5px_5px_0px_rgba(245,158,11,0.3)] hover:-translate-x-px hover:-translate-y-px transition-all overflow-hidden"
             >
                 <div className="px-3 pt-2.5">
                     <span className="inline-block px-1.5 py-0.5 bg-amber-400 text-black text-[8px] font-black uppercase tracking-wider rounded-sm">
@@ -85,15 +85,15 @@ function DealView({ deal, variant }: { deal: Deal; variant: Variant }) {
                 </div>
                 <div className="flex items-center gap-2.5 px-3 pt-2 pb-2">
                     <LogoTile deal={deal} />
-                    <h3 className="text-xs sm:text-sm font-bold text-gray-900 leading-tight line-clamp-2 min-w-0">
+                    <h3 className="text-xs sm:text-sm font-bold text-gray-900 dark:text-white leading-tight line-clamp-2 min-w-0">
                         {deal.title}
                     </h3>
                 </div>
                 <div className="px-3 pb-2 flex-grow">
-                    <p className="text-[11px] text-gray-600 leading-snug line-clamp-2">{deal.shortDescription}</p>
+                    <p className="text-[11px] text-gray-600 dark:text-gray-450 leading-snug line-clamp-2">{deal.shortDescription}</p>
                 </div>
-                <div className="px-3 pb-3 mt-auto border-t border-amber-200 pt-2 flex items-center justify-between gap-1.5">
-                    <p className="text-xs sm:text-sm font-bold text-amber-700 font-mono line-clamp-1 flex-1 min-w-0">
+                <div className="px-3 pb-3 mt-auto border-t border-amber-200 dark:border-amber-900/50 pt-2 flex items-center justify-between gap-1.5">
+                    <p className="text-xs sm:text-sm font-bold text-amber-700 dark:text-amber-400 font-mono line-clamp-1 flex-1 min-w-0">
                         {deal.value}
                     </p>
                     <span className="relative inline-flex items-center gap-0.5 bg-black text-white text-[9px] font-bold uppercase px-2.5 py-1.5 rounded-sm group-hover:bg-accent-yellow group-hover:text-black transition-all">
@@ -109,7 +109,7 @@ function DealView({ deal, variant }: { deal: Deal; variant: Variant }) {
     return (
         <Link
             href={`/deals/${deal.slug}`}
-            className="group relative block bg-white border-2 border-black rounded-lg p-3 shadow-[3px_3px_0px_#111] hover:shadow-[5px_5px_0px_#111] hover:-translate-x-px hover:-translate-y-px transition-all overflow-hidden"
+            className="group relative block bg-white dark:bg-[#0c0c0c] border-2 border-black dark:border-white/10 rounded-lg p-3 shadow-[3px_3px_0px_#111] dark:shadow-[3px_3px_0px_rgba(255,255,255,0.05)] hover:shadow-[5px_5px_0px_#111] dark:hover:shadow-[5px_5px_0px_rgba(255,255,255,0.1)] hover:-translate-x-px hover:-translate-y-px transition-all overflow-hidden"
         >
             <span className="absolute -top-1.5 -right-1.5 bg-amber-400 text-black border border-black px-1.5 py-0.5 font-mono text-[8px] font-black uppercase tracking-wider shadow-[1px_1px_0px_#111] rotate-3">
                 📌 Pinned
@@ -117,8 +117,8 @@ function DealView({ deal, variant }: { deal: Deal; variant: Variant }) {
             <div className="flex items-center gap-2.5">
                 <LogoTile deal={deal} size="w-9 h-9" />
                 <div className="min-w-0 flex-1">
-                    <p className="font-mono text-[12px] font-black text-gray-900 leading-tight truncate">{deal.title}</p>
-                    <p className="text-[10px] text-gray-500 truncate">By {deal.provider}</p>
+                    <p className="font-mono text-[12px] font-black text-gray-900 dark:text-white leading-tight truncate">{deal.title}</p>
+                    <p className="text-[10px] text-gray-500 dark:text-gray-400 truncate">By {deal.provider}</p>
                 </div>
             </div>
             {deal.value && (
@@ -289,11 +289,11 @@ export default function FeaturedSlot({
         <div className={className}>
             {showHeader && (variant === 'rail' || variant === 'banner') && (
                 <div className="flex items-center justify-between mb-2 px-0.5">
-                    <span className="inline-flex items-center gap-1.5 font-mono text-[9px] font-black uppercase tracking-[0.14em] text-gray-500">
+                    <span className="inline-flex items-center gap-1.5 font-mono text-[9px] font-black uppercase tracking-[0.14em] text-gray-500 dark:text-gray-400">
                         <span className="material-symbols-outlined !text-[13px] text-amber-500" style={{ fontVariationSettings: "'FILL' 1" }}>push_pin</span>
                         Pinned
                     </span>
-                    <span className="font-mono text-[8px] font-bold uppercase tracking-[0.1em] text-gray-400">Ad</span>
+                    <span className="font-mono text-[8px] font-bold uppercase tracking-[0.1em] text-gray-400 dark:text-gray-500">Ad</span>
                 </div>
             )}
 
@@ -319,7 +319,7 @@ export default function FeaturedSlot({
             {variant === 'rail' && !isEmpty && showHeader && (
                 <Link
                     href="/submit-deal"
-                    className="block text-center font-mono text-[9px] font-bold uppercase tracking-[0.12em] text-gray-500 hover:text-black transition-colors pt-2"
+                    className="block text-center font-mono text-[9px] font-bold uppercase tracking-[0.12em] text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-white transition-colors pt-2"
                 >
                     + Pin your deal to the top
                 </Link>

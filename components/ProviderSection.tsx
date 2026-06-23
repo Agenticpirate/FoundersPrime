@@ -57,11 +57,11 @@ function Orbital({ className = '' }: { className?: string }) {
 
 export default function ProviderSection() {
   return (
-    <section className="relative overflow-hidden bg-[#FAF9F5] py-10 md:py-12 border-y border-black/5">
+    <section className="relative overflow-hidden bg-[#FAF9F5] dark:bg-[#000000] text-black dark:text-white py-10 md:py-12 border-y border-black/5 dark:border-white/10 transition-colors duration-300">
       {/* ─── Ambient ornament (decorative, subtle) ─── */}
       <Mandala
         variant="rings"
-        colorClass="text-black"
+        colorClass="text-black dark:text-white"
         opacity={0.035}
         speed={150}
         direction="cw"
@@ -75,15 +75,15 @@ export default function ProviderSection() {
           <div className="fp-fade-up">
             {/* tag with yellow underline */}
             <div className="inline-block mb-5">
-              <span className="inline-flex items-center gap-1.5 border border-black/15 bg-white/70 px-2.5 py-1 rounded-[3px] font-mono text-[9px] font-black uppercase tracking-[0.12em] text-black/70">
-                <span className="material-symbols-outlined !text-[12px] text-black">campaign</span>
+              <span className="inline-flex items-center gap-1.5 border border-black/15 dark:border-white/15 bg-white/70 dark:bg-white/5 px-2.5 py-1 rounded-[3px] font-mono text-[9px] font-black uppercase tracking-[0.12em] text-black/70 dark:text-white/70">
+                <span className="material-symbols-outlined !text-[12px] text-black dark:text-white">campaign</span>
                 More visibility. More founders. More growth.
               </span>
               <span className="block h-[3px] bg-accent-yellow rounded-full mt-1.5" />
             </div>
 
             {/* headline */}
-            <h2 className="font-mono font-black uppercase text-black tracking-tight leading-[1.05] text-[24px] sm:text-[28px]">
+            <h2 className="font-mono font-black uppercase text-black dark:text-white tracking-tight leading-[1.05] text-[24px] sm:text-[28px]">
               Founders are looking.
             </h2>
             <span className="mt-2 inline-block bg-accent-yellow text-black font-mono font-black uppercase tracking-tight leading-none text-[24px] sm:text-[28px] px-2.5 py-1.5">
@@ -91,7 +91,7 @@ export default function ProviderSection() {
             </span>
 
             {/* body */}
-            <p className="mt-4 font-sans text-sm text-gray-600 leading-relaxed max-w-sm">
+            <p className="mt-4 font-sans text-sm text-gray-600 dark:text-gray-400 leading-relaxed max-w-sm">
               Put your program in front of thousands of founders actively searching for resources like yours.
             </p>
 
@@ -102,7 +102,7 @@ export default function ProviderSection() {
                   <span className="w-6 h-6 rounded-md bg-accent-yellow flex items-center justify-center flex-shrink-0">
                     <span className="material-symbols-outlined !text-[14px] text-black">{f.icon}</span>
                   </span>
-                  <span className="font-sans font-bold text-[13px] text-black leading-snug">{f.text}</span>
+                  <span className="font-sans font-bold text-[13px] text-black dark:text-white leading-snug">{f.text}</span>
                 </li>
               ))}
             </ul>
@@ -119,9 +119,9 @@ export default function ProviderSection() {
             {/* dots ornament */}
             <div className="mt-7 flex items-center gap-1.5" aria-hidden="true">
               {[0.2, 0.3, 0.55, 0.3, 0.2].map((o, i) => (
-                <span key={i} className="w-1.5 h-1.5 rounded-full bg-black" style={{ opacity: o }} />
+                <span key={i} className="w-1.5 h-1.5 rounded-full bg-black dark:bg-white" style={{ opacity: o }} />
               ))}
-              <span className="ml-2 h-px w-16 bg-black/15" />
+              <span className="ml-2 h-px w-16 bg-black/15 dark:bg-white/15" />
             </div>
           </div>
 
@@ -129,7 +129,7 @@ export default function ProviderSection() {
           <div className="fp-fade-up space-y-3.5" style={{ animationDelay: '0.08s' }}>
             {/* toolbar */}
             <div className="flex items-center gap-2">
-              <div className="flex-1 inline-flex items-center gap-2 rounded-lg border border-black/10 bg-white px-3 py-2 shadow-sm min-w-0">
+              <div className="flex-1 inline-flex items-center gap-2 rounded-lg border border-black/10 dark:border-white/10 bg-white dark:bg-white/5 px-3 py-2 shadow-sm min-w-0">
                 <span className="material-symbols-outlined !text-[15px] text-gray-400">search</span>
                 <span className="font-sans text-[11.5px] text-gray-400 truncate">Search startup programs, founder deals...</span>
               </div>
@@ -140,21 +140,21 @@ export default function ProviderSection() {
             </div>
 
             {/* the deals feed — featured slot pinned above regular listings */}
-            <div className="relative rounded-xl border border-black/10 bg-white/60 p-3 shadow-[0_10px_30px_rgba(0,0,0,0.05)]">
+            <div className="relative rounded-xl border border-black/10 dark:border-white/10 bg-white/60 dark:bg-white/[0.02] p-3 shadow-[0_10px_30px_rgba(0,0,0,0.05)]">
               {/* pinned label */}
               <div className="flex items-center justify-between px-0.5 mb-2">
-                <span className="inline-flex items-center gap-1.5 font-mono text-[8.5px] font-black uppercase tracking-[0.14em] text-gray-500">
+                <span className="inline-flex items-center gap-1.5 font-mono text-[8.5px] font-black uppercase tracking-[0.14em] text-gray-500 dark:text-gray-400">
                   <span className="material-symbols-outlined !text-[12px] text-amber-500" style={{ fontVariationSettings: "'FILL' 1" }}>push_pin</span>
                   Pinned to top
                 </span>
-                <span className="font-mono text-[8px] font-bold uppercase tracking-[0.1em] text-gray-400">Ad</span>
+                <span className="font-mono text-[8px] font-bold uppercase tracking-[0.1em] text-gray-400 dark:text-gray-500">Ad</span>
               </div>
 
               {/* ★ THE ACTUAL FEATURED SLOT (matches the live deals page) */}
               <div className="relative overflow-hidden rounded-lg border-2 border-black bg-gradient-to-br from-gray-900 via-gray-900 to-black text-white shadow-[4px_4px_0_#111] p-4">
                 <Orbital className="absolute -top-8 -right-8 w-28 h-28 opacity-[0.16]" />
                 <div className="relative">
-                  <span className="inline-flex items-center gap-1.5 bg-accent-yellow text-black font-mono text-[8px] font-black uppercase tracking-[0.12em] px-2 py-0.5 border border-black mb-2.5">
+                  <span className="inline-flex items-center gap-1.5 bg-accent-yellow text-black font-mono text-[8px] font-black uppercase tracking-[0.12em] px-2.5 py-0.5 border border-black mb-2.5">
                     <span className="w-1 h-1 rounded-full bg-black animate-pulse" />
                     Open Slot
                   </span>
@@ -185,16 +185,16 @@ export default function ProviderSection() {
               {/* regular listings beneath (dimmed, for context) */}
               <div className="grid grid-cols-2 gap-2 mt-2 opacity-80">
                 {regularRows.map((r) => (
-                  <div key={r.name} className="rounded-lg border border-black/10 bg-white p-2.5">
+                  <div key={r.name} className="rounded-lg border border-black/10 dark:border-white/10 bg-white dark:bg-[#0c0c0c] p-2.5">
                     <div className="flex items-center gap-2">
-                      <span className="w-7 h-7 flex-shrink-0 rounded-md border border-black/10 bg-gray-50 flex items-center justify-center">
-                        <span className="material-symbols-outlined !text-[15px] text-gray-300">{r.icon}</span>
+                      <span className="w-7 h-7 flex-shrink-0 rounded-md border border-black/10 dark:border-white/10 bg-gray-50 dark:bg-white/5 flex items-center justify-center">
+                        <span className="material-symbols-outlined !text-[15px] text-gray-300 dark:text-gray-600">{r.icon}</span>
                       </span>
-                      <p className="font-sans font-bold text-[10.5px] text-gray-700 leading-tight truncate">{r.name}</p>
+                      <p className="font-sans font-bold text-[10.5px] text-gray-700 dark:text-gray-300 leading-tight truncate">{r.name}</p>
                     </div>
                     <div className="mt-2 flex items-center justify-between">
-                      <span className="font-mono text-[9px] font-black text-emerald-600">{r.value}</span>
-                      <span className="font-mono text-[7.5px] font-black uppercase tracking-wide text-gray-400 border border-black/10 rounded px-1.5 py-0.5">View</span>
+                      <span className="font-mono text-[9px] font-black text-emerald-600 dark:text-emerald-400">{r.value}</span>
+                      <span className="font-mono text-[7.5px] font-black uppercase tracking-wide text-gray-400 dark:text-gray-500 border border-black/10 dark:border-white/10 rounded px-1.5 py-0.5">View</span>
                     </div>
                   </div>
                 ))}
@@ -203,15 +203,15 @@ export default function ProviderSection() {
 
             {/* live performance */}
             <div>
-              <span className="inline-flex items-center bg-black text-white font-mono text-[9px] font-black uppercase tracking-[0.15em] px-2.5 py-1 rounded-[3px]">
+              <span className="inline-flex items-center bg-black dark:bg-white text-white dark:text-black font-mono text-[9px] font-black uppercase tracking-[0.15em] px-2.5 py-1 rounded-[3px]">
                 Live Performance
               </span>
-              <div className="mt-2.5 grid grid-cols-4 rounded-xl border border-black/10 bg-white shadow-sm divide-x divide-black/10 overflow-hidden">
+              <div className="mt-2.5 grid grid-cols-4 rounded-xl border border-black/10 dark:border-white/10 bg-white dark:bg-[#0c0c0c] shadow-sm divide-x divide-black/10 dark:divide-white/10 overflow-hidden">
                 {livePerf.map((s) => (
                   <div key={s.label} className="flex flex-col items-center text-center px-2 py-3">
-                    <span className="material-symbols-outlined !text-[16px] text-black mb-1" style={{ fontVariationSettings: "'FILL' 1" }}>{s.icon}</span>
-                    <p className="font-mono font-black text-[15px] text-black leading-none">{s.value}</p>
-                    <p className="font-mono text-[8px] uppercase tracking-wide text-gray-400 leading-tight mt-1">{s.label}</p>
+                    <span className="material-symbols-outlined !text-[16px] text-black dark:text-white mb-1" style={{ fontVariationSettings: "'FILL' 1" }}>{s.icon}</span>
+                    <p className="font-mono font-black text-[15px] text-black dark:text-white leading-none">{s.value}</p>
+                    <p className="font-mono text-[8px] uppercase tracking-wide text-gray-400 dark:text-gray-500 leading-tight mt-1">{s.label}</p>
                   </div>
                 ))}
               </div>
@@ -220,7 +220,7 @@ export default function ProviderSection() {
 
           {/* ══════════ RIGHT — featured ad slot offer ══════════ */}
           <div className="fp-fade-up" style={{ animationDelay: '0.16s' }}>
-            <div className="relative rounded-2xl border-2 border-black bg-accent-yellow shadow-[6px_6px_0_#111] overflow-hidden">
+            <div className="relative rounded-2xl border-2 border-black bg-accent-yellow shadow-[6px_6px_0_#111] dark:shadow-[6px_6px_0_rgba(255,255,255,0.08)] overflow-hidden">
               {/* most visibility tab */}
               <div className="absolute top-0 right-0 z-10 flex items-center gap-1 bg-black text-accent-yellow px-2.5 py-1.5 rounded-bl-lg font-mono text-[8.5px] font-black uppercase tracking-[0.12em]">
                 <span className="material-symbols-outlined !text-[11px]" style={{ fontVariationSettings: "'FILL' 1" }}>bolt</span>
@@ -248,10 +248,10 @@ export default function ProviderSection() {
 
                 {/* price boxes */}
                 <div className="grid grid-cols-2 gap-2.5 mb-3.5">
-                  <div className="rounded-lg border border-black/15 bg-white px-3 py-2.5">
-                    <p className="font-mono text-[8px] font-bold uppercase tracking-widest text-gray-400">Typical Directory</p>
-                    <p className="font-mono font-black text-[15px] text-black/70 line-through decoration-accent-red decoration-2 my-1">$500 – $1,500</p>
-                    <p className="font-mono text-[8px] uppercase tracking-widest text-gray-400">/ Month</p>
+                  <div className="rounded-lg border border-black/15 dark:border-white/15 bg-white dark:bg-[#0c0c0c] px-3 py-2.5">
+                    <p className="font-mono text-[8px] font-bold uppercase tracking-widest text-gray-400 dark:text-gray-500">Typical Directory</p>
+                    <p className="font-mono font-black text-[15px] text-black/70 dark:text-white/70 line-through decoration-accent-red decoration-2 my-1">$500 – $1,500</p>
+                    <p className="font-mono text-[8px] uppercase tracking-widest text-gray-400 dark:text-gray-500">/ Month</p>
                   </div>
                   <div className="rounded-lg bg-black px-3 py-2.5">
                     <p className="font-mono text-[8px] font-bold uppercase tracking-widest text-accent-yellow">FoundersPrime</p>
@@ -298,3 +298,4 @@ export default function ProviderSection() {
     </section>
   )
 }
+

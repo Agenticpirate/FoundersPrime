@@ -4,23 +4,30 @@
  *
  * Used as the suspense fallback for app routes. Keep it lightweight: no
  * remote assets, no client-side state.
+ *
+ * Always renders in dark-mode palette to prevent light-flash during
+ * dark-mode navigation (the html.dark class is set synchronously by the
+ * inline script in layout.tsx, but CSS Tailwind dark: variants on the
+ * loading shell can lag one paint frame — using explicit dark values avoids
+ * that flicker entirely).
  */
 export default function BrandedLoader() {
   return (
-    <div className="relative min-h-screen overflow-hidden bg-background-light flex items-center justify-center px-6">
+    <div className="relative min-h-screen overflow-hidden bg-[#000000] flex items-center justify-center px-6">
       {/* Subtle grid backdrop */}
       <div
-        className="absolute inset-0 opacity-[0.04] pointer-events-none"
+        className="absolute inset-0 opacity-[0.025] pointer-events-none"
         style={{
           backgroundImage:
-            'linear-gradient(#000 1px, transparent 1px), linear-gradient(90deg, #000 1px, transparent 1px)',
+            'linear-gradient(rgba(255,255,255,0.8) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.8) 1px, transparent 1px)',
           backgroundSize: '32px 32px',
         }}
         aria-hidden="true"
       />
-      {/* Soft yellow glow */}
+      {/* Ambient yellow glow */}
       <div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[420px] h-[420px] bg-accent-yellow/10 rounded-full blur-3xl pointer-events-none"
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[480px] h-[480px] rounded-full blur-3xl pointer-events-none"
+        style={{ background: 'radial-gradient(circle, rgba(255,221,0,0.08) 0%, transparent 70%)' }}
         aria-hidden="true"
       />
 
@@ -30,9 +37,9 @@ export default function BrandedLoader() {
           {/* Outer mandala — clockwise */}
           <svg
             viewBox="0 0 200 200"
-            className="absolute inset-0 w-full h-full text-black/20 splash-mandala-spin"
+            className="absolute inset-0 w-full h-full splash-mandala-spin"
             fill="none"
-            stroke="currentColor"
+            stroke="rgba(255,255,255,0.15)"
             strokeWidth="0.6"
             aria-hidden="true"
           >
@@ -41,30 +48,30 @@ export default function BrandedLoader() {
             {[0, 45, 90, 135, 180, 225, 270, 315].map((deg) => (
               <g key={deg} transform={`rotate(${deg} 100 100)`}>
                 <line x1="100" y1="20" x2="100" y2="35" />
-                <circle cx="100" cy="20" r="2" fill="currentColor" />
+                <circle cx="100" cy="20" r="2" fill="rgba(255,255,255,0.15)" />
               </g>
             ))}
           </svg>
 
-          {/* Inner mandala — counter-clockwise */}
+          {/* Inner mandala — counter-clockwise (accent yellow) */}
           <svg
             viewBox="0 0 200 200"
-            className="absolute inset-0 w-full h-full text-accent-yellow/40 splash-mandala-spin-reverse"
+            className="absolute inset-0 w-full h-full splash-mandala-spin-reverse"
             fill="none"
-            stroke="currentColor"
+            stroke="rgba(255,221,0,0.25)"
             strokeWidth="0.7"
             aria-hidden="true"
           >
             <circle cx="100" cy="100" r="50" strokeDasharray="3 3" />
             {[0, 60, 120, 180, 240, 300].map((deg) => (
               <g key={deg} transform={`rotate(${deg} 100 100)`}>
-                <line x1="100" y1="50" x2="100" y2="60" strokeWidth="1" />
+                <line x1="100" y1="50" x2="100" y2="60" strokeWidth="1" stroke="rgba(255,221,0,0.35)" />
               </g>
             ))}
           </svg>
 
           {/* Logo tile */}
-          <div className="relative w-12 h-12 bg-white border-2 border-black flex items-center justify-center shadow-[3px_3px_0px_#111] splash-logo-pulse">
+          <div className="relative w-12 h-12 bg-[#0c0c0c] border border-white/10 flex items-center justify-center shadow-[3px_3px_0px_rgba(255,221,0,0.15)] splash-logo-pulse">
             <img
               src="/FPLogo.png"
               alt=""
@@ -75,16 +82,16 @@ export default function BrandedLoader() {
         </div>
 
         {/* Wordmark */}
-        <div className="font-mono text-base font-black tracking-[0.18em] text-black uppercase">
+        <div className="font-mono text-base font-black tracking-[0.18em] text-white uppercase">
           <span>FOUNDERS</span>
-          <span className="text-accent-yellow">[</span>
+          <span style={{ color: '#FFD700' }}>[</span>
           <span>PRIME</span>
-          <span className="text-accent-yellow">]</span>
+          <span style={{ color: '#FFD700' }}>]</span>
         </div>
 
         {/* Progress bar */}
-        <div className="relative w-40 h-[3px] bg-black/10 overflow-hidden rounded-full">
-          <div className="absolute inset-y-0 left-0 w-1/3 bg-gradient-to-r from-transparent via-black to-transparent splash-progress-sweep" />
+        <div className="relative w-40 h-[2px] bg-white/10 overflow-hidden">
+          <div className="absolute inset-y-0 left-0 w-1/3 splash-progress-sweep" style={{ background: 'linear-gradient(90deg, transparent, #FFD700, transparent)' }} />
         </div>
 
         {/* Loading text — accessibility */}

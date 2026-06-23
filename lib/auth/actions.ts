@@ -78,7 +78,7 @@ export async function signup(formData: FormData): Promise<AuthResult> {
         data: {
           full_name: fullName || email.split('@')[0],
         },
-        emailRedirectTo: `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3001'}/auth/callback`,
+        emailRedirectTo: `${process.env.NEXT_PUBLIC_APP_URL || 'https://www.foundersprime.com'}/auth/callback`,
       },
     })
 
@@ -129,7 +129,7 @@ export async function forgotPassword(formData: FormData): Promise<AuthResult> {
 
   try {
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3001'}/auth/reset-password`,
+      redirectTo: `${process.env.NEXT_PUBLIC_APP_URL || 'https://www.foundersprime.com'}/auth/reset-password`,
     })
 
     if (error) {

@@ -2,91 +2,124 @@
 
 import { useSearchParams, useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
-import { getPaymentLink } from '@/lib/pricing/payment-links'
+import { useAuth } from '@/lib/auth/hooks'
+
+// Map old-style plan param names to the API's expected keys
+const PLAN_KEY_MAP: Record<string, string> = {
+  pro: 'founder',       // legacy "pro" → founder plan
+  annual: 'founder',   // legacy "annual" → founder plan
+  monthly: 'nextfounder',
+  lifetime: 'legend',
+  // Direct keys pass through unchanged
+  nextfounder: 'nextfounder',
+  founder: 'founder',
+  legend: 'legend',
+}
 
 export default function CheckoutContent() {
-    const searchParams = useSearchParams()
-    const router = useRouter()
-    const plan = searchParams.get('plan') || 'pro'
-    const period = searchParams.get('period')
+  const searchParams = useSearchParams()
+  const router = useRouter()
+  const { user, loading: authLoading } = useAuth()
 
-    const [error, setError] = useState<string | null>(null)
-    const [isLoading, setIsLoading] = useState(true)
+  const rawPlan = searchParams.get('plan') || 'founder'
+  const plan = PLAN_KEY_MAP[rawPlan] || 'founder'
 
-    useEffect(() => {
-        const initiateCheckout = async () => {
-            try {
-                // Map frontend params to API expected keys (monthly, annual, lifetime)
-                let apiPlan = plan;
-                if (plan === 'pro') {
-                    // Default to monthly if period is missing/invalid, usually explicitly set by pricing page
-                    apiPlan = period === 'annual' ? 'annual' : 'monthly';
-                }
+  const [error, setError] = useState<string | null>(null)
+  const [isLoading, setIsLoading] = useState(true)
 
-                // Call our new API route
-                const response = await fetch('/api/payment/create-link', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ plan: apiPlan, customerEmail: '' }) // user email not available here yet
-                });
+  useEffect(() => {
+    // Wait for auth to resolve before proceeding
+    if (authLoading) return
 
-                const data = await response.json();
+    // Redirect unauthenticated users to login, then back here
+    if (!user) {
+      router.replace(`/login?redirect=/pricing`)
+      return
+    }
 
-                if (!response.ok) {
-                    throw new Error(data.error || 'Failed to create payment link');
-                }
+    const initiateCheckout = async () => {
+      try {
+        const response = await fetch('/api/payment/create-link', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          // Do NOT pass customerEmail — the API reads it from the session securely
+          body: JSON.stringify({ plan }),
+        })
 
-                // Redirect to Dodo Checkout
-                window.location.href = data.url;
-            } catch (err: any) {
-                console.error('Checkout error:', err);
-                setError(err.message);
-                setIsLoading(false);
-            }
-        };
+        const data = await response.json()
 
-        if (plan) {
-            initiateCheckout();
+        if (response.status === 401) {
+          router.replace('/login?redirect=/pricing')
+          return
         }
-    }, [plan, period])
 
+        if (!response.ok) {
+          throw new Error(data.error || 'Failed to create payment link')
+        }
+
+        window.location.href = data.url
+      } catch (err: unknown) {
+        const message = err instanceof Error ? err.message : 'Unknown error'
+        setError(message)
+        setIsLoading(false)
+      }
+    }
+
+    initiateCheckout()
+  }, [plan, authLoading, user, router])
+
+  // Show nothing while auth resolves — avoids a flash before redirecting unauthenticated users
+  if (authLoading) {
     return (
-        <div className="max-w-md w-full mx-4 bg-white border-2 md:border-[3px] border-black shadow-[4px_4px_0px_#111111] md:shadow-[6px_6px_0px_#111111] p-6 md:p-8 text-center">
-            <div className="mb-5 md:mb-6">
-                <span className="material-symbols-outlined text-5xl md:text-6xl text-primary animate-pulse">sync_alt</span>
-            </div>
-
-            <h1 className="text-xl md:text-2xl font-black uppercase mb-3 md:mb-4">Redirecting to Secure Checkout...</h1>
-
-            {error ? (
-                <div className="p-4 bg-red-100 border-2 border-red-600 text-red-900 rounded-sm">
-                    <p className="font-bold flex items-center justify-center gap-2">
-                        <span className="material-symbols-outlined">error</span>
-                        Checkout Error
-                    </p>
-                    <p className="mt-2 text-sm">{error}</p>
-                    {error.includes('Product IDs') && (
-                        <p className="mt-4 text-xs font-mono bg-white p-2 border border-red-200">
-                            Configuration Pending: Dodo Payment Product IDs are missing.
-                        </p>
-                    )}
-                    <button
-                        onClick={() => window.location.reload()}
-                        className="mt-4 bg-black text-white px-4 py-2 font-bold hover:bg-gray-800"
-                    >
-                        Retry
-                    </button>
-                </div>
-            ) : (
-                <div className="flex flex-col items-center justify-center my-8">
-                    <div className="animate-spin h-8 w-8 border-4 border-black border-t-transparent rounded-full mb-4"></div>
-                    <p className="text-sm font-bold animate-pulse">Creating secure session...</p>
-                </div>
-            )}
-
-            <p className="mt-6 text-xs text-gray-400">
-                Secured by Dodo Payments.
-            </p>
+      <div className="max-w-md w-full mx-4 bg-[#0a0a0a] border border-white/10 p-8 text-center">
+        <div className="flex flex-col items-center justify-center gap-4">
+          <div className="animate-spin h-8 w-8 border-2 border-white/20 border-t-white rounded-full" />
+          <p className="font-mono text-sm text-gray-400 animate-pulse">Verifying session...</p>
         </div>
+      </div>
     )
+  }
+
+  return (
+    <div className="max-w-md w-full mx-4 bg-[#0a0a0a] border border-white/10 shadow-[0_20px_60px_rgba(0,0,0,0.5)] p-8 text-center">
+      <div className="mb-6">
+        <span className="material-symbols-outlined text-5xl text-accent-yellow animate-pulse">sync_alt</span>
+      </div>
+
+      <h1 className="font-mono text-xl font-black uppercase tracking-[0.08em] text-white mb-3">
+        Redirecting to Secure Checkout...
+      </h1>
+
+      {error ? (
+        <div className="p-4 bg-red-500/10 border border-red-500/40 text-red-400 mt-4">
+          <p className="font-mono font-bold flex items-center justify-center gap-2">
+            <span className="material-symbols-outlined text-base">error</span>
+            Checkout Error
+          </p>
+          <p className="mt-2 text-sm font-sans">{error}</p>
+          <div className="mt-4 flex gap-3 justify-center">
+            <button
+              onClick={() => router.push('/pricing')}
+              className="px-4 py-2 border border-white/20 text-white font-mono text-xs uppercase hover:bg-white/10 transition-colors"
+            >
+              Back to Pricing
+            </button>
+            <button
+              onClick={() => window.location.reload()}
+              className="px-4 py-2 bg-accent-yellow text-black font-mono font-black text-xs uppercase hover:bg-yellow-400 transition-colors"
+            >
+              Retry
+            </button>
+          </div>
+        </div>
+      ) : (
+        <div className="flex flex-col items-center justify-center my-6">
+          <div className="animate-spin h-6 w-6 border-2 border-white/20 border-t-white rounded-full mb-4" />
+          <p className="font-mono text-sm text-gray-400 animate-pulse">Creating secure session...</p>
+        </div>
+      )}
+
+      <p className="mt-6 text-xs text-gray-600 font-mono">Secured by Dodo Payments</p>
+    </div>
+  )
 }

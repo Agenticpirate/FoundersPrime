@@ -9,6 +9,7 @@ import DealLogo from '@/components/deals/DealLogo'
 import { getAllCategories } from '@/lib/deals-database'
 import { fetchDealBySlugFromDB, fetchAllDealSlugsFromDB, isDealsDbConfigured } from '@/lib/deals-server'
 import { getStartupProgramUrl } from '@/lib/comprehensive-startup-urls'
+import { checkProStatusServer } from '@/lib/auth/user-server'
 import fs from 'fs'
 import path from 'path'
 import { accelerators2026 } from '@/data/accelerators-2026'
@@ -408,6 +409,10 @@ export default async function SingleDealPage({ params }: PageProps) {
 
     const deal = convertDealForDisplay(dealData, similarDeals)
 
+    // Resolve pro status server-side so the client never sees a loading flash
+    const { isPro: serverIsPro, user: serverUser } = await checkProStatusServer()
+    const serverIsNextFounder = !!serverUser?.isNextFounder
+
     // Structured Data (JSON-LD)
     const dealUrl = `https://www.foundersprime.com/deals/${params.slug}`
     const dealImage = dealData.logoUrl || `https://www.foundersprime.com/logos/${deal.provider.toLowerCase().replace(/\s+/g, '-')}.png`
@@ -494,7 +499,7 @@ export default async function SingleDealPage({ params }: PageProps) {
     const jsonLd = [primarySchema, breadcrumbSchema, faqSchema]
 
     return (
-      <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden bg-gray-50">
+      <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden bg-gray-50 dark:bg-[#000000] text-[#1a1a1a] dark:text-white transition-colors duration-300">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -502,13 +507,12 @@ export default async function SingleDealPage({ params }: PageProps) {
         <Header />
         <main className="flex-1">
           {/* Neo-brutalist hero header — gradient bg + mandala ornaments */}
-          <div className="relative w-full bg-white border-b-3 border-b-black overflow-hidden">
-            {/* Subtle grid bg */}
-            <div className="absolute inset-0 grid-bg opacity-[0.5] pointer-events-none" aria-hidden="true" />
+          <div className="relative w-full bg-white dark:bg-[#000000] border-b-3 border-b-black dark:border-b-white/10 overflow-hidden transition-colors duration-300">
+            {/* Subtle grid bg removed */}
 
             {/* Decorative mandalas */}
-            <div className="absolute -top-16 -right-16 w-72 h-72 pointer-events-none opacity-[0.08] hidden md:block" aria-hidden="true">
-              <svg viewBox="0 0 200 200" className="w-full h-full text-gray-900 single-deal-mandala-spin" fill="none" stroke="currentColor" strokeWidth="0.7">
+            <div className="absolute -top-16 -right-16 w-72 h-72 pointer-events-none opacity-[0.08] dark:opacity-[0.12] hidden md:block" aria-hidden="true">
+              <svg viewBox="0 0 200 200" className="w-full h-full text-gray-900 dark:text-white single-deal-mandala-spin" fill="none" stroke="currentColor" strokeWidth="0.7">
                 <circle cx="100" cy="100" r="40" />
                 <circle cx="100" cy="100" r="60" strokeDasharray="2 4" />
                 <circle cx="100" cy="100" r="80" strokeDasharray="1 6" />
@@ -521,7 +525,7 @@ export default async function SingleDealPage({ params }: PageProps) {
                 ))}
               </svg>
             </div>
-            <div className="absolute -bottom-20 -left-20 w-64 h-64 pointer-events-none opacity-[0.06] hidden md:block" aria-hidden="true">
+            <div className="absolute -bottom-20 -left-20 w-64 h-64 pointer-events-none opacity-[0.06] dark:opacity-[0.10] hidden md:block" aria-hidden="true">
               <svg viewBox="0 0 200 200" className="w-full h-full text-accent-yellow single-deal-mandala-spin-reverse" fill="none" stroke="currentColor" strokeWidth="0.7">
                 <circle cx="100" cy="100" r="50" />
                 <circle cx="100" cy="100" r="35" strokeDasharray="3 3" />
@@ -552,19 +556,19 @@ export default async function SingleDealPage({ params }: PageProps) {
 
                 return (
                   <nav aria-label="Breadcrumb" className="flex mb-4">
-                    <ol className="inline-flex items-center gap-1.5 font-mono text-[11px] md:text-xs text-gray-600 whitespace-nowrap">
-                      <li><a className="hover:text-black transition-colors" href="/">Home</a></li>
-                      <li className="text-gray-400">/</li>
-                      <li><a className="hover:text-black transition-colors" href="/deals">{sub ? sub.parentLabel : 'Deals'}</a></li>
+                    <ol className="inline-flex items-center gap-1.5 font-mono text-[11px] md:text-xs text-gray-600 dark:text-gray-400 whitespace-nowrap">
+                      <li><a className="hover:text-black dark:hover:text-white transition-colors" href="/">Home</a></li>
+                      <li className="text-gray-400 dark:text-gray-600">/</li>
+                      <li><a className="hover:text-black dark:hover:text-white transition-colors" href="/deals">{sub ? sub.parentLabel : 'Deals'}</a></li>
                       {sub && (
                         <>
-                          <li className="text-gray-400">/</li>
-                          <li><a className="hover:text-black transition-colors" href={sub.href}>{sub.label}</a></li>
+                          <li className="text-gray-400 dark:text-gray-600">/</li>
+                          <li><a className="hover:text-black dark:hover:text-white transition-colors" href={sub.href}>{sub.label}</a></li>
                         </>
                       )}
-                      <li className="text-gray-400">/</li>
+                      <li className="text-gray-400 dark:text-gray-600">/</li>
                       <li aria-current="page">
-                        <span className="text-black font-bold bg-accent-yellow/30 px-2 py-0.5 border-2 border-black rounded-sm truncate max-w-[180px] md:max-w-[280px] inline-block align-bottom">{deal.title}</span>
+                        <span className="text-black dark:text-white font-bold bg-accent-yellow/30 dark:bg-accent-yellow/20 px-2 py-0.5 border-2 border-black dark:border-white/10 rounded-sm truncate max-w-[180px] md:max-w-[280px] inline-block align-bottom">{deal.title}</span>
                       </li>
                     </ol>
                   </nav>
@@ -574,7 +578,7 @@ export default async function SingleDealPage({ params }: PageProps) {
               {/* Header — logo + title block */}
               <div className="flex items-start gap-3 lg:gap-5">
                 <div className="flex-shrink-0">
-                  <div className="relative w-14 h-14 lg:w-20 lg:h-20 rounded-sm bg-white border-2 border-black shadow-[3px_3px_0px_#111] overflow-hidden flex items-center justify-center">
+                  <div className="relative w-14 h-14 lg:w-20 lg:h-20 rounded-sm bg-white dark:bg-[#0c0c0c] border-2 border-black dark:border-white/10 shadow-[3px_3px_0px_#111] dark:shadow-[3px_3px_0px_rgba(255,255,255,0.05)] overflow-hidden flex items-center justify-center">
                     <DealLogo
                       logoUrl={dealData.logoUrl}
                       brandIcon={dealData.brandIcon}
@@ -585,26 +589,26 @@ export default async function SingleDealPage({ params }: PageProps) {
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="mb-2 flex flex-wrap gap-1.5">
-                    <span className="inline-flex items-center gap-1 rounded-sm px-2.5 py-0.5 font-mono text-[10px] font-black uppercase tracking-wide bg-emerald-100 text-black border-2 border-black shadow-[1px_1px_0px_#111]">
+                    <span className="inline-flex items-center gap-1 rounded-sm px-2.5 py-0.5 font-mono text-[10px] font-black uppercase tracking-wide bg-emerald-100 dark:bg-emerald-950/20 text-black dark:text-emerald-400 border-2 border-black dark:border-white/10 shadow-[1px_1px_0px_#111] dark:shadow-[1px_1px_0px_rgba(255,255,255,0.05)]">
                       <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
                       {deal.status}
                     </span>
-                    <span className="inline-flex items-center rounded-sm px-2.5 py-0.5 font-mono text-[10px] font-black uppercase tracking-wide bg-sky-100 text-black border-2 border-black shadow-[1px_1px_0px_#111]">
+                    <span className="inline-flex items-center rounded-sm px-2.5 py-0.5 font-mono text-[10px] font-black uppercase tracking-wide bg-sky-100 dark:bg-sky-950/20 text-black dark:text-sky-400 border-2 border-black dark:border-white/10 shadow-[1px_1px_0px_#111] dark:shadow-[1px_1px_0px_rgba(255,255,255,0.05)]">
                       {deal.category}
                     </span>
                     <DealProBadge />
                   </div>
-                  <h1 className="font-mono text-xl sm:text-2xl lg:text-[34px] font-black tracking-tight text-black leading-[1.1] mb-1.5">
+                  <h1 className="font-mono text-xl sm:text-2xl lg:text-[34px] font-black tracking-tight text-black dark:text-white leading-[1.1] mb-1.5 transition-colors duration-300">
                     {deal.title}
                   </h1>
-                  <div className="flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-xs lg:text-sm text-gray-700">
+                  <div className="flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-xs lg:text-sm text-gray-700 dark:text-gray-300">
                     <span className="inline-flex items-center gap-1">
-                      <span className="material-symbols-outlined text-[16px] text-gray-600">domain</span>
-                      <span className="font-bold text-black">{deal.provider}</span>
+                      <span className="material-symbols-outlined text-[16px] text-gray-600 dark:text-gray-400">domain</span>
+                      <span className="font-bold text-black dark:text-white">{deal.provider}</span>
                     </span>
-                    <span className="hidden md:inline text-gray-400">·</span>
+                    <span className="hidden md:inline text-gray-400 dark:text-gray-600">·</span>
                     <span className="inline-flex items-center gap-1">
-                      <span className="material-symbols-outlined text-[16px] text-amber-600">verified</span>
+                      <span className="material-symbols-outlined text-[16px] text-amber-600 dark:text-amber-500">verified</span>
                       <span>Verified · Last checked {new Date(deal.verification.lastVerified).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</span>
                     </span>
                   </div>
@@ -626,7 +630,11 @@ export default async function SingleDealPage({ params }: PageProps) {
 
           {/* Main content */}
           <div className="max-w-[1600px] mx-auto px-4 lg:px-6 py-4 lg:py-6">
-            <SingleDealContent deal={deal} />
+            <SingleDealContent
+              deal={deal}
+              initialIsPro={serverIsPro}
+              initialIsNextFounder={serverIsNextFounder}
+            />
           </div>
         </main>
         <Footer />

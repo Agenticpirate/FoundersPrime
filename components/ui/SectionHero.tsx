@@ -38,12 +38,12 @@ interface SectionHeroProps {
 export default function SectionHero({
   eyebrowIcon,
   eyebrowText,
-  eyebrowClass = 'bg-accent-yellow/15 border-accent-yellow/40 text-gray-800',
+  eyebrowClass = 'bg-accent-yellow/15 border-accent-yellow/40 text-gray-800 dark:text-gray-300 dark:border-accent-yellow/20',
   eyebrowAccentClass = 'text-accent-yellow',
   title,
   subtitle,
   stats,
-  mandalaColorClass = 'text-gray-900',
+  mandalaColorClass = 'text-gray-900 dark:text-white/5',
   statsMinWidth = 'lg:min-w-[560px]',
   className = '',
 }: SectionHeroProps) {
@@ -85,10 +85,10 @@ export default function SectionHero({
               {eyebrowText}
             </span>
           </div>
-          <h1 className="font-mono text-2xl md:text-3xl lg:text-[34px] font-black tracking-tight text-gray-900 leading-[1.05] mb-1.5">
+          <h1 className="font-mono text-2xl md:text-3xl lg:text-[34px] font-black tracking-tight text-gray-900 dark:text-white leading-[1.05] mb-1.5">
             {title}
           </h1>
-          <p className="font-sans text-[13px] md:text-sm text-gray-600 leading-relaxed max-w-2xl">
+          <p className="font-sans text-[13px] md:text-sm text-gray-600 dark:text-gray-300 leading-relaxed max-w-2xl">
             {subtitle}
           </p>
         </div>

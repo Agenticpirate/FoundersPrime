@@ -3,10 +3,16 @@ import RefundContent from '@/components/refund/RefundContent'
 import RefundSidebar from '@/components/refund/RefundSidebar'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
+import { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Refund Policy',
+  description: 'FoundersPrime refund policy. Read our policy regarding subscriptions, credits, and final sales.',
+}
 
 export default function RefundPolicyPage() {
   return (
-    <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden bg-background-light">
+    <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden bg-background-light dark:bg-[#000000]">
       <Header />
       <main className="flex-1">
         <div className="mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-8 py-5 md:py-6">

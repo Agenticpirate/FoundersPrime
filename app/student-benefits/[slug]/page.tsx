@@ -181,67 +181,119 @@ export default async function StudentBenefitDetailPage({ params }: PageProps) {
         }
 
         return (
-            <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden">
+            <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden bg-gray-50 dark:bg-[#000000] text-[#1a1a1a] dark:text-white transition-colors duration-300">
                 <script
                     type="application/ld+json"
                     dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
                 />
                 <Header />
-                <main className="flex-1 bg-gray-50">
-                    {/* Full-width header section */}
-                    <div className="w-full bg-white border-b-3 border-black">
-                        <div className="max-w-[1400px] mx-auto px-3 md:px-6 py-2 md:py-4">
-                            {/* Breadcrumb — same format as deals */}
-                            <nav aria-label="Breadcrumb" className="flex mb-3 md:mb-4">
-                                <ol className="inline-flex items-center space-x-1 md:space-x-3 font-mono text-xs md:text-sm font-medium whitespace-nowrap">
-                                    <li><a className="text-gray-500 hover:text-black" href="/">Home</a></li>
-                                    <li className="flex items-center">
-                                        <span className="material-symbols-outlined text-gray-400 text-sm mx-0.5 md:mx-1">chevron_right</span>
-                                        <a className="text-gray-500 hover:text-black" href="/student-benefits">Students</a>
-                                    </li>
-                                    <li className="flex items-center">
-                                        <span className="material-symbols-outlined text-gray-400 text-sm mx-0.5 md:mx-1">chevron_right</span>
-                                        <span className="text-black bg-primary/20 px-1.5 md:px-2 py-0.5 rounded-sm border border-black text-[11px] md:text-sm truncate max-w-[150px] md:max-w-[250px]">{deal.title}</span>
+                <main className="flex-1">
+                    {/* Neo-brutalist hero header — gradient bg + mandala ornaments */}
+                    <div className="relative w-full bg-white dark:bg-[#000000] border-b-3 border-b-black dark:border-b-white/10 overflow-hidden transition-colors duration-300">
+                        {/* Subtle grid bg removed */}
+
+                        {/* Decorative mandalas */}
+                        <div className="absolute -top-16 -right-16 w-72 h-72 pointer-events-none opacity-[0.08] dark:opacity-[0.12] hidden md:block" aria-hidden="true">
+                            <svg viewBox="0 0 200 200" className="w-full h-full text-gray-900 dark:text-white single-deal-mandala-spin" fill="none" stroke="currentColor" strokeWidth="0.7">
+                                <circle cx="100" cy="100" r="40" />
+                                <circle cx="100" cy="100" r="60" strokeDasharray="2 4" />
+                                <circle cx="100" cy="100" r="80" strokeDasharray="1 6" />
+                                <circle cx="100" cy="100" r="3" fill="currentColor" />
+                                {[0, 45, 90, 135, 180, 225, 270, 315].map((deg) => (
+                                    <g key={deg} transform={`rotate(${deg} 100 100)`}>
+                                        <line x1="100" y1="40" x2="100" y2="20" />
+                                        <circle cx="100" cy="20" r="2" fill="currentColor" />
+                                    </g>
+                                ))}
+                            </svg>
+                        </div>
+                        <div className="absolute -bottom-20 -left-20 w-64 h-64 pointer-events-none opacity-[0.06] dark:opacity-[0.10] hidden md:block" aria-hidden="true">
+                            <svg viewBox="0 0 200 200" className="w-full h-full text-accent-yellow single-deal-mandala-spin-reverse" fill="none" stroke="currentColor" strokeWidth="0.7">
+                                <circle cx="100" cy="100" r="50" />
+                                <circle cx="100" cy="100" r="35" strokeDasharray="3 3" />
+                                {[...Array(12)].map((_, i) => (
+                                    <line
+                                        key={i}
+                                        x1="100"
+                                        y1="100"
+                                        x2={100 + Math.cos((i * Math.PI) / 6) * 90}
+                                        y2={100 + Math.sin((i * Math.PI) / 6) * 90}
+                                    />
+                                ))}
+                                <circle cx="100" cy="100" r="2" fill="currentColor" />
+                            </svg>
+                        </div>
+
+                        <div className="relative max-w-[1600px] mx-auto px-4 lg:px-6 py-4 lg:py-6">
+                            {/* Breadcrumb */}
+                            <nav aria-label="Breadcrumb" className="flex mb-4">
+                                <ol className="inline-flex items-center gap-1.5 font-mono text-[11px] md:text-xs text-gray-600 dark:text-gray-400 whitespace-nowrap">
+                                    <li><a className="hover:text-black dark:hover:text-white transition-colors" href="/">Home</a></li>
+                                    <li className="text-gray-400 dark:text-gray-600">/</li>
+                                    <li><a className="hover:text-black dark:hover:text-white transition-colors" href="/student-benefits">Students</a></li>
+                                    <li className="text-gray-400 dark:text-gray-600">/</li>
+                                    <li aria-current="page">
+                                        <span className="text-black dark:text-white font-bold bg-accent-yellow/30 dark:bg-accent-yellow/20 px-2 py-0.5 border-2 border-black dark:border-white/10 rounded-sm truncate max-w-[180px] md:max-w-[280px] inline-block align-bottom">{deal.title}</span>
                                     </li>
                                 </ol>
                             </nav>
 
-                            {/* Header — no CTA button */}
-                            <div className="flex items-start gap-3 lg:gap-5 mb-2 lg:mb-4">
-                                <DealLogo
-                                    logoUrl={benefitData.logo}
-                                    provider={benefitData.company}
-                                    size="sm"
-                                />
+                            {/* Header — logo + title block */}
+                            <div className="flex items-start gap-3 lg:gap-5">
+                                <div className="flex-shrink-0">
+                                    <div className="relative w-14 h-14 lg:w-20 lg:h-20 rounded-sm bg-white dark:bg-[#0c0c0c] border-2 border-black dark:border-white/10 shadow-[3px_3px_0px_#111] dark:shadow-[3px_3px_0px_rgba(255,255,255,0.05)] overflow-hidden flex items-center justify-center">
+                                        <DealLogo
+                                            logoUrl={benefitData.logo}
+                                            provider={benefitData.company}
+                                            size="sm"
+                                        />
+                                    </div>
+                                </div>
                                 <div className="flex-1 min-w-0">
-                                    <div className="mb-1.5 flex flex-wrap gap-1 lg:gap-2">
-                                        <span className="inline-flex items-center rounded-sm border border-black px-1.5 py-0.5 lg:px-3 lg:py-1 font-mono text-[9px] lg:text-xs font-bold uppercase bg-green-100">
+                                    <div className="mb-2 flex flex-wrap gap-1.5">
+                                        <span className="inline-flex items-center gap-1 rounded-sm px-2.5 py-0.5 font-mono text-[10px] font-black uppercase tracking-wide bg-emerald-100 dark:bg-emerald-950/20 text-black dark:text-emerald-400 border-2 border-black dark:border-white/10 shadow-[1px_1px_0px_#111] dark:shadow-[1px_1px_0px_rgba(255,255,255,0.05)]">
+                                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
                                             {benefitData.appCategory}
                                         </span>
-                                        <span className="inline-flex items-center rounded-sm border border-black px-1.5 py-0.5 lg:px-3 lg:py-1 font-mono text-[9px] lg:text-xs font-bold uppercase bg-purple-100">
+                                        <span className="inline-flex items-center rounded-sm px-2.5 py-0.5 font-mono text-[10px] font-black uppercase tracking-wide bg-purple-100 dark:bg-purple-950/20 text-black dark:text-purple-400 border-2 border-black dark:border-white/10 shadow-[1px_1px_0px_#111] dark:shadow-[1px_1px_0px_rgba(255,255,255,0.05)]">
                                             {benefitData.category}
                                         </span>
+                                        <span className="inline-flex items-center rounded-sm px-2.5 py-0.5 font-mono text-[10px] font-black uppercase tracking-wide bg-amber-100 dark:bg-amber-950/20 text-black dark:text-amber-400 border-2 border-black dark:border-white/10 shadow-[1px_1px_0px_#111] dark:shadow-[1px_1px_0px_rgba(255,255,255,0.05)]">
+                                            Free
+                                        </span>
                                     </div>
-                                    <h1 className="font-mono text-base sm:text-xl lg:text-3xl font-bold uppercase leading-tight text-black mb-1">
+                                    <h1 className="font-mono text-xl sm:text-2xl lg:text-[34px] font-black tracking-tight text-black dark:text-white leading-[1.1] mb-1.5 transition-colors duration-300">
                                         {deal.title}
                                     </h1>
-                                    <div className="flex items-center gap-3 text-xs lg:text-sm font-mono text-gray-500">
-                                        <span className="flex items-center gap-1">
-                                            <span className="material-symbols-outlined text-sm">domain</span>
-                                            {deal.provider}
+                                    <div className="flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-xs lg:text-sm text-gray-700 dark:text-gray-300">
+                                        <span className="inline-flex items-center gap-1">
+                                            <span className="material-symbols-outlined text-[16px] text-gray-600 dark:text-gray-400">domain</span>
+                                            <span className="font-bold text-black dark:text-white">{deal.provider}</span>
                                         </span>
-                                        <span className="flex items-center gap-1">
-                                            <span className="material-symbols-outlined text-sm">verified</span>
-                                            {benefitData.verification}
+                                        <span className="hidden md:inline text-gray-400 dark:text-gray-600">/</span>
+                                        <span className="inline-flex items-center gap-1">
+                                            <span className="material-symbols-outlined text-[16px] text-amber-600 dark:text-amber-500">verified</span>
+                                            <span>Verified via {benefitData.verification}</span>
                                         </span>
                                     </div>
                                 </div>
                             </div>
                         </div>
+
+                        {/* Mandala spin keyframes */}
+                        <style dangerouslySetInnerHTML={{ __html: `
+                            @keyframes singleDealMandalaSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+                            @keyframes singleDealMandalaSpinReverse { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
+                            .single-deal-mandala-spin { animation: singleDealMandalaSpin 80s linear infinite; transform-origin: center; }
+                            .single-deal-mandala-spin-reverse { animation: singleDealMandalaSpinReverse 100s linear infinite; transform-origin: center; }
+                            @media (prefers-reduced-motion: reduce) {
+                                .single-deal-mandala-spin, .single-deal-mandala-spin-reverse { animation: none; }
+                            }
+                        ` }} />
                     </div>
 
                     {/* Main content */}
-                    <div className="max-w-[1400px] mx-auto px-3 md:px-6 py-2 md:py-6">
+                    <div className="max-w-[1600px] mx-auto px-4 lg:px-6 py-4 lg:py-6">
                         <SingleDealContent deal={deal} freeAccess={true} basePath="/student-benefits" />
                     </div>
                 </main>

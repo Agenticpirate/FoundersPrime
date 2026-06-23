@@ -6,7 +6,7 @@ import { useState } from 'react'
 
 export default function ResourcesGrid() {
   const [currentPage, setCurrentPage] = useState(1);
-  const totalPages = 21; // Example hardcoded value keeping it consistent
+  const itemsPerPage = 6;
 
   const resources = [
     {
@@ -111,14 +111,18 @@ export default function ResourcesGrid() {
       isPremium: false,
       lastUpdated: '2024-03-11'
     }
-  ]
+  ];
+  
+  const totalPages = Math.max(1, Math.ceil(resources.length / itemsPerPage));
+
+  // If you later add pagination slice logic: const currentResources = resources.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
 
   return (
     <div>
       {/* Results Header */}
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-3">
-          <h2 className="font-mono text-2xl md:text-2xl font-bold">Showing 1,247 resources</h2>
+          <h2 className="font-mono text-2xl md:text-2xl font-bold">Showing {resources.length} resources</h2>
           <span className="bg-gray-200 px-2 py-1 font-mono text-[10px] md:text-xs rounded-sm border border-black whitespace-nowrap">
             Page {currentPage} of {totalPages}
           </span>

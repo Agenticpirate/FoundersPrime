@@ -90,10 +90,10 @@ export default function DealsCategorySidebar({
 
   return (
     <aside className="w-full">
-      <div className="relative sticky top-20 max-h-[calc(100vh-6rem)] overflow-hidden bg-white border border-gray-200 rounded-xl shadow-sm">
+      <div className="relative sticky top-20 max-h-[calc(100vh-6rem)] overflow-hidden bg-white dark:bg-[#0c0c0c] border border-gray-200 dark:border-white/10 rounded-xl shadow-sm transition-colors duration-300">
         {/* Decorative mandala — corner ornament */}
         <div className="absolute -bottom-12 -right-12 w-40 h-40 pointer-events-none opacity-[0.06]" aria-hidden="true">
-          <svg viewBox="0 0 200 200" className="w-full h-full text-gray-900 sidebar-mandala-spin" fill="none" stroke="currentColor" strokeWidth="0.6">
+          <svg viewBox="0 0 200 200" className="w-full h-full text-gray-900 dark:text-white/10 sidebar-mandala-spin" fill="none" stroke="currentColor" strokeWidth="0.6">
             <circle cx="100" cy="100" r="50" />
             <circle cx="100" cy="100" r="35" strokeDasharray="3 3" />
             {[...Array(12)].map((_, i) => (
@@ -111,9 +111,9 @@ export default function DealsCategorySidebar({
 
         <div className="relative max-h-[calc(100vh-6rem)] overflow-y-auto">
         {/* Header */}
-        <div className="px-4 pt-4 pb-3 border-b border-gray-100">
+        <div className="px-4 pt-4 pb-3 border-b border-gray-100 dark:border-white/10">
           <div className="flex items-center justify-between">
-            <h3 className="text-[10px] font-bold text-gray-500 uppercase tracking-[0.12em]">Categories</h3>
+            <h3 className="text-[10px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-[0.12em]">Categories</h3>
             <span className="text-[10px] font-mono text-gray-400">{categories.length}</span>
           </div>
         </div>
@@ -124,22 +124,22 @@ export default function DealsCategorySidebar({
             onClick={() => onCategorySelect?.('', '')}
             className={`group w-full flex items-center gap-2 px-2.5 py-2 text-left rounded-lg transition-all ${
               !selectedCategory
-                ? 'bg-gray-900 text-white shadow-sm'
-                : 'hover:bg-gray-50 text-gray-700'
+                ? 'bg-gray-900 dark:bg-white text-white dark:text-black shadow-sm'
+                : 'hover:bg-gray-50 dark:hover:bg-white/5 text-gray-700 dark:text-gray-300'
             }`}
           >
-            <span className={`material-symbols-outlined text-[17px] flex-shrink-0 ${!selectedCategory ? 'text-accent-yellow' : 'text-gray-400 group-hover:text-gray-600'}`}>
+            <span className={`material-symbols-outlined text-[17px] flex-shrink-0 ${!selectedCategory ? 'text-accent-yellow dark:text-black' : 'text-gray-400 group-hover:text-gray-600 dark:group-hover:text-gray-300'}`}>
               grid_view
             </span>
             <span className="text-[13px] font-medium flex-1 min-w-0 truncate">All Deals</span>
             <span className={`text-[10.5px] font-mono px-1.5 py-0.5 rounded flex-shrink-0 ${
-              !selectedCategory ? 'bg-white/10 text-white' : 'bg-gray-100 text-gray-500 group-hover:bg-gray-200'
+              !selectedCategory ? 'bg-white/10 dark:bg-black/10 text-white dark:text-gray-300' : 'bg-gray-100 dark:bg-white/5 text-gray-500 dark:text-gray-400 group-hover:bg-gray-200 dark:group-hover:bg-white/10'
             }`}>
               {totalDeals}
             </span>
           </button>
 
-          <div className="my-2 border-t border-gray-100" aria-hidden="true" />
+          <div className="my-2 border-t border-gray-100 dark:border-white/10" aria-hidden="true" />
 
           {/* Categories */}
           <div className="space-y-0.5">
@@ -156,7 +156,7 @@ export default function DealsCategorySidebar({
                 <div key={category.id}>
                   <div
                     className={`group relative flex items-center rounded-lg transition-all ${
-                      isActive ? 'bg-gray-100' : 'hover:bg-gray-50'
+                      isActive ? 'bg-gray-100 dark:bg-white/5' : 'hover:bg-gray-50 dark:hover:bg-white/5'
                     }`}
                   >
                     <button
@@ -168,11 +168,11 @@ export default function DealsCategorySidebar({
                       }`}>
                         {icon}
                       </span>
-                      <span className={`text-[13px] truncate flex-1 min-w-0 ${isActive ? 'font-semibold text-gray-900' : 'text-gray-700 font-medium'}`}>
+                      <span className={`text-[13px] truncate flex-1 min-w-0 ${isActive ? 'font-semibold text-gray-900 dark:text-white' : 'text-gray-700 dark:text-gray-300 font-medium'}`}>
                         {category.name}
                       </span>
                       <span className={`text-[10.5px] font-mono px-1.5 py-0.5 rounded flex-shrink-0 ${
-                        isActive ? 'bg-white text-gray-700 border border-gray-200' : 'bg-gray-100 text-gray-500'
+                        isActive ? 'bg-white dark:bg-white/10 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-white/10' : 'bg-gray-100 dark:bg-white/5 text-gray-500 dark:text-gray-400'
                       }`}>
                         {count}
                       </span>
@@ -181,7 +181,7 @@ export default function DealsCategorySidebar({
                     {hasSubcategories && (
                       <button
                         onClick={(e) => handleToggleOnly(category.id, e)}
-                        className="flex-shrink-0 p-1.5 mr-1 rounded hover:bg-gray-200/60 transition-colors"
+                        className="flex-shrink-0 p-1.5 mr-1 rounded hover:bg-gray-200/60 dark:hover:bg-white/10 transition-colors"
                         aria-label={isExpanded ? 'Collapse' : 'Expand'}
                       >
                         <span
@@ -202,7 +202,7 @@ export default function DealsCategorySidebar({
                         isExpanded ? 'max-h-[600px] opacity-100' : 'max-h-0 opacity-0'
                       }`}
                     >
-                      <div className="mt-0.5 ml-7 pl-2 border-l border-gray-200 space-y-0.5">
+                      <div className="mt-0.5 ml-7 pl-2 border-l border-gray-200 dark:border-white/10 space-y-0.5">
                         {subcategories.map((subcategory) => {
                           const isSubActive =
                             selectedCategory === category.id && selectedSubcategory === subcategory.id
@@ -213,13 +213,13 @@ export default function DealsCategorySidebar({
                               onClick={() => handleSubcategoryClick(category.id, subcategory.id)}
                               className={`w-full flex items-center justify-between gap-2 px-2.5 py-1.5 text-left rounded-md transition-colors text-[12.5px] ${
                                 isSubActive
-                                  ? 'bg-accent-yellow/15 text-gray-900 font-semibold'
-                                  : 'hover:bg-gray-50 text-gray-600'
+                                  ? 'bg-accent-yellow/15 dark:bg-accent-yellow/10 text-gray-900 dark:text-accent-yellow font-semibold'
+                                  : 'hover:bg-gray-50 dark:hover:bg-white/5 text-gray-600 dark:text-gray-400'
                               }`}
                             >
                               <span className="truncate">{subcategory.name}</span>
                               <span className={`text-[10px] font-mono ${
-                                isSubActive ? 'text-gray-700' : 'text-gray-400'
+                                isSubActive ? 'text-gray-700 dark:text-accent-yellow/80' : 'text-gray-400'
                               }`}>
                                 {subCount}
                               </span>
@@ -236,9 +236,9 @@ export default function DealsCategorySidebar({
         </div>
 
         {/* Footer hint */}
-        <div className="px-4 py-3 border-t border-gray-100 bg-gray-50/60 rounded-b-xl">
-          <p className="text-[10px] text-gray-500 leading-relaxed">
-            <span className="font-semibold text-gray-700">Tip:</span> Use a work email to boost approval rates.
+        <div className="px-4 py-3 border-t border-gray-100 dark:border-white/10 bg-gray-50/60 dark:bg-white/[0.02] rounded-b-xl">
+          <p className="text-[10px] text-gray-500 dark:text-gray-450 leading-relaxed">
+            <span className="font-semibold text-gray-700 dark:text-gray-300">Tip:</span> Use a work email to boost approval rates.
           </p>
         </div>
         </div>
