@@ -7,7 +7,9 @@ import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import { createClient } from '@/lib/supabase/client'
 
-export default function PendingVerificationPage() {
+import { Suspense } from 'react'
+
+function PendingVerificationContent() {
   const [resending, setResending] = useState(false)
   const [resent, setResent] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -152,5 +154,13 @@ export default function PendingVerificationPage() {
       </main>
       <Footer />
     </div>
+  )
+}
+
+export default function PendingVerificationPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-[#f8f9fa] flex items-center justify-center font-mono">Loading...</div>}>
+      <PendingVerificationContent />
+    </Suspense>
   )
 }

@@ -6,7 +6,7 @@ export default function NotFound() {
   return (
     <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden">
       <Header />
-      <main className="flex-1 flex items-center justify-center bg-[#FAF9F5] dark:bg-[#050505] text-black dark:text-white transition-colors duration-300 p-4">
+      <main className="flex-1 flex items-center justify-center bg-[#FAF9F5] dark:bg-[#000000] text-black dark:text-white transition-colors duration-300 p-4">
         <div className="mx-auto max-w-2xl px-4 py-8 text-center">
           {/* Error Code */}
           <div className="mb-4 md:mb-6">

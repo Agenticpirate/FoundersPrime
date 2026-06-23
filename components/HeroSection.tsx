@@ -106,7 +106,7 @@ export default function HeroSection() {
   }, [])
 
   return (
-    <section className="relative overflow-hidden grid-bg bg-[#f6f8f8] dark:bg-[#050505] text-[#1a1a1a] dark:text-white pt-8 md:pt-12 pb-0 transition-colors duration-300">
+    <section className="relative overflow-hidden grid-bg bg-[#f6f8f8] dark:bg-[#000000] text-[#1a1a1a] dark:text-white pt-8 md:pt-12 pb-0 transition-colors duration-300">
       {/* Soft glow accents */}
       <div className="hidden lg:block absolute -top-32 -left-32 w-96 h-96 bg-accent-yellow/15 dark:bg-accent-yellow/5 rounded-full blur-3xl pointer-events-none" />
       <div className="hidden lg:block absolute -bottom-40 -right-32 w-[28rem] h-[28rem] bg-accent-yellow/10 dark:bg-accent-yellow/5 rounded-full blur-3xl pointer-events-none" />
@@ -135,7 +135,7 @@ export default function HeroSection() {
         <PlusMark className="hidden md:block absolute right-0 -top-1 lg:left-[58%] lg:right-auto" />
 
         {/* ─── Mobile Hero Section ─── */}
-        <div className="block lg:hidden pt-6 pb-6 bg-[#050505] text-white -mx-4 px-4 relative z-10 grid-bg dark">
+        <div className="block lg:hidden pt-6 pb-6 bg-[#000000] text-white -mx-4 px-4 relative z-10 grid-bg dark">
           {/* Top badge */}
           <div className="inline-flex items-center gap-2 px-3 py-1.5 border border-white/10 rounded-full bg-white/[0.03] w-fit mb-5">
             <span className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse" />
@@ -229,8 +229,8 @@ export default function HeroSection() {
 
           {/* Brand logos scroller animation under See Pricing button */}
           <div className="w-full overflow-hidden my-4 relative py-2 bg-white/[0.01] border-y border-white/[0.04] -mx-4 px-4">
-            <div className="absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-[#050505] to-transparent z-10 pointer-events-none" />
-            <div className="absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-[#050505] to-transparent z-10 pointer-events-none" />
+            <div className="absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-[#000000] to-transparent z-10 pointer-events-none" />
+            <div className="absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-[#000000] to-transparent z-10 pointer-events-none" />
             <div className="flex gap-8 animate-[marquee_25s_linear_infinite] whitespace-nowrap w-max">
               {[...TRUSTED_BRANDS, ...TRUSTED_BRANDS, ...TRUSTED_BRANDS].map((brand, idx) => (
                 <div key={`${brand.name}-${idx}`} className="inline-flex items-center gap-1.5 opacity-90 transition-all hover:opacity-100">
@@ -339,7 +339,7 @@ export default function HeroSection() {
             />
             <div
               aria-hidden="true"
-              className="absolute inset-[1.5px] translate-x-6 translate-y-6 bg-transparent dark:bg-[#050505] pointer-events-none hidden md:block"
+              className="absolute inset-[1.5px] translate-x-6 translate-y-6 bg-transparent dark:bg-[#000000] pointer-events-none hidden md:block"
               style={{ clipPath: CARD_CLIP }}
             />
             <div
@@ -349,7 +349,7 @@ export default function HeroSection() {
             />
             <div
               aria-hidden="true"
-              className="absolute inset-[1.5px] translate-x-3 translate-y-3 bg-transparent dark:bg-[#050505] pointer-events-none hidden md:block"
+              className="absolute inset-[1.5px] translate-x-3 translate-y-3 bg-transparent dark:bg-[#000000] pointer-events-none hidden md:block"
               style={{ clipPath: CARD_CLIP }}
             />
 

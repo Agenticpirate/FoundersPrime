@@ -127,12 +127,12 @@ const categories: {
 
 export default function SystemModules() {
   return (
-    <section className="relative overflow-hidden bg-[#FAFAF7] dark:bg-[#050505] grid-bg dark:grid-bg-dark py-10 md:py-14 border-y border-black/5 dark:border-white/5 transition-colors duration-300">
-      {/* ─── Ambient mandala ornaments + glow (decorative) ─── */}
+    <section className="relative overflow-hidden bg-black grid-bg-dark py-12 md:py-16 border-y border-white/5">
+      {/* ─── Ambient ornaments (subtle, dark layout) ─── */}
       <Mandala
         variant="rings"
-        colorClass="text-gray-900 dark:text-white"
-        opacity={0.05}
+        colorClass="text-white"
+        opacity={0.03}
         speed={130}
         direction="cw"
         className="hidden md:block absolute -top-32 -left-28 w-[26rem] h-[26rem]"
@@ -140,33 +140,28 @@ export default function SystemModules() {
       <Mandala
         variant="orbital"
         colorClass="text-accent-yellow"
-        opacity={0.12}
+        opacity={0.06}
         speed={150}
         direction="ccw"
         className="hidden md:block absolute -bottom-40 -right-28 w-[30rem] h-[30rem]"
       />
-      <div
-        className="pointer-events-none absolute inset-x-0 top-0 h-48 opacity-60"
-        style={{ background: 'radial-gradient(60% 100% at 50% 0%, rgba(255,215,0,0.08), transparent 70%)' }}
-        aria-hidden="true"
-      />
 
       <div className="relative z-10 max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
         {/* ─── Header ─── */}
-        <div className="flex items-end justify-between gap-4 mb-6 md:mb-8 fp-fade-up">
+        <div className="flex items-end justify-between gap-4 mb-8 fp-fade-up">
           <div>
-            <span className="inline-flex items-center gap-1.5 bg-black text-accent-yellow font-mono text-[9px] md:text-[10px] font-black uppercase tracking-widest px-2.5 py-1 rounded-[3px] mb-3">
+            <span className="inline-flex items-center gap-1.5 bg-white/5 border border-white/10 text-accent-yellow font-mono text-[9px] md:text-[10px] font-black uppercase tracking-widest px-2.5 py-1 rounded-[3px] mb-3">
               <span className="material-symbols-outlined !text-[12px]">bolt</span>
               Everything you need
             </span>
-            <h2 className="font-mono font-black uppercase text-black dark:text-white tracking-tight leading-[1.05] text-2xl sm:text-3xl lg:text-[34px]">
+            <h2 className="font-mono font-black uppercase text-white tracking-tight leading-[1.05] text-2xl sm:text-3xl lg:text-[34px]">
               Every category. Every advantage.
             </h2>
-            <p className="mt-2.5 font-mono text-[10.5px] md:text-[11px] uppercase tracking-[0.2em] text-gray-500 dark:text-gray-400">
+            <p className="mt-2.5 font-mono text-[10.5px] md:text-[11px] uppercase tracking-[0.2em] text-gray-400">
               <span className="text-accent-yellow/90">//</span> Six curated tracks. One terminal for the entire founder stack.
             </p>
           </div>
-          <span className="hidden md:inline-flex items-center gap-1.5 font-mono text-[10px] font-bold uppercase tracking-widest text-gray-500 dark:text-gray-400 flex-shrink-0 pb-1">
+          <span className="hidden md:inline-flex items-center gap-1.5 font-mono text-[10px] font-bold uppercase tracking-widest text-gray-400 flex-shrink-0 pb-1">
             <span className="relative flex h-1.5 w-1.5">
               <span className="absolute inline-flex h-full w-full rounded-full bg-green-500 opacity-75 animate-ping" />
               <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-green-500" />
@@ -192,62 +187,37 @@ export default function SystemModules() {
               <div
                 key={c.name}
                 style={{ animationDelay: `${0.08 + i * 0.06}s` }}
-                className={`group fp-fade-up relative flex flex-col overflow-hidden rounded-2xl p-4 transition-all duration-300 hover:-translate-y-1 bg-[#0d0d0d] border border-white/10 md:bg-[#FAFAF7] md:dark:bg-[#050505] md:border-t-4 md:border-x-0 md:border-b-0 md:${c.border} md:dark:${c.darkBorder} md:${c.bg} md:dark:${c.darkBg} hover:shadow-[0_14px_34px_rgba(0,0,0,0.10)] dark:hover:shadow-[0_14px_34px_rgba(255,255,255,0.03)]`}
+                className="group fp-fade-up relative flex flex-col overflow-hidden rounded-2xl p-4 md:p-5 transition-all duration-300 hover:-translate-y-1 bg-[#0d0d0d] border border-white/10 hover:border-accent-yellow/40 hover:shadow-[0_8px_30px_rgba(0,0,0,0.5)]"
               >
-                {/* Subtle dots matrix pattern overlay */}
-                <div
-                  aria-hidden="true"
-                  className={`pointer-events-none absolute inset-0 opacity-[0.06] dark:opacity-[0.03] transition-opacity duration-300 group-hover:opacity-[0.12] dark:group-hover:opacity-[0.08] ${c.iconColor} ${c.darkIconColor} hidden md:block`}
-                  style={{
-                    backgroundImage: 'radial-gradient(currentColor 0.75px, transparent 0.75px)',
-                    backgroundSize: '8px 8px',
-                  }}
-                />
-
-                {/* Inset dashed ring */}
-                <div className={`absolute inset-[6px] rounded-[10px] border border-dashed opacity-20 dark:opacity-[0.08] group-hover:opacity-40 transition-opacity ${c.border} ${c.darkBorder} hidden md:block`} aria-hidden="true" />
-
-                {/* mandala watermark (decorative) */}
-                <div className="pointer-events-none absolute -bottom-7 -right-7 w-24 h-24 opacity-70 transition-opacity duration-500 group-hover:opacity-100 hidden md:block">
-                  <Mandala
-                    variant={c.mandalaVariant}
-                    colorClass={c.mandalaColor}
-                    opacity={0.14}
-                    speed={70 + i * 12}
-                    direction={i % 2 === 0 ? 'cw' : 'ccw'}
-                    className="w-full h-full"
-                  />
-                </div>
-
                 {/* index tick */}
-                <span className="absolute top-3 right-3 font-mono text-[9px] font-bold tracking-widest text-white/40 md:text-black/25 md:dark:text-white/20">
+                <span className="absolute top-3.5 right-3.5 font-mono text-[9px] font-bold tracking-widest text-white/20">
                   {String(i + 1).padStart(2, '0')}
                 </span>
 
                 {/* icon + name */}
-                <div className="relative flex items-center gap-2 mb-3">
-                  <span className={`w-7 h-7 rounded-lg bg-white/5 border border-white/10 ${brandCol} md:bg-white md:dark:bg-white/5 md:border-black/5 md:dark:border-white/10 md:${c.iconColor} md:dark:${c.darkIconColor} shadow-sm flex items-center justify-center flex-shrink-0 transition-all duration-300 group-hover:scale-110 group-hover:-rotate-6`}>
-                    <span className="material-symbols-outlined !text-[16px]">{c.icon}</span>
+                <div className="relative flex items-center gap-2.5 mb-3">
+                  <span className="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center flex-shrink-0 transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-6">
+                    <span className={`material-symbols-outlined !text-[16px] ${brandCol}`}>{c.icon}</span>
                   </span>
-                  <h3 className="font-mono text-[10.5px] font-black uppercase tracking-wide text-white md:text-black md:dark:text-white leading-tight">
+                  <h3 className="font-sans font-bold text-[13.5px] text-white leading-tight">
                     {c.name}
                   </h3>
                 </div>
 
                 {/* value */}
-                <p className={`relative font-mono font-black text-sm mb-1.5 ${brandCol} md:${c.valueColor} md:dark:${c.darkValueColor}`}>{c.value}</p>
+                <p className={`relative font-mono font-black text-sm md:text-base my-1.5 ${brandCol}`}>{c.value}</p>
 
                 {/* description */}
-                <p className="relative font-sans text-[12px] text-gray-400 md:text-gray-600 md:dark:text-gray-400 leading-snug mb-4">{c.desc}</p>
+                <p className="relative font-sans text-[12px] text-gray-400 leading-snug mb-4">{c.desc}</p>
 
                 {/* explore */}
                 <Link
                   href={c.href}
                   aria-label={`Explore ${c.name}`}
-                  className="relative mt-auto inline-flex items-center gap-1 self-start rounded-md border border-white/10 bg-white/5 px-2.5 py-1 font-mono text-[10px] font-black uppercase tracking-wider text-white backdrop-blur-sm hover:bg-white hover:text-black md:border-black/15 md:dark:border-white/10 md:bg-white/70 md:dark:bg-white/5 md:text-black md:dark:text-white md:hover:bg-black md:hover:text-white md:dark:hover:bg-white md:dark:hover:text-black transition-all duration-300"
+                  className="relative mt-auto inline-flex items-center gap-1 self-start rounded-md border border-white/10 bg-white/5 px-2.5 py-1.5 font-mono text-[9.5px] font-black uppercase tracking-wider text-white hover:bg-white hover:text-black hover:border-white transition-all duration-300"
                 >
                   Explore
-                  <span className="material-symbols-outlined !text-[13px] transition-transform group-hover:translate-x-0.5">arrow_forward</span>
+                  <span className="material-symbols-outlined !text-[12px] transition-transform group-hover:translate-x-0.5">arrow_forward</span>
                 </Link>
               </div>
             )
@@ -255,7 +225,7 @@ export default function SystemModules() {
         </div>
 
         {/* ─── Bottom CTA banner — premium dark ─── */}
-        <div className="hidden md:flex fp-fade-up relative mt-5 md:mt-6 overflow-hidden rounded-2xl bg-black dark:bg-[#0c0c0c] border-2 border-black dark:border-white/20 shadow-[4px_4px_0px_#ffd700] dark:shadow-[4px_4px_0px_rgba(255,215,0,0.15)] px-5 md:px-7 py-4.5 flex-col sm:flex-row items-center justify-between gap-3" style={{ animationDelay: '0.5s' }}>
+        <div className="hidden md:flex fp-fade-up relative mt-6 overflow-hidden rounded-2xl bg-black border-2 border-white/10 shadow-[4px_4px_0px_rgba(255,215,0,0.15)] px-5 md:px-7 py-4.5 flex-col sm:flex-row items-center justify-between gap-3" style={{ animationDelay: '0.5s' }}>
           {/* embedded mandalas */}
           <Mandala
             variant="orbital"
@@ -290,3 +260,4 @@ export default function SystemModules() {
     </section>
   )
 }
+

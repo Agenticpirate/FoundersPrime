@@ -77,10 +77,10 @@ export default function PricingPlans({ currency }: PricingPlansProps) {
 
             {/* Headline and Subline */}
             <h4 className="font-mono text-[16px] md:text-[17px] font-black text-white leading-[1.25] mb-1">
-              Skip your first idea on a tight budget.
+              Built for students building their first startup.
             </h4>
             <p className="text-[12.5px] text-gray-400 leading-relaxed mb-4">
-              For students and indie hackers shipping their first product.
+              For active students, student indie hackers, and student founders who are just getting started — no revenue, no funding required.
             </p>
 
             {/* Price section */}
@@ -96,11 +96,11 @@ export default function PricingPlans({ currency }: PricingPlansProps) {
             {/* Features list */}
             <ul className="space-y-3 my-5">
               {[
-                'Curated AI & SaaS perks for early builders',
-                'Hackathons, fellowships, and student programs',
-                'Early‑stage grants & founder communities',
-                'Tools, discounts, and credits matched to pre‑revenue teams',
-                'Career & opportunity hub to find gigs, internships, and co‑founders',
+                'Premium AI & SaaS credits curated for student builders',
+                'Student-exclusive hackathons, fellowships & campus programs',
+                'Early-stage grants & non-dilutive funding for student founders',
+                'Dev tools, discounts & credits matched to pre-revenue projects',
+                'Opportunity Hub: internships, co-founders, and student networks',
               ].map((feat) => (
                 <li key={feat} className="flex items-start gap-2.5 text-[13px] text-gray-300">
                   <span className="material-symbols-outlined !text-[16px] text-gray-500 mt-0.5" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
@@ -109,7 +109,7 @@ export default function PricingPlans({ currency }: PricingPlansProps) {
               ))}
               <li className="flex items-start gap-2.5 text-[13px] text-accent-yellow font-bold">
                 <span className="material-symbols-outlined !text-[16px] text-accent-yellow mt-0.5" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
-                <span>Perfect if you’re still validating ideas and haven’t raised or hit revenue yet</span>
+                <span>Made for students, indie hackers & first-time founders still figuring it out</span>
               </li>
             </ul>
           </div>
@@ -121,17 +121,17 @@ export default function PricingPlans({ currency }: PricingPlansProps) {
               disabled={loadingPlan === 'nextfounder'}
               className="w-full inline-flex items-center justify-center gap-2 py-3.5 px-4 font-mono font-black text-[12px] uppercase tracking-[0.1em] text-white border border-white hover:bg-white/15 rounded-lg transition-all"
             >
-              <span>{loadingPlan === 'nextfounder' ? 'REDIRECTING...' : 'START BUILDING SMARTER'}</span>
+              <span>{loadingPlan === 'nextfounder' ? 'REDIRECTING...' : 'START BUILDING FOR FREE*'}</span>
               <span className="material-symbols-outlined !text-[16px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
             </button>
             <p className="mt-3 text-center text-[10.5px] text-gray-500 font-mono">
-              ★ Upgrade to Founder or Legend anytime as you grow
+              ★ Active students only · Upgrade to Founder anytime as you grow
             </p>
           </div>
         </div>
 
         {/* ── Founder Card (Growth) — Highlighted ── */}
-        <div className="group relative flex flex-col justify-between bg-[#0e0d0a]/95 backdrop-blur-md border-2 border-accent-yellow/45 p-6 md:p-8 rounded-xl shadow-[0_0_30px_rgba(255,213,0,0.05)] scale-[1.03] z-10 hover:border-accent-yellow transition-all duration-300">
+        <div className="group relative flex flex-col justify-between bg-[#0e0d0a]/95 backdrop-blur-md border-2 border-accent-yellow/45 p-6 md:p-8 rounded-xl shadow-[0_0_30px_rgba(255,213,0,0.05)] md:scale-[1.03] my-4 md:my-0 z-10 hover:border-accent-yellow transition-all duration-300">
           {/* Most popular badge — fixed, nowrap, full width pill */}
           <div className="absolute -top-4 left-0 right-0 flex justify-center z-20">
             <span className="inline-flex items-center gap-1.5 bg-accent-yellow text-black font-mono text-[9px] font-black uppercase tracking-[0.12em] px-4 py-1.5 rounded-full border border-black shadow-[2px_2px_0px_#000] whitespace-nowrap">
@@ -186,7 +186,7 @@ export default function PricingPlans({ currency }: PricingPlansProps) {
                 'Unlimited deal claims across every category — no hidden limits',
                 'Funding & grant programs filtered to your stage and geography',
                 'Accelerators, fellowships, and operator programs in one place',
-                'Verified startups & startup ideas database to find collaborators and customers',
+                'Access to Founders Resources (including ideas database, existing startups, and more)',
               ].map((feat) => (
                 <li key={feat} className="flex items-start gap-2.5 text-[13px] text-gray-300 pl-0.5">
                   <span className="material-symbols-outlined !text-[16px] text-accent-yellow mt-0.5" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>

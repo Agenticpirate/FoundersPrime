@@ -20,7 +20,7 @@ export default function PricingComparisonTable() {
                 { name: "Curated Tools & Opportunities", nextfounder: "✓", founder: "✓", legend: "✓" },
                 { name: "Accelerator Programs", nextfounder: "—", founder: "✓ All Pages", legend: "✓ All Pages" },
                 { name: "Incubator Programs", nextfounder: "—", founder: "✓ All Pages", legend: "✓ All Pages" },
-                { name: "Verified Startups Database", nextfounder: "—", founder: "✓", legend: "✓" },
+                { name: "Founders Resources (Ideas database, existing startups & more)", nextfounder: "—", founder: "✓", legend: "✓" },
                 { name: "Investor Database", nextfounder: "—", founder: "✓", legend: "✓" },
             ]
         },

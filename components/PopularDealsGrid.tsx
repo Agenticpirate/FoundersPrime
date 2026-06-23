@@ -121,7 +121,7 @@ function DealCard({ deal }: { deal: PopularDeal }) {
         {/* CTA */}
         <Link
           href="/pricing"
-          className="group/cta mt-auto w-full inline-flex items-center justify-center gap-1.5 bg-[#050505] text-white border border-[#FFD500]/40 group-hover:bg-[#FFD500] group-hover:text-black group-hover:border-[#FFD500] hover:bg-[#FFD500] hover:text-black hover:border-[#FFD500] font-mono font-black text-[10px] uppercase tracking-[0.12em] py-2.5 rounded transition-all duration-200"
+          className="group/cta mt-auto w-full inline-flex items-center justify-center gap-1.5 bg-[#000000] text-white border border-[#FFD500]/40 group-hover:bg-[#FFD500] group-hover:text-black group-hover:border-[#FFD500] hover:bg-[#FFD500] hover:text-black hover:border-[#FFD500] font-mono font-black text-[10px] uppercase tracking-[0.12em] py-2.5 rounded transition-all duration-200"
           aria-label={`Get the ${deal.name} deal`}
         >
           Get this deal
@@ -170,7 +170,7 @@ export default function PopularDealsGrid() {
   }, [activeIndex, totalPages])
 
   return (
-    <section className="relative py-12 md:py-16 bg-[#f6f8f8] dark:bg-[#050505] text-[#1a1a1a] dark:text-white border-b-2 border-black dark:border-white/10 overflow-hidden grid-bg transition-colors duration-300">
+    <section className="relative py-12 md:py-16 bg-[#f6f8f8] dark:bg-[#000000] text-[#1a1a1a] dark:text-white border-b-2 border-black dark:border-white/10 overflow-hidden grid-bg transition-colors duration-300">
       <style dangerouslySetInnerHTML={{ __html: `
         .hide-scrollbar::-webkit-scrollbar { display: none; }
       `}} />
@@ -333,7 +333,7 @@ export default function PopularDealsGrid() {
           
           <Link
             href="/deals"
-            className="w-full bg-[#050505] border border-[#FFD500] text-[#FFD500] hover:bg-[#FFD500] hover:text-black py-3.5 flex items-center justify-center gap-2 font-mono font-bold text-[11px] uppercase tracking-[0.15em] transition-all rounded-lg"
+            className="w-full bg-[#000000] border border-[#FFD500] text-[#FFD500] hover:bg-[#FFD500] hover:text-black py-3.5 flex items-center justify-center gap-2 font-mono font-bold text-[11px] uppercase tracking-[0.15em] transition-all rounded-lg"
           >
             <span className="material-symbols-outlined !text-[16px]">bolt</span>
             Access all deals

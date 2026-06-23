@@ -57,7 +57,7 @@ const STATS = [
 
 export default function FlashDealsPage() {
   return (
-    <div className="relative flex min-h-screen w-full flex-col bg-[#050505] text-white overflow-x-hidden">
+    <div className="relative flex min-h-screen w-full flex-col bg-[#000000] text-white overflow-x-hidden">
       {/* Subtle grid overlay */}
       <div
         className="fixed inset-0 pointer-events-none z-0 opacity-[0.025]"

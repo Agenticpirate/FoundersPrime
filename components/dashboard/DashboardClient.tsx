@@ -79,15 +79,7 @@ export default function DashboardClient({
     <>
       {/* ── Premium dark hero ── */}
       <section className="relative bg-gradient-to-br from-gray-900 via-black to-gray-900 text-white border-b-2 border-accent-yellow overflow-hidden">
-        <div
-          className="absolute inset-0 opacity-[0.05] pointer-events-none"
-          style={{
-            backgroundImage:
-              'linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)',
-            backgroundSize: '40px 40px',
-          }}
-          aria-hidden="true"
-        />
+        {/* Grid background removed */}
         <div className="absolute -top-24 -left-24 w-72 h-72 bg-accent-yellow/15 rounded-full blur-3xl pointer-events-none" />
         <div className="absolute -bottom-24 -right-24 w-72 h-72 bg-sky-500/10 rounded-full blur-3xl pointer-events-none" />
         <DashboardMandala />

@@ -13,7 +13,7 @@
  */
 export default function BrandedLoader() {
   return (
-    <div className="relative min-h-screen overflow-hidden bg-[#050505] flex items-center justify-center px-6">
+    <div className="relative min-h-screen overflow-hidden bg-[#000000] flex items-center justify-center px-6">
       {/* Subtle grid backdrop */}
       <div
         className="absolute inset-0 opacity-[0.025] pointer-events-none"

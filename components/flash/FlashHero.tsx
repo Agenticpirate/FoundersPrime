@@ -120,7 +120,7 @@ export default function FlashHero() {
           lightning bolt SVG (which extends beyond the card edge) remains
           visible. The inner glow blob is the only element that bleeds out.
         */}
-        <div className="relative bg-gradient-to-br from-[#1c1a0e] via-[#0d0d0d] to-[#050505] border border-accent-yellow/35 p-5 md:p-7 flex flex-col justify-center min-h-[240px]">
+        <div className="relative bg-gradient-to-br from-[#1c1a0e] via-[#0d0d0d] to-[#000000] border border-accent-yellow/35 p-5 md:p-7 flex flex-col justify-center min-h-[240px]">
           {/* Scan-line texture */}
           <div
             aria-hidden="true"

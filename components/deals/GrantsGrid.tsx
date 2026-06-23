@@ -1,3 +1,5 @@
+'use client'
+
 import { useState, useMemo, useEffect } from 'react'
 import { useRouter, useSearchParams, usePathname } from 'next/navigation'
 import { grants2026, Grant } from '@/data/grants-2026'

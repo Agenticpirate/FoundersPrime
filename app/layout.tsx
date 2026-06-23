@@ -1,45 +1,9 @@
 import type { Metadata } from 'next'
 import Script from 'next/script'
-import { IBM_Plex_Sans, IBM_Plex_Mono, Space_Grotesk, Archivo } from 'next/font/google'
 import './globals.css'
 import CookieConsentProvider from '@/components/cookie/CookieConsentProvider'
 
 const GA_MEASUREMENT_ID = 'G-X2EQLZJD8C'
-
-// Self-host fonts via next/font — eliminates render-blocking CSS request,
-// preloads critical weights, swap behavior prevents FOIT.
-const ibmPlexSans = IBM_Plex_Sans({
-  subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
-  display: 'swap',
-  variable: '--font-sans',
-  preload: true,
-})
-
-const ibmPlexMono = IBM_Plex_Mono({
-  subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
-  display: 'swap',
-  variable: '--font-mono',
-  preload: true,
-})
-
-const spaceGrotesk = Space_Grotesk({
-  subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
-  display: 'swap',
-  variable: '--font-display',
-  preload: false,
-})
-
-// Heavy display grotesque for the hero tagline ("BUILD MORE. BURN LESS.")
-const archivo = Archivo({
-  subsets: ['latin'],
-  weight: ['700', '800', '900'],
-  display: 'swap',
-  variable: '--font-heading',
-  preload: true,
-})
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.foundersprime.com'),
@@ -108,10 +72,8 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  const fontVariables = `${ibmPlexSans.variable} ${ibmPlexMono.variable} ${spaceGrotesk.variable} ${archivo.variable}`
-
   return (
-    <html lang="en" className={`dark ${fontVariables}`}>
+    <html lang="en" className="dark">
       <head>
         {/* Inline theme-switching script to prevent FOUC */}
         <script
@@ -132,6 +94,23 @@ export default function RootLayout({
             `
           }}
         />
+        {/* GA Consent Mode v2 — default DENY before user consents.
+             This must run synchronously (beforeInteractive) so GA initialises
+             in denied state even before the consent provider hydrates. */}
+        <Script id="ga-consent-defaults" strategy="beforeInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('consent', 'default', {
+              analytics_storage: 'denied',
+              ad_storage: 'denied',
+              ad_user_data: 'denied',
+              ad_personalization: 'denied',
+              wait_for_update: 500,
+            });
+            gtag('js', new Date());
+          `}
+        </Script>
         {/* Google Analytics — lazy-load after interactive */}
         <Script
           src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
@@ -139,9 +118,6 @@ export default function RootLayout({
         />
         <Script id="google-analytics" strategy="lazyOnload">
           {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
             gtag('config', '${GA_MEASUREMENT_ID}');
           `}
         </Script>
@@ -157,6 +133,10 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="https://images.unsplash.com" />
         <link rel="dns-prefetch" href="https://lh3.googleusercontent.com" />
         <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;800;900&family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+        />
+        <link
           rel="preload"
           as="style"
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0..1,0&display=swap"
@@ -166,7 +146,7 @@ export default function RootLayout({
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0..1,0&display=swap"
         />
       </head>
-      <body className="bg-[#050505] text-white dark:bg-[#050505] dark:text-white transition-colors duration-300 flex flex-col min-h-screen overflow-x-hidden w-full relative">
+      <body className="bg-[#000000] text-white dark:bg-[#000000] dark:text-white transition-colors duration-300 flex flex-col min-h-screen overflow-x-hidden w-full relative">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

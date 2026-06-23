@@ -90,14 +90,7 @@ export default function VerifiedIdeasAndFundedDB() {
           {/* Funded Database */}
           <div className="relative bg-black text-white border-2 border-black p-5 md:p-8 shadow-[5px_5px_0px_#111] overflow-hidden mt-3 lg:mt-0">
             <div className="absolute -top-12 -right-12 w-48 h-48 bg-green-500/20 rounded-full blur-3xl pointer-events-none" />
-            <div
-              className="absolute inset-0 opacity-[0.04] pointer-events-none"
-              style={{
-                backgroundImage:
-                  'linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)',
-                backgroundSize: '20px 20px',
-              }}
-            />
+            {/* Grid background removed */}
 
             <div className="relative flex flex-col sm:flex-row justify-between items-start sm:items-end mb-5 md:mb-6 border-b border-white/20 pb-4 gap-3">
               <div>

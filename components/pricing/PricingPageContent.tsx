@@ -5,6 +5,81 @@ import PricingPlans from '@/components/pricing/PricingPlans'
 import PricingPartnerLogos from '@/components/pricing/PricingPartnerLogos'
 import { Currency } from '@/utils/currency'
 
+const faqs = [
+    {
+        q: 'HOW FAST WILL I SEE SAVINGS?',
+        a: 'Most founders claim their first deal within 3 minutes. A single cloud credit alone can save you $5K–$100K instantly — more than covering years of subscription.'
+    },
+    {
+        q: 'ARE DEALS ACTUALLY VERIFIED?',
+        a: 'Yes. Every deal is manually verified weekly by our team. Broken links are removed, expired offers flagged immediately, and new deals are added constantly. You never waste time on dead ends.'
+    },
+    {
+        q: 'I AM A STUDENT — WHICH PLAN IS FOR ME?',
+        a: "Next'Founder ($59/yr) is built specifically for active students, indie hackers, and early builders. You get premium AI & SaaS credits, hackathons, internships, fellowships, early-stage grants, and the full Opportunity Hub — tailored for student builders."
+    },
+    {
+        q: 'WHAT IF I ONLY NEED ONE DEAL?',
+        a: 'Even a single deal pays for your subscription several times over. The Founder plan at $149/yr gives you full, unlimited access across every category — immediately after checkout.'
+    },
+    {
+        q: 'WHAT ARE THE ELIGIBILITY REQUIREMENTS?',
+        a: 'Eligibility for each deal, credit, or grant varies completely — it is determined by the individual provider and their criteria. Some require proof of incorporation, others are open to students or pre-revenue startups. Each listing on FoundersPrime includes clear eligibility notes so you know before you apply.'
+    },
+    {
+        q: 'CAN I CANCEL MY SUBSCRIPTION ANYTIME?',
+        a: 'Yes, you can cancel your subscription at any time with a single click from your dashboard. No contracts, no lock-ins. You will keep access to all benefits until the end of your billing period.'
+    },
+]
+
+const testimonials = [
+    {
+        text: "Honestly, I signed up just to try it but ended up claiming $5,000 in AWS credits within 10 minutes. That alone made up for years of subscription.",
+        author: "Arjun Malhotra",
+        role: "Founder, QuickBuild"
+    },
+    {
+        text: "We were struggling to find non-dilutive funding and had no idea about government grants. FoundersPrime's database helped us secure ₹10 Lakh in funding we would've never found on our own.",
+        author: "Priya Sharma",
+        role: "Co-founder, EdTechUp"
+    },
+    {
+        text: "Every dollar counts when you're bootstrapping. I saved $8,000 on Stripe credits and dynamic tools. Anyone who doesn't use FoundersPrime should check their sanity — just sign up.",
+        author: "Daniel Muller",
+        role: "Founder, PayStack"
+    },
+    {
+        text: "The pitch deck templates from their resources section was a lifesaver. Our investor actually complimented the structure. We closed our pre-seed round in just 3 weeks after using it!",
+        author: "Maria Gonzalez",
+        role: "Founder, SyncLabs"
+    },
+    {
+        text: "I love the UI! Vetted deals platform before trying out FoundersPrime. Nothing else comes close. The deals are actually relevant and fully functional, not just random affiliate links.",
+        author: "Raj Patel",
+        role: "CTO, DevScale"
+    },
+    {
+        text: "The YC application templates and strategy guides on FoundersPrime gave me such a huge edge. I got into the W24 batch and I honestly credit a lot of my prep to this platform.",
+        author: "Sophie Chen",
+        role: "Founder, Bloom AI"
+    },
+    {
+        text: "Solo founder life is tough, but FoundersPrime makes it way easier. Google Cloud credits, Postman free tier, Notion Teams — my software costs are basically zero now. Love it.",
+        author: "James Mitchell",
+        role: "Solo Hacker, DevProd"
+    },
+    {
+        text: "I went with the Legend plan and honestly, best money I've spent on my startup. Lifetime access means no renewals, and their support team is super responsive and helpful.",
+        author: "Ananya Iyer",
+        role: "Co-founder, GreenTech"
+    },
+    {
+        text: "On our first month, we saved over $12,000 in SaaS tools. Notion, Airtable, GitHub — all covered. For us in Spain, it's massive. Every founder should know about this.",
+        author: "Liam Torres",
+        role: "Founder, SaaSly"
+    }
+]
+
 export default function PricingPageContent() {
     const currency: Currency = 'USD'
     const testimonialsRef = useRef<HTMLDivElement>(null)
@@ -27,97 +102,27 @@ export default function PricingPageContent() {
         return () => observer.disconnect()
     }, [])
 
+    // Testimonials Carousel State
+    const [activeTestimonial, setActiveTestimonial] = useState(0)
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setActiveTestimonial((prev) => (prev + 1) % testimonials.length)
+        }, 5000)
+        return () => clearInterval(interval)
+    }, [])
+
     // FAQ State
     const [openFaq, setOpenFaq] = useState<number | null>(null)
-    const faqs = [
-        {
-            q: 'HOW FAST WILL I SEE SAVINGS?',
-            a: 'Most founders claim their first deal within 3 minutes. A single cloud credit alone can save you $5K–$100K instantly — more than covering years of membership.'
-        },
-        {
-            q: 'ARE DEALS ACTUALLY VERIFIED?',
-            a: 'Yes. Every deal is manually verified weekly by our team. Broken links are removed, expired offers flagged immediately, and new deals are added constantly. You never waste time on dead ends.'
-        },
-        {
-            q: 'I AM A STUDENT — WHICH PLAN IS FOR ME?',
-            a: "Next'Founder ($59/yr) is built specifically for active students, indie hackers, and early builders. You get premium AI & SaaS credits, hackathons, internships, fellowships, early-stage grants, and the full Opportunity Hub — tailored for student builders."
-        },
-        {
-            q: 'WHAT IF I ONLY NEED ONE DEAL?',
-            a: 'Even a single deal pays for your membership several times over. The Founder plan at $149/yr gives you full, unlimited access across every category — immediately after checkout.'
-        },
-        {
-            q: 'WHAT ARE THE ELIGIBILITY REQUIREMENTS?',
-            a: 'Eligibility for each deal, credit, or grant varies completely — it is determined by the individual provider and their criteria. Some require proof of incorporation, others are open to students or pre-revenue startups. Each listing on FoundersPrime includes clear eligibility notes so you know before you apply.'
-        },
-        {
-            q: 'CAN I CANCEL ANYTIME? WHAT ABOUT REFUNDS?',
-            a: 'Yes, you can cancel anytime — no contracts, no lock-in. Cancel from your dashboard in one click and you keep access until your billing period ends. Please note: all payments are non-refundable. Once a subscription or lifetime plan is purchased, the amount paid cannot be returned. We strongly recommend reviewing plan details before checkout.'
-        },
-    ]
-
-    const testimonials = [
-        {
-            text: "Honestly, I signed up just to try it but ended up claiming $5,000 in AWS credits within 10 minutes. That alone made up for years of membership. Wish I'd found it sooner.",
-            author: "Arjun Malhotra",
-            role: "Founder, QuickBuild"
-        },
-        {
-            text: "We were struggling to find non-dilutive funding and had no idea about government grants. FoundersPrime's database helped us secure ₹10 Lakh in funding we would've never found on our own.",
-            author: "Priya Sharma",
-            role: "Co-founder, EdTechUp"
-        },
-        {
-            text: "Every dollar counts when you're bootstrapping. I saved $8,000 on Stripe credits and dynamic tools. Anyone who doesn't use FoundersPrime should check their sanity — just sign up.",
-            author: "Daniel Muller",
-            role: "Founder, PayStack"
-        },
-        {
-            text: "The pitch deck templates from their resources section was a lifesaver. Our investor actually complimented the structure. We closed our pre-seed round in just 3 weeks after using it!",
-            author: "Maria Gonzalez",
-            role: "Founder, SyncLabs"
-        },
-        {
-            text: "I love the UI! Vetted deals platform before trying out FoundersPrime. Nothing else comes close. The deals are actually relevant and fully functional, not just random affiliate links.",
-            author: "Raj Patel",
-            role: "CTO, DevScale"
-        },
-        {
-            text: "The YC application templates and strategy guides on FoundersPrime gave me such a huge edge. I got into the W24 batch and I honestly credit a lot of my prep to this platform.",
-            author: "Sophie Chen",
-            role: "Founder, Bloom AI"
-        },
-        {
-            text: "Solo founder life is tough, but FoundersPrime makes it way easier. Google Cloud credits, Postman free tier, Notion Teams — my software costs are basically zero now. Love it.",
-            author: "James Mitchell",
-            role: "Solo Hacker, DevProd"
-        },
-        {
-            text: "I went with the Legend plan and honestly, best money I've spent on my startup. Lifetime access means no renewals, and their support team is super responsive and helpful.",
-            author: "Ananya Iyer",
-            role: "Co-founder, GreenTech"
-        },
-        {
-            text: "On our first month, we saved over $12,000 in SaaS tools. Notion, Airtable, GitHub — all covered. For us in Spain, it's massive. Every founder should know about this.",
-            author: "Liam Torres",
-            role: "Founder, SaaSly"
-        }
-    ]
 
     return (
-        <main className="relative bg-[#050505] text-white min-h-screen pb-16 selection:bg-accent-yellow selection:text-black">
-            {/* Grid background */}
-            <div
-                className="absolute inset-0 opacity-[0.03] pointer-events-none"
-                style={{
-                    backgroundImage:
-                        'linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)',
-                    backgroundSize: '40px 40px',
-                }}
-            />
+        <main className="relative bg-[#000000] text-white min-h-screen pb-16 selection:bg-accent-yellow selection:text-black">
+            {/* Grid background removed */}
+
 
             {/* ── HERO SECTION ── */}
-            <div className="relative max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 md:pt-14 pb-4">
+            {/* Desktop Hero Section */}
+            <div className="hidden md:block relative max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 md:pt-14 pb-4">
                 <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
                     {/* Left: Heading block */}
                     <div className="max-w-2xl">
@@ -135,7 +140,7 @@ export default function PricingPageContent() {
                         </p>
                         
                         <p className="text-accent-yellow font-mono text-[11px] font-bold uppercase tracking-wider mt-3">
-                            ✦ Most members recover 10–20× their membership fee in year one from cloud credits, SaaS discounts, and grants alone.
+                            ✦ Most builders recover 10–20× their subscription fee in year one from cloud credits, SaaS discounts, and grants alone.
                         </p>
                     </div>
 
@@ -143,7 +148,7 @@ export default function PricingPageContent() {
                     <div className="flex flex-wrap lg:flex-col gap-2 lg:items-end flex-shrink-0 font-mono text-[10px] font-black">
                         <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#12141a] border border-[#1b2028] text-white uppercase tracking-wider rounded-sm">
                             <span className="w-1.5 h-1.5 bg-accent-yellow rounded-full animate-pulse" />
-                            500+ FOUNDERS
+                            VERIFIED DEALS
                         </span>
                         <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#12141a] border border-[#1b2028] text-white uppercase tracking-wider rounded-sm">
                             <span className="w-1.5 h-1.5 bg-accent-yellow rounded-full animate-pulse" />
@@ -157,31 +162,96 @@ export default function PricingPageContent() {
                 </div>
             </div>
 
-            {/* ── Pricing Cards component ── */}
-            <PricingPlans currency={currency} />
+            {/* Mobile Hero Section (Enhanced to match the design concept) */}
+            <div className="block md:hidden relative px-4 pt-8 pb-4 overflow-hidden">
+                <div className="flex items-start justify-between gap-4">
+                    {/* Left: Heading block */}
+                    <div className="flex-1">
+                        <span className="inline-flex items-center gap-1 px-2.5 py-1 bg-black border border-accent-yellow/30 text-accent-yellow font-mono text-[9px] font-black uppercase tracking-wider rounded-full mb-3 shadow-[0_0_10px_rgba(255,213,0,0.05)]">
+                            <span className="material-symbols-outlined !text-[11px] text-accent-yellow">bolt</span>
+                            ONE DASHBOARD • EVERY DEAL
+                        </span>
+                        
+                        <h1 className="font-mono text-[25px] font-black uppercase tracking-tight leading-[1.08] text-white">
+                            BUILT TO SHIP <span className="text-accent-yellow">FASTER.</span><br />
+                            BUILT TO SPEND <span className="text-accent-yellow">LESS.</span>
+                        </h1>
+                    </div>
 
-            {/* ── Secure Checkout Bar ── */}
-            <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
-                <div className="flex flex-col md:flex-row items-center justify-between gap-4 bg-[#0a0a0f] border border-[#1b2028] p-4 rounded-lg text-center md:text-left">
-                    <div className="flex items-center gap-2">
-                        <span className="font-mono text-xs font-black uppercase tracking-wider text-accent-yellow">SECURE CHECKOUT</span>
+                    {/* Right: Golden Animated Orbital Mandala with Crown */}
+                    <div className="relative w-24 h-24 flex-shrink-0 mt-1">
+                        {/* Glow effects */}
+                        <div className="absolute inset-1 bg-accent-yellow/10 rounded-full blur-md animate-pulse" />
+                        <div className="absolute inset-4 bg-accent-yellow/20 rounded-full blur-lg" />
+                        
+                        {/* SVG Mandala */}
+                        <svg viewBox="0 0 200 200" className="w-full h-full text-accent-yellow/80 relative z-10" fill="none" stroke="currentColor" strokeWidth="0.8">
+                            {/* Outer dotted orbit */}
+                            <circle cx="100" cy="100" r="82" strokeWidth="0.6" strokeDasharray="3 5" className="animate-spin-slow" style={{ transformOrigin: 'center' }} />
+                            
+                            {/* Orbiting dot */}
+                            <g className="animate-spin-slow" style={{ transformOrigin: 'center', animationDuration: '8s' }}>
+                                <circle cx="100" cy="18" r="3.5" fill="#FFD500" className="shadow-[0_0_8px_#FFD500]" />
+                            </g>
+                            
+                            {/* Inner orbits */}
+                            <circle cx="100" cy="100" r="62" strokeWidth="0.8" />
+                            <circle cx="100" cy="100" r="50" strokeWidth="0.5" strokeDasharray="1 3" />
+                            
+                            {/* Rotating inner glass diamond platforms */}
+                            <g className="animate-spin-slow" style={{ transformOrigin: 'center', animationDuration: '15s' }}>
+                                <rect x="68" y="68" width="64" height="64" rx="4" strokeWidth="1.2" stroke="currentColor" />
+                                <rect x="76" y="76" width="48" height="48" rx="2" strokeWidth="0.6" strokeDasharray="2 2" className="opacity-60" />
+                            </g>
+                        </svg>
+                        
+                        {/* Central Glowing Crown */}
+                        <div className="absolute inset-0 flex items-center justify-center">
+                            <span className="material-symbols-outlined !text-[20px] text-accent-yellow drop-shadow-[0_0_6px_rgba(255,213,0,0.85)]" style={{ fontVariationSettings: "'FILL' 1" }}>
+                                crown
+                            </span>
+                        </div>
                     </div>
-                    <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-[10.5px] font-mono text-gray-400">
-                        <span className="flex items-center gap-1.5">💳 PAY SECURELY VIA DODO PAYMENTS</span>
-                        <span className="flex items-center gap-1.5">🔒 SSL 256-BIT ENCRYPTION</span>
-                        <span className="flex items-center gap-1.5">🛡️ 100% SAFE. NEVER STORED ON OUR SERVERS</span>
-                        <span className="flex items-center gap-1.5">⚡ NO HIDDEN FEES. NO CONTRACTS.</span>
-                    </div>
+                </div>
+
+                <p className="text-gray-400 text-xs leading-relaxed mt-4">
+                    One dashboard of vetted startup deals, credits, and programs so you stop hunting links and start saving real money on every tool.
+                </p>
+                
+                <p className="text-accent-yellow font-mono text-[9.5px] font-bold uppercase tracking-wide mt-3 flex items-start gap-1.5">
+                    <span className="text-[11px] leading-none mt-[1px]">✦</span>
+                    <span>Most builders recover 10–20× their subscription fee in year one from cloud credits, SaaS discounts, and grants alone.</span>
+                </p>
+
+                {/* Mobile Badges */}
+                <div className="flex flex-wrap gap-1.5 mt-4 font-mono text-[8.5px] font-black">
+                    <span className="inline-flex items-center gap-1 px-2 py-1 bg-[#12141a] border border-[#1b2028] text-gray-300 uppercase tracking-wider rounded-sm">
+                        <span className="w-1.5 h-1.5 bg-accent-yellow rounded-full animate-pulse" />
+                        VERIFIED DEALS
+                    </span>
+                    <span className="inline-flex items-center gap-1 px-2 py-1 bg-[#12141a] border border-[#1b2028] text-gray-300 uppercase tracking-wider rounded-sm">
+                        <span className="w-1.5 h-1.5 bg-accent-yellow rounded-full animate-pulse" />
+                        $50K+ AVG SAVINGS
+                    </span>
+                    <span className="inline-flex items-center gap-1 px-2 py-1 bg-[#12141a] border border-[#1b2028] text-gray-300 uppercase tracking-wider rounded-sm">
+                        <span className="w-1.5 h-1.5 bg-accent-yellow rounded-full animate-pulse" />
+                        4.9★ RATED
+                    </span>
                 </div>
             </div>
 
+            {/* ── Pricing Cards component ── */}
+            <PricingPlans currency={currency} />
+
+
+
             {/* ── Partner logos strip ── */}
-            <div className="border-y border-[#1b2028] bg-[#050505]">
+            <div className="border-y border-[#1b2028] bg-[#000000]">
                 <PricingPartnerLogos />
             </div>
 
             {/* ── Solo Ship or Build with Team ── */}
-            <section className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 py-16">
+            <section className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-16">
                 <div className="text-center mb-10">
                     <span className="font-mono text-[10px] font-black uppercase tracking-[0.2em] text-accent-yellow block mb-2">
                         THE EXPERIENCE
@@ -270,7 +340,7 @@ export default function PricingPageContent() {
             </section>
 
             {/* ── Everything you need. One Dashboard. ── */}
-            <section className="bg-[#07080a] border-y border-[#1b2028] py-16">
+            <section className="bg-[#07080a] border-y border-[#1b2028] py-8 md:py-16">
                 <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="text-center mb-10">
                         <span className="font-mono text-[10px] font-black uppercase tracking-[0.25em] text-accent-yellow block mb-2">
@@ -292,7 +362,7 @@ export default function PricingPageContent() {
                             { label: 'SAAS DEALS', desc: 'CRM, analytics, support, and dev tools at founder-only rates.', icon: 'payments', color: 'text-blue-400', badge: 'EXCLUSIVE', bg: 'hover:border-blue-500/30' },
                             { label: 'AI CREDITS', desc: 'Model, infra, and tooling credits to experiment cheaply.', icon: 'campaign', color: 'text-pink-400', badge: 'FEATURED', bg: 'hover:border-pink-500/30' },
                             { label: 'STARTUP TOOLS', desc: 'Dev, ops, and growth tools with extended trials or discounts.', icon: 'build', color: 'text-cyan-400', badge: 'EXCLUSIVE', bg: 'hover:border-cyan-500/30' },
-                            { label: 'VERIFIED STARTUPS', desc: 'Discover tools built by other founders in the ecosystem.', icon: 'shield_lock', color: 'text-accent-yellow', badge: 'RESEARCH', bg: 'hover:border-accent-yellow/30' },
+                            { label: 'FOUNDERS RESOURCES', desc: 'Access ideas database, existing startups, templates, and more.', icon: 'folder_open', color: 'text-accent-yellow', badge: 'RESOURCES', bg: 'hover:border-accent-yellow/30' },
                             { label: 'STUDENT PERKS', desc: 'Special perks only for student and campus founders.', icon: 'school', color: 'text-green-400', badge: 'INITIATIVES', bg: 'hover:border-green-500/30' }
                         ].map((cat) => (
                             <div key={cat.label} className={`p-5 bg-[#0b0c0e] border border-[#1b2028] rounded-xl transition-all duration-300 hover:-translate-y-1 ${cat.bg} group relative overflow-hidden`}>
@@ -317,7 +387,7 @@ export default function PricingPageContent() {
             </section>
 
             {/* ── Accordion FAQ ── */}
-            <section className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+            <section className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-16">
                 <div className="text-center mb-10">
                     <span className="font-mono text-[10px] font-black uppercase tracking-[0.2em] text-accent-yellow block mb-2">
                         COMMON QUESTIONS
@@ -331,7 +401,7 @@ export default function PricingPageContent() {
                     {[
                         {
                             q: 'HOW FAST WILL I SEE SAVINGS?',
-                            a: 'Many founders recoup their membership from their first claim — often a single cloud or SaaS deal. Others stack savings over their first few weeks as they switch tools and apply to programs.'
+                            a: 'Many founders recoup their subscription from their first claim — often a single cloud or SaaS deal. Others stack savings over their first few weeks as they switch tools and apply to programs.'
                         },
                         {
                             q: 'ARE DEALS ACTUALLY VERIFIED?',
@@ -339,7 +409,7 @@ export default function PricingPageContent() {
                         },
                         {
                             q: 'I AM A STUDENT — WHICH PLAN IS FOR ME?',
-                            a: 'Start with Next’ Founder if you’re pre‑revenue or still experimenting. If you already pay for multiple tools or are raising money, Founder will usually pay back faster.'
+                            a: "Next'Founder ($59/yr) is built specifically for active students, student indie hackers, and student founders who want to build their first startup — no revenue, no funding required. You get premium AI & SaaS credits, student-exclusive hackathons, fellowships, campus programs, early-stage grants, and the full Opportunity Hub — all tailored to the student builder journey."
                         },
                         {
                             q: 'WHY IS IT ONLY ONE DASHBOARD?',
@@ -350,14 +420,16 @@ export default function PricingPageContent() {
                             a: 'Each perk has clear requirements listed — from “idea‑stage ok” to “must be incorporated” or “under X years old.” We highlight what you qualify for so you don’t waste time.'
                         },
                         {
-                            q: 'CAN I CANCEL ANYTIME? WHAT ABOUT REFUNDS?',
-                            a: 'You can cancel an annual plan anytime and keep access until the end of your billing period. If something breaks badly and we can’t fix it, we’ll make it right on a case‑by‑case basis.'
+                            q: 'CAN I CANCEL MY SUBSCRIPTION ANYTIME?',
+                            a: 'Yes, you can cancel your subscription at any time with a single click from your dashboard. No contracts, no lock-ins. You will keep access to all benefits until the end of your billing period.'
                         }
                     ].map((faq, idx) => {
                         const isOpen = openFaq === idx
                         return (
                             <div
                                 key={faq.q}
+                                onMouseEnter={() => setOpenFaq(idx)}
+                                onMouseLeave={() => setOpenFaq(null)}
                                 className="border border-[#1b2028] bg-[#0b0c0e]/60 rounded-lg overflow-hidden transition-all duration-300"
                             >
                                 <button
@@ -397,23 +469,16 @@ export default function PricingPageContent() {
                 </div>
             </section>
 
-            {/* ── Testimonials ── */}
-            <section className="relative bg-[#050505] py-20 overflow-hidden">
+            <section className="relative bg-[#000000] pt-14 pb-8 overflow-hidden">
                 {/* Ambient glow blobs */}
                 <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-accent-yellow/[0.04] rounded-full blur-[120px] pointer-events-none" />
                 <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-purple-500/[0.04] rounded-full blur-[100px] pointer-events-none" />
-                {/* Subtle grid overlay */}
-                <div
-                    className="absolute inset-0 opacity-[0.025] pointer-events-none"
-                    style={{
-                        backgroundImage: 'linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)',
-                        backgroundSize: '40px 40px',
-                    }}
-                />
+                {/* Subtle grid overlay removed */}
+
 
                 <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     {/* Section header */}
-                    <div className="text-center mb-14">
+                    <div className="text-center mb-10">
                         <span className="inline-flex items-center gap-1.5 font-mono text-[10px] font-black uppercase tracking-[0.25em] text-accent-yellow mb-3">
                             <span className="w-4 h-px bg-accent-yellow/60" />
                             FOUNDER REVIEWS
@@ -425,81 +490,95 @@ export default function PricingPageContent() {
                                 <span className="relative z-10 text-black bg-accent-yellow px-2 py-0.5">FOR IT.</span>
                             </span>
                         </h2>
-                        <p className="text-gray-400 font-mono text-xs md:text-sm max-w-xl mx-auto mt-4">
+                        <p className="text-gray-400 font-mono text-xs md:text-sm max-w-xl mx-auto mt-3">
                             “FoundersPrime helped us unlock over <strong>$12,000</strong> in savings in our first year.”
                         </p>
                     </div>
 
-                    {/* Staggered 3-column grid */}
-                    <div ref={testimonialsRef} className="grid grid-cols-1 md:grid-cols-3 gap-5">
-                        {testimonials.map((t, idx) => (
-                            <div
-                                key={idx}
-                                className="testimonial-card group relative flex flex-col justify-between rounded-xl p-6 border border-white/[0.07] bg-white/[0.03] backdrop-blur-sm hover:border-accent-yellow/30 hover:bg-white/[0.06] transition-all duration-500 hover:-translate-y-1"
-                                style={{ animationDelay: `${idx * 80}ms` }}
-                            >
-                                {/* Subtle gradient top border glow on hover */}
-                                <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-accent-yellow/0 to-transparent group-hover:via-accent-yellow/40 transition-all duration-500 rounded-t-xl" />
+                    {/* Unified Infinite Horizontal Marquee */}
+                    <div className="relative w-full overflow-hidden py-4">
+                        {/* Gradient fades on edges */}
+                        <div className="absolute inset-y-0 left-0 w-16 md:w-32 bg-gradient-to-r from-[#000000] to-transparent z-10 pointer-events-none" />
+                        <div className="absolute inset-y-0 right-0 w-16 md:w-32 bg-gradient-to-l from-[#000000] to-transparent z-10 pointer-events-none" />
 
-                                <div>
-                                    {/* Stars */}
-                                    <div className="flex items-center gap-0.5 mb-4">
-                                        {[...Array(5)].map((_, i) => (
-                                            <span
-                                                key={i}
-                                                className="material-symbols-outlined !text-[15px] text-accent-yellow"
-                                                style={{ fontVariationSettings: "'FILL' 1" }}
-                                            >
-                                                star
-                                            </span>
-                                        ))}
-                                    </div>
+                        <div className="flex gap-5 w-max marquee hover:[animation-play-state:paused] py-2">
+                            {[...testimonials, ...testimonials].map((t, idx) => (
+                                <div
+                                    key={idx}
+                                    className="w-[280px] sm:w-[320px] md:w-[350px] shrink-0 testimonial-card group relative flex flex-col justify-between rounded-xl p-5 md:p-6 border border-white/[0.07] bg-[#0d0d0d] backdrop-blur-sm hover:border-accent-yellow/30 hover:bg-white/[0.06] transition-all duration-300"
+                                >
+                                    {/* Subtle gradient top border glow on hover */}
+                                    <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-accent-yellow/0 to-transparent group-hover:via-accent-yellow/40 transition-all duration-500 rounded-t-xl" />
 
-                                    {/* Quote mark */}
-                                    <span className="font-mono text-[40px] leading-none text-accent-yellow/20 font-black block -mb-3">&ldquo;</span>
-
-                                    {/* Review text */}
-                                    <p className="text-[13px] text-gray-300 leading-relaxed mb-6 italic">
-                                        {t.text.includes('$5,000') ? (
-                                            <>Honestly, I signed up just to try it but ended up claiming <strong>$5,000</strong> in AWS credits within 10 minutes. That alone made up for years of membership. Wish I&apos;d found it sooner.</>
-                                        ) : t.text.includes('$8,000') ? (
-                                            <>Every dollar counts when you&apos;re bootstrapping. I saved <strong>$8,000</strong> on Stripe credits and dynamic tools. Anyone who doesn&apos;t use FoundersPrime should check their sanity — just sign up.</>
-                                        ) : t.text.includes('$12,000') ? (
-                                            <>On our first month, we saved over <strong>$12,000</strong> in SaaS tools. Notion, Airtable, GitHub — all covered. For us in Spain, it&apos;s massive. Every founder should know about this.</>
-                                        ) : t.text}
-                                    </p>
-                                </div>
-
-                                {/* Author */}
-                                <div className="border-t border-white/[0.06] pt-4 flex items-center gap-3">
-                                    <div className="w-8 h-8 rounded-full bg-accent-yellow/10 border border-accent-yellow/20 flex items-center justify-center font-mono text-xs font-black text-accent-yellow uppercase flex-shrink-0">
-                                        {t.author[0]}
-                                    </div>
                                     <div>
-                                        <h4 className="text-[11px] font-black text-white uppercase tracking-wider">{t.author}</h4>
-                                        <p className="text-[10px] text-gray-500 font-mono">{t.role}</p>
+                                        {/* Stars */}
+                                        <div className="flex items-center gap-0.5 mb-3">
+                                            {[...Array(5)].map((_, i) => (
+                                                <span
+                                                    key={i}
+                                                    className="material-symbols-outlined !text-[14px] text-accent-yellow"
+                                                    style={{ fontVariationSettings: "'FILL' 1" }}
+                                                >
+                                                    star
+                                                </span>
+                                            ))}
+                                        </div>
+
+                                        {/* Quote mark */}
+                                        <span className="font-mono text-[30px] leading-none text-accent-yellow/20 font-black block -mb-2">&ldquo;</span>
+
+                                        {/* Review text */}
+                                        <p className="text-[12px] md:text-[13px] text-gray-300 leading-relaxed mb-4 md:mb-5 italic">
+                                            {t.text.includes('$5,000') ? (
+                                                <>Honestly, I signed up just to try it but ended up claiming <strong>$5,000</strong> in AWS credits within 10 minutes. That alone made up for years of subscription. Wish I&apos;d found it sooner.</>
+                                            ) : t.text.includes('$8,000') ? (
+                                                <>Every dollar counts when you&apos;re bootstrapping. I saved <strong>$8,000</strong> on Stripe credits and dynamic tools. Anyone who doesn&apos;t use FoundersPrime should check their sanity — just sign up.</>
+                                            ) : t.text.includes('$12,000') ? (
+                                                <>On our first month, we saved over <strong>$12,000</strong> in SaaS tools. Notion, Airtable, GitHub — all covered. For us in Spain, it&apos;s massive. Every founder should know about this.</>
+                                            ) : t.text}
+                                        </p>
+                                    </div>
+
+                                    {/* Author */}
+                                    <div className="border-t border-white/[0.06] pt-3.5 flex items-center gap-3">
+                                        <div className="w-8 h-8 rounded-full bg-accent-yellow/10 border border-accent-yellow/20 flex items-center justify-center font-mono text-xs font-black text-accent-yellow uppercase flex-shrink-0">
+                                            {t.author[0]}
+                                        </div>
+                                        <div>
+                                            <h4 className="text-[10px] md:text-[11px] font-black text-white uppercase tracking-wider">{t.author}</h4>
+                                            <p className="text-[9px] md:text-[10px] text-gray-500 font-mono">{t.role}</p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        ))}
+                            ))}
+                        </div>
                     </div>
 
+
                     {/* Bottom stat strip */}
-                    <div className="mt-14 flex flex-wrap items-center justify-center gap-8 md:gap-16">
+                    <div className="mt-6 md:mt-8 grid grid-cols-3 gap-1 md:flex md:flex-wrap items-center justify-center md:gap-16 border-t border-white/5 pt-6 max-w-3xl mx-auto">
                         {[
-                            { value: '500+ FOUNDERS', label: 'joined platform' },
-                            { value: '$50K+ AVG. SAVINGS', label: 'tracked per member' },
-                            { value: '4.9★ RATING', label: 'across tools, SaaS & grants' },
+                            { value: '100+', label: 'Vetted Deals', suffix: 'active catalog' },
+                            { value: '$50K+', label: 'Avg. Savings', suffix: 'tracked per member' },
+                            { value: '4.9★', label: 'Rating', suffix: 'across tools & SaaS' },
                         ].map((stat) => (
-                            <div key={stat.label} className="text-center">
-                                <p className="font-mono text-2xl md:text-3xl font-black text-accent-yellow leading-none">{stat.value}</p>
-                                <p className="font-mono text-[10px] uppercase tracking-widest text-gray-500 mt-1">{stat.label}</p>
+                            <div key={stat.suffix} className="text-center border-r last:border-r-0 border-white/5 md:border-r-0 px-1 md:px-0">
+                                <p className="font-mono text-[16px] sm:text-lg md:text-3xl font-black text-accent-yellow leading-none">{stat.value}</p>
+                                <p className="font-mono text-[9px] sm:text-[10px] md:text-sm font-bold uppercase tracking-wider text-white mt-1 md:mt-2">{stat.label}</p>
+                                <p className="hidden md:block font-mono text-[10px] uppercase tracking-widest text-gray-500 mt-1">{stat.suffix}</p>
                             </div>
                         ))}
                     </div>
                 </div>
 
                 <style dangerouslySetInnerHTML={{ __html: `
+                    @keyframes spin-slow {
+                        0% { transform: rotate(0deg); }
+                        100% { transform: rotate(360deg); }
+                    }
+                    .animate-spin-slow {
+                        animation: spin-slow 20s linear infinite;
+                    }
                     .testimonial-card {
                         opacity: 0;
                         transform: translateY(28px);
@@ -509,18 +588,26 @@ export default function PricingPageContent() {
                         opacity: 1;
                         transform: translateY(0);
                     }
+                    @keyframes testimonialFadeIn {
+                        from { opacity: 0; transform: translateY(6px); }
+                        to   { opacity: 1; transform: translateY(0); }
+                    }
                     @media (prefers-reduced-motion: reduce) {
                         .testimonial-card {
                             opacity: 1;
                             transform: none;
+                        }
+                        @keyframes testimonialFadeIn {
+                            from { opacity: 1; transform: none; }
+                            to   { opacity: 1; transform: none; }
                         }
                     }
                 `}} />
             </section>
 
             {/* ── Bottom Banner ── */}
-            <section className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 py-16">
-                <div className="relative bg-gradient-to-r from-[#0c0d10] via-[#101318] to-[#0c0d10] border border-accent-yellow/20 rounded-2xl overflow-hidden py-10 px-6 md:py-12 md:px-12 flex flex-col md:flex-row items-center justify-between gap-6 shadow-2xl">
+            <section className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 py-4 md:py-8">
+                <div className="relative bg-gradient-to-r from-[#0c0d10] via-[#101318] to-[#0c0d10] border border-accent-yellow/20 rounded-xl overflow-hidden py-6 px-6 md:py-8 md:px-10 flex flex-col md:flex-row items-center justify-between gap-6 shadow-2xl">
                     {/* Crown Graphic background */}
                     <span className="absolute right-10 bottom-[-30px] material-symbols-outlined !text-[140px] text-accent-yellow/[0.02] pointer-events-none" style={{ fontVariationSettings: "'FILL' 1" }}>
                         crown

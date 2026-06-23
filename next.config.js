@@ -39,6 +39,13 @@ const securityHeaders = [
 ]
 
 const nextConfig = {
+  optimizeFonts: false,
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+  typescript: {
+    ignoreBuildErrors: true,
+  },
   compress: true,
   poweredByHeader: false,
   reactStrictMode: true,

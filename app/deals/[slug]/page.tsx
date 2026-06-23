@@ -499,7 +499,7 @@ export default async function SingleDealPage({ params }: PageProps) {
     const jsonLd = [primarySchema, breadcrumbSchema, faqSchema]
 
     return (
-      <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden bg-gray-50 dark:bg-[#050505] text-[#1a1a1a] dark:text-white transition-colors duration-300">
+      <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden bg-gray-50 dark:bg-[#000000] text-[#1a1a1a] dark:text-white transition-colors duration-300">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -507,9 +507,8 @@ export default async function SingleDealPage({ params }: PageProps) {
         <Header />
         <main className="flex-1">
           {/* Neo-brutalist hero header — gradient bg + mandala ornaments */}
-          <div className="relative w-full bg-white dark:bg-[#050505] border-b-3 border-b-black dark:border-b-white/10 overflow-hidden transition-colors duration-300">
-            {/* Subtle grid bg */}
-            <div className="absolute inset-0 grid-bg opacity-[0.5] pointer-events-none" aria-hidden="true" />
+          <div className="relative w-full bg-white dark:bg-[#000000] border-b-3 border-b-black dark:border-b-white/10 overflow-hidden transition-colors duration-300">
+            {/* Subtle grid bg removed */}
 
             {/* Decorative mandalas */}
             <div className="absolute -top-16 -right-16 w-72 h-72 pointer-events-none opacity-[0.08] dark:opacity-[0.12] hidden md:block" aria-hidden="true">

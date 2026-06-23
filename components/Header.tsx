@@ -119,7 +119,7 @@ export default function Header() {
 
   return (
     <>
-      <header className="sticky top-0 z-50 bg-[#050505]/95 backdrop-blur-xl text-white border-b border-white/10 shadow-[0_1px_0_0_rgba(255,221,0,0.18),0_8px_30px_-12px_rgba(0,0,0,0.8)] relative overflow-visible">
+      <header className="sticky top-0 z-50 bg-[#000000]/95 backdrop-blur-xl text-white border-b border-white/10 shadow-[0_1px_0_0_rgba(255,221,0,0.18),0_8px_30px_-12px_rgba(0,0,0,0.8)] relative overflow-visible">
       {/* Animated gradient sweep on the very top */}
       <div className="absolute top-0 left-0 right-0 h-[1px] overflow-hidden pointer-events-none">
         <div
@@ -309,9 +309,7 @@ export default function Header() {
           {/* ─── Right: Auth / CTA ─── */}
           <div className="hidden md:flex items-center gap-3">
             <ThemeToggle />
-            {loading ? (
-              <div className="w-24 h-9 bg-white/10 animate-pulse rounded-sm" />
-            ) : user ? (
+            {!loading && user ? (
               <div className="relative group">
                 <button className="bg-white/[0.04] border border-white/10 hover:border-accent-yellow/40 text-white font-mono font-bold py-2 px-3 text-[12px] rounded-md transition-all uppercase tracking-[0.06em] flex items-center gap-2 hover:bg-white/[0.08]">
                   <span className="material-symbols-outlined text-base text-accent-yellow">account_circle</span>
@@ -461,7 +459,7 @@ export default function Header() {
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-              className="fixed top-0 right-0 bottom-0 w-[70vw] max-w-[270px] bg-[#050505]/95 backdrop-blur-md border-l border-white/10 z-50 xl:hidden flex flex-col shadow-2xl"
+              className="fixed top-0 right-0 bottom-0 w-[70vw] max-w-[270px] bg-[#000000]/95 backdrop-blur-md border-l border-white/10 z-50 xl:hidden flex flex-col shadow-2xl"
             >
               {/* Drawer Header */}
               <div className="flex items-center justify-between px-4 h-14 border-b border-white/10 flex-shrink-0">

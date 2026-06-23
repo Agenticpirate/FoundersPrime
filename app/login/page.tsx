@@ -1,6 +1,6 @@
 'use client'
 
-import { Suspense, useState, useRef } from 'react'
+import { Suspense, useState, useRef, useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
@@ -35,6 +35,11 @@ function LoginContent() {
   const [resending, setResending] = useState(false)
   const [resendMsg, setResendMsg] = useState<string | null>(null)
 
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
   // Turnstile state
   const [turnstileToken, setTurnstileToken] = useState<string | null>(null)
   const turnstileRef = useRef<TurnstileInstance>(null)
@@ -48,6 +53,13 @@ function LoginContent() {
   const searchParams = useSearchParams()
   const redirect = searchParams.get('redirect') || '/dashboard'
   const errorParam = searchParams.get('error')
+
+  // Use dummy testing sitekey for localhost, otherwise use env sitekey
+  const isLocalhost = typeof window !== 'undefined' && 
+    (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.hostname === '[::1]')
+  const turnstileSiteKey = isLocalhost 
+    ? '1x00000000000000000000AA' 
+    : (process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || '1x00000000000000000000AA')
 
   const handleOAuthLogin = async (provider: 'google' | 'github' | 'linkedin') => {
     setError(null)
@@ -321,9 +333,9 @@ function LoginContent() {
   }
 
   return (
-    <div className="min-h-screen flex bg-[#050505] grid-bg-dark text-white selection:bg-accent-yellow selection:text-black relative overflow-hidden">
+    <div className="min-h-screen flex bg-[#000000] grid-bg-dark text-white selection:bg-accent-yellow selection:text-black relative overflow-hidden">
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(255,234,0,0.03),transparent_50%)] pointer-events-none" />
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#050505]/40 to-[#050505] pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#000000]/40 to-[#000000] pointer-events-none" />
 
       {/* Floating Mandalas for premium branding background */}
       <Mandala
@@ -589,14 +601,16 @@ function LoginContent() {
 
                   {/* Cloudflare Turnstile */}
                   <div className="flex justify-center py-1">
-                    <Turnstile
-                      ref={turnstileRef}
-                      siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || '1x00000000000000000000AA'}
-                      onSuccess={(token) => setTurnstileToken(token)}
-                      onExpire={() => setTurnstileToken(null)}
-                      onError={() => setTurnstileToken(null)}
-                      options={{ theme: 'dark', size: 'flexible' }}
-                    />
+                    {mounted && (
+                      <Turnstile
+                        ref={turnstileRef}
+                        siteKey={turnstileSiteKey}
+                        onSuccess={(token) => setTurnstileToken(token)}
+                        onExpire={() => setTurnstileToken(null)}
+                        onError={() => setTurnstileToken(null)}
+                        options={{ theme: 'dark', size: 'flexible' }}
+                      />
+                    )}
                   </div>
 
                   <button type="submit" disabled={loading || !turnstileToken}
@@ -705,14 +719,16 @@ function LoginContent() {
 
                   {/* Cloudflare Turnstile */}
                   <div className="flex justify-center py-1">
-                    <Turnstile
-                      ref={turnstileRef}
-                      siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || '1x00000000000000000000AA'}
-                      onSuccess={(token) => setTurnstileToken(token)}
-                      onExpire={() => setTurnstileToken(null)}
-                      onError={() => setTurnstileToken(null)}
-                      options={{ theme: 'dark', size: 'flexible' }}
-                    />
+                    {mounted && (
+                      <Turnstile
+                        ref={turnstileRef}
+                        siteKey={turnstileSiteKey}
+                        onSuccess={(token) => setTurnstileToken(token)}
+                        onExpire={() => setTurnstileToken(null)}
+                        onError={() => setTurnstileToken(null)}
+                        options={{ theme: 'dark', size: 'flexible' }}
+                      />
+                    )}
                   </div>
 
                   <button type="submit" disabled={loading || !turnstileToken}
@@ -763,14 +779,16 @@ function LoginContent() {
 
                   {/* Cloudflare Turnstile */}
                   <div className="flex justify-center py-1">
-                    <Turnstile
-                      ref={turnstileRef}
-                      siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || '1x00000000000000000000AA'}
-                      onSuccess={(token) => setTurnstileToken(token)}
-                      onExpire={() => setTurnstileToken(null)}
-                      onError={() => setTurnstileToken(null)}
-                      options={{ theme: 'dark', size: 'flexible' }}
-                    />
+                    {mounted && (
+                      <Turnstile
+                        ref={turnstileRef}
+                        siteKey={turnstileSiteKey}
+                        onSuccess={(token) => setTurnstileToken(token)}
+                        onExpire={() => setTurnstileToken(null)}
+                        onError={() => setTurnstileToken(null)}
+                        options={{ theme: 'dark', size: 'flexible' }}
+                      />
+                    )}
                   </div>
 
                   <button type="submit" disabled={loading || !turnstileToken}

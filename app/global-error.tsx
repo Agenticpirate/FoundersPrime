@@ -29,7 +29,7 @@ export default function GlobalError({
                 </Script>
             </head>
             <body>
-                <div className="flex min-h-screen flex-col items-center justify-center bg-[#FAF9F5] dark:bg-[#050505] text-black dark:text-white p-4 text-center font-mono transition-colors duration-300">
+                <div className="flex min-h-screen flex-col items-center justify-center bg-[#FAF9F5] dark:bg-[#000000] text-black dark:text-white p-4 text-center font-mono transition-colors duration-300">
                     <div className="mb-4 md:mb-6">
                         <div className="inline-block border-2 border-black dark:border-accent-red/40 bg-accent-red px-6 py-2 shadow-[4px_4px_0px_#000] dark:shadow-[4px_4px_0px_rgba(239,68,68,0.2)] mb-6 rounded-md">
                             <span className="font-mono text-xs font-bold uppercase text-white tracking-wider">Critical System Error</span>

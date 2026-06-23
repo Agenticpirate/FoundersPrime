@@ -225,10 +225,10 @@ export default function FounderLogs() {
   }, [paused])
 
   return (
-    <section className="py-7 md:py-10 bg-background-light dark:bg-[#050505] border-y-2 border-black dark:border-white/10 overflow-hidden transition-colors duration-300">
+    <section className="py-7 md:py-10 bg-background-light dark:bg-[#000000] border-y-2 border-black dark:border-white/10 overflow-hidden transition-colors duration-300">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Top: headline + rating summary */}
-        <div className="grid lg:grid-cols-2 gap-6 lg:gap-10 items-center mb-5 md:mb-7">
+        {/* Top: headline + scroller controls */}
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-6 md:mb-8">
           <div>
             <span className="inline-flex items-center gap-1.5 bg-accent-yellow/20 text-black dark:text-accent-yellow font-mono text-[10px] font-black uppercase tracking-widest px-2.5 py-1 rounded-md mb-3 transition-colors duration-300">
               <span className="material-symbols-outlined text-[13px]">forum</span>
@@ -241,68 +241,30 @@ export default function FounderLogs() {
                 &ldquo;I just claimed it.&rdquo;
               </span>
             </h2>
-            <p className="mt-3 text-sm text-gray-600 dark:text-gray-400 font-sans max-w-md transition-colors duration-300">
+            <p className="mt-3 text-sm text-gray-600 dark:text-gray-400 font-sans max-w-lg transition-colors duration-300">
               FoundersPrime has helped thousands of founders discover credits, grants, and perks
               that help them build faster and smarter.
             </p>
           </div>
 
-          {/* Rating card */}
-          <div className="bg-white dark:bg-[#0c0c0c] border border-gray-200 dark:border-white/10 rounded-2xl shadow-[0_2px_14px_rgba(0,0,0,0.05)] p-4 md:p-5 w-full transition-colors duration-300">
-            <div className="flex items-center gap-5 md:gap-8">
-              <div className="shrink-0">
-                <div className="flex items-baseline gap-0.5">
-                  <span className="font-mono font-black text-4xl md:text-5xl text-black dark:text-white leading-none transition-colors duration-300">4.9</span>
-                  <span className="font-mono text-sm text-gray-400 dark:text-gray-500">/5</span>
-                </div>
-                <div className="mt-2">
-                  <Stars size={18} />
-                </div>
-                <p className="mt-2 text-[11px] text-gray-500 dark:text-gray-400 font-sans transition-colors duration-300">From founders worldwide</p>
-              </div>
-
-              <div className="flex-1 space-y-1.5 min-w-0">
-                {ratingBreakdown.map((row) => (
-                  <div key={row.stars} className="flex items-center gap-2">
-                    <span className="text-[11px] font-mono text-gray-600 dark:text-gray-400 w-2.5 text-right transition-colors duration-300">{row.stars}</span>
-                    <span
-                      className="material-symbols-outlined text-[#f5c800] text-[12px]"
-                      style={{ fontVariationSettings: "'FILL' 1" }}
-                    >
-                      star
-                    </span>
-                    <div className="flex-1 h-1.5 bg-gray-100 dark:bg-white/10 rounded-full overflow-hidden transition-colors duration-300">
-                      <div
-                        className="h-full bg-[#f5c800] rounded-full"
-                        style={{ width: `${row.pct}%` }}
-                      />
-                    </div>
-                    <span className="text-[11px] font-mono text-gray-500 dark:text-gray-400 w-8 text-right transition-colors duration-300">{row.pct}%</span>
-                  </div>
-                ))}
-              </div>
-            </div>
+          <div className="hidden md:flex gap-2 shrink-0 md:pb-1">
+            <button
+              type="button"
+              onClick={() => scrollByCards(-1)}
+              aria-label="Previous testimonials"
+              className="w-9 h-9 flex items-center justify-center rounded-full border border-gray-300 dark:border-white/20 bg-white dark:bg-[#0c0c0c] text-black dark:text-white hover:bg-gray-50 dark:hover:bg-white/5 transition-all"
+            >
+              <span className="material-symbols-outlined text-[18px]">arrow_back</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => scrollByCards(1)}
+              aria-label="Next testimonials"
+              className="w-9 h-9 flex items-center justify-center rounded-full bg-black dark:bg-white text-accent-yellow dark:text-black hover:bg-gray-800 dark:hover:bg-gray-200 transition-all"
+            >
+              <span className="material-symbols-outlined text-[18px]">arrow_forward</span>
+            </button>
           </div>
-        </div>
-
-        {/* Scroller controls */}
-        <div className="flex justify-end gap-2 mb-3">
-          <button
-            type="button"
-            onClick={() => scrollByCards(-1)}
-            aria-label="Previous testimonials"
-            className="w-9 h-9 flex items-center justify-center rounded-full border border-gray-300 dark:border-white/20 bg-white dark:bg-[#0c0c0c] text-black dark:text-white hover:bg-gray-50 dark:hover:bg-white/5 transition-all"
-          >
-            <span className="material-symbols-outlined text-[18px]">arrow_back</span>
-          </button>
-          <button
-            type="button"
-            onClick={() => scrollByCards(1)}
-            aria-label="Next testimonials"
-            className="w-9 h-9 flex items-center justify-center rounded-full bg-black dark:bg-white text-accent-yellow dark:text-black hover:bg-gray-800 dark:hover:bg-gray-200 transition-all"
-          >
-            <span className="material-symbols-outlined text-[18px]">arrow_forward</span>
-          </button>
         </div>
 
         {/* Testimonial scroller */}
@@ -336,9 +298,9 @@ export default function FounderLogs() {
               </p>
             </div>
 
-            <div className="flex-1 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 lg:gap-3 lg:divide-x lg:divide-dashed lg:divide-gray-300 dark:lg:divide-white/10">
+            <div className="flex-1 flex flex-row overflow-x-auto gap-4 snap-x snap-mandatory [scrollbar-width:none] [&::-webkit-scrollbar]:hidden pb-1 lg:pb-0 lg:grid lg:grid-cols-5 lg:gap-3 lg:divide-x lg:divide-dashed lg:divide-gray-300 dark:lg:divide-white/10">
               {trustStats.map((stat) => (
-                <div key={stat.label} className="flex flex-col items-center text-center lg:px-2">
+                <div key={stat.label} className="flex flex-col items-center text-center shrink-0 snap-center w-[105px] lg:w-auto lg:px-2">
                   <span className="w-9 h-9 flex items-center justify-center bg-black dark:bg-white/10 rounded-xl mb-2 transition-colors duration-300">
                     <span
                       className="material-symbols-outlined text-accent-yellow text-[18px]"
@@ -347,10 +309,10 @@ export default function FounderLogs() {
                       {stat.icon}
                     </span>
                   </span>
-                  <span className="font-mono font-black text-base md:text-lg text-black dark:text-white leading-none whitespace-nowrap transition-colors duration-300">
+                  <span className="font-mono font-black text-sm md:text-lg text-black dark:text-white leading-none whitespace-nowrap transition-colors duration-300">
                     {stat.value}
                   </span>
-                  <span className="text-[10px] text-gray-500 dark:text-gray-400 font-sans mt-1 transition-colors duration-300">{stat.label}</span>
+                  <span className="text-[9.5px] text-gray-500 dark:text-gray-400 font-sans mt-1 transition-colors duration-300 text-center leading-tight">{stat.label}</span>
                 </div>
               ))}
             </div>

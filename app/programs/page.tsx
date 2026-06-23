@@ -84,7 +84,7 @@ export default async function ProgramsPage({ searchParams }: { searchParams: { [
 
   return (
     <FeaturedDealsProvider initialFeaturedDeals={featuredDeals} initialIsPro={isPro}>
-      <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden bg-gray-50 dark:bg-[#050505] text-[#1a1a1a] dark:text-white transition-colors duration-300">
+      <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden bg-gray-50 dark:bg-[#000000] text-[#1a1a1a] dark:text-white transition-colors duration-300">
         <Header />
         <main className="flex-1">
           <div className="max-w-[1600px] mx-auto px-4 lg:px-6 pt-6 md:pt-8 pb-4 lg:pb-5">

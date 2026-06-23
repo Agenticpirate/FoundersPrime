@@ -96,6 +96,10 @@ img {
 }
 
 :root {
+  --font-sans: 'IBM Plex Sans', sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+  --font-display: 'Space Grotesk', sans-serif;
+  --font-heading: 'Archivo', sans-serif;
   --ruler-color: rgba(0, 0, 0, 0.2);
 }
 
@@ -104,7 +108,7 @@ img {
 }
 
 /* ─── Light-mode body override ─────────────────────────────────────────────
-   The body defaults to dark (#050505) to prevent a white flash during
+   The body defaults to dark (#000000) to prevent a white flash during
    dark-mode page transitions. When the user switches to light mode the
    .light class is added to <html> by the ThemeToggle / inline script,
    and these rules restore the expected light-mode palette.
@@ -175,16 +179,13 @@ h6 {
     linear-gradient(to bottom, rgba(16, 22, 34, 0.05) 1px, transparent 1px);
 }
 .dark .grid-bg {
-  background-image:
-    linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-image: none;
+  background-color: #000000;
 }
 
 .grid-bg-dark {
-  background-size: 40px 40px;
-  background-image:
-    linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-image: none;
+  background-color: #000000;
 }
 
 .cursor-blink {
@@ -321,6 +322,10 @@ h6 {
   background-image:
     linear-gradient(to right, rgba(13, 24, 27, 0.05) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(13, 24, 27, 0.05) 1px, transparent 1px);
+}
+.dark .pattern-grid-lg {
+  background-image: none;
+  background-color: #000000;
 }
 
 /* Pricing page specific styles */
@@ -668,6 +673,12 @@ button, a, [role="button"] {
 p > a, li > a, span > a {
   min-height: unset;
   display: inline;
+}
+
+/* Exception: toggle switches have their own sizing — don't force 44px height */
+[role="switch"] {
+  min-height: unset;
+  display: inline-flex;
 }
 
 /* ─── Touch-safe Neo-shadow Hover ─── */

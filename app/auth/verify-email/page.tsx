@@ -7,7 +7,9 @@ import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import { createClient } from '@/lib/supabase/client'
 
-export default function VerifyEmailPage() {
+import { Suspense } from 'react'
+
+function VerifyEmailContent() {
   const [status, setStatus] = useState<'verifying' | 'success' | 'error'>('verifying')
   const [error, setError] = useState<string | null>(null)
   const router = useRouter()
@@ -80,7 +82,7 @@ export default function VerifyEmailPage() {
                 </p>
                 <div className="p-4 bg-green-50 border-2 border-green-400 text-green-800 text-sm mb-6">
                   <div className="flex items-start gap-2">
-                    <span className="material-symbols-outlined text-lg mt-0.5">info</span>
+                     <span className="material-symbols-outlined text-lg mt-0.5">info</span>
                     <span>Redirecting you to your dashboard in 3 seconds...</span>
                   </div>
                 </div>
@@ -129,5 +131,13 @@ export default function VerifyEmailPage() {
       </main>
       <Footer />
     </div>
+  )
+}
+
+export default function VerifyEmailPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-[#f8f9fa] flex items-center justify-center font-mono">Loading...</div>}>
+      <VerifyEmailContent />
+    </Suspense>
   )
 }

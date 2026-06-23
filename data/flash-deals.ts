@@ -20,6 +20,11 @@
 export type FlashBadge = 'hot' | 'recommended' | 'new'
 export type FlashDiscountColor = 'violet' | 'orange' | 'red'
 
+export interface FlashDealOption {
+  label: string
+  url: string
+}
+
 export interface FlashDeal {
   id: string
   /** Provider / product name shown on the card. */
@@ -48,6 +53,8 @@ export interface FlashDeal {
   durationHours?: number
   /** Where "View Deal" links. */
   dealUrl: string
+  /** Country/region specific promo options if available */
+  options?: FlashDealOption[]
 }
 
 /** Category filter pills (order matters — 'all' first). */
@@ -65,6 +72,35 @@ export const FLASH_COUPON = {
 
 export const flashDeals: FlashDeal[] = [
   {
+    id: 'chatgpt-plus-flash',
+    name: 'ChatGPT Plus Promo',
+    description: 'Claim your exclusive region-based promo code for ChatGPT Plus.',
+    badge: 'hot',
+    category: 'ai-credits',
+    logo: '/logos/chatgpt.png',
+    domain: 'chatgpt.com',
+    price: 'Promo',
+    priceUnit: 'Discount',
+    originalPrice: '$20',
+    discount: 'SPECIAL OFFER',
+    discountColor: 'red',
+    durationHours: 72,
+    dealUrl: 'https://chatgpt.com',
+    options: [
+      { label: '🇺🇸 USA', url: 'https://chatgpt.com/?promoCode=f6sus' },
+      { label: '🇨🇦 Canada', url: 'https://chatgpt.com/?promoCode=factspanca' },
+      { label: '🇦🇺 Australia', url: 'https://chatgpt.com/?promoCode=27aiau' },
+      { label: '🇳🇿 New Zealand', url: 'https://chatgpt.com/?promoCode=27ainz' },
+      { label: '🇲🇽 Mexico', url: 'https://chatgpt.com/?promoCode=wedoaimx' },
+      { label: '🇵🇰 Pakistan', url: 'https://chatgpt.com/?promoCode=wedoaipk' },
+      { label: '🇩🇪 Germany', url: 'https://chatgpt.com/?promoCode=loptrde' },
+      { label: '🇩🇰 Denmark', url: 'https://chatgpt.com/?promoCode=factspandk' },
+      { label: '🇮🇳 India', url: 'https://chatgpt.com/?promoCode=27aiin' },
+      { label: '🇯🇵 Japan', url: 'https://chatgpt.com/?promoCode=archinesjp' },
+      { label: '🇸🇬 Singapore', url: 'https://chatgpt.com/?promoCode=synechronsg' },
+    ],
+  },
+  {
     id: 'openai-codex-students',
     name: 'OpenAI Codex',
     description: '$100 in Codex credits for verified university students in the US & Canada.',
@@ -81,4 +117,5 @@ export const flashDeals: FlashDeal[] = [
     dealUrl: 'https://chatgpt.com/codex/students/',
   },
 ]
+
 

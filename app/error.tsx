@@ -15,9 +15,9 @@ export default function Error({
   }, [error])
 
   return (
-    <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden bg-[#FAF9F5] dark:bg-[#050505] text-black dark:text-white transition-colors duration-300">
+    <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden bg-[#FAF9F5] dark:bg-[#000000] text-black dark:text-white transition-colors duration-300">
       {/* Simple Header */}
-      <header className="sticky top-0 z-50 w-full border-b-2 border-black dark:border-white/10 bg-[#FAF9F5] dark:bg-[#050505]">
+      <header className="sticky top-0 z-50 w-full border-b-2 border-black dark:border-white/10 bg-[#FAF9F5] dark:bg-[#000000]">
         <div className="mx-auto flex h-16 max-w-[1600px] items-center justify-between px-4 sm:px-6 lg:px-8">
           <Link href="/" className="flex items-center gap-2.5 no-underline">
             <img
