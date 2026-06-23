@@ -65,7 +65,7 @@ function GrantLogo({ grant }: { grant: Grant }) {
   )
 }
 
-export default function GrantsGrid() {
+export default function GrantsGrid({ defaultRegion = 'All' }: { defaultRegion?: string }) {
   const { user } = useAuth()
   const [isPro, setIsPro] = useState(false)
 
@@ -85,7 +85,7 @@ export default function GrantsGrid() {
   const searchParams = useSearchParams()
   const pathname = usePathname()
 
-  const [selectedRegion, setSelectedRegion] = useState<string>('All')
+  const [selectedRegion, setSelectedRegion] = useState<string>(defaultRegion)
   const [selectedType, setSelectedType] = useState<string>('All')
   const [searchQuery, setSearchQuery] = useState('')
 

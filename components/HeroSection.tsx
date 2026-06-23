@@ -10,9 +10,30 @@ import BrandLogo from '@/components/ui/BrandLogo'
 const TRUSTED_BRANDS = [
   { name: 'AWS', domain: 'aws.amazon.com' },
   { name: 'Google Cloud', domain: 'cloud.google.com' },
-  { name: 'HubSpot', domain: 'hubspot.com' },
+  { name: 'Stripe', domain: 'stripe.com' },
+  { name: 'Notion', domain: 'notion.so' },
   { name: 'OpenAI', domain: 'openai.com' },
+  { name: 'Vercel', domain: 'vercel.com' },
+  { name: 'Supabase', domain: 'supabase.com' },
+  { name: 'Figma', domain: 'figma.com' },
+  { name: 'Slack', domain: 'slack.com' },
+  { name: 'Linear', domain: 'linear.app' },
+  { name: 'Framer', domain: 'framer.com' },
+  { name: 'Webflow', domain: 'webflow.com' },
+  { name: 'Airtable', domain: 'airtable.com' },
+  { name: 'HubSpot', domain: 'hubspot.com' },
+  { name: 'Intercom', domain: 'intercom.com' },
+  { name: 'Datadog', domain: 'datadoghq.com' },
+  { name: 'Sentry', domain: 'sentry.io' },
+  { name: 'Mixpanel', domain: 'mixpanel.com' },
+  { name: 'Twilio', domain: 'twilio.com' },
   { name: 'DigitalOcean', domain: 'digitalocean.com' },
+  { name: 'Discord', domain: 'discord.com' },
+  { name: 'Canva', domain: 'canva.com' },
+  { name: 'Adobe', domain: 'adobe.com' },
+  { name: 'Salesforce', domain: 'salesforce.com' },
+  { name: 'Brex', domain: 'brex.com' },
+  { name: 'Ramp', domain: 'ramp.com' },
 ]
 
 /* ─── Stat grid inside the dark "total saved" card (2 × 3) ─── */
@@ -418,25 +439,30 @@ export default function HeroSection() {
         </div>
       </div>
 
-      {/* ─── Trusted-by bar ─── */}
+      {/* ─── Trusted-by bar (Infinite Marquee Scroller) ─── */}
       <div className="hidden lg:block max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 mt-10 md:mt-14 mb-8 md:mb-12 relative z-10">
-        <div className="border-2 border-black dark:border-white/10 bg-white dark:bg-white/[0.04] px-5 md:px-8 py-4 md:py-5 shadow-[4px_4px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_rgba(255,255,255,0.05)] flex flex-col lg:flex-row items-center gap-4 lg:gap-8 transition-colors duration-300">
+        <div className="border-2 border-black dark:border-white/10 bg-white dark:bg-white/[0.04] px-5 md:px-8 py-4 md:py-5 shadow-[4px_4px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_rgba(255,255,255,0.05)] flex flex-col lg:flex-row items-center gap-4 lg:gap-8 transition-colors duration-300 overflow-hidden">
           <span className="font-mono text-[10px] md:text-xs font-black uppercase tracking-[0.16em] text-gray-500 dark:text-gray-400 flex items-center gap-2 flex-shrink-0">
             Trusted by founders using
             <span className="material-symbols-outlined !text-[16px]">arrow_forward</span>
           </span>
-          <div className="flex flex-wrap items-center justify-center gap-6 md:gap-10 flex-1">
-            {TRUSTED_BRANDS.map((b) => (
-              <div key={b.name} className="flex items-center gap-2 grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition-all">
-                <BrandLogo name={b.name} domain={b.domain} size="md" eager />
-                <span className="font-mono text-xs md:text-sm font-bold text-gray-700 dark:text-gray-300 whitespace-nowrap hidden sm:inline">
-                  {b.name}
-                </span>
-              </div>
-            ))}
-            <span className="font-mono text-[10px] md:text-xs font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wider whitespace-nowrap">
-              And 100+ More
-            </span>
+          <div 
+            className="relative flex-1 overflow-hidden"
+            style={{ 
+              maskImage: 'linear-gradient(to right, transparent, black 8%, black 92%, transparent)',
+              WebkitMaskImage: 'linear-gradient(to right, transparent, black 8%, black 92%, transparent)'
+            }}
+          >
+            <div className="flex gap-12 animate-[marquee_45s_linear_infinite] whitespace-nowrap items-center w-max">
+              {[...TRUSTED_BRANDS, ...TRUSTED_BRANDS].map((b, index) => (
+                <div key={`${b.name}-${index}`} className="inline-flex items-center gap-2.5 transition-all flex-shrink-0 hover:scale-105">
+                  <BrandLogo name={b.name} domain={b.domain} size="md" eager />
+                  <span className="font-mono text-xs md:text-sm font-bold text-gray-700 dark:text-gray-300 whitespace-nowrap">
+                    {b.name}
+                  </span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>

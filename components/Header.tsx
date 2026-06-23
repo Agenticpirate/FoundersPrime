@@ -84,12 +84,13 @@ export default function Header() {
     {
       id: 'programs',
       label: 'Programs',
-      href: '/deals/accelerators',
+      href: '/programs',
       icon: 'rocket_launch',
       children: [
-        { label: 'Accelerators', href: '/deals/accelerators', icon: 'rocket_launch', colorClass: 'text-orange-400' },
-        { label: 'Incubators', href: '/deals/incubators', icon: 'lightbulb', colorClass: 'text-yellow-400' },
-        { label: 'Grants', href: '/deals/grants', icon: 'payments', colorClass: 'text-green-400' },
+        { label: 'All Programs', href: '/programs', icon: 'grid_view', colorClass: 'text-accent-yellow' },
+        { label: 'Accelerators', href: '/programs?type=accelerators', icon: 'rocket_launch', colorClass: 'text-orange-400' },
+        { label: 'Incubators', href: '/programs?type=incubators', icon: 'lightbulb', colorClass: 'text-yellow-400' },
+        { label: 'Grants', href: '/programs?type=grants', icon: 'payments', colorClass: 'text-green-400' },
       ],
     },
     {
@@ -98,9 +99,9 @@ export default function Header() {
       href: '#',
       icon: 'school',
       children: [
-        { label: 'Funding & Opportunities', href: '/resources/funding-opportunities', icon: 'monetization_on', colorClass: 'text-emerald-400' },
-        { label: 'Campus Edge', href: '/resources/free-access', icon: 'workspace_premium', colorClass: 'text-pink-400' },
-        { label: 'Credits & Savings', href: '/resources/credits-savings', icon: 'savings', colorClass: 'text-green-400' },
+        { label: 'Funding & Opportunities', href: '/student-benefits?type=funding', icon: 'monetization_on', colorClass: 'text-emerald-400' },
+        { label: 'Campus Edge', href: '/student-benefits?type=free-access', icon: 'workspace_premium', colorClass: 'text-pink-400' },
+        { label: 'Credits & Savings', href: '/student-benefits?type=credits-savings', icon: 'savings', colorClass: 'text-green-400' },
       ],
     },
     {
@@ -195,7 +196,7 @@ export default function Header() {
             {/* Programs */}
             <div className="relative group">
               <Link
-                href="/deals/accelerators"
+                href="/programs"
                 className="header-nav-link relative text-gray-200 font-bold hover:text-white flex items-center gap-1.5 px-3 py-2 rounded-md hover:bg-white/[0.05] transition-all"
               >
                 <span className="header-nav-text">Programs</span>
@@ -203,15 +204,19 @@ export default function Header() {
               </Link>
               <div className={dropdownClasses}>
                 <div className={dropdownPanelClasses}>
-                  <Link href="/deals/accelerators" className={dropdownItemClasses}>
+                  <Link href="/programs" className={dropdownItemClasses}>
+                    <span className="material-symbols-outlined text-base text-accent-yellow">grid_view</span>
+                    All Programs
+                  </Link>
+                  <Link href="/programs?type=accelerators" className={dropdownItemClasses}>
                     <span className="material-symbols-outlined text-base text-orange-400">rocket_launch</span>
                     Accelerators
                   </Link>
-                  <Link href="/deals/incubators" className={dropdownItemClasses}>
+                  <Link href="/programs?type=incubators" className={dropdownItemClasses}>
                     <span className="material-symbols-outlined text-base text-yellow-400">lightbulb</span>
                     Incubators
                   </Link>
-                  <Link href="/deals/grants" className={dropdownItemClasses}>
+                  <Link href="/programs?type=grants" className={dropdownItemClasses}>
                     <span className="material-symbols-outlined text-base text-green-400">payments</span>
                     Grants
                   </Link>
@@ -230,15 +235,15 @@ export default function Header() {
               </Link>
               <div className={dropdownClasses}>
                 <div className={dropdownPanelClasses}>
-                  <Link href="/resources/funding-opportunities" className={dropdownItemClasses}>
+                  <Link href="/student-benefits?type=funding" className={dropdownItemClasses}>
                     <span className="material-symbols-outlined text-base text-emerald-400">monetization_on</span>
                     Funding &amp; Opportunities
                   </Link>
-                  <Link href="/resources/free-access" className={dropdownItemClasses}>
+                  <Link href="/student-benefits?type=free-access" className={dropdownItemClasses}>
                     <span className="material-symbols-outlined text-base text-pink-400">workspace_premium</span>
                     Campus Edge
                   </Link>
-                  <Link href="/resources/credits-savings" className={dropdownItemClasses}>
+                  <Link href="/student-benefits?type=credits-savings" className={dropdownItemClasses}>
                     <span className="material-symbols-outlined text-base text-green-400">savings</span>
                     Credits &amp; Savings
                   </Link>

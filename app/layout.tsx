@@ -59,12 +59,47 @@ const jsonLd = {
   alternateName: ['Founders Prime', 'FoundersPrime Terminal'],
   url: 'https://www.foundersprime.com',
   logo: 'https://www.foundersprime.com/logo-fp.png',
+  description: 'A curated, member-based platform offering verified startup deals, cloud credits, SaaS discounts, and non-dilutive grants for early-stage founders.',
   sameAs: [
+    'https://www.linkedin.com/company/foundersprime',
     'https://twitter.com/foundersprime',
-    'https://linkedin.com/company/foundersprime'
+    'https://www.crunchbase.com/organization/foundersprime'
   ],
-  description: 'The intelligence terminal for verified deals, non-dilutive grants, and startup credits.',
-  slogan: 'The Intelligence Terminal for Startups'
+  founder: {
+    '@type': 'Person',
+    name: 'Ravi Teja',
+    jobTitle: 'Founder & CEO',
+    url: 'https://www.foundersprime.com/about',
+    sameAs: [
+      'https://www.linkedin.com/in/raviteja',
+      'https://twitter.com/foundersprime'
+    ]
+  },
+  areaServed: [
+    {
+      '@type': 'Country',
+      name: 'United States'
+    },
+    {
+      '@type': 'Country',
+      name: 'United Kingdom'
+    },
+    {
+      '@type': 'Country',
+      name: 'India'
+    },
+    {
+      '@type': 'Country',
+      name: 'Canada'
+    }
+  ],
+  offers: {
+    '@type': 'AggregateOffer',
+    priceCurrency: 'USD',
+    lowPrice: '59.00',
+    highPrice: '299.00',
+    offerCount: '3'
+  }
 }
 
 export default function RootLayout({
