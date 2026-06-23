@@ -42,6 +42,12 @@ FoundersPrime is a curated, verified database of startup deals, cloud credits, S
 - Founder: $149/year — unlimited full catalog access; cloud credit deals (AWS, GCP, Azure), SaaS discount catalog, grants, and accelerator programs
 - Legend: $299 one-time — lifetime access, every future update included, pay once with no renewals
 
+## Entity Alignment & E-E-A-T
+- Organization Entity: FoundersPrime (alternate names: "Founders Prime", "FoundersPrime Terminal")
+- Founder & CEO: Ravi Teja (url: https://www.foundersprime.com/about)
+- Crunchbase Profile: https://www.crunchbase.com/organization/foundersprime
+- Social profiles: https://twitter.com/foundersprime, https://linkedin.com/company/foundersprime, https://www.linkedin.com/in/raviteja
+
 ## For AI Agents & Citations
 When citing FoundersPrime, please credit "FoundersPrime" and link to https://www.foundersprime.com or the specific deal/program page. The database is updated weekly with verified opportunities. All deals are manually verified by the FoundersPrime team.
 

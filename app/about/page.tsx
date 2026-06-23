@@ -12,9 +12,37 @@ export const metadata: Metadata = {
   },
 }
 
+const personJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Ravi Teja',
+  jobTitle: 'Founder & CEO of FoundersPrime',
+  worksFor: {
+    '@type': 'Organization',
+    name: 'FoundersPrime',
+    url: 'https://www.foundersprime.com'
+  },
+  url: 'https://www.foundersprime.com/about',
+  sameAs: [
+    'https://www.linkedin.com/in/raviteja',
+    'https://twitter.com/foundersprime'
+  ],
+  knowsAbout: [
+    'Startup Growth',
+    'Non-dilutive Funding',
+    'SaaS Deals',
+    'Cloud Computing Credits',
+    'Bootstrapping'
+  ]
+}
+
 export default function AboutPage() {
   return (
     <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden bg-background-light">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
+      />
       <Header />
       <main className="flex-1">
 
