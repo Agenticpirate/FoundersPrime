@@ -421,10 +421,29 @@ export default function SingleDealContent({
                 </button>
               </li>
               <li>
-                <a href={`https://www.${deal.provider.toLowerCase().replace(/\s+/g, '')}.com`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-[12.5px] font-bold text-black dark:text-white hover:bg-gray-100 dark:hover:bg-white/5 rounded-sm px-2 py-1.5 transition-colors">
-                  <span className="material-symbols-outlined !text-[16px] text-sky-500">info</span>
-                  About {deal.provider}
-                </a>
+                {(() => {
+                  const isDofollow = deal.tags?.includes('dofollow');
+                  const targetUrl = deal.providerWebsite || `https://www.${deal.provider.toLowerCase().replace(/\s+/g, '')}.com`;
+                  return (
+                    <a
+                      href={targetUrl}
+                      target="_blank"
+                      rel={isDofollow ? "noopener" : "nofollow noopener noreferrer"}
+                      className="flex items-center justify-between gap-2 text-[12.5px] font-bold text-black dark:text-white hover:bg-gray-100 dark:hover:bg-white/5 rounded-sm px-2 py-1.5 transition-colors"
+                    >
+                      <span className="flex items-center gap-2">
+                        <span className="material-symbols-outlined !text-[16px] text-sky-500">info</span>
+                        About {deal.provider}
+                      </span>
+                      {isDofollow && (
+                        <span className="inline-flex items-center gap-1 text-[9px] font-mono font-bold uppercase tracking-wider text-emerald-500 bg-emerald-500/10 border border-emerald-500/20 rounded-sm px-1.5 py-0.5">
+                          <span className="w-1 h-1 rounded-full bg-emerald-500 animate-pulse" />
+                          SEO Dofollow Verified
+                        </span>
+                      )}
+                    </a>
+                  );
+                })()}
               </li>
             </ul>
           </div>

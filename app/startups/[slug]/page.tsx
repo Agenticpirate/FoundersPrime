@@ -98,7 +98,8 @@ export default function StartupDetailPage({ params }: PageProps) {
   ]
 
   return (
-    <div className="relative flex min-h-screen w-full flex-col bg-gray-50">
+    <div className="relative flex min-h-screen w-full flex-col bg-gray-50 dark:bg-[#000000] text-[#1a1a1a] dark:text-white transition-colors duration-300">
+
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

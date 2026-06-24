@@ -1,6 +1,7 @@
 import { createClient as createServiceClient } from '@supabase/supabase-js'
 import { NextResponse } from 'next/server'
 import { verifyAdminServer as verifyAdmin } from '@/lib/admin/verify-admin-server'
+import { sendDofollowProofEmail } from '@/lib/mail-service'
 
 // ─── Helper: service-role client (bypasses RLS for full read access) ──────────
 function getServiceRoleClient() {
@@ -106,8 +107,8 @@ export async function POST(request: Request) {
                     .toLowerCase()
                     .replace(/[^a-z0-9]+/g, '-')
                     .replace(/(^-|-$)+/g, '') +
-                '-' +
-                Math.floor(Math.random() * 1000)
+                    '-' +
+                    Math.floor(Math.random() * 1000)
 
             // If they paid for Featured before approval, propagate the pin date.
             const featuredUntil = submission.featured_paid && submission.featured_until
@@ -125,6 +126,9 @@ export async function POST(request: Request) {
                 ? ` Use code: ${submission.redemption_link} at checkout.`
                 : ''
             const fullDescription = `${submission.benefit_description || ''}${codeNote}`.trim()
+
+            // Automation rule: Paid featured listings receive the premium 'dofollow' backlink attribute
+            const tags = submission.featured_paid ? ['dofollow'] : []
 
             const { error: insertError } = await supabase.from('deals').insert({
                 slug,
@@ -147,6 +151,7 @@ export async function POST(request: Request) {
                 data_source: 'submission',
                 featured: !!featuredUntil,
                 featured_until: featuredUntil,
+                tags,
             })
 
             if (insertError) {
@@ -156,6 +161,21 @@ export async function POST(request: Request) {
                     { status: 500 }
                 )
             }
+
+            // 3. Dispatch automated SEO dofollow backlink proof if they are a paid subscriber
+            if (submission.featured_paid && submission.submitter_email) {
+                try {
+                    await sendDofollowProofEmail({
+                        toEmail: submission.submitter_email,
+                        companyName: submission.company_name,
+                        websiteUrl: submission.website_url,
+                        dealSlug: slug,
+                    });
+                } catch (emailErr) {
+                    console.error('Error dispatching proof email:', emailErr);
+                    // Do not block transaction/approval on email failure
+                }
+            }
         }
 
         return NextResponse.json({ success: true })
@@ -164,3 +184,4 @@ export async function POST(request: Request) {
         return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 })
     }
 }
+

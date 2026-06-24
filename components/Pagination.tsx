@@ -32,13 +32,13 @@ export default function Pagination({
     }
 
     const navBtnBase =
-        'flex items-center justify-center gap-1.5 px-3.5 py-2 font-mono text-[11px] md:text-xs font-black uppercase tracking-[0.08em] border-2 border-black rounded-sm transition-all'
+        'flex items-center justify-center gap-1.5 px-3.5 py-2 font-mono text-[11px] md:text-xs font-black uppercase tracking-[0.08em] border-2 border-black dark:border-white/10 rounded-sm transition-all'
 
     const numBtnBase =
-        'min-w-[34px] h-[34px] md:min-w-[38px] md:h-[38px] flex items-center justify-center text-[12px] md:text-[13px] font-mono font-black border-2 border-black rounded-sm transition-all tabular-nums'
+        'min-w-[34px] h-[34px] md:min-w-[38px] md:h-[38px] flex items-center justify-center text-[12px] md:text-[13px] font-mono font-black border-2 border-black dark:border-white/10 rounded-sm transition-all tabular-nums'
 
     return (
-        <div className={`relative bg-white border-2 border-black shadow-[3px_3px_0px_#111] mt-6 overflow-hidden ${className}`}>
+        <div className={`relative bg-white dark:bg-[#0c0c0c] border-2 border-black dark:border-white/10 shadow-[3px_3px_0px_#111] dark:shadow-[3px_3px_0px_rgba(255,255,255,0.05)] mt-6 overflow-hidden ${className}`}>
             {/* Soft yellow accent strip on top */}
             <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-transparent via-accent-yellow to-transparent opacity-70" aria-hidden="true" />
 
@@ -49,8 +49,8 @@ export default function Pagination({
                     disabled={currentPage === 1}
                     className={`${navBtnBase} hidden sm:flex ${
                         currentPage === 1
-                            ? 'bg-white text-gray-300 cursor-not-allowed border-gray-200 shadow-none'
-                            : 'bg-white text-black hover:bg-gray-50 shadow-[2px_2px_0px_#111] hover:shadow-[3px_3px_0px_#111] hover:-translate-x-px hover:-translate-y-px'
+                            ? 'bg-white dark:bg-white/5 text-gray-300 dark:text-gray-600 cursor-not-allowed border-gray-200 dark:border-white/5 shadow-none'
+                            : 'bg-white dark:bg-white/5 text-black dark:text-white hover:bg-gray-50 dark:hover:bg-white/10 shadow-[2px_2px_0px_#111] dark:shadow-[2px_2px_0px_rgba(255,255,255,0.05)] hover:shadow-[3px_3px_0px_#111] dark:hover:shadow-[3px_3px_0px_rgba(255,255,255,0.05)] hover:-translate-x-px hover:-translate-y-px'
                     }`}
                 >
                     <span className="material-symbols-outlined !text-[14px]">arrow_back</span>
@@ -68,8 +68,8 @@ export default function Pagination({
                                 aria-current={currentPage === pageNum ? 'page' : undefined}
                                 className={`${numBtnBase} ${
                                     currentPage === pageNum
-                                        ? 'bg-accent-yellow text-black shadow-[2px_2px_0px_#111] hover:shadow-[3px_3px_0px_#111] hover:-translate-x-px hover:-translate-y-px'
-                                        : 'bg-white text-black hover:bg-accent-yellow/20 hover:shadow-[2px_2px_0px_#111] hover:-translate-x-px hover:-translate-y-px'
+                                        ? 'bg-accent-yellow text-black shadow-[2px_2px_0px_#111] dark:shadow-[2px_2px_0px_rgba(255,255,255,0.05)] hover:shadow-[3px_3px_0px_#111] dark:hover:shadow-[3px_3px_0px_rgba(255,255,255,0.05)] hover:-translate-x-px hover:-translate-y-px'
+                                        : 'bg-white dark:bg-white/5 text-black dark:text-white hover:bg-accent-yellow/20 dark:hover:bg-accent-yellow/20 hover:shadow-[2px_2px_0px_#111] dark:hover:shadow-[2px_2px_0px_rgba(255,255,255,0.05)] hover:-translate-x-px hover:-translate-y-px'
                                 }`}
                             >
                                 {pageNum}
@@ -77,7 +77,7 @@ export default function Pagination({
                         ) : (
                             <span
                                 key={idx}
-                                className="min-w-[24px] h-[34px] md:min-w-[28px] md:h-[38px] flex items-center justify-center font-mono font-black text-gray-400 text-[14px] tracking-widest"
+                                className="min-w-[24px] h-[34px] md:min-w-[28px] md:h-[38px] flex items-center justify-center font-mono font-black text-gray-400 dark:text-gray-600 text-[14px] tracking-widest"
                                 aria-hidden="true"
                             >
                                 ···
@@ -92,8 +92,8 @@ export default function Pagination({
                     disabled={currentPage === totalPages}
                     className={`${navBtnBase} hidden sm:flex ${
                         currentPage === totalPages
-                            ? 'bg-white text-gray-300 cursor-not-allowed border-gray-200 shadow-none'
-                            : 'bg-accent-yellow text-black shadow-[2px_2px_0px_#111] hover:bg-amber-300 hover:shadow-[3px_3px_0px_#111] hover:-translate-x-px hover:-translate-y-px'
+                            ? 'bg-white dark:bg-white/5 text-gray-300 dark:text-gray-600 cursor-not-allowed border-gray-200 dark:border-white/5 shadow-none'
+                            : 'bg-accent-yellow text-black shadow-[2px_2px_0px_#111] dark:shadow-[2px_2px_0px_rgba(255,255,255,0.05)] hover:bg-amber-300 hover:shadow-[3px_3px_0px_#111] dark:hover:shadow-[3px_3px_0px_rgba(255,255,255,0.05)] hover:-translate-x-px hover:-translate-y-px'
                     }`}
                 >
                     <span>Next</span>
@@ -107,8 +107,8 @@ export default function Pagination({
                         disabled={currentPage === 1}
                         className={`${navBtnBase} ${
                             currentPage === 1
-                                ? 'bg-white text-gray-300 border-gray-200 cursor-not-allowed shadow-none'
-                                : 'bg-white text-black shadow-[2px_2px_0px_#111]'
+                                ? 'bg-white dark:bg-white/5 text-gray-300 dark:text-gray-600 border-gray-200 dark:border-white/5 cursor-not-allowed shadow-none'
+                                : 'bg-white dark:bg-white/5 text-black dark:text-white shadow-[2px_2px_0px_#111] dark:shadow-[2px_2px_0px_rgba(255,255,255,0.05)]'
                         }`}
                     >
                         <span className="material-symbols-outlined !text-[14px]">arrow_back</span>
@@ -119,8 +119,8 @@ export default function Pagination({
                         disabled={currentPage === totalPages}
                         className={`${navBtnBase} ${
                             currentPage === totalPages
-                                ? 'bg-white text-gray-300 border-gray-200 cursor-not-allowed shadow-none'
-                                : 'bg-accent-yellow text-black shadow-[2px_2px_0px_#111]'
+                                ? 'bg-white dark:bg-white/5 text-gray-300 dark:text-gray-600 border-gray-200 dark:border-white/5 cursor-not-allowed shadow-none'
+                                : 'bg-accent-yellow text-black shadow-[2px_2px_0px_#111] dark:shadow-[2px_2px_0px_rgba(255,255,255,0.05)]'
                         }`}
                     >
                         Next
@@ -130,9 +130,9 @@ export default function Pagination({
             </div>
 
             {/* Page count footer (subtle) */}
-            <div className="hidden md:flex items-center justify-center gap-1.5 pb-2 -mt-1 font-mono text-[10px] uppercase tracking-[0.14em] text-gray-400">
+            <div className="hidden md:flex items-center justify-center gap-1.5 pb-2 -mt-1 font-mono text-[10px] uppercase tracking-[0.14em] text-gray-400 dark:text-gray-500">
                 <span className="w-1 h-1 rounded-full bg-accent-yellow" />
-                Page <span className="text-black font-bold tabular-nums">{currentPage}</span> of <span className="text-black font-bold tabular-nums">{totalPages}</span>
+                Page <span className="text-black dark:text-white font-bold tabular-nums">{currentPage}</span> of <span className="text-black dark:text-white font-bold tabular-nums">{totalPages}</span>
                 <span className="w-1 h-1 rounded-full bg-accent-yellow" />
             </div>
         </div>

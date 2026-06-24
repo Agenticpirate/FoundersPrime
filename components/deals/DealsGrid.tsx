@@ -592,7 +592,7 @@ export default function DealsGrid({ filters, initialIsPro }: DealsGridProps) {
         return (
           <div className="relative mb-4 md:mb-5">
             <div
-              className={`grid grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4 transition-all duration-300 ${
+              className={`grid grid-cols-2 lg:grid-cols-3 grid-fill-row gap-3 md:gap-4 transition-all duration-300 ${
                 isLocked ? 'pointer-events-none select-none' : ''
               }`}
               aria-hidden={isLocked}

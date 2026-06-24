@@ -17,8 +17,9 @@ export default function StartupsPage() {
   const count = getStartupCount()
 
   return (
-    <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden bg-gray-50">
+    <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden bg-gray-50 dark:bg-[#000000] text-[#1a1a1a] dark:text-white transition-colors duration-300">
       <Header />
+
       <main className="flex-1">
         <StartupsContent startups={startups} count={count} />
       </main>

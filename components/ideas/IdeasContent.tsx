@@ -72,10 +72,11 @@ export default function IdeasContent() {
         categories={categories.map(c => c.name)}
         sources={sources}
         resultCount={filteredIdeas.length}
+        totalCount={allIdeas.length}
         onReset={() => setFilters(DEFAULT_FILTERS)}
       />
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-6">
         <div className="lg:col-span-8">
           <IdeasGrid ideas={filteredIdeas} />
         </div>

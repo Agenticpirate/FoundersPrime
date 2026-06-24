@@ -113,6 +113,54 @@ export default function AdminDealsPage() {
     a.click()
   }
 
+  const exportAsPdf = () => {
+    const printWindow = window.open('', '_blank')
+    if (!printWindow) return
+
+    let html = `
+      <html>
+      <head>
+        <title>FoundersPrime Database Export - PDF</title>
+        <style>
+          body { font-family: monospace; padding: 25px; color: #000; background-color: #fff; line-height: 1.4; }
+          h1 { text-transform: uppercase; border-bottom: 3px solid #000; padding-bottom: 12px; margin-bottom: 8px; font-size: 20px; }
+          .summary { font-size: 11px; margin-bottom: 25px; font-weight: bold; text-transform: uppercase; }
+          .record { border-bottom: 1px dashed #000; padding: 15px 0; page-break-inside: avoid; }
+          .title { font-weight: bold; font-size: 14px; text-transform: uppercase; }
+          .meta { font-size: 10px; color: #444; margin: 6px 0; font-weight: bold; }
+          .desc { font-size: 11px; margin-top: 8px; color: #222; }
+        </style>
+      </head>
+      <body>
+        <h1>FoundersPrime Database Catalog</h1>
+        <div class="summary">Total Records: ${filtered.length} | Export Date: ${new Date().toLocaleString()}</div>
+    `
+
+    filtered.forEach((r, idx) => {
+      html += `
+        <div class="record">
+          <div class="title">[#${idx + 1}] ${r.title}</div>
+          <div class="meta">Provider: ${r.provider || 'N/A'} | Category: ${r.category || 'N/A'} | Value: ${r.value || 'N/A'}</div>
+          <div class="desc">${r.description || 'No description available.'}</div>
+        </div>
+      `
+    })
+
+    html += `
+        <script>
+          window.onload = function() {
+            window.print();
+            setTimeout(function() { window.close(); }, 500);
+          }
+        </script>
+      </body>
+      </html>
+    `
+
+    printWindow.document.write(html)
+    printWindow.document.close()
+  }
+
   // Stats
   const stats = {
     total: deals.length,
@@ -132,7 +180,17 @@ export default function AdminDealsPage() {
         <div className="flex gap-2">
           <button onClick={() => setShowAddModal(true)} className="bg-cyan-500 text-white px-3 py-1.5 border-2 border-black font-bold hover:bg-cyan-600 shadow-[2px_2px_0_0_#000] transition-all font-mono uppercase text-[10px]">+ Add</button>
           <button onClick={() => setShowImportModal(true)} className="bg-purple-500 text-white px-3 py-1.5 border-2 border-black font-bold hover:bg-purple-600 shadow-[2px_2px_0_0_#000] transition-all font-mono uppercase text-[10px]">Import</button>
-          <button onClick={exportDeals} className="bg-green-500 text-white px-3 py-1.5 border-2 border-black font-bold hover:bg-green-600 shadow-[2px_2px_0_0_#000] transition-all font-mono uppercase text-[10px]">Export</button>
+          <div className="inline-flex gap-1">
+            <a href="/api/admin/export?format=txt" download className="bg-green-500 text-white px-2.5 py-1.5 border-2 border-black font-bold hover:bg-green-600 shadow-[2px_2px_0_0_#000] transition-all font-mono uppercase text-[10px] flex items-center gap-1">
+              Notepad
+            </a>
+            <a href="/api/admin/export?format=csv" download className="bg-emerald-600 text-white px-2.5 py-1.5 border-2 border-black font-bold hover:bg-emerald-700 shadow-[2px_2px_0_0_#000] transition-all font-mono uppercase text-[10px] flex items-center gap-1">
+              Excel
+            </a>
+            <button onClick={exportAsPdf} className="bg-red-500 text-white px-2.5 py-1.5 border-2 border-black font-bold hover:bg-red-600 shadow-[2px_2px_0_0_#000] transition-all font-mono uppercase text-[10px] flex items-center gap-1">
+              PDF
+            </button>
+          </div>
         </div>
       </div>
 

@@ -16,12 +16,12 @@ export const metadata: Metadata = {
 
 export default function ContactPage() {
   return (
-    <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden bg-background-light">
+    <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden bg-[#000000] text-white">
       <Header />
-      <main className="flex-1 pattern-grid-lg">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-5 md:py-7">
+      <main className="flex-1 pattern-grid-lg pt-24 md:pt-28 pb-12">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <ContactHero />
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 md:gap-4 mb-3 md:mb-4">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
             <div className="lg:col-span-2">
               <ContactForm />
             </div>

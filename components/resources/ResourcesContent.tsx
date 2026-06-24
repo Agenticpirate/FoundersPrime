@@ -97,7 +97,7 @@ export default function ResourcesContent() {
 
   return (
     <div className="w-full">
-      <ResourcesHero searchQuery={searchQuery} onSearchChange={setSearchQuery} />
+      <ResourcesHero searchQuery={searchQuery} onSearchChange={setSearchQuery} totalCount={resourcesData.length} />
       <ResourcesFilterBar filters={filters} onFilterChange={setFilters} onClear={handleClear} />
       <ResourcesGrid resources={filteredResources} />
     </div>

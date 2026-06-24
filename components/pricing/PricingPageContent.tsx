@@ -496,7 +496,7 @@ export default function PricingPageContent() {
                     </div>
 
                     {/* Unified Infinite Horizontal Marquee */}
-                    <div className="relative w-full overflow-hidden py-4">
+                    <div ref={testimonialsRef} className="relative w-full overflow-hidden py-4">
                         {/* Gradient fades on edges */}
                         <div className="absolute inset-y-0 left-0 w-16 md:w-32 bg-gradient-to-r from-[#000000] to-transparent z-10 pointer-events-none" />
                         <div className="absolute inset-y-0 right-0 w-16 md:w-32 bg-gradient-to-l from-[#000000] to-transparent z-10 pointer-events-none" />
