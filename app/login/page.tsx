@@ -56,7 +56,7 @@ function LoginContent() {
   const redirect = searchParams.get('redirect') || '/dashboard'
   const errorParam = searchParams.get('error')
 
-  const turnstileSiteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || '0x4AAAAAADpu2acBr1UgCu0a'
+  const turnstileSiteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || '1x00000000000000000000AA'
 
   const handleOAuthLogin = async (provider: 'google' | 'github' | 'linkedin') => {
     setError(null)
