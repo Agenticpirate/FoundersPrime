@@ -1,7 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-import Mandala from '@/components/ui/Mandala'
 
 export default function ContactFAQ() {
   const [openFAQ, setOpenFAQ] = useState<number | null>(null)
@@ -16,7 +15,7 @@ export default function ContactFAQ() {
       a: (
         <>
           Browsing is free and the first page of every category is open to everyone. Unlocking the full catalog — every cloud credit, SaaS discount and grant — needs a{' '}
-          <a href="/pricing" className="font-bold underline decoration-2 underline-offset-2 hover:text-black">membership</a>. The deals themselves are always free to claim; we never take a cut.
+          <a href="/pricing" className="font-bold underline decoration-2 underline-offset-2 text-yellow-400 hover:text-yellow-300">membership</a>. The deals themselves are always free to claim; we never take a cut.
         </>
       ),
     },
@@ -29,7 +28,7 @@ export default function ContactFAQ() {
       a: (
         <>
           Memberships are sold under a strict no-refund policy — all sales are final. You can cancel anytime to stop the next renewal and keep access until the period ends (no pro-rated refunds). Exceptions: a proven double-charge, or if we discontinue the service. Full details on our{' '}
-          <a href="/refund-policy" className="font-bold underline decoration-2 underline-offset-2 hover:text-black">Refund Policy</a>.
+          <a href="/refund-policy" className="font-bold underline decoration-2 underline-offset-2 text-yellow-400 hover:text-yellow-300">Refund Policy</a>.
         </>
       ),
     },
@@ -44,46 +43,38 @@ export default function ContactFAQ() {
   ]
 
   return (
-    <div className="relative bg-white border-2 border-black shadow-[5px_5px_0px_#111] p-4 md:p-5 overflow-hidden fp-fade-up">
-      <Mandala
-        variant="rings"
-        colorClass="text-gray-900"
-        opacity={0.04}
-        speed={100}
-        className="absolute -top-16 -right-16 w-64 h-64 hidden md:block"
-      />
-
-      <div className="relative mb-4 flex items-center gap-2.5">
-        <div className="size-9 bg-accent-yellow border-2 border-black flex items-center justify-center shadow-[2px_2px_0px_#111]">
-          <span className="material-symbols-outlined !text-[18px] text-black">quiz</span>
+    <div className="relative bg-[#0d0d0d] border border-zinc-800 rounded-xl p-6 md:p-8 overflow-hidden transition-all duration-300">
+      <div className="relative mb-6 flex items-center gap-3">
+        <div className="size-10 bg-yellow-400 flex items-center justify-center rounded-md">
+          <span className="material-symbols-outlined !text-[20px] text-black">quiz</span>
         </div>
         <div>
-          <h2 className="font-mono text-base md:text-lg font-black text-black uppercase leading-none">
+          <h2 className="font-mono text-sm font-bold text-white uppercase tracking-wider">
             Frequently Asked Questions
           </h2>
           <p className="font-sans text-[11px] text-gray-500 mt-0.5">Answers to the most common questions</p>
         </div>
       </div>
 
-      <div className="relative grid grid-cols-1 md:grid-cols-2 gap-2.5 items-start">
+      <div className="relative grid grid-cols-1 md:grid-cols-2 gap-3 items-start">
         {faqs.map((faq, index) => {
           const open = openFAQ === index
           return (
             <div
               key={index}
-              className={`group border-2 border-black overflow-hidden transition-all duration-200 ${open ? 'shadow-[3px_3px_0px_#111]' : ''}`}
+              className={`border border-zinc-800 bg-[#131316] rounded-lg overflow-hidden transition-all duration-300 ${open ? 'border-zinc-700 ring-1 ring-zinc-700' : ''}`}
             >
               <button
                 onClick={() => setOpenFAQ(open ? null : index)}
                 aria-expanded={open}
-                className={`w-full p-3 text-left flex items-center justify-between gap-2 transition-colors bg-gray-50 group-hover:bg-accent-yellow/10 ${open ? '!bg-accent-yellow/10' : ''}`}
+                className="w-full p-4 text-left flex items-center justify-between gap-3 transition-colors bg-[#131316] hover:bg-zinc-800/30"
               >
-                <h3 className="font-mono text-xs font-bold text-black pr-1">
+                <h3 className="font-sans text-xs font-bold text-white pr-1">
                   {faq.q}
                 </h3>
                 <span
-                  className={`material-symbols-outlined !text-[18px] size-6 flex-shrink-0 border-2 border-black flex items-center justify-center bg-white text-black transition-all duration-300 ease-out group-hover:bg-accent-yellow group-hover:rotate-45 ${
-                    open ? '!bg-accent-yellow rotate-45' : ''
+                  className={`material-symbols-outlined !text-[16px] size-5 flex-shrink-0 border border-zinc-800 flex items-center justify-center rounded-full bg-black text-gray-400 transition-all duration-350 ${
+                    open ? 'rotate-45 text-yellow-400 border-yellow-400/30' : ''
                   }`}
                 >
                   add
@@ -91,12 +82,12 @@ export default function ContactFAQ() {
               </button>
 
               <div
-                className={`grid transition-all duration-300 ease-out grid-rows-[0fr] opacity-0 group-hover:grid-rows-[1fr] group-hover:opacity-100 ${
-                  open ? '!grid-rows-[1fr] !opacity-100' : ''
+                className={`grid transition-all duration-300 ease-in-out ${
+                  open ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'
                 }`}
               >
                 <div className="overflow-hidden">
-                  <p className="p-3 bg-white border-t-2 border-black font-mono text-[11px] text-gray-700 leading-relaxed">
+                  <p className="p-4 bg-[#0e0e10] border-t border-zinc-800 font-sans text-[11px] text-gray-400 leading-relaxed">
                     {faq.a}
                   </p>
                 </div>
@@ -107,21 +98,19 @@ export default function ContactFAQ() {
       </div>
 
       {/* Still have questions */}
-      <div className="relative mt-4 border-2 border-black bg-gradient-to-br from-gray-900 via-gray-900 to-black p-4 md:p-5 flex flex-col sm:flex-row items-center justify-between gap-3 overflow-hidden shadow-[4px_4px_0px_#ffd700]">
-        <Mandala
-          variant="petal"
-          colorClass="text-accent-yellow"
-          opacity={0.1}
-          speed={90}
-          className="absolute -bottom-10 -right-8 w-32 h-32"
-        />
-        <div className="relative text-center sm:text-left">
-          <p className="font-mono text-white font-black text-sm md:text-base uppercase">Still have questions?</p>
-          <p className="font-mono text-gray-400 text-[11px] md:text-xs mt-0.5">Drop us a line — we read every message.</p>
+      <div className="relative mt-8 border border-zinc-800 bg-[#131316] p-6 rounded-xl flex flex-col sm:flex-row items-center justify-between gap-4 overflow-hidden">
+        <div className="relative text-center sm:text-left flex flex-col sm:flex-row items-center gap-4">
+          <div className="size-10 bg-yellow-400/10 border border-yellow-400/20 text-yellow-400 flex items-center justify-center rounded-full">
+            <span className="material-symbols-outlined !text-[20px]">help_outline</span>
+          </div>
+          <div>
+            <p className="font-mono text-xs font-bold text-white uppercase tracking-wider">Still have questions?</p>
+            <p className="font-sans text-xs text-gray-400 mt-1">Drop us a line — we read every message.</p>
+          </div>
         </div>
         <a
           href="mailto:support@foundersprime.com"
-          className="relative shrink-0 inline-flex items-center gap-2 bg-accent-yellow text-black font-mono font-black text-xs uppercase px-5 py-2.5 border-2 border-black shadow-[3px_3px_0px_rgba(255,221,0,0.4)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all"
+          className="relative shrink-0 inline-flex items-center gap-2 bg-yellow-400 hover:bg-yellow-500 text-black font-sans font-bold text-xs uppercase px-5 py-2.5 rounded-md transition-all shadow-md"
         >
           <span className="material-symbols-outlined !text-[16px]">mail</span>
           Email Support

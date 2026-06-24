@@ -1,12 +1,24 @@
 'use client'
 
 import { useState, useRef, useEffect } from 'react'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import Header from '@/components/Header'
+import Footer from '@/components/Footer'
+
+const CATEGORIES = [
+    { value: 'cloud', label: 'Cloud Credits', icon: 'cloud', desc: 'AWS, GCP, Azure, etc.' },
+    { value: 'saas', label: 'SaaS Discount', icon: 'dns', desc: 'Software and API access' },
+    { value: 'marketing', label: 'Marketing/Ads', icon: 'campaign', desc: 'Ad spend & growth tools' },
+    { value: 'hiring', label: 'Hiring/Payroll', icon: 'groups', desc: 'HR, payroll & hiring platforms' },
+    { value: 'legal', label: 'Legal/Finance', icon: 'gavel', desc: 'Legal help, accounting & banking' },
+    { value: 'other', label: 'Other Perks', icon: 'more_horiz', desc: 'Anything else for startups' }
+]
 
 export default function SubmitDealPage() {
     const [logoMethod, setLogoMethod] = useState<'url' | 'upload'>('url')
     const [previewUrl, setPreviewUrl] = useState<string>('')
+    const [selectedCategory, setSelectedCategory] = useState<string>('')
+    const [redemptionMethod, setRedemptionMethod] = useState<'link' | 'code'>('link')
     const [challenge, setChallenge] = useState({ num1: 0, num2: 0, answer: '' })
     const [securityAnswer, setSecurityAnswer] = useState('')
     const [isHuman, setIsHuman] = useState(false)
@@ -41,26 +53,21 @@ export default function SubmitDealPage() {
     const [errorMessage, setErrorMessage] = useState<string>('')
     const [tier, setTier] = useState<'standard' | 'featured'>('standard')
     const [featuredPlan, setFeaturedPlan] = useState<'weekly' | 'monthly'>('weekly')
-    // Snapshot of what the user submitted, so the success screen can show the
-    // correct "what happens next" path even after the form is reset.
+    
+    // Snapshot of what the user submitted
     const [submittedTier, setSubmittedTier] = useState<'standard' | 'featured'>('standard')
     const [submittedPrice, setSubmittedPrice] = useState<string>('$25')
     const [submittedDuration, setSubmittedDuration] = useState<string>('7 days')
 
-    // Display values driven by the selected featured plan
     const featuredPrice = featuredPlan === 'weekly' ? '$25' : '$99'
     const featuredAnchor = featuredPlan === 'weekly' ? '$99' : '$299'
     const featuredDuration = featuredPlan === 'weekly' ? '7 days' : '30 days'
 
-    // Track when the form was first rendered (for anti-bot fill-time check)
     const formLoadedAt = useRef<number>(Date.now())
     useEffect(() => {
         formLoadedAt.current = Date.now()
     }, [])
 
-    // Pre-select the Featured tier when arriving from a "Get featured" CTA
-    // (e.g. /submit-deal?tier=featured). Read from the URL directly to avoid
-    // requiring a Suspense boundary around useSearchParams.
     useEffect(() => {
         const params = new URLSearchParams(window.location.search)
         if (params.get('tier') === 'featured') {
@@ -81,13 +88,16 @@ export default function SubmitDealPage() {
             return
         }
 
+        if (!selectedCategory) {
+            setErrorMessage('Please select a deal category.')
+            setSubmissionStatus('error')
+            return
+        }
+
         setIsSubmitting(true)
         setSubmissionStatus('idle')
         setErrorMessage('')
 
-        // Capture the form element now — `e.currentTarget` becomes null after
-        // the first `await` below, so referencing it later would throw and get
-        // mislabeled as a network error.
         const form = e.currentTarget
         const formData = new FormData(form)
         const data = {
@@ -95,16 +105,16 @@ export default function SubmitDealPage() {
             website_url: formData.get('website_url'),
             logo_url: logoMethod === 'url' ? formData.get('logo_url') : previewUrl,
             benefit_description: formData.get('benefit_description'),
-            category: formData.get('category'),
+            category: selectedCategory,
             deal_value: formData.get('deal_value'),
-            redemption_method: formData.get('redemption'),
+            redemption_method: redemptionMethod,
             redemption_link: formData.get('redemption_link'),
             is_exclusive: formData.get('is_exclusive') === 'on',
             submitter_email: formData.get('submitter_email'),
             featured_requested: tier === 'featured',
             featured_plan: featuredPlan,
             // Anti-bot signals
-            website_link: formData.get('website_link'), // honeypot — should be empty
+            website_link: formData.get('website_link'), // honeypot
             fill_time_ms: Date.now() - formLoadedAt.current,
         }
 
@@ -120,12 +130,12 @@ export default function SubmitDealPage() {
             const result = await response.json().catch(() => ({}))
 
             if (response.ok) {
-                // Snapshot the submitted tier/plan for the success screen before resetting.
                 setSubmittedTier(tier)
                 setSubmittedPrice(featuredPrice)
                 setSubmittedDuration(featuredDuration)
                 setSubmissionStatus('success')
                 form.reset()
+                setSelectedCategory('')
                 setPreviewUrl('')
                 setIsHuman(false)
                 setSecurityAnswer('')
@@ -146,20 +156,24 @@ export default function SubmitDealPage() {
     }
 
     return (
-        <div className="min-h-screen bg-background-light flex flex-col font-mono">
+        <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden bg-[#000000] text-white">
             <Header />
 
-            <main className="flex-grow py-5 md:py-8 px-4 grid-bg">
-                <div className="max-w-3xl mx-auto">
-                    <div className="mb-5 md:mb-8 text-center">
-                        <div className="inline-flex items-center gap-1.5 bg-black text-accent-yellow font-mono text-[9px] md:text-[10px] font-black uppercase tracking-widest px-3 py-1 border-2 border-black mb-3 shadow-[2px_2px_0px_#111]">
-                            <span className="w-1.5 h-1.5 rounded-full bg-accent-yellow animate-pulse" />
-                            Now accepting submissions
+            <main className="flex-1 pattern-grid-lg py-12 md:py-16">
+                <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                    
+                    {/* Hero section */}
+                    <div className="mb-10 md:mb-12 text-center">
+                        <div className="inline-flex items-center gap-2 bg-yellow-400/10 border border-yellow-400/20 text-yellow-400 font-mono text-[10px] md:text-xs font-bold uppercase tracking-wider px-3.5 py-1.5 rounded-full mb-4">
+                            <span className="w-2 h-2 rounded-full bg-yellow-400 animate-ping" />
+                            Accepting Submissions
                         </div>
-                        <h1 className="text-[26px] leading-[1.05] md:text-4xl font-black uppercase mb-2 md:mb-3 tracking-tight">Submit Your Deal</h1>
-                        <p className="text-[13px] md:text-base text-gray-600 max-w-xl mx-auto leading-relaxed">
-                            Reach thousands of verified founders. We only list high-value, exclusive deals.
-                            <span className="inline-block bg-accent-yellow px-2 py-0.5 mt-2 md:ml-1.5 md:mt-0 border-2 border-black font-bold text-black text-xs md:text-sm">Zero fees.</span>
+                        <h1 className="font-heading text-3xl md:text-5xl font-black uppercase mb-3 tracking-tight text-white">
+                            Submit Your <span className="text-yellow-400">Deal</span>
+                        </h1>
+                        <p className="font-sans text-sm md:text-base text-gray-400 max-w-xl mx-auto leading-relaxed">
+                            Put your product in front of thousands of vetted founders. We only list high-quality, exclusive perks.
+                            <span className="inline-block bg-yellow-400/10 text-yellow-400 px-2.5 py-0.5 rounded-md mt-2 md:ml-2 md:mt-0 font-mono text-xs border border-yellow-400/20">Zero fees.</span>
                         </p>
                     </div>
 
@@ -168,65 +182,56 @@ export default function SubmitDealPage() {
                             initial={{ opacity: 0, y: 24, scale: 0.96 }}
                             animate={{ opacity: 1, y: 0, scale: 1 }}
                             transition={{ type: 'spring', stiffness: 220, damping: 22 }}
-                            className="relative bg-white border-[3px] border-black p-6 md:p-10 text-center shadow-[4px_4px_0px_0px_#000] md:shadow-[8px_8px_0px_0px_#000] overflow-hidden"
+                            className="relative bg-[#0d0d0d] border border-zinc-800 rounded-2xl p-6 md:p-12 text-center overflow-hidden shadow-2xl"
                         >
-                            {/* Sleek accent particles bursting from the check */}
+                            {/* Particles background */}
                             <div className="pointer-events-none absolute inset-0 flex items-start justify-center">
                                 {[...Array(8)].map((_, i) => {
                                     const angle = (i / 8) * Math.PI * 2
                                     return (
                                         <motion.span
                                             key={i}
-                                            className="absolute top-[64px] md:top-[80px] w-2 h-2 bg-accent-yellow border border-black"
+                                            className="absolute top-[64px] md:top-[80px] w-2 h-2 bg-yellow-400 rounded-full"
                                             initial={{ opacity: 0, x: 0, y: 0, scale: 0 }}
                                             animate={{
                                                 opacity: [0, 1, 0],
-                                                x: Math.cos(angle) * 90,
-                                                y: Math.sin(angle) * 90,
-                                                scale: [0, 1, 0.4],
+                                                x: Math.cos(angle) * 110,
+                                                y: Math.sin(angle) * 110,
+                                                scale: [0, 1.2, 0.4],
                                             }}
-                                            transition={{ duration: 0.9, delay: 0.25 + i * 0.02, ease: 'easeOut' }}
+                                            transition={{ duration: 1.2, delay: 0.2 + i * 0.03, ease: 'easeOut' }}
                                         />
                                     )
                                 })}
                             </div>
 
-                            {/* Animated check badge */}
                             <motion.div
                                 initial={{ scale: 0, rotate: -25 }}
                                 animate={{ scale: 1, rotate: 0 }}
                                 transition={{ type: 'spring', stiffness: 260, damping: 14, delay: 0.1 }}
-                                className="relative inline-flex items-center justify-center w-16 h-16 md:w-20 md:h-20 bg-green-100 border-2 border-green-600 mb-4"
+                                className="relative inline-flex items-center justify-center w-16 h-16 md:w-20 md:h-20 bg-green-500/10 border border-green-500/20 text-green-400 rounded-full mb-6"
                             >
-                                <motion.span
-                                    className="material-symbols-outlined text-5xl md:text-6xl text-green-600"
-                                    style={{ fontVariationSettings: "'FILL' 1" }}
-                                    initial={{ scale: 0 }}
-                                    animate={{ scale: 1 }}
-                                    transition={{ type: 'spring', stiffness: 300, damping: 12, delay: 0.32 }}
-                                >
-                                    check_circle
-                                </motion.span>
+                                <span className="material-symbols-outlined text-4xl md:text-5xl">check_circle</span>
                             </motion.div>
 
                             <motion.h2
                                 initial={{ opacity: 0, y: 10 }}
                                 animate={{ opacity: 1, y: 0 }}
-                                transition={{ delay: 0.36 }}
-                                className="text-xl md:text-2xl font-black mb-2 uppercase tracking-tight"
+                                transition={{ delay: 0.3 }}
+                                className="font-heading text-2xl md:text-3xl font-bold mb-2 uppercase tracking-tight text-white"
                             >
                                 Submission Received!
                             </motion.h2>
                             <motion.p
                                 initial={{ opacity: 0, y: 10 }}
                                 animate={{ opacity: 1, y: 0 }}
-                                transition={{ delay: 0.44 }}
-                                className="text-sm md:text-base text-gray-600 mb-6 max-w-md mx-auto leading-relaxed"
+                                transition={{ delay: 0.4 }}
+                                className="font-sans text-xs md:text-sm text-gray-400 mb-8 max-w-md mx-auto leading-relaxed"
                             >
-                                Thanks for submitting your deal. Here's exactly what happens next.
+                                Your deal request has been logged. Here is what you can expect next from our vetting process.
                             </motion.p>
 
-                            {/* What happens next — staggered timeline */}
+                            {/* Timeline style details */}
                             <motion.ol
                                 initial="hidden"
                                 animate="show"
@@ -234,19 +239,19 @@ export default function SubmitDealPage() {
                                     hidden: {},
                                     show: { transition: { staggerChildren: 0.12, delayChildren: 0.5 } },
                                 }}
-                                className="text-left max-w-md mx-auto space-y-3 mb-6"
+                                className="text-left max-w-lg mx-auto space-y-4 mb-8"
                             >
                                 {(submittedTier === 'featured'
                                     ? [
-                                        { n: '1', t: 'We review your deal', d: 'Priority review within ~24 hours.' },
-                                        { n: '2', t: 'Approval email', d: `If approved, we email you a secure ${submittedPrice} payment link.` },
-                                        { n: '3', t: 'You pay & go live', d: `After payment, your deal is pinned with a Featured badge for ${submittedDuration}.` },
-                                        { n: '4', t: 'Auto-refund safety net', d: 'Not approved? Your payment is automatically refunded.' },
+                                        { n: '1', t: 'Deal Verification & Vetting', d: 'Our team will review the exclusivity and quality of your deal within 24 hours.' },
+                                        { n: '2', t: 'Approval & Payment Link', d: `Upon approval, we will email you a secure Stripe link for the ${submittedPrice} featured listing.` },
+                                        { n: '3', t: 'Live Featured Promotion', d: `Once payment completes, your deal is pinned at the top with a premium Featured badge for ${submittedDuration}.` },
+                                        { n: '4', t: 'Assurance Policy', d: 'If for any reason your deal is not approved, no charges will be made.' },
                                     ]
                                     : [
-                                        { n: '1', t: 'We review your deal', d: 'Our team reviews within ~48 hours.' },
-                                        { n: '2', t: 'Status email', d: "We'll email you once it's approved or if we need changes." },
-                                        { n: '3', t: 'It goes live', d: 'Approved deals are listed for thousands of verified founders.' },
+                                        { n: '1', t: 'Manual Admin Verification', d: 'We verify the deal and logo assets. This takes approximately 48 hours.' },
+                                        { n: '2', t: 'Email Notification', d: "We'll send you an email confirmation when the deal goes live or if adjustments are required." },
+                                        { n: '3', t: 'Live Listing', d: 'Your deal goes live and is listed chronologically in our active directory.' },
                                     ]
                                 ).map((step) => (
                                     <motion.li
@@ -255,14 +260,14 @@ export default function SubmitDealPage() {
                                             hidden: { opacity: 0, x: -16 },
                                             show: { opacity: 1, x: 0 },
                                         }}
-                                        className="flex items-start gap-3 bg-gray-50 border-2 border-black p-3 shadow-[2px_2px_0px_#111]"
+                                        className="flex gap-4 bg-[#111115] border border-zinc-800/60 p-4 rounded-xl hover:border-zinc-800 transition-colors"
                                     >
-                                        <span className="bg-black text-accent-yellow w-6 h-6 flex items-center justify-center text-xs font-black shrink-0 shadow-[2px_2px_0px_#111]">
+                                        <span className="bg-yellow-400 text-black w-7 h-7 rounded-full flex items-center justify-center text-xs font-mono font-black shrink-0">
                                             {step.n}
                                         </span>
                                         <div>
-                                            <p className="font-black uppercase text-xs md:text-sm tracking-tight">{step.t}</p>
-                                            <p className="text-[11px] md:text-xs text-gray-600 leading-snug">{step.d}</p>
+                                            <p className="font-mono text-xs md:text-sm font-bold uppercase tracking-wider text-white">{step.t}</p>
+                                            <p className="font-sans text-[11px] md:text-xs text-gray-400 mt-1 leading-relaxed">{step.d}</p>
                                         </div>
                                     </motion.li>
                                 ))}
@@ -272,46 +277,55 @@ export default function SubmitDealPage() {
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
                                 transition={{ delay: 1 }}
-                                className="text-[11px] md:text-xs text-gray-500 bg-amber-50 border border-amber-200 px-3 py-2 max-w-md mx-auto mb-6 leading-snug"
+                                className="text-[11px] md:text-xs text-yellow-400 bg-yellow-400/5 border border-yellow-400/10 rounded-lg px-4 py-3 max-w-lg mx-auto mb-8 leading-relaxed flex gap-2 items-center justify-center font-mono"
                             >
-                                <span className="font-bold">Heads up:</span> all status updates are sent to the email
-                                you provided. If you didn't add one, check back here for your listing.
+                                <span className="material-symbols-outlined !text-[16px] shrink-0">info</span>
+                                Updates and status details will be sent to your provided submitter email address.
                             </motion.div>
 
                             <motion.button
                                 initial={{ opacity: 0, y: 10 }}
                                 animate={{ opacity: 1, y: 0 }}
-                                transition={{ delay: 1.05 }}
+                                transition={{ delay: 1.1 }}
                                 whileHover={{ y: -2 }}
                                 whileTap={{ y: 1 }}
                                 onClick={() => setSubmissionStatus('idle')}
-                                className="px-6 py-3 bg-black text-white font-mono font-bold text-sm uppercase border-2 border-black hover:bg-accent-yellow hover:text-black transition-colors shadow-[3px_3px_0px_#888]"
+                                className="px-6 py-3 bg-yellow-400 hover:bg-yellow-500 text-black font-mono text-xs font-bold uppercase rounded-md transition-colors shadow-lg shadow-yellow-400/10"
                             >
                                 Submit Another Deal
                             </motion.button>
                         </motion.div>
                     ) : (
-                        <form className="bg-white border-[3px] border-black shadow-[4px_4px_0px_0px_#000] md:shadow-[8px_8px_0px_0px_#000] p-4 md:p-8 space-y-6 md:space-y-8" onSubmit={handleSubmit}>
+                        <form className="relative bg-[#0d0d0d] border border-zinc-800 rounded-2xl p-6 md:p-10 space-y-8 md:space-y-10 shadow-2xl" onSubmit={handleSubmit}>
 
                             {/* Section 1: Provider Info */}
-                            <div className="space-y-3 md:space-y-4">
-                                <h2 className="text-base md:text-xl font-black uppercase border-b-2 border-black pb-2 flex items-center gap-2 tracking-tight">
-                                    <span className="bg-black text-accent-yellow w-6 h-6 md:w-7 md:h-7 flex items-center justify-center text-xs md:text-sm font-black shadow-[2px_2px_0px_#111]">1</span>
-                                    Provider Details
-                               </h2>
-
-                               <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
+                            <div className="space-y-6">
+                                <div className="flex items-center gap-3 border-b border-zinc-800 pb-3">
+                                    <div className="size-8 bg-yellow-400/10 border border-yellow-400/20 text-yellow-400 rounded-lg flex items-center justify-center text-xs font-mono font-bold">1</div>
                                     <div>
-                                        <label className="block text-xs font-bold uppercase mb-1">Company Name *</label>
-                                        <input name="company_name" type="text" placeholder="e.g. Acme Corp" className="w-full p-2 md:p-3 text-sm md:text-base border-2 border-black focus:outline-none focus:shadow-[4px_4px_0px_0px_#000] transition-shadow bg-background-light" required />
-                                    </div>
-                                    <div>
-                                        <label className="block text-xs font-bold uppercase mb-1">Website URL *</label>
-                                        <input name="website_url" type="url" placeholder="https://" className="w-full p-2 md:p-3 text-sm md:text-base border-2 border-black focus:outline-none focus:shadow-[4px_4px_0px_0px_#000] transition-shadow bg-background-light" required />
+                                        <h2 className="font-heading text-sm font-bold uppercase tracking-wider text-white">Provider Details</h2>
+                                        <p className="font-sans text-[10px] text-gray-500 mt-0.5">Let us know who is hosting this exclusive perk</p>
                                     </div>
                                 </div>
 
-                                {/* Honeypot — hidden from real users, visible to bots */}
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                                    <div>
+                                        <label className="block font-mono text-[10px] font-bold text-gray-400 mb-2 uppercase tracking-wider">Company Name *</label>
+                                        <div className="relative">
+                                            <span className="material-symbols-outlined !text-[16px] text-gray-500 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none">business</span>
+                                            <input name="company_name" type="text" placeholder="e.g. Acme Corp" className="w-full pl-10 pr-4 py-3 text-xs bg-[#131316] border border-zinc-800 rounded-lg text-white font-sans focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition-all placeholder:text-gray-600" required />
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label className="block font-mono text-[10px] font-bold text-gray-400 mb-2 uppercase tracking-wider">Website URL *</label>
+                                        <div className="relative">
+                                            <span className="material-symbols-outlined !text-[16px] text-gray-500 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none">link</span>
+                                            <input name="website_url" type="url" placeholder="https://acme.com" className="w-full pl-10 pr-4 py-3 text-xs bg-[#131316] border border-zinc-800 rounded-lg text-white font-sans focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition-all placeholder:text-gray-600" required />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Honeypot */}
                                 <div aria-hidden="true" className="absolute left-[-9999px] top-[-9999px] opacity-0 pointer-events-none" tabIndex={-1}>
                                     <label>Leave this field blank
                                         <input type="text" name="website_link" tabIndex={-1} autoComplete="off" />
@@ -319,46 +333,49 @@ export default function SubmitDealPage() {
                                 </div>
 
                                 <div>
-                                    <label className="block text-xs font-bold uppercase mb-2">Logo Upload *</label>
+                                    <label className="block font-mono text-[10px] font-bold text-gray-400 mb-3 uppercase tracking-wider">Logo Upload *</label>
 
-                                    <div className="flex gap-2 mb-2 text-xs font-bold">
+                                    <div className="flex gap-2.5 mb-3">
                                         <button
                                             type="button"
                                             onClick={() => setLogoMethod('url')}
-                                            className={`px-3 py-1.5 border-2 border-black uppercase tracking-wide transition-colors ${logoMethod === 'url' ? 'bg-black text-accent-yellow shadow-[2px_2px_0px_#111]' : 'bg-white text-black hover:bg-gray-100'}`}
+                                            className={`px-4 py-2 border font-mono text-[11px] font-medium rounded-lg transition-all ${logoMethod === 'url' ? 'bg-yellow-400 border-yellow-400 text-black font-bold shadow-md shadow-yellow-400/5' : 'bg-[#131316] border-zinc-800 text-gray-400 hover:text-white'}`}
                                         >
-                                            Use URL
+                                            URL Link
                                         </button>
                                         <button
                                             type="button"
                                             onClick={() => setLogoMethod('upload')}
-                                            className={`px-3 py-1.5 border-2 border-black uppercase tracking-wide transition-colors ${logoMethod === 'upload' ? 'bg-black text-accent-yellow shadow-[2px_2px_0px_#111]' : 'bg-white text-black hover:bg-gray-100'}`}
+                                            className={`px-4 py-2 border font-mono text-[11px] font-medium rounded-lg transition-all ${logoMethod === 'upload' ? 'bg-yellow-400 border-yellow-400 text-black font-bold shadow-md shadow-yellow-400/5' : 'bg-[#131316] border-zinc-800 text-gray-400 hover:text-white'}`}
                                         >
                                             Upload File
                                         </button>
                                     </div>
 
                                     {logoMethod === 'url' ? (
-                                        <div className="flex gap-2">
-                                            <input
-                                                name="logo_url"
-                                                type="url"
-                                                placeholder="https://domain.com/logo.png"
-                                                className="w-full p-2 md:p-3 text-sm md:text-base border-2 border-black focus:outline-none focus:shadow-[4px_4px_0px_0px_#000] transition-shadow bg-background-light"
-                                                required={logoMethod === 'url'}
-                                                onChange={(e) => setPreviewUrl(e.target.value)}
-                                            />
-                                            <div className="w-10 h-10 md:w-12 md:h-12 border-2 border-black bg-gray-100 flex items-center justify-center shrink-0 overflow-hidden relative">
+                                        <div className="flex gap-3">
+                                            <div className="relative flex-1">
+                                                <span className="material-symbols-outlined !text-[16px] text-gray-500 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none">image</span>
+                                                <input
+                                                    name="logo_url"
+                                                    type="url"
+                                                    placeholder="https://acme.com/logo.png"
+                                                    className="w-full pl-10 pr-4 py-3 text-xs bg-[#131316] border border-zinc-800 rounded-lg text-white font-sans focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition-all placeholder:text-gray-600"
+                                                    required={logoMethod === 'url'}
+                                                    onChange={(e) => setPreviewUrl(e.target.value)}
+                                                />
+                                            </div>
+                                            <div className="w-11 h-11 md:w-12 md:h-12 rounded-lg border border-zinc-800 bg-[#131316] flex items-center justify-center shrink-0 overflow-hidden relative">
                                                 {previewUrl ? (
-                                                    <img src={previewUrl} alt="Preview" className="w-full h-full object-contain" onError={(e) => e.currentTarget.style.display = 'none'} />
+                                                    <img src={previewUrl} alt="Preview" className="w-full h-full object-contain p-1" onError={(e) => e.currentTarget.style.display = 'none'} />
                                                 ) : (
-                                                    <span className="material-symbols-outlined text-gray-400 text-sm">image</span>
+                                                    <span className="material-symbols-outlined text-zinc-600 text-sm">image</span>
                                                 )}
                                             </div>
                                         </div>
                                     ) : (
-                                        <div className="flex gap-2">
-                                            <div className="relative w-full">
+                                        <div className="flex gap-3">
+                                            <div className="relative flex-1">
                                                 <input
                                                     ref={fileInputRef}
                                                     type="file"
@@ -367,247 +384,289 @@ export default function SubmitDealPage() {
                                                     onChange={handleFileChange}
                                                     required={logoMethod === 'upload'}
                                                 />
-                                                <div className="w-full p-2 md:p-3 text-sm md:text-base border-2 border-black bg-background-light flex items-center justify-between">
-                                                    <span className="text-gray-500 truncate text-xs md:text-sm">{fileInputRef.current?.files?.[0]?.name || "Select file..."}</span>
-                                                    <span className="material-symbols-outlined text-sm md:text-base">upload_file</span>
+                                                <div className="w-full px-4 py-3 text-xs bg-[#131316] border border-zinc-800 rounded-lg flex items-center justify-between">
+                                                    <span className="text-gray-400 truncate max-w-[200px] sm:max-w-xs">{fileInputRef.current?.files?.[0]?.name || "Select image file..."}</span>
+                                                    <span className="material-symbols-outlined text-zinc-500 text-[18px]">upload_file</span>
                                                 </div>
                                             </div>
-                                            <div className="w-10 h-10 md:w-12 md:h-12 border-2 border-black bg-gray-100 flex items-center justify-center shrink-0 overflow-hidden relative">
+                                            <div className="w-11 h-11 md:w-12 md:h-12 rounded-lg border border-zinc-800 bg-[#131316] flex items-center justify-center shrink-0 overflow-hidden relative">
                                                 {previewUrl ? (
-                                                    <img src={previewUrl} alt="Preview" className="w-full h-full object-contain" />
+                                                    <img src={previewUrl} alt="Preview" className="w-full h-full object-contain p-1" />
                                                 ) : (
-                                                    <span className="material-symbols-outlined text-gray-400 text-sm">image</span>
+                                                    <span className="material-symbols-outlined text-zinc-600 text-sm">image</span>
                                                 )}
                                             </div>
                                         </div>
                                     )}
-                                    <p className="text-[10px] text-gray-500 mt-1">
-                                        {logoMethod === 'url' ? 'Direct link to a high-res PNG/SVG.' : 'Max 2MB. Square format recommended.'}
+                                    <p className="text-[10px] text-gray-500 mt-2 font-sans">
+                                        {logoMethod === 'url' ? 'Direct secure link to your startup logo (PNG or SVG format).' : 'Max file size 2MB. A square logo format is ideal.'}
                                     </p>
                                 </div>
                             </div>
 
                             {/* Section 2: Deal Info */}
-                            <div className="space-y-3 md:space-y-4">
-                                <h2 className="text-base md:text-xl font-black uppercase border-b-2 border-black pb-2 flex items-center gap-2 tracking-tight">
-                                    <span className="bg-black text-accent-yellow w-6 h-6 md:w-7 md:h-7 flex items-center justify-center text-xs md:text-sm font-black shadow-[2px_2px_0px_#111]">2</span>
-                                    Deal Configuration
-                                </h2>
-
-                                <div>
-                                    <label className="block text-xs font-bold uppercase mb-1">Benefit Description *</label>
-                                    <input name="benefit_description" type="text" placeholder="e.g. $5,000 in Credits for 12 months" className="w-full p-2 md:p-3 text-sm md:text-base border-2 border-black focus:outline-none focus:shadow-[4px_4px_0px_0px_#000] transition-shadow bg-background-light" required />
-                                </div>
-
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
+                            <div className="space-y-6">
+                                <div className="flex items-center gap-3 border-b border-zinc-800 pb-3">
+                                    <div className="size-8 bg-yellow-400/10 border border-yellow-400/20 text-yellow-400 rounded-lg flex items-center justify-center text-xs font-mono font-bold">2</div>
                                     <div>
-                                        <label className="block text-xs font-bold uppercase mb-1">Category *</label>
-                                        <select name="category" className="w-full p-2 md:p-3 text-sm md:text-base border-2 border-black focus:outline-none focus:shadow-[4px_4px_0px_0px_#000] transition-shadow bg-background-light appearance-none" required>
-                                            <option value="">Select Category...</option>
-                                            <option value="cloud">Cloud Credits</option>
-                                            <option value="saas">SaaS Discount</option>
-                                            <option value="marketing">Marketing/Ads</option>
-                                            <option value="hiring">Hiring/Payroll</option>
-                                            <option value="legal">Legal/Finance</option>
-                                            <option value="other">Other</option>
-                                        </select>
+                                        <h2 className="font-heading text-sm font-bold uppercase tracking-wider text-white">Deal Configuration</h2>
+                                        <p className="font-sans text-[10px] text-gray-500 mt-0.5">Specify the terms of your premium discount or credit</p>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label className="block font-mono text-[10px] font-bold text-gray-400 mb-2 uppercase tracking-wider">Benefit Description *</label>
+                                    <div className="relative">
+                                        <span className="material-symbols-outlined !text-[16px] text-gray-500 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none">featured_play_list</span>
+                                        <input name="benefit_description" type="text" placeholder="e.g. $5,000 in Credits for 12 months" className="w-full pl-10 pr-4 py-3 text-xs bg-[#131316] border border-zinc-800 rounded-lg text-white font-sans focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition-all placeholder:text-gray-600" required />
+                                    </div>
+                                </div>
+
+                                {/* Category Selection Grid Cards */}
+                                <div>
+                                    <label className="block font-mono text-[10px] font-bold text-gray-400 mb-3 uppercase tracking-wider">Category *</label>
+                                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
+                                        {CATEGORIES.map((cat) => {
+                                            const isSelected = selectedCategory === cat.value
+                                            return (
+                                                <button
+                                                    key={cat.value}
+                                                    type="button"
+                                                    onClick={() => setSelectedCategory(cat.value)}
+                                                    className={`p-3 text-left border rounded-lg transition-all group flex flex-col items-start gap-1.5 ${
+                                                        isSelected
+                                                            ? 'bg-yellow-400 border-yellow-400 text-black shadow-lg shadow-yellow-400/5'
+                                                            : 'bg-[#131316] border-zinc-800/80 hover:border-zinc-700 text-gray-400 hover:text-white'
+                                                    }`}
+                                                >
+                                                    <span className={`material-symbols-outlined !text-[20px] ${isSelected ? 'text-black' : 'text-gray-500 group-hover:text-yellow-400 transition-colors'}`}>
+                                                        {cat.icon}
+                                                    </span>
+                                                    <div>
+                                                        <span className="block font-mono text-[10px] font-bold uppercase tracking-wider leading-tight">{cat.label}</span>
+                                                        <span className={`block font-sans text-[8px] mt-0.5 leading-tight ${isSelected ? 'text-black/70' : 'text-gray-500'}`}>{cat.desc}</span>
+                                                    </div>
+                                                </button>
+                                            )
+                                        })}
+                                    </div>
+                                    <input type="hidden" name="category" value={selectedCategory} required />
+                                </div>
+
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                                    <div>
+                                        <label className="block font-mono text-[10px] font-bold text-gray-400 mb-2 uppercase tracking-wider">Deal Value ($ USD) *</label>
+                                        <div className="relative">
+                                            <span className="material-symbols-outlined !text-[16px] text-gray-500 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none">payments</span>
+                                            <input name="deal_value" type="text" placeholder="e.g. 5000" className="w-full pl-10 pr-4 py-3 text-xs bg-[#131316] border border-zinc-800 rounded-lg text-white font-sans focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition-all placeholder:text-gray-600" required />
+                                        </div>
                                     </div>
                                     <div>
-                                        <label className="block text-xs font-bold uppercase mb-1">Deal Value ($) *</label>
-                                        <input name="deal_value" type="text" placeholder="e.g. 5000" className="w-full p-2 md:p-3 text-sm md:text-base border-2 border-black focus:outline-none focus:shadow-[4px_4px_0px_0px_#000] transition-shadow bg-background-light" required />
+                                        <label className="block font-mono text-[10px] font-bold text-gray-400 mb-2 uppercase tracking-wider">Your Email (Status Updates)</label>
+                                        <div className="relative">
+                                            <span className="material-symbols-outlined !text-[16px] text-gray-500 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none">mail</span>
+                                            <input name="submitter_email" type="email" placeholder="hello@yourcompany.com" className="w-full pl-10 pr-4 py-3 text-xs bg-[#131316] border border-zinc-800 rounded-lg text-white font-sans focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition-all placeholder:text-gray-600" />
+                                        </div>
                                     </div>
                                 </div>
 
                                 <div>
-                                    <label className="block text-xs font-bold uppercase mb-2">Redemption Method *</label>
-                                    <div className="flex flex-col sm:flex-row gap-2 sm:gap-4">
-                                        <label className="flex items-center gap-2 cursor-pointer border-2 border-transparent hover:border-black p-2 -ml-2 rounded text-sm md:text-base">
-                                            <input type="radio" name="redemption" value="link" className="accent-black w-3.5 h-3.5 md:w-4 md:h-4" defaultChecked />
-                                            <span className="font-bold">Unique URL</span>
-                                        </label>
-                                        <label className="flex items-center gap-2 cursor-pointer border-2 border-transparent hover:border-black p-2 rounded text-sm md:text-base">
-                                            <input type="radio" name="redemption" value="code" className="accent-black w-3.5 h-3.5 md:w-4 md:h-4" />
-                                            <span className="font-bold">Coupon Code</span>
-                                        </label>
+                                    <label className="block font-mono text-[10px] font-bold text-gray-400 mb-3 uppercase tracking-wider">Redemption Method *</label>
+                                    <div className="flex gap-2.5 mb-3">
+                                        <button
+                                            type="button"
+                                            onClick={() => setRedemptionMethod('link')}
+                                            className={`px-4 py-2 border font-mono text-[11px] font-medium rounded-lg transition-all ${redemptionMethod === 'link' ? 'bg-yellow-400 border-yellow-400 text-black font-bold shadow-md shadow-yellow-400/5' : 'bg-[#131316] border-zinc-800 text-gray-400 hover:text-white'}`}
+                                        >
+                                            Unique URL Link
+                                        </button>
+                                        <button
+                                            type="button"
+                                            onClick={() => setRedemptionMethod('code')}
+                                            className={`px-4 py-2 border font-mono text-[11px] font-medium rounded-lg transition-all ${redemptionMethod === 'code' ? 'bg-yellow-400 border-yellow-400 text-black font-bold shadow-md shadow-yellow-400/5' : 'bg-[#131316] border-zinc-800 text-gray-400 hover:text-white'}`}
+                                        >
+                                            Coupon Code
+                                        </button>
                                     </div>
+                                    <input type="hidden" name="redemption" value={redemptionMethod} />
                                 </div>
 
                                 <div>
-                                    <label className="block text-xs font-bold uppercase mb-1">Redemption Link / Code *</label>
-                                    <input name="redemption_link" type="text" placeholder="https://your-site.com/founders-prime OR Code: PRIME2025" className="w-full p-2 md:p-3 text-sm md:text-base border-2 border-black focus:outline-none focus:shadow-[4px_4px_0px_0px_#000] transition-shadow bg-background-light" required />
-                                </div>
-
-                                <div>
-                                    <label className="block text-xs font-bold uppercase mb-1">Your Email (optional)</label>
-                                    <input name="submitter_email" type="email" placeholder="hello@yourcompany.com" className="w-full p-2 md:p-3 text-sm md:text-base border-2 border-black focus:outline-none focus:shadow-[4px_4px_0px_0px_#000] transition-shadow bg-background-light" />
-                                    <p className="text-[10px] text-gray-500 mt-1">We'll only use this to notify you about your submission status.</p>
+                                    <label className="block font-mono text-[10px] font-bold text-gray-400 mb-2 uppercase tracking-wider">
+                                        {redemptionMethod === 'link' ? 'Redemption Link / URL *' : 'Coupon Code / Details *'}
+                                    </label>
+                                    <div className="relative">
+                                        <span className="material-symbols-outlined !text-[16px] text-gray-500 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none">
+                                            {redemptionMethod === 'link' ? 'open_in_new' : 'vpn_key'}
+                                        </span>
+                                        <input
+                                            name="redemption_link"
+                                            type="text"
+                                            placeholder={redemptionMethod === 'link' ? "https://yourcompany.com/foundersprime" : "PRIME2026"}
+                                            className="w-full pl-10 pr-4 py-3 text-xs bg-[#131316] border border-zinc-800 rounded-lg text-white font-sans focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition-all placeholder:text-gray-600"
+                                            required
+                                        />
+                                    </div>
                                 </div>
                             </div>
 
                             {/* Section 3: Exclusivity */}
-                            <div className="bg-accent-yellow/20 border-2 border-black p-3 md:p-4 shadow-[2px_2px_0px_#111]">
-                                <label className="flex items-start gap-2.5 md:gap-3 cursor-pointer">
-                                    <input name="is_exclusive" type="checkbox" className="mt-0.5 w-5 h-5 accent-black border-2 border-black flex-shrink-0" required />
+                            <div className="bg-[#111114] border border-zinc-800/80 rounded-xl p-5 hover:border-zinc-700 transition-all">
+                                <label className="flex items-start gap-3.5 cursor-pointer select-none">
+                                    <input name="is_exclusive" type="checkbox" className="mt-0.5 w-5 h-5 rounded accent-yellow-400 bg-[#131316] border border-zinc-800 cursor-pointer shrink-0" required />
                                     <div>
-                                        <span className="font-bold uppercase block text-xs md:text-sm tracking-wide">Exclusivity Confirmation *</span>
-                                        <span className="text-[11px] md:text-xs text-gray-800 tracking-tight md:tracking-normal leading-snug block mt-0.5">
-                                            I confirm this deal offers a <span className="font-bold underline">special benefit</span> to FoundersPrime users (e.g., extra credits, extended trial, or higher discount) compared to our public pricing. We do not list generic referral links.
+                                        <span className="font-mono text-xs font-bold uppercase tracking-wider text-white block">Exclusivity Commitment *</span>
+                                        <span className="font-sans text-[11px] text-gray-400 leading-relaxed block mt-1.5">
+                                            I verify this discount/credit provides a <span className="text-yellow-400 font-bold underline">verifiable custom perk</span> to FoundersPrime subscribers that exceeds public offerings. Generic affiliate or referral links will be declined.
                                         </span>
                                     </div>
                                 </label>
                             </div>
 
                             {/* Section 4: Tier Selection */}
-                            <div className="space-y-3 md:space-y-4">
-                                <h2 className="text-base md:text-xl font-black uppercase border-b-2 border-black pb-2 flex items-center gap-2 tracking-tight">
-                                    <span className="bg-black text-accent-yellow w-6 h-6 md:w-7 md:h-7 flex items-center justify-center text-xs md:text-sm font-black shadow-[2px_2px_0px_#111]">3</span>
-                                    Listing Tier
-                                </h2>
-
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                                    {/* Standard */}
-                                    <label
-                                        className={`relative cursor-pointer border-2 p-3 md:p-4 transition-all ${
-                                            tier === 'standard'
-                                                ? 'border-black bg-white shadow-[3px_3px_0px_#111]'
-                                                : 'border-gray-300 bg-gray-50 hover:border-black'
-                                        }`}
-                                    >
-                                        <input
-                                            type="radio"
-                                            name="tier"
-                                            value="standard"
-                                            checked={tier === 'standard'}
-                                            onChange={() => setTier('standard')}
-                                            className="absolute opacity-0 pointer-events-none"
-                                        />
-                                        <div className="flex items-start gap-2 mb-2">
-                                            <div className={`w-4 h-4 rounded-full border-2 border-black flex-shrink-0 mt-0.5 ${tier === 'standard' ? 'bg-black' : 'bg-white'}`}>
-                                                {tier === 'standard' && (
-                                                    <div className="w-1.5 h-1.5 bg-accent-yellow rounded-full m-auto mt-[3px]" />
-                                                )}
-                                            </div>
-                                            <div className="flex-1 min-w-0">
-                                                <div className="flex items-baseline justify-between gap-2 mb-0.5">
-                                                    <span className="font-mono text-sm md:text-base font-black uppercase">Standard</span>
-                                                    <span className="font-mono text-base md:text-lg font-black">FREE</span>
-                                                </div>
-                                                <p className="text-[10px] md:text-xs text-gray-600 leading-snug">
-                                                    Listed in standard order after admin approval. ~48 hour review.
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </label>
-
-                                    {/* Featured */}
-                                    <label
-                                        className={`relative cursor-pointer border-2 p-3 md:p-4 transition-all ${
-                                            tier === 'featured'
-                                                ? 'border-black bg-accent-yellow/30 shadow-[3px_3px_0px_#111]'
-                                                : 'border-gray-300 bg-gray-50 hover:border-black hover:bg-accent-yellow/10'
-                                        }`}
-                                    >
-                                        <input
-                                            type="radio"
-                                            name="tier"
-                                            value="featured"
-                                            checked={tier === 'featured'}
-                                            onChange={() => setTier('featured')}
-                                            className="absolute opacity-0 pointer-events-none"
-                                        />
-                                        <span className="absolute -top-2 -right-2 bg-red-500 text-white border border-black px-1.5 py-0.5 font-mono text-[8px] md:text-[9px] font-black uppercase tracking-widest shadow-[1px_1px_0px_#111] rotate-3">
-                                            ⏳ Limited
-                                        </span>
-                                        <div className="flex items-start gap-2 mb-2">
-                                            <div className={`w-4 h-4 rounded-full border-2 border-black flex-shrink-0 mt-0.5 ${tier === 'featured' ? 'bg-black' : 'bg-white'}`}>
-                                                {tier === 'featured' && (
-                                                    <div className="w-1.5 h-1.5 bg-accent-yellow rounded-full m-auto mt-[3px]" />
-                                                )}
-                                            </div>
-                                            <div className="flex-1 min-w-0">
-                                                <div className="flex items-baseline justify-between gap-2 mb-0.5">
-                                                    <span className="font-mono text-sm md:text-base font-black uppercase flex items-center gap-1">
-                                                        <span className="material-symbols-outlined text-base text-amber-600" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
-                                                        Featured
-                                                    </span>
-                                                    <span className="flex items-baseline gap-1">
-                                                        <span className="font-mono text-xs font-bold line-through text-gray-400">{featuredAnchor}</span>
-                                                        <span className="font-mono text-base md:text-lg font-black">{featuredPrice}</span>
-                                                    </span>
-                                                </div>
-                                                <ul className="text-[10px] md:text-xs text-gray-700 leading-snug space-y-0.5 mt-1">
-                                                    <li>· Pinned at top for {featuredDuration}</li>
-                                                    <li>· ⭐ Featured badge on listing</li>
-                                                    <li>· Priority admin review</li>
-                                                    <li>· Auto-refund if not approved</li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </label>
+                            <div className="space-y-6">
+                                <div className="flex items-center gap-3 border-b border-zinc-800 pb-3">
+                                    <div className="size-8 bg-yellow-400/10 border border-yellow-400/20 text-yellow-400 rounded-lg flex items-center justify-center text-xs font-mono font-bold">3</div>
+                                    <div>
+                                        <h2 className="font-heading text-sm font-bold uppercase tracking-wider text-white">Listing Tier</h2>
+                                        <p className="font-sans text-[10px] text-gray-500 mt-0.5">Select how prominent your startup deal should be displayed</p>
+                                    </div>
                                 </div>
 
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    {/* Standard Tier Card */}
+                                    <div
+                                        onClick={() => setTier('standard')}
+                                        className={`relative cursor-pointer border rounded-xl p-5 md:p-6 transition-all flex flex-col justify-between group ${
+                                            tier === 'standard'
+                                                ? 'bg-[#111114] border-zinc-500 shadow-xl shadow-white/[0.02]'
+                                                : 'bg-[#0d0d0f] border-zinc-800/80 hover:border-zinc-700/80'
+                                        }`}
+                                    >
+                                        <div>
+                                            <div className="flex items-center justify-between mb-4">
+                                                <div className="flex items-center gap-2">
+                                                    <div className={`w-4 h-4 rounded-full border flex items-center justify-center shrink-0 ${tier === 'standard' ? 'border-yellow-400' : 'border-zinc-700'}`}>
+                                                        {tier === 'standard' && <div className="w-1.5 h-1.5 bg-yellow-400 rounded-full" />}
+                                                    </div>
+                                                    <span className="font-mono text-xs font-bold uppercase tracking-wider text-white">Standard</span>
+                                                </div>
+                                                <span className="font-mono text-sm font-bold text-gray-400">FREE</span>
+                                            </div>
+                                            <p className="font-sans text-[11px] text-gray-400 leading-relaxed mb-4">
+                                                List your startup perk chronologically below the featured directory. Reviewed in ~48 hours.
+                                            </p>
+                                        </div>
+                                        <div className="border-t border-zinc-800/80 pt-3 text-[10px] font-mono text-gray-500 uppercase tracking-wider">
+                                            · Chronological placement
+                                        </div>
+                                    </div>
+
+                                    {/* Featured Tier Card */}
+                                    <div
+                                        onClick={() => setTier('featured')}
+                                        className={`relative cursor-pointer border rounded-xl p-5 md:p-6 transition-all flex flex-col justify-between group overflow-hidden ${
+                                            tier === 'featured'
+                                                ? 'bg-[#161614] border-yellow-400 shadow-lg shadow-yellow-400/[0.03]'
+                                                : 'bg-[#0d0d0f] border-zinc-800/80 hover:border-zinc-700/80'
+                                        }`}
+                                    >
+                                        <div className="absolute top-2.5 right-2.5 bg-yellow-400 text-black px-2 py-0.5 rounded font-mono text-[9px] font-bold uppercase tracking-wider shadow">
+                                            Priority
+                                        </div>
+
+                                        <div>
+                                            <div className="flex items-center justify-between mb-4">
+                                                <div className="flex items-center gap-2">
+                                                    <div className={`w-4 h-4 rounded-full border flex items-center justify-center shrink-0 ${tier === 'featured' ? 'border-yellow-400' : 'border-zinc-700'}`}>
+                                                        {tier === 'featured' && <div className="w-1.5 h-1.5 bg-yellow-400 rounded-full" />}
+                                                    </div>
+                                                    <span className="font-mono text-xs font-bold uppercase tracking-wider text-yellow-400 flex items-center gap-1">
+                                                        <span className="material-symbols-outlined text-[14px]">star</span>
+                                                        Featured
+                                                    </span>
+                                                </div>
+                                                <div className="flex items-center gap-1.5">
+                                                    <span className="font-mono text-[10px] line-through text-zinc-600">{featuredAnchor}</span>
+                                                    <span className="font-mono text-sm font-bold text-white">{featuredPrice}</span>
+                                                </div>
+                                            </div>
+                                            <p className="font-sans text-[11px] text-gray-400 leading-relaxed mb-4">
+                                                Boost exposure instantly. Pin your deal at the top of the category and main listings.
+                                            </p>
+                                        </div>
+
+                                        <div className="border-t border-zinc-800/80 pt-3 space-y-1">
+                                            <div className="text-[10px] font-mono text-yellow-400/80 uppercase tracking-wider">
+                                                · Pinned placement for {featuredDuration}
+                                            </div>
+                                            <div className="text-[10px] font-mono text-gray-400 uppercase tracking-wider">
+                                                · Featured visual badge
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <input type="hidden" name="tier" value={tier} />
+
                                 {tier === 'featured' && (
-                                    <div className="space-y-2">
-                                        <p className="text-[10px] md:text-xs font-bold uppercase tracking-wide text-gray-700">Choose duration</p>
-                                        <div className="grid grid-cols-2 gap-2">
+                                    <div className="bg-[#111114] border border-zinc-800 rounded-xl p-5 space-y-4">
+                                        <p className="font-mono text-[10px] font-bold uppercase tracking-wider text-gray-400">Duration Option</p>
+                                        <div className="grid grid-cols-2 gap-3">
                                             <button
                                                 type="button"
                                                 onClick={() => setFeaturedPlan('weekly')}
-                                                className={`border-2 p-2.5 text-left transition-all ${
+                                                className={`p-3 text-left border rounded-lg transition-all flex flex-col justify-between ${
                                                     featuredPlan === 'weekly'
-                                                        ? 'border-black bg-accent-yellow/40 shadow-[2px_2px_0px_#111]'
-                                                        : 'border-gray-300 bg-white hover:border-black'
+                                                        ? 'bg-[#161614] border-yellow-400'
+                                                        : 'bg-[#131316] border-zinc-800/80 text-gray-400 hover:text-white'
                                                 }`}
                                             >
-                                                <div className="flex items-baseline justify-between gap-1">
-                                                    <span className="font-mono text-xs md:text-sm font-black uppercase">1 Week</span>
-                                                    <span className="font-mono text-sm md:text-base font-black">$25</span>
-                                                </div>
-                                                <p className="text-[9px] md:text-[10px] text-gray-600 mt-0.5">Test it for a week</p>
+                                                <span className="font-mono text-[10px] font-bold uppercase tracking-wider">7 Days</span>
+                                                <span className="font-mono text-sm font-bold text-white mt-1">$25</span>
                                             </button>
                                             <button
                                                 type="button"
                                                 onClick={() => setFeaturedPlan('monthly')}
-                                                className={`relative border-2 p-2.5 text-left transition-all ${
+                                                className={`p-3 text-left border rounded-lg transition-all flex flex-col justify-between relative overflow-hidden ${
                                                     featuredPlan === 'monthly'
-                                                        ? 'border-black bg-accent-yellow/40 shadow-[2px_2px_0px_#111]'
-                                                        : 'border-gray-300 bg-white hover:border-black'
+                                                        ? 'bg-[#161614] border-yellow-400'
+                                                        : 'bg-[#131316] border-zinc-800/80 text-gray-400 hover:text-white'
                                                 }`}
                                             >
-                                                <span className="absolute -top-2 -right-2 bg-black text-accent-yellow border border-black px-1.5 py-0.5 font-mono text-[8px] font-black uppercase tracking-widest">
-                                                    Best value
-                                                </span>
-                                                <div className="flex items-baseline justify-between gap-1">
-                                                    <span className="font-mono text-xs md:text-sm font-black uppercase">30 Days</span>
-                                                    <span className="font-mono text-sm md:text-base font-black">$99</span>
-                                                </div>
-                                                <p className="text-[9px] md:text-[10px] text-gray-600 mt-0.5">Full month of exposure</p>
+                                                <span className="absolute top-0 right-0 bg-yellow-400 text-black px-1.5 py-0.5 rounded-bl font-mono text-[7px] font-bold uppercase tracking-wider">Popular</span>
+                                                <span className="font-mono text-[10px] font-bold uppercase tracking-wider">30 Days</span>
+                                                <span className="font-mono text-sm font-bold text-white mt-1">$99</span>
                                             </button>
                                         </div>
-                                        <p className="text-[10px] md:text-xs text-gray-600 bg-amber-50 border border-amber-200 px-3 py-2 leading-snug">
-                                            <span className="font-bold">How it works:</span> Submit free → we review within 24 hours → if approved, you'll get a payment link for {featuredPrice} → after payment, your deal goes live with the Featured badge for {featuredDuration}.
-                                        </p>
+                                        <div className="font-sans text-[11px] text-gray-400 bg-yellow-400/5 border border-yellow-400/10 rounded-lg p-3.5 leading-relaxed flex gap-2">
+                                            <span className="material-symbols-outlined !text-[16px] text-yellow-400 shrink-0">info</span>
+                                            <span>
+                                                Submit now with no upfront charges. We review all featured applications within 24 hours. If verified and approved, you'll receive a secure Stripe payment invoice.
+                                            </span>
+                                        </div>
                                     </div>
                                 )}
                             </div>
 
                             {/* Section 5: Security Check */}
-                            <div className="border-t-2 border-black pt-4 md:pt-5">
-                                <label className="block text-xs font-bold uppercase mb-2 tracking-wide">Security Verification *</label>
-                                <div className="bg-gray-50 p-3 md:p-4 border-2 border-black flex items-center justify-between gap-3 shadow-[2px_2px_0px_#111]">
-                                    <span className="font-mono text-sm md:text-lg font-black">{challenge.num1} + {challenge.num2} = ?</span>
-                                    <div className="flex items-center gap-2">
+                            <div className="border-t border-zinc-800 pt-6">
+                                <label className="block font-mono text-[10px] font-bold text-gray-400 mb-2.5 uppercase tracking-wider">Verification Security Check *</label>
+                                <div className="bg-[#111114] border border-zinc-800 p-4 rounded-xl flex items-center justify-between gap-4">
+                                    <span className="font-mono text-sm font-bold text-white tracking-wider">
+                                        ENTER THE SUM OF: <span className="text-yellow-400">{challenge.num1}</span> + <span className="text-yellow-400">{challenge.num2}</span>
+                                    </span>
+                                    <div className="flex items-center gap-3">
                                         {isHuman && (
-                                            <div className="flex items-center text-green-600 font-bold gap-1">
-                                                <span className="material-symbols-outlined text-[18px]" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
-                                                <span className="text-xs md:text-sm hidden sm:inline">Verified</span>
+                                            <div className="flex items-center text-green-400 font-mono text-xs gap-1">
+                                                <span className="material-symbols-outlined !text-[16px]">verified</span>
+                                                <span className="hidden sm:inline">VERIFIED</span>
                                             </div>
                                         )}
                                         <input
                                             type="text"
                                             inputMode="numeric"
                                             placeholder="?"
-                                            className={`w-16 p-2 text-base border-2 border-black text-center font-black outline-none ring-2 bg-white ${isHuman ? 'ring-green-500 border-green-500' : 'ring-transparent'}`}
+                                            className={`w-16 p-2 text-sm bg-[#131316] border rounded-lg text-center font-mono font-bold text-white focus:outline-none transition-all ${isHuman ? 'border-green-500 shadow-md shadow-green-500/10' : 'border-zinc-800 focus:border-yellow-400'}`}
                                             value={securityAnswer}
                                             onChange={(e) => checkSecurity(e.target.value)}
                                             maxLength={3}
@@ -616,25 +675,28 @@ export default function SubmitDealPage() {
                                 </div>
                             </div>
 
-                            <div className="pt-2 md:pt-4">
+                            {/* Submit Button */}
+                            <div className="space-y-4">
                                 <button
                                     type="submit"
                                     disabled={!isHuman || isSubmitting}
-                                    className={`w-full font-mono font-black text-base md:text-lg uppercase tracking-wide py-3.5 md:py-4 border-[3px] border-[#101622] flex items-center justify-center gap-2 transition-all shadow-[4px_4px_0px_0px_#888] md:shadow-[6px_6px_0px_0px_#888]
-                                    ${isHuman && !isSubmitting
-                                            ? 'bg-[#101622] text-white hover:bg-accent-yellow hover:text-[#101622] cursor-pointer active:translate-x-1 active:translate-y-1 active:shadow-none'
-                                            : 'bg-gray-300 text-gray-500 cursor-not-allowed border-gray-400 shadow-none'
-                                        }`}
+                                    className={`w-full font-mono font-bold text-xs uppercase tracking-wider py-4 rounded-lg flex items-center justify-center gap-2 transition-all ${
+                                        isHuman && !isSubmitting
+                                            ? 'bg-yellow-400 text-black hover:bg-yellow-500 active:scale-[0.99] cursor-pointer shadow-lg shadow-yellow-400/5'
+                                            : 'bg-zinc-800 text-zinc-500 cursor-not-allowed border border-zinc-800'
+                                    }`}
                                 >
-                                    {isSubmitting ? 'Submitting...' : 'Submit Deal'} <span className="material-symbols-outlined text-[18px] md:text-base">send</span>
+                                    {isSubmitting ? 'Processing submission...' : 'Submit Deal Request'}
+                                    <span className="material-symbols-outlined !text-[16px]">send</span>
                                 </button>
-                                <p className="text-center text-[9px] md:text-[10px] text-gray-500 mt-3 md:mt-4 uppercase font-bold">
-                                    {submissionStatus === 'error' && (
-                                        <span className="text-red-600 block mb-1 normal-case font-mono text-xs">
-                                            ⚠ {errorMessage || 'Error submitting deal. Please try again.'}
-                                        </span>
-                                    )}
-                                    Review time: ~48 Hours. You will be notified via email.
+                                
+                                {submissionStatus === 'error' && (
+                                    <div className="text-center text-xs font-mono text-red-400 bg-red-400/5 border border-red-400/10 rounded-lg py-2.5 px-3">
+                                        ⚠ {errorMessage || 'Error submitting deal. Please try again.'}
+                                    </div>
+                                )}
+                                <p className="text-center font-mono text-[9px] text-gray-500 uppercase tracking-wider">
+                                    Vetting queue takes ~48 hours. Approval status notifications are sent via email.
                                 </p>
                             </div>
 
@@ -643,9 +705,7 @@ export default function SubmitDealPage() {
                 </div>
             </main>
 
-            <footer className="bg-white border-t-2 border-black py-8 text-center">
-                <div className="text-xs font-bold font-mono text-gray-400">© 2025 FoundersPrime. All rights reserved.</div>
-            </footer>
+            <Footer />
         </div>
     )
 }

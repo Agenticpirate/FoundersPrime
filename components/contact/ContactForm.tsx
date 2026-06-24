@@ -1,7 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-import Mandala from '@/components/ui/Mandala'
 
 export default function ContactForm() {
   const [formData, setFormData] = useState({
@@ -17,10 +16,10 @@ export default function ContactForm() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     setSubmitted(true)
-    setTimeout(() => setSubmitted(false), 3000)
+    setTimeout(() => setSubmitted(false), 5000)
   }
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
@@ -38,89 +37,72 @@ export default function ContactForm() {
 
   if (submitted) {
     return (
-      <div className="relative bg-gradient-to-br from-gray-900 via-gray-900 to-black border-2 border-black shadow-[6px_6px_0px_#ffd700] p-8 md:p-12 overflow-hidden fp-fade-up">
-        <Mandala
-          variant="rings"
-          colorClass="text-accent-yellow"
-          opacity={0.12}
-          speed={70}
-          className="absolute -top-12 -right-12 w-56 h-56"
-        />
-        <div className="relative text-center">
-          <div className="inline-flex size-16 bg-green-400 border-[3px] border-black items-center justify-center shadow-[4px_4px_0px_rgba(255,221,0,0.4)] mb-4">
-            <span className="material-symbols-outlined text-4xl text-black">check_circle</span>
-          </div>
-          <h3 className="font-mono text-xl md:text-2xl font-black text-white mb-2 uppercase tracking-tight">
-            Message Sent
-          </h3>
-          <p className="font-mono text-xs md:text-sm text-gray-400 mb-6 max-w-sm mx-auto">
-            Thanks for reaching out. A real human will reply within 24 hours.
-          </p>
-          <button
-            onClick={() => setSubmitted(false)}
-            className="px-5 py-2.5 bg-accent-yellow text-black border-2 border-black font-mono text-xs font-bold uppercase shadow-[3px_3px_0px_rgba(255,221,0,0.4)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all"
-          >
-            Send Another →
-          </button>
+      <div className="relative bg-[#0d0d0d] border border-zinc-800 rounded-xl p-8 md:p-12 text-center transition-all duration-300">
+        <div className="inline-flex size-16 bg-green-500/10 border border-green-500/20 text-green-400 items-center justify-center rounded-full mb-4">
+          <span className="material-symbols-outlined text-4xl">check_circle</span>
         </div>
+        <h3 className="font-sans text-xl md:text-2xl font-bold text-white mb-2 tracking-tight">
+          Message Sent
+        </h3>
+        <p className="font-sans text-xs md:text-sm text-gray-400 mb-6 max-w-sm mx-auto">
+          Thanks for reaching out. A real human will reply within 24 hours.
+        </p>
+        <button
+          onClick={() => setSubmitted(false)}
+          className="px-5 py-2.5 bg-yellow-400 hover:bg-yellow-500 text-black font-sans text-xs font-bold uppercase rounded-md transition-all"
+        >
+          Send Another
+        </button>
       </div>
     )
   }
 
   return (
-    <div className="relative bg-white border-2 border-black shadow-[5px_5px_0px_#111] p-4 md:p-5 overflow-hidden fp-fade-up">
-      <Mandala
-        variant="radial"
-        colorClass="text-gray-900"
-        opacity={0.04}
-        speed={120}
-        className="absolute -bottom-16 -right-16 w-56 h-56 hidden md:block"
-      />
-
-      <div className="relative mb-4 flex items-center gap-2.5">
-        <div className="size-9 bg-accent-yellow border-2 border-black flex items-center justify-center shadow-[2px_2px_0px_#111]">
-          <span className="material-symbols-outlined !text-[18px] text-black">edit_note</span>
+    <div className="relative bg-[#0d0d0d] border border-zinc-800 rounded-xl p-6 md:p-8 transition-all duration-300">
+      <div className="relative mb-6 flex items-center gap-3">
+        <div className="size-10 bg-yellow-400 flex items-center justify-center rounded-md">
+          <span className="material-symbols-outlined !text-[20px] text-black">mail</span>
         </div>
         <div>
-          <h2 className="font-mono text-base md:text-lg font-black text-black uppercase leading-none">
+          <h2 className="font-mono text-sm font-bold text-white uppercase tracking-wider">
             Send Us a Message
           </h2>
           <p className="font-sans text-[11px] text-gray-500 mt-0.5">All fields marked * are required</p>
         </div>
       </div>
 
-      <form onSubmit={handleSubmit} className="relative space-y-3.5">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+      <form onSubmit={handleSubmit} className="relative space-y-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className="block font-mono text-[10px] font-bold text-black mb-1.5 uppercase tracking-wide">
+            <label className="block font-mono text-[10px] font-bold text-gray-400 mb-1.5 uppercase tracking-wider">
               Full Name *
             </label>
             <div className="relative">
-              <span className="material-symbols-outlined !text-[16px] text-gray-400 absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none">person</span>
+              <span className="material-symbols-outlined !text-[16px] text-gray-500 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none">person</span>
               <input
                 type="text"
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
                 required
-                className="w-full pl-8 pr-3 py-2.5 text-xs border-2 border-black font-mono focus:outline-none focus:shadow-[4px_4px_0px_#111] focus:-translate-x-0.5 focus:-translate-y-0.5 transition-all bg-white placeholder:text-gray-400"
+                className="w-full pl-9 pr-3 py-2.5 text-xs bg-[#131316] border border-zinc-800 rounded-md text-white font-sans focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition-all placeholder:text-gray-600"
                 placeholder="John Doe"
               />
             </div>
           </div>
           <div>
-            <label className="block font-mono text-[10px] font-bold text-black mb-1.5 uppercase tracking-wide">
+            <label className="block font-mono text-[10px] font-bold text-gray-400 mb-1.5 uppercase tracking-wider">
               Email *
             </label>
             <div className="relative">
-              <span className="material-symbols-outlined !text-[16px] text-gray-400 absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none">mail</span>
+              <span className="material-symbols-outlined !text-[16px] text-gray-500 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none">mail</span>
               <input
                 type="email"
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
                 required
-                className="w-full pl-8 pr-3 py-2.5 text-xs border-2 border-black font-mono focus:outline-none focus:shadow-[4px_4px_0px_#111] focus:-translate-x-0.5 focus:-translate-y-0.5 transition-all bg-white placeholder:text-gray-400"
+                className="w-full pl-9 pr-3 py-2.5 text-xs bg-[#131316] border border-zinc-800 rounded-md text-white font-sans focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition-all placeholder:text-gray-600"
                 placeholder="you@email.com"
               />
             </div>
@@ -129,7 +111,7 @@ export default function ContactForm() {
 
         {/* Category pills */}
         <div>
-          <label className="block font-mono text-[10px] font-bold text-black mb-1.5 uppercase tracking-wide">
+          <label className="block font-mono text-[10px] font-bold text-gray-400 mb-2.5 uppercase tracking-wider">
             Category *
           </label>
           <div className="flex flex-wrap gap-2">
@@ -141,10 +123,10 @@ export default function ContactForm() {
                   type="button"
                   onClick={() => setFormData({ ...formData, category: category.value })}
                   aria-pressed={active}
-                  className={`inline-flex items-center gap-1.5 px-3 py-1.5 border-2 border-black font-mono text-[10px] font-bold uppercase tracking-wide transition-all ${
+                  className={`inline-flex items-center gap-1.5 px-3 py-1.5 border font-sans text-[11px] font-medium rounded-full transition-all ${
                     active
-                      ? 'bg-accent-yellow text-black shadow-[3px_3px_0px_#111] -translate-x-0.5 -translate-y-0.5'
-                      : 'bg-white text-gray-600 hover:bg-gray-50 shadow-[2px_2px_0px_#111]'
+                      ? 'bg-yellow-400 border-yellow-400 text-black shadow-md'
+                      : 'bg-[#131316] border-zinc-800 text-gray-400 hover:text-white hover:border-zinc-700'
                   }`}
                 >
                   <span className="material-symbols-outlined !text-[13px]">{category.icon}</span>
@@ -156,25 +138,25 @@ export default function ContactForm() {
         </div>
 
         <div>
-          <label className="block font-mono text-[10px] font-bold text-black mb-1.5 uppercase tracking-wide">
+          <label className="block font-mono text-[10px] font-bold text-gray-400 mb-1.5 uppercase tracking-wider">
             Subject *
           </label>
           <div className="relative">
-            <span className="material-symbols-outlined !text-[16px] text-gray-400 absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none">subject</span>
+            <span className="material-symbols-outlined !text-[16px] text-gray-500 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none">subject</span>
             <input
               type="text"
               name="subject"
               value={formData.subject}
               onChange={handleChange}
               required
-              className="w-full pl-8 pr-3 py-2.5 text-xs border-2 border-black font-mono focus:outline-none focus:shadow-[4px_4px_0px_#111] focus:-translate-x-0.5 focus:-translate-y-0.5 transition-all bg-white placeholder:text-gray-400"
+              className="w-full pl-9 pr-3 py-2.5 text-xs bg-[#131316] border border-zinc-800 rounded-md text-white font-sans focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition-all placeholder:text-gray-600"
               placeholder="What's this about?"
             />
           </div>
         </div>
 
         <div>
-          <label className="block font-mono text-[10px] font-bold text-black mb-1.5 uppercase tracking-wide">
+          <label className="block font-mono text-[10px] font-bold text-gray-400 mb-1.5 uppercase tracking-wider">
             Message *
           </label>
           <textarea
@@ -182,18 +164,18 @@ export default function ContactForm() {
             value={formData.message}
             onChange={handleChange}
             required
-            rows={5}
-            className="w-full px-3 py-2.5 text-xs border-2 border-black font-mono resize-none focus:outline-none focus:shadow-[4px_4px_0px_#111] focus:-translate-x-0.5 focus:-translate-y-0.5 transition-all bg-white placeholder:text-gray-400"
+            rows={6}
+            className="w-full px-3 py-2.5 text-xs bg-[#131316] border border-zinc-800 rounded-md text-white font-sans resize-none focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition-all placeholder:text-gray-600"
             placeholder="Tell us what you need..."
           />
         </div>
 
         <button
           type="submit"
-          className="group w-full px-6 py-3.5 bg-gray-900 hover:bg-black border-2 border-black text-white font-mono text-sm font-black uppercase tracking-wide shadow-[4px_4px_0px_#111] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all flex items-center justify-center gap-2"
+          className="w-full px-6 py-3 bg-yellow-400 hover:bg-yellow-500 text-black font-sans text-xs font-bold uppercase tracking-wider rounded-md transition-all flex items-center justify-center gap-2"
         >
           Send Message
-          <span className="material-symbols-outlined !text-[18px] text-accent-yellow group-hover:translate-x-1 transition-transform">arrow_forward</span>
+          <span className="material-symbols-outlined !text-[16px] text-black">send</span>
         </button>
       </form>
     </div>

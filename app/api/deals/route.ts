@@ -120,7 +120,7 @@ export async function GET(request: NextRequest) {
       let query = supabase.from('deals').select(
         isSingleLookup
           ? '*'
-          : 'id,slug,title,provider,category,subcategory,shortDescription,short_description,value,status,featured,recommended,verified,difficulty,timeToApply,time_to_apply,tags,logoUrl,logo_url,applicationUrl,application_url,expiryDate,expiry_date'
+          : 'id,slug,title,provider,category,subcategory,shortDescription,short_description,value,status,featured,recommended,verified,difficulty,timeToApply,time_to_apply,tags,logoUrl,logo_url,applicationUrl,application_url,providerWebsite,provider_website,expiryDate,expiry_date'
       );
 
       if (slug) query = query.eq('slug', slug);

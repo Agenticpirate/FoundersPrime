@@ -1,8 +1,7 @@
 "use client";
 
-import Link from 'next/link';
-import SectionHero from '@/components/ui/SectionHero';
-import Mandala from '@/components/ui/Mandala';
+import Link from "next/link";
+import SectionHero from "@/components/ui/SectionHero";
 
 interface StartupsHeaderProps {
   count: number;
@@ -11,26 +10,25 @@ interface StartupsHeaderProps {
 export default function StartupsHeader({ count }: StartupsHeaderProps) {
   const activeStartupsCount = count || 0;
 
-
   return (
     <div className="mb-4 md:mb-6">
-      {/* Breadcrumb */}
-      <nav aria-label="Breadcrumb" className="flex mb-3">
-        <ol className="inline-flex items-center space-x-1 font-mono text-sm font-medium">
-          <li className="inline-flex items-center">
-            <Link className="text-gray-500 hover:text-black" href="/">Home</Link>
-          </li>
+      {/* Breadcrumb — matches DealsHeader exactly */}
+      <nav aria-label="Breadcrumb" className="flex mb-3 md:mb-3.5">
+        <ol className="inline-flex items-center gap-1.5 font-mono text-[11px] md:text-xs text-gray-500 dark:text-gray-400 whitespace-nowrap">
           <li>
-            <div className="flex items-center">
-              <span className="material-symbols-outlined text-gray-400 text-base mx-1">chevron_right</span>
-              <Link className="text-gray-500 hover:text-black" href="/resources">Resources</Link>
-            </div>
+            <Link className="hover:text-gray-900 dark:hover:text-white transition-colors" href="/">
+              Home
+            </Link>
           </li>
+          <li className="text-gray-300 dark:text-white/20">/</li>
+          <li>
+            <Link className="hover:text-gray-900 dark:hover:text-white transition-colors" href="/resources">
+              Resources
+            </Link>
+          </li>
+          <li className="text-gray-300 dark:text-white/20">/</li>
           <li aria-current="page">
-            <div className="flex items-center">
-              <span className="material-symbols-outlined text-gray-400 text-base mx-1">chevron_right</span>
-              <span className="text-black bg-accent-yellow/30 px-2 py-0.5 rounded-sm border border-black">Verified Startups</span>
-            </div>
+            <span className="text-gray-900 dark:text-white font-semibold">Verified Startups</span>
           </li>
         </ol>
       </nav>
@@ -39,91 +37,87 @@ export default function StartupsHeader({ count }: StartupsHeaderProps) {
       <SectionHero
         eyebrowIcon="rocket_launch"
         eyebrowText="Discover + Invest"
-        eyebrowClass="bg-accent-yellow/15 border-accent-yellow/40 text-gray-800"
+        eyebrowClass="bg-accent-yellow/15 border-accent-yellow/40 text-gray-800 dark:text-gray-300 dark:border-accent-yellow/20"
         eyebrowAccentClass="text-accent-yellow"
-        mandalaColorClass="text-gray-900"
+        mandalaColorClass="text-gray-900 dark:text-white/5"
         statsMinWidth="lg:min-w-[560px]"
         title={<>Verified Startups</>}
         subtitle={
           <>
-            Access{' '}
-            <span className="font-bold text-gray-900 bg-accent-yellow/30 px-1 rounded-sm">verified</span>{' '}
-            high-potential startups. Direct data from Y Combinator and top accelerators — real metrics, vetted founders, breakout opportunities.
+            Access{" "}
+            <span className="font-bold text-gray-900 dark:text-accent-yellow bg-accent-yellow/20 dark:bg-accent-yellow/10 px-1 rounded-sm">
+              verified
+            </span>{" "}
+            high-potential startups. Direct data from Y Combinator and top
+            accelerators — real metrics, vetted founders, breakout opportunities.
           </>
         }
         stats={[
           {
-            label: 'Total Valuation',
-            value: '$4.2B+',
-            delta: 'Across companies',
-            icon: 'trending_up',
-            iconColor: 'text-amber-600',
-            iconBg: 'bg-accent-yellow/30',
+            label: "Total Valuation",
+            value: "$4.2B+",
+            delta: "Across companies",
+            icon: "trending_up",
+            iconColor: "text-amber-600",
+            iconBg: "bg-accent-yellow/30",
             highlight: true,
-            accent: '255,221,0',
-            valueGradient: 'from-accent-yellow to-amber-300',
-            ornamentColor: 'text-accent-yellow',
+            accent: "255,221,0",
+            valueGradient: "from-accent-yellow to-amber-300",
+            ornamentColor: "text-accent-yellow",
           },
           {
-            label: 'Verified',
+            label: "Verified",
             value: activeStartupsCount.toLocaleString(),
-            delta: 'YC + accelerators',
-            icon: 'verified',
-            iconColor: 'text-sky-600',
-            iconBg: 'bg-sky-100',
+            delta: "YC + accelerators",
+            icon: "verified",
+            iconColor: "text-sky-600",
+            iconBg: "bg-sky-100 dark:bg-sky-900/30",
           },
           {
-            label: 'Avg Seed',
-            value: '$3.5M',
-            delta: 'Per round',
-            icon: 'paid',
-            iconColor: 'text-emerald-600',
-            iconBg: 'bg-emerald-100',
+            label: "Avg Seed",
+            value: "$3.5M",
+            delta: "Per round",
+            icon: "paid",
+            iconColor: "text-emerald-600",
+            iconBg: "bg-emerald-100 dark:bg-emerald-900/30",
           },
         ]}
       />
 
-      {/* Motivation Card — premium, with mandala */}
-      <div className="relative bg-gradient-to-br from-gray-900 via-gray-900 to-black text-white border-2 border-black shadow-[4px_4px_0px_0px_#111] rounded-sm p-4 md:p-6 overflow-hidden mt-4 md:mt-6">
-        <Mandala
-          variant="orbital"
-          colorClass="text-accent-yellow"
-          opacity={0.12}
-          speed={70}
-          className="absolute -bottom-12 -right-12 w-44 h-44"
-        />
-        <Mandala
-          variant="rings"
-          colorClass="text-accent-yellow"
-          opacity={0.07}
-          speed={100}
-          direction="ccw"
-          className="absolute -top-14 -left-14 w-40 h-40 hidden md:block"
-        />
-        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-accent-yellow/50 to-transparent" />
+      {/* Motivation banner — dark band matching the deals design */}
+      <div className="relative bg-gray-900 dark:bg-[#0c0c0c] border border-gray-800 dark:border-white/10 rounded-xl px-5 py-4 overflow-hidden mt-4 md:mt-5">
+        {/* Gradient top line */}
+        <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-accent-yellow/60 to-transparent" />
+        {/* Soft glow */}
+        <div className="absolute -top-8 -right-8 w-40 h-40 rounded-full bg-accent-yellow/5 blur-3xl pointer-events-none" />
 
-        <div className="relative">
-          <p className="font-mono text-[9px] font-bold uppercase tracking-[0.14em] text-accent-yellow mb-2 inline-flex items-center gap-1.5">
-            <span className="w-1 h-1 rounded-full bg-accent-yellow animate-pulse" />
-            Acquisition & Investment Database
-          </p>
-          <h2 className="font-mono text-base md:text-xl font-black text-white mb-2 leading-tight">
-            Vetted startups with real metrics and revenue.
-          </h2>
-          <p className="font-sans text-xs md:text-sm text-gray-300 leading-relaxed max-w-2xl mb-3">
-            Skip the broker fees. Connect directly with founders from top accelerators like Y Combinator.
-          </p>
-          <div className="flex flex-wrap gap-2">
-            {['Verified Revenue', 'Vetted Founders', 'Direct Contact'].map(tag => (
-              <div key={tag} className="inline-flex items-center gap-1 bg-white/5 text-gray-200 px-2.5 py-1 text-[10px] font-mono font-bold uppercase tracking-wide border border-white/10 rounded-sm">
-                <span className="material-symbols-outlined text-[12px] text-accent-yellow">check</span>
+        <div className="relative flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6">
+          <div className="flex-1 min-w-0">
+            <p className="font-mono text-[10px] font-bold uppercase tracking-[0.14em] text-accent-yellow mb-1 inline-flex items-center gap-1.5">
+              <span className="w-1 h-1 rounded-full bg-accent-yellow animate-pulse" />
+              Acquisition &amp; Investment Database
+            </p>
+            <h2 className="font-mono text-sm md:text-base font-black text-white mb-1 leading-tight">
+              Vetted startups with real metrics and revenue.
+            </h2>
+            <p className="font-sans text-[12px] text-gray-400 leading-relaxed">
+              Skip broker fees. Connect directly with founders from Y Combinator and top accelerators.
+            </p>
+          </div>
+
+          <div className="flex flex-wrap gap-2 sm:flex-col sm:items-end sm:gap-1.5">
+            {["Verified Revenue", "Vetted Founders", "Direct Contact"].map((tag) => (
+              <div
+                key={tag}
+                className="inline-flex items-center gap-1 bg-white/5 border border-white/10 text-gray-300 px-2.5 py-1 rounded-lg text-[10px] font-mono font-semibold uppercase tracking-wide"
+              >
+                <span className="material-symbols-outlined text-[11px] text-accent-yellow">check</span>
                 {tag}
               </div>
             ))}
           </div>
         </div>
       </div>
-
     </div>
   );
 }

@@ -195,7 +195,7 @@ export default function Footer() {
                     <li key={linkIndex}>
                       <Link
                         href={link.href}
-                        className={`font-sans text-[13px] no-underline hover:translate-x-1 hover:pl-0.5 transition-all inline-block ${
+                        className={`font-sans text-[13px] no-underline transition-colors inline-block ${
                           (link as { highlight?: boolean }).highlight
                             ? 'text-accent-yellow font-bold hover:text-yellow-300'
                             : 'text-zinc-400 hover:text-white'

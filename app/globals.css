@@ -1031,3 +1031,62 @@ p > a, li > a, span > a {
   color: #ffffff;
 }
 
+/* Custom classes to fill any empty space in the last row of responsive grids */
+.grid-fill-row > *:last-child:nth-child(2n - 1) {
+  /* Under lg: 2 columns. If last child is 1st in row, span 2. */
+  grid-column: span 2;
+}
+
+@media (min-width: 1024px) { /* lg */
+  .grid-fill-row > *:last-child:nth-child(2n - 1) {
+    grid-column: span 1;
+  }
+  .grid-fill-row > *:last-child:nth-child(3n - 2) {
+    grid-column: span 3;
+  }
+  .grid-fill-row > *:last-child:nth-child(3n - 1) {
+    grid-column: span 2;
+  }
+}
+
+/* For Startups and Ideas Grid: sm:2, xl:3 */
+@media (min-width: 640px) and (max-width: 1279px) {
+  .grid-fill-row-startups > *:last-child:nth-child(2n - 1) {
+    grid-column: span 2;
+  }
+}
+@media (min-width: 1280px) { /* xl */
+  .grid-fill-row-startups > *:last-child:nth-child(3n - 2) {
+    grid-column: span 3;
+  }
+  .grid-fill-row-startups > *:last-child:nth-child(3n - 1) {
+    grid-column: span 2;
+  }
+}
+
+/* For Resources Grid: sm:2, lg:3, xl:4 */
+@media (min-width: 640px) and (max-width: 1023px) {
+  .grid-fill-row-resources > *:last-child:nth-child(2n - 1) {
+    grid-column: span 2;
+  }
+}
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .grid-fill-row-resources > *:last-child:nth-child(3n - 2) {
+    grid-column: span 3;
+  }
+  .grid-fill-row-resources > *:last-child:nth-child(3n - 1) {
+    grid-column: span 2;
+  }
+}
+@media (min-width: 1280px) { /* xl */
+  .grid-fill-row-resources > *:last-child:nth-child(4n - 3) {
+    grid-column: span 4;
+  }
+  .grid-fill-row-resources > *:last-child:nth-child(4n - 2) {
+    grid-column: span 3;
+  }
+  .grid-fill-row-resources > *:last-child:nth-child(4n - 1) {
+    grid-column: span 2;
+  }
+}
+
