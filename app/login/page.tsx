@@ -416,7 +416,7 @@ function LoginContent() {
                 <div>
                   <h4 className="font-mono text-xs font-black uppercase text-white tracking-wider mb-1.5">Unlock Premium Benefits</h4>
                   <p className="text-[11px] text-gray-400 leading-relaxed">
-                    Instantly save runway with exclusive discounts on <span className="text-white font-bold">AWS</span>, <span className="text-white font-bold">OpenAI</span>, <span className="text-white font-bold">Stripe</span>, and <span className="text-white font-bold">Google Cloud</span>. No pitch decks, no interviews, no equity dilution.
+                    Instantly save runway with discounts on <span className="text-white font-bold">AWS</span>, <span className="text-white font-bold">OpenAI</span>, <span className="text-white font-bold">Stripe</span>, and <span className="text-white font-bold">Google Cloud</span>. No pitch decks, no interviews, no equity dilution.
                   </p>
                 </div>
               </div>
