@@ -407,13 +407,16 @@ function LoginContent() {
               </div>
             </div>
 
-            <div className="bg-neutral-900/30 border border-neutral-800/60 p-4.5 rounded-xl relative max-w-md">
-              <div className="flex items-start gap-3">
-                <span className="material-symbols-outlined text-accent-yellow text-xl flex-shrink-0 mt-0.5">local_fire_department</span>
+            <div className="bg-gradient-to-br from-[#0c0c0e] to-black border border-white/5 p-5 rounded-xl relative max-w-md mb-8 group overflow-hidden">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-accent-yellow/5 rounded-full blur-3xl -mr-16 -mt-16 transition-opacity group-hover:opacity-100 opacity-50"></div>
+              <div className="flex items-start gap-3.5 relative z-10">
+                <div className="flex-shrink-0 w-8 h-8 rounded bg-accent-yellow/10 border border-accent-yellow/20 flex items-center justify-center">
+                  <span className="material-symbols-outlined text-accent-yellow text-sm">local_fire_department</span>
+                </div>
                 <div>
-                  <h4 className="font-mono text-xs font-black uppercase text-white tracking-wider mb-1">Unlock Premium Accelerator Benefits</h4>
+                  <h4 className="font-mono text-xs font-black uppercase text-white tracking-wider mb-1.5">Unlock Premium Benefits</h4>
                   <p className="text-[11px] text-gray-400 leading-relaxed">
-                    Instantly save runway by accessing exclusive discounts on <span className="text-white font-bold">AWS</span>, <span className="text-white font-bold">OpenAI</span>, <span className="text-white font-bold">Stripe</span>, and <span className="text-white font-bold">Google Cloud</span>. No pitch decks, no interviews, no equity dilution.
+                    Instantly save runway with exclusive discounts on <span className="text-white font-bold">AWS</span>, <span className="text-white font-bold">OpenAI</span>, <span className="text-white font-bold">Stripe</span>, and <span className="text-white font-bold">Google Cloud</span>. No pitch decks, no interviews, no equity dilution.
                   </p>
                 </div>
               </div>
