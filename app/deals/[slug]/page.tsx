@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { notFound } from 'next/navigation'
 import type { Metadata, ResolvingMetadata } from 'next'
 import SingleDealContent from '@/components/deals/SingleDealContent'

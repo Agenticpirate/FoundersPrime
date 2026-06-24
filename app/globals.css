@@ -1090,3 +1090,16 @@ p > a, li > a, span > a {
   }
 }
 
+
+/* Fast Marquee for Partner Logos */
+@keyframes marquee-fast {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.animate-marquee-fast {
+  animation: marquee-fast 20s linear infinite;
+}
+.mask-gradient-x {
+  mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+}
