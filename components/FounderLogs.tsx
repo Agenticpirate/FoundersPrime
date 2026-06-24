@@ -195,40 +195,11 @@ function TestimonialCard({ t }: { t: Testimonial }) {
 }
 
 export default function FounderLogs() {
-  const scrollerRef = useRef<HTMLDivElement>(null)
-  const [paused, setPaused] = useState(false)
-
-  const scrollByCards = (dir: 1 | -1) => {
-    const el = scrollerRef.current
-    if (!el) return
-    const amount = Math.max(el.clientWidth * 0.8, 300)
-    el.scrollBy({ left: dir * amount, behavior: 'smooth' })
-  }
-
-  // Gentle auto-advance for the scroller; pauses on hover/focus and respects
-  // the user's reduced-motion preference.
-  useEffect(() => {
-    if (paused) return
-    if (typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      return
-    }
-    const el = scrollerRef.current
-    if (!el) return
-    const id = setInterval(() => {
-      if (el.scrollLeft + el.clientWidth >= el.scrollWidth - 8) {
-        el.scrollTo({ left: 0, behavior: 'smooth' })
-      } else {
-        el.scrollBy({ left: el.clientWidth * 0.8, behavior: 'smooth' })
-      }
-    }, 3800)
-    return () => clearInterval(id)
-  }, [paused])
-
   return (
     <section className="py-7 md:py-10 bg-background-light dark:bg-[#000000] border-y-2 border-black dark:border-white/10 overflow-hidden transition-colors duration-300">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Top: headline + scroller controls */}
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-6 md:mb-8">
+        {/* Top: headline */}
+        <div className="mb-6 md:mb-8">
           <div>
             <span className="inline-flex items-center gap-1.5 bg-accent-yellow/20 text-black dark:text-accent-yellow font-mono text-[10px] font-black uppercase tracking-widest px-2.5 py-1 rounded-md mb-3 transition-colors duration-300">
               <span className="material-symbols-outlined text-[13px]">forum</span>
@@ -246,39 +217,19 @@ export default function FounderLogs() {
               that help them build faster and smarter.
             </p>
           </div>
-
-          <div className="hidden md:flex gap-2 shrink-0 md:pb-1">
-            <button
-              type="button"
-              onClick={() => scrollByCards(-1)}
-              aria-label="Previous testimonials"
-              className="w-9 h-9 flex items-center justify-center rounded-full border border-gray-300 dark:border-white/20 bg-white dark:bg-[#0c0c0c] text-black dark:text-white hover:bg-gray-50 dark:hover:bg-white/5 transition-all"
-            >
-              <span className="material-symbols-outlined text-[18px]">arrow_back</span>
-            </button>
-            <button
-              type="button"
-              onClick={() => scrollByCards(1)}
-              aria-label="Next testimonials"
-              className="w-9 h-9 flex items-center justify-center rounded-full bg-black dark:bg-white text-accent-yellow dark:text-black hover:bg-gray-800 dark:hover:bg-gray-200 transition-all"
-            >
-              <span className="material-symbols-outlined text-[18px]">arrow_forward</span>
-            </button>
-          </div>
         </div>
 
         {/* Testimonial scroller */}
-        <div
-          ref={scrollerRef}
-          onMouseEnter={() => setPaused(true)}
-          onMouseLeave={() => setPaused(false)}
-          onFocusCapture={() => setPaused(true)}
-          onBlurCapture={() => setPaused(false)}
-          className="flex gap-4 md:gap-5 overflow-x-auto snap-x snap-mandatory pb-2 -mx-4 px-4 sm:mx-0 sm:px-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-        >
-          {testimonials.map((t, i) => (
-            <TestimonialCard key={i} t={t} />
-          ))}
+        <div className="relative w-full overflow-hidden pb-4 -mx-4 px-4 sm:mx-0 sm:px-0">
+          {/* Edge gradients for seamless infinite scroll */}
+          <div className="absolute inset-y-0 left-0 w-8 md:w-16 bg-gradient-to-r from-background-light dark:from-[#000000] to-transparent z-10 pointer-events-none" />
+          <div className="absolute inset-y-0 right-0 w-8 md:w-16 bg-gradient-to-l from-background-light dark:from-[#000000] to-transparent z-10 pointer-events-none" />
+          
+          <div className="flex gap-4 md:gap-5 w-max marquee hover:[animation-play-state:paused] py-2">
+            {[...testimonials, ...testimonials].map((t, i) => (
+              <TestimonialCard key={i} t={t} />
+            ))}
+          </div>
         </div>
 
         {/* Trust stats bar */}
