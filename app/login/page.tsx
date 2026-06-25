@@ -50,10 +50,11 @@ function LoginContent() {
     if (typeof window !== 'undefined') {
       const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
       const prodKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY
-      if (!isLocalhost && prodKey) {
+      if (!isLocalhost && prodKey && prodKey !== '1x00000000000000000000AA') {
         setTurnstileSiteKey(prodKey)
       } else {
-        setTurnstileSiteKey('1x00000000000000000000AA')
+        setTurnstileSiteKey('')
+        setTurnstileToken('bypass') // Auto-bypass if no valid key
       }
     }
   }, [])
@@ -136,7 +137,7 @@ function LoginContent() {
   }, [mounted, view, redirect])
 
   // Turnstile state
-  const [turnstileToken, setTurnstileToken] = useState<string | null>('bypass')
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null)
   const turnstileRef = useRef<TurnstileInstance>(null)
 
   // MFA state
@@ -664,9 +665,9 @@ function LoginContent() {
                         <button type="button" onClick={() => handleToggleView('forgot')} className="text-[11px] font-bold text-accent-yellow hover:underline">Forgot password?</button>
                       </div>
 
-                      {/* Cloudflare Turnstile (temporarily disabled) */}
-                      {/* <div className="flex justify-center py-1">
-                        {mounted && (
+                      {/* Cloudflare Turnstile */}
+                      <div className="flex justify-center py-1">
+                        {mounted && turnstileSiteKey && (
                           <Turnstile
                             ref={turnstileRef}
                             siteKey={turnstileSiteKey}
@@ -676,7 +677,7 @@ function LoginContent() {
                             options={{ theme: 'dark', size: 'flexible' }}
                           />
                         )}
-                      </div> */}
+                      </div>
 
                       <button type="submit" disabled={loading || !turnstileToken}
                         className="btn-shiny w-full h-11 bg-[#FFEA00] hover:bg-[#FFE000] shadow-[0_0_20px_rgba(255,234,0,0.4)] hover:shadow-[0_0_30px_rgba(255,234,0,0.6)] border border-[#FFEA00]/50 text-black font-black uppercase text-xs tracking-widest rounded-md font-mono transition-all duration-300 disabled:opacity-90 disabled:cursor-not-allowed flex items-center justify-center gap-1.5 hover:-translate-y-0.5">
@@ -782,9 +783,9 @@ function LoginContent() {
                         </label>
                       </div>
 
-                      {/* Cloudflare Turnstile (temporarily disabled) */}
-                      {/* <div className="flex justify-center py-1">
-                        {mounted && (
+                      {/* Cloudflare Turnstile */}
+                      <div className="flex justify-center py-1">
+                        {mounted && turnstileSiteKey && (
                           <Turnstile
                             ref={turnstileRef}
                             siteKey={turnstileSiteKey}
@@ -794,7 +795,7 @@ function LoginContent() {
                             options={{ theme: 'dark', size: 'flexible' }}
                           />
                         )}
-                      </div> */}
+                      </div>
 
                       <button type="submit" disabled={loading || !turnstileToken}
                         className="btn-shiny w-full h-11 bg-[#FFEA00] hover:bg-[#FFE000] shadow-[0_0_20px_rgba(255,234,0,0.4)] hover:shadow-[0_0_30px_rgba(255,234,0,0.6)] border border-[#FFEA00]/50 text-black font-black uppercase text-xs tracking-widest rounded-md font-mono transition-all duration-300 disabled:opacity-90 disabled:cursor-not-allowed flex items-center justify-center gap-1.5 hover:-translate-y-0.5">
@@ -842,9 +843,9 @@ function LoginContent() {
                         </div>
                       </div>
 
-                      {/* Cloudflare Turnstile (temporarily disabled) */}
-                      {/* <div className="flex justify-center py-1">
-                        {mounted && (
+                      {/* Cloudflare Turnstile */}
+                      <div className="flex justify-center py-1">
+                        {mounted && turnstileSiteKey && (
                           <Turnstile
                             ref={turnstileRef}
                             siteKey={turnstileSiteKey}
@@ -854,7 +855,7 @@ function LoginContent() {
                             options={{ theme: 'dark', size: 'flexible' }}
                           />
                         )}
-                      </div> */}
+                      </div>
 
                       <button type="submit" disabled={loading || !turnstileToken}
                         className="btn-shiny w-full h-11 bg-[#FFEA00] hover:bg-[#FFE000] shadow-[0_0_20px_rgba(255,234,0,0.4)] hover:shadow-[0_0_30px_rgba(255,234,0,0.6)] border border-[#FFEA00]/50 text-black font-black uppercase text-xs tracking-widest rounded-md font-mono transition-all duration-300 disabled:opacity-90 disabled:cursor-not-allowed flex items-center justify-center gap-1.5 hover:-translate-y-0.5">
