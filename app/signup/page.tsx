@@ -184,7 +184,7 @@ export default function SignupPage() {
     try {
       const supabase = createClient()
       const { error } = await supabase.auth.signInWithOAuth({
-        provider,
+        provider: provider === 'linkedin' ? 'linkedin_oidc' : provider,
         options: {
           redirectTo: `${window.location.origin}/auth/callback`,
         },
