@@ -48,10 +48,9 @@ const STAT_CARDS = [
 
 /* ─── Deal counts (hero stats strip) ─── */
 const DEAL_STATS = [
-  { value: '918', label: 'Student Deals', icon: 'school', href: '/student-benefits' },
-  { value: '146', label: 'Accelerators', icon: 'rocket_launch', href: '/programs?type=accelerators' },
-  { value: '88', label: 'Grants', icon: 'redeem', href: '/programs?type=grants' },
-  { value: '25', label: 'Incubators', icon: 'hub', href: '/programs?type=incubators' },
+  { value: '300+', label: 'Founders Deals', icon: 'local_offer', href: '/deals' },
+  { value: '259', label: 'Programs (Accelerators/Incubators/Grants)', icon: 'rocket_launch', href: '/programs' },
+  { value: '918', label: 'Student Benefits', icon: 'school', href: '/student-benefits' },
 ]
 
 /* Chamfered-corner clip paths (brutalist notch detail) */
