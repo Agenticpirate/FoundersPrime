@@ -7,6 +7,8 @@ import { studentBenefits2026, StudentBenefit } from '@/data/student-benefits-202
 import type { StudentBenefitType } from './StudentBenefitsSidebar'
 import type { StudentBenefitsFilterState } from './StudentBenefitsFilterBar'
 import FeaturedSlot from './featured/FeaturedSlot'
+import ProGateOverlay from '@/components/ProGateOverlay'
+import { useHydratedDeals } from '@/context/FeaturedDealsContext'
 
 // Logo helper - uses Google Favicons (fast, reliable)
 const getLogo = (benefit: StudentBenefit) => {
@@ -93,6 +95,8 @@ interface StudentBenefitsGridProps {
 
 export default function StudentBenefitsGrid({ activeType, filters }: StudentBenefitsGridProps) {
   const [currentPage, setCurrentPage] = useState(1)
+  const { isPro } = useHydratedDeals()
+
   // Page 1 uses 10 items so that 10 items + 2 ads = 12 cells (divisible by 3 → no empty grid slots).
   // All subsequent pages use 12 items (no ads) = 12 cells, also complete.
   const getPageSize = (page: number) => page === 1 ? 10 : 12
@@ -213,40 +217,63 @@ export default function StudentBenefitsGrid({ activeType, filters }: StudentBene
     const startIndex = currentPage === 1 ? 0 : firstPageSize + (currentPage - 2) * otherPageSize
     const paginated = items.slice(startIndex, startIndex + pageSize)
 
+    const gridContent = (
+      <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-4">
+        {(() => {
+          const cardItems: React.ReactNode[] = paginated.map((b, idx) => (
+            <DealCard key={b.slug || `${b.company}-${idx}`} deal={convertToCard(b, idx)} basePath="/student-benefits" />
+          ))
+          
+          // Page 1 only: interleave 2 ads at positions 4 and 10.
+          // 10 items + 2 ads = 12 grid cells → 4 complete rows of 3, no empty slot.
+          if (currentPage === 1) {
+            const adPositions = [4, 10]
+            adPositions.forEach((pos, adIdx) => {
+              if (cardItems.length >= pos) {
+                const insertAt = Math.min(pos + adIdx, cardItems.length)
+                cardItems.splice(
+                  insertAt,
+                  0,
+                  <FeaturedSlot
+                    key={`featured-ad-single-${adIdx}`}
+                    variant="inline"
+                    count={1}
+                    intervalMs={5500}
+                    offset={6 + adIdx * 3}
+                    className="h-full"
+                  />
+                )
+              }
+            })
+          }
+          
+          return cardItems
+        })()}
+      </div>
+    )
+
+    if (!isPro && currentPage > 1) {
+      return (
+        <div>
+          <ProGateOverlay
+            totalCount={totalItems}
+            visibleCount={firstPageSize}
+            label="Student Benefits"
+          >
+            {gridContent}
+          </ProGateOverlay>
+          {totalPages > 1 && (
+            <div className="mt-8 md:mt-10 mb-8 md:mb-10 w-full">
+              <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
+            </div>
+          )}
+        </div>
+      )
+    }
+
     return (
       <div>
-        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-4">
-          {(() => {
-            const cardItems: React.ReactNode[] = paginated.map((b, idx) => (
-              <DealCard key={b.slug || `${b.company}-${idx}`} deal={convertToCard(b, idx)} basePath="/student-benefits" />
-            ))
-            
-            // Page 1 only: interleave 2 ads at positions 4 and 10.
-            // 10 items + 2 ads = 12 grid cells → 4 complete rows of 3, no empty slot.
-            if (currentPage === 1) {
-              const adPositions = [4, 10]
-              adPositions.forEach((pos, adIdx) => {
-                if (cardItems.length >= pos) {
-                  const insertAt = Math.min(pos + adIdx, cardItems.length)
-                  cardItems.splice(
-                    insertAt,
-                    0,
-                    <FeaturedSlot
-                      key={`featured-ad-single-${adIdx}`}
-                      variant="inline"
-                      count={1}
-                      intervalMs={5500}
-                      offset={6 + adIdx * 3}
-                      className="h-full"
-                    />
-                  )
-                }
-              })
-            }
-            
-            return cardItems
-          })()}
-        </div>
+        {gridContent}
         {totalPages > 1 && (
           <div className="mt-8 md:mt-10 mb-8 md:mb-10 w-full">
             <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
@@ -327,6 +354,72 @@ export default function StudentBenefitsGrid({ activeType, filters }: StudentBene
   const allDisplayStart = allStartIndex + 1
   const allDisplayEnd = Math.min(allStartIndex + allPageSize, allBenefitsMerged.length)
 
+  const allGridContent = (
+    <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-4">
+      {(() => {
+        const cardItems: React.ReactNode[] = allCurrentItems.map((b, idx) => (
+          <DealCard
+            key={b.slug || `${b.company}-${idx}`}
+            deal={convertToCard(b, idx)}
+            basePath="/student-benefits"
+          />
+        ))
+        // Page 1 only: 10 items + 2 ads at positions 4 & 10 = 12 total cells, no empty slot
+        if (currentPage === 1) {
+          const adPositions = [4, 10]
+          adPositions.forEach((pos, idx) => {
+            if (cardItems.length >= pos) {
+              const insertAt = Math.min(pos + idx, cardItems.length)
+              cardItems.splice(
+                insertAt,
+                0,
+                <FeaturedSlot
+                  key={`featured-ad-all-${idx}`}
+                  variant="inline"
+                  count={1}
+                  intervalMs={5500}
+                  offset={6 + idx * 3}
+                  className="h-full"
+                />
+              )
+            }
+          })
+        }
+        return cardItems
+      })()}
+    </div>
+  )
+
+  if (!isPro && currentPage > 1) {
+    return (
+      <div>
+        <p className="text-xs md:text-[13px] text-gray-600 dark:text-gray-400 px-1 mb-4">
+          Showing{' '}
+          <span className="font-semibold text-gray-900 dark:text-white tabular-nums">
+            {allDisplayStart}–{allDisplayEnd}
+          </span>{' '}
+          of{' '}
+          <span className="font-semibold text-gray-900 dark:text-white tabular-nums">{allBenefitsMerged.length}</span>{' '}
+          student benefits
+        </p>
+
+        <ProGateOverlay
+          totalCount={allBenefitsMerged.length}
+          visibleCount={allFirstPageSize}
+          label="Student Benefits"
+        >
+          {allGridContent}
+        </ProGateOverlay>
+
+        {allTotalPages > 1 && (
+          <div className="mt-8 md:mt-10 mb-8 md:mb-10 w-full">
+            <Pagination currentPage={currentPage} totalPages={allTotalPages} onPageChange={handlePageChange} />
+          </div>
+        )}
+      </div>
+    )
+  }
+
   return (
     <div>
       <p className="text-xs md:text-[13px] text-gray-600 dark:text-gray-400 px-1 mb-4">
@@ -339,39 +432,7 @@ export default function StudentBenefitsGrid({ activeType, filters }: StudentBene
         student benefits
       </p>
 
-      <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-4">
-        {(() => {
-          const cardItems: React.ReactNode[] = allCurrentItems.map((b, idx) => (
-            <DealCard
-              key={b.slug || `${b.company}-${idx}`}
-              deal={convertToCard(b, idx)}
-              basePath="/student-benefits"
-            />
-          ))
-          // Page 1 only: 10 items + 2 ads at positions 4 & 10 = 12 total cells, no empty slot
-          if (currentPage === 1) {
-            const adPositions = [4, 10]
-            adPositions.forEach((pos, idx) => {
-              if (cardItems.length >= pos) {
-                const insertAt = Math.min(pos + idx, cardItems.length)
-                cardItems.splice(
-                  insertAt,
-                  0,
-                  <FeaturedSlot
-                    key={`featured-ad-all-${idx}`}
-                    variant="inline"
-                    count={1}
-                    intervalMs={5500}
-                    offset={6 + idx * 3}
-                    className="h-full"
-                  />
-                )
-              }
-            })
-          }
-          return cardItems
-        })()}
-      </div>
+      {allGridContent}
 
       {allTotalPages > 1 && (
         <div className="mt-8 md:mt-10 mb-8 md:mb-10 w-full">
@@ -381,4 +442,3 @@ export default function StudentBenefitsGrid({ activeType, filters }: StudentBene
     </div>
   )
 }
-
