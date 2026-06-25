@@ -43,8 +43,19 @@ function LoginContent() {
   const [resendMsg, setResendMsg] = useState<string | null>(null)
 
   const [mounted, setMounted] = useState(false)
+  const [turnstileSiteKey, setTurnstileSiteKey] = useState('1x00000000000000000000AA')
+
   useEffect(() => {
     setMounted(true)
+    if (typeof window !== 'undefined') {
+      const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+      const prodKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY
+      if (!isLocalhost && prodKey) {
+        setTurnstileSiteKey(prodKey)
+      } else {
+        setTurnstileSiteKey('1x00000000000000000000AA')
+      }
+    }
   }, [])
 
   // Load Google Client library for client-side custom domain branding login
@@ -133,7 +144,7 @@ function LoginContent() {
   const [mfaFactorId, setMfaFactorId] = useState<string | null>(null)
   const [mfaChallengeId, setMfaChallengeId] = useState<string | null>(null)
 
-  const turnstileSiteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || '1x00000000000000000000AA'
+
 
   const handleOAuthLogin = async (provider: 'google' | 'github' | 'linkedin') => {
     setError(null)
