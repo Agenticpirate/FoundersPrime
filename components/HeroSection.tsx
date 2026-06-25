@@ -46,8 +46,13 @@ const STAT_CARDS = [
   { value: '1K+', label: 'Verified Startups', icon: 'verified_user', href: '/startups' },
 ]
 
-/* ─── Trust line (risk reversal) ─── */
-const TRUST_POINTS = ['Founder-vetted weekly', 'Apply in under 3 min', 'Zero equity. Ever.']
+/* ─── Deal counts (hero stats strip) ─── */
+const DEAL_STATS = [
+  { value: '918', label: 'Student Deals', icon: 'school', href: '/student-benefits' },
+  { value: '146', label: 'Accelerators', icon: 'rocket_launch', href: '/programs?type=accelerators' },
+  { value: '88', label: 'Grants', icon: 'redeem', href: '/programs?type=grants' },
+  { value: '25', label: 'Incubators', icon: 'hub', href: '/programs?type=incubators' },
+]
 
 /* Chamfered-corner clip paths (brutalist notch detail) */
 const CARD_CLIP = 'polygon(30px 0, 100% 0, 100% 100%, 0 100%, 0 30px)'
@@ -184,23 +189,8 @@ export default function HeroSection() {
               <span className="text-[#FFD500] dark:text-accent-yellow font-black">$500K</span>{' '}
               in verified startup credits, grants, tools, and founder perks.
             </p>
- 
-            {/* Bullet Points */}
-            <div className="flex flex-col gap-3 mt-1.5">
-              <div className="flex items-center gap-2 text-xs sm:text-sm text-gray-700 dark:text-gray-200 font-sans font-semibold">
-                <span className="material-symbols-outlined text-[#FFD500] !text-base" style={{ fontVariationSettings: "'FILL' 0" }}>verified_user</span>
-                Founder-vetted. Always.
-              </div>
-              <div className="flex items-center gap-2 text-xs sm:text-sm text-gray-700 dark:text-gray-200 font-sans font-semibold">
-                <span className="material-symbols-outlined text-[#FFD500] !text-base" style={{ fontVariationSettings: "'FILL' 0" }}>account_balance_wallet</span>
-                Save thousands. Every month.
-              </div>
-              <div className="flex items-center gap-2 text-xs sm:text-sm text-gray-700 dark:text-gray-200 font-sans font-semibold">
-                <span className="material-symbols-outlined text-[#FFD500] !text-base" style={{ fontVariationSettings: "'FILL' 0" }}>bolt</span>
-                Zero dilution. 100% founder-first.
-              </div>
-            </div>
           </div>
+ 
  
           {/* 4-column key metrics row */}
           <div className="flex justify-between items-center border border-gray-250 dark:border-white/10 bg-white/80 dark:bg-[#0a0a0a]/60 shadow-sm dark:shadow-none rounded-2xl p-3 mb-6">
@@ -247,8 +237,31 @@ export default function HeroSection() {
               <span className="material-symbols-outlined !text-[16px]">arrow_forward</span>
             </Link>
           </div>
- 
-          {/* Brand logos scroller animation under See Pricing button */}
+
+          {/* Deal counts strip — mobile */}
+          <div className="flex flex-wrap items-center gap-1.5 mb-4">
+            {DEAL_STATS.map((stat) => (
+              <Link
+                key={stat.label}
+                href={stat.href}
+                className="group inline-flex items-center gap-1 px-2.5 py-1 border border-black/10 dark:border-white/10 bg-white/60 dark:bg-white/[0.04] hover:border-accent-yellow hover:bg-accent-yellow/10 rounded-full transition-all duration-200"
+              >
+                <span
+                  className="material-symbols-outlined !text-[11px] text-green-600 dark:text-green-400"
+                  style={{ fontVariationSettings: "'FILL' 1" }}
+                >
+                  {stat.icon}
+                </span>
+                <span className="font-mono font-black text-[10px] text-black dark:text-white tabular-nums">
+                  {stat.value}
+                </span>
+                <span className="font-mono text-[9px] font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide">
+                  {stat.label}
+                </span>
+              </Link>
+            ))}
+          </div>
+
           <div className="w-full overflow-hidden my-4 relative py-2 bg-gray-500/[0.03] dark:bg-white/[0.01] border-y border-gray-200 dark:border-white/[0.04] -mx-4 px-4">
             <div className="absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-[#f6f8f8] dark:from-[#000000] to-transparent z-10 pointer-events-none" />
             <div className="absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-[#f6f8f8] dark:from-[#000000] to-transparent z-10 pointer-events-none" />
@@ -332,18 +345,27 @@ export default function HeroSection() {
               </Link>
             </div>
 
-            {/* Trust line */}
-            <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
-              {TRUST_POINTS.map((text) => (
-                <span key={text} className="inline-flex items-center gap-1.5 text-xs md:text-[13px] font-mono font-bold text-gray-600 dark:text-gray-400">
+            {/* Deal counts strip */}
+            <div className="flex flex-wrap items-center gap-2">
+              {DEAL_STATS.map((stat) => (
+                <Link
+                  key={stat.label}
+                  href={stat.href}
+                  className="group inline-flex items-center gap-1.5 px-3 py-1.5 border border-black/10 dark:border-white/10 bg-white/60 dark:bg-white/[0.04] hover:border-accent-yellow hover:bg-accent-yellow/10 dark:hover:border-accent-yellow dark:hover:bg-accent-yellow/10 rounded-full transition-all duration-200"
+                >
                   <span
-                    className="material-symbols-outlined !text-[16px] text-green-600 flex-shrink-0"
+                    className="material-symbols-outlined !text-[13px] text-green-600 dark:text-green-400 group-hover:text-black dark:group-hover:text-accent-yellow transition-colors"
                     style={{ fontVariationSettings: "'FILL' 1" }}
                   >
-                    check_circle
+                    {stat.icon}
                   </span>
-                  {text}
-                </span>
+                  <span className="font-mono font-black text-[11px] text-black dark:text-white group-hover:text-black dark:group-hover:text-white tabular-nums">
+                    {stat.value}
+                  </span>
+                  <span className="font-mono text-[10px] font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide">
+                    {stat.label}
+                  </span>
+                </Link>
               ))}
             </div>
           </div>
