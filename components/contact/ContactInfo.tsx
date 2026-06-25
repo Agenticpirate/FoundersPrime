@@ -18,9 +18,9 @@ export default function ContactInfo() {
       platform: 'X',
       handle: '@FoundersPrime',
       url: 'https://x.com/foundersprime',
-      bgClass: 'bg-black border border-zinc-800',
+      bgClass: 'bg-gray-100 dark:bg-black border border-gray-200 dark:border-zinc-800',
       icon: (
-        <svg viewBox="0 0 24 24" className="w-4 h-4 text-white" fill="currentColor">
+        <svg viewBox="0 0 24 24" className="w-4 h-4 text-black dark:text-white" fill="currentColor">
           <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
         </svg>
       )
@@ -51,9 +51,9 @@ export default function ContactInfo() {
       platform: 'Threads',
       handle: '@FoundersPrime',
       url: 'https://www.threads.net/@foundersprime',
-      bgClass: 'bg-black border border-zinc-800',
+      bgClass: 'bg-gray-100 dark:bg-black border border-gray-200 dark:border-zinc-800',
       icon: (
-        <svg viewBox="0 0 24 24" className="w-4 h-4 text-white" fill="currentColor">
+        <svg viewBox="0 0 24 24" className="w-4 h-4 text-black dark:text-white" fill="currentColor">
           <path d="M12.186 24h-.007c-3.581-.024-6.334-1.205-8.184-3.509C2.35 18.44 1.5 15.586 1.472 12.01v-.017c.03-3.579.879-6.43 2.525-8.482C5.845 1.205 8.6.024 12.18 0h.014c2.746.02 5.043.725 6.826 2.098 1.677 1.29 2.858 3.13 3.509 5.467l-2.04.569c-1.104-3.96-3.898-5.984-8.304-6.015-2.91.022-5.11.936-6.54 2.717C4.307 6.504 3.616 8.914 3.589 12c.027 3.086.718 5.496 2.057 7.164 1.43 1.781 3.631 2.695 6.54 2.717 2.623-.02 4.358-.631 5.8-2.045 1.647-1.613 1.618-3.593 1.09-4.798-.31-.71-.873-1.3-1.634-1.75-.192 1.352-.622 2.446-1.284 3.272-.886 1.102-2.14 1.704-3.73 1.79-1.202.065-2.361-.218-3.259-.801-1.063-.689-1.685-1.74-1.752-2.964-.065-1.19.408-2.285 1.33-3.082.88-.76 2.119-1.207 3.583-1.291a13.853 13.853 0 013.02.142c-.126-.742-.375-1.332-.74-1.756-.5-.582-1.274-.88-2.3-.886h-.027c-.824 0-1.942.227-2.656 1.298l-1.687-1.135c.954-1.41 2.503-2.187 4.354-2.187h.04c3.087.018 4.924 1.911 5.108 5.214.105.043.21.088.31.135 1.4.66 2.426 1.658 2.967 2.886.752 1.708.823 4.494-1.444 6.722-1.732 1.703-3.835 2.474-6.802 2.493zm1.327-9.469c-.235 0-.474.007-.717.021-1.836.103-2.98.946-2.916 2.143.067 1.256 1.452 1.839 2.784 1.767 1.224-.065 2.818-.543 3.086-3.71a10.272 10.272 0 00-2.237-.221z" />
         </svg>
       )
@@ -63,7 +63,7 @@ export default function ContactInfo() {
   return (
     <div className="space-y-4">
       {/* WHY REACH OUT? */}
-      <div className="bg-[#0d0d0d] border border-zinc-800 rounded-xl p-4 md:p-5">
+      <div className="bg-white dark:bg-[#0d0d0d] border border-gray-200 dark:border-zinc-800 rounded-xl p-4 md:p-5">
         <h3 className="font-mono text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-3">
           Why Reach Out?
         </h3>
@@ -74,7 +74,7 @@ export default function ContactInfo() {
                 <div className="size-7 bg-yellow-400 flex items-center justify-center rounded text-black flex-shrink-0">
                   <span className="material-symbols-outlined !text-[15px]">{icon}</span>
                 </div>
-                <span className="font-sans text-xs font-bold text-white">{value}</span>
+                <span className="font-sans text-xs font-bold text-gray-900 dark:text-white">{value}</span>
               </div>
               <span className="font-mono text-[9px] text-gray-500 tracking-wider text-right">{label}</span>
             </div>
@@ -83,7 +83,7 @@ export default function ContactInfo() {
       </div>
 
       {/* ONLINE NOW */}
-      <div className="relative bg-[#0d0d0d] border border-yellow-400/20 rounded-xl p-4 md:p-5 overflow-hidden group hover:border-yellow-400/30 transition-all duration-300">
+      <div className="relative bg-white dark:bg-[#0d0d0d] border border-gray-200 dark:border-yellow-400/20 rounded-xl p-4 md:p-5 overflow-hidden group hover:border-yellow-400/30 transition-all duration-300">
         <div className="absolute top-0 right-0 p-8 pointer-events-none opacity-[0.03] group-hover:opacity-[0.05] transition-opacity duration-300">
           <svg className="w-20 h-20 text-yellow-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1">
             <path strokeLinecap="round" strokeLinejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
@@ -96,16 +96,16 @@ export default function ContactInfo() {
             Online Now
           </span>
         </div>
-        <h3 className="font-mono text-xs font-bold text-white uppercase tracking-wider mb-1">
+        <h3 className="font-mono text-xs font-bold text-gray-900 dark:text-white uppercase tracking-wider mb-1">
           We Reply to Everyone
         </h3>
-        <p className="font-sans text-[11px] text-gray-400 leading-relaxed max-w-[90%]">
+        <p className="font-sans text-[11px] text-gray-600 dark:text-gray-400 leading-relaxed max-w-[90%]">
           No bots, no canned tickets. Every message lands with a real person.
         </p>
       </div>
 
       {/* QUICK INFO */}
-      <div className="bg-[#0d0d0d] border border-zinc-800 rounded-xl p-4 md:p-5">
+      <div className="bg-white dark:bg-[#0d0d0d] border border-gray-200 dark:border-zinc-800 rounded-xl p-4 md:p-5">
         <h3 className="font-mono text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-3 flex items-center gap-2">
           <span className="material-symbols-outlined !text-[15px]">info</span>
           Quick Info
@@ -118,7 +118,7 @@ export default function ContactInfo() {
               </div>
               <div>
                 <p className="font-mono text-[9px] font-bold text-gray-500 tracking-wider uppercase">{label}</p>
-                <p className="font-sans text-[11px] text-white mt-0.5">{value}</p>
+                <p className="font-sans text-[11px] text-gray-900 dark:text-white mt-0.5">{value}</p>
               </div>
             </div>
           ))}
@@ -126,7 +126,7 @@ export default function ContactInfo() {
       </div>
 
       {/* FOLLOW US */}
-      <div className="bg-[#0d0d0d] border border-zinc-800 rounded-xl p-4 md:p-5">
+      <div className="bg-white dark:bg-[#0d0d0d] border border-gray-200 dark:border-zinc-800 rounded-xl p-4 md:p-5">
         <h3 className="font-mono text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-3 flex items-center gap-2">
           <span className="material-symbols-outlined !text-[15px]">share</span>
           Follow Us
@@ -138,7 +138,7 @@ export default function ContactInfo() {
               href={social.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-between p-2.5 bg-[#131316] border border-zinc-850 hover:border-zinc-700 rounded-lg transition-all group"
+              className="flex items-center justify-between p-2.5 bg-gray-50 dark:bg-[#131316] border border-gray-200 dark:border-zinc-850 hover:border-gray-300 dark:hover:border-zinc-700 rounded-lg transition-all group"
             >
               <div className="flex items-center gap-3">
                 <div className={`size-8 ${social.bgClass} flex items-center justify-center rounded`}>
@@ -146,10 +146,10 @@ export default function ContactInfo() {
                 </div>
                 <div>
                   <p className="font-mono text-[9px] text-gray-500 tracking-wider uppercase">{social.platform}</p>
-                  <p className="font-sans text-[11px] font-bold text-white mt-0.5">{social.handle}</p>
+                  <p className="font-sans text-[11px] font-bold text-gray-900 dark:text-white mt-0.5">{social.handle}</p>
                 </div>
               </div>
-              <span className="material-symbols-outlined !text-[14px] text-gray-600 group-hover:text-white transition-colors">arrow_outward</span>
+              <span className="material-symbols-outlined !text-[14px] text-gray-500 group-hover:text-black dark:group-hover:text-white transition-colors">arrow_outward</span>
             </a>
           ))}
         </div>

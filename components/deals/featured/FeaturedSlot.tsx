@@ -76,7 +76,7 @@ function DealView({ deal, variant }: { deal: Deal; variant: Variant }) {
         return (
             <Link
                 href={`/deals/${deal.slug}`}
-                className="group relative flex h-full flex-col bg-amber-50 dark:bg-[#1a1510] border-2 border-amber-500 dark:border-amber-500/50 rounded-sm shadow-[3px_3px_0px_#b45309] dark:shadow-[3px_3px_0px_rgba(245,158,11,0.2)] hover:shadow-[5px_5px_0px_#b45309] dark:hover:shadow-[5px_5px_0px_rgba(245,158,11,0.3)] hover:-translate-x-px hover:-translate-y-px transition-all overflow-hidden"
+                className="group relative flex h-full flex-col bg-amber-50 dark:bg-[#1a1510] border-2 border-amber-500 dark:border-amber-500/50 rounded-xl shadow-[3px_3px_0px_#b45309] dark:shadow-[3px_3px_0px_rgba(245,158,11,0.2)] hover:shadow-[5px_5px_0px_#b45309] dark:hover:shadow-[5px_5px_0px_rgba(245,158,11,0.3)] hover:-translate-x-px hover:-translate-y-px transition-all overflow-hidden"
             >
                 <div className="px-3 pt-2.5">
                     <span className="inline-block px-1.5 py-0.5 bg-amber-400 text-black text-[8px] font-black uppercase tracking-wider rounded-sm">
@@ -197,7 +197,7 @@ function Promo({ variant, compact = false, dense = false }: { variant: Variant; 
         return (
             <Link
                 href="/submit-deal"
-                className="group relative flex h-full flex-col items-center justify-center text-center bg-gradient-to-br from-gray-900 via-gray-900 to-black text-white border-2 border-dashed border-amber-400 rounded-sm shadow-[3px_3px_0px_#111] hover:shadow-[5px_5px_0px_#111] hover:-translate-x-px hover:-translate-y-px transition-all p-4 overflow-hidden"
+                className="group relative flex h-full flex-col items-center justify-center text-center bg-gradient-to-br from-gray-900 via-gray-900 to-black text-white border-2 border-dashed border-amber-400 rounded-xl shadow-[3px_3px_0px_#111] hover:shadow-[5px_5px_0px_#111] hover:-translate-x-px hover:-translate-y-px transition-all p-4 overflow-hidden"
             >
                 <span className="inline-flex items-center gap-1.5 bg-accent-yellow text-black font-mono text-[8px] font-black uppercase tracking-[0.12em] px-2 py-0.5 border border-black mb-2">
                     Open Slot
@@ -267,6 +267,23 @@ function Promo({ variant, compact = false, dense = false }: { variant: Variant; 
     )
 }
 
+function FeaturedSlotSkeleton({ variant, dense }: { variant: Variant; dense?: boolean }) {
+    if (variant === 'banner') {
+        return (
+            <div className="w-full h-[76px] rounded-xl bg-gray-200 dark:bg-neutral-900 animate-pulse border border-gray-300 dark:border-neutral-800" />
+        )
+    }
+    if (variant === 'inline') {
+        return (
+            <div className="w-full h-full min-h-[220px] rounded-xl bg-gray-200 dark:bg-neutral-900 animate-pulse border border-gray-300 dark:border-neutral-800" />
+        )
+    }
+    // rail
+    return (
+        <div className={`w-full ${dense ? 'h-[140px]' : 'h-[160px]'} rounded-lg bg-gray-200 dark:bg-neutral-900 animate-pulse border border-gray-300 dark:border-neutral-800`} />
+    )
+}
+
 /* ─── Public slot ─── */
 export default function FeaturedSlot({
     variant,
@@ -281,49 +298,158 @@ export default function FeaturedSlot({
     const { deals, loading } = useFeaturedDeals()
     const { window: shown, tick } = useRotatingWindow(deals, count, intervalMs, offset)
 
-    if (loading) return null
+    if (loading) {
+        return (
+            <div className={className}>
+                {showHeader && (variant === 'rail' || variant === 'banner') && (
+                    <div className="flex items-center justify-between mb-2 px-0.5">
+                        <span className="inline-flex items-center gap-1.5 font-mono text-[9px] font-black uppercase tracking-[0.14em] text-gray-500 dark:text-gray-400">
+                            <span className="material-symbols-outlined !text-[13px] text-amber-500" style={{ fontVariationSettings: "'FILL' 1" }}>push_pin</span>
+                            Pinned
+                        </span>
+                        <span className="font-mono text-[8px] font-bold uppercase tracking-[0.1em] text-gray-400 dark:text-gray-500">Ad</span>
+                    </div>
+                )}
+                <FeaturedSlotSkeleton variant={variant} dense={dense} />
+            </div>
+        )
+    }
 
     const isEmpty = deals.length === 0
 
     return (
-        <div className={className}>
-            {showHeader && (variant === 'rail' || variant === 'banner') && (
-                <div className="flex items-center justify-between mb-2 px-0.5">
-                    <span className="inline-flex items-center gap-1.5 font-mono text-[9px] font-black uppercase tracking-[0.14em] text-gray-500 dark:text-gray-400">
-                        <span className="material-symbols-outlined !text-[13px] text-amber-500" style={{ fontVariationSettings: "'FILL' 1" }}>push_pin</span>
-                        Pinned
-                    </span>
-                    <span className="font-mono text-[8px] font-bold uppercase tracking-[0.1em] text-gray-400 dark:text-gray-500">Ad</span>
-                </div>
-            )}
+        <div className={`${className} ${variant === 'inline' ? 'h-full' : ''}`.trim()}>
+            {/* Desktop View */}
+            <div className="hidden lg:block h-full">
+                {showHeader && (variant === 'rail' || variant === 'banner') && (
+                    <div className="flex items-center justify-between mb-2 px-0.5">
+                        <span className="inline-flex items-center gap-1.5 font-mono text-[9px] font-black uppercase tracking-[0.14em] text-gray-500 dark:text-gray-400">
+                            <span className="material-symbols-outlined !text-[13px] text-amber-500" style={{ fontVariationSettings: "'FILL' 1" }}>push_pin</span>
+                            Pinned
+                        </span>
+                        <span className="font-mono text-[8px] font-bold uppercase tracking-[0.1em] text-gray-400 dark:text-gray-500">Ad</span>
+                    </div>
+                )}
 
-            {isEmpty ? (
-                <Promo variant={variant} compact={compact} dense={dense} />
-            ) : (
-                <AnimatePresence mode="wait">
-                    <motion.div
-                        key={tick}
-                        initial={{ opacity: 0, y: 8 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -8 }}
-                        transition={{ duration: 0.4, ease: 'easeOut' }}
-                        className={variant === 'rail' ? 'space-y-2' : variant === 'banner' ? '' : 'h-full'}
+                {isEmpty ? (
+                    <Promo variant={variant} compact={compact} dense={dense} />
+                ) : (
+                    <AnimatePresence mode="wait">
+                        <motion.div
+                            key={tick}
+                            initial={{ opacity: 0, y: 8 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -8 }}
+                            transition={{ duration: 0.4, ease: 'easeOut' }}
+                            className={variant === 'rail' ? 'space-y-2' : variant === 'banner' ? '' : 'h-full'}
+                        >
+                            {shown.map((deal) => (
+                                <DealView key={deal.slug} deal={deal} variant={variant} />
+                            ))}
+                        </motion.div>
+                    </AnimatePresence>
+                )}
+
+                {variant === 'rail' && !isEmpty && showHeader && (
+                    <Link
+                        href="/submit-deal"
+                        className="block text-center font-mono text-[9px] font-bold uppercase tracking-[0.12em] text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-white transition-colors pt-2"
                     >
-                        {shown.map((deal) => (
-                            <DealView key={deal.slug} deal={deal} variant={variant} />
-                        ))}
-                    </motion.div>
-                </AnimatePresence>
-            )}
+                        + Pin your deal to the top
+                    </Link>
+                )}
+            </div>
 
-            {variant === 'rail' && !isEmpty && showHeader && (
-                <Link
-                    href="/submit-deal"
-                    className="block text-center font-mono text-[9px] font-bold uppercase tracking-[0.12em] text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-white transition-colors pt-2"
-                >
-                    + Pin your deal to the top
-                </Link>
-            )}
+            {/* Mobile View */}
+            <div className="block lg:hidden h-full">
+                {variant === 'banner' ? (
+                    <div>
+                        {showHeader && (
+                            <div className="flex items-center justify-between mb-1.5 px-0.5">
+                                <span className="inline-flex items-center gap-1 font-mono text-[9px] font-black uppercase tracking-[0.14em] text-gray-500 dark:text-gray-400">
+                                    <span className="material-symbols-outlined !text-[11px] text-amber-500" style={{ fontVariationSettings: "'FILL' 1" }}>push_pin</span>
+                                    Pinned Ads
+                                </span>
+                                <span className="font-mono text-[8px] font-bold uppercase tracking-[0.1em] text-gray-400 dark:text-gray-500">Ad</span>
+                            </div>
+                        )}
+                        {isEmpty ? (
+                            <Link
+                                href="/submit-deal"
+                                className="group relative flex items-center justify-between bg-gradient-to-r from-gray-900 via-gray-900 to-black text-white border border-dashed border-amber-500/50 rounded-lg px-3 py-2 text-xs w-full shadow-sm hover:border-amber-450 transition-colors"
+                            >
+                                <span className="font-mono text-[9px] font-black uppercase tracking-wider text-amber-400 flex items-center gap-1.5">
+                                    <span className="w-1 h-1 rounded-full bg-amber-400 animate-pulse" />
+                                    Pinned Ad: Open Slot
+                                </span>
+                                <span className="font-mono text-[9px] bg-amber-400 text-black px-1.5 py-0.5 rounded font-black">
+                                    FROM $25
+                                </span>
+                            </Link>
+                        ) : (
+                            <div className="flex gap-2.5 overflow-x-auto pb-2 pt-0.5 mobile-scroll-hide">
+                                {deals.map((deal) => (
+                                    <Link
+                                        key={deal.slug}
+                                        href={`/deals/${deal.slug}`}
+                                        className="flex items-center gap-2 bg-[#0a0a0a] dark:bg-[#0c0c0c] border border-gray-800 dark:border-white/10 rounded-lg px-2.5 py-1.5 flex-shrink-0 text-xs w-[170px]"
+                                    >
+                                        <LogoTile deal={deal} size="w-7 h-7" />
+                                        <div className="min-w-0 flex-1">
+                                            <p className="font-mono text-[10.5px] font-black leading-tight truncate text-white dark:text-white group-hover:text-accent-yellow">{deal.provider || deal.title}</p>
+                                            <p className="text-[9px] text-amber-450 font-bold truncate">{deal.value || 'Special Offer'}</p>
+                                        </div>
+                                    </Link>
+                                ))}
+                                <Link
+                                    href="/submit-deal"
+                                    className="flex items-center justify-center gap-1 border border-dashed border-gray-700 dark:border-white/10 rounded-lg px-3 py-1.5 flex-shrink-0 text-[10px] font-mono text-gray-400 hover:text-white hover:border-white transition-colors"
+                                >
+                                    + Pin Yours
+                                </Link>
+                            </div>
+                        )}
+                    </div>
+                ) : (
+                    <>
+                        {showHeader && (variant === 'rail') && (
+                            <div className="flex items-center justify-between mb-2 px-0.5">
+                                <span className="inline-flex items-center gap-1.5 font-mono text-[9px] font-black uppercase tracking-[0.14em] text-gray-500 dark:text-gray-400">
+                                    <span className="material-symbols-outlined !text-[13px] text-amber-500" style={{ fontVariationSettings: "'FILL' 1" }}>push_pin</span>
+                                    Pinned
+                                </span>
+                                <span className="font-mono text-[8px] font-bold uppercase tracking-[0.1em] text-gray-400 dark:text-gray-500">Ad</span>
+                            </div>
+                        )}
+                        {isEmpty ? (
+                            <Promo variant={variant} compact={compact} dense={dense} />
+                        ) : (
+                            <AnimatePresence mode="wait">
+                                <motion.div
+                                    key={tick}
+                                    initial={{ opacity: 0, y: 8 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    exit={{ opacity: 0, y: -8 }}
+                                    transition={{ duration: 0.4, ease: 'easeOut' }}
+                                    className={variant === 'rail' ? 'space-y-2' : 'h-full'}
+                                >
+                                    {shown.map((deal) => (
+                                        <DealView key={deal.slug} deal={deal} variant={variant} />
+                                    ))}
+                                </motion.div>
+                            </AnimatePresence>
+                        )}
+                        {variant === 'rail' && !isEmpty && showHeader && (
+                            <Link
+                                href="/submit-deal"
+                                className="block text-center font-mono text-[9px] font-bold uppercase tracking-[0.12em] text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-white transition-colors pt-2"
+                            >
+                                + Pin your deal to the top
+                            </Link>
+                        )}
+                    </>
+                )}
+            </div>
         </div>
     )
 }

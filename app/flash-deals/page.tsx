@@ -57,7 +57,7 @@ const STATS = [
 
 export default function FlashDealsPage() {
   return (
-    <div className="relative flex min-h-screen w-full flex-col bg-[#000000] text-white overflow-x-hidden">
+    <div className="relative flex min-h-screen w-full flex-col bg-white dark:bg-[#000000] text-gray-900 dark:text-white transition-colors duration-300 overflow-x-hidden">
       {/* Subtle grid overlay */}
       <div
         className="fixed inset-0 pointer-events-none z-0 opacity-[0.025]"
@@ -74,10 +74,10 @@ export default function FlashDealsPage() {
       <main className="flex-1 relative z-10">
         {/* Breadcrumb */}
         <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 pt-4">
-          <nav className="flex items-center gap-1 font-mono text-[10px] uppercase tracking-[0.1em] text-gray-600">
+          <nav className="flex items-center gap-1 font-mono text-[10px] uppercase tracking-[0.1em] text-gray-500">
             <Link href="/" className="hover:text-accent-yellow transition-colors">Home</Link>
-            <span className="material-symbols-outlined text-[13px] text-gray-700">chevron_right</span>
-            <span className="text-gray-400">Flash Deals</span>
+            <span className="material-symbols-outlined text-[13px] text-gray-400">chevron_right</span>
+            <span className="text-gray-450 dark:text-gray-400">Flash Deals</span>
           </nav>
         </div>
 
@@ -85,9 +85,9 @@ export default function FlashDealsPage() {
 
         {/* ── Feature strip ── */}
         <section className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 pb-2">
-          <div className="grid grid-cols-2 lg:grid-cols-4 border border-white/[0.07] bg-[#080808] divide-y divide-x divide-white/[0.07] lg:divide-y-0 overflow-hidden">
+          <div className="grid grid-cols-2 lg:grid-cols-4 border border-gray-200 dark:border-white/[0.07] bg-white dark:bg-[#080808] divide-y divide-x divide-gray-200 dark:divide-white/[0.07] lg:divide-y-0 overflow-hidden">
             {FEATURES.map((f) => (
-              <div key={f.title} className="group relative flex items-center gap-3 px-4 py-4 md:px-5 hover:bg-white/[0.02] transition-colors">
+              <div key={f.title} className="group relative flex items-center gap-3 px-4 py-4 md:px-5 hover:bg-gray-50 dark:hover:bg-white/[0.02] transition-colors">
                 {/* Icon */}
                 <span
                   className="w-9 h-9 flex-shrink-0 flex items-center justify-center border"
@@ -108,10 +108,10 @@ export default function FlashDealsPage() {
                   </span>
                 </span>
                 <div className="min-w-0">
-                  <p className="font-mono font-black text-[10px] uppercase tracking-[0.1em] text-white leading-tight">
+                  <p className="font-mono font-black text-[10px] uppercase tracking-[0.1em] text-gray-900 dark:text-white leading-tight">
                     {f.title}
                   </p>
-                  <p className="font-sans text-[11px] text-gray-500 leading-tight mt-0.5">{f.sub}</p>
+                  <p className="font-sans text-[11px] text-gray-600 dark:text-gray-500 leading-tight mt-0.5">{f.sub}</p>
                 </div>
               </div>
             ))}
@@ -123,8 +123,8 @@ export default function FlashDealsPage() {
         <FlashPremiumCTA />
 
         {/* ── Stats strip ── */}
-        <section className="border-t border-white/[0.07] bg-[#080808]">
-          <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 py-8 grid grid-cols-2 lg:grid-cols-4 divide-y divide-x divide-white/[0.07] lg:divide-y-0">
+        <section className="border-t border-gray-200 dark:border-white/[0.07] bg-gray-50 dark:bg-[#080808]">
+          <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 py-8 grid grid-cols-2 lg:grid-cols-4 divide-y divide-x divide-gray-200 dark:divide-white/[0.07] lg:divide-y-0">
             {STATS.map((s) => (
               <div key={s.sub} className="flex items-center gap-3.5 py-4 lg:py-0 px-4 lg:px-6 first:pl-0 last:pr-0">
                 <span
@@ -138,8 +138,8 @@ export default function FlashDealsPage() {
                   {s.icon}
                 </span>
                 <div>
-                  <p className="font-mono font-black text-xl text-white leading-none">{s.value}</p>
-                  <p className="font-sans text-[11px] text-gray-500 mt-1 leading-none">{s.sub}</p>
+                  <p className="font-mono font-black text-xl text-gray-900 dark:text-white leading-none">{s.value}</p>
+                  <p className="font-sans text-[11px] text-gray-600 dark:text-gray-500 mt-1 leading-none">{s.sub}</p>
                 </div>
               </div>
             ))}

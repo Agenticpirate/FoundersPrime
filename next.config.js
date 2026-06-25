@@ -21,15 +21,15 @@ const securityHeaders = [
     key: 'Content-Security-Policy',
     value: [
       "default-src 'self'",
-      // Allow Next.js inline scripts (required for __NEXT_DATA__ and JSON-LD) and Cloudflare Turnstile
-      "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://fonts.googleapis.com https://challenges.cloudflare.com",
+      // Allow Next.js inline scripts (required for __NEXT_DATA__ and JSON-LD), Cloudflare Turnstile, and Google Sign-in
+      "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://fonts.googleapis.com https://challenges.cloudflare.com https://accounts.google.com",
       "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com",
       "font-src 'self' https://fonts.gstatic.com",
       "img-src 'self' data: blob: https:",
-      // Supabase, Dodo Payments, Cloudflare Turnstile, and any other API origin
-      "connect-src 'self' https://*.supabase.co wss://*.supabase.co https://api.dodopayments.com https://challenges.cloudflare.com",
-      // Allow Cloudflare Turnstile iframe
-      "frame-src 'self' https://checkout.dodopayments.com https://challenges.cloudflare.com",
+      // Supabase, Dodo Payments, Cloudflare Turnstile, Google Accounts API, and any other API origin
+      "connect-src 'self' https://*.supabase.co wss://*.supabase.co https://api.dodopayments.com https://challenges.cloudflare.com https://accounts.google.com",
+      // Allow Cloudflare Turnstile and Google Sign-in iframe
+      "frame-src 'self' https://checkout.dodopayments.com https://challenges.cloudflare.com https://accounts.google.com",
       "frame-ancestors 'self'",
       "base-uri 'self'",
       "form-action 'self'",

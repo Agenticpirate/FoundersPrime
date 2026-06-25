@@ -6,7 +6,7 @@ export default function ContactHero() {
       {/* Breadcrumb */}
       <nav aria-label="Breadcrumb" className="mb-6">
         <ol className="inline-flex items-center gap-1 font-mono text-[11px] text-gray-500">
-          <li><a href="/" className="hover:text-white transition-colors">Home</a></li>
+          <li><a href="/" className="hover:text-gray-900 dark:hover:text-white transition-colors">Home</a></li>
           <li aria-hidden="true"><span className="text-gray-700">/</span></li>
           <li className="text-gray-400">Contact Us</li>
         </ol>
@@ -22,12 +22,12 @@ export default function ContactHero() {
         </div>
 
         {/* Heading */}
-        <h1 className="font-sans text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-white mb-4 leading-tight">
+        <h1 className="font-sans text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-gray-900 dark:text-white mb-4 leading-tight">
           Let's build something <span className="text-yellow-400">great</span> together.
         </h1>
 
         {/* Subtitle */}
-        <p className="font-sans text-sm md:text-base text-gray-400 max-w-xl leading-relaxed">
+        <p className="font-sans text-sm md:text-base text-gray-600 dark:text-gray-400 max-w-xl leading-relaxed">
           Questions about deals, partnerships, or your account? Real humans, real fast — we respond within 24 hours.
         </p>
 

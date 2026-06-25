@@ -61,9 +61,13 @@ export default function StudentBenefitsFilterBar({ activeType, onFilterChange, c
     return () => clearTimeout(t)
   }, [filters.search, filters.category, filters.subtype, filters.sort, filters.region])
 
-  // Reset filters when active type tab changes
+  const lastActiveType = useRef(activeType)
+  // Reset filters when active type tab changes (but not on mount)
   useEffect(() => {
-    setFilters(prev => ({ ...prev, category: 'All', subtype: 'All', region: 'All' }))
+    if (lastActiveType.current !== activeType) {
+      lastActiveType.current = activeType
+      setFilters(prev => ({ ...prev, category: 'All', subtype: 'All', region: 'All' }))
+    }
   }, [activeType])
 
   const handleChange = (key: keyof StudentBenefitsFilterState, value: string) => {

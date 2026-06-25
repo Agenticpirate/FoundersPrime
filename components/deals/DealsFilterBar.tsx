@@ -70,7 +70,7 @@ export default function DealsFilterBar({ onFilterChange, currentFilters }: Deals
   ]
 
   return (
-    <div className="relative bg-white dark:bg-[#0c0c0c] border border-gray-200 dark:border-white/10 rounded-xl p-3 md:p-3.5 sticky top-14 md:top-20 z-30 shadow-sm overflow-hidden transition-colors duration-300">
+    <div className="relative bg-white dark:bg-[#0c0c0c] border border-gray-200 dark:border-white/10 rounded-xl p-2.5 md:p-3.5 sticky top-14 md:top-20 z-30 shadow-sm overflow-hidden transition-colors duration-300">
       {/* Decorative mandala — top-right corner */}
       <div className="absolute -top-10 -right-10 w-32 h-32 pointer-events-none opacity-[0.05]" aria-hidden="true">
         <svg viewBox="0 0 200 200" className="w-full h-full text-gray-900 dark:text-white/10 filterbar-mandala-spin" fill="none" stroke="currentColor" strokeWidth="0.6">
@@ -91,7 +91,7 @@ export default function DealsFilterBar({ onFilterChange, currentFilters }: Deals
 
       <div className="relative">
       {/* Search row */}
-      <div className="relative mb-2.5">
+      <div className="relative mb-2">
         <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-[18px] pointer-events-none">search</span>
         <input
           className="w-full h-9 pl-10 pr-9 border border-gray-200 dark:border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-yellow/40 focus:border-accent-yellow text-[12.5px] bg-gray-50 dark:bg-white/5 hover:bg-white focus:bg-white dark:focus:bg-[#0c0c0c] transition-colors placeholder:text-gray-400 dark:placeholder:text-gray-500 dark:text-white"
@@ -112,8 +112,8 @@ export default function DealsFilterBar({ onFilterChange, currentFilters }: Deals
       </div>
 
       {/* Dropdowns row */}
-      <div className="grid grid-cols-3 gap-2 mb-2.5">
-        <div className="relative">
+      <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 mb-2">
+        <div className="relative hidden sm:block">
           <select
             className={selectClass}
             value={filters.category}

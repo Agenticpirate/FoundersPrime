@@ -54,11 +54,11 @@ export default function ResourceDetailPage({ params }: PageProps) {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
             {/* Left: Detail info */}
             <div className="lg:col-span-2 space-y-5">
-              <div className="relative bg-[#0c0c0c] border border-white/10 rounded-xl p-5 md:p-6 overflow-hidden">
+              <div className="relative bg-white dark:bg-[#0c0c0c] border border-gray-200 dark:border-white/10 rounded-xl p-5 md:p-6 overflow-hidden">
                 <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#ffd700] to-transparent" />
                 
                 <div className="flex flex-col sm:flex-row gap-4 items-start">
-                  <div className="w-16 h-16 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center font-mono font-black text-2xl text-accent-yellow flex-shrink-0">
+                  <div className="w-16 h-16 bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-xl flex items-center justify-center font-mono font-black text-2xl text-accent-yellow flex-shrink-0">
                     {resource.thumbnail}
                   </div>
 
@@ -74,11 +74,11 @@ export default function ResourceDetailPage({ params }: PageProps) {
                       )}
                     </div>
 
-                    <h1 className="font-mono text-xl sm:text-2xl md:text-3xl font-black text-white tracking-tight leading-tight mb-2">
+                    <h1 className="font-mono text-xl sm:text-2xl md:text-3xl font-black text-gray-900 dark:text-white tracking-tight leading-tight mb-2">
                       {resource.title}
                     </h1>
 
-                    <div className="flex flex-wrap items-center gap-3 text-[11px] text-gray-400 font-mono mb-2">
+                    <div className="flex flex-wrap items-center gap-3 text-[11px] text-gray-500 dark:text-gray-400 font-mono mb-2">
                       <span className="flex items-center gap-1">
                         <User className="w-3.5 h-3.5" /> {resource.author}
                       </span>
@@ -96,19 +96,19 @@ export default function ResourceDetailPage({ params }: PageProps) {
               </div>
 
               {/* Description */}
-              <div className="bg-[#0c0c0c] border border-white/10 rounded-xl p-5 md:p-6">
-                <h2 className="font-mono text-sm font-black uppercase mb-3 text-white flex items-center gap-2">
+              <div className="bg-white dark:bg-[#0c0c0c] border border-gray-200 dark:border-white/10 rounded-xl p-5 md:p-6">
+                <h2 className="font-mono text-sm font-black uppercase mb-3 text-gray-900 dark:text-white flex items-center gap-2">
                   <span className="w-2 h-2 rounded-full bg-accent-yellow flex-shrink-0" />
                   Description
                 </h2>
-                <p className="text-[13px] md:text-sm text-gray-300 leading-relaxed">
+                <p className="text-[13px] md:text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
                   {resource.description}
                 </p>
               </div>
 
               {/* What's Included */}
-              <div className="bg-[#0c0c0c] border border-white/10 rounded-xl p-5 md:p-6">
-                <h2 className="font-mono text-sm font-black uppercase mb-3 text-white flex items-center gap-2">
+              <div className="bg-white dark:bg-[#0c0c0c] border border-gray-200 dark:border-white/10 rounded-xl p-5 md:p-6">
+                <h2 className="font-mono text-sm font-black uppercase mb-3 text-gray-900 dark:text-white flex items-center gap-2">
                   <span className="w-2 h-2 rounded-full bg-accent-yellow flex-shrink-0" />
                   What's Included
                 </h2>
@@ -116,7 +116,7 @@ export default function ResourceDetailPage({ params }: PageProps) {
                   {resource.features.map((feature, i) => (
                     <div key={i} className="flex items-center gap-2">
                       <CheckCircle className="w-4 h-4 text-emerald-400 flex-shrink-0" />
-                      <span className="text-[13px] text-gray-300">{feature}</span>
+                      <span className="text-[13px] text-gray-700 dark:text-gray-300">{feature}</span>
                     </div>
                   ))}
                 </div>
@@ -125,15 +125,15 @@ export default function ResourceDetailPage({ params }: PageProps) {
 
             {/* Right: Quick actions */}
             <div className="space-y-5">
-              <div className="bg-[#0c0c0c] border border-white/10 rounded-xl p-5">
-                <h3 className="font-mono text-[11px] font-black uppercase tracking-[0.1em] mb-4 border-b border-white/5 pb-2.5 text-white">
+              <div className="bg-white dark:bg-[#0c0c0c] border border-gray-200 dark:border-white/10 rounded-xl p-5">
+                <h3 className="font-mono text-[11px] font-black uppercase tracking-[0.1em] mb-4 border-b border-gray-100 dark:border-white/5 pb-2.5 text-gray-900 dark:text-white">
                   Quick Facts
                 </h3>
 
                 <div className="space-y-3.5 text-[12px] font-mono mb-6">
                   <div className="flex items-center justify-between">
                     <span className="text-gray-500 uppercase tracking-wider text-[10px]">Format</span>
-                    <span className="font-bold text-white">{resource.format}</span>
+                    <span className="font-bold text-gray-900 dark:text-white">{resource.format}</span>
                   </div>
                   <div className="flex items-center justify-between">
                     <span className="text-gray-500 uppercase tracking-wider text-[10px]">Price</span>
@@ -141,7 +141,7 @@ export default function ResourceDetailPage({ params }: PageProps) {
                   </div>
                   <div className="flex items-center justify-between">
                     <span className="text-gray-500 uppercase tracking-wider text-[10px]">Last Updated</span>
-                    <span className="font-bold text-white">{resource.lastUpdated}</span>
+                    <span className="font-bold text-gray-900 dark:text-white">{resource.lastUpdated}</span>
                   </div>
                 </div>
 

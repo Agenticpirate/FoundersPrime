@@ -7,24 +7,71 @@ export default function ThemeToggle() {
   const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
-    // Sync initial state on client mount
-    const isLight = document.documentElement.classList.contains('light')
-    setTheme(isLight ? 'light' : 'dark')
+    // Function to check and enforce theme constraints based on viewport
+    const enforceThemeConstraints = () => {
+      const isDesktop = window.innerWidth >= 1024
+      const savedTheme = localStorage.getItem('theme')
+      
+      if (!isDesktop) {
+        // Force dark mode on mobile/tablet
+        if (document.documentElement.classList.contains('light')) {
+          document.documentElement.classList.remove('light')
+          document.documentElement.classList.add('dark')
+        }
+        setTheme('dark')
+      } else {
+        // On desktop, respect saved theme
+        const currentTheme = savedTheme === 'light' ? 'light' : 'dark'
+        if (currentTheme === 'light') {
+          document.documentElement.classList.remove('dark')
+          document.documentElement.classList.add('light')
+        } else {
+          document.documentElement.classList.remove('light')
+          document.documentElement.classList.add('dark')
+        }
+        setTheme(currentTheme)
+      }
+    }
+
+    // Run on mount
+    enforceThemeConstraints()
     setMounted(true)
+
+    // Listen for window resize
+    window.addEventListener('resize', enforceThemeConstraints)
+
+    // Listen for sync events from other toggle buttons
+    const handleSync = (e: Event) => {
+      const customEvent = e as CustomEvent<'light' | 'dark'>
+      if (customEvent.detail) {
+        if (window.innerWidth >= 1024 || customEvent.detail === 'dark') {
+          setTheme(customEvent.detail)
+        }
+      }
+    }
+    window.addEventListener('theme-changed', handleSync)
+    
+    return () => {
+      window.removeEventListener('resize', enforceThemeConstraints)
+      window.removeEventListener('theme-changed', handleSync)
+    }
   }, [])
 
   const toggleTheme = () => {
-    if (theme === 'light') {
+    // Only allow toggling theme on desktop
+    if (window.innerWidth < 1024) return
+
+    const nextTheme = theme === 'light' ? 'dark' : 'light'
+    if (nextTheme === 'dark') {
       document.documentElement.classList.remove('light')
       document.documentElement.classList.add('dark')
-      localStorage.setItem('theme', 'dark')
-      setTheme('dark')
     } else {
       document.documentElement.classList.remove('dark')
       document.documentElement.classList.add('light')
-      localStorage.setItem('theme', 'light')
-      setTheme('light')
     }
+    localStorage.setItem('theme', nextTheme)
+    setTheme(nextTheme)
+    window.dispatchEvent(new CustomEvent('theme-changed', { detail: nextTheme }))
   }
 
   // Prevent layout shift before mount — show dark (sun) icon by default
@@ -34,7 +81,7 @@ export default function ThemeToggle() {
     <button
       onClick={toggleTheme}
       type="button"
-      className="relative flex items-center justify-center w-8 h-8 focus:outline-none group"
+      className="relative hidden lg:flex items-center justify-center w-8 h-8 focus:outline-none group"
       aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
     >
       {/* Ambient glow halo — appears on hover */}

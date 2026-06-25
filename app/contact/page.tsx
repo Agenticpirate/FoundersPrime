@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 
 export default function ContactPage() {
   return (
-    <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden bg-[#000000] text-white">
+    <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden bg-gray-50 dark:bg-[#000000] text-[#1a1a1a] dark:text-white transition-colors duration-300">
       <Header />
       <main className="flex-1 pattern-grid-lg pt-24 md:pt-28 pb-12">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
