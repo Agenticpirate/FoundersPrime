@@ -345,23 +345,23 @@ export default function HeroSection() {
             </div>
 
             {/* Deal counts strip */}
-            <div className="flex flex-wrap items-center gap-2">
+            <div className="flex flex-nowrap items-center gap-1.5 xl:gap-2 w-full overflow-hidden">
               {DEAL_STATS.map((stat) => (
                 <Link
                   key={stat.label}
                   href={stat.href}
-                  className="group inline-flex items-center gap-1.5 px-3 py-1.5 border border-black/10 dark:border-white/10 bg-white/60 dark:bg-white/[0.04] hover:border-accent-yellow hover:bg-accent-yellow/10 dark:hover:border-accent-yellow dark:hover:bg-accent-yellow/10 rounded-full transition-all duration-200"
+                  className="group flex items-center gap-1.5 px-2.5 xl:px-3 py-1.5 border border-black/10 dark:border-white/10 bg-white/60 dark:bg-white/[0.04] hover:border-accent-yellow hover:bg-accent-yellow/10 dark:hover:border-accent-yellow dark:hover:bg-accent-yellow/10 rounded-full transition-all duration-200 shrink min-w-0"
                 >
                   <span
-                    className="material-symbols-outlined !text-[13px] text-green-600 dark:text-green-400 group-hover:text-black dark:group-hover:text-accent-yellow transition-colors"
+                    className="material-symbols-outlined !text-[13px] text-green-600 dark:text-green-400 group-hover:text-black dark:group-hover:text-accent-yellow transition-colors shrink-0"
                     style={{ fontVariationSettings: "'FILL' 1" }}
                   >
                     {stat.icon}
                   </span>
-                  <span className="font-mono font-black text-[11px] text-black dark:text-white group-hover:text-black dark:group-hover:text-white tabular-nums">
+                  <span className="font-mono font-black text-[11px] text-black dark:text-white group-hover:text-black dark:group-hover:text-white tabular-nums shrink-0">
                     {stat.value}
                   </span>
-                  <span className="font-mono text-[10px] font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide">
+                  <span className="font-mono text-[9px] xl:text-[10px] font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide truncate">
                     {stat.label}
                   </span>
                 </Link>
