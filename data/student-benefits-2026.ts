@@ -1,5 +1,4 @@
-
- export interface StudentBenefit {
+export interface StudentBenefit {
   title: string;
   company: string;
   slug?: string;
@@ -8,27 +7,27 @@
   appCategory: 'Software & Tools' | 'Credits & Savings' | 'Funding & Opportunities' | 'Programs';
   offerSummary: string;
   description?: string;
- benefitType: string;
- value: string;
- eligibility: string;
- region: string;
- verification: string;
- url: string;
- claimUrl?: string;
- applicationSteps?: string[];
- included?: string[];
- requirements?: string[];
- faq?: Array<{
- question: string;
- answer: string;
- }>;
- stats?: {
- appTime?: string;
- approval?: string;
- difficulty?: string;
- successRate?: string;
- };
- tags?: string[];
+  benefitType: string;
+  value: string;
+  eligibility: string;
+  region: string;
+  verification: string;
+  url: string;
+  claimUrl?: string;
+  applicationSteps?: string[];
+  included?: string[];
+  requirements?: string[];
+  faq?: Array<{
+    question: string;
+    answer: string;
+  }>;
+  stats?: {
+    appTime?: string;
+    approval?: string;
+    difficulty?: string;
+    successRate?: string;
+  };
+  tags?: string[];
 }
 
 export const studentBenefits2026: StudentBenefit[] = [
@@ -36,11 +35,11 @@ export const studentBenefits2026: StudentBenefit[] = [
     "title": "Spotify Premium Student - 50% off Premium via SheerID",
     "company": "Spotify",
     "slug": "spotify-premium-student",
-    "logo": "https://www.google.com/s2/favicons?domain=spotify.com&sz=128",
+    "logo": "https://img.logo.dev/spotify.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Entertainment",
     "appCategory": "Credits & Savings",
-    "offerSummary": "50% off Spotify Premium + Hulu & Showtime bundle",
-    "description": "Spotify Premium Student gives you ad-free music, offline downloads, and unlimited skips for just $5.99/mo (50% off). In the US, it includes Hulu (ad-supported) and Showtime at no extra cost.",
+    "offerSummary": "Stream millions of ad-free songs with offline downloads for students",
+    "description": "Spotify Premium for Students gives you ad-free streaming of millions of songs with offline downloads at 50% off the regular price. Stream without interruption, create playlists, and download tracks to listen anywhere\u2014perfect for students balancing studies and music. Access the full Spotify catalog including podcasts and audiobooks.\n\nVerify your enrollment through SheerID to unlock the student discount on a single Premium account. Eligible students receive the promotional rate automatically after verification. Your discount applies as long as you remain enrolled at an accredited higher education institution.",
     "benefitType": "Discount",
     "value": "$72/yr savings",
     "eligibility": "Students",
@@ -55,24 +54,24 @@ export const studentBenefits2026: StudentBenefit[] = [
       "Get Premium at student rate"
     ],
     "tags": [
-      "Music",
-      "Streaming",
-      "Entertainment",
-      "Hulu",
-      "Discount",
       "Web",
-      "Global"
+      "Global",
+      "Entertainment",
+      "Streaming",
+      "Music",
+      "Discount",
+      "Hulu"
     ]
   },
   {
     "title": "Medium Student Membership",
     "company": "Medium",
     "slug": "medium-student",
-    "logo": "https://www.google.com/s2/favicons?domain=medium.com&sz=128",
+    "logo": "https://img.logo.dev/medium.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Learning",
     "appCategory": "Credits & Savings",
-    "offerSummary": "50% off Medium Membership - unlimited access to stories",
-    "description": "Medium offers students 50% off their membership ($2.50/mo or $25/yr instead of $5/mo or $50/yr). Get unlimited access to member-only stories, audio narrations, and support your favorite writers.",
+    "offerSummary": "Ad-free reading platform with millions of long-form articles and essays",
+    "description": "Medium is an ad-free reading platform hosting millions of long-form articles and essays across business, technology, design, culture, and beyond. The platform connects you with independent writers, industry experts, and thought leaders sharing in-depth perspectives on topics that matter.\n\nVerified students receive 25% off both monthly and annual subscription plans, unlocking full access to premium features at a reduced rate. Claim your discount by verifying student status through UNiDAYS. If your institution supports automatic verification, you'll gain access instantly. If not, submit your student ID card for manual review, typically completed within 7 days.\n\nOnce verified, your discounted subscription begins immediately, giving you unlimited ad-free reading, offline access, personalized recommendations, and the ability to bookmark and highlight articles. Perfect for students seeking quality journalism and diverse viewpoints without interruption.",
     "benefitType": "Discount",
     "value": "$25/yr savings",
     "eligibility": "Students",
@@ -87,21 +86,23 @@ export const studentBenefits2026: StudentBenefit[] = [
       "Get 50% off membership"
     ],
     "tags": [
-      "Reading",
       "Writing",
+      "Web",
+      "Discount",
       "Learning",
-      "Content"
+      "Content",
+      "Reading"
     ]
   },
   {
     "title": "Figma for Education",
     "company": "Figma",
     "slug": "figma-education",
-    "logo": "https://www.google.com/s2/favicons?domain=figma.com&sz=128",
+    "logo": "https://img.logo.dev/figma.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Design & Creative",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free Figma Professional for students and educators",
-    "description": "Figma for Education provides free access to Figma Professional and FigJam for students and educators. Includes unlimited files, projects, team libraries, and advanced prototyping features.",
+    "offerSummary": "Collaborative design platform for prototyping and interface design",
+    "description": "Figma is a collaborative design platform where teams create, prototype, and share designs in real time. Students and teachers can access Figma and FigJam completely free by verifying their student or educator status through Figma's education program.\n\nThe free education license includes full access to Figma Design (for creating graphics, presentations, and interactive prototypes), FigJam (an online whiteboard for collaborative brainstorming and group work), and Dev Mode (a workspace for inspecting designs and learning how design concepts map to code). There are no restrictions on project files, file storage, or team collaboration under the education license.\n\nVerification is straightforward: create a Figma account, then click the verification link on Figma's education page to confirm your student or educator status. Figma and Google have also partnered to bring Figma free to Google Workspace districts in the US, UK, and Japan.",
     "benefitType": "Subscription",
     "value": "$144/yr",
     "eligibility": "Students",
@@ -116,10 +117,12 @@ export const studentBenefits2026: StudentBenefit[] = [
       "Get Professional access"
     ],
     "tags": [
-      "Design",
+      "Web",
       "UI/UX",
-      "Prototyping",
-      "Collaboration"
+      "Collaboration",
+      "Free",
+      "Design",
+      "Prototyping"
     ]
   },
   {
@@ -414,11 +417,11 @@ export const studentBenefits2026: StudentBenefit[] = [
     "title": "Babbel Student",
     "company": "Babbel",
     "slug": "babbel-student",
-    "logo": "https://www.google.com/s2/favicons?domain=babbel.com&sz=128",
+    "logo": "https://img.logo.dev/babbel.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Learning",
     "appCategory": "Credits & Savings",
-    "offerSummary": "65% off 3 months of language learning",
-    "description": "Babbel offers students a 65% discount on 3 months of language learning. Learn 14 languages with bite-sized lessons designed by linguists.",
+    "offerSummary": "Learn languages quickly with conversation-based lessons and review sessions",
+    "description": "Babbel is a language learning app that uses conversation-based lessons and spaced repetition to help you build speaking skills and retention. The platform focuses on practical speaking practice and personalized learning paths rather than isolated vocabulary drills, making it useful for study abroad preparation, language requirements, travel, internships, or multilingual career goals.\n\nEligible U.S. college students can save 65% on three months of lessons through ID.me verification. Babbel is best for students who want structured progression without committing to full subscription pricing upfront.",
     "benefitType": "Discount",
     "value": "$30+ savings",
     "eligibility": "Students",
@@ -426,8 +429,10 @@ export const studentBenefits2026: StudentBenefit[] = [
     "verification": "SheerID",
     "url": "https://www.babbel.com/student-discount",
     "tags": [
-      "Language",
+      "Web",
+      "Discount",
       "Learning",
+      "Language",
       "Education"
     ],
     "claimUrl": "https://get.babbel.com/discount_student_ame-usa_en"
@@ -458,10 +463,10 @@ export const studentBenefits2026: StudentBenefit[] = [
     "title": "EveryPlate Student",
     "company": "EveryPlate",
     "slug": "everyplate-student",
-    "logo": "https://www.google.com/s2/favicons?domain=everyplate.com&sz=128",
+    "logo": "https://img.logo.dev/everyplate.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Food & Dining",
     "appCategory": "Credits & Savings",
-    "offerSummary": "75% off first box + 15% off for a year",
+    "offerSummary": "Budget-friendly meal kit with pre-portioned ingredients and easy 4-step recipes",
     "description": "EveryPlate offers students 75% off their first meal kit box, free shipping, and an ongoing 15% discount for one year via UNiDAYS.",
     "benefitType": "Discount",
     "value": "$50+ savings",
@@ -470,9 +475,11 @@ export const studentBenefits2026: StudentBenefit[] = [
     "verification": "UNiDAYS",
     "url": "https://www.everyplate.com/student-discount",
     "tags": [
+      "Web",
+      "Cooking",
+      "Discount",
       "Food",
-      "Meal Kit",
-      "Cooking"
+      "Meal Kit"
     ],
     "claimUrl": "https://www.everyplate.com/student-discount"
   },
@@ -502,10 +509,10 @@ export const studentBenefits2026: StudentBenefit[] = [
     "title": "Zipcar Student",
     "company": "Zipcar",
     "slug": "zipcar-student",
-    "logo": "https://www.google.com/s2/favicons?domain=zipcar.com&sz=128",
+    "logo": "https://img.logo.dev/zipcar.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Transportation",
     "appCategory": "Credits & Savings",
-    "offerSummary": "Discounted car sharing at partner universities",
+    "offerSummary": "Car-sharing service letting students book cars by the hour or day on campus",
     "description": "Zipcar provides discounted hourly and daily on-demand car sharing to students at hundreds of partner universities. Perfect for errands, road trips, and moving.",
     "benefitType": "Discount",
     "value": "Variable",
@@ -514,8 +521,10 @@ export const studentBenefits2026: StudentBenefit[] = [
     "verification": "University Partnership",
     "url": "https://www.zipcar.com/universities",
     "tags": [
+      "Web",
       "Transportation",
       "Car Sharing",
+      "Discount",
       "Travel"
     ],
     "claimUrl": "https://www.zipcar.com/universities"
@@ -590,10 +599,10 @@ export const studentBenefits2026: StudentBenefit[] = [
     "title": "J.Crew Student",
     "company": "J.Crew",
     "slug": "jcrew-student",
-    "logo": "https://www.google.com/s2/favicons?domain=jcrew.com&sz=128",
+    "logo": "https://img.logo.dev/jcrew.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Retail",
     "appCategory": "Credits & Savings",
-    "offerSummary": "15% off with valid college ID",
+    "offerSummary": "American clothing brand for women, men, and kids \u2014 workwear, cashmere, denim, and more",
     "description": "J.Crew offers students a 15% discount on purchases online and in-store with a valid college ID.",
     "benefitType": "Discount",
     "value": "15% off",
@@ -602,9 +611,11 @@ export const studentBenefits2026: StudentBenefit[] = [
     "verification": "Student ID",
     "url": "https://www.jcrew.com/",
     "tags": [
+      "Web",
+      "Discount",
       "Fashion",
-      "Clothing",
-      "Retail"
+      "Retail",
+      "Clothing"
     ],
     "claimUrl": "https://www.jcrew.com/company/teacher-student-discount"
   },
@@ -882,11 +893,11 @@ export const studentBenefits2026: StudentBenefit[] = [
     "title": "Geico Good Student",
     "company": "Geico",
     "slug": "geico-student",
-    "logo": "https://www.google.com/s2/favicons?domain=geico.com&sz=128",
+    "logo": "https://img.logo.dev/geico.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Insurance",
     "appCategory": "Credits & Savings",
-    "offerSummary": "15% off car insurance for good students",
-    "description": "Geico gives full-time students in good academic standing 15% off some car insurance coverages.",
+    "offerSummary": "Affordable car insurance for college and high school students with good grades",
+    "description": "GEICO provides car insurance for college and high school students with discounts available on auto policies. Students qualify for a good student discount and may access other discounts that reduce premiums. New policyholders switching to GEICO could save $100, $150, or even $200 on an annual auto insurance policy, according to GEICO's national survey data through October 2024.\n\nTo get a quote and check available discounts, students can visit GEICO's website or use the GEICO Mobile app. The good student discount is one of several ways GEICO reduces costs for student drivers. Discounts available in most states, though some discounts and coverages vary by state and GEICO operating company. Students can contact GEICO customer service at (800) 207-7847 to confirm eligibility and learn which specific discounts apply in their location.",
     "benefitType": "Discount",
     "value": "15% off",
     "eligibility": "Students with B average",
@@ -894,9 +905,11 @@ export const studentBenefits2026: StudentBenefit[] = [
     "verification": "Transcript/Report Card",
     "url": "https://www.geico.com/save/discounts/student-discounts/",
     "tags": [
-      "Insurance",
+      "Web",
       "Car",
-      "Auto"
+      "Auto",
+      "Discount",
+      "Insurance"
     ],
     "claimUrl": "https://www.geico.com/save/discounts/student-discounts/"
   },
@@ -904,11 +917,11 @@ export const studentBenefits2026: StudentBenefit[] = [
     "title": "State Farm Student",
     "company": "State Farm",
     "slug": "state-farm-student",
-    "logo": "https://www.google.com/s2/favicons?domain=statefarm.com&sz=128",
+    "logo": "https://img.logo.dev/statefarm.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Insurance",
     "appCategory": "Credits & Savings",
-    "offerSummary": "Good student & distant student discounts",
-    "description": "State Farm offers drivers under 25 discounted insurance for maintaining good grades, attending college 100+ miles from home, or enrolling in their driver training program.",
+    "offerSummary": "Auto insurance discounts for students with good grades",
+    "description": "State Farm auto insurance offers multiple discounts for student drivers and families, including a Good Student Discount and Student Away at School Discount. These programs help reduce premiums for eligible young drivers while they're completing their education.\n\nThe Good Student Discount applies to drivers under age 21 who complete an approved driver education course, while the Student Away at School Discount covers students under 25 who move away for school and use the vehicle only during holidays and breaks. Discounts vary significantly by state and individual eligibility; State Farm notes that discounts may exceed 30% overall, though they are not available in California, Massachusetts, or Rhode Island, and are capped at 30% in New York.\n\nVerification and specific discount amounts depend on your state, driver profile, vehicle safety features, and policy structure. Contact a State Farm agent to determine which discounts you qualify for based on your circumstances.",
     "benefitType": "Discount",
     "value": "Up to 25% off",
     "eligibility": "Students under 25",
@@ -916,9 +929,11 @@ export const studentBenefits2026: StudentBenefit[] = [
     "verification": "Transcript",
     "url": "https://www.statefarm.com/insurance/auto/discounts",
     "tags": [
-      "Insurance",
+      "Web",
       "Car",
-      "Auto"
+      "Auto",
+      "Discount",
+      "Insurance"
     ],
     "claimUrl": "https://www.statefarm.com/insurance/auto/discounts"
   },
@@ -926,11 +941,11 @@ export const studentBenefits2026: StudentBenefit[] = [
     "title": "Progressive Student",
     "company": "Progressive",
     "slug": "progressive-student",
-    "logo": "https://www.google.com/s2/favicons?domain=progressive.com&sz=128",
+    "logo": "https://img.logo.dev/progressive.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Insurance",
     "appCategory": "Credits & Savings",
-    "offerSummary": "Good student discount for B average or higher",
-    "description": "Progressive offers insurance discounts for full-time students under 23 who maintain a B average or higher. Students 100+ miles from home may also qualify.",
+    "offerSummary": "Student auto insurance discounts and safe driving rewards",
+    "description": "Progressive offers auto insurance with special discounts designed for students under age 23. The good student discount starts at 5% in most states for full-time students with a B average or better. Additionally, Progressive offers a distant student discount for those age 22 or younger attending school 100+ miles from home without a car at school.\n\nTo qualify, students must be listed on a parent's or guardian's policy\u2014not their own. You may be asked to provide proof of enrollment and eligibility. Discounts vary by state and are not available in California.\n\nProgressive's mobile app allows you to file claims, send photos, and track claim status.",
     "benefitType": "Discount",
     "value": "Variable",
     "eligibility": "Students under 23",
@@ -938,9 +953,11 @@ export const studentBenefits2026: StudentBenefit[] = [
     "verification": "Transcript",
     "url": "https://www.progressive.com/answers/student-car-insurance/",
     "tags": [
-      "Insurance",
+      "Web",
       "Car",
-      "Auto"
+      "Auto",
+      "Discount",
+      "Insurance"
     ],
     "claimUrl": "https://www.progressive.com/answers/student-information/"
   },
@@ -948,11 +965,11 @@ export const studentBenefits2026: StudentBenefit[] = [
     "title": "Dashlane Student",
     "company": "Dashlane",
     "slug": "dashlane-student",
-    "logo": "https://www.google.com/s2/favicons?domain=dashlane.com&sz=128",
+    "logo": "https://img.logo.dev/dashlane.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Security",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free Dashlane Premium password manager for students",
-    "description": "Dashlane offers students free access to their Premium password manager. Securely store passwords, autofill forms, and protect your digital identity.",
+    "offerSummary": "Store and autofill passwords securely across devices",
+    "description": "Dashlane is a password manager and credential security platform that stores, generates, and autofills passwords across devices. Premium includes password management, credential protection, and secure autofill across all your devices\u2014useful for managing the multiple accounts students typically maintain across campus portals, internship platforms, finance apps, and other services.\n\nStudents can claim one year of free Dashlane Premium by verifying with an eligible student email address. The offer is available to both new and existing Dashlane customers.\n\nAfter the free year ends, standard Dashlane pricing applies unless you cancel.",
     "benefitType": "Free",
     "value": "$60/yr",
     "eligibility": "Students",
@@ -960,9 +977,11 @@ export const studentBenefits2026: StudentBenefit[] = [
     "verification": "Edu Email",
     "url": "https://www.dashlane.com/students",
     "tags": [
+      "Web",
       "Security",
-      "Password Manager",
-      "Privacy"
+      "Free",
+      "Privacy",
+      "Password Manager"
     ],
     "claimUrl": "https://www.dashlane.com/students"
   },
@@ -970,10 +989,10 @@ export const studentBenefits2026: StudentBenefit[] = [
     "title": "Notion Education",
     "company": "Notion",
     "slug": "notion-education",
-    "logo": "https://www.google.com/s2/favicons?domain=notion.so&sz=128",
+    "logo": "https://img.logo.dev/notion.so?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Productivity",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free Notion Plus Plan for students and educators",
+    "offerSummary": "All-in-one workspace for notes, projects, and team collaboration",
     "description": "Notion Plus Plan is free for students and educators with a valid .edu email. Includes unlimited blocks, file uploads, and collaboration features for notes, docs, and projects.",
     "benefitType": "Free",
     "value": "$120/yr",
@@ -982,7 +1001,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "verification": "Edu Email",
     "url": "https://www.notion.so/product/notion-for-education",
     "tags": [
+      "Web",
       "Productivity",
+      "Free",
       "Notes",
       "Collaboration"
     ],
@@ -1080,11 +1101,11 @@ export const studentBenefits2026: StudentBenefit[] = [
     "title": "GitHub Student Developer Pack",
     "company": "GitHub",
     "slug": "github-student-developer-pack",
-    "logo": "https://www.google.com/s2/favicons?domain=github.com&sz=128",
+    "logo": "https://img.logo.dev/github.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Developer Tools",
     "appCategory": "Software & Tools",
     "offerSummary": "100+ free tools, cloud credits, domains & learning resources for students",
-    "description": "The GitHub Student Developer Pack is the ultimate bundle for student developers. Get free access to professional developer tools, cloud credits, domains, learning platforms, and more from 100+ partners including GitHub Copilot, JetBrains, Azure, DigitalOcean, Notion, and many more.",
+    "description": "GitHub is a web-based platform for hosting code repositories, collaborating on software projects, and managing version control. Students aged 13 and older enrolled in a degree or diploma-granting course of study qualify for a free GitHub Pro account through GitHub Global Campus, plus access to the Student Developer Pack.\n\nThe offer includes GitHub Pro features, 3,000 Actions minutes and 180 Codespaces hours per month, GitHub Copilot (AI-powered code suggestions), and dozens of partner benefits covering cloud hosting, development platforms, and premium educational content. Verification requires a school-issued email address or official, dated proof of enrollment. Once approved, students retain these benefits for the duration of their studies, making professional developer tools accessible at no cost during their academic career.",
     "benefitType": "Bundle",
     "value": "$200K+",
     "eligibility": "Students 13+",
@@ -1099,83 +1120,83 @@ export const studentBenefits2026: StudentBenefit[] = [
       "Access all partner offers from your dashboard"
     ],
     "included": [
-      "GitHub Copilot — Free AI pair programmer",
-      "GitHub Pro — Unlimited private repos & advanced features",
-      "GitHub Codespaces — Free cloud dev environments",
-      "JetBrains — All IDEs free (IntelliJ, PyCharm, WebStorm, etc.)",
-      "Microsoft Azure — $100 credit + 25 free services",
-      "DigitalOcean — $200 platform credit for 1 year",
-      "Heroku — $13/month credit for 24 months ($312 total)",
-      "MongoDB — $50 Atlas credits + free certification ($150 value)",
-      "Notion — Free Plus plan with AI",
-      "1Password — Free for 1 year + Developer Tools",
-      "Namecheap — Free .me domain + SSL certificate",
-      "Name.com — Free domain (.live, .studio, .app, .dev, etc.)",
-      ".TECH — Free .tech domain for 1 year",
-      "Stripe — Waived fees on first $1,000 revenue",
-      "DataCamp — 3 months free access",
-      "FrontendMasters — 6 months free access",
-      "Educative — 6 months free + 30% off subscriptions",
-      "Scrimba — 1 month free Pro access",
-      "Codedex — 6 months free Club membership",
-      "AlgoExpert — 20 free questions + 10% off",
-      "GoRails — 12 months free access",
-      "SymfonyCasts — 3 months free",
-      "InterviewCake — 1 week full access",
-      "Termius — Free Pro SSH client",
-      "GitKraken — Free Pro for 6 months, then 80% off",
-      "GitLens — Free Pro VS Code extension",
-      "Tower — Free Pro Git client",
-      "Working Copy — Free Pro iOS Git client",
-      "Bootstrap Studio — Free license",
-      "Polypane — Free Individual plan for 1 year",
-      "BrowserStack — Free Automate Mobile Plan for 1 year",
-      "LambdaTest — Free Live Plan for 1 year",
-      "Travis CI — Free private builds",
-      "Codecov — Free code coverage",
-      "Sentry — 50K errors, 100K transactions, Team features",
-      "New Relic — Free observability ($300/month value)",
-      "Datadog — Pro Account + 10 servers for 2 years",
-      "Honeybadger — Free Small account for 1 year",
-      "Blackfire — Free PHP profiler",
-      "DeepScan — 6 months free JavaScript analysis",
-      "CodeScene — Free Student account",
-      "Deepnote — Free Team plan for data science",
-      "LocalStack — Free AWS emulator license",
-      "Appwrite — Free Education plan ($160/month value)",
-      "Doppler — Free Team secret management",
-      "ConfigCat — 1000 feature flags free forever",
-      "DevCycle — Free Starter plan for 1 year",
-      "Testmail — Free Essential plan",
-      "Imgbot — Free image optimization",
-      "POEditor — Plus Plan free for 1 year",
-      "Pageclip — Free basic plan",
-      "Zyte — Free Scrapy Cloud unit forever",
-      "Icons8 — 3 months free subscription",
-      "IconScout — 60 premium icons/month for 1 year",
-      "Visme — 3 months free Starter plan",
-      "PomoDone — Lite plan free for 2 years",
-      "HazeOver — Free Mac app license",
-      "DailyBot — Business plan free for 6 months",
-      "Dashlane — Premium free for 6 months",
-      "Arduino — 6 months Cloud + hardware discounts",
-      "Adafruit — 1 year IO+ subscription + discounts",
-      "Camber — Free Student plan for scientific computing",
-      "CARTO — 2 years premium features",
-      "Blockchair — 100,000 free API requests",
-      "SimpleAnalytics — Starter plan free for 1 year",
-      "Appfigures — 1 year free analytics",
-      "Themeisle — Free Neve Agency WordPress theme",
-      "Vaadin — Free Pro subscription",
-      "Xojo — Free Pro license",
-      "SQLGate — Standard features for 1 year",
-      "PopSQL — Free Premium subscription",
-      "ToDiagram — Free Pro plan",
-      "Requestly — Professional plan free for 1 year ($270 value)",
-      "AstraSecurity — 6 months firewall & malware scanner",
-      "SlideCoach — 2,000 free AI presentation credits",
-      "GitHub Certification — Free voucher for Foundations or Copilot exam",
-      "GitHub Campus Experts — Leadership training program"
+      "GitHub Copilot \u2014 Free AI pair programmer",
+      "GitHub Pro \u2014 Unlimited private repos & advanced features",
+      "GitHub Codespaces \u2014 Free cloud dev environments",
+      "JetBrains \u2014 All IDEs free (IntelliJ, PyCharm, WebStorm, etc.)",
+      "Microsoft Azure \u2014 $100 credit + 25 free services",
+      "DigitalOcean \u2014 $200 platform credit for 1 year",
+      "Heroku \u2014 $13/month credit for 24 months ($312 total)",
+      "MongoDB \u2014 $50 Atlas credits + free certification ($150 value)",
+      "Notion \u2014 Free Plus plan with AI",
+      "1Password \u2014 Free for 1 year + Developer Tools",
+      "Namecheap \u2014 Free .me domain + SSL certificate",
+      "Name.com \u2014 Free domain (.live, .studio, .app, .dev, etc.)",
+      ".TECH \u2014 Free .tech domain for 1 year",
+      "Stripe \u2014 Waived fees on first $1,000 revenue",
+      "DataCamp \u2014 3 months free access",
+      "FrontendMasters \u2014 6 months free access",
+      "Educative \u2014 6 months free + 30% off subscriptions",
+      "Scrimba \u2014 1 month free Pro access",
+      "Codedex \u2014 6 months free Club membership",
+      "AlgoExpert \u2014 20 free questions + 10% off",
+      "GoRails \u2014 12 months free access",
+      "SymfonyCasts \u2014 3 months free",
+      "InterviewCake \u2014 1 week full access",
+      "Termius \u2014 Free Pro SSH client",
+      "GitKraken \u2014 Free Pro for 6 months, then 80% off",
+      "GitLens \u2014 Free Pro VS Code extension",
+      "Tower \u2014 Free Pro Git client",
+      "Working Copy \u2014 Free Pro iOS Git client",
+      "Bootstrap Studio \u2014 Free license",
+      "Polypane \u2014 Free Individual plan for 1 year",
+      "BrowserStack \u2014 Free Automate Mobile Plan for 1 year",
+      "LambdaTest \u2014 Free Live Plan for 1 year",
+      "Travis CI \u2014 Free private builds",
+      "Codecov \u2014 Free code coverage",
+      "Sentry \u2014 50K errors, 100K transactions, Team features",
+      "New Relic \u2014 Free observability ($300/month value)",
+      "Datadog \u2014 Pro Account + 10 servers for 2 years",
+      "Honeybadger \u2014 Free Small account for 1 year",
+      "Blackfire \u2014 Free PHP profiler",
+      "DeepScan \u2014 6 months free JavaScript analysis",
+      "CodeScene \u2014 Free Student account",
+      "Deepnote \u2014 Free Team plan for data science",
+      "LocalStack \u2014 Free AWS emulator license",
+      "Appwrite \u2014 Free Education plan ($160/month value)",
+      "Doppler \u2014 Free Team secret management",
+      "ConfigCat \u2014 1000 feature flags free forever",
+      "DevCycle \u2014 Free Starter plan for 1 year",
+      "Testmail \u2014 Free Essential plan",
+      "Imgbot \u2014 Free image optimization",
+      "POEditor \u2014 Plus Plan free for 1 year",
+      "Pageclip \u2014 Free basic plan",
+      "Zyte \u2014 Free Scrapy Cloud unit forever",
+      "Icons8 \u2014 3 months free subscription",
+      "IconScout \u2014 60 premium icons/month for 1 year",
+      "Visme \u2014 3 months free Starter plan",
+      "PomoDone \u2014 Lite plan free for 2 years",
+      "HazeOver \u2014 Free Mac app license",
+      "DailyBot \u2014 Business plan free for 6 months",
+      "Dashlane \u2014 Premium free for 6 months",
+      "Arduino \u2014 6 months Cloud + hardware discounts",
+      "Adafruit \u2014 1 year IO+ subscription + discounts",
+      "Camber \u2014 Free Student plan for scientific computing",
+      "CARTO \u2014 2 years premium features",
+      "Blockchair \u2014 100,000 free API requests",
+      "SimpleAnalytics \u2014 Starter plan free for 1 year",
+      "Appfigures \u2014 1 year free analytics",
+      "Themeisle \u2014 Free Neve Agency WordPress theme",
+      "Vaadin \u2014 Free Pro subscription",
+      "Xojo \u2014 Free Pro license",
+      "SQLGate \u2014 Standard features for 1 year",
+      "PopSQL \u2014 Free Premium subscription",
+      "ToDiagram \u2014 Free Pro plan",
+      "Requestly \u2014 Professional plan free for 1 year ($270 value)",
+      "AstraSecurity \u2014 6 months firewall & malware scanner",
+      "SlideCoach \u2014 2,000 free AI presentation credits",
+      "GitHub Certification \u2014 Free voucher for Foundations or Copilot exam",
+      "GitHub Campus Experts \u2014 Leadership training program"
     ],
     "requirements": [
       "Be currently enrolled in a degree or diploma granting course",
@@ -1209,13 +1230,15 @@ export const studentBenefits2026: StudentBenefit[] = [
     },
     "tags": [
       "GitHub",
+      "Open Source",
       "Developer Tools",
+      "IDEs",
+      "Free",
       "Cloud Credits",
+      "AI",
       "Domains",
       "Learning",
-      "IDEs",
-      "AI",
-      "Free",
+      "Developer",
       "Bundle"
     ]
   },
@@ -1223,7 +1246,7 @@ export const studentBenefits2026: StudentBenefit[] = [
     "title": "Termius Student Plan",
     "company": "Termius",
     "slug": "termius-student-plan",
-    "logo": "https://www.google.com/s2/favicons?domain=termius.com&sz=128",
+    "logo": "https://img.logo.dev/termius.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Developer Tools",
     "appCategory": "Software & Tools",
     "offerSummary": "Free Termius Pro (SSH client) access via GitHub Student Pack",
@@ -1240,7 +1263,11 @@ export const studentBenefits2026: StudentBenefit[] = [
       "Sign in and verify",
       "Activate Pro features"
     ],
-    "description": "Secure SSH client for managing servers on desktop and mobile"
+    "description": "Termius is a cross-platform SSH client that lets you securely connect to servers, manage credentials, and organize terminal access from desktop and mobile devices. It synchronizes your SSH keys, saved connections, and configuration data across all your devices without ads.\n\nStudents with an active GitHub Student Developer Pack can access Termius completely free. The student offer includes all features of Termius Pro and Termius Team plans, enabling you to synchronize data across devices, create multiple vaults to organize and separate access to credentials, and share connections with classmates. Verification happens by linking your GitHub account at account.termius.com/student.\n\nThe free student access remains active as long as your GitHub Student Developer Pack eligibility is maintained. You can use Termius on Windows, Mac, Linux, iPhone, iPad, and Android.",
+    "tags": [
+      "Web",
+      "Free"
+    ]
   },
   {
     "title": "GitKraken Student",
@@ -1269,7 +1296,7 @@ export const studentBenefits2026: StudentBenefit[] = [
     "title": "Bootstrap Studio",
     "company": "Bootstrap Studio",
     "slug": "bootstrap-studio",
-    "logo": "https://www.google.com/s2/favicons?domain=bootstrapstudio.io&sz=128",
+    "logo": "https://img.logo.dev/bootstrapstudio.io?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Design & Creative",
     "appCategory": "Software & Tools",
     "offerSummary": "Free License for website design tool via GitHub Student Pack",
@@ -1286,13 +1313,18 @@ export const studentBenefits2026: StudentBenefit[] = [
       "Request license",
       "Activate in app"
     ],
-    "description": "Drag-and-drop builder for responsive websites"
+    "description": "Bootstrap Studio is a drag-and-drop builder for creating responsive websites without writing code. The tool is available free to verified students through the GitHub Student Developer Pack, a collection of premium development tools and services offered at no cost by GitHub Education.\n\nTo qualify, you must be enrolled at an accredited educational institution and verify your student status using a school-issued email address or proof of enrollment through your GitHub account settings. Once verified, you receive a free Bootstrap Studio license that renews annually for the duration of your studies.\n\nThe pack also includes access to GitHub Copilot, GitHub Codespaces, Microsoft Azure credits, and 25+ other professional tools normally available only to paying users.",
+    "tags": [
+      "Web",
+      "Free",
+      "No-Code"
+    ]
   },
   {
     "title": "BrowserStack",
     "company": "BrowserStack",
     "slug": "browserstack",
-    "logo": "https://www.google.com/s2/favicons?domain=browserstack.com&sz=128",
+    "logo": "https://img.logo.dev/browserstack.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Developer Tools",
     "appCategory": "Software & Tools",
     "offerSummary": "Free Automate Mobile Plan (1 parallel user) via GitHub Student Pack",
@@ -1309,16 +1341,20 @@ export const studentBenefits2026: StudentBenefit[] = [
       "Sign up",
       "Verify with GitHub"
     ],
-    "description": "Test websites on 2000+ real browsers and mobile devices"
+    "description": "BrowserStack is a cloud-based testing platform that lets developers test websites and web apps on 3000+ real browsers and mobile devices without owning the hardware. It supports live manual testing, automated browser testing, and iOS/Android mobile app testing, plus accessibility compliance automation for WCAG standards.\n\nStudents access BrowserStack free through the GitHub Student Developer Pack. The offer includes a free 1-year license to BrowserStack Live and Automate Mobile, worth $2,388/year. To qualify, you sign up with your GitHub account via the student pack portal and verify your student status through GitHub's verification process.\n\nAfter the 1-year term expires, you would need to transition to a paid plan or reapply if still eligible. The platform is available globally to all GitHub Student Developer Pack members.",
+    "tags": [
+      "Web",
+      "Free"
+    ]
   },
   {
     "title": "Sentry for Education",
     "company": "Sentry",
     "slug": "sentry-education",
-    "logo": "https://www.google.com/s2/favicons?domain=github.com&sz=128",
+    "logo": "https://img.logo.dev/sentry.io?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Developer Tools",
     "appCategory": "Credits & Savings",
-    "offerSummary": "500k errors/mo, 100k transactions, performance monitoring",
+    "offerSummary": "Track errors and monitor application performance in real time",
     "benefitType": "Subscription",
     "value": "Enterprise",
     "eligibility": "Students",
@@ -1326,16 +1362,20 @@ export const studentBenefits2026: StudentBenefit[] = [
     "verification": "GitHub Packeducation.",
     "url": "https://github.com/pack",
     "claimUrl": "https://sentry.io/for/education/",
-    "description": "Track errors and monitor application performance in real time"
+    "description": "Sentry is an application performance monitoring and error tracking platform that captures exceptions, logs, traces, and replays from production software in real time. This gives student developers the same observability tools used by teams at Disney+ and companies worldwide, enabling them to catch production issues before users do.\n\nStudents, teachers, and university researchers qualify for a free education account through the GitHub Student Developer Pack. The free tier includes 50,000 errors per month, 5GB of logs, 5 million spans, 500 replays, 1 cron monitor, 1GB attachments, and $20 Seer credits monthly\u2014valid for one year. After verification via GitHub Education, eligible users can activate their education plan by signing in or creating a new account on Sentry's education portal.",
+    "tags": [
+      "Credit",
+      "Web"
+    ]
   },
   {
     "title": "Travis CI",
     "company": "Travis CI",
     "slug": "travis-ci",
-    "logo": "https://www.google.com/s2/favicons?domain=education.github.com&sz=128",
+    "logo": "https://img.logo.dev/travis-ci.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Developer Tools",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free private builds for students",
+    "offerSummary": "Continuous integration and testing platform for developers",
     "benefitType": "Subscription",
     "value": "$69/mo",
     "eligibility": "Students",
@@ -1343,16 +1383,20 @@ export const studentBenefits2026: StudentBenefit[] = [
     "verification": "GitHub Packeducation.",
     "url": "https://education.github.com/pack",
     "claimUrl": "https://www.travis-ci.com/education",
-    "description": "Travis CI is a continuous integration and testing platform for developers. The service integrates directly with GitHub repositories, making it practical for learning CI/CD concepts and collaborating with teammates. This allows students to set up automated testing and deployment workflows on real projects and assignments.\n\nStudents with GitHub Education membership receive free private builds and can run one concurrent job without requiring separate manual verification. Students should confirm their GitHub Education membership remains active and understand the one-concurrent-job limit applies to their account."
+    "description": "Travis CI is a continuous integration and testing platform for developers. The service integrates directly with GitHub repositories, making it practical for learning CI/CD concepts and collaborating with teammates. This allows students to set up automated testing and deployment workflows on real projects and assignments.\n\nStudents with GitHub Education membership receive free private builds and can run one concurrent job without requiring separate manual verification. Students should confirm their GitHub Education membership remains active and understand the one-concurrent-job limit applies to their account.",
+    "tags": [
+      "Web",
+      "Free"
+    ]
   },
   {
     "title": "Deepnote Team",
     "company": "Deepnote",
     "slug": "deepnote-team",
-    "logo": "https://www.google.com/s2/favicons?domain=deepnote.com&sz=128",
+    "logo": "https://img.logo.dev/deepnote.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Data Science",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free Team Plan (Collaboration, History, 5GB RAM machines)",
+    "offerSummary": "Collaborate in Jupyter notebooks for data and analytics work",
     "benefitType": "Subscription",
     "value": "$40/mo",
     "eligibility": "Students",
@@ -1360,16 +1404,21 @@ export const studentBenefits2026: StudentBenefit[] = [
     "verification": "Edu Email / GH",
     "url": "https://deepnote.com/education",
     "claimUrl": "https://deepnote.com/github-student-pack",
-    "description": "Collaborate in Jupyter notebooks for data and analytics work"
+    "description": "Deepnote is a collaborative data notebook platform built on Jupyter with SQL and real-time multiplayer editing for data analysis work. The platform enables team members to share notebooks, collaborate on analyses, and schedule automated runs. It supports Python, SQL, and integrates AI-assisted workflows, making it suitable for coursework in data science and analytics.\n\nStudents receive free access to Deepnote's Team plan with unlimited projects through the GitHub Student Developer Pack. Verification happens through GitHub Student Developer Pack eligibility, which typically requires a valid .edu email or school-issued GitHub account.",
+    "tags": [
+      "Web",
+      "Free",
+      "AI"
+    ]
   },
   {
     "title": "Arduino Create",
     "company": "Arduino",
     "slug": "arduino-create",
-    "logo": "https://www.google.com/s2/favicons?domain=arduino.cc&sz=128",
+    "logo": "https://img.logo.dev/arduino.cc?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Hardware/Dev",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free Create Maker Plan (6 months)",
+    "offerSummary": "Build and test IoT projects with open-source hardware boards",
     "benefitType": "Subscription",
     "value": "$36",
     "eligibility": "Students",
@@ -1377,7 +1426,11 @@ export const studentBenefits2026: StudentBenefit[] = [
     "verification": "GitHub Packeducation.",
     "url": "https://www.arduino.cc/education/",
     "claimUrl": "https://www.arduino.cc/education/student-kit/",
-    "description": "Build and test IoT projects with open-source hardware boards"
+    "description": "Arduino is an open-source hardware platform for building electronics projects, IoT applications, embedded systems, and robotics prototypes. The platform provides students with access to professional tools and resources to develop their skills.\n\nArduino offers students free access to Arduino Cloud for 6 months, 50% off the Arduino Certification Program, and discounts on selected hardware through GitHub Education. Students verify eligibility by signing in with a GitHub student account, then claim discount codes from Arduino's education portal to redeem during checkout in the Arduino store. The offer includes access to Arduino Cloud's Maker Plan features and discounts on hardware boards including MKR FOX 1200, MKR WAN 1300, MKR GSM 1400, and MKR WiFi boards.",
+    "tags": [
+      "Web",
+      "Trial"
+    ]
   },
   {
     "title": "Unity Student Plan",
@@ -1399,10 +1452,10 @@ export const studentBenefits2026: StudentBenefit[] = [
     "title": "Unreal Engine - Free for students for their academic work and personal use",
     "company": "Epic Games",
     "slug": "unreal-engine",
-    "logo": "https://www.google.com/s2/favicons?domain=unrealengine.com&sz=128",
+    "logo": "https://img.logo.dev/unrealengine.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Developer Tools",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free License (Standard) for creators",
+    "offerSummary": "Advanced 3D game engine for creating interactive experiences",
     "benefitType": "License",
     "value": "N/A",
     "eligibility": "Everyone",
@@ -1410,21 +1463,21 @@ export const studentBenefits2026: StudentBenefit[] = [
     "verification": "N/",
     "url": "https://www.unrealengine.com/en-US/students-and-schools",
     "claimUrl": "https://www.unrealengine.com/en-US/students-and-schools",
-    "description": "Advanced 3D game engine for creating interactive experiences",
+    "description": "Unreal Engine is an advanced 3D game engine developed by Epic Games for creating interactive experiences across gaming, film, television, architecture, and other real-time fields. The platform provides the full engine suite, extensive documentation, tutorials, and learning resources to help students develop professional-grade skills in 3D creation and game development.\n\nStudents can access Unreal Engine free of charge for academic coursework and personal projects. Access includes the engine source code, which allows for deep customization and learning. Students gain hands-on experience with industry-standard tools used by professional studios worldwide.\n\nVerify current usage terms with Epic Games regarding the boundaries between academic, personal, and commercial work, as policies may change.",
     "tags": [
-      "Free",
       "Web",
-      "Global"
+      "Global",
+      "Free"
     ]
   },
   {
     "title": "Polypane",
     "company": "Polypane",
     "slug": "polypane",
-    "logo": "https://www.google.com/s2/favicons?domain=polypane.app&sz=128",
+    "logo": "https://img.logo.dev/polypane.app?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Developer Tools",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free Individual Plan (1 year) for web development",
+    "offerSummary": "Browser for testing responsive designs across multiple devices",
     "benefitType": "Subscription",
     "value": "$100+",
     "eligibility": "Students",
@@ -1432,16 +1485,20 @@ export const studentBenefits2026: StudentBenefit[] = [
     "verification": "GitHub",
     "url": "https://polypane.app/github-students/",
     "claimUrl": "https://polypane.app/github-students/",
-    "description": "Browser for testing responsive designs across multiple devices"
+    "description": "Polypane is a browser built for testing responsive designs across multiple devices, from mobile screens to 5K monitors, all in one interface. It includes accessibility testing tools, dark/light mode previews, and site quality checks for developers, designers, QA professionals, and marketers.\n\nStudents receive a free Polypane license for one year for non-commercial work through the GitHub Student Developer Pack. To qualify, you must be enrolled in a degree-granting program and verify your student status via GitHub. The offer covers the full Polypane feature set, including multi-device viewport testing, accessibility inspection, and CSS/HTML analysis tools.\n\nAfter one year, the license expires and you will need to upgrade to a paid plan or restart verification if still a student. General users can try Polypane free for 14 days without a credit card.",
+    "tags": [
+      "Web",
+      "Free"
+    ]
   },
   {
     "title": "Tower Git",
     "company": "Tower",
     "slug": "tower-git",
-    "logo": "https://www.google.com/s2/favicons?domain=git-tower.com&sz=128",
+    "logo": "https://img.logo.dev/git-tower.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Developer Tools",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free Pro License for Mac/Windows",
+    "offerSummary": "Git client with a powerful visual interface for developers",
     "benefitType": "License",
     "value": "$69",
     "eligibility": "Students",
@@ -1449,16 +1506,20 @@ export const studentBenefits2026: StudentBenefit[] = [
     "verification": "Edu Email /",
     "url": "https://www.git-tower.com/students/mac",
     "claimUrl": "https://www.git-tower.com/students",
-    "description": "Tower is a Git client with a visual interface for Mac and Windows that lets you manage version control without using only command-line tools. Instead of memorizing Git commands, you work through a graphical interface to handle branching, merging, committing, and other core workflows. The visual approach makes Git more accessible whether you're new to version control or already experienced.\n\nTower is free for students, removing the cost barrier while you learn development skills. It's useful for coursework, personal projects, and team collaboration."
+    "description": "Tower is a Git client with a visual interface for Mac and Windows that lets you manage version control without using only command-line tools. Instead of memorizing Git commands, you work through a graphical interface to handle branching, merging, committing, and other core workflows. The visual approach makes Git more accessible whether you're new to version control or already experienced.\n\nTower is free for students, removing the cost barrier while you learn development skills. It's useful for coursework, personal projects, and team collaboration.",
+    "tags": [
+      "Free",
+      "macOS"
+    ]
   },
   {
     "title": "SQLGate",
     "company": "SQLGate",
     "slug": "sqlgate",
-    "logo": "https://www.google.com/s2/favicons?domain=sqlgate.com&sz=128",
+    "logo": "https://img.logo.dev/sqlgate.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Developer Tools",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free Standard License for database management",
+    "offerSummary": "SQL IDE for writing and managing complex database queries",
     "benefitType": "License",
     "value": "$100+",
     "eligibility": "Students",
@@ -1466,16 +1527,20 @@ export const studentBenefits2026: StudentBenefit[] = [
     "verification": "GitHub Packeducation.",
     "url": "https://www.sqlgate.com/pricing/education",
     "claimUrl": "https://www.sqlgate.com/student-pack",
-    "description": "SQL IDE for writing and managing complex database queries"
+    "description": "SQLGate is a SQL IDE designed for writing, executing, and managing database queries across multiple database types. It provides table auto-completion, SQL templates, views, triggers, and procedure management tools for developers, database administrators, and data analysts.\n\nStudents enrolled in the GitHub Student Developer Pack receive free access to SQLGate Standard Subscription features for 1 year. Eligibility is determined through GitHub's student verification process. The offer includes the majority of Standard Subscription functionality, enabling students to write complex queries, export results, and manage databases without cost during the trial period.\n\nAfter the 1-year free period ends, students can continue with SQLGate's free version or transition to a paid subscription. SQLGate has served over 2,000 customers for more than 15 years and is available for database professionals at all skill levels.",
+    "tags": [
+      "Web",
+      "Free"
+    ]
   },
   {
     "title": "PopSQL Premium",
     "company": "PopSQL",
     "slug": "popsql-premium",
-    "logo": "https://www.google.com/s2/favicons?domain=popsql.com&sz=128",
+    "logo": "https://img.logo.dev/popsql.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Developer Tools",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free Premium Subscription for collaborative SQL",
+    "offerSummary": "Collaborative SQL editor for writing, sharing, and analyzing queries",
     "benefitType": "Subscription",
     "value": "$20/mo",
     "eligibility": "Students",
@@ -1483,16 +1548,20 @@ export const studentBenefits2026: StudentBenefit[] = [
     "verification": "Edu",
     "url": "https://popsql.com/github-students",
     "claimUrl": "https://popsql.com/github-students",
-    "description": "Collaborative SQL editor for writing, sharing, and analyzing queries"
+    "description": "PopSQL is a collaborative SQL editor for writing, sharing, and analyzing database queries across teams. The Business plan includes query variables, scheduled queries via API, and team collaboration features that allow both technical and non-technical users to explore data and write queries together.\n\nStudents enrolled in the GitHub Student Developer Pack receive PopSQL's Business plan for free. Access is granted through GitHub authentication; verify your student status via the GitHub Student Developer Pack, then sign up at popsql.com using your GitHub account. This offer is available for the duration of your GitHub Student Developer Pack membership.",
+    "tags": [
+      "Web",
+      "Free"
+    ]
   },
   {
     "title": "Datadog Pro",
     "company": "Datadog",
     "slug": "datadog-pro",
-    "logo": "https://www.google.com/s2/favicons?domain=github.com&sz=128",
+    "logo": "https://img.logo.dev/datadoghq.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Developer Tools",
     "appCategory": "Credits & Savings",
-    "offerSummary": "Pro Account + 10 Servers for 2 years",
+    "offerSummary": "Monitor infrastructure and logs in cloud applications",
     "benefitType": "Subscription",
     "value": "Enterprise",
     "eligibility": "Students",
@@ -1500,16 +1569,20 @@ export const studentBenefits2026: StudentBenefit[] = [
     "verification": "GitHub Packeducation.",
     "url": "https://github.com/pack",
     "claimUrl": "https://education.github.com/pack",
-    "description": "Monitor infrastructure and logs in cloud applications"
+    "description": "Datadog is an observability platform for monitoring infrastructure, logs, services, and application performance across cloud applications. The free Pro tier includes 50,000 errors, 100,000 transactions, 1GB attachments, 500 replays, team features, and access to core monitoring capabilities\u2014tools normally used by professional developers globally but made available free to students.\n\nThrough the GitHub Student Developer Pack, verified students receive a free Datadog Pro account for one year, renewable annually. Eligibility requires enrollment at an accredited educational institution and verification via school-issued email or enrollment documentation through GitHub Education settings.\n\nAfter the one-year term, the subscription can be renewed by maintaining GitHub Student Developer Pack status.",
+    "tags": [
+      "Web",
+      "Free"
+    ]
   },
   {
     "title": "New Relic",
     "company": "New Relic",
     "slug": "new-relic",
-    "logo": "https://www.google.com/s2/favicons?domain=newrelic.com&sz=128",
+    "logo": "https://img.logo.dev/newrelic.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Developer Tools",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free Full Stack Observability (Standard)",
+    "offerSummary": "Track app performance and errors in cloud infrastructure",
     "benefitType": "Subscription",
     "value": "Enterprise",
     "eligibility": "Students",
@@ -1517,16 +1590,20 @@ export const studentBenefits2026: StudentBenefit[] = [
     "verification": "GitHub",
     "url": "https://newrelic.com/students",
     "claimUrl": "https://newrelic.com/students",
-    "description": "Track app performance and errors in cloud infrastructure"
+    "description": "Track app performance and errors in cloud infrastructure",
+    "tags": [
+      "Web",
+      "Free"
+    ]
   },
   {
     "title": "Blackfire",
     "company": "Blackfire",
     "slug": "blackfire",
-    "logo": "https://www.google.com/s2/favicons?domain=blackfire.io&sz=128",
+    "logo": "https://aobklvmdpcebkbgvvijp.supabase.co/storage/v1/object/public/LOGOs/Blackfire.jpeg",
     "category": "Developer Tools",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free Profiler Subscription for PHP performance",
+    "offerSummary": "Profile code performance and identify bottlenecks in applications",
     "benefitType": "Subscription",
     "value": "Premium",
     "eligibility": "Students",
@@ -1534,16 +1611,20 @@ export const studentBenefits2026: StudentBenefit[] = [
     "verification": "GitHub",
     "url": "https://www.blackfire.io/students/",
     "claimUrl": "https://www.blackfire.io/students",
-    "description": "Profile code performance and identify bottlenecks in applications"
+    "description": "Blackfire is an application performance management and code profiling tool that measures execution performance and identifies bottlenecks in web applications. Students and teachers can access a free Profiler subscription worth \u20ac348/year through the GitHub Student Developer Pack or GitHub Teacher Toolbox, giving learners the same performance profiling capabilities used by professional engineering teams.\n\nTo qualify, you must first enroll in the GitHub Student Developer Pack (for students) or GitHub Teacher Toolbox (for educators). Once enrolled, sign up to Blackfire using your GitHub account to activate the free Profiler subscription. The student offer includes access to the vast majority of standard Blackfire Profiler features, allowing you to profile code, analyze execution flow, and optimize application performance without cost. Blackfire is trusted by over 1,000 engineering teams worldwide and is the leading Web Observability solution in Europe for PHP and Python applications.",
+    "tags": [
+      "Developer",
+      "Free"
+    ]
   },
   {
     "title": "CodeScene",
     "company": "CodeScene",
     "slug": "codescene",
-    "logo": "https://www.google.com/s2/favicons?domain=codescene.com&sz=128",
+    "logo": "https://img.logo.dev/codescene.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Developer Tools",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free Student Account for code analysis",
+    "offerSummary": "Analyze code quality and identify technical debt in projects",
     "benefitType": "Subscription",
     "value": "Premium",
     "eligibility": "Students",
@@ -1551,7 +1632,11 @@ export const studentBenefits2026: StudentBenefit[] = [
     "verification": "GitHub",
     "url": "https://codescene.com/resources/github-students",
     "claimUrl": "https://codescene.com/github-students",
-    "description": "Analyze code quality and identify technical debt in projects"
+    "description": "CodeScene is a code analysis platform that visualizes code quality and identifies technical debt in projects. It helps developers understand codebase health through risk analysis, code evolution patterns, and actionable metrics that reveal maintenance challenges and quality trends.\n\nStudents receive free access through GitHub's Student Developer Pack. This gives you hands-on experience with professional-grade code evaluation tools\u2014the kind used by engineering teams to catch problems before they become expensive. You'll learn how technical debt accumulates, why refactoring matters, and how to assess code health beyond basic functionality. This bridges the gap between classroom coding and real-world software engineering practices.",
+    "tags": [
+      "Web",
+      "Free"
+    ]
   },
   {
     "title": "Astra Security",
@@ -1573,10 +1658,10 @@ export const studentBenefits2026: StudentBenefit[] = [
     "title": "Cryptolens",
     "company": "Cryptolens",
     "slug": "cryptolens",
-    "logo": "https://www.google.com/s2/favicons?domain=app.cryptolens.io&sz=128",
+    "logo": "https://img.logo.dev/cryptolens.io?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Developer Tools",
     "appCategory": "Software & Tools",
-    "offerSummary": "10 Licenses Free for software licensing",
+    "offerSummary": "Software licensing system for developers to manage license keys.",
     "benefitType": "License",
     "value": "Commercial",
     "eligibility": "Students",
@@ -1584,16 +1669,20 @@ export const studentBenefits2026: StudentBenefit[] = [
     "verification": "GitHub Packeducation.",
     "url": "https://app.cryptolens.io/user/githubstudent",
     "claimUrl": "https://app.cryptolens.io/user/githubstudent",
-    "description": "Cryptolens is a software licensing system that helps developers manage license keys for their applications. It provides licensing infrastructure, analytics, and distribution controls so developers can protect their software instead of giving away binaries freely.\n\nStudent developers enrolled in school get 10 free software licenses through the GitHub Student Developer Pack. Each license can support any number of end users, making it ideal for students building desktop tools, indie apps, or early-stage products who want to learn license management and control distribution.\n\nThe benefit is available while you remain enrolled in school. Access Cryptolens through the GitHub Student Developer Pack by verifying your student status."
+    "description": "Cryptolens is a software licensing system that helps developers manage license keys for their applications. It provides licensing infrastructure, analytics, and distribution controls so developers can protect their software instead of giving away binaries freely.\n\nStudent developers enrolled in school get 10 free software licenses through the GitHub Student Developer Pack. Each license can support any number of end users, making it ideal for students building desktop tools, indie apps, or early-stage products who want to learn license management and control distribution.\n\nThe benefit is available while you remain enrolled in school. Access Cryptolens through the GitHub Student Developer Pack by verifying your student status.",
+    "tags": [
+      "Web",
+      "Free"
+    ]
   },
   {
     "title": "DailyBot",
     "company": "DailyBot",
     "slug": "dailybot",
-    "logo": "https://www.google.com/s2/favicons?domain=dailybot.com&sz=128",
+    "logo": "https://img.logo.dev/dailybot.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Developer Tools",
     "appCategory": "Software & Tools",
-    "offerSummary": "Business Plan Free (10 users) for 6 months",
+    "offerSummary": "Automate daily standups and team check-ins across chat platforms",
     "benefitType": "Subscription",
     "value": "Commercial",
     "eligibility": "Students",
@@ -1601,16 +1690,20 @@ export const studentBenefits2026: StudentBenefit[] = [
     "verification": "GitHub Packeducation.",
     "url": "https://www.dailybot.com/programs/github-students",
     "claimUrl": "https://www.dailybot.com/programs/github-students",
-    "description": "Automate daily standups and team check-ins across chat platforms"
+    "description": "DailyBot is a team coordination tool that automates daily standups and check-ins across chat platforms like Slack, Teams, Google Chat, and Discord. It helps teams coordinate asynchronously without lengthy meetings, making it practical for student clubs, project groups, and university-based startup teams.\n\nStudents verified through the GitHub Student Developer Pack can access the Business plan free for 10 users for 6 months. The offer is designed for student teams working on academic projects, hackathons, capstones, and class initiatives. The 6-month window gives students time to evaluate the tool for their team workflow.",
+    "tags": [
+      "Web",
+      "Free"
+    ]
   },
   {
     "title": "Imgbot",
     "company": "Imgbot",
     "slug": "imgbot",
-    "logo": "https://www.google.com/s2/favicons?domain=imgbot.net&sz=128",
+    "logo": "https://img.logo.dev/imgbot.net?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Developer Tools",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free Image Optimization for GitHub repos",
+    "offerSummary": "Automatically compress and optimize images in GitHub repositories",
     "benefitType": "Subscription",
     "value": "Usage",
     "eligibility": "Students",
@@ -1618,16 +1711,20 @@ export const studentBenefits2026: StudentBenefit[] = [
     "verification": "GitHub Packeducation.",
     "url": "https://imgbot.net/github-students/",
     "claimUrl": "https://imgbot.net/github-students/",
-    "description": "Automatically compress and optimize images in GitHub repositories"
+    "description": "Imgbot is an automated image optimization tool that compresses and optimizes images in GitHub repositories. The tool reduces image file sizes automatically, lowering bandwidth usage and improving project performance without requiring manual compression work.\n\nStudents can install Imgbot for free in all public and private projects through the GitHub Student Developer Pack, with no time limit or strings attached. Once installed via GitHub, Imgbot runs on every pull request, optimizing images and suggesting changes. Students verify eligibility through their GitHub Student Developer Pack membership, and the tool remains free for open source projects indefinitely.",
+    "tags": [
+      "Web",
+      "Free"
+    ]
   },
   {
     "title": "ConfigCat",
     "company": "ConfigCat",
     "slug": "configcat",
-    "logo": "https://www.google.com/s2/favicons?domain=configcat.com&sz=128",
+    "logo": "https://img.logo.dev/configcat.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Developer Tools",
     "appCategory": "Software & Tools",
-    "offerSummary": "1000 Feature Flags free forever",
+    "offerSummary": "Manage feature flags to control releases and experiments easily",
     "benefitType": "Subscription",
     "value": "Usage",
     "eligibility": "Students",
@@ -1635,16 +1732,20 @@ export const studentBenefits2026: StudentBenefit[] = [
     "verification": "GitHub Packeducation.",
     "url": "https://configcat.com/student/",
     "claimUrl": "https://configcat.com/student/",
-    "description": "Manage feature flags to control releases and experiments easily"
+    "description": "ConfigCat is a feature flag management platform that lets you control releases and run experiments without redeploying code. The Pro plan includes up to 1000 feature flags, unlimited team seats for collaboration, and support for multiple environments\u2014useful for capstone projects, startup clubs, and coursework involving controlled rollouts or A/B testing.\n\nStudents can access the full Pro plan for free through the GitHub Student Developer Pack. Verify your student status via GitHub Education, then sign up with your GitHub account to activate the offer.\n\nThe free Pro access remains active as long as you maintain student eligibility.",
+    "tags": [
+      "Web",
+      "Free"
+    ]
   },
   {
     "title": "Honeybadger",
     "company": "Honeybadger",
     "slug": "honeybadger",
-    "logo": "https://www.google.com/s2/favicons?domain=honeybadger.io&sz=128",
+    "logo": "https://img.logo.dev/honeybadger.io?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Developer Tools",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free Exception Monitoring (Unlimited)",
+    "offerSummary": "Monitor exceptions and uptime across applications and services",
     "benefitType": "Subscription",
     "value": "Startup",
     "eligibility": "Students",
@@ -1652,16 +1753,20 @@ export const studentBenefits2026: StudentBenefit[] = [
     "verification": "GitHub Packeducation.",
     "url": "https://www.honeybadger.io/blog/github-student-developer-pack-holiday-contest/",
     "claimUrl": "https://www.honeybadger.io/github-students/",
-    "description": "Monitor exceptions and uptime across applications and services"
+    "description": "Honeybadger is an error monitoring and uptime platform that tracks exceptions, production issues, and application health across Ruby, JavaScript, Python, Elixir, PHP, and other languages. The platform uses smart error grouping to reduce noise, monitors scheduled tasks automatically, and helps developers identify and fix bugs faster by reducing time spent backtracing errors.\n\nStudents get free access to Honeybadger's full Small plan for one year (valued at over $700) through the GitHub Student Developer Pack. To access the offer, verify your student status through GitHub's education program\u2014no credit card required to start.",
+    "tags": [
+      "Web",
+      "Free"
+    ]
   },
   {
     "title": "Doppler",
     "company": "Doppler",
     "slug": "doppler",
-    "logo": "https://www.google.com/s2/favicons?domain=doppler.com&sz=128",
+    "logo": "https://img.logo.dev/doppler.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Developer Tools",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free Secret Management for unlimited projects",
+    "offerSummary": "Manage environment variables and secrets securely across teams",
     "benefitType": "Subscription",
     "value": "Team",
     "eligibility": "Students",
@@ -1669,33 +1774,41 @@ export const studentBenefits2026: StudentBenefit[] = [
     "verification": "GitHub Packeducation.",
     "url": "https://www.doppler.com/secretsops-for-students",
     "claimUrl": "https://www.doppler.com/secretsops-for-students",
-    "description": "Manage environment variables and secrets securely across teams"
+    "description": "Doppler is a secrets management platform that securely stores and manages environment variables, API keys, and sensitive credentials across teams. Instead of using `.env` files or hard-coded secrets, Doppler provides a centralized workflow for handling sensitive data like database passwords and deployment credentials.\n\nVerified students can access Doppler's Team subscription for free while studying. This is especially useful for student developers working on group projects, cloud applications, hackathons, or any project requiring secure credential management.\n\nClaim your free access through GitHub Education verification.",
+    "tags": [
+      "Web",
+      "Free"
+    ]
   },
   {
     "title": "Typeform",
     "company": "Typeform",
     "slug": "typeform",
-    "logo": "https://www.google.com/s2/favicons?domain=help.typeform.com&sz=128",
+    "logo": "https://img.logo.dev/typeform.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Developer Tools",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free Professional Plan (1 year)",
+    "offerSummary": "Online form builder for surveys, quizzes and data collection",
     "benefitType": "Subscription",
     "value": "$50/mo",
     "eligibility": "Students",
     "region": "Global",
     "verification": "GitHub Packeducation.",
     "url": "https://help.typeform.com/hc/en-us/articles/360039728951-Non-profit-NGO-and-student-discounts-at-Typeform",
-    "description": "Online form builder for surveys, quizzes and data collection",
-    "claimUrl": "https://help.typeform.com/hc/en-us/articles/360039728951-Non-profit-NGO-and-student-discounts-at-Typeform"
+    "description": "Typeform is an online form builder for creating surveys, quizzes, applications, and data collection workflows with a conversational interface. Students can request a discount by submitting a form to Typeform's support team.\n\nThe discount depends on the billing plan: students on a monthly plan receive 40% off for 12 months, while students on a yearly plan receive 50% off for 1 year. To apply, fill out Typeform's student discount request form and provide verification of student status. Discounts are applied via coupon code issued by the support team.\n\nEligibility is limited to current students; educators and NGO staff qualify for separate discount tiers (25\u201340% depending on plan type).",
+    "claimUrl": "https://help.typeform.com/hc/en-us/articles/360039728951-Non-profit-NGO-and-student-discounts-at-Typeform",
+    "tags": [
+      "Web",
+      "Discount"
+    ]
   },
   {
     "title": "LambdaTest",
     "company": "LambdaTest",
     "slug": "lambdatest",
-    "logo": "https://www.google.com/s2/favicons?domain=testmuai.com&sz=128",
+    "logo": "https://img.logo.dev/lambdatest.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Developer Tools",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free Live Plan (1 year) for cross-browser testing",
+    "offerSummary": "Cloud platform for cross-browser and OS compatibility testing",
     "benefitType": "Subscription",
     "value": "$15/mo",
     "eligibility": "Students",
@@ -1703,7 +1816,11 @@ export const studentBenefits2026: StudentBenefit[] = [
     "verification": "GitHub Packeducation.",
     "url": "https://www.testmuai.com/github-students/",
     "claimUrl": "https://www.lambdatest.com/github-students",
-    "description": "Cloud platform for cross-browser and OS compatibility testing"
+    "description": "LambdaTest (now TestMu AI) is a cloud-based testing platform that enables developers to test websites and applications across thousands of browser and device environments. The platform supports testing on 3000+ desktop and mobile browser environments, allowing students to identify and fix cross-browser compatibility issues before deployment.\n\nStudents enrolled in the GitHub Student Developer Pack can access LambdaTest's full Live plan at no cost, including unlimited manual realtime testing, screenshot testing, responsive testing, and one parallel session. Access is verified through your GitHub Student Developer Pack enrollment\u2014sign up on LambdaTest's website after confirming your student pack membership.",
+    "tags": [
+      "Web",
+      "Free"
+    ]
   },
   {
     "title": "Simple Analytics",
@@ -1726,10 +1843,10 @@ export const studentBenefits2026: StudentBenefit[] = [
     "title": "Vaadin",
     "company": "Vaadin",
     "slug": "vaadin",
-    "logo": "https://www.google.com/s2/favicons?domain=vaadin.com&sz=128",
+    "logo": "https://img.logo.dev/vaadin.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Developer Tools",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free Pro Subscription for web apps",
+    "offerSummary": "Java framework for building modern web and enterprise applications",
     "benefitType": "Subscription",
     "value": "$50/mo",
     "eligibility": "Students",
@@ -1737,16 +1854,21 @@ export const studentBenefits2026: StudentBenefit[] = [
     "verification": "GitHub Packeducation.",
     "url": "https://vaadin.com/education",
     "claimUrl": "https://vaadin.com/student-program",
-    "description": "Vaadin is a Java framework for building modern web and enterprise applications with a component-based UI model. It offers a free Pro subscription license to students, providing access to premium framework features, components, and tooling typically reserved for paid tiers.\n\nStudents qualify for this offer by verifying their academic status through the Vaadin student program. The free Pro license is valid for the duration of studies and enables students to develop, test, and deploy applications using Vaadin's full feature set without cost. This is ideal for computer science and software engineering students learning enterprise application development, as well as those building capstone projects or portfolios with Java-based web technologies."
+    "description": "Vaadin is a Java framework for building modern web and enterprise applications with a component-based UI model. It offers a free Pro subscription license to students, providing access to premium framework features, components, and tooling typically reserved for paid tiers.\n\nStudents qualify for this offer by verifying their academic status through the Vaadin student program. The free Pro license is valid for the duration of studies and enables students to develop, test, and deploy applications using Vaadin's full feature set without cost. This is ideal for computer science and software engineering students learning enterprise application development, as well as those building capstone projects or portfolios with Java-based web technologies.",
+    "tags": [
+      "Web",
+      "Free",
+      "No-Code"
+    ]
   },
   {
     "title": "Xojo",
     "company": "Xojo",
     "slug": "xojo",
-    "logo": "https://www.google.com/s2/favicons?domain=xojo.com&sz=128",
+    "logo": "https://img.logo.dev/xojo.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Developer Tools",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free Desktop License for cross-platform dev",
+    "offerSummary": "Build cross-platform apps for desktop, web, and mobile easily",
     "benefitType": "License",
     "value": "$300",
     "eligibility": "Students",
@@ -1754,41 +1876,54 @@ export const studentBenefits2026: StudentBenefit[] = [
     "verification": "GitHub Packeducation.",
     "url": "https://www.xojo.com/githubstudent/",
     "claimUrl": "https://www.xojo.com/githubstudent/",
-    "description": "Xojo is a cross-platform development tool for building desktop, web, mobile, and Raspberry Pi applications. It provides a single toolchain to learn app development across multiple platforms. Xojo also includes documentation and educational resources to support your learning.\n\nStudents verified through GitHub Student Developer Pack can claim a free Pro license with one year of updates. This offer lets you access Pro features without paying for a subscription during your studies.\n\nAfter the update period expires, you retain access to the licensed version indefinitely."
+    "description": "Xojo is a cross-platform development tool for building desktop, web, mobile, and Raspberry Pi applications. It provides a single toolchain to learn app development across multiple platforms. Xojo also includes documentation and educational resources to support your learning.\n\nStudents verified through GitHub Student Developer Pack can claim a free Pro license with one year of updates. This offer lets you access Pro features without paying for a subscription during your studies.\n\nAfter the update period expires, you retain access to the licensed version indefinitely.",
+    "tags": [
+      "Web",
+      "Free",
+      "No-Code"
+    ]
   },
   {
     "title": "Vercel",
     "company": "Vercel",
     "slug": "vercel",
-    "logo": "https://www.google.com/s2/favicons?domain=vercel.com&sz=128",
+    "logo": "https://img.logo.dev/vercel.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Developer Tools",
     "appCategory": "Software & Tools",
-    "offerSummary": "Hobby tier (generous limits for frontend)",
+    "offerSummary": "Platform for frontend frameworks and static sites. Free Hobby plan includes unlimited deployments, custom domains, and HTTPS. No credit card required.",
     "benefitType": "Free",
     "value": "N/A",
     "eligibility": "Everyone",
     "region": "Global",
     "verification": "N/",
     "url": "https://vercel.com/pricing",
-    "description": "Platform for frontend frameworks and static sites. Free Hobby plan includes unlimited deployments, custom domains, and HTTPS. No credit card required.",
-    "claimUrl": "https://vercel.com/pricing"
+    "description": "Vercel is a frontend deployment platform for React, Next.js, and modern web frameworks, offering automated global CDN delivery with multi-region compute and failover. The platform is commonly used for building portfolios, startup MVPs, and hackathon projects because deployment is immediate and scalable without upfront infrastructure costs.\n\nThe free Hobby plan requires no credit card and includes unlimited deployments, custom domains, HTTPS, and automatic response compression via Vercel's Edge Network. This plan is available to all users globally and never expires\u2014you can build and deploy production applications at no cost. To upgrade, Vercel offers a Pro plan at $20/month with $20 of included usage credit, pay-as-you-go compute pricing, and team collaboration features.",
+    "claimUrl": "https://vercel.com/pricing",
+    "tags": [
+      "Developer",
+      "Free"
+    ]
   },
   {
     "title": "Netlify",
     "company": "Netlify",
     "slug": "netlify",
-    "logo": "https://www.google.com/s2/favicons?domain=netlify.com&sz=128",
+    "logo": "https://img.logo.dev/netlify.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Developer Tools",
     "appCategory": "Software & Tools",
-    "offerSummary": "Starter Tier (generous build/hosting)",
+    "offerSummary": "Deploy and host websites with previews, forms, and global CDN",
     "benefitType": "Free",
     "value": "N/A",
     "eligibility": "Everyone",
     "region": "Global",
     "verification": "N/",
     "url": "https://netlify.com/pricing",
-    "description": "Deploy and host websites with previews, forms, and global CDN",
-    "claimUrl": "https://netlify.com/pricing"
+    "description": "Netlify is a deployment and hosting platform designed for websites and frontend applications. It automates your deployment workflow, letting you push code and see changes live instantly across a global network. The platform handles SSL certificates, custom domains, and DNS management.\n\nThe free Starter plan is available to all users at no cost\u2014no payment or verification required. You get deploy previews for every branch, form handling, a global CDN, and serverless functions included. This makes it ideal for portfolios, class projects, hackathon submissions, and personal websites.\n\nThe free plan includes 300 build minutes monthly, 100 GB bandwidth per month, and 125k requests daily\u2014limits that suit most learning projects and small sites. When your project grows, you can upgrade to paid plans for higher limits and additional features like team collaboration tools.",
+    "claimUrl": "https://netlify.com/pricing",
+    "tags": [
+      "Developer",
+      "Free"
+    ]
   },
   {
     "title": "Supabase",
@@ -1874,10 +2009,10 @@ export const studentBenefits2026: StudentBenefit[] = [
     "title": "Postman",
     "company": "Postman",
     "slug": "postman",
-    "logo": "https://www.google.com/s2/favicons?domain=postman.com&sz=128",
+    "logo": "https://img.logo.dev/postman.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Developer Tools",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free Tier (3 users, API testing)",
+    "offerSummary": "API platform for building, testing, and documenting APIs",
     "benefitType": "Free",
     "value": "N/A",
     "eligibility": "Everyone",
@@ -1885,16 +2020,20 @@ export const studentBenefits2026: StudentBenefit[] = [
     "verification": "N/",
     "url": "https://www.postman.com/student-program/",
     "claimUrl": "https://academy.postman.com/path/postman-api-fundamentals-student-expert",
-    "description": "API platform for building, testing, and documenting APIs"
+    "description": "Postman is an API platform for building, testing, and documenting APIs used by developers worldwide. The Postman API Fundamentals Student Expert certification is a free educational credential available to students through Postman Academy that validates foundational knowledge of APIs and Postman's core features.\n\nStudents complete a structured learning path and pass an exam to earn the certification. Upon completion, they receive an official credential they can add to their resume and professional profiles, making it valuable for demonstrating API expertise to employers or for continuing into advanced Postman certifications.\n\nThe certification is free to pursue and available globally.",
+    "tags": [
+      "Developer",
+      "Free"
+    ]
   },
   {
     "title": "Cloudflare",
     "company": "Cloudflare",
     "slug": "cloudflare",
-    "logo": "https://www.google.com/s2/favicons?domain=cloudflare.com&sz=128",
+    "logo": "https://img.logo.dev/cloudflare.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Cloud & Credits",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free Tier (CDN, Pages, Security)",
+    "offerSummary": "Serverless platform for building, deploying, and scaling applications",
     "benefitType": "Free",
     "value": "N/A",
     "eligibility": "Everyone",
@@ -1902,7 +2041,11 @@ export const studentBenefits2026: StudentBenefit[] = [
     "verification": "N/",
     "url": "https://www.cloudflare.com/en-in/students/",
     "claimUrl": "https://www.cloudflare.com/students/",
-    "description": "Serverless platform for building, deploying, and scaling applications"
+    "description": "Cloudflare Workers is a serverless platform for building, deploying, and scaling applications at the edge. Students in the US with a verified .edu email address can receive one year of the Workers Paid Plan free, with the $5/month base subscription fee waived. The student offer includes increased usage allotments: 20 million logs per month and 6,000 build minutes per month, compared to the free plan.\n\nTo claim the offer, sign up for a free Cloudflare account using your .edu email address, verify your email, add a valid credit card to your billing page, and confirm your billing email is your .edu address. After 12 months, the subscription automatically reverts to the free plan unless you choose to upgrade to paid pricing. Usage beyond the included allotments is charged separately. The program is limited to US students aged 18 and over who are currently enrolled in an eligible educational institution.",
+    "tags": [
+      "Developer",
+      "Trial"
+    ]
   },
   {
     "title": "Auth0",
@@ -1956,10 +2099,10 @@ export const studentBenefits2026: StudentBenefit[] = [
     "title": "Appwrite Cloud",
     "company": "Appwrite",
     "slug": "appwrite-cloud",
-    "logo": "https://www.google.com/s2/favicons?domain=appwrite.io&sz=128",
+    "logo": "https://img.logo.dev/appwrite.io?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Developer Tools",
     "appCategory": "Software & Tools",
-    "offerSummary": "Starter Plan (Authentication, DB)",
+    "offerSummary": "Build secure backends for web and mobile apps",
     "benefitType": "Free",
     "value": "N/A",
     "eligibility": "Everyone",
@@ -1967,7 +2110,11 @@ export const studentBenefits2026: StudentBenefit[] = [
     "verification": "N/",
     "url": "https://appwrite.io/education",
     "claimUrl": "https://appwrite.io/education",
-    "description": "Build secure backends for web and mobile apps"
+    "description": "Appwrite is an open-source backend platform for building and scaling applications, offering Auth, Databases, Storage, Functions, Messaging, Realtime, and web hosting in one place.\n\nStudents enrolled in the GitHub Student Developer Pack receive free access to Appwrite Cloud's Education plan throughout their studies. The Education plan grants 2 projects with usage limits equivalent to Appwrite's Pro tier (excluding email support), valid from sign-up until graduation. Verification is automatic through your GitHub Student Developer Pack membership\u2014simply sign up on the Appwrite Cloud console and your eligibility is confirmed instantly.",
+    "tags": [
+      "Web",
+      "Free"
+    ]
   },
   {
     "title": "Hasura",
@@ -2037,10 +2184,10 @@ export const studentBenefits2026: StudentBenefit[] = [
     "title": "Bitbucket - Free unlimited private repositories for students",
     "company": "Atlassian",
     "slug": "bitbucket",
-    "logo": "https://www.google.com/s2/favicons?domain=bitbucket.org&sz=128",
+    "logo": "https://img.logo.dev/bitbucket.org?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Developer Tools",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free Tier (5 users, unlimited private repos)",
+    "offerSummary": "Git code repository with unlimited private repos and collaborators.",
     "benefitType": "Free",
     "value": "N/A",
     "eligibility": "Everyone",
@@ -2048,12 +2195,12 @@ export const studentBenefits2026: StudentBenefit[] = [
     "verification": "N/",
     "url": "https://bitbucket.org/product/education",
     "claimUrl": "https://bitbucket.org/product/education",
-    "description": "Git code repository with unlimited private repos and collaborators.",
+    "description": "Bitbucket is Atlassian's Git repository platform for hosting and managing code with built-in collaboration tools. Student developers and teachers can sign up with an academic email address to receive free unlimited private repositories and unlimited academic collaborators at no cost.\n\nTo qualify, register using your academic email domain. Bitbucket automatically grants an academic license if your email domain matches their list of accredited academic institutions. If your institution isn't recognized, you can request an academic license directly through Atlassian's form and they will manually verify your status. Once approved, you get unlimited private repositories to organize code for classes, assignments, and labs, plus the ability to add unlimited peers and instructors as collaborators with granular access controls.",
     "tags": [
+      "Global",
       "Open Source",
-      "Free",
       "Developer",
-      "Global"
+      "Free"
     ]
   },
   {
@@ -2076,11 +2223,11 @@ export const studentBenefits2026: StudentBenefit[] = [
     "title": "Stripe Atlas",
     "company": "Stripe",
     "slug": "stripe-atlas",
-    "logo": "https://www.google.com/s2/favicons?domain=stripe.com&sz=128",
+    "logo": "https://img.logo.dev/stripe.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Finance",
     "appCategory": "Credits & Savings",
-    "offerSummary": "50% Off Incorporation.",
-    "description": "Stripe Atlas helps you incorporate your startup in Delaware, get a bank account, and start accepting payments. Students often get 50% off or waived fees through partner incubators.",
+    "offerSummary": "Process online payments and manage transactions in your web applications",
+    "description": "Stripe is a payment processing platform that enables developers to accept online payments and manage transactions in web applications. It provides professional payment infrastructure for building commerce functionality into web apps and services.\n\nAvailable to all users globally, Stripe is accessible through the GitHub Student Developer Pack, a collection of premium developer tools and services offered free to verified students. Students who are currently enrolled at an accredited educational institution can access Stripe with waived fees on the first $1,000 in revenue, providing hands-on experience without upfront costs. Verification requires a school-issued email address or proof of enrollment submitted through GitHub account settings.\n\nThe offer renews annually for as long as you remain a verified student, making it practical for student founders, developers building side projects, and anyone learning payment processing in a real-world context.",
     "benefitType": "Discount",
     "value": "$250+ Savings",
     "eligibility": "Students/Founders",
@@ -2088,9 +2235,11 @@ export const studentBenefits2026: StudentBenefit[] = [
     "verification": "Partner Code",
     "url": "https://stripe.com/atlas",
     "tags": [
-      "Finance",
+      "Credit",
+      "Incorporation",
       "Startup",
-      "Incorporation"
+      "API",
+      "Finance"
     ],
     "claimUrl": "https://education.github.com/pack#:~:text=Stripe-,About%20Stripe,-Web%20and%20mobile"
   },
@@ -2162,27 +2311,31 @@ export const studentBenefits2026: StudentBenefit[] = [
     "title": "Vultr",
     "company": "Vultr",
     "slug": "vultr",
-    "logo": "https://www.google.com/s2/favicons?domain=avultr.com&sz=128",
+    "logo": "https://img.logo.dev/vultr.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Cloud & Credits",
     "appCategory": "Credits & Savings",
-    "offerSummary": "$100 Credit for new users",
+    "offerSummary": "Cloud compute and VPS hosting provider with scalable cloud servers",
     "benefitType": "Credits",
     "value": "$100New Users",
     "eligibility": "Student",
     "region": "Global",
     "verification": "N/",
     "url": "https://vultr.com/promo",
-    "description": "Cloud compute and VPS hosting provider with scalable cloud servers",
-    "claimUrl": "https://vultr.com/promo"
+    "description": "Vultr is a cloud infrastructure provider offering SSD VPS servers, cloud compute instances, and GPU hosting across 33 global data center regions. The platform provides scalable cloud servers starting at $2.50/month for standard compute, with options for optimized instances, bare metal servers, and GPU acceleration via AMD or NVIDIA hardware.\n\nNew accounts receive $300 in free credits to use toward any Vultr service. This credit offer is available to all new users creating an account\u2014not limited to students. Credits can be applied to any combination of Vultr's compute, storage, networking, and GPU products, giving new users the opportunity to test infrastructure workloads at no upfront cost.\n\nCredits are typically valid for a limited period; check the account creation page for current credit expiration terms. Vultr serves developers, students, and businesses building applications, hosting websites, training machine learning models, or experimenting with cloud infrastructure.",
+    "claimUrl": "https://vultr.com/promo",
+    "tags": [
+      "Credit",
+      "Web"
+    ]
   },
   {
     "title": "Alibaba Cloud - Free cloud servers for students",
     "company": "Alibaba",
     "slug": "alibaba-cloud",
-    "logo": "https://www.google.com/s2/favicons?domain=alibabacloud.com&sz=128",
+    "logo": "https://img.logo.dev/alibabacloud.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Cloud & Credits",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free Trial + Student Credits",
+    "offerSummary": "Alibabas cloud computing platform offering scalable cloud services",
     "benefitType": "Credits",
     "value": "$1000New Users",
     "eligibility": "Student",
@@ -2190,21 +2343,21 @@ export const studentBenefits2026: StudentBenefit[] = [
     "verification": "N/",
     "url": "https://www.alibabacloud.com/en/developer/students?_p_lc=1",
     "claimUrl": "https://www.alibabacloud.com/en/developer/students?_p_lc=1",
-    "description": "Alibabas cloud computing platform offering scalable cloud services",
+    "description": "Alibaba Cloud is a cloud computing platform providing infrastructure, storage, and networking services. The Alibaba Cloud for Students program offers verified students one year of free Elastic Compute Service (ECS) instances valued at up to $133.08 for building and deploying applications.\n\nStudents also receive free access to Alibaba Cloud Academy Membership, which includes over 100 online courses and certifications. Students at participating institutions can register for ACA certification exams at no cost.\n\nThe program is available to students in 190+ countries across Africa, the Americas, Asia & Pacific, and Europe.",
     "tags": [
-      "Free",
       "Web",
-      "Global"
+      "Global",
+      "Free"
     ]
   },
   {
     "title": "IBM Cloud - Free tier + $200 credits",
     "company": "IBM",
     "slug": "ibm-cloud",
-    "logo": "https://www.google.com/s2/favicons?domain=skillsbuild.org&sz=128",
+    "logo": "https://img.logo.dev/ibm.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Cloud & Credits",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free Tier (40+ services, lite plans)",
+    "offerSummary": "IBM cloud computing platform for servers and analytics",
     "benefitType": "Free",
     "value": "N/A",
     "eligibility": "Everyone",
@@ -2212,7 +2365,7 @@ export const studentBenefits2026: StudentBenefit[] = [
     "verification": "N/",
     "url": "https://skillsbuild.org/college-students",
     "claimUrl": "https://skillsbuild.org/college-students",
-    "description": "IBM cloud computing platform for servers and analytics",
+    "description": "IBM Cloud is a cloud computing platform offering compute, storage, networking, security, and AI services including Watson APIs. Students at accredited degree-granting institutions can access a free trial account through IBM SkillsBuild by validating their institution credentials.\n\nThe free tier includes access to 50+ products with no time limit, no upfront fees, and you only pay for what you use beyond the free tier. Payment details are required at signup, but a nominal hold is placed on your card only to verify authenticity\u2014you won't be charged until you consume a billable service.\n\nImportant: adding a credit card converts your trial account to Pay-as-you-go and cannot be reversed, and educational feature codes cannot be used in Pay-as-you-go accounts.",
     "tags": [
       "Credit",
       "Web",
@@ -2240,17 +2393,22 @@ export const studentBenefits2026: StudentBenefit[] = [
     "title": "GitLens Pro",
     "company": "GitKraken",
     "slug": "gitlens-pro",
-    "logo": "https://www.google.com/s2/favicons?domain=gitkraken.com&sz=128",
+    "logo": "https://img.logo.dev/gitkraken.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Developer Tools",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free Pro extension for VS Code",
+    "offerSummary": "Git client with a visual interface for managing repositories",
     "benefitType": "Subscription",
     "value": "$10/mo",
     "eligibility": "Students",
     "region": "Global",
     "verification": "GitHub",
     "url": "https://www.gitkraken.com/github-student-developer-pack-bundle",
-    "claimUrl": "https://www.gitkraken.com/github-student-developer-pack-bundle"
+    "claimUrl": "https://www.gitkraken.com/github-student-developer-pack-bundle",
+    "description": "GitKraken is a visual Git client and DevEx platform that provides a graphical interface for managing repositories, handling pull requests, and tracking issues. GitKraken Desktop, GitKraken CLI, and GitLens all include comprehensive features like Commit Graph, Launchpad, Workspaces, and Dev Team Automations.\n\nStudents qualify for free access to GitKraken's complete platform for 6 months through the GitHub Student Developer Pack, followed by GitKraken's lowest student pricing tier. Eligibility requires verification of student status via GitHub Education. After the 6-month free period, your access continues at the permanent student discount rate as long as your GitHub Student Developer Pack verification remains active.\n\nThe offer is available worldwide to students who can verify through the platform.",
+    "tags": [
+      "Developer",
+      "Trial"
+    ]
   },
   {
     "title": "Bump.sh",
@@ -2464,10 +2622,10 @@ export const studentBenefits2026: StudentBenefit[] = [
     "title": "Sketch for Education",
     "company": "Sketch",
     "slug": "sketch-education",
-    "logo": "https://www.google.com/s2/favicons?domain=proofsketch.com&sz=128",
+    "logo": "https://img.logo.dev/sketch.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Design & Creative",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free License for Mac app",
+    "offerSummary": "Professional design tool for creating and sharing digital interfaces",
     "benefitType": "License",
     "value": "$99/yr",
     "eligibility": "Students",
@@ -2475,16 +2633,20 @@ export const studentBenefits2026: StudentBenefit[] = [
     "verification": "Upload",
     "url": "https://sketch.com/education",
     "claimUrl": "https://www.sketch.com/education/",
-    "description": "Professional design tool for creating and sharing digital interfaces"
+    "description": "Sketch is a professional design platform for creating digital interfaces, prototypes, and collaborative design workflows on macOS, web, and iPhone. Students and educators receive a free Education plan that includes a Workspace with 50 GB of storage, Editor seat access, and the Mac app for one year.\n\nTo qualify, you must be at least 16 years old and either enrolled full-time at a college, university, high school, or in an online course lasting at least 2 months (where course fees meet or exceed Sketch's regular cost), or be an employed teacher. Eligibility is verified through Sketch's application form\u2014no credit card required. You'll receive 30 days of free access while your application is reviewed.\n\nAfter your one-year Education plan expires, you can request renewal through Sketch's Education page; the team reviews extension requests on a case-by-case basis. Availability may vary by country.",
+    "tags": [
+      "Free",
+      "macOS"
+    ]
   },
   {
     "title": "Shapr3D",
     "company": "Shapr3D",
     "slug": "shapr3d",
-    "logo": "https://www.google.com/s2/favicons?domain=shapr3d.com&sz=128",
+    "logo": "https://img.logo.dev/shapr3d.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Design & Creative",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free Educational License (3D CAD)",
+    "offerSummary": "Intuitive 3D modeling software built for tablets and stylus use",
     "benefitType": "License",
     "value": "$299/yr",
     "eligibility": "Students",
@@ -2492,13 +2654,17 @@ export const studentBenefits2026: StudentBenefit[] = [
     "verification": "Edu Email /",
     "url": "https://shapr3d.com/education",
     "claimUrl": "https://www.shapr3d.com/education",
-    "description": "Intuitive 3D modeling software built for tablets and stylus use"
+    "description": "Intuitive 3D modeling software built for tablets and stylus use",
+    "tags": [
+      "Web",
+      "Free"
+    ]
   },
   {
     "title": "Perplexity Pro - Education Pro for $10/month",
     "company": "Perplexity",
     "slug": "perplexity-pro",
-    "logo": "https://www.google.com/s2/favicons?domain=perplexity.ai&sz=128",
+    "logo": "https://img.logo.dev/perplexity.ai?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "AI Tools",
     "appCategory": "Software & Tools",
     "offerSummary": "1 Year Free via partnerships (e.g., Uber/PayPal)",
@@ -2509,30 +2675,35 @@ export const studentBenefits2026: StudentBenefit[] = [
     "verification": "Partner/Edu",
     "url": "https://www.perplexity.ai/backtoschool",
     "claimUrl": "https://www.perplexity.ai/backtoschool",
-    "description": "AI-powered search engine with cited answers",
+    "description": "Perplexity Pro is a paid tier of Perplexity's AI-powered search engine that provides access to advanced AI models and higher query limits compared to the free version. The platform generates answers to questions with cited sources, making it useful for research, writing, and learning workflows. The service combines web search with AI synthesis, allowing users to explore topics with source attribution and follow-up questions.\n\nPerplexity has historically offered a student pricing option at $10 per month, though current availability and exact terms should be verified directly on their website.",
     "tags": [
-      "AI",
-      "Discount",
       "Web",
-      "Global"
+      "Global",
+      "Discount",
+      "AI"
     ]
   },
   {
     "title": "Mistral Le Chat",
     "company": "Mistral AI",
     "slug": "mistral-le-chat",
-    "logo": "https://www.google.com/s2/favicons?domain=mistral.ai&sz=128",
+    "logo": "https://img.logo.dev/mistral.ai?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "AI Tools",
     "appCategory": "Credits & Savings",
-    "offerSummary": "50% Off Pro tier for students",
+    "offerSummary": "AI assistant and coding agent suite with Mistral's frontier models",
     "benefitType": "Discount",
     "value": "Variable",
     "eligibility": "Students",
     "region": "Global",
     "verification": "Edu Emailhelp.",
     "url": "https://mistral.ai",
-    "description": "AI assistant and coding agent suite with Mistral's frontier models",
-    "claimUrl": "https://mistral.ai"
+    "description": "Mistral Pro is an AI assistant and coding agent suite that provides access to Mistral's frontier models for building, testing, and running AI applications. It enables developers and students to build, test, and run AI applications with advanced capabilities.\n\nThe student education plan offers verified students at accredited higher institutions a discounted rate of $5.99 per month, down from the standard $14.99 monthly price. The student plan includes full access to Vibe for long-running tasks, unlimited task scheduling subject to fair usage limits, and all coding features.\n\nEligibility requires domain name verification and a maximum 12-month validity period per student account; the offer is not available to users who have previously used Vibe or Le Chat.",
+    "claimUrl": "https://mistral.ai",
+    "tags": [
+      "Web",
+      "Discount",
+      "AI"
+    ]
   },
   {
     "title": "Warp AI",
@@ -2634,18 +2805,22 @@ export const studentBenefits2026: StudentBenefit[] = [
     "title": "Prezi",
     "company": "Prezi",
     "slug": "prezi",
-    "logo": "https://www.google.com/s2/favicons?domain=prezi.com&sz=128",
+    "logo": "https://img.logo.dev/prezi.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Design & Creative",
     "appCategory": "Credits & Savings",
-    "offerSummary": "Edu Plus Plan ($3/mo)",
+    "offerSummary": "Dynamic presentation tool with engaging zoomable canvas",
     "benefitType": "Discount",
     "value": "$10/mo",
     "eligibility": "Students",
     "region": "Global",
     "verification": "Edu",
     "url": "https://prezi.com/education/",
-    "description": "Dynamic presentation tool with engaging zoomable canvas",
-    "claimUrl": "https://prezi.com/education/"
+    "description": "Prezi is a presentation software that uses a zoomable canvas instead of linear slides, enabling dynamic visual storytelling through zoom and pan transitions. Students can create and present non-linear, visually engaging presentations for class assignments, pitch competitions, research talks, and portfolio projects.\n\nStudents qualify for either a free Basic plan or special education pricing starting at $4/month. The Basic plan includes core presentation tools with Prezi's signature zoom functionality. Education pricing requires verification of student status and provides access to additional features at a reduced rate. Both options allow students to move beyond traditional slide decks and create presentations that stand out through interactive, spatial design.",
+    "claimUrl": "https://prezi.com/education/",
+    "tags": [
+      "Web",
+      "Free"
+    ]
   },
   {
     "title": "Unity Personal",
@@ -2796,10 +2971,10 @@ export const studentBenefits2026: StudentBenefit[] = [
     "title": "Axure RP",
     "company": "Axure",
     "slug": "axure-rp",
-    "logo": "https://www.google.com/s2/favicons?domain=axure.com&sz=128",
+    "logo": "https://img.logo.dev/axure.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Design & Creative",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free Educational License",
+    "offerSummary": "Tool for creating interactive wireframes and high-fidelity prototypes",
     "benefitType": "License",
     "value": "$25/mo",
     "eligibility": "Students",
@@ -2807,7 +2982,11 @@ export const studentBenefits2026: StudentBenefit[] = [
     "verification": "Edu Email /",
     "url": "https://axure.com/edu",
     "claimUrl": "https://www.axure.com/edu",
-    "description": "Tool for creating interactive wireframes and high-fidelity prototypes"
+    "description": "Axure RP is a design tool for creating interactive wireframes and high-fidelity prototypes used by UX and product designers. It lets you build detailed, clickable designs and specifications that simulate real user interactions, going beyond static mockups.\n\nStudents can request a free one-year Axure RP license annually while enrolled at an accredited school. The license covers the full feature set, allowing you to design complex interactions, create dynamic components, and generate design specifications for development teams.\n\nYour Axure RP license renews each year of study\u2014you'll need to reapply during each enrollment period to maintain access. Verify your student status through Axure's education application process on their website.",
+    "tags": [
+      "Web",
+      "Free"
+    ]
   },
   {
     "title": "Balsamiq Cloud",
@@ -2829,10 +3008,10 @@ export const studentBenefits2026: StudentBenefit[] = [
     "title": "Webflow Student",
     "company": "Webflow",
     "slug": "webflow-student",
-    "logo": "https://www.google.com/s2/favicons?domain=webflow.com&sz=128",
+    "logo": "https://img.logo.dev/webflow.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Developer Tools",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free Student Plan (1 year)",
+    "offerSummary": "No-code website builder with hosting and advanced design control",
     "benefitType": "Subscription",
     "value": "$12/mo",
     "eligibility": "Students",
@@ -2840,16 +3019,21 @@ export const studentBenefits2026: StudentBenefit[] = [
     "verification": "Edu",
     "url": "https://webflow.com/classroom",
     "claimUrl": "https://webflow.com/solutions/classroom/student-application",
-    "description": "No-code website builder with hosting and advanced design control"
+    "description": "Webflow is a no-code website builder that combines design tools, CMS functionality, and hosting in one platform. Students historically accessed a free annual CMS plan through Webflow's student discount program, which allowed publishing to custom domains and accessing advanced content management features.\n\nThe Webflow for Students program ended on February 28, 2026, and new applications are no longer accepted. Students who received approval before that date will continue their free period until the end of their predefined term; after expiration, standard CMS Site plan rates apply unless cancelled.\n\nAll students can access Webflow's free Starter Site plan, which includes design and hosting but publishes only to a `.webflow.io` domain without custom domain support.",
+    "tags": [
+      "Web",
+      "Free",
+      "No-Code"
+    ]
   },
   {
     "title": "Squarespace Student",
     "company": "Squarespace",
     "slug": "squarespace-student",
-    "logo": "https://www.google.com/s2/favicons?domain=squarespace.com&sz=128",
+    "logo": "https://img.logo.dev/squarespace.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Developer Tools",
     "appCategory": "Credits & Savings",
-    "offerSummary": "50% Off First Year",
+    "offerSummary": "Website builder for creating professional sites and online stores",
     "benefitType": "Discount",
     "value": "~$70",
     "eligibility": "Students",
@@ -2857,16 +3041,21 @@ export const studentBenefits2026: StudentBenefit[] = [
     "verification": "Student",
     "url": "https://www.squarespace.com/students",
     "claimUrl": "https://www.squarespace.com/students",
-    "description": "Website builder for creating professional sites and online stores"
+    "description": "Squarespace is a website builder that enables students to create professional websites, portfolios, and online stores with drag-and-drop design tools and built-in SEO, marketing, and e-commerce features.\n\nStudents receive 50% off the first year on any annual website plan. To claim this discount, verify your student status for free through Student Beans, then enter your offer code at checkout on Squarespace.com. No credit card is required to start, and you can cancel anytime.\n\nThe offer applies to annual billing cycles; standard pricing resumes on renewal unless cancelled.",
+    "tags": [
+      "Web",
+      "Discount",
+      "No-Code"
+    ]
   },
   {
     "title": "Wix Student",
     "company": "Wix",
     "slug": "wix-student",
-    "logo": "https://www.google.com/s2/favicons?domain=wix.com&sz=128",
+    "logo": "https://img.logo.dev/wix.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Developer Tools",
     "appCategory": "Credits & Savings",
-    "offerSummary": "50% Off Premium",
+    "offerSummary": "Website builder with drag-and-drop editor for creating websites",
     "benefitType": "Discount",
     "value": "~$60",
     "eligibility": "Students",
@@ -2874,7 +3063,12 @@ export const studentBenefits2026: StudentBenefit[] = [
     "verification": "Student",
     "url": "https://www.wix.com/education",
     "claimUrl": "https://www.wix.com/students",
-    "description": "Website builder with drag-and-drop editor for creating websites"
+    "description": "Wix is an AI-powered website builder that combines drag-and-drop design tools with business software, enabling students to create professional portfolios, CVs, and project websites without coding. The platform works on desktop and mobile devices, with no credit card required to start.\n\nStudents can access a 50% discount on yearly premium plans through Student Beans verification. This offer includes Wix's full feature set: customizable templates, email marketing, mobile app builder, and business tools\u2014all hosted on Wix's global infrastructure with 99.98% uptime guarantee, automatic mobile optimization, CDN coverage, and built-in security. Beyond the discount, Wix offers hands-on workshops and expert guidance designed for student use cases.",
+    "tags": [
+      "Web",
+      "Discount",
+      "No-Code"
+    ]
   },
   {
     "title": "Automattic",
@@ -2896,10 +3090,10 @@ export const studentBenefits2026: StudentBenefit[] = [
     "title": "Icons8",
     "company": "Icons8",
     "slug": "icons8",
-    "logo": "https://www.google.com/s2/favicons?domain=icons8.com&sz=128",
+    "logo": "https://img.logo.dev/icons8.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Design & Creative",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free Design Assets subscription",
+    "offerSummary": "Icons, photos, and music resources for creative design work",
     "benefitType": "Subscription",
     "value": "$30/mo",
     "eligibility": "Students",
@@ -2907,16 +3101,20 @@ export const studentBenefits2026: StudentBenefit[] = [
     "verification": "GitHub Packeducation.",
     "url": "https://icons8.com/github-students",
     "claimUrl": "https://icons8.com/github-students",
-    "description": "Icons, photos, and music resources for creative design work"
+    "description": "Icons8 is a design asset platform offering icons, illustrations, photos, and royalty-free music for creative work. The free license includes Lunacy, Icons8's professional design app with Figma import functionality, enabling faster workflow for design, frontend, and product development projects.\n\nStudents receive a 3-month free license through the GitHub Student Developer Pack, which includes access to icons, clipart illustrations, photos, and music with royalty-free licensing. To claim the offer, students must verify their status via GitHub and sign in with their GitHub account through the Icons8 student portal.",
+    "tags": [
+      "Web",
+      "Trial"
+    ]
   },
   {
     "title": "IconScout",
     "company": "IconScout",
     "slug": "iconscout",
-    "logo": "https://www.google.com/s2/favicons?domain=iconscout.com&sz=128",
+    "logo": "https://img.logo.dev/iconscout.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Design & Creative",
     "appCategory": "Credits & Savings",
-    "offerSummary": "60 Premium downloads/mo",
+    "offerSummary": "Access icons, illustrations, and 3D assets for design projects",
     "benefitType": "Credits",
     "value": "$20/mo",
     "eligibility": "Students",
@@ -2924,7 +3122,11 @@ export const studentBenefits2026: StudentBenefit[] = [
     "verification": "GitHub Packeducation.",
     "url": "https://iconscout.com/education",
     "claimUrl": "https://iconscout.com/github-students",
-    "description": "Access icons, illustrations, and 3D assets for design projects"
+    "description": "IconScout is a design-asset platform offering premium icons, illustrations, 3D models, and Lottie animations for creative and development projects. The platform provides thousands of royalty-free assets including vector illustrations, 3D icons in PNG and glTF formats, and editable Lottie animations.\n\nThrough the GitHub Student Developer Pack, students receive free access to IconScout's premium assets. To qualify, students must verify their status through GitHub Education and enroll in the GitHub Student Developer Pack. The benefit provides one year of access to premium design resources, enabling students to download and use professional-grade assets for design work, frontend development, and UI prototyping without per-asset costs.",
+    "tags": [
+      "Web",
+      "Discount"
+    ]
   },
   {
     "title": "8th Wall",
@@ -3058,10 +3260,10 @@ export const studentBenefits2026: StudentBenefit[] = [
     "title": "Milanote",
     "company": "Milanote",
     "slug": "milanote",
-    "logo": "https://www.google.com/s2/favicons?domain=milanote.com&sz=128",
+    "logo": "https://img.logo.dev/milanote.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Design & Creative",
     "appCategory": "Credits & Savings",
-    "offerSummary": "Education Plan (Discount/Free)",
+    "offerSummary": "Visual workspace for creatives to organize projects, moodboards, and briefs",
     "benefitType": "Discount",
     "value": "N/",
     "eligibility": "Student",
@@ -3069,7 +3271,11 @@ export const studentBenefits2026: StudentBenefit[] = [
     "verification": "N/A",
     "url": "https://milanote.com/education-pricing",
     "claimUrl": "https://help.milanote.com/en/articles/3600867-can-i-have-a-discount",
-    "description": "Visual workspace for creatives to organize projects, moodboards, and briefs"
+    "description": "Visual workspace for creatives to organize projects, moodboards, and briefs",
+    "tags": [
+      "Web",
+      "Discount"
+    ]
   },
   {
     "title": "MockFlow",
@@ -3107,18 +3313,22 @@ export const studentBenefits2026: StudentBenefit[] = [
     "title": "Zeplin",
     "company": "Zeplin",
     "slug": "zeplin",
-    "logo": "https://www.google.com/s2/favicons?domain=zeplin.io&sz=128",
+    "logo": "https://img.logo.dev/zeplin.io?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Design & Creative",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free Tier (1 project)",
+    "offerSummary": "Design handoff tool connecting Figma designs to developers with specs and code",
     "benefitType": "Free",
     "value": "N/A",
     "eligibility": "Everyone",
     "region": "Global",
     "verification": "N/",
     "url": "https://zeplin.io/students/",
-    "description": "Design handoff tool connecting Figma designs to developers with specs and code",
-    "claimUrl": "https://zeplin.io/students/"
+    "description": "Zeplin is a design handoff tool that bridges Figma designs and developer workflows by translating design files into organized, annotated specs and implementation references. It replaces manual design file prep with features like flows, annotations, screen variants, and AI-powered design review to catch spacing, color, and accessibility inconsistencies before handoff to developers.\n\nStudents receive the Basic 3-project plan free for 1 year through Zeplin's education program, or alternatively can access the Team Plan (5 seats with unlimited reviewers) free for 1 year. Both plans include design documentation, workflow management, and build scaling tools. Eligibility requires student verification through Zeplin's education application form.",
+    "claimUrl": "https://zeplin.io/students/",
+    "tags": [
+      "Web",
+      "Free"
+    ]
   },
   {
     "title": "Abstract",
@@ -3172,10 +3382,10 @@ export const studentBenefits2026: StudentBenefit[] = [
     "title": "Evernote Student",
     "company": "Evernote",
     "slug": "evernote-student",
-    "logo": "https://www.google.com/s2/favicons?domain=evernote.com&sz=128",
+    "logo": "https://img.logo.dev/evernote.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Productivity",
     "appCategory": "Credits & Savings",
-    "offerSummary": "50% Off Personal Plan",
+    "offerSummary": "Note-taking and task management tool for organizing your work",
     "benefitType": "Discount",
     "value": "$",
     "eligibility": "Student",
@@ -3183,7 +3393,11 @@ export const studentBenefits2026: StudentBenefit[] = [
     "verification": "N/A",
     "url": "https://evernote.com/students",
     "claimUrl": "https://evernote.com/unidays",
-    "description": "Note-taking and task management tool for organizing your work"
+    "description": "Evernote is a note-taking and task management app that helps students capture, organize, and retrieve information across devices. It includes features like AI meeting note transcription, PDF editing, web clipping, and collaboration tools for coursework and research.\n\nEligible students receive 40% off Evernote Advanced Annual plan. To qualify, you must not currently subscribe to any Evernote Paid Service and must verify your student status through UNiDAYS, a third-party verification platform. Once verified, the discount is applied to your annual subscription.\n\nThis offer is only available to new or free-tier users. If you currently hold a paid Evernote subscription, you are ineligible and will not receive a refund if you attempt to apply the offer. Student verification is handled entirely by UNiDAYS under their privacy policy, separate from Evernote's data handling.",
+    "tags": [
+      "Web",
+      "Discount"
+    ]
   },
   {
     "title": "Google Workspace for Edu",
@@ -3221,10 +3435,10 @@ export const studentBenefits2026: StudentBenefit[] = [
     "title": "LinkedIn Learning - Free 1-month trial + free access via select universities",
     "company": "LinkedIn",
     "slug": "linkedin-learning",
-    "logo": "https://www.google.com/s2/favicons?domain=linkedin.com&sz=128",
+    "logo": "https://img.logo.dev/linkedin.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Learning",
     "appCategory": "Software & Tools",
-    "offerSummary": "LinkedInLearningFree via University/Library",
+    "offerSummary": "Platform offering professional development courses and certifications",
     "benefitType": "Subscription",
     "value": "$300",
     "eligibility": "Students",
@@ -3232,11 +3446,11 @@ export const studentBenefits2026: StudentBenefit[] = [
     "verification": "Institutionlearning.",
     "url": "https://www.linkedin.com/help/linkedin/answer/a9954084",
     "claimUrl": "https://www.linkedin.com/help/linkedin/answer/a9954084",
-    "description": "Platform offering professional development courses and certifications",
+    "description": "LinkedIn Learning is a professional skills platform offering over 2,000 courses in software training, business management, creative design, and career development. The platform provides access to 120+ off-platform credentials including certifications, continuing education units, and academic credits.\n\nStudents can start with a free one-month trial of LinkedIn Learning. Additionally, free access may be available through your university if your school has a direct license with LinkedIn Learning for higher education. Check your school's library or student resources portal to confirm eligibility.\n\nAfter the trial ends, a paid subscription is required for continued access unless your institution provides ongoing free access. Course completion can count toward recognized professional certifications and, at participating schools, academic credit.",
     "tags": [
-      "Trial",
       "Web",
-      "Limited Universities"
+      "Limited Universities",
+      "Trial"
     ]
   },
   {
@@ -3291,10 +3505,10 @@ export const studentBenefits2026: StudentBenefit[] = [
     "title": "Skillshare Student",
     "company": "Skillshare",
     "slug": "skillshare-student",
-    "logo": "https://www.google.com/s2/favicons?domain=skillshare.com&sz=128",
+    "logo": "https://img.logo.dev/skillshare.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Learning",
     "appCategory": "Credits & Savings",
-    "offerSummary": "50% Off Membership",
+    "offerSummary": "Learn creative and business skills through thousands of online classes",
     "benefitType": "Discount",
     "value": "$80",
     "eligibility": "Students",
@@ -3302,7 +3516,11 @@ export const studentBenefits2026: StudentBenefit[] = [
     "verification": "Student",
     "url": "https://www.skillshare.com/",
     "claimUrl": "https://www.skillshare.com/en/membership",
-    "description": "Learn creative and business skills through thousands of online classes"
+    "description": "Skillshare is an online learning platform offering thousands of classes in creative and business skills including illustration, design, photography, and productivity. New members can access unlimited classes for free during a 7-day trial period, with the ability to learn offline using the Skillshare mobile app.\n\nThe trial is available to new paid subscribers only\u2014you must cancel before the trial ends to avoid automatic billing on a recurring subscription basis. After the trial period, membership converts to a paid plan unless canceled, and all charges continue on a recurring schedule until you manage your subscription settings.",
+    "tags": [
+      "Web",
+      "Trial"
+    ]
   },
   {
     "title": "Alteryx for Students",
@@ -3340,18 +3558,23 @@ export const studentBenefits2026: StudentBenefit[] = [
     "title": "QuillBot Student",
     "company": "QuillBot",
     "slug": "quillbot-student",
-    "logo": "https://www.google.com/s2/favicons?domain=quillbot.com&sz=128",
+    "logo": "https://img.logo.dev/quillbot.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Productivity",
     "appCategory": "Credits & Savings",
-    "offerSummary": "Up to 25% Off",
+    "offerSummary": "AI paraphrasing and rewriting tool with grammar and citation features",
     "benefitType": "Discount",
     "value": "~$4/",
     "eligibility": "Student",
     "region": "Global",
     "verification": "N/A",
     "url": "https://quillbot.com/",
-    "description": "AI paraphrasing and rewriting tool with grammar and citation features",
-    "claimUrl": "https://quillbot.com/"
+    "description": "QuillBot is an AI writing assistant that paraphrases, checks grammar, detects plagiarism, and generates citations. The Premium plan includes unlimited paraphrasing, unlimited AI-generated text prompts, custom writing modes, and plagiarism checks on unlimited words per month\u2014compared to the free version's 25,000-word monthly limit.\n\nStudents can access QuillBot Premium for $8.33 USD per month when billed annually via UNiDAYS verification. This pricing reflects a 25% student discount stacked on top of the annual plan's standard 58% savings compared to monthly billing, for a combined 66% total discount. Verification is completed through UNiDAYS at signup.\n\nQuillBot's paraphrasing tool matches multiple tones (Academic, Creative, and others) and works across browser extensions and dedicated apps. The service is available worldwide for students and has been adopted by top-tier educational institutions.",
+    "claimUrl": "https://quillbot.com/",
+    "tags": [
+      "Web",
+      "Discount",
+      "AI"
+    ]
   },
   {
     "title": "Speechify Student",
@@ -3421,10 +3644,10 @@ export const studentBenefits2026: StudentBenefit[] = [
     "title": "Parallels Desktop - 50% off Pro and Standard editions",
     "company": "Alludo",
     "slug": "parallels-desktop",
-    "logo": "https://www.google.com/s2/favicons?domain=parallels.com&sz=128",
+    "logo": "https://img.logo.dev/parallels.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Productivity",
     "appCategory": "Credits & Savings",
-    "offerSummary": "50% Off Student Edition",
+    "offerSummary": "Run Windows apps and software on your Mac without a second device",
     "benefitType": "Discount",
     "value": "$50+",
     "eligibility": "Student",
@@ -3432,21 +3655,21 @@ export const studentBenefits2026: StudentBenefit[] = [
     "verification": "N/A",
     "url": "https://www.parallels.com/landing/student-discount/",
     "claimUrl": "https://www.parallels.com/landing/student-discount/",
-    "description": "Run Windows apps and software on your Mac without a second device",
+    "description": "Parallels Desktop is virtualization software that lets you run Windows applications and programs directly on your Mac without needing a separate computer or dual-boot setup. This is essential for students taking courses that require Windows-only engineering software, design tools, analytics platforms, or architecture applications. You can switch between macOS and Windows instantly, access both operating systems side-by-side, and run professional-grade tools without sacrificing Mac performance.\n\nEligible students receive 50% off Parallels Desktop Pro and Standard editions after verifying academic status through the education verification portal. The discount applies to both new purchases and renewals, and it refreshes annually as long as you maintain valid student status. No reapplication is needed each semester\u2014your verification stays active throughout your enrollment period.",
     "tags": [
-      "Discount",
+      "Global",
       "macOS",
-      "Global"
+      "Discount"
     ]
   },
   {
     "title": "Loom for Education",
     "company": "Loom",
     "slug": "loom-education",
-    "logo": "https://www.google.com/s2/favicons?domain=loom.com&sz=128",
+    "logo": "https://img.logo.dev/loom.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Productivity",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free Education Plan (Unlimited videos)",
+    "offerSummary": "Screen recorder and video sharing for students and educators",
     "benefitType": "Subscription",
     "value": "$8/mo",
     "eligibility": "K-12/Higher Ed",
@@ -3454,16 +3677,20 @@ export const studentBenefits2026: StudentBenefit[] = [
     "verification": "Edu",
     "url": "https://www.loom.com/products/teaching-screen-recorder",
     "claimUrl": "https://www.loom.com/use-case/education",
-    "description": "Screen recorder and video sharing for students and educators"
+    "description": "Loom is a screen recording and video sharing tool that lets educators and students capture, annotate, and share videos instantly. Teachers use it to record lessons, walkthroughs, feedback, and read-alouds; students use it for presentations, group work explanations, and portfolio documentation.\n\nQualified educators receive unlimited recordings and access to premium features at 75% off Loom Business. Videos can be shared via email, direct link, or messaging apps, and students can pause and rewind to learn at their own pace. A free version is available to all users with basic recording capabilities.\n\nEducation pricing requires verification as a qualified educator through Loom's education program. Once approved, the 75% discount applies to the Business plan, unlocking unlimited recordings and advanced features like custom chapters and summaries designed to boost engagement.",
+    "tags": [
+      "Web",
+      "Discount"
+    ]
   },
   {
     "title": "Scrivener - 15% off educational license",
     "company": "Literature & Latte",
     "slug": "scrivener",
-    "logo": "https://www.google.com/s2/favicons?domain=statusliteratureandlatte.com&sz=128",
+    "logo": "https://img.logo.dev/literatureandlatte.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Productivity",
     "appCategory": "Credits & Savings",
-    "offerSummary": "~20% Off Education License",
+    "offerSummary": "Long-form writing and research app for Mac and Windows",
     "benefitType": "Discount",
     "value": "$50",
     "eligibility": "Students",
@@ -3471,21 +3698,21 @@ export const studentBenefits2026: StudentBenefit[] = [
     "verification": "Proof of",
     "url": "https://tatusliteratureandlatte.com",
     "claimUrl": "https://tatusliteratureandlatte.com",
-    "description": "Long-form writing and research app for Mac and Windows",
+    "description": "Scrivener is a long-form writing and research application for macOS, Windows, iPad, and iPhone designed to help writers organize, draft, and manage complex projects. The software functions as a combined typewriter, ring-binder, and scrapbook\u2014allowing users to capture research, outline ideas, and structure full manuscripts in a single workspace.\n\nStudents and academics receive an Educational Licence discount on Scrivener for both macOS and Windows. The educational license requires institutional affiliation verification and is available exclusively to students and academic staff. Before purchasing, you can start a free 30-day trial on either platform to test the full version. Scrivener also offers free webinars tailored to writing groups, organizations, and college peers, covering practical strategies for using the software's tools to streamline different aspects of writing work.",
     "tags": [
-      "Discount",
+      "Global",
       "macOS",
-      "Global"
+      "Discount"
     ]
   },
   {
     "title": "Ulysses",
     "company": "Ulysses",
     "slug": "ulysses",
-    "logo": "https://www.google.com/s2/favicons?domain=ulysses.app&sz=128",
+    "logo": "https://aobklvmdpcebkbgvvijp.supabase.co/storage/v1/object/public/LOGOs/Ulysses.png",
     "category": "Productivity",
     "appCategory": "Credits & Savings",
-    "offerSummary": "Discounted Subscription ($11/6mo)",
+    "offerSummary": "Markdown writing app for focused long-form writing and publishing",
     "benefitType": "Discount",
     "value": "$30/",
     "eligibility": "Student",
@@ -3493,7 +3720,11 @@ export const studentBenefits2026: StudentBenefit[] = [
     "verification": "N/A",
     "url": "https://ulysses.app/education",
     "claimUrl": "https://ulysses.app/students/",
-    "description": "Markdown writing app for focused long-form writing and publishing"
+    "description": "Ulysses is a distraction-free markdown writing app designed for long-form writing, research papers, essays, and structured content creation across Mac and iOS. The app includes built-in grammar and style checking available in over 20 languages, full iCloud synchronization across devices, and a focused writing interface to minimize distractions.\n\nEnrolled students in high school, vocational school, college, or university can access Ulysses for $10.99 per 6-month subscription period. To qualify, you apply directly within the app by providing a valid student ID for verification. Once approved, your student pricing remains active as long as you maintain active student enrollment.\n\nUlysses offers a free trial on all devices before committing to the student plan. The app helps with grammar, punctuation, capitalization, semantics, and style suggestions across multiple languages, making it practical for academic writing, thesis work, and long-form projects.",
+    "tags": [
+      "Discount",
+      "macOS"
+    ]
   },
   {
     "title": "Zoom for Education",
@@ -3595,18 +3826,22 @@ export const studentBenefits2026: StudentBenefit[] = [
     "title": "Proton Mail",
     "company": "Proton",
     "slug": "proton-mail",
-    "logo": "https://www.google.com/s2/favicons?domain=proton.me&sz=128",
+    "logo": "https://img.logo.dev/proton.me?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Productivity",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free Encrypted Mail (1GB)",
+    "offerSummary": "Privacy-first suite with encrypted email, VPN, Drive, and password manager",
     "benefitType": "Free",
     "value": "N/A",
     "eligibility": "Everyone",
     "region": "Global",
     "verification": "N/",
     "url": "https://proton.me/student",
-    "description": "Privacy-first suite with encrypted email, VPN, Drive, and password manager",
-    "claimUrl": "https://proton.me/student"
+    "description": "Proton is a privacy-first suite that includes encrypted email, VPN, cloud storage, and password management tools. Verified students can access discounted annual subscriptions on Proton Mail, Proton VPN Plus, and Proton Unlimited plans through Student Beans verification.\n\nEligible students are those in full-time education at university, college, sixth form, high school, or studying for an apprenticeship. Verification happens once through Student Beans and Beans iD, and discounts apply automatically at checkout.\n\nAfter your initial discounted term ends, your subscription renews at regular pricing unless you cancel.",
+    "claimUrl": "https://proton.me/student",
+    "tags": [
+      "Web",
+      "Discount"
+    ]
   },
   {
     "title": "Tutanota",
@@ -3756,27 +3991,31 @@ export const studentBenefits2026: StudentBenefit[] = [
     "title": "Perlego",
     "company": "Perlego",
     "slug": "perlego",
-    "logo": "https://www.google.com/s2/favicons?domain=perlego.com&sz=128",
+    "logo": "https://img.logo.dev/perlego.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Learning",
     "appCategory": "Credits & Savings",
-    "offerSummary": "Student Discount (15%+)",
+    "offerSummary": "Digital library of 1.5M+ academic textbooks and research tools",
     "benefitType": "Discount",
     "value": "$100/yr",
     "eligibility": "Students",
     "region": "Global",
     "verification": "Student",
     "url": "https://www.perlego.com/",
-    "description": "Digital library of 1.5M+ academic textbooks and research tools",
-    "claimUrl": "https://www.perlego.com/"
+    "description": "Perlego is a subscription-based digital library offering access to over 1.5 million academic textbooks across subjects including architecture, business, computer science, law, medicine, and psychology. The platform works with 5,000+ academic publishers worldwide and is available globally to individual students and 250+ institutions.\n\nStudents can access the full Perlego library on a monthly, semesterly, or yearly subscription plan. Monthly billing is available, with semesterly plans offering 17% savings and yearly plans offering 33% savings. The platform includes study tools such as Smart Search (an AI research assistant), study guides created by Masters and PhD experts, and cross-device reading via desktop app and mobile app. Books can be read unlimited times during an active subscription with no per-book purchase fees.",
+    "claimUrl": "https://www.perlego.com/",
+    "tags": [
+      "Web",
+      "Discount"
+    ]
   },
   {
     "title": "Blinkist",
     "company": "Blinkist",
     "slug": "blinkist",
-    "logo": "https://www.google.com/s2/favicons?domain=blinkist.com&sz=128",
+    "logo": "https://img.logo.dev/blinkist.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Learning",
     "appCategory": "Credits & Savings",
-    "offerSummary": "Student Discount",
+    "offerSummary": "Read or listen to short summaries of nonfiction books and podcasts",
     "benefitType": "Discount",
     "value": "$50",
     "eligibility": "Students",
@@ -3784,7 +4023,11 @@ export const studentBenefits2026: StudentBenefit[] = [
     "verification": "Student",
     "url": "https://www.blinkist.com/en/content/education-discount/",
     "claimUrl": "https://www.studentbeans.com/student-discount/us/blinkist?offer=0-student-discount-64f7cdfc-e23e-495f-9199-ad78163e53de",
-    "description": "Read or listen to short summaries of nonfiction books and podcasts"
+    "description": "Blinkist is a learning platform that condenses nonfiction books and podcasts into 15-minute summaries you can read or listen to. The service covers thousands of titles across business, psychology, self-improvement, science, and other categories, letting you absorb key ideas without spending hours on each book. Most summaries include audio versions, and you can highlight key passages and take notes as you learn.\n\nStudents receive 40% off Blinkist's annual Premium plan when verified through Student Beans. The discount gives you twelve months of unlimited access to the full summary library, offline reading, and all Premium features at a reduced annual rate.",
+    "tags": [
+      "Web",
+      "Discount"
+    ]
   },
   {
     "title": "MasterClass",
@@ -3950,27 +4193,31 @@ export const studentBenefits2026: StudentBenefit[] = [
     "title": "Linear",
     "company": "Linear",
     "slug": "linear",
-    "logo": "https://www.google.com/s2/favicons?domain=linear.app&sz=128",
+    "logo": "https://img.logo.dev/linear.app?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Productivity",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free Tier (250 issues)",
+    "offerSummary": "Issue tracking and project management tool for software teams",
     "benefitType": "Free",
     "value": "N/A",
     "eligibility": "Everyone",
     "region": "Global",
     "verification": "N/",
     "url": "https://linear.app/pricing",
-    "description": "Issue tracking and project management tool for software teams",
-    "claimUrl": "https://linear.app/pricing"
+    "description": "Linear is an issue-tracking and project management tool designed for software teams to manage bugs, tasks, roadmaps, and engineering workflows. Full-time students at qualifying colleges and universities receive 100% free access for one year through Linear's Education Program.\n\nTo qualify, you must be enrolled full-time at a college or higher-level institution (high schools and for-profit or online-only institutions are not eligible). Apply by emailing support@linear.app from your .edu address with your Linear workspace name and associated email address. University staff and employees receive a 75% discount on paid plans during the same period.\n\nAfter the one-year period ends, your account will revert to Linear's standard pricing unless you reapply or downgrade to the free plan.",
+    "claimUrl": "https://linear.app/pricing",
+    "tags": [
+      "Web",
+      "Discount"
+    ]
   },
   {
     "title": "Asana",
     "company": "Asana",
     "slug": "asana",
-    "logo": "https://www.google.com/s2/favicons?domain=asana.com&sz=128",
+    "logo": "https://img.logo.dev/asana.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Productivity",
     "appCategory": "Software & Tools",
-    "offerSummary": "Basic Plan (Free)",
+    "offerSummary": "Manage team projects with lists, boards, and timelines",
     "benefitType": "Free",
     "value": "N/A",
     "eligibility": "Everyone",
@@ -3978,7 +4225,11 @@ export const studentBenefits2026: StudentBenefit[] = [
     "verification": "N/",
     "url": "https://asana.com/industry/education",
     "claimUrl": "https://asana.com/industry/students",
-    "description": "Manage team projects with lists, boards, and timelines"
+    "description": "Asana is a project management platform that helps teams organize work using lists, boards, timelines, and task tracking. Students 18 and older enrolled in accredited higher education institutions can access Asana's Starter plan free for 12 months, supporting up to 50 users per workspace.\n\nTo claim the offer, create a free Asana account and apply for the student discount via Goodstack, Asana's verification partner. Goodstack will verify your eligibility using a student ID card, enrollment certificate, confirmation of studies letter, or recent tuition receipt.\n\nThe discount applies to accredited universities worldwide; administrative offices, research institutes, teaching hospitals, and certified training programs do not qualify. After 12 months, your account will revert to paid pricing at Asana's standard rates unless you downgrade or cancel.",
+    "tags": [
+      "Web",
+      "Free"
+    ]
   },
   {
     "title": "Zapier",
@@ -4016,10 +4267,10 @@ export const studentBenefits2026: StudentBenefit[] = [
     "title": "JotForm Education",
     "company": "JotForm",
     "slug": "jotform-education",
-    "logo": "https://www.google.com/s2/favicons?domain=emailjotform.com&sz=128",
+    "logo": "https://img.logo.dev/jotform.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Productivity",
     "appCategory": "Credits & Savings",
-    "offerSummary": "50% Off Education",
+    "offerSummary": "Online form builder with 20,000+ templates, payments, e-signatures, and AI agents",
     "benefitType": "Discount",
     "value": "Variable",
     "eligibility": "Students/Edu",
@@ -4027,7 +4278,11 @@ export const studentBenefits2026: StudentBenefit[] = [
     "verification": "Edu",
     "url": "https://www.jotform.com/education/",
     "claimUrl": "https://www.jotform.com/education/pricing/",
-    "description": "Online form builder with 20,000+ templates, payments, e-signatures, and AI agents"
+    "description": "Online form builder with 20,000+ templates, payments, e-signatures, and AI agents",
+    "tags": [
+      "Web",
+      "Discount"
+    ]
   },
   {
     "title": "Tally.so",
@@ -4049,18 +4304,23 @@ export const studentBenefits2026: StudentBenefit[] = [
     "title": "Coda Education",
     "company": "Coda",
     "slug": "coda-education",
-    "logo": "https://www.google.com/s2/favicons?domain=coda.io&sz=128",
+    "logo": "https://img.logo.dev/coda.io?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Productivity",
     "appCategory": "Credits & Savings",
-    "offerSummary": "Education Discount",
+    "offerSummary": "All-in-one workspace combining docs, tables, workflows, and AI",
     "benefitType": "Discount",
     "value": "N/AStudents/",
     "eligibility": "Student",
     "region": "Global",
     "verification": "N/A",
     "url": "https://coda.io/for/education",
-    "description": "All-in-one workspace combining docs, tables, workflows, and AI",
-    "claimUrl": "https://coda.io/for/education"
+    "description": "Coda is an all-in-one workspace that combines documents, tables, workflows, and AI features in a single platform. It lets you build custom tools, automate tasks, and collaborate with your team without switching between apps.\n\nStudents and educators can access Coda's Pro plan free for one year through the education program. This includes unlimited docs, advanced AI capabilities, team collaboration features, and API access\u2014everything needed for coursework, research projects, and group assignments.\n\nEligibility requires verification of a valid school email address or student ID. After 12 months, accounts convert to standard paid pricing unless you reapply if still enrolled. The program is available worldwide to students and educators at accredited institutions.",
+    "claimUrl": "https://coda.io/for/education",
+    "tags": [
+      "Web",
+      "Discount",
+      "AI"
+    ]
   },
   {
     "title": "Smartsheet",
@@ -4082,10 +4342,10 @@ export const studentBenefits2026: StudentBenefit[] = [
     "title": "Basecamp Edu",
     "company": "Basecamp",
     "slug": "basecamp-edu",
-    "logo": "https://www.google.com/s2/favicons?domain=basecamp.com&sz=128",
+    "logo": "https://img.logo.dev/basecamp.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Productivity",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free for Teachers/Students",
+    "offerSummary": "Project management tool for organizing tasks, teams, and communication",
     "benefitType": "Subscription",
     "value": "$99/mo",
     "eligibility": "K-12/Higher Ed",
@@ -4093,7 +4353,11 @@ export const studentBenefits2026: StudentBenefit[] = [
     "verification": "Email",
     "url": "https://basecamp.com/discounts",
     "claimUrl": "https://basecamp.com/discounts",
-    "description": "Project management tool for organizing tasks, teams, and communication"
+    "description": "Basecamp's education program is better than a typical coupon because it is positioned as a fully free classroom-use account rather than a short-term student promo. Teachers and students at K-12 schools or universities qualify if the account will be used only for classroom work. The offer is especially relevant to student teams managing capstone projects, clubs, research coordination, class deliverables, and collaborative coursework.\n\nTo claim the discount, students sign up and then email Basecamp from their school account with their school name, what they are studying, and their expected graduation date. The company will verify eligibility and grant access. Note that the discount is limited to one account, prior payments are not refunded, and Basecamp reserves the right to end the program for abuse while preserving discounts already granted.",
+    "tags": [
+      "Web",
+      "Free"
+    ]
   },
   {
     "title": "Toggl Track",
@@ -4243,18 +4507,22 @@ export const studentBenefits2026: StudentBenefit[] = [
     "title": "Samsung Education",
     "company": "Samsung",
     "slug": "samsung-education",
-    "logo": "https://www.google.com/s2/favicons?domain=samsung.com&sz=128",
+    "logo": "https://img.logo.dev/samsung.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Hardware",
     "appCategory": "Credits & Savings",
-    "offerSummary": "Up to 30% Off products",
+    "offerSummary": "Student pricing on phones, laptops, and wearable devices",
     "benefitType": "Discount",
     "value": "Variable",
     "eligibility": "Students",
     "region": "Global",
     "verification": "Edu",
     "url": "https://www.samsung.com/us/shop/offer-program/education/",
-    "description": "Student pricing on phones, laptops, and wearable devices",
-    "claimUrl": "https://www.samsung.com/us/shop/offer-program/education/"
+    "description": "Samsung offers student pricing through its Education Store, where eligible students can save up to 20% on phones, laptops, tablets, wearables, and home appliances. Access to the Education Store grants exclusive everyday discounts plus weekly rotating offers, with new deals released every Thursday.\n\nThe discount is available to students in Australia who verify using a valid student or education email address, or by logging in through UNiDAYS. Eligibility is confirmed through your student email during signup, and UNiDAYS members receive exclusive access to additional promotions including limited-time S Series device discounts.\n\nDelivery is free in Australia for mobile, tablet, wearable, and memory products; other product categories incur delivery charges.",
+    "claimUrl": "https://www.samsung.com/us/shop/offer-program/education/",
+    "tags": [
+      "Web",
+      "Discount"
+    ]
   },
   {
     "title": "Apple Education Pricing",
@@ -4276,18 +4544,22 @@ export const studentBenefits2026: StudentBenefit[] = [
     "title": "Dell University",
     "company": "Dell",
     "slug": "dell-university",
-    "logo": "https://www.google.com/s2/favicons?domain=dell.com&sz=128",
+    "logo": "https://img.logo.dev/dell.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Hardware",
     "appCategory": "Credits & Savings",
-    "offerSummary": "Extra 5-10% Off + Rewards",
+    "offerSummary": "Laptops, monitors, and PCs with special student pricing",
     "benefitType": "Discount",
     "value": "Variable",
     "eligibility": "Students",
     "region": "Global",
     "verification": "Edu",
     "url": "https://www.dell.com/en-us/member/purchaseprogram/university",
-    "description": "Laptops, monitors, and PCs with special student pricing",
-    "claimUrl": "https://www.dell.com/en-us/member/purchaseprogram/university"
+    "description": "Dell manufactures laptops, desktops, and personal computers for consumer and business use. The company offers verified student pricing on select devices through its student discount program.\n\nEligible students can access up to 15% off on qualifying Dell laptops and PCs. The exact discount varies by product category, current promotions, and device specifications. Popular models across XPS, Inspiron, and Alienware lines are included in the program.\n\nStudent status verification is required at checkout through Dell's education portal. Discount availability and depth may differ by region and product line. Check current promotions, as Dell regularly updates eligible products and discount tiers.",
+    "claimUrl": "https://www.dell.com/en-us/member/purchaseprogram/university",
+    "tags": [
+      "Web",
+      "Discount"
+    ]
   },
   {
     "title": "HP Education Store",
@@ -4533,10 +4805,10 @@ export const studentBenefits2026: StudentBenefit[] = [
     "title": "UNiDAYS",
     "company": "UNiDAYS",
     "slug": "unidays",
-    "logo": "https://www.google.com/s2/favicons?domain=myunidays.com&sz=128",
+    "logo": "https://img.logo.dev/myunidays.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Miscellaneous",
     "appCategory": "Software & Tools",
-    "offerSummary": "Verification Platform/Deals",
+    "offerSummary": "Student platform offering exclusive brand discounts on fashion and tech",
     "benefitType": "Hybrid",
     "value": "N/A",
     "eligibility": "Students",
@@ -4544,16 +4816,20 @@ export const studentBenefits2026: StudentBenefit[] = [
     "verification": "Edu",
     "url": "https://www.myunidays.com/",
     "claimUrl": "https://www.myunidays.com/",
-    "description": "Student platform offering exclusive brand discounts on fashion and tech"
+    "description": "UNiDAYS is a free verification platform that helps eligible students unlock exclusive discounts from hundreds of major brands. After completing identity verification through your university email or student ID, you gain instant access to offers across fashion, technology, food, travel, and lifestyle categories. The platform partners with retailers like Nike, ASOS, Apple, and Spotify to deliver savings tailored to student budgets.\n\nYou can access deals through the UNiDAYS app or in-store at participating retailers. Discounts vary by brand and region, so check each offer's details before redeeming. Your student status requires re-verification approximately every 12 months to maintain access.\n\nUNiDAYS operates in multiple countries, though partner availability and discount amounts differ by location.",
+    "tags": [
+      "Web",
+      "Discount"
+    ]
   },
   {
     "title": "Student Beans",
     "company": "Student Beans",
     "slug": "student-beans",
-    "logo": "https://www.google.com/s2/favicons?domain=studentbeans.com&sz=128",
+    "logo": "https://img.logo.dev/studentbeans.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Miscellaneous",
     "appCategory": "Software & Tools",
-    "offerSummary": "Verification Platform/Deals",
+    "offerSummary": "Platform verifying student status for exclusive brand and product deals",
     "benefitType": "Hybrid",
     "value": "N/A",
     "eligibility": "Students",
@@ -4561,16 +4837,20 @@ export const studentBenefits2026: StudentBenefit[] = [
     "verification": "Edu",
     "url": "https://www.studentbeans.com/",
     "claimUrl": "https://www.studentbeans.com/",
-    "description": "Platform verifying student status for exclusive brand and product deals"
+    "description": "Student Beans is a student verification and discount platform that aggregates exclusive deals from brands across tech, fashion, travel, food, and software. The platform verifies student status to unlock access to partner brand discounts that are not available to general users.\n\nStudents create an account, complete verification through documentation or institutional email, and then browse and claim offers from hundreds of partner retailers. After verification, students can immediately access available discounts without additional authentication steps for each brand.\n\nThe platform operates in over 20 countries including the United Kingdom, United States, Australia, Canada, France, Germany, and others. Student Beans is operated by The Beans Group, a company registered in England and Wales.",
+    "tags": [
+      "Web",
+      "Discount"
+    ]
   },
   {
     "title": "Totum - Access to hundreds of UK student discounts",
     "company": "NUS",
     "slug": "totum",
-    "logo": "https://www.google.com/s2/favicons?domain=totum.com&sz=128",
+    "logo": "https://img.logo.dev/totum.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Miscellaneous",
     "appCategory": "Credits & Savings",
-    "offerSummary": "UK Student Discount Card",
+    "offerSummary": "Official student discount card and app for UK students",
     "benefitType": "Hybrid",
     "value": "Variable",
     "eligibility": "Students",
@@ -4578,11 +4858,11 @@ export const studentBenefits2026: StudentBenefit[] = [
     "verification": "Edu",
     "url": "https://www.totum.com/",
     "claimUrl": "https://www.totum.com/",
-    "description": "Official student discount card and app for UK students",
+    "description": "Totum is an official UK student discount card and app that provides access to hundreds of participating retailers and service providers across the UK. The platform operates as a membership service designed specifically for students, offering both a physical card and a mobile app to access verified discounts at partner businesses.\n\nTo use Totum, students must verify their eligibility through the platform's verification process, which typically requires proof of valid student status. Once verified, members can access discount codes, in-store offers, and exclusive deals from hundreds of UK merchants across categories including food, fashion, entertainment, and travel.",
     "tags": [
-      "Discount",
       "Web",
-      "UK"
+      "UK",
+      "Discount"
     ]
   },
   {
@@ -4980,7 +5260,7 @@ export const studentBenefits2026: StudentBenefit[] = [
     "offerSummary": "Europe's leading early-stage tech for good VC.",
     "description": "Bethnal Green Ventures invests in and supports founders using technology to tackle big social and environmental problems. Their Tech for Good accelerator provides funding and mentorship.",
     "benefitType": "Investment",
-    "value": "£30,000",
+    "value": "\u00a330,000",
     "eligibility": "Founders",
     "region": "UK/Europe",
     "verification": "Application",
@@ -5158,10 +5438,10 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://www.google.com/s2/favicons?domain=hsbc.co.uk&sz=128",
     "category": "Credits & Savings",
     "appCategory": "Credits & Savings",
-    "offerSummary": "£100 Cash + £1000+ Overdraft.",
-    "description": "The HSBC Student Bank Account offers a £100 welcome cash offer and an interest-free arranged overdraft of up to £1,000 in the first year, increasing in subsequent years.",
+    "offerSummary": "\u00a3100 Cash + \u00a31000+ Overdraft.",
+    "description": "The HSBC Student Bank Account offers a \u00a3100 welcome cash offer and an interest-free arranged overdraft of up to \u00a31,000 in the first year, increasing in subsequent years.",
     "benefitType": "Prize",
-    "value": "£100 Cash",
+    "value": "\u00a3100 Cash",
     "eligibility": "Students",
     "region": "UK",
     "verification": "UCAS Code",
@@ -5182,9 +5462,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "category": "Credits & Savings",
     "appCategory": "Credits & Savings",
     "offerSummary": "Free 4-Year Railcard.",
-    "description": "Santander's 1I2I3 Student Current Account comes with a free 4-year 16-25 Railcard (worth £100), plus an interest-free arranged overdraft.",
+    "description": "Santander's 1I2I3 Student Current Account comes with a free 4-year 16-25 Railcard (worth \u00a3100), plus an interest-free arranged overdraft.",
     "benefitType": "Free",
-    "value": "£100 value",
+    "value": "\u00a3100 value",
     "eligibility": "Students",
     "region": "UK",
     "verification": "UCAS Code",
@@ -5228,7 +5508,7 @@ export const studentBenefits2026: StudentBenefit[] = [
     "category": "Credits & Savings",
     "appCategory": "Credits & Savings",
     "offerSummary": "Interest Free Overdraft.",
-    "description": "Barclays Student Additions Account offers an interest-free overdraft of up to £1,500 in the first year, plus access to Perx rewards.",
+    "description": "Barclays Student Additions Account offers an interest-free overdraft of up to \u00a31,500 in the first year, plus access to Perx rewards.",
     "benefitType": "Free",
     "value": "Overdraft",
     "eligibility": "Students",
@@ -5250,7 +5530,7 @@ export const studentBenefits2026: StudentBenefit[] = [
     "category": "Credits & Savings",
     "appCategory": "Credits & Savings",
     "offerSummary": "Cash Back + Good Grade Reward ($20).",
-    "description": "The Discover it® Student Chrome Card offers 2% cash back at gas stations and restaurants, plus a $20 statement credit each school year your GPA is 3.0 or higher.",
+    "description": "The Discover it\u00ae Student Chrome Card offers 2% cash back at gas stations and restaurants, plus a $20 statement credit each school year your GPA is 3.0 or higher.",
     "benefitType": "Hybrid",
     "value": "$20/yr",
     "eligibility": "Students",
@@ -5361,11 +5641,11 @@ export const studentBenefits2026: StudentBenefit[] = [
     "title": "Amtrak Student",
     "company": "Amtrak",
     "slug": "amtrak-student",
-    "logo": "https://www.google.com/s2/favicons?domain=amtrak.com&sz=128",
+    "logo": "https://img.logo.dev/amtrak.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Travel",
     "appCategory": "Credits & Savings",
-    "offerSummary": "15% Off (Regional).",
-    "description": "Students aged 17-24 save 15% on Amtrak travel in select regions including the Midwest, California, and South. Valid for booking online at least one day in advance.",
+    "offerSummary": "Save on train tickets across the US with a valid student ID",
+    "description": "Amtrak offers students aged 17-24 a 15% discount on train fares when booking one day in advance. The discount applies to Amtrak's national rail network, which serves more than 500 destinations across the Northeast, California, Midwest, Northwest, and beyond. Students must present a valid student ID at the time of booking or travel to qualify for the discount.\n\nThe 15% savings can be applied to any Amtrak ticket purchased with at least one day advance notice, making it useful for trips home, campus visits, internship travel, or exploring new cities. Amtrak trains offer downtown-to-downtown service, spacious seating, complimentary Wi-Fi, and baggage services\u2014features that make rail travel practical for budget-conscious college students. Additional savings are available through the Amtrak Guest Rewards program and affiliated credit card benefits.",
     "benefitType": "Discount",
     "value": "15% Off",
     "eligibility": "Students 17-24",
@@ -5373,10 +5653,11 @@ export const studentBenefits2026: StudentBenefit[] = [
     "verification": "ID / Code",
     "url": "https://www.amtrak.com/student-discounts",
     "tags": [
-      "Travel",
-      "Train",
+      "Web",
       "US",
-      "Discount"
+      "Train",
+      "Discount",
+      "Travel"
     ],
     "claimUrl": "https://www.amtrak.com/student-discounts"
   },
@@ -5384,11 +5665,11 @@ export const studentBenefits2026: StudentBenefit[] = [
     "title": "FlixBus Student",
     "company": "FlixBus",
     "slug": "flixbus-student",
-    "logo": "https://www.google.com/s2/favicons?domain=flixbus.com&sz=128",
+    "logo": "https://img.logo.dev/flixbus.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Travel",
     "appCategory": "Credits & Savings",
-    "offerSummary": "10-15% Off.",
-    "description": "FlixBus offers student discounts of 10-15% depending on the region. Verification is typically done through StudentBeans or ISIC card.",
+    "offerSummary": "Budget bus network connecting 5,500+ destinations across 40+ countries worldwide",
+    "description": "FlixBus is a global mobility platform offering affordable intercity bus travel across Europe and the United States. The service operates over 180 destinations including 40 university routes across 29 U.S. states, with fares starting from $4.99, and provides amenities including free Wi-Fi and comfortable seating on most routes.\n\nStudents can access a 10% discount on FlixBus bookings through Student Beans. The discount code is redeemable on both the FlixBus website and mobile app at checkout. The current promotion is valid for travel dates between January 7, 2026 and June 26, 2026, with a blackout period from April 2\u20137, 2026. The discount cannot be combined with other promotional codes and does not apply to service fees or add-on extras.\n\nVerification is handled through the Student Beans portal. Note that the discount excludes service fees and cannot be retroactively applied to existing bookings.",
     "benefitType": "Discount",
     "value": "10-15% Off",
     "eligibility": "Students",
@@ -5396,10 +5677,11 @@ export const studentBenefits2026: StudentBenefit[] = [
     "verification": "StudentBeans / ISIC",
     "url": "https://www.isic.org/",
     "tags": [
-      "Travel",
-      "Bus",
+      "Web",
       "Global",
-      "Discount"
+      "Bus",
+      "Discount",
+      "Travel"
     ],
     "claimUrl": "https://www.isic.org/"
   },
@@ -5474,11 +5756,11 @@ export const studentBenefits2026: StudentBenefit[] = [
     "title": "Emirates Student",
     "company": "Emirates",
     "slug": "emirates-student",
-    "logo": "https://www.google.com/s2/favicons?domain=emirates.com&sz=128",
+    "logo": "https://img.logo.dev/emirates.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Travel",
     "appCategory": "Credits & Savings",
-    "offerSummary": "Up to 10% Off.",
-    "description": "Emirates offers exclusive discounts for students, including up to 10% off Economy and Business Class fares and extra baggage allowance.",
+    "offerSummary": "International airline with student discounts on flights.",
+    "description": "Emirates is an international airline offering discounted fares for eligible students on flights across its global route network. The airline provides up to 10% off Economy class fares and 5% off Premium Economy or Business Class for travellers aged 16 to 31.\n\nTo claim the discount, students use the promo code STUDENT when booking on the Emirates website. Students aged 16\u201331 must provide proof of student status (such as a valid student ID) during booking or at check-in. The offer is available on bookings across Emirates' destinations worldwide and suits study-abroad travel, semester breaks, and long-haul journeys.\n\nVerify that your preferred route and cabin class qualify for the discount, confirm current booking deadlines, and check any destination-specific travel requirements before completing your Emirates flight booking.",
     "benefitType": "Discount",
     "value": "Up to 10% Off",
     "eligibility": "Students",
@@ -5486,9 +5768,11 @@ export const studentBenefits2026: StudentBenefit[] = [
     "verification": "Code 'STUDENT'",
     "url": "https://www.emirates.com/us/english/special-offers/student-special-fares/",
     "tags": [
-      "Travel",
+      "Web",
+      "Student Fares",
       "Flights",
-      "Student Fares"
+      "Discount",
+      "Travel"
     ],
     "claimUrl": "https://www.emirates.com/us/english/special-offers/student-special-fares/"
   },
@@ -5746,7 +6030,7 @@ export const studentBenefits2026: StudentBenefit[] = [
     "category": "Travel",
     "appCategory": "Credits & Savings",
     "offerSummary": "1/3 Off Rail Fares.",
-    "description": "The 16-25 Railcard saves you 1/3 on most rail fares across Great Britain. It costs £30 a year but pays for itself in just a few trips.",
+    "description": "The 16-25 Railcard saves you 1/3 on most rail fares across Great Britain. It costs \u00a330 a year but pays for itself in just a few trips.",
     "benefitType": "Discount",
     "value": "33% Off",
     "eligibility": "16-25 or Student",
@@ -5810,11 +6094,11 @@ export const studentBenefits2026: StudentBenefit[] = [
     "title": "Hulu Student",
     "company": "Hulu",
     "slug": "hulu-student",
-    "logo": "https://www.google.com/s2/favicons?domain=hulu.com&sz=128",
+    "logo": "https://img.logo.dev/hulu.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Entertainment",
     "appCategory": "Credits & Savings",
-    "offerSummary": "$1.99/mo (Ad supported).",
-    "description": "Get Hulu (ad-supported) for just $1.99/month while you're a student. Stream thousands of shows and movies.",
+    "offerSummary": "Stream TV shows and films on the student discounted plan",
+    "description": "Hulu is a streaming service offering TV shows, films, and next-day network content on demand. Verified students can access Hulu's ad-supported plan for $1.99 per month after completing a 30-day free trial, significantly below the standard pricing.\n\nTo claim this offer, you'll need a valid student ID or proof of enrollment at a recognized institution. Verification happens through the UNiDAYS platform at no cost. Once verified, activate the offer through your UNiDAYS account to begin streaming immediately.\n\nNote that the $1.99/month rate applies exclusively to Hulu's ad-supported tier. The student pricing renews monthly as long as your student status remains verified.",
     "benefitType": "Discount",
     "value": "$6/mo savings",
     "eligibility": "Students",
@@ -5822,10 +6106,12 @@ export const studentBenefits2026: StudentBenefit[] = [
     "verification": "SheerID",
     "url": "https://www.hulu.com/student",
     "tags": [
-      "Streaming",
-      "Video",
       "Movies",
-      "US"
+      "Web",
+      "US",
+      "Streaming",
+      "Trial",
+      "Video"
     ],
     "claimUrl": "https://www.myunidays.com/US/en-US/partners/hulu/view"
   },
@@ -5901,11 +6187,11 @@ export const studentBenefits2026: StudentBenefit[] = [
     "title": "Tidal Student",
     "company": "Tidal",
     "slug": "tidal-student",
-    "logo": "https://www.google.com/s2/favicons?domain=tidal.com&sz=128",
+    "logo": "https://img.logo.dev/tidal.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Entertainment",
     "appCategory": "Credits & Savings",
-    "offerSummary": "50% Off.",
-    "description": "Tidal offers a 50% discount on its subscription tiers for eligible high school and college students.",
+    "offerSummary": "HiFi music streaming with lossless audio, Dolby Atmos and 110M+ tracks",
+    "description": "Tidal is a music streaming service that delivers lossless audio quality, Dolby Atmos support, and access to over 110 million tracks. Unlike standard streaming, Tidal preserves the full fidelity of master recordings, making it ideal for audiophiles and casual listeners alike.\n\nEligible students receive a 30-day free trial, then 50% or more off the regular monthly subscription price ($5.49/month after trial). This makes Tidal an affordable way to experience high-fidelity music streaming.\n\nTidal Student is available to college students and U.S. high school students age 16 or older, though availability varies by country. Student accounts require reverification every 12 months through SheerID to maintain the discount.",
     "benefitType": "Discount",
     "value": "$5/mo savings",
     "eligibility": "Students",
@@ -5913,9 +6199,11 @@ export const studentBenefits2026: StudentBenefit[] = [
     "verification": "SheerID",
     "url": "https://tidal.com/partners/student",
     "tags": [
-      "Music",
+      "High Fidelity",
+      "Web",
       "Streaming",
-      "High Fidelity"
+      "Music",
+      "Trial"
     ],
     "claimUrl": "https://tidal.com/partners/student"
   },
@@ -5945,11 +6233,11 @@ export const studentBenefits2026: StudentBenefit[] = [
     "title": "SoundCloud Go+",
     "company": "SoundCloud",
     "slug": "soundcloud-student",
-    "logo": "https://www.google.com/s2/favicons?domain=soundcloud.com&sz=128",
+    "logo": "https://img.logo.dev/soundcloud.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Entertainment",
     "appCategory": "Credits & Savings",
-    "offerSummary": "50% Off.",
-    "description": "Get SoundCloud Go+ for 50% off as a student. Offline listening and no ads.",
+    "offerSummary": "Stream and upload music with ad-free student pricing",
+    "description": "SoundCloud Go+ is a premium music streaming service that removes ads and unlocks unlimited skips, high-quality audio, and the ability to download tracks for offline listening. Go+ removes ads from playback and expands your access to SoundCloud's catalog of independent and mainstream artists.\n\nStudents qualify for a discounted Go+ Student plan verified through SheerID: one free month, then $5.49/month (50% off the standard price). After your free month ends, your subscription renews automatically at the discounted student rate each month. You must verify your student status via SheerID at signup.\n\nThe service is available across 15+ countries.",
     "benefitType": "Discount",
     "value": "$5/mo savings",
     "eligibility": "Students",
@@ -5957,8 +6245,10 @@ export const studentBenefits2026: StudentBenefit[] = [
     "verification": "SheerID",
     "url": "https://checkout.soundcloud.com/student",
     "tags": [
-      "Music",
+      "Web",
       "Streaming",
+      "Music",
+      "Discount",
       "Indie"
     ],
     "claimUrl": "https://shop.sheerid.com/offers/only-5-49-month-for-students/"
@@ -5967,11 +6257,11 @@ export const studentBenefits2026: StudentBenefit[] = [
     "title": "Pandora Student",
     "company": "Pandora",
     "slug": "pandora-student",
-    "logo": "https://www.google.com/s2/favicons?domain=pandora.com&sz=128",
+    "logo": "https://img.logo.dev/pandora.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Entertainment",
     "appCategory": "Credits & Savings",
-    "offerSummary": "$4.99/mo Premium.",
-    "description": "Pandora Premium Student is available for $4.99/month. Listen ad-free, search and play any song.",
+    "offerSummary": "Ad-free personalized music streaming and offline listening",
+    "description": "Pandora is a personalized music streaming service that offers ad-free listening and offline downloads to Premium subscribers. Eligible U.S. college students can access Pandora Premium at a discounted rate of $5.99 per month for up to four consecutive years.\n\nTo qualify, you must be currently enrolled at a Title IV accredited U.S. higher education institution and verified through SheerID, Pandora's verification vendor. If you have an existing Pandora Plus subscription, you'll pay a prorated amount to upgrade to the student discount rate.\n\nVerification is valid for 12 months and must be renewed annually to maintain the student discount. After four years or if you fail to re-verify your enrollment status, your subscription automatically converts to Pandora Premium at the current standard rate.",
     "benefitType": "Discount",
     "value": "$5/mo savings",
     "eligibility": "Students",
@@ -5979,8 +6269,10 @@ export const studentBenefits2026: StudentBenefit[] = [
     "verification": "SheerID",
     "url": "https://www.pandora.com/upgrade/premium/student",
     "tags": [
-      "Music",
+      "Web",
       "Streaming",
+      "Music",
+      "Trial",
       "Radio"
     ],
     "claimUrl": "https://www.pandora.com/legal/subscription/student-discount"
@@ -5989,11 +6281,11 @@ export const studentBenefits2026: StudentBenefit[] = [
     "title": "Headspace Student",
     "company": "Headspace",
     "slug": "headspace-student",
-    "logo": "https://www.google.com/s2/favicons?domain=headspace.com&sz=128",
+    "logo": "https://img.logo.dev/headspace.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Health & Fitness",
     "appCategory": "Credits & Savings",
-    "offerSummary": "$9.99/year.",
-    "description": "Headspace Student Plan offers the full Headspace library of meditation and mindfulness exercises for just $9.99 per year (usually $69.99).",
+    "offerSummary": "Mindfulness app for meditation, stress relief, and better sleep",
+    "description": "Headspace is a meditation and mindfulness app that offers guided meditations, sleep programs, stress-relief courses, online therapy, and mental health coaching.\n\nStudents aged 18+ attending a post-secondary institution in the United States, UK, Australia, Canada, France, Portugal, or Spain can access the full app for $9.99 USD per year (or equivalent in local currency) \u2014 a reduction of 85% from the standard annual price. Eligibility is verified through SheerID, which may require instant authentication or manual document upload. No school email is required to register.\n\nYour student status is re-verified annually; if you're no longer verified (such as after graduation), Headspace automatically transitions you to a 1-year alumni subscription at 40% off the regular annual membership price.",
     "benefitType": "Discount",
     "value": "$60/yr savings",
     "eligibility": "Students",
@@ -6001,10 +6293,12 @@ export const studentBenefits2026: StudentBenefit[] = [
     "verification": "SheerID",
     "url": "https://www.headspace.com/studentplan",
     "tags": [
-      "Health",
-      "Meditation",
       "Wellness",
-      "App"
+      "Web",
+      "App",
+      "Meditation",
+      "Health",
+      "Discount"
     ],
     "claimUrl": "https://www.headspace.com/studentplan"
   },
@@ -6012,11 +6306,11 @@ export const studentBenefits2026: StudentBenefit[] = [
     "title": "Calm Student",
     "company": "Calm",
     "slug": "calm-student",
-    "logo": "https://www.google.com/s2/favicons?domain=calm.com&sz=128",
+    "logo": "https://img.logo.dev/calm.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Health & Fitness",
     "appCategory": "Credits & Savings",
-    "offerSummary": "40% Off (Periodic).",
-    "description": "Calm occasionally offers student discounts, such as 40% off the annual subscription. Amazon Prime Student members may also get a 3-month free trial.",
+    "offerSummary": "Meditation and sleep app with guided sessions for focus and relaxation.",
+    "description": "Calm is a meditation and sleep app designed to help users experience better sleep, lower stress, and reduced anxiety. The app offers guided meditations, sleep stories, and wellness content for daily use.\n\nStudents can access Calm's annual plan at 60% off through Student Beans, a verified student discount portal. The offer requires student status verification through Student Beans at the time of purchase. Additionally, Calm provides a 14-day free trial for new users to explore the app's features before committing to a subscription. Prime Student members may also unlock an annual discount directly through Calm's website.",
     "benefitType": "Discount",
     "value": "Variable",
     "eligibility": "Students",
@@ -6024,10 +6318,12 @@ export const studentBenefits2026: StudentBenefit[] = [
     "verification": "Amazon / ID",
     "url": "https://www.calm.com/",
     "tags": [
-      "Health",
+      "Web",
+      "App",
       "Meditation",
       "Sleep",
-      "App"
+      "Health",
+      "Discount"
     ],
     "claimUrl": "https://www.calm.com/"
   },
@@ -6058,11 +6354,11 @@ export const studentBenefits2026: StudentBenefit[] = [
     "title": "Strava Student",
     "company": "Strava",
     "slug": "strava-student",
-    "logo": "https://www.google.com/s2/favicons?domain=strava.com&sz=128",
+    "logo": "https://img.logo.dev/strava.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Health & Fitness",
     "appCategory": "Credits & Savings",
-    "offerSummary": "50% Off Subscription.",
-    "description": "Strava offers a 50% discount on its annual subscription for eligible students, unlocking advanced performance analytics and route planning.",
+    "offerSummary": "Track fitness activity with advanced performance metrics and route planning",
+    "description": "Strava is a fitness tracking app for running, cycling, and hiking that records performance metrics, route data, and allows users to share activities. The app provides access to premium features like advanced performance analytics and route planning for serious athletes and fitness enthusiasts.\n\nStrava offers a student discount that includes 30 days free, followed by 50% off an annual subscription. Students can verify eligibility through Strava's student discount page to gain access to these reduced rates. After the 30-day trial ends, the discounted annual rate applies, making ongoing training data and community features more affordable for full-time students.",
     "benefitType": "Discount",
     "value": "50% Off",
     "eligibility": "Students",
@@ -6070,10 +6366,12 @@ export const studentBenefits2026: StudentBenefit[] = [
     "verification": "SheerID",
     "url": "https://www.strava.com/student",
     "tags": [
-      "Health",
-      "Fitness",
+      "Web",
       "Running",
-      "Cycling"
+      "Cycling",
+      "Fitness",
+      "Health",
+      "Trial"
     ],
     "claimUrl": "https://www.strava.com/student"
   },
@@ -6193,11 +6491,11 @@ export const studentBenefits2026: StudentBenefit[] = [
     "title": "DoorDash Student",
     "company": "DoorDash",
     "slug": "doordash-student",
-    "logo": "https://www.google.com/s2/favicons?domain=doordash.com&sz=128",
+    "logo": "https://img.logo.dev/doordash.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Miscellaneous",
     "appCategory": "Credits & Savings",
-    "offerSummary": "DashPass Student $4.99/mo.",
-    "description": "DashPass for Students is $4.99/month (half price). Get $0 delivery fees on eligible orders and 5% back in DoorDash credits on pickup orders.",
+    "offerSummary": "$$0 delivery fees on eligible orders (over $12), 5% credits back on pickup & exclusive promos",
+    "description": "DoorDash is a food delivery platform that connects users with restaurants and merchants for on-demand meal delivery. The service operates through a subscription model called DashPass, which provides membership benefits including reduced or eliminated delivery fees on eligible orders.\n\nStudents can access DashPass at a discounted rate compared to standard pricing. With an active student subscription, eligible orders qualify for $0 delivery fees. To access student pricing, users typically need to verify their student status through an identity verification service during signup or account management. DashPass membership includes ongoing access to these benefits for the subscription period, and renewal occurs automatically unless canceled.",
     "benefitType": "Discount",
     "value": "$5/mo savings",
     "eligibility": "Students",
@@ -6205,9 +6503,11 @@ export const studentBenefits2026: StudentBenefit[] = [
     "verification": "SheerID",
     "url": "https://www.doordash.com/dashpass-students/",
     "tags": [
-      "Food",
-      "Delivery",
+      "Web",
       "App",
+      "Food",
+      "Discount",
+      "Delivery",
       "DashPass"
     ],
     "claimUrl": "https://help.doordash.com/consumers/s/article/DashPass-for-Students"
@@ -6370,11 +6670,11 @@ export const studentBenefits2026: StudentBenefit[] = [
     "title": "ASOS Student",
     "company": "ASOS",
     "slug": "asos-student",
-    "logo": "https://www.google.com/s2/favicons?domain=asos.com&sz=128",
+    "logo": "https://img.logo.dev/asos.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Fashion",
     "appCategory": "Credits & Savings",
-    "offerSummary": "10% Off.",
-    "description": "ASOS offers a 10% student discount. Occasionally boosted to 20% or 25% during sales.",
+    "offerSummary": "Online fashion retailer with 85,000+ products across clothing, shoes, and accessories",
+    "description": "Online fashion retailer with 85,000+ products across clothing, shoes, and accessories",
     "benefitType": "Discount",
     "value": "10% Off",
     "eligibility": "Students",
@@ -6382,9 +6682,11 @@ export const studentBenefits2026: StudentBenefit[] = [
     "verification": "ASOS Form / UNiDAYS",
     "url": "https://www.myunidays.com/",
     "tags": [
+      "Web",
+      "Online Store",
       "Fashion",
-      "Apparel",
-      "Online Store"
+      "Discount",
+      "Apparel"
     ],
     "claimUrl": "https://www.myunidays.com/"
   },
@@ -6392,11 +6694,11 @@ export const studentBenefits2026: StudentBenefit[] = [
     "title": "H&M Student",
     "company": "H&M",
     "slug": "hm-student",
-    "logo": "https://www.google.com/s2/favicons?domain=hm.com&sz=128",
+    "logo": "https://img.logo.dev/hm.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Fashion",
     "appCategory": "Credits & Savings",
-    "offerSummary": "10-20% Off.",
-    "description": "H&M offers a student discount, usually 15% or 20% via StudentBeans or UNiDAYS.",
+    "offerSummary": "Student discounts on clothing via UNiDAYS or Student Beans",
+    "description": "H&M is a global fashion retailer offering clothing, accessories, footwear, and seasonal wear for men, women, and children. Students can access H&M discounts by verifying their student status through UNiDAYS or Student Beans, two trusted student verification platforms.\n\nAfter verification, students receive discount codes for online shopping and in-store offers. To redeem in-store, you may need to present your Student Beans or UNiDAYS Student ID at checkout.\n\nThe discount percentage and eligible product categories vary by region and season. Check your local Student Beans or UNiDAYS portal for the current H&M offer details, as promotions update regularly.",
     "benefitType": "Discount",
     "value": "15-20% Off",
     "eligibility": "Students",
@@ -6404,9 +6706,11 @@ export const studentBenefits2026: StudentBenefit[] = [
     "verification": "StudentBeans / UNiDAYS",
     "url": "https://www.myunidays.com/",
     "tags": [
+      "Web",
+      "Discount",
       "Fashion",
-      "Apparel",
-      "Retail"
+      "Retail",
+      "Apparel"
     ],
     "claimUrl": "https://www.myunidays.com/"
   },
@@ -6980,10 +7284,10 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://www.google.com/s2/favicons?domain=jamesdysonaward.org&sz=128",
     "category": "Competitions",
     "appCategory": "Funding & Opportunities",
-    "offerSummary": "£30k for Design.",
-    "description": "The James Dyson Award receives entries from current and recent engineering and design students. The international winner receives £30,000.",
+    "offerSummary": "\u00a330k for Design.",
+    "description": "The James Dyson Award receives entries from current and recent engineering and design students. The international winner receives \u00a330,000.",
     "benefitType": "Prize",
-    "value": "£30,000",
+    "value": "\u00a330,000",
     "eligibility": "Students/Recent Grads",
     "region": "Global",
     "verification": "Application",
@@ -8467,11 +8771,11 @@ export const studentBenefits2026: StudentBenefit[] = [
     "title": "Logitech Education",
     "company": "Logitech",
     "slug": "logitech-education",
-    "logo": "https://www.google.com/s2/favicons?domain=logitech.com&sz=128",
+    "logo": "https://img.logo.dev/logitech.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Hardware",
     "appCategory": "Credits & Savings",
-    "offerSummary": "25% Off.",
-    "description": "Logitech offers a 25% student discount on mice, keyboards, and webcams through UNiDAYS.",
+    "offerSummary": "Exclusive student pricing on Logitech gear, keyboards, and accessories",
+    "description": "Logitech manufactures computer peripherals and accessories including mice, keyboards, headsets, webcams, and microphones for work, creativity, and gaming. The company maintains an Education section focused on institutional solutions for schools and higher education institutions, with products designed for classroom durability and compatibility across major platforms and learning management systems.\n\nLogitech offers a student discount program, though the dedicated student offer pages currently return 404 errors on both US and UK domains. To access current student pricing, you may need to contact Logitech support directly or check their main website for active promotional offers.",
     "benefitType": "Discount",
     "value": "25% Off",
     "eligibility": "Students",
@@ -8479,9 +8783,11 @@ export const studentBenefits2026: StudentBenefit[] = [
     "verification": "UNiDAYS",
     "url": "https://www.myunidays.com/",
     "tags": [
+      "Web",
+      "Discount",
       "Hardware",
-      "Accessories",
-      "Tech"
+      "Tech",
+      "Accessories"
     ],
     "claimUrl": "https://www.myunidays.com/"
   },
@@ -9191,19 +9497,19 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://aobklvmdpcebkbgvvijp.supabase.co/storage/v1/object/public/LOGOs/aerolink.webp",
     "category": "AI & Machine Learning",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free $350+ credits — All Claude models via API",
+    "offerSummary": "Unified API gateway with managed keys, rolling usage limits, and cost ledger",
     "description": "Unified API gateway with managed keys, rolling usage limits, and cost ledger",
     "benefitType": "Discount",
-    "value": "Free $350+ credits — All Claude models via API",
+    "value": "Free $350+ credits \u2014 All Claude models via API",
     "eligibility": "Students",
     "region": "Global",
     "verification": "Edu Email / Student ID",
     "url": "https://aerolink.lat/",
     "claimUrl": "https://aerolink.lat/",
     "tags": [
-      "API",
       "Credit",
-      "Developer"
+      "Developer",
+      "API"
     ]
   },
   {
@@ -9213,19 +9519,19 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/freemodel.dev?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "AI & Machine Learning",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free up to $300 credits — Claude & GPT API access",
-    "description": "FreeModel is an API platform that provides access to Claude, OpenAI, and other leading models through a single OpenAI-compatible endpoint. Developers can integrate multiple models without switching between different API providers. The unified interface saves setup time and simplifies model comparison during development.\n\nNew accounts receive $300 in free API credits upon signup with no credit card required, letting you prototype, test, and experiment with different models immediately. The credits work across all supported models for API calls. FreeModel is available to everyone—developers, researchers, and anyone building with AI. The $300 credits give you real usage without barriers to entry.\n\nOnce your initial credits are consumed, you can review FreeModel's pricing page for additional credit options and payment methods to continue.",
+    "offerSummary": "Free API access to frontier models from Claude, OpenAI and more",
+    "description": "FreeModel is an API platform that provides access to Claude, OpenAI, and other leading models through a single OpenAI-compatible endpoint. Developers can integrate multiple models without switching between different API providers. The unified interface saves setup time and simplifies model comparison during development.\n\nNew accounts receive $300 in free API credits upon signup with no credit card required, letting you prototype, test, and experiment with different models immediately. The credits work across all supported models for API calls. FreeModel is available to everyone\u2014developers, researchers, and anyone building with AI. The $300 credits give you real usage without barriers to entry.\n\nOnce your initial credits are consumed, you can review FreeModel's pricing page for additional credit options and payment methods to continue.",
     "benefitType": "Discount",
-    "value": "Free up to $300 credits — Claude & GPT API access",
+    "value": "Free up to $300 credits \u2014 Claude & GPT API access",
     "eligibility": "Students",
     "region": "Global",
     "verification": "Edu Email / Student ID",
     "url": "https://freemodel.dev/invite/FRE-fec6fe32",
     "claimUrl": "https://freemodel.dev/invite/FRE-fec6fe32",
     "tags": [
-      "API",
       "Credit",
-      "Developer"
+      "Developer",
+      "API"
     ]
   },
   {
@@ -9235,19 +9541,19 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://aobklvmdpcebkbgvvijp.supabase.co/storage/v1/object/public/LOGOs/blueminds-logo.png",
     "category": "AI & Machine Learning",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free $100 credits — Gemini, GPT, DeepSeek & more API access",
+    "offerSummary": "Unified AI API gateway \u2014 GPT-5.5, Gemini, Kimi K2.6, DeepSeek & more",
     "description": "BluesMinds is a unified API gateway that provides access to multiple AI models including GPT, Gemini, DeepSeek, and Kimi K2.6 through a single integration point. This service enables developers to test and build with various large language models without the need for separate integrations or upfront payment.\n\nThe service offers free $100 credits for new users, available to all developers regardless of background. These credits can be used to call any of the supported AI APIs, making BluesMinds useful for developers building prototypes, learning AI integration, working on hackathon projects, or testing different model providers. After the free credits are consumed, users can purchase additional API access on a pay-as-you-go basis.",
     "benefitType": "Discount",
-    "value": "Free $100 credits — Gemini, GPT, DeepSeek & more API access",
+    "value": "Free $100 credits \u2014 Gemini, GPT, DeepSeek & more API access",
     "eligibility": "Students",
     "region": "Global",
     "verification": "Edu Email / Student ID",
     "url": "https://api.bluesminds.com/register?aff=JFfN",
     "claimUrl": "https://api.bluesminds.com/register?aff=JFfN",
     "tags": [
-      "API",
       "Credit",
-      "Developer"
+      "Developer",
+      "API"
     ]
   },
   {
@@ -9257,19 +9563,19 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/agentrouter.org?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "AI & Machine Learning",
     "appCategory": "Software & Tools",
-    "offerSummary": "Up to $200 free credits — Claude, GLM & more API access",
-    "description": "AgentRouter is a unified API gateway that provides access to frontier AI models including Claude and GLM through a single integration point. The platform allows developers to route requests across multiple large language models without managing separate API keys or integrations for each service.\n\nNew users receive up to $200 in free API credits upon signup, applicable toward API usage across supported models. This service is available to all users—not limited to students—and is designed for developers building with multiple AI model APIs.\n\nThe exact credit allocation, expiration terms, and eligible models should be confirmed on AgentRouter's signup page, as offerings may change.",
+    "offerSummary": "Unified API gateway for frontier models including Claude, GLM and more",
+    "description": "AgentRouter is a unified API gateway that provides access to frontier AI models including Claude and GLM through a single integration point. The platform allows developers to route requests across multiple large language models without managing separate API keys or integrations for each service.\n\nNew users receive up to $200 in free API credits upon signup, applicable toward API usage across supported models. This service is available to all users\u2014not limited to students\u2014and is designed for developers building with multiple AI model APIs.\n\nThe exact credit allocation, expiration terms, and eligible models should be confirmed on AgentRouter's signup page, as offerings may change.",
     "benefitType": "Discount",
-    "value": "Up to $200 free credits — Claude, GLM & more API access",
+    "value": "Up to $200 free credits \u2014 Claude, GLM & more API access",
     "eligibility": "Students",
     "region": "Global",
     "verification": "Edu Email / Student ID",
     "url": "https://agentrouter.org/register?aff=K8iK",
     "claimUrl": "https://agentrouter.org/register?aff=K8iK",
     "tags": [
-      "API",
       "Credit",
-      "Developer"
+      "Developer",
+      "API"
     ]
   },
   {
@@ -9279,7 +9585,7 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://aobklvmdpcebkbgvvijp.supabase.co/storage/v1/object/public/LOGOs/kimchi.jpg",
     "category": "AI & Machine Learning",
     "appCategory": "Software & Tools",
-    "offerSummary": "$$50/mo free credits",
+    "offerSummary": "CLI coding agent & inference layer \u2014 Kimi K2.7, MiniMax M3, Nemotron Ultra & more",
     "description": "Kimchi is an open-source coding agent CLI that integrates multiple large language models including Kimi K2.6 and MiniMax M2.7 to automate code generation and software development tasks. The platform provides AI-assisted coding capabilities for developers building applications, students working on coursework projects, or contributors to open-source software.\n\nThe platform offers $50 per month in free credits for all users, available immediately upon signup without requiring verification. New users can use these credits toward any supported model inference, and credits are applied to your account upon registration and reset monthly, allowing continuous access at no cost within the credit limit.",
     "benefitType": "Discount",
     "value": "$$50/mo free credits",
@@ -9290,8 +9596,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "claimUrl": "https://app.kimchi.dev/?product=kimchi&screen_hint=SIGNUP",
     "tags": [
       "Vibe Coding",
-      "Free",
-      "Developer"
+      "Developer",
+      "Free"
     ]
   },
   {
@@ -9301,7 +9607,7 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://commandcode.ai/favicon.ico",
     "category": "AI & Machine Learning",
     "appCategory": "Software & Tools",
-    "offerSummary": "Go plan for $1/month with $10 in credits included",
+    "offerSummary": "Terminal AI coding agent that builds, edits, and reviews codebases while learning your coding taste",
     "description": "Command Code is an AI coding agent that builds, edits, and reviews codebases while learning your coding preferences and style. Whether you're working on side projects, prototyping new ideas, or learning to code, Command Code adapts to how you work. The taste-learning feature means the agent improves over time as it understands your coding patterns and preferences.\n\nThe Go plan costs just $1/month and includes $10 in credits, making it an affordable way to start using AI-assisted development. The plan includes access to supported AI models, detailed usage analytics, and cancel-anytime billing with no long-term commitments. You can start immediately and only pay what you use beyond your included credits.\n\nThis pricing is available to all users with no verification required.",
     "benefitType": "Discount",
     "value": "Go plan for $1/month with $10 in credits included",
@@ -9311,8 +9617,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://commandcode.ai/pricing",
     "claimUrl": "https://commandcode.ai/pricing",
     "tags": [
-      "Vibe Coding",
       "Credit",
+      "Vibe Coding",
       "Developer"
     ]
   },
@@ -9323,7 +9629,7 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/opencode.ai?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "AI & Machine Learning",
     "appCategory": "Credits & Savings",
-    "offerSummary": "First month $5, then $10/mo (regular pricing)",
+    "offerSummary": "Open-source AI coding API \u2014 Kimi K2.5, MiniMax M2.5/M2.7 & GLM-5 models.",
     "description": "OpenCode Go is a low-cost subscription service providing access to open-source AI coding models including GLM-5, Kimi K2.5, MiniMax M2.5/M2.7, Qwen, and DeepSeek variants. The service is designed for developers building with agentic coding workflows and is available to all users globally.\n\nGo pricing starts at $5 for the first month, then $10 per month ongoing. The subscription includes generous token limits and reliable access to multiple open-source models. You can use OpenCode Go with OpenCode or integrate it with any coding agent. Additional top-up credit is available if needed, and you can cancel at any time.\n\nThe desktop app is available in beta on macOS, Windows, and Linux, with terminal interface and IDE extension options also supported. Free models are included in the subscription, and you can optionally connect models from other providers like Claude, GPT, or Gemini.",
     "benefitType": "Discount",
     "value": "First month $5, then $10/mo (regular pricing)",
@@ -9333,8 +9639,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://opencode.ai/go",
     "claimUrl": "https://opencode.ai/go",
     "tags": [
-      "Discount",
-      "Web"
+      "Web",
+      "Discount"
     ]
   },
   {
@@ -9344,7 +9650,7 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/zed.dev?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Development Tools",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free Zed Pro for 1 year",
+    "offerSummary": "AI-powered code editor with real-time collaboration, edit predictions, and $10/month in AI token credits",
     "description": "Zed is an AI-powered code editor built for real-time collaboration, featuring edit predictions and live multiplayer editing. It provides developers with intelligent coding assistance and seamless teamwork capabilities.\n\nVerified university students receive Zed Pro free for one year, including all Pro features, unlimited edit predictions, real-time collaboration tools, and $10 per month in AI token credits. To qualify, you need a GitHub account older than 30 days and a valid current university email address verified through a university-domain database.\n\nAfter 12 months, your Zed account automatically downgrades to the free version.",
     "benefitType": "Discount",
     "value": "Free Zed Pro for 1 year",
@@ -9354,9 +9660,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://zed.dev/education",
     "claimUrl": "https://zed.dev/education",
     "tags": [
-      "AI",
+      "Web",
       "Free",
-      "Web"
+      "AI"
     ]
   },
   {
@@ -9366,8 +9672,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/youtube.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Media & Entertainment",
     "appCategory": "Credits & Savings",
-    "offerSummary": "1 month free, then ~50% off for up to 48 months",
-    "description": "YouTube Premium is a paid subscription that removes ads from YouTube videos and includes access to YouTube Music with over 100 million ad-free songs. The subscription includes unlimited ad-free video streaming, background play, and high-quality audio at 256kbps on eligible music videos.\n\nThe student plan offers a 1-month free trial, then ₹89 per month after the trial ends. Eligible students must complete annual verification to qualify, and the offer is available for new members only with recurring billing. After sign-up, you'll receive a reminder 7 days before your trial ends.\n\nYou can cancel anytime, and the plan supports adding up to 5 family members (ages 13+) to your household account.",
+    "offerSummary": "Ad-free YouTube with background play and YouTube Music access",
+    "description": "YouTube Premium is a paid subscription that removes ads from YouTube videos and includes access to YouTube Music with over 100 million ad-free songs. The subscription includes unlimited ad-free video streaming, background play, and high-quality audio at 256kbps on eligible music videos.\n\nThe student plan offers a 1-month free trial, then \u20b989 per month after the trial ends. Eligible students must complete annual verification to qualify, and the offer is available for new members only with recurring billing. After sign-up, you'll receive a reminder 7 days before your trial ends.\n\nYou can cancel anytime, and the plan supports adding up to 5 family members (ages 13+) to your household account.",
     "benefitType": "Discount",
     "value": "1 month free, then ~50% off for up to 48 months",
     "eligibility": "Students",
@@ -9376,8 +9682,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://www.youtube.com/premium/student",
     "claimUrl": "https://www.youtube.com/premium/student",
     "tags": [
-      "Trial",
-      "Web"
+      "Web",
+      "Trial"
     ]
   },
   {
@@ -9387,7 +9693,7 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/transloadit.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Development Tools",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free 5 GB/month via GitHub Student Pack",
+    "offerSummary": "File uploading and encoding service for handling uploads, image processing, video transcoding, and document conversion. Integrate via REST API or SDKs.",
     "description": "Transloadit is a file uploading and encoding service that handles image processing, video transcoding, document conversion, and other media workflows via REST API or SDKs. This makes it accessible for students building apps that need production-ready file handling without upfront cost.\n\nStudents in the GitHub Student Developer Pack receive a free Startup Plan with monthly encoding credit, no credit card required. The offer is claimed through GitHub Education verification, so you'll need an active GitHub Student Developer Pack account to access it.",
     "benefitType": "Discount",
     "value": "Free 5 GB/month via GitHub Student Pack",
@@ -9397,8 +9703,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://transloadit.com/github-students/",
     "claimUrl": "https://transloadit.com/github-students/",
     "tags": [
-      "Free",
-      "Developer"
+      "Developer",
+      "Free"
     ]
   },
   {
@@ -9408,7 +9714,7 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/zyte.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Development Tools",
     "appCategory": "Software & Tools",
-    "offerSummary": "1 Free Forever Scrapy Cloud Unit ",
+    "offerSummary": "Cloud-based web scraping and crawler management platform",
     "description": "Zyte is a cloud-based web scraping and crawler management platform that allows you to deploy and run web crawlers in the cloud, keep spiders running indefinitely, and retain cached data for 120 days. This service is tailored for students working on research automation, data collection, and technical projects that require more capability than a local setup.\n\nStudents get free access to one Scrapy Cloud unit through the GitHub Student Developer Pack. To claim this offer, verify your eligibility through GitHub Education and review Scrapy Cloud's documentation to ensure the included limits meet your project's needs.",
     "benefitType": "Discount",
     "value": "1 Free Forever Scrapy Cloud Unit ",
@@ -9418,8 +9724,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://www.zyte.com/scrapy-cloud-student-backpack/",
     "claimUrl": "https://www.zyte.com/scrapy-cloud-student-backpack/",
     "tags": [
-      "Free",
-      "Web"
+      "Web",
+      "Free"
     ]
   },
   {
@@ -9429,7 +9735,7 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://aobklvmdpcebkbgvvijp.supabase.co/storage/v1/object/public/LOGOs/VS%20Code.jpeg",
     "category": "Development Tools",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free coding packs (Java, Python or .NET)",
+    "offerSummary": "Lightweight code editor with rich extensions for multiple languages",
     "description": "$48",
     "benefitType": "Discount",
     "value": "Free coding packs (Java, Python or .NET)",
@@ -9439,8 +9745,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://code.visualstudio.com/",
     "claimUrl": "https://code.visualstudio.com/",
     "tags": [
-      "Free",
-      "Web"
+      "Web",
+      "Free"
     ]
   },
   {
@@ -9450,7 +9756,7 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/visme.co?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Productivity",
     "appCategory": "Software & Tools",
-    "offerSummary": "3 months free Starter plan access",
+    "offerSummary": "Create infographics, reports, and visual presentations easily",
     "description": "Visme is a design platform for creating infographics, reports, visual documents, and interactive presentations without coding. The tool offers drag-and-drop templates and customizable layouts suitable for academic projects, research presentations, and visual assignments.\n\nStudents verified through GitHub Education receive 3 months of free access to Visme's Starter plan via the GitHub Student Developer Pack. This plan includes core design features and template access to support student projects and coursework.\n\nTo qualify, you must be enrolled at an accredited educational institution and verify your student status through your GitHub account. The offer is available globally and remains active as long as your GitHub student verification is current.",
     "benefitType": "Discount",
     "value": "3 months free Starter plan access",
@@ -9460,8 +9766,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://education.github.com/pack#:~:text=Visme-,About%20Visme,-The%20all%2Din",
     "claimUrl": "https://education.github.com/pack#:~:text=Visme-,About%20Visme,-The%20all%2Din",
     "tags": [
-      "Free",
-      "Web"
+      "Web",
+      "Free"
     ]
   },
   {
@@ -9471,7 +9777,7 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/todiagram.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Design & Creative",
     "appCategory": "Credits & Savings",
-    "offerSummary": "Pro Plan including full editor access",
+    "offerSummary": "Convert JSON, YAML, and CSV data into visual diagrams",
     "description": "ToDiagram converts JSON, YAML, CSV, and XML data into visual diagrams. This tool is useful for students learning APIs, schemas, and data formats who need to visualize nested structures and debug responses.\n\nVerified students can claim the Pro Plan free for 12 months through GitHub Education, normally priced at $120. The Pro Plan includes full editor access, higher document limits, unlimited data size, cloud storage, sharing, and higher-resolution exports. Note that AI-powered helpers are not included in the student offer.",
     "benefitType": "Discount",
     "value": "Pro Plan including full editor access",
@@ -9481,8 +9787,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://todiagram.com/blog/todiagram-github-education",
     "claimUrl": "https://todiagram.com/blog/todiagram-github-education",
     "tags": [
-      "Discount",
-      "Web"
+      "Web",
+      "Discount"
     ]
   },
   {
@@ -9492,7 +9798,7 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/themeisle.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Cloud & Hosting",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free Neve Agency WordPress theme for 1 year",
+    "offerSummary": "Premium WordPress themes for creating responsive websites",
     "description": "Neve Agency is a professional WordPress theme from ThemeIsle designed for building responsive, modern websites. The theme includes pre-built agency layouts and components that speed up website creation without coding, making it ideal for students learning WordPress development, creating portfolio sites to showcase work, or managing client projects with professional results.\n\nVerified GitHub students receive one free year of Neve Agency, including an unrestricted license, all software updates, technical support, and access to premium features like Header Booster, custom layouts, and white labeling capabilities. This offer is available to all verified GitHub students with an active GitHub Education account.\n\nThe free one-year access cannot be extended beyond the initial term. After the year expires, standard renewal pricing applies.",
     "benefitType": "Discount",
     "value": "Free Neve Agency WordPress theme for 1 year",
@@ -9502,9 +9808,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://themeisle.com/github-students/",
     "claimUrl": "https://themeisle.com/github-students/",
     "tags": [
-      "No-Code",
+      "Web",
       "Free",
-      "Web"
+      "No-Code"
     ]
   },
   {
@@ -9514,8 +9820,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/exa.ai?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "AI & Machine Learning",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free $10 search API credits",
-    "description": "Exa AI is a developer search API that powers AI agents and applications with live web search, content retrieval, and research capabilities. The platform offers multiple ways for students to access its API at no cost or reduced rates.\n\nStudents can qualify for Exa's Education Grants program, which provides a 90% token reduction on API usage. Additionally, all users including students have access to a free tier that includes up to 1,000 requests per month—sufficient for prototyping, hackathons, and research-heavy projects. Beyond the free tier, Exa charges $7 per 1,000 requests at standard rates, with enterprise pricing available at $12–15 per 1,000 requests.\n\nTo access Education Grants, students should apply through Exa's Startup and Education Grants program on their pricing page. The grant covers comprehensive web search integration for education and research projects, making it ideal for coursework involving AI, natural language processing, or data science applications.",
+    "offerSummary": "Developer search API powered by AI with free starter credits",
+    "description": "Exa AI is a developer search API that powers AI agents and applications with live web search, content retrieval, and research capabilities. The platform offers multiple ways for students to access its API at no cost or reduced rates.\n\nStudents can qualify for Exa's Education Grants program, which provides a 90% token reduction on API usage. Additionally, all users including students have access to a free tier that includes up to 1,000 requests per month\u2014sufficient for prototyping, hackathons, and research-heavy projects. Beyond the free tier, Exa charges $7 per 1,000 requests at standard rates, with enterprise pricing available at $12\u201315 per 1,000 requests.\n\nTo access Education Grants, students should apply through Exa's Startup and Education Grants program on their pricing page. The grant covers comprehensive web search integration for education and research projects, making it ideal for coursework involving AI, natural language processing, or data science applications.",
     "benefitType": "Discount",
     "value": "Free $10 search API credits",
     "eligibility": "Students",
@@ -9524,9 +9830,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://exa.ai/pricing",
     "claimUrl": "https://exa.ai/pricing",
     "tags": [
-      "AI",
       "Credit",
-      "Developer"
+      "Developer",
+      "AI"
     ]
   },
   {
@@ -9536,7 +9842,7 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/humata.ai?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "AI & Machine Learning",
     "appCategory": "Credits & Savings",
-    "offerSummary": "$$1.99/month student plan",
+    "offerSummary": "Ask questions and summarize PDFs with AI-powered research assistant",
     "description": "Humata is an AI-powered research assistant that lets you ask questions and summarize PDFs instantly. Instead of reading through lengthy documents, you upload a PDF and ask Humata to extract key information, answer specific questions, or provide summaries. It's designed for students, professionals, and teams who need to process research papers, reports, and documentation faster.\n\nHumata offers a free tier with 60 monthly pages, an Expert plan at $9.99/month (500 monthly pages), a Team plan at $49/user/month (5,000 monthly pages), and a Student plan. Additional pages beyond your monthly allowance cost $0.02 per page on Student and Expert plans, or $0.01 per page on Team plans. All plans are self-serve subscriptions with a straightforward monthly billing model. The free tier requires no credit card and is a genuine way to test the tool.",
     "benefitType": "Discount",
     "value": "$$1.99/month student plan",
@@ -9546,9 +9852,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://www.humata.ai/pricing",
     "claimUrl": "https://www.humata.ai/pricing",
     "tags": [
-      "AI",
+      "Web",
       "Discount",
-      "Web"
+      "AI"
     ]
   },
   {
@@ -9558,8 +9864,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/scira.ai?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "AI & Machine Learning",
     "appCategory": "Credits & Savings",
-    "offerSummary": "Scira Pro at $5/month",
-    "description": "Scira is an AI research and writing assistant that integrates multiple large language models—Claude, GPT, and Gemini—into a single interface with PDF, voice, and MCP app support. The platform starts with a free tier for casual research use, and upgraded tiers unlock more powerful models and higher request limits.\n\nStudents with verified school email addresses qualify for Scira Pro at $9/month, down from the regular price of $15/month. The discount is applied automatically at checkout when you sign in with an eligible school email; no coupon code is required. On the Pro tier, you get unlimited Claude Haiku 4.5, capped access to Sonnet and Opus, and weekly limits on GPT and Gemini requests.\n\nAll subscriptions can be cancelled anytime, and access continues through the end of your billing period.",
+    "offerSummary": "AI assistant for research, writing, and workflow automation",
+    "description": "Scira is an AI research and writing assistant that integrates multiple large language models\u2014Claude, GPT, and Gemini\u2014into a single interface with PDF, voice, and MCP app support. The platform starts with a free tier for casual research use, and upgraded tiers unlock more powerful models and higher request limits.\n\nStudents with verified school email addresses qualify for Scira Pro at $9/month, down from the regular price of $15/month. The discount is applied automatically at checkout when you sign in with an eligible school email; no coupon code is required. On the Pro tier, you get unlimited Claude Haiku 4.5, capped access to Sonnet and Opus, and weekly limits on GPT and Gemini requests.\n\nAll subscriptions can be cancelled anytime, and access continues through the end of your billing period.",
     "benefitType": "Discount",
     "value": "Scira Pro at $5/month",
     "eligibility": "Students",
@@ -9568,9 +9874,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://scira.ai/pricing",
     "claimUrl": "https://scira.ai/pricing",
     "tags": [
-      "AI",
+      "Web",
       "Discount",
-      "Web"
+      "AI"
     ]
   },
   {
@@ -9580,7 +9886,7 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/scispace.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "AI & Machine Learning",
     "appCategory": "Credits & Savings",
-    "offerSummary": "Up to 40% off plans and add-on credits via Discount Codes",
+    "offerSummary": "AI research assistant for reading, annotating, and summarizing papers",
     "description": "SciSpace is an AI research assistant designed for reading, annotating, and summarizing academic papers. The platform helps researchers and students extract key information from papers quickly, with tools for highlighting, note-taking, and AI-powered explanations of complex content.\n\nDiscount codes offering up to 40% off plans and add-on credits are available, though the specific eligibility criteria and current code validity require verification on the SciSpace website. The platform is accessible via browser extension and mobile app, making it usable across devices during research work.\n\nCheck the current SciSpace pricing page or contact their support for active discount codes, redemption terms, and any student verification requirements.",
     "benefitType": "Discount",
     "value": "Up to 40% off plans and add-on credits via Discount Codes",
@@ -9590,9 +9896,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://scispace.com/",
     "claimUrl": "https://scispace.com/",
     "tags": [
-      "AI",
+      "Web",
       "Discount",
-      "Web"
+      "AI"
     ]
   },
   {
@@ -9602,8 +9908,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/firecrawl.dev?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Development Tools",
     "appCategory": "Software & Tools",
-    "offerSummary": "10,000 free credits for students",
-    "description": "Firecrawl is a web scraping and data extraction API that converts web pages into structured data for developers, AI applications, and research tools. The platform is used by companies including Apple, Canva, and Lovable to extract and format website content at scale.\n\nVerified students enrolled in a college, university, or accredited program receive 10,000 free credits. Sign up with a valid educational email address, redeem your code, and credits are added to your account instantly—no credit card required. Credits can be used for educational and personal projects, including hackathons, AI prototypes, and research applications.\n\nOnce you've used your 10,000 free credits, you can view pricing options and purchase additional credits on a pay-as-you-go basis through Firecrawl's standard pricing page.",
+    "offerSummary": "Web scraping and data extraction API for developers and AI apps",
+    "description": "Firecrawl is a web scraping and data extraction API that converts web pages into structured data for developers, AI applications, and research tools. The platform is used by companies including Apple, Canva, and Lovable to extract and format website content at scale.\n\nVerified students enrolled in a college, university, or accredited program receive 10,000 free credits. Sign up with a valid educational email address, redeem your code, and credits are added to your account instantly\u2014no credit card required. Credits can be used for educational and personal projects, including hackathons, AI prototypes, and research applications.\n\nOnce you've used your 10,000 free credits, you can view pricing options and purchase additional credits on a pay-as-you-go basis through Firecrawl's standard pricing page.",
     "benefitType": "Discount",
     "value": "10,000 free credits for students",
     "eligibility": "Students",
@@ -9612,7 +9918,6 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://www.firecrawl.dev/student-program",
     "claimUrl": "https://www.firecrawl.dev/student-program",
     "tags": [
-      "API",
       "Credit",
       "API"
     ]
@@ -9624,7 +9929,7 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/superhuman.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Productivity",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free 1 month + $10/month (67% off) on request",
+    "offerSummary": "Blazing-fast email client with AI triage, shortcuts, and smart workflows",
     "description": "$4b",
     "benefitType": "Discount",
     "value": "Free 1 month + $10/month (67% off) on request",
@@ -9634,8 +9939,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://superhuman.com/edu",
     "claimUrl": "https://superhuman.com/edu",
     "tags": [
-      "Trial",
-      "Web"
+      "Web",
+      "Trial"
     ]
   },
   {
@@ -9645,8 +9950,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/replit.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "AI & Machine Learning",
     "appCategory": "Credits & Savings",
-    "offerSummary": "50% off Replit Core ($10/month)",
-    "description": "Replit is a browser-based coding and app-building workspace where students can build, deploy, and collaborate on real projects without local setup. The platform lets you create unlimited public and private apps, manage multiple workspaces, and access AI-powered coding models—all from any device with a browser.\n\nStudents with a .edu email address qualify for 50% off Replit Core, bringing the monthly cost to $10 (down from the standard $20/month). Verification is automatic through your .edu email during signup. The discount applies to Core tier features including unlimited apps, unlimited workspaces, and access to the most powerful AI models available on the platform.\n\nReplit's free tier remains available indefinitely for students who want to start building without a paid plan. The student discount is exclusive to .edu domains and applies globally.",
+    "offerSummary": "AI app-building workspace for coding, deploying, and collaboration",
+    "description": "Replit is a browser-based coding and app-building workspace where students can build, deploy, and collaborate on real projects without local setup. The platform lets you create unlimited public and private apps, manage multiple workspaces, and access AI-powered coding models\u2014all from any device with a browser.\n\nStudents with a .edu email address qualify for 50% off Replit Core, bringing the monthly cost to $10 (down from the standard $20/month). Verification is automatic through your .edu email during signup. The discount applies to Core tier features including unlimited apps, unlimited workspaces, and access to the most powerful AI models available on the platform.\n\nReplit's free tier remains available indefinitely for students who want to start building without a paid plan. The student discount is exclusive to .edu domains and applies globally.",
     "benefitType": "Discount",
     "value": "50% off Replit Core ($10/month)",
     "eligibility": "Students",
@@ -9655,9 +9960,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://replit.com/edu/students",
     "claimUrl": "https://replit.com/edu/students",
     "tags": [
+      "Web",
       "Vibe Coding",
-      "Discount",
-      "Web"
+      "Discount"
     ]
   },
   {
@@ -9667,7 +9972,7 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/otter.ai?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "AI & Machine Learning",
     "appCategory": "Credits & Savings",
-    "offerSummary": "20% off on Otter Pro Monthly and Annual plans",
+    "offerSummary": "AI transcription and meeting notes tool with real-time collaboration",
     "description": "Otter.ai is an AI-powered transcription and meeting notes tool designed for students, professionals, and teams. It records conversations, generates real-time transcripts, and creates searchable summaries automatically. The platform integrates with Zoom, Google Meet, Microsoft Teams, and other productivity tools, making it easy to capture lectures, interviews, and meetings.\n\nStudents receive 20% off Otter Pro monthly and annual plans with education verification. Otter Pro includes unlimited storage, unlimited meetings with in-app recording, unlimited audio and video file imports, and enhanced admin features for team management. A free tier with 300 monthly transcription minutes is available to all users, allowing you to test the service before upgrading.\n\nAccess Otter.ai across desktop, mobile, and web browsers, making it perfect for students taking notes in class, researchers conducting interviews, or teams documenting important discussions.",
     "benefitType": "Discount",
     "value": "20% off on Otter Pro Monthly and Annual plans",
@@ -9677,9 +9982,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://otter.ai/pricing",
     "claimUrl": "https://otter.ai/pricing",
     "tags": [
-      "AI",
+      "Web",
       "Discount",
-      "Web"
+      "AI"
     ]
   },
   {
@@ -9689,8 +9994,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/lovable.dev?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Development Tools",
     "appCategory": "Credits & Savings",
-    "offerSummary": "50% off Pro ($12.50/mo)",
-    "description": "Lovable is an AI app builder that enables students to create full-stack applications in minutes without writing code manually. The platform generates front-end and back-end code from simple descriptions, letting students focus on product logic and features rather than infrastructure.\n\nStudents can verify their status using an educational email or student ID to unlock 50% off Lovable Pro, reducing the monthly cost to $12.50/month for one year. This discount applies to new student accounts; existing Lovable users with non-student emails can verify with a student credential to access the student pricing tier. Verification is instant once your student status is confirmed.\n\nAfter the student discount period ends or when your student email is deactivated, you maintain access to your projects—Lovable allows you to link your account to a permanent email address to preserve your work and project history beyond your academic tenure.",
+    "offerSummary": "AI app builder for creating full-stack applications instantly",
+    "description": "Lovable is an AI app builder that enables students to create full-stack applications in minutes without writing code manually. The platform generates front-end and back-end code from simple descriptions, letting students focus on product logic and features rather than infrastructure.\n\nStudents can verify their status using an educational email or student ID to unlock 50% off Lovable Pro, reducing the monthly cost to $12.50/month for one year. This discount applies to new student accounts; existing Lovable users with non-student emails can verify with a student credential to access the student pricing tier. Verification is instant once your student status is confirmed.\n\nAfter the student discount period ends or when your student email is deactivated, you maintain access to your projects\u2014Lovable allows you to link your account to a permanent email address to preserve your work and project history beyond your academic tenure.",
     "benefitType": "Discount",
     "value": "50% off Pro ($12.50/mo)",
     "eligibility": "Students",
@@ -9699,9 +10004,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://lovable.dev/students",
     "claimUrl": "https://lovable.dev/students",
     "tags": [
+      "Web",
       "Vibe Coding",
-      "Discount",
-      "Web"
+      "Discount"
     ]
   },
   {
@@ -9711,7 +10016,7 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/kiro.dev?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "AI & Machine Learning",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free Pro plan on first upgrade + 50 free credits/month",
+    "offerSummary": "AI-native IDE with vibe coding and spec-driven development modes",
     "description": "Kiro is an AI-native IDE that combines vibe coding and spec-driven development modes to accelerate code generation and software design workflows. The platform provides access to open-weight models and Claude AI models for real-time code assistance and development acceleration.\n\nStudents receive $20 in credit toward their first paid plan upgrade using social login or Builder ID. The Kiro Free tier includes 50 monthly credits; the Pro tier provides 1,000 monthly credits. After claiming the $20 credit, students can continue using Kiro on paid plans, with additional usage billed at $0.04 per credit as overage charges if enabled. Paid plan users access premium AI models including Claude Sonnet 4.5 and Claude Opus 4.6, subject to regional availability.\n\nThe platform is available to users with billing addresses in 195+ countries and territories. Overage charges are disabled by default and must be manually enabled in account settings; they remain active on paid plans until the account downgrades to the free tier.",
     "benefitType": "Discount",
     "value": "Free Pro plan on first upgrade + 50 free credits/month",
@@ -9721,9 +10026,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://kiro.dev/pricing/",
     "claimUrl": "https://kiro.dev/pricing/",
     "tags": [
-      "Vibe Coding",
       "Credit",
-      "Web"
+      "Web",
+      "Vibe Coding"
     ]
   },
   {
@@ -9733,7 +10038,7 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/jetbrains.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Development Tools",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free annual IDE subscription and more",
+    "offerSummary": "Professional IDEs for Java, Python, and more.",
     "description": "JetBrains makes professional integrated development environments (IDEs) for Java, Python, JavaScript, Kotlin, C#, and other programming languages used by 88 of the Fortune Global Top 100 companies. Students enrolled in accredited educational programs lasting longer than one year can access the JetBrains Student Pack free during their studies.\n\nThe offer includes all JetBrains IDEs, free coding courses, and a JetBrains AI Pro trial with unlimited code completion and access to AI agents like Claude and Codex. Student verification requires a university email address, ISIC/ITIC card, or GitHub Student Developer Pack account. Students needing only one IDE for a single class or personal project can get free access without verification.\n\nLicenses renew annually for the duration of your studies and remain free as long as you maintain student status.",
     "benefitType": "Discount",
     "value": "Free annual IDE subscription and more",
@@ -9743,8 +10048,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://www.jetbrains.com/community/education/#students",
     "claimUrl": "https://www.jetbrains.com/community/education/#students",
     "tags": [
-      "Free",
-      "Web"
+      "Web",
+      "Free"
     ]
   },
   {
@@ -9754,8 +10059,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/openai.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "AI & Machine Learning",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free ChatGPT Go access for 1 year in India",
-    "description": "ChatGPT Go is a lightweight plan from OpenAI designed for quick everyday AI assistance. Free access offers have been historically offered in specific regions, including a reported one-year free tier in India.\n\nAvailability and terms vary by country and payment partner—for example, some regions offer promotional periods through banking partners. Because offer details are region-specific and subject to change, verify the current terms directly with OpenAI or your local provider before assuming eligibility. This is not a documented universal student discount program.",
+    "offerSummary": "OpenAI's ChatGPT Go plan with extended GPT-5 access, image generation & more.",
+    "description": "ChatGPT Go is OpenAI's subscription plan delivering extended GPT-5 access, image generation, advanced reasoning, and priority features for power users. During your subscription, you get full access to ChatGPT Go's premium features.\n\nBBVA customers in Mexico can claim three months free when signing up as new paid subscribers using an eligible BBVA debit or credit card through the official BBVA promotion page. This offer applies to all BBVA cardholders meeting eligibility requirements\u2014no special status needed. After three months, ChatGPT Go automatically renews at OpenAI's standard monthly rate unless you cancel beforehand.\n\nReview eligibility requirements, promotion window dates, and card terms on the BBVA partner page before claiming. Ensure your BBVA card qualifies and that you're registering as a new paid subscriber to activate the promotion.",
     "benefitType": "Discount",
     "value": "Free ChatGPT Go access for 1 year in India",
     "eligibility": "Students",
@@ -9764,20 +10069,20 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://chat.openai.com",
     "claimUrl": "https://chat.openai.com",
     "tags": [
-      "AI",
+      "Web",
       "Free",
-      "Web"
+      "AI"
     ]
   },
   {
-    "title": "Google Gemini Pro × Jio Student Offer",
-    "company": "Google Gemini Pro × Jio",
+    "title": "Google Gemini Pro \u00d7 Jio Student Offer",
+    "company": "Google Gemini Pro \u00d7 Jio",
     "slug": "google-gemini-pro-jio",
     "logo": "https://img.logo.dev/google.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "AI & Machine Learning",
     "appCategory": "Software & Tools",
     "offerSummary": "Free 18-month Gemini Pro access for Jio 5G users",
-    "description": "Google Gemini Pro is an AI assistant for research, writing, and content creation. Through a partnership with Jio, this offer provides 18 months of free Gemini Pro access to eligible Jio 5G users in India.\n\nTo qualify, you must be aged 18 or above with an active Jio unlimited 5G plan costing ₹349 or more (prepaid or postpaid). The benefit includes Gemini 3 access, the Gemini app with enhanced model capabilities, and advanced research and writing tools with 5X higher usage limits. You can claim the benefit once per unique mobile number and must maintain your active 5G plan throughout the 18-month period to retain access.",
+    "description": "Google Gemini Pro is an AI assistant for research, writing, and content creation. Through a partnership with Jio, this offer provides 18 months of free Gemini Pro access to eligible Jio 5G users in India.\n\nTo qualify, you must be aged 18 or above with an active Jio unlimited 5G plan costing \u20b9349 or more (prepaid or postpaid). The benefit includes Gemini 3 access, the Gemini app with enhanced model capabilities, and advanced research and writing tools with 5X higher usage limits. You can claim the benefit once per unique mobile number and must maintain your active 5G plan throughout the 18-month period to retain access.",
     "benefitType": "Discount",
     "value": "Free 18-month Gemini Pro access for Jio 5G users",
     "eligibility": "Students",
@@ -9786,9 +10091,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://jio.com/google-gemini-offer",
     "claimUrl": "https://jio.com/google-gemini-offer",
     "tags": [
-      "AI",
+      "Web",
       "Free",
-      "Web"
+      "AI"
     ]
   },
   {
@@ -9908,7 +10213,7 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://aobklvmdpcebkbgvvijp.supabase.co/storage/v1/object/public/LOGOs/bai-logo.jpg",
     "category": "AI & Machine Learning",
     "appCategory": "Software & Tools",
-    "offerSummary": "500K free credits + Minimax M3 free trial",
+    "offerSummary": "AI API platform with 50+ frontier models and OpenAI-compatible endpoint",
     "description": "AI API platform with 50+ frontier models and OpenAI-compatible endpoint",
     "benefitType": "Discount",
     "value": "500K free credits + Minimax M3 free trial",
@@ -9918,9 +10223,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://b.ai",
     "claimUrl": "https://b.ai",
     "tags": [
-      "API",
       "Credit",
-      "Developer"
+      "Developer",
+      "API"
     ]
   },
   {
@@ -9930,7 +10235,7 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/descript.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "AI & Machine Learning",
     "appCategory": "Credits & Savings",
-    "offerSummary": "50% off Hobbyist plan",
+    "offerSummary": "Edit video and podcasts by editing the transcript, powered by AI",
     "description": "Edit video and podcasts by editing the transcript, powered by AI",
     "benefitType": "Discount",
     "value": "50% off Hobbyist plan",
@@ -9940,9 +10245,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://help.descript.com/hc/en-us/articles/10255872422029",
     "claimUrl": "https://help.descript.com/hc/en-us/articles/10255872422029",
     "tags": [
-      "AI",
+      "Web",
       "Discount",
-      "Web"
+      "AI"
     ]
   },
   {
@@ -9952,7 +10257,7 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/thesisai.io?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "AI & Machine Learning",
     "appCategory": "Credits & Savings",
-    "offerSummary": "20% off Pro plan",
+    "offerSummary": "Draft 80-page academic papers with verified inline citations from one prompt",
     "description": "Draft 80-page academic papers with verified inline citations from one prompt",
     "benefitType": "Discount",
     "value": "20% off Pro plan",
@@ -9962,9 +10267,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://www.thesisai.io/coupon-code/",
     "claimUrl": "https://www.thesisai.io/coupon-code/",
     "tags": [
-      "AI",
+      "Web",
       "Discount",
-      "Web"
+      "AI"
     ]
   },
   {
@@ -9974,8 +10279,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/scite.ai?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "AI & Machine Learning",
     "appCategory": "Credits & Savings",
-    "offerSummary": "Up to 40% off via Student Beans",
-    "description": "AI-powered research tool with Smart Citations — see if papers are supported or contradicted by later studies",
+    "offerSummary": "AI-powered research tool with Smart Citations \u2014 see if papers are supported or contradicted by later studies",
+    "description": "AI-powered research tool with Smart Citations \u2014 see if papers are supported or contradicted by later studies",
     "benefitType": "Discount",
     "value": "Up to 40% off via Student Beans",
     "eligibility": "Students",
@@ -9984,9 +10289,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://student-redirect.studentoffersteam.workers.dev/studentbeans/scite",
     "claimUrl": "https://student-redirect.studentoffersteam.workers.dev/studentbeans/scite",
     "tags": [
-      "AI",
+      "Web",
       "Discount",
-      "Web"
+      "AI"
     ]
   },
   {
@@ -9996,7 +10301,7 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/dify.ai?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "AI & Machine Learning",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free Yearly Professional plan",
+    "offerSummary": "No-code LLMOps platform for building AI apps, agents, and RAG pipelines",
     "description": "No-code LLMOps platform for building AI apps, agents, and RAG pipelines",
     "benefitType": "Discount",
     "value": "Free Yearly Professional plan",
@@ -10006,9 +10311,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://dify.ai/education",
     "claimUrl": "https://dify.ai/education",
     "tags": [
-      "AI",
+      "Developer",
       "Free",
-      "Developer"
+      "AI"
     ]
   },
   {
@@ -10018,7 +10323,7 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/logically.app?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "AI & Machine Learning",
     "appCategory": "Credits & Savings",
-    "offerSummary": "50% off Unlimited yearly plan (first year)",
+    "offerSummary": "AI writing suite with document editor, reference manager, and AI assistant",
     "description": "AI writing suite with document editor, reference manager, and AI assistant",
     "benefitType": "Discount",
     "value": "50% off Unlimited yearly plan (first year)",
@@ -10028,9 +10333,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://logically.app/pricing/",
     "claimUrl": "https://logically.app/pricing/",
     "tags": [
-      "AI",
+      "Web",
       "Discount",
-      "Web"
+      "AI"
     ]
   },
   {
@@ -10040,7 +10345,7 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/granola.ai?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "AI & Machine Learning",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free Business plan for 12 months",
+    "offerSummary": "AI meeting notepad that captures lectures and meetings, generating structured notes automatically",
     "description": "AI meeting notepad that captures lectures and meetings, generating structured notes automatically",
     "benefitType": "Discount",
     "value": "Free Business plan for 12 months",
@@ -10050,9 +10355,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://www.granola.ai/students",
     "claimUrl": "https://www.granola.ai/students",
     "tags": [
-      "AI",
+      "Web",
       "Free",
-      "Web"
+      "AI"
     ]
   },
   {
@@ -10062,7 +10367,7 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/paperguide.ai?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "AI & Machine Learning",
     "appCategory": "Credits & Savings",
-    "offerSummary": "40% off with college email",
+    "offerSummary": "All-in-one AI research platform for literature reviews, paper search, writing, and references",
     "description": "All-in-one AI research platform for literature reviews, paper search, writing, and references",
     "benefitType": "Discount",
     "value": "40% off with college email",
@@ -10072,9 +10377,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://paperguide.ai/pricing/",
     "claimUrl": "https://paperguide.ai/pricing/",
     "tags": [
-      "AI",
+      "Web",
       "Discount",
-      "Web"
+      "AI"
     ]
   },
   {
@@ -10084,7 +10389,7 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/consensus.app?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "AI & Machine Learning",
     "appCategory": "Credits & Savings",
-    "offerSummary": "Up to 40% off all paid plans",
+    "offerSummary": "AI academic search engine searching 220M+ peer-reviewed papers with AI summaries",
     "description": "AI academic search engine searching 220M+ peer-reviewed papers with AI summaries",
     "benefitType": "Discount",
     "value": "Up to 40% off all paid plans",
@@ -10094,9 +10399,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://consensus.app/pricing/",
     "claimUrl": "https://consensus.app/pricing/",
     "tags": [
-      "AI",
+      "Web",
       "Discount",
-      "Web"
+      "AI"
     ]
   },
   {
@@ -10106,7 +10411,7 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/undermind.ai?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "AI & Machine Learning",
     "appCategory": "Credits & Savings",
-    "offerSummary": "73% off Pro plan with academic pricing",
+    "offerSummary": "AI research tool that deep-searches scientific literature, finding papers others miss",
     "description": "AI research tool that deep-searches scientific literature, finding papers others miss",
     "benefitType": "Discount",
     "value": "73% off Pro plan with academic pricing",
@@ -10116,9 +10421,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://www.undermind.ai/#pricing",
     "claimUrl": "https://www.undermind.ai/#pricing",
     "tags": [
-      "AI",
+      "Web",
       "Discount",
-      "Web"
+      "AI"
     ]
   },
   {
@@ -10128,7 +10433,7 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/manus.im?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "AI & Machine Learning",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free campus access + bonus referral credits",
+    "offerSummary": "Autonomous AI agent that browses, codes, and creates files to complete complex tasks end-to-end",
     "description": "Autonomous AI agent that browses, codes, and creates files to complete complex tasks end-to-end",
     "benefitType": "Discount",
     "value": "Free campus access + bonus referral credits",
@@ -10138,9 +10443,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://manus.im/edu",
     "claimUrl": "https://manus.im/edu",
     "tags": [
-      "AI",
+      "Web",
       "Free",
-      "Web"
+      "AI"
     ]
   },
   {
@@ -10150,7 +10455,7 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/udio.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "AI & Machine Learning",
     "appCategory": "Credits & Savings",
-    "offerSummary": "50% off for 6 months",
+    "offerSummary": "AI music generation platform to create original songs from text prompts and style references",
     "description": "AI music generation platform to create original songs from text prompts and style references",
     "benefitType": "Discount",
     "value": "50% off for 6 months",
@@ -10160,9 +10465,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://www.udio.com/pricing",
     "claimUrl": "https://www.udio.com/pricing",
     "tags": [
-      "AI",
+      "Web",
       "Discount",
-      "Web"
+      "AI"
     ]
   },
   {
@@ -10172,7 +10477,7 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/notta.ai?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "AI & Machine Learning",
     "appCategory": "Credits & Savings",
-    "offerSummary": "50% off Pro and Business plans",
+    "offerSummary": "AI transcription app for meetings, interviews, and lectures with summaries and action items",
     "description": "AI transcription app for meetings, interviews, and lectures with summaries and action items",
     "benefitType": "Discount",
     "value": "50% off Pro and Business plans",
@@ -10182,9 +10487,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://support.notta.ai/hc/en-us/articles/17418832708251-How-to-apply-for-Notta-educational-discount",
     "claimUrl": "https://support.notta.ai/hc/en-us/articles/17418832708251-How-to-apply-for-Notta-educational-discount",
     "tags": [
-      "AI",
+      "Web",
       "Discount",
-      "Web"
+      "AI"
     ]
   },
   {
@@ -10194,7 +10499,7 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/ryanair.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Travel & Finance",
     "appCategory": "Credits & Savings",
-    "offerSummary": "10% off flights + free 20kg bag with ESNcard",
+    "offerSummary": "Budget European airline offering Erasmus students discounted flights and a free check-in bag",
     "description": "Budget European airline offering Erasmus students discounted flights and a free check-in bag",
     "benefitType": "Discount",
     "value": "10% off flights + free 20kg bag with ESNcard",
@@ -10204,8 +10509,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://www.ryanair.com/gb/en/lp/explore/erasmus",
     "claimUrl": "https://www.ryanair.com/gb/en/lp/explore/erasmus",
     "tags": [
-      "Discount",
-      "Web"
+      "Web",
+      "Discount"
     ]
   },
   {
@@ -10215,7 +10520,7 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/skylum.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Design & Creative",
     "appCategory": "Credits & Savings",
-    "offerSummary": "50% off with student ID",
+    "offerSummary": "AI-powered photo editor with sky replacement, background removal, and retouching",
     "description": "AI-powered photo editor with sky replacement, background removal, and retouching",
     "benefitType": "Discount",
     "value": "50% off with student ID",
@@ -10225,9 +10530,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://skylum.com/education-discount",
     "claimUrl": "https://skylum.com/education-discount",
     "tags": [
-      "AI",
+      "Web",
       "Discount",
-      "Web"
+      "AI"
     ]
   },
   {
@@ -10237,7 +10542,7 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/lingvist.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Learning & Education",
     "appCategory": "Credits & Savings",
-    "offerSummary": "50% off subscription",
+    "offerSummary": "AI language learning app covering 60+ language pairs with smart vocabulary algorithms",
     "description": "AI language learning app covering 60+ language pairs with smart vocabulary algorithms",
     "benefitType": "Discount",
     "value": "50% off subscription",
@@ -10247,9 +10552,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://lingvist.com/students/",
     "claimUrl": "https://lingvist.com/students/",
     "tags": [
-      "AI",
+      "Web",
       "Discount",
-      "Web"
+      "AI"
     ]
   },
   {
@@ -10259,7 +10564,7 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/murf.ai?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "AI & Machine Learning",
     "appCategory": "Credits & Savings",
-    "offerSummary": "20% off any paid plan",
+    "offerSummary": "AI voice generator with 200+ voices in 30+ languages for voiceovers and videos",
     "description": "AI voice generator with 200+ voices in 30+ languages for voiceovers and videos",
     "benefitType": "Discount",
     "value": "20% off any paid plan",
@@ -10269,9 +10574,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://help.murf.ai/do-you-offer-any-discount",
     "claimUrl": "https://help.murf.ai/do-you-offer-any-discount",
     "tags": [
-      "AI",
+      "Web",
       "Discount",
-      "Web"
+      "AI"
     ]
   },
   {
@@ -10281,7 +10586,7 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/jitter.video?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Design & Creative",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free Pro plan",
+    "offerSummary": "Browser-based motion design tool for creating animations, GIFs, and Lottie files",
     "description": "Browser-based motion design tool for creating animations, GIFs, and Lottie files",
     "benefitType": "Discount",
     "value": "Free Pro plan",
@@ -10291,8 +10596,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://help.jitter.video/en/articles/6545337-jitter-for-education",
     "claimUrl": "https://help.jitter.video/en/articles/6545337-jitter-for-education",
     "tags": [
-      "Free",
-      "Web"
+      "Web",
+      "Free"
     ]
   },
   {
@@ -10302,7 +10607,7 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://aobklvmdpcebkbgvvijp.supabase.co/storage/v1/object/public/LOGOs/hyperwrite.jpg",
     "category": "AI & Machine Learning",
     "appCategory": "Credits & Savings",
-    "offerSummary": "50% off monthly subscription",
+    "offerSummary": "AI writing assistant with web search, citations, and hundreds of writing tools",
     "description": "AI writing assistant with web search, citations, and hundreds of writing tools",
     "benefitType": "Discount",
     "value": "50% off monthly subscription",
@@ -10312,9 +10617,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://www.hyperwriteai.com/faq/does-hyperwrite-offer-a-student-discount",
     "claimUrl": "https://www.hyperwriteai.com/faq/does-hyperwrite-offer-a-student-discount",
     "tags": [
-      "AI",
+      "Web",
       "Discount",
-      "Web"
+      "AI"
     ]
   },
   {
@@ -10324,7 +10629,7 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/mnml.ai?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "AI & Machine Learning",
     "appCategory": "Credits & Savings",
-    "offerSummary": "30% off any plan",
+    "offerSummary": "AI architecture rendering tool for sketches, interiors, exteriors, and 3D models",
     "description": "AI architecture rendering tool for sketches, interiors, exteriors, and 3D models",
     "benefitType": "Discount",
     "value": "30% off any plan",
@@ -10334,9 +10639,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://mnml.ai/education",
     "claimUrl": "https://mnml.ai/education",
     "tags": [
-      "AI",
+      "Web",
       "Discount",
-      "Web"
+      "AI"
     ]
   },
   {
@@ -10346,7 +10651,7 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/amctheatres.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Media & Entertainment",
     "appCategory": "Credits & Savings",
-    "offerSummary": "Up to 50% off tickets and concessions",
+    "offerSummary": "America's largest movie theater chain with IMAX, Dolby, and luxury recliners",
     "description": "America's largest movie theater chain with IMAX, Dolby, and luxury recliners",
     "benefitType": "Discount",
     "value": "Up to 50% off tickets and concessions",
@@ -10356,8 +10661,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://www.amctheatres.com/offers",
     "claimUrl": "https://www.amctheatres.com/offers",
     "tags": [
-      "Discount",
-      "Web"
+      "Web",
+      "Discount"
     ]
   },
   {
@@ -10367,7 +10672,7 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://aobklvmdpcebkbgvvijp.supabase.co/storage/v1/object/public/LOGOs/kickbacks-ai.png",
     "category": "Marketing & Growth",
     "appCategory": "Software & Tools",
-    "offerSummary": "Earn while Claude Code thinks - up to $200/day",
+    "offerSummary": "Passive income VS Code extension - earns ad revenue while AI tools think",
     "description": "Passive income VS Code extension - earns ad revenue while AI tools think",
     "benefitType": "Discount",
     "value": "Earn while Claude Code thinks - up to $200/day",
@@ -10377,8 +10682,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://kickbacks.ai/",
     "claimUrl": "https://kickbacks.ai/",
     "tags": [
-      "Free",
-      "Developer"
+      "Developer",
+      "Free"
     ]
   },
   {
@@ -10388,7 +10693,7 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/lightning.ai?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "AI & Machine Learning",
     "appCategory": "Software & Tools",
-    "offerSummary": "30M free tokens/month via model APIs",
+    "offerSummary": "Access Claude, GPT, Gemini, DeepSeek and more via one unified API key.",
     "description": "Access Claude, GPT, Gemini, DeepSeek and more via one unified API key.",
     "benefitType": "Discount",
     "value": "30M free tokens/month via model APIs",
@@ -10398,9 +10703,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://lightning.ai/models",
     "claimUrl": "https://lightning.ai/models",
     "tags": [
-      "API",
+      "Developer",
       "Free",
-      "Developer"
+      "API"
     ]
   },
   {
@@ -10410,7 +10715,7 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://aobklvmdpcebkbgvvijp.supabase.co/storage/v1/object/public/LOGOs/jimis-burger.png",
     "category": "Food & Dining",
     "appCategory": "Credits & Savings",
-    "offerSummary": "Free Classic Burger on any 2 burgers",
+    "offerSummary": "Mumbai burger chain with dine-in outlets across the city",
     "description": "Mumbai burger chain with dine-in outlets across the city",
     "benefitType": "Discount",
     "value": "Free Classic Burger on any 2 burgers",
@@ -10420,8 +10725,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://www.instagram.com/reels/DZaC04MNZsx/",
     "claimUrl": "https://www.instagram.com/reels/DZaC04MNZsx/",
     "tags": [
-      "Food",
-      "Free"
+      "Free",
+      "Food"
     ]
   },
   {
@@ -10431,7 +10736,7 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/tavily.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "AI & Machine Learning",
     "appCategory": "Software & Tools",
-    "offerSummary": "4 months free on Project Plan ($120 value)",
+    "offerSummary": "Web search, extraction, and crawling API built for AI agents",
     "description": "Web search, extraction, and crawling API built for AI agents",
     "benefitType": "Discount",
     "value": "4 months free on Project Plan ($120 value)",
@@ -10441,9 +10746,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://tavily.com/",
     "claimUrl": "https://tavily.com/",
     "tags": [
-      "AI",
       "Free",
-      "API"
+      "API",
+      "AI"
     ]
   },
   {
@@ -10453,7 +10758,7 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://aobklvmdpcebkbgvvijp.supabase.co/storage/v1/object/public/LOGOs/tokenrouter.jpg",
     "category": "AI & Machine Learning",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free MiniMax M3 API access",
+    "offerSummary": "Unified API gateway for 50+ AI models with OpenAI-compatible endpoint",
     "description": "Unified API gateway for 50+ AI models with OpenAI-compatible endpoint",
     "benefitType": "Discount",
     "value": "Free MiniMax M3 API access",
@@ -10463,9 +10768,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://www.tokenrouter.com",
     "claimUrl": "https://www.tokenrouter.com",
     "tags": [
-      "API",
+      "Developer",
       "Free",
-      "Developer"
+      "API"
     ]
   },
   {
@@ -10475,10 +10780,10 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/freebuff.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "AI & Machine Learning",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free CLI agent — unlimited DeepSeek & MiniMax models",
-    "description": "Freebuff is a free, open-source CLI coding agent that runs in your terminal and helps you write, review, and edit code using natural language. You describe what you want to build or fix, and Freebuff reads your repository, understands the context, and makes changes directly. It uses a multi-agent system with specialized sub-agents for planning, editing, and code review to handle tasks efficiently.\n\nThe free tier is ad-supported and offers unlimited access to frontier AI models including DeepSeek V4 Pro, Kimi K2.6, and MiniMax M2.7 in supported regions. Install it with a single npm command—no account, credit card, or configuration needed. You can use it immediately with zero setup overhead.\n\nFreebuff is available globally. In 25+ countries (US, UK, Canada, Australia, and most of Europe), you get full access to all models. Everywhere else, you're limited to DeepSeek V4 Flash with 5 one-hour sessions per day, but it remains completely free.",
+    "offerSummary": "Ad-supported CLI coding agent with unlimited frontier models, no subscription",
+    "description": "Freebuff is a free, open-source CLI coding agent that runs in your terminal and helps you write, review, and edit code using natural language. You describe what you want to build or fix, and Freebuff reads your repository, understands the context, and makes changes directly. It uses a multi-agent system with specialized sub-agents for planning, editing, and code review to handle tasks efficiently.\n\nThe free tier is ad-supported and offers unlimited access to frontier AI models including DeepSeek V4 Pro, Kimi K2.6, and MiniMax M2.7 in supported regions. Install it with a single npm command\u2014no account, credit card, or configuration needed. You can use it immediately with zero setup overhead.\n\nFreebuff is available globally. In 25+ countries (US, UK, Canada, Australia, and most of Europe), you get full access to all models. Everywhere else, you're limited to DeepSeek V4 Flash with 5 one-hour sessions per day, but it remains completely free.",
     "benefitType": "Discount",
-    "value": "Free CLI agent — unlimited DeepSeek & MiniMax models",
+    "value": "Free CLI agent \u2014 unlimited DeepSeek & MiniMax models",
     "eligibility": "Students",
     "region": "Global",
     "verification": "Edu Email / Student ID",
@@ -10486,8 +10791,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "claimUrl": "https://freebuff.com/",
     "tags": [
       "Vibe Coding",
-      "Free",
-      "Developer"
+      "Developer",
+      "Free"
     ]
   },
   {
@@ -10497,7 +10802,7 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://aobklvmdpcebkbgvvijp.supabase.co/storage/v1/object/public/LOGOs/brik.png",
     "category": "AI & Machine Learning",
     "appCategory": "Software & Tools",
-    "offerSummary": "3 months Pro free",
+    "offerSummary": "AI platform to create interactive design tools from text prompts",
     "description": "AI platform to create interactive design tools from text prompts",
     "benefitType": "Discount",
     "value": "3 months Pro free",
@@ -10507,9 +10812,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://brik.space/student",
     "claimUrl": "https://brik.space/student",
     "tags": [
-      "AI",
+      "Web",
       "Free",
-      "Web"
+      "AI"
     ]
   },
   {
@@ -10519,7 +10824,7 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/distrokid.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Media & Entertainment",
     "appCategory": "Credits & Savings",
-    "offerSummary": "50% off first year ($12.49)",
+    "offerSummary": "Distribute music to Spotify, Apple, TikTok and 150+ platforms",
     "description": "DistroKid is a music distribution service that uploads your tracks to Spotify, Apple Music, TikTok, and 150+ platforms worldwide. The platform lets artists keep 100% of their earnings and removes typical upload limits, making it popular with student musicians, bedroom producers, and independent creators releasing their first tracks.\n\nStudents can access a first-year discount of 50% ($12.49 instead of $24.99) by signing up with a `.edu` email address. Verify current eligibility requirements and renewal pricing on the official education page before signing up.",
     "benefitType": "Discount",
     "value": "50% off first year ($12.49)",
@@ -10529,8 +10834,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://distrokid.com/edu/",
     "claimUrl": "https://distrokid.com/edu/",
     "tags": [
-      "Discount",
-      "Web"
+      "Web",
+      "Discount"
     ]
   },
   {
@@ -10540,7 +10845,7 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/qualcomm.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Learning & Education",
     "appCategory": "Software & Tools",
-    "offerSummary": "25+ Free Courses on AI, 5G & More + Certificates",
+    "offerSummary": "Free courses on AI, 5G, Edge AI and more taught by Qualcomm engineers",
     "description": "Qualcomm Academy is a free online learning platform offering 25+ courses on AI, 5G, edge AI, robotics, IoT, and related technical subjects taught by Qualcomm engineers. Courses span multiple skill levels from fundamentals to advanced topics, designed for students, developers, and engineers seeking industry-backed technical education.\n\nThe platform is free for everyone to access. To get started, you create a free Qualcomm account and browse the available courses. Most courses include completion certificates that demonstrate proficiency in the covered material. Each course page clearly indicates whether it's part of the free catalog and what certificate options are included.",
     "benefitType": "Discount",
     "value": "25+ Free Courses on AI, 5G & More + Certificates",
@@ -10550,9 +10855,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://academy.qualcomm.com/course-catalog?ByFormat=eLearning+-+FREE",
     "claimUrl": "https://academy.qualcomm.com/course-catalog?ByFormat=eLearning+-+FREE",
     "tags": [
-      "AI",
+      "Web",
       "Free",
-      "Web"
+      "AI"
     ]
   },
   {
@@ -10562,7 +10867,7 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/filmora.wondershare.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Design & Creative",
     "appCategory": "Credits & Savings",
-    "offerSummary": "Up to 50% off Plans",
+    "offerSummary": "AI video editor with timeline editing, effects, and 2.9M+ creative assets",
     "description": "Filmora is an AI-powered video editor built for creators who need professional results without steep learning curves. It features timeline editing, AI-assisted tools, effects, and access to over 2.9 million creative assets including stock footage, music, and transitions. The software balances accessibility with capable features like multi-track editing, text animations, and audio controls, making it ideal for students stepping up from basic editors but not yet ready for industry-standard suites like Adobe Premiere or DaVinci Resolve.\n\nStudents can claim up to 50% off annual and monthly plans through Student Beans verification. Filmora works well for class projects, YouTube videos, portfolios, social media content, and presentations.",
     "benefitType": "Discount",
     "value": "Up to 50% off Plans",
@@ -10572,9 +10877,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://filmora.wondershare.com/store/education.html",
     "claimUrl": "https://filmora.wondershare.com/store/education.html",
     "tags": [
-      "AI",
+      "Web",
       "Discount",
-      "Web"
+      "AI"
     ]
   },
   {
@@ -10584,7 +10889,7 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/chess.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Media & Entertainment",
     "appCategory": "Credits & Savings",
-    "offerSummary": "50% off Premium Membership",
+    "offerSummary": "Online chess platform with game review, puzzles, lessons, and bots",
     "description": "Chess.com is an online chess platform offering game analysis, tactical puzzles, video lessons, and AI opponents for players of all skill levels. The platform includes a mobile app available on iOS and Android for play anywhere.\n\nStudents receive 50% off Chess.com Premium Membership through a dedicated student discount offer. Premium includes unlimited game review, unlimited puzzles, and unlimited lessons. To access the student discount, students sign up or log in through Chess.com's student offer page using the INSTUDENTDISCOUNT coupon code.\n\nThe exact verification process and subscription renewal terms are available on Chess.com's student offer page. Premium membership provides structured learning tools alongside live and correspondence game play.",
     "benefitType": "Discount",
     "value": "50% off Premium Membership",
@@ -10594,8 +10899,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://www.chess.com/student-discount",
     "claimUrl": "https://www.chess.com/student-discount",
     "tags": [
-      "Discount",
-      "Web"
+      "Web",
+      "Discount"
     ]
   },
   {
@@ -10605,8 +10910,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/iask.ai?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free 1 Year Pro",
-    "description": "Ad-free AI search engine with source citing and document summarizer",
+    "offerSummary": "Ad-free AI search engine with source citing and document summarizer",
+    "description": "iAsk AI is an ad-free AI search engine that delivers search results with source citations and includes a built-in document summarizer. Unlike traditional search engines cluttered with ads, iAsk AI focuses on providing clean, attributed answers for research and study tasks.\n\nStudents with a .edu or .ac email address can claim one year of iAsk Pro free, with no credit card required. iAsk Pro removes ads entirely and unlocks premium features for academic work.\n\nThis offer is limited-time, so eligibility may change. Verify current terms directly on the iAsk AI website before signing up.",
     "benefitType": "iAsk AI",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -10615,22 +10920,22 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://iask.ai/students",
     "claimUrl": "https://iask.ai/students",
     "tags": [
-      "AI",
-      "Free",
       "Web",
-      "⏰Limited Time",
-      "Global"
+      "\u23f0Limited Time",
+      "Global",
+      "Free",
+      "AI"
     ]
   },
   {
-    "title": "MindMap AI - Over 70% off — Basic $2.99, Pro $4.49/mo",
+    "title": "MindMap AI - Over 70% off \u2014 Basic $2.99, Pro $4.49/mo",
     "company": "MindMap AI",
     "slug": "mindmap-ai",
     "logo": "https://img.logo.dev/mindmapai.app?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Credits & Savings",
-    "offerSummary": "Over 70% off — Basic $2.99, Pro $4.49/mo",
-    "description": "AI mind mapping tool — converts PDFs, notes, audio and video into visual maps",
+    "offerSummary": "AI mind mapping tool \u2014 converts PDFs, notes, audio and video into visual maps",
+    "description": "MindMap AI is an AI-powered mind mapping tool that converts PDFs, notes, audio, and video into visual mind maps to help organize study materials and research. Students receive over 70% off the regular pricing, paying $2.99/month for Basic or $4.49/month for Pro plans through the exclusive student discount program.\n\nTo qualify, you must register with an official student email from an accredited institution and verify your enrollment status. After verification, MindMap AI emails your discount code within 48 hours. The student plan includes access to premium AI-powered mind mapping features designed for note-taking, focus, and productivity during study sessions. As long as you remain a student, you can renew your monthly subscription. The offer is available to students worldwide.",
     "benefitType": "MindMap AI",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -10639,10 +10944,10 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://mindmapai.app/student-discount",
     "claimUrl": "https://mindmapai.app/student-discount",
     "tags": [
-      "AI",
-      "Discount",
       "Web",
-      "Global"
+      "Global",
+      "Discount",
+      "AI"
     ]
   },
   {
@@ -10652,8 +10957,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/mathworks.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Credits & Savings",
-    "offerSummary": "Student Suite for $49/year",
-    "description": "Numerical computing platform for data analysis, engineering and science",
+    "offerSummary": "Numerical computing platform for data analysis, engineering and science",
+    "description": "MATLAB & Simulink is a numerical computing platform used by engineers and scientists worldwide for data analysis, simulation, and algorithm development. The Student Suite includes MATLAB for numerical computing and programming, Simulink for modeling and simulation, and access to specialized toolboxes for engineering, mathematics, machine learning, signal processing, optimization, and control systems. Students use these tools for coursework in robotics, electrical systems, controls, data analysis, and scientific computing.\n\nThe Student Suite is available for $49/year and provides access to the same industry-standard tools used by professionals, at a fraction of commercial licensing costs. The suite also includes online training resources to help you build skills in core concepts and applications.\n\nRegional pricing may apply\u2014verify your local price before purchase. Your license renews annually as long as you maintain student status.",
     "benefitType": "MATLAB & Simulink",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -10662,9 +10967,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://www.mathworks.com/store/link/products/student/STUDENT",
     "claimUrl": "https://www.mathworks.com/store/link/products/student/STUDENT",
     "tags": [
-      "Discount",
       "Web",
-      "Global"
+      "Global",
+      "Discount"
     ]
   },
   {
@@ -10674,8 +10979,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/mobbin.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Credits & Savings",
-    "offerSummary": "50% off Pro for up to 2 years",
-    "description": "UI/UX pattern library for researching real app flows and screens",
+    "offerSummary": "UI/UX pattern library for researching real app flows and screens",
+    "description": "Mobbin is a UI/UX pattern library that lets you research real app flows and screens from over 1,000 apps. The platform helps design students study live product patterns, sharpen visual design judgment, and build portfolios by learning from real-world interfaces rather than isolated screenshots.\n\nStudents get 50% off Mobbin Pro for up to 2 years with verified student status. Verification takes roughly two minutes using your university email and student ID. It's useful for UX, UI, product design, and HCI coursework, internships, and portfolio work.",
     "benefitType": "Mobbin",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -10684,9 +10989,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://mobbin.com/education",
     "claimUrl": "https://mobbin.com/education",
     "tags": [
-      "Discount",
       "Web",
-      "Global"
+      "Global",
+      "Discount"
     ]
   },
   {
@@ -10696,8 +11001,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/exploratory.io?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free Academic Plan for students and teachers",
-    "description": "Data analytics and visualization platform for exploring datasets.",
+    "offerSummary": "Data analytics and visualization platform for exploring datasets.",
+    "description": "Exploratory.io is a data analytics and visualization platform that lets students and teachers explore datasets, build charts, and create dashboards. The platform supports data workflows built on R, making it useful for coursework in data analysis, statistics, research, and business intelligence.\n\nThe Academic Plan is free for eligible students and teachers who verify with a valid school email address. Students can use Exploratory to work through datasets and learn practical data skills without paying for a professional license.\n\nCheck the service terms for the Academic Plan to confirm your project type and institution eligibility before relying on the free tier for class or research work.",
     "benefitType": "Exploratory.io",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -10706,10 +11011,10 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://exploratory.io/plan?plan=Community",
     "claimUrl": "https://exploratory.io/plan?plan=Community",
     "tags": [
-      "AI",
-      "Free",
       "Web",
-      "Global"
+      "Global",
+      "Free",
+      "AI"
     ]
   },
   {
@@ -10719,8 +11024,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/malwarebytes.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Credits & Savings",
-    "offerSummary": "50% off Malwarebytes plans for students",
-    "description": "Device security and malware protection for your computers and devices.",
+    "offerSummary": "Device security and malware protection for your computers and devices.",
+    "description": "Malwarebytes is device security and malware protection software for computers and devices. It protects against malware, ransomware, phishing, and other threats across individual devices, making it suitable for students managing laptops and phones across different locations.\n\nStudents can get 50% off Malwarebytes plans through student verification via Proxi.ID. The company also offers a 14-day Premium trial separately, so students can test the full product before committing to a paid plan.\n\nVerify your student status through Proxi.ID and confirm the current discount terms and renewal policy before purchase.",
     "benefitType": "Malwarebytes",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -10729,9 +11034,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://www.malwarebytes.com/student-discount",
     "claimUrl": "https://www.malwarebytes.com/student-discount",
     "tags": [
-      "Discount",
       "Web",
-      "Global"
+      "Global",
+      "Discount"
     ]
   },
   {
@@ -10741,8 +11046,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/learnsql.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free SQL Basics course",
-    "description": "Learn SQL with 129 interactive exercises. Free for students with school email.",
+    "offerSummary": "Learn SQL with 129 interactive exercises. Free for students with school email.",
+    "description": "LearnSQL is an interactive SQL learning platform offering a free SQL Basics course to students and teachers worldwide. The course includes 129 interactive exercises covering beginner SQL concepts: queries across one or more tables, JOINs, GROUP BY, aggregation, reporting logic, and early subquery work. The platform focuses on guided, hands-on practice rather than passive video lessons, making it practical for students learning SQL for coursework, analytics, internships, or technical interviews.\n\nTo access it free, create an account and verify using your school email address. After completing SQL Basics, you can explore paid tracks and certifications if you need more advanced specialization.",
     "benefitType": "LearnSQL",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -10751,9 +11056,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://learnsql.com/for-students/",
     "claimUrl": "https://learnsql.com/for-students/",
     "tags": [
-      "Free",
       "Web",
-      "US"
+      "US",
+      "Free"
     ]
   },
   {
@@ -10763,8 +11068,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/freecodecamp.org?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Software & Tools",
-    "offerSummary": "100% free coding curriculum with certifications",
-    "description": "Learn to code for free with 3,000 hours of interactive lessons and verified certifications.",
+    "offerSummary": "Learn to code for free with 3,000 hours of interactive lessons and verified certifications.",
+    "description": "freeCodeCamp is a free online learning platform offering 3,000+ hours of interactive coding lessons and verified certifications at no cost. Students gain hands-on experience across web development, data science, machine learning, and cybersecurity through project-based curricula. The platform includes responsive design lessons, backend development, databases, and more.\n\nEach certification requires completing real-world projects, ensuring employers recognize the credential. All course materials and certifications remain completely free with no hidden fees or premium tiers. Access the full curriculum immediately after signup without payment or trial limitations.",
     "benefitType": "freeCodeCamp",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -10773,10 +11078,10 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://www.freecodecamp.org/learn/",
     "claimUrl": "https://www.freecodecamp.org/learn/",
     "tags": [
-      "Open Source",
-      "Free",
       "Web",
-      "Global"
+      "Global",
+      "Open Source",
+      "Free"
     ]
   },
   {
@@ -10786,8 +11091,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/leetcode.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free practice problems and guided study plans",
-    "description": "Practice coding with 4,150+ problems and structured interview prep guides.",
+    "offerSummary": "Practice coding with 4,150+ problems and structured interview prep guides.",
+    "description": "LeetCode Explore is a free coding practice platform with 4,150+ problems and guided study plans for interview preparation. It provides structured learning paths organized by topic and difficulty level, helping you build coding skills systematically rather than tackling random problems. The platform includes curated interview-prep guides designed to help you prepare for software engineering roles.\n\nAvailable to all users, LeetCode Explore offers free access to its full set of resources without requiring a paid subscription. The guided study plans and topic-based organization make it particularly effective for self-directed learners of all backgrounds who want a clear path to mastering coding fundamentals.\n\nWhile useful for building core skills, LeetCode Explore complements broader LeetCode features if you need company-specific questions or premium content for more advanced preparation.",
     "benefitType": "LeetCode Explore",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -10796,9 +11101,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://leetcode.com/explore/",
     "claimUrl": "https://leetcode.com/explore/",
     "tags": [
-      "Free",
       "Web",
-      "Global"
+      "Global",
+      "Free"
     ]
   },
   {
@@ -10808,8 +11113,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/gitpod.io?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free $10 usage credit on cloud IDE",
-    "description": "Browser-based cloud development environment with VS Code Web integration.",
+    "offerSummary": "Browser-based cloud development environment with VS Code Web integration.",
+    "description": "Gitpod is a browser-based cloud development environment that provides instant, pre-configured workspaces for coding projects without requiring local setup. It integrates VS Code Web directly into the browser, allowing developers to write, test, and collaborate on code from any device with internet access.\n\nGitpod offers a free tier with usage credits, though the current structure and student eligibility terms require verification on their live platform. The free plan includes monthly usage allowance and supports common development workflows for individual projects and learning. Access is available globally and does not require a credit card to start.\n\nAfter initial setup, users can create workspaces from GitHub repositories and switch between projects instantly. The exact credit amounts and renewal terms should be confirmed directly on Gitpod's current pricing page, as offer terms may change.",
     "benefitType": "Gitpod",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -10818,9 +11123,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://app.gitpod.io/",
     "claimUrl": "https://app.gitpod.io/",
     "tags": [
-      "Free",
+      "Global",
       "Developer",
-      "Global"
+      "Free"
     ]
   },
   {
@@ -10830,8 +11135,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/codecademy.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Credits & Savings",
-    "offerSummary": "35% off Pro for college & high school students",
-    "description": "Interactive coding courses with career paths and certificates.",
+    "offerSummary": "Interactive coding courses with career paths and certificates.",
+    "description": "Codecademy Pro Student is a discounted subscription plan for eligible college and high school students that provides full access to interactive coding courses, career paths, and skill paths. The offer provides up to 50% off the regular Codecademy Pro price for verified students.\n\nEligible college and high school students can upgrade to Codecademy Pro Student to access unlimited lessons, practice packs, quizzes, and structured career paths designed to teach the skills and languages covered in a 4-year college computer science degree. The curriculum is built for hands-on learning, with lessons that teach abstract programming concepts alongside real-world problem-solving skills. Student membership also includes access to community chapters, exclusive events, and a global learner network for support and collaboration.",
     "benefitType": "Codecademy Pro Student",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -10840,9 +11145,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://www.codecademy.com/student-center",
     "claimUrl": "https://www.codecademy.com/student-center",
     "tags": [
-      "Discount",
       "Web",
-      "Global"
+      "Global",
+      "Discount"
     ]
   },
   {
@@ -10852,8 +11157,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/railway.app?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free $5 credits/month",
-    "description": "Deploy full-stack apps to the cloud with GitHub integration.",
+    "offerSummary": "Deploy full-stack apps to the cloud with GitHub integration.",
+    "description": "Railway is a cloud deployment platform that lets developers deploy full-stack applications, databases, and backend services with GitHub integration. The platform makes it easy to get started without upfront costs, making it accessible for students building portfolio projects, hackathon submissions, or side projects.\n\nAll users receive a free tier that includes $5 in monthly credits, available regardless of student status. You can use these credits toward compute, storage, and database resources on Railway's infrastructure. After the free credits are used or the month ends, you can add a payment method to continue, or stay on the free tier with limited resources.",
     "benefitType": "Railway",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -10862,9 +11167,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://railway.app/new",
     "claimUrl": "https://railway.app/new",
     "tags": [
-      "Free",
+      "Global",
       "Developer",
-      "Global"
+      "Free"
     ]
   },
   {
@@ -10874,8 +11179,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/ynab.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free YNAB for 1 year",
-    "description": "Budgeting tool for managing expenses and building savings goals",
+    "offerSummary": "Budgeting tool for managing expenses and building savings goals",
+    "description": "YNAB is a budgeting tool designed to help you manage expenses and build savings goals. This offer gives students a chance to establish strong money habits early without upfront cost.\n\nStudents receive one free year after verifying their enrollment status. The free year applies to full-time and part-time students, including those pursuing graduate degrees. To claim, you'll need to provide proof of enrollment such as a student ID, transcript, or tuition statement directly through YNAB.\n\nAfter the free year ends, standard pricing applies.",
     "benefitType": "YNAB",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -10884,9 +11189,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://www.ynab.com/college",
     "claimUrl": "https://www.ynab.com/college",
     "tags": [
-      "Free",
       "Web",
-      "Global"
+      "Global",
+      "Free"
     ]
   },
   {
@@ -10896,8 +11201,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/xero.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free 30-day trial for students",
-    "description": "Cloud accounting software to manage invoices, bank reconciliation, and bookkeeping",
+    "offerSummary": "Cloud accounting software to manage invoices, bank reconciliation, and bookkeeping",
+    "description": "Xero is a cloud accounting platform for managing invoices, bank reconciliation, and bookkeeping. For students in accounting, finance, or business programs, Xero offers practical experience with real-world accounting workflows and software skills valued by employers.\n\nA free 30-day trial is available to everyone, including students, teachers, and business owners. You can use the trial to complete coursework, practice bookkeeping tasks, or explore the platform before deciding on a paid plan.\n\nVerify the trial terms and pricing structure before committing beyond the trial period.",
     "benefitType": "Xero",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -10906,9 +11211,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://www.xero.com/educators/students/",
     "claimUrl": "https://www.xero.com/educators/students/",
     "tags": [
-      "Trial",
       "Web",
-      "Global"
+      "Global",
+      "Trial"
     ]
   },
   {
@@ -10918,8 +11223,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/workona.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Credits & Savings",
-    "offerSummary": "50% discount on individual Pro and Team subscriptions",
-    "description": "Turn chaotic browser tabs into organized, dedicated project workspaces",
+    "offerSummary": "Turn chaotic browser tabs into organized, dedicated project workspaces",
+    "description": "Workona is a workspace organization tool that turns multiple browser tabs into dedicated project spaces. This is useful for managing coursework, research, group projects, and internships alongside personal work\u2014all within the browser.\n\nStudents with verified school email addresses can get 50% off individual Pro and Team subscriptions for two years. The discount applies only to verified education accounts, so confirm your school email qualifies before signing up.\n\nCheck Workona's billing page for current eligibility and what happens when the two-year verified period ends.",
     "benefitType": "Workona",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -10928,9 +11233,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://workona.com/help/subscriptions-billing/#edu-nonprofit",
     "claimUrl": "https://workona.com/help/subscriptions-billing/#edu-nonprofit",
     "tags": [
-      "Discount",
       "Web",
-      "Global"
+      "Global",
+      "Discount"
     ]
   },
   {
@@ -10940,8 +11245,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/wisprflow.ai?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Software & Tools",
-    "offerSummary": "3 months free Pro Plan then 50% off",
-    "description": "High-speed AI dictation with smart formatting, auto-edits, and instant transcription",
+    "offerSummary": "High-speed AI dictation with smart formatting, auto-edits, and instant transcription",
+    "description": "Wispr Flow is a voice dictation app that converts speech to text in any application on your computer or phone. It features smart formatting, auto-edits, and instant transcription so you can work at the speed of thought without typing. The app works in documents, emails, notes, and other apps, and lets you adjust tone from casual to formal.\n\nStudents who verify their status receive 3 months of Flow Pro free, then 50% off the standard monthly rate for as long as they remain eligible.",
     "benefitType": "Wispr Flow",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -10950,10 +11255,10 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://wisprflow.ai/students",
     "claimUrl": "https://wisprflow.ai/students",
     "tags": [
-      "AI",
-      "Trial",
       "Web",
-      "Global"
+      "Global",
+      "Trial",
+      "AI"
     ]
   },
   {
@@ -10963,8 +11268,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/windsurf.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Credits & Savings",
-    "offerSummary": "50% off Pro ($7.5/mo)",
-    "description": "AI-powered coding environment for fast and intelligent development",
+    "offerSummary": "AI-powered coding environment for fast and intelligent development",
+    "description": "Windsurf is an AI-powered coding environment that has been integrated into Devin Desktop, a full-featured IDE with intelligent agent capabilities for software development. The product includes syntax highlighting, autocomplete, debugging tools, and unlimited access to SWE-1.6, the fastest coding model available, allowing developers to stay in their editor while planning, delegating, and shipping code.\n\nWindsurf offers a 50% student discount on the Pro plan, reducing the monthly cost to $7.50. Eligibility and verification details for this student offer should be confirmed directly on the product page, as the specific verification method is not detailed in current documentation. The product serves developers worldwide and integrates local and cloud agents into a single development surface for faster, more intelligent coding workflows.",
     "benefitType": "Windsurf",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -10973,10 +11278,10 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://windsurf.com/editor/students",
     "claimUrl": "https://windsurf.com/editor/students",
     "tags": [
-      "Vibe Coding",
-      "Discount",
       "Web",
-      "Global"
+      "Global",
+      "Vibe Coding",
+      "Discount"
     ]
   },
   {
@@ -10986,8 +11291,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/whimsical.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free Pro plan with a limit of 100 total AI actions",
-    "description": "Collaborative workspace for docs, diagrams, and whiteboards",
+    "offerSummary": "Collaborative workspace for docs, diagrams, and whiteboards",
+    "description": "Whimsical is a collaborative workspace for creating documents, diagrams, mind maps, and whiteboards with built-in AI-assisted features. It helps students, teachers, and teams organize ideas visually and work together in real time across projects.\n\nEligible students and educators receive Whimsical's Pro plan free through the education program. This includes unlimited shared boards, AI-assisted creation tools, and 100 total AI actions per month\u2014the same core features as the paid Pro tier.\n\nTo qualify, apply through Whimsical's education verification form and complete account confirmation. The free Pro plan remains active for the duration of your education eligibility. When that period ends, standard pricing applies unless you reapply for continued access.",
     "benefitType": "Whimsical",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -10996,9 +11301,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://help.whimsical.com/billing/pricing#:~:text=To%20apply%20for%20the%20education%20discount%2C",
     "claimUrl": "https://help.whimsical.com/billing/pricing#:~:text=To%20apply%20for%20the%20education%20discount%2C",
     "tags": [
-      "Free",
       "Web",
-      "Global"
+      "Global",
+      "Free"
     ]
   },
   {
@@ -11008,8 +11313,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/wandb.ai?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free Pro for academic institutions",
-    "description": "Machine learning experiment tracking platform for researchers",
+    "offerSummary": "Machine learning experiment tracking platform for researchers",
+    "description": "Weights & Biases is an experiment tracking and model evaluation platform for machine learning research and development. It helps researchers log, visualize, and debug training runs, compare model performance, and collaborate on AI projects.\n\nAcademic institutions qualify for a free Pro license if pursuing research not connected to a for-profit entity. Students, professors, and postdoctoral researchers with an active email address from an academic institution can access all Pro features at no cost. The academic license includes unlimited tracked hours, 200GB of cloud storage, up to 25GB/month of Weave data ingestion, and up to 100 seats. Additional storage is available at $0.03 per GB monthly, though local hosting removes storage limits.\n\nVerification requires an institutional email address. Organizations can also deploy Weights & Biases on their own infrastructure using a free enterprise trial license.",
     "benefitType": "Weights & Biases",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -11018,10 +11323,10 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://wandb.ai/site/pricing/",
     "claimUrl": "https://wandb.ai/site/pricing/",
     "tags": [
-      "AI",
-      "Free",
       "Web",
-      "Global"
+      "Global",
+      "Free",
+      "AI"
     ]
   },
   {
@@ -11031,8 +11336,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/vscodeedu.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free online coding learning environment",
-    "description": "Browser-based coding platform with built-in lessons and assessments",
+    "offerSummary": "Browser-based coding platform with built-in lessons and assessments",
+    "description": "VS Code Education is a browser-based coding platform designed for learning environments. It provides built-in lessons and assessments to help students practice coding without requiring a local installation. Unlike the standard desktop VS Code editor, this education-specific version is built around classroom workflows, assignments, and structured learning paths.\n\nStudents can access coding exercises directly in their browser, making it easy to get started with programming. Availability and features may depend on whether your school or instructor has set up an account on the platform.",
     "benefitType": "VS Code Education",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -11041,9 +11346,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://vscodeedu.com/",
     "claimUrl": "https://vscodeedu.com/",
     "tags": [
-      "Free",
       "Web",
-      "Global"
+      "Global",
+      "Free"
     ]
   },
   {
@@ -11053,8 +11358,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/visualstudio.microsoft.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free Visual Studio Community",
-    "description": "Cross-platform IDE for modern app, web, and cloud development",
+    "offerSummary": "Cross-platform IDE for modern app, web, and cloud development",
+    "description": "Visual Studio Community is a free, cross-platform IDE for building modern apps, web applications, and cloud services. It supports .NET, Python, C++, Node.js, TypeScript, and a broad extension ecosystem. Developers of any background can use Community to start professional desktop, web, cloud, and game development workflows without upfront software costs.\n\nAvailable to all users at no cost, Visual Studio Community is a general-purpose public tool rather than a student-only offering. While Microsoft promotes it on student-focused pages due to its educational value, anyone can download and use it for their development needs.\n\nVerify device support and workload requirements before installation.",
     "benefitType": "Visual Studio Community",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -11063,9 +11368,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://visualstudio.microsoft.com/students/",
     "claimUrl": "https://visualstudio.microsoft.com/students/",
     "tags": [
-      "Free",
       "Web",
-      "Global"
+      "Global",
+      "Free"
     ]
   },
   {
@@ -11075,8 +11380,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/unity.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free Unity Student plan",
-    "description": "Game development platform for building 2D, 3D, and VR experiences",
+    "offerSummary": "Game development platform for building 2D, 3D, and VR experiences",
+    "description": "Unity Student is a free game development platform for building 2D, 3D, AR, and VR experiences across 25+ platforms. The plan includes full access to the Unity Editor, collaboration tools, LiveOps features, and multiplayer development capabilities\u2014all at no cost for eligible students.\n\nYou also get access to official documentation, free developer training through Unity Learn, and exclusive student resources. Verification happens through SheerID, and your license is valid for one year, renewable as long as you remain enrolled in an accredited educational institution.",
     "benefitType": "Unity Student",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -11085,9 +11390,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://store.unity.com/academic/unity-student",
     "claimUrl": "https://store.unity.com/academic/unity-student",
     "tags": [
-      "Free",
       "Web",
-      "Global"
+      "Global",
+      "Free"
     ]
   },
   {
@@ -11097,8 +11402,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/uber.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Software & Tools",
-    "offerSummary": "4-week free trial then 50% off at $4.99/month",
-    "description": "Free delivery and savings on Uber rides and Uber Eats",
+    "offerSummary": "Free delivery and savings on Uber rides and Uber Eats",
+    "description": "Uber One for Students is a membership subscription that provides discounts on Uber rides and Uber Eats food delivery for eligible students. The membership includes $0 delivery fees on standard deliveries from participating restaurants, up to 10% off orders, Uber One credits earned from rides (valid for 60 days), and exclusive offers during peak demand periods.\n\nStudents who are 18 or older can access a 4-week free trial, then pay $4.99 per month after the trial ends. To qualify, you must verify your student status during sign-up. The subscription auto-renews each month, but you can cancel anytime in the Uber app under Manage Membership. Cancellations made less than 24 hours before renewal may still process, though charges are automatically refunded. Benefits apply only where Uber operates and for eligible stores and rides marked with the Uber One icon; order minimums and additional fees for Priority or Long Range Delivery may apply.",
     "benefitType": "Uber One Student",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -11107,9 +11412,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://www.uber.com/us/en/uber-one/student/",
     "claimUrl": "https://www.uber.com/us/en/uber-one/student/",
     "tags": [
-      "Trial",
       "Web",
-      "Limited Countries"
+      "Limited Countries",
+      "Trial"
     ]
   },
   {
@@ -11119,8 +11424,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/trello.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Credits & Savings",
-    "offerSummary": "75% off for students via Student Beans",
-    "description": "Visual project management and team organization with boards and cards.",
+    "offerSummary": "Visual project management and team organization with boards and cards.",
+    "description": "Trello is a visual project management tool developed by Atlassian that uses boards, lists, and cards to help teams organize tasks and collaborate on projects.\n\nStudents can access Trello through Atlassian's 75% student discount, available via Student Beans verification. To qualify, you must register with Student Beans and verify your current student status (apprentices are also eligible). The discount is redeemed through Student Beans and requires verification with the external provider. Once verified, you gain access to the discounted Atlassian products.\n\nIf you have issues redeeming the offer, contact Student Beans directly as it is managed externally. Full terms apply to the promotion.",
     "benefitType": "Trello",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -11129,9 +11434,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://www.studentbeans.com/student-discount/us/atlassian",
     "claimUrl": "https://www.studentbeans.com/student-discount/us/atlassian",
     "tags": [
-      "Discount",
       "Web",
-      "US"
+      "US",
+      "Discount"
     ]
   },
   {
@@ -11141,8 +11446,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/theglobeandmail.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Credits & Savings",
-    "offerSummary": "$1 per week for 52 weeks",
-    "description": "Unlimited access to Canada's most trusted news and business analysis",
+    "offerSummary": "Unlimited access to Canada's most trusted news and business analysis",
+    "description": "The Globe and Mail offers a dedicated student subscription through its Globe Campus program, with a value proposition stronger than a generic newspaper discount. The student subscription includes unlimited articles, app access, newsletters, audio articles, financial tools, member events, and access to special ranking programs and business coverage\u2014making it relevant for general news reading as well as careers, business, investing, and public affairs research.\n\nDigital access is available at $1 per week for 52 weeks to postsecondary students with a valid student email address. This is a verified education offer with a clearly stated rate and inclusion set.\n\nStudents should verify the renewal terms after the 52-week introductory period and confirm whether the offer applies only to digital access before subscribing.",
     "benefitType": "The Globe and Mail",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -11151,9 +11456,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://www.theglobeandmail.com/globecampus/students/",
     "claimUrl": "https://www.theglobeandmail.com/globecampus/students/",
     "tags": [
-      "Discount",
       "Web",
-      "Canada"
+      "Canada",
+      "Discount"
     ]
   },
   {
@@ -11163,8 +11468,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/testmail.app?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free Essential plan with unlimited emails",
-    "description": "Automated email testing for app verification and workflows",
+    "offerSummary": "Automated email testing for app verification and workflows",
+    "description": "Testmail is an automated email testing platform that provides unlimited email addresses and mailboxes for developers and QA teams to test app verification flows, signups, password resets, and notification workflows. The service gives developers access to unlimited real email addresses by simply changing tags within a namespace.\n\nThe free forever plan includes 100 emails per month with no credit card required, making it accessible to students, hobbyists, and production teams across all skill levels. Paid plans unlock advanced features including wildcard search, live queries (waiting for new emails), sorting, pagination, attachment handling, and SpamAssassin spam reports.\n\nTestmail's GraphQL API and REST endpoints enable end-to-end test automation for seamless integration into your testing workflows.",
     "benefitType": "Testmail",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -11173,9 +11478,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://testmail.app/github-students",
     "claimUrl": "https://testmail.app/github-students",
     "tags": [
-      "Free",
       "Web",
-      "Global"
+      "Global",
+      "Free"
     ]
   },
   {
@@ -11185,8 +11490,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/tella.tv?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free Tella plan for students",
-    "description": "Professional screen recorder with custom layouts, instant editing, and 4K export",
+    "offerSummary": "Professional screen recorder with custom layouts, instant editing, and 4K export",
+    "description": "Tella is a screen recording and video editing platform with AI-powered tools for creating polished videos, demos, and classroom content. It supports unlimited video recording, instant editing, 4K export, and built-in analytics to track viewer engagement.\n\nStudents and teachers at accredited educational institutions qualify for free access to Tella Pro for 6 months. To apply, create a Tella account using your school email address, then submit an application form with your name, school website, and school email. Tella will review and respond within a few days. The education discount is limited to one user per workspace.",
     "benefitType": "Tella",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -11195,9 +11500,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://www.tella.tv/for-education",
     "claimUrl": "https://www.tella.tv/for-education",
     "tags": [
-      "Free",
       "Web",
-      "Global"
+      "Global",
+      "Free"
     ]
   },
   {
@@ -11207,7 +11512,7 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/target.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Credits & Savings",
-    "offerSummary": "Target Circle 360 at $4.99/mo (55% off)",
+    "offerSummary": "Student membership for exclusive savings and same-day delivery",
     "description": "Student membership for exclusive savings and same-day delivery",
     "benefitType": "Target Circle Student",
     "value": "Variable savings",
@@ -11217,9 +11522,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://www.target.com/l/target-circle-college-student-appreciation/-/N-6v01l",
     "claimUrl": "https://www.target.com/l/target-circle-college-student-appreciation/-/N-6v01l",
     "tags": [
-      "Discount",
       "Web",
-      "US"
+      "US",
+      "Discount"
     ]
   },
   {
@@ -11229,8 +11534,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/tableau.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Software & Tools",
-    "offerSummary": "Tableau Desktop Public Edition free",
-    "description": "Visual analytics platform for exploring and presenting data interactively",
+    "offerSummary": "Visual analytics platform for exploring and presenting data interactively",
+    "description": "Tableau Desktop Public Edition is a free data visualization and analytics software that lets you explore, analyze, and present data interactively through dashboards and visual reports. Available to everyone at no cost, it includes the latest features and release updates, making it accessible for learning data visualization fundamentals.\n\nTo get started, download Tableau Desktop Public Edition directly from Tableau's website. There is no student verification required and no trial period\u2014once you sign up and download, the software is yours to use indefinitely. The platform is designed for exploratory analysis and presenting insights visually, with no renewal fees or subscription commitments. Tableau also offers free training videos and community resources through the DataFam community to support your learning journey.",
     "benefitType": "Tableau Desktop",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -11239,10 +11544,10 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://www.tableau.com/academic/students",
     "claimUrl": "https://www.tableau.com/academic/students",
     "tags": [
-      "AI",
-      "Free",
       "Web",
-      "Global"
+      "Global",
+      "Free",
+      "AI"
     ]
   },
   {
@@ -11252,8 +11557,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://aobklvmdpcebkbgvvijp.supabase.co/storage/v1/object/public/LOGOs/SFcasts.jpeg",
     "category": "Other",
     "appCategory": "Software & Tools",
-    "offerSummary": "3 months free subscription",
-    "description": "Learn Symfony framework development through hands-on video tutorials",
+    "offerSummary": "Learn Symfony framework development through hands-on video tutorials",
+    "description": "SymfonyCasts is a video tutorial platform teaching Symfony framework development, APIs, PHP, JavaScript tools, and practical web development through hands-on courses. Students enrolled in the GitHub Student Developer Pack qualify for a free 3-month subscription to SymfonyCasts' full paid content library, valued at $75.\n\nTo claim the offer, verify your student status through the GitHub Student Developer Pack, then log in or register on SymfonyCasts using your GitHub account to activate the three-month access. After the offer period ends, your access to paid content will end unless you purchase a subscription.",
     "benefitType": "SymfonyCasts",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -11262,20 +11567,20 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://symfonycasts.com/github-student",
     "claimUrl": "https://symfonycasts.com/github-student",
     "tags": [
-      "Free",
       "Web",
-      "Global"
+      "Global",
+      "Free"
     ]
   },
   {
-    "title": "SurveyHero - Student account — 100% free",
+    "title": "SurveyHero - Student account \u2014 100% free",
     "company": "SurveyHero",
     "slug": "surveyhero",
     "logo": "https://img.logo.dev/surveyhero.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Software & Tools",
-    "offerSummary": "Student account — 100% free",
-    "description": "Create and share online surveys, polls, and questionnaires easily",
+    "offerSummary": "Create and share online surveys, polls, and questionnaires easily",
+    "description": "SurveyHero offers one of the clearer academic-use benefits in this batch: a free student account for eligible students for the duration of their studies. Its student page explicitly says the account is 100% free, supports unlimited surveys, requires proof of student status, and is intended for non-commercial academic use. That makes SurveyHero especially relevant to students running research projects, coursework surveys, thesis questionnaires, or class feedback forms.\n\nThe page should explain that this is not a vague education discount but a defined student account with manual review and periodic re-verification. That level of specificity is exactly what makes a page stronger for search and more citable by answer engines.\n\nStudents should also know what happens after graduation: SurveyHero says the account reverts to the free Basic plan while keeping existing surveys and data intact. That is a concrete, useful detail worth surfacing.",
     "benefitType": "SurveyHero",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -11284,9 +11589,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://www.surveyhero.com/students",
     "claimUrl": "https://www.surveyhero.com/students",
     "tags": [
-      "Free",
       "Web",
-      "Global"
+      "Global",
+      "Free"
     ]
   },
   {
@@ -11296,8 +11601,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://aobklvmdpcebkbgvvijp.supabase.co/storage/v1/object/public/LOGOs/StudySmarter.png",
     "category": "Other",
     "appCategory": "Credits & Savings",
-    "offerSummary": "Student discounts provider and aggregator",
-    "description": "Curated UK student deals from verified brands and partners",
+    "offerSummary": "Curated UK student deals from verified brands and partners",
+    "description": "Study Smarter Deals is a student discount aggregator that curates verified offers from over 1,000 brands across categories including books, education, finance, food, software, sports, and freebies. Rather than offering a single discount, it functions as a discovery platform where students can browse and claim deals from partner brands. The platform verifies student status to gate access, providing a trusted layer between students and brand offers.\n\nEach offer has its own terms, redemption process, and eligibility rules. Use it to explore what discounts are available across your favourite retailers, but always check individual brand pages for current terms before claiming.",
     "benefitType": "Study Smarter Deals",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -11306,9 +11611,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://deals.studysmarter.co.uk/",
     "claimUrl": "https://deals.studysmarter.co.uk/",
     "tags": [
-      "Discount",
       "Web",
-      "UK"
+      "UK",
+      "Discount"
     ]
   },
   {
@@ -11318,8 +11623,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/studentwowdeals.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Credits & Savings",
-    "offerSummary": "Access to 500+ student discounts",
-    "description": "Discover hundreds of exclusive student discounts on brands and local events",
+    "offerSummary": "Discover hundreds of exclusive student discounts on brands and local events",
+    "description": "Student Wow Deals is a free membership platform that aggregates 500+ student discounts across online and in-store offers. The service covers food, fashion, entertainment, travel, and other categories, with local deals and events available across multiple countries. Students can discover discounts from major brands alongside location-based savings and accommodation listings in one place.\n\nMembership is free to join. Each offer listed on Student Wow Deals carries its own verification requirements, expiry dates, and geographic eligibility, so students should confirm terms on the final brand page before claiming.",
     "benefitType": "Studentwowdeals",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -11328,9 +11633,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://studentwowdeals.com/",
     "claimUrl": "https://studentwowdeals.com/",
     "tags": [
-      "Discount",
       "Web",
-      "Global"
+      "Global",
+      "Discount"
     ]
   },
   {
@@ -11340,8 +11645,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/studentai.app?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free starter plan with 10,000 credits & 106+ AI study tools",
-    "description": "AI study toolkit with flashcards, quizzes, and citation helpers",
+    "offerSummary": "AI study toolkit with flashcards, quizzes, and citation helpers",
+    "description": "StudentAI is an AI-powered study platform designed for students, graduates, and professionals to complete academic work more efficiently. The platform provides 106+ AI study tools including flashcards, quizzes, citation helpers, and writing assistants tailored to learning workflows.\n\nStudents can access a free starter plan that includes 10,000 credits, unlocking core study tools at no cost. The platform offers tiered plans with Pro and team options for users who need additional features or credits. Verification as a student may be required; check the StudentAI site for current eligibility requirements.\n\nThe free starter plan gives students immediate access to the tool library. Credits are consumed when using AI features; the 10,000-credit allotment supports foundational study tasks like quiz generation, flashcard creation, and citation formatting.",
     "benefitType": "StudentAI",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -11350,10 +11655,10 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://studentai.app/",
     "claimUrl": "https://studentai.app/",
     "tags": [
-      "AI",
-      "Free",
       "Web",
-      "Global"
+      "Global",
+      "Free",
+      "AI"
     ]
   },
   {
@@ -11363,8 +11668,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/studentsaviour.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Credits & Savings",
-    "offerSummary": "Student discounts provider and aggregator",
-    "description": "UK-based student discount platform for brands and services",
+    "offerSummary": "UK-based student discount platform for brands and services",
+    "description": "Student Saviour is a UK student platform that bundles discounts with campus-oriented community features such as group chat, events, accommodation, and student life content. Its own site describes itself as a digital campus, while the discounts area surfaces partner offers across fashion, food and drink, tech, travel, banking, and more. That means Student Saviour should be framed as a discovery and verification-style portal, not as one universal student discount.\n\nFor students, the value is convenience: one place to browse live offers while also using student-focused social and campus tools. This is especially relevant for search intent around UK student discounts because many users are looking for a platform they can keep returning to, not just a one-off code.\n\nStudents should still verify the live terms on each brand page, because the exact discount, validity period, and redemption rules depend on the specific merchant offer.",
     "benefitType": "Student Saviour",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -11373,9 +11678,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://www.studentsaviour.com/student-discount/",
     "claimUrl": "https://www.studentsaviour.com/student-discount/",
     "tags": [
-      "Discount",
       "Web",
-      "UK"
+      "UK",
+      "Discount"
     ]
   },
   {
@@ -11385,8 +11690,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/spccard.ca?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Credits & Savings",
-    "offerSummary": "$11.99 per year membership",
-    "description": "Canadian discount card offering exclusive retail and dining offers",
+    "offerSummary": "Canadian discount card offering exclusive retail and dining offers",
+    "description": "Student Price Card (SPC) is a Canadian membership program that provides students with access to exclusive discounts across retail, dining, and lifestyle merchants. The membership costs $11.99 per year and is designed specifically for Canadian students seeking a centralized discount network.\n\nSPC membership grants cardholders access to partner discounts at participating retailers and restaurants across Canada. Students activate their membership by paying the annual fee and receive either a physical or digital card for use at partner locations. The program targets post-secondary students looking to maximize savings on everyday purchases and dining through a single membership rather than managing individual coupons or promotional codes.\n\nStudents should verify current partner listings and discount terms directly on SPC's platform, as merchant participation and offer details may vary by region and change seasonally.",
     "benefitType": "Student Price Card (SPC)",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -11395,9 +11700,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://www.spccard.ca/",
     "claimUrl": "https://www.spccard.ca/",
     "tags": [
-      "Discount",
       "Web",
-      "Canada"
+      "Canada",
+      "Discount"
     ]
   },
   {
@@ -11407,8 +11712,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/studentedge.org?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Credits & Savings",
-    "offerSummary": "Student discounts provider and aggregator",
-    "description": "Discount platform offering deals on tech, food, and fashion",
+    "offerSummary": "Discount platform offering deals on tech, food, and fashion",
+    "description": "Student Edge is a student membership and discount platform that functions as an offer portal for verified students, especially in Australia. Rather than providing a single coupon, it presents itself as a broader student community with deals, study tools, surveys, jobs, competitions, and news. The deals section highlights partner offers across categories such as tech, food, travel, entertainment, and education.\n\nFor students, the value is breadth: one account can open access to multiple brand deals plus extra student resources. The exact savings depend on the partner brand, so students should verify local market availability, membership eligibility, and the live terms on each linked deal page before relying on any one offer.",
     "benefitType": "Student Edge",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -11417,9 +11722,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://studentedge.org/deals",
     "claimUrl": "https://studentedge.org/deals",
     "tags": [
-      "Discount",
       "Web",
-      "Global"
+      "Global",
+      "Discount"
     ]
   },
   {
@@ -11429,8 +11734,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/studentappcentre.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Credits & Savings",
-    "offerSummary": "100+ student discounts on apps",
-    "description": "Curated platform featuring premium app deals and offers for students",
+    "offerSummary": "Curated platform featuring premium app deals and offers for students",
+    "description": "Student App Centre is a platform that aggregates app discounts and offers for students. The service curates deals across premium software and applications, positioning itself as a centralized discovery hub rather than a single discount code or partnership. Students can browse multiple app offers in one location instead of searching individual software provider sites.\n\nThe platform's model is designed to help students find discounted or free versions of productivity, creative, and development tools they use for coursework and projects. Specific current offers, eligibility criteria, and verification requirements are not available due to website access issues; prospective users should visit the live site directly to confirm what deals are active and any student verification process required.",
     "benefitType": "Student App Centre",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -11439,9 +11744,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://www.studentappcentre.com/",
     "claimUrl": "https://www.studentappcentre.com/",
     "tags": [
-      "Discount",
       "Web",
-      "Global"
+      "Global",
+      "Discount"
     ]
   },
   {
@@ -11451,8 +11756,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/spicejet.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Credits & Savings",
-    "offerSummary": "Up to 10% off domestic flights + 25 kg baggage",
-    "description": "Airline offering discounted fares and extra baggage for students",
+    "offerSummary": "Airline offering discounted fares and extra baggage for students",
+    "description": "SpiceJet is an Indian airline offering a student discount program on domestic flights. Students aged 12 and older enrolled in a recognised school or university in India receive up to 16% discount on base fares plus a free baggage allowance of 25 kg (15 kg standard + 10 kg extra) when booking through the student discount option on SpiceJet's website. The discount applies to one-way and round-trip domestic flights.\n\nTo qualify, students must present a valid, original student ID card issued by their school or university at airport check-in. The discount does not extend to friends or relatives, and limited inventory is available. Failure to present the valid student ID at check-in will result in loss of all student discount benefits, and customers will be required to pay applicable charges or may be denied boarding. Conditions apply to all bookings.",
     "benefitType": "SpiceJet",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -11461,8 +11766,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://corporate.spicejet.com/studentdiscountlanding.aspx",
     "claimUrl": "https://corporate.spicejet.com/studentdiscountlanding.aspx",
     "tags": [
-      "Discount",
       "Web",
+      "Discount",
       "India"
     ]
   },
@@ -11474,7 +11779,7 @@ export const studentBenefits2026: StudentBenefit[] = [
     "category": "Other",
     "appCategory": "Software & Tools",
     "offerSummary": "2000 credits for 1 year (40 AI presentation sessions)",
-    "description": "Practice and improve presentations with AI coach",
+    "description": "SlideCoach is an AI-powered presentation coach designed to help students practice talks, receive feedback, and improve delivery for academic presentations, thesis defenses, and student projects. The platform provides access to all premium features including advanced analytics and personalized coaching feedback.\n\nStudents verified through the GitHub Student Developer Pack receive 2000 free credits annually, which enables up to 80 practice sessions. Verification is instant through connecting your GitHub account to confirm GitHub Student Developer Pack eligibility, and the credits are exclusive to verified student members.",
     "benefitType": "SlideCoach",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -11483,10 +11788,10 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://slidecoach.ai/en/education",
     "claimUrl": "https://slidecoach.ai/en/education",
     "tags": [
-      "AI",
       "Credit",
       "Web",
-      "Global"
+      "Global",
+      "AI"
     ]
   },
   {
@@ -11496,8 +11801,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/slack.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Credits & Savings",
-    "offerSummary": "85% off on Pro or Business Plans via educational institution",
-    "description": "Team communication platform for collaboration and project discussions",
+    "offerSummary": "Team communication platform for collaboration and project discussions",
+    "description": "Slack is a team communication platform for workspace messaging, channels, file sharing, and project collaboration. The Slack for Education programme offers an 85% discount on Pro or Business+ subscriptions for accredited educational institutions.\n\nEligible organizations include primary, secondary, and tertiary schools, along with affiliated faculty groups, alumni associations, fraternities, sororities, and athletic associations. Your institution must apply through the Slack for Education application form and provide documentation confirming accredited status. Faculty, students, and staff at approved institutions can then access the discounted subscription at checkout.\n\nNote that each workspace requires a separate application.",
     "benefitType": "Slack",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -11506,9 +11811,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://slack.com/help/articles/206646877-Apply-for-the-Slack-for-Education-discount",
     "claimUrl": "https://slack.com/help/articles/206646877-Apply-for-the-Slack-for-Education-discount",
     "tags": [
-      "Discount",
       "Web",
-      "Global"
+      "Global",
+      "Discount"
     ]
   },
   {
@@ -11518,7 +11823,7 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/sketchy.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Credits & Savings",
-    "offerSummary": "20% off for groups of 10+ students",
+    "offerSummary": "Visual mnemonics for medical and pre-med exam prep",
     "description": "Visual mnemonics for medical and pre-med exam prep",
     "benefitType": "Sketchy",
     "value": "Variable savings",
@@ -11528,9 +11833,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://www.sketchy.com/student-groups",
     "claimUrl": "https://www.sketchy.com/student-groups",
     "tags": [
-      "Discount",
       "Web",
-      "Global"
+      "Global",
+      "Discount"
     ]
   },
   {
@@ -11540,8 +11845,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/sheerid.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Credits & Savings",
-    "offerSummary": "Student verification provider for brand offers",
-    "description": "Identity verification platform for student, teacher, and military discounts",
+    "offerSummary": "Identity verification platform for student, teacher, and military discounts",
+    "description": "SheerID is an identity verification platform that authenticates student, teacher, military, and other eligible groups to unlock exclusive discounts from participating brands. Rather than offering a discount itself, SheerID acts as the verification layer\u2014when you encounter a brand offering student savings, SheerID confirms your eligibility through document upload or database matching. After verification, your status is confirmed and you can access the discount offer directly from the participating brand.\n\nSheerID's verification is typically instant or same-day, and your verified status often remains active for the duration of your eligibility (e.g., for the length of your enrollment as a student). The platform operates globally across 230+ countries and works with consumer software, apps, and retail merchants.",
     "benefitType": "SheerID",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -11550,9 +11855,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://shop.sheerid.com/",
     "claimUrl": "https://shop.sheerid.com/",
     "tags": [
-      "Discount",
       "Web",
-      "Global"
+      "Global",
+      "Discount"
     ]
   },
   {
@@ -11562,8 +11867,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/setapp.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Credits & Savings",
-    "offerSummary": "20% off Mac + iOS annual plan",
-    "description": "Access 240+ curated Mac and iOS apps for students",
+    "offerSummary": "Access 240+ curated Mac and iOS apps for students",
+    "description": "Setapp is a subscription service that bundles 240+ curated Mac and iOS applications into a single annual plan. The service covers apps for note-taking, research writing, time management, calculations, and academic workflows, letting you replace multiple individual app purchases with one subscription.\n\nStudents receive 20% off the annual Mac + iOS plan when signing up with a verified educational email address (.edu or institutional domain). Setapp automatically verifies your student status during signup, and the discount renews annually as long as you maintain an active educational email.",
     "benefitType": "Setapp",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -11572,9 +11877,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://app.setapp.com/educational-discount",
     "claimUrl": "https://app.setapp.com/educational-discount",
     "tags": [
-      "Discount",
+      "Global",
       "macOS",
-      "Global"
+      "Discount"
     ]
   },
   {
@@ -11584,8 +11889,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://aobklvmdpcebkbgvvijp.supabase.co/storage/v1/object/public/LOGOs/Scrimba.png",
     "category": "Other",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free 1 month Scrimba Pro (40+ courses)",
-    "description": "Interactive frontend coding courses with live code editing",
+    "offerSummary": "Interactive frontend coding courses with live code editing",
+    "description": "Scrimba is an interactive coding platform that teaches frontend development through live code editing and project-based courses in JavaScript, React, and web programming. Students can follow along in real-time, edit code directly in the browser, and build portfolios while learning.\n\nStudents included in the GitHub Student Developer Pack receive one free month of Scrimba Pro, which grants access to 40+ interactive courses. Access is verified through GitHub Education; students must have an active GitHub Student Developer Pack membership to claim the offer.\n\nAfter the free month expires, access to Scrimba Pro requires a paid subscription. The one-month trial is designed to let students explore Scrimba's full course library before deciding on a subscription.",
     "benefitType": "Scrimba",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -11594,10 +11899,10 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://scrimba.com/github-education",
     "claimUrl": "https://scrimba.com/github-education",
     "tags": [
-      "Vibe Coding",
-      "Trial",
       "Web",
-      "Global"
+      "Global",
+      "Vibe Coding",
+      "Trial"
     ]
   },
   {
@@ -11607,8 +11912,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/screen.studio?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Credits & Savings",
-    "offerSummary": "40% off Screen Studio license",
-    "description": "Record polished demo or tutorial videos with ease",
+    "offerSummary": "Record polished demo or tutorial videos with ease",
+    "description": "Screen Studio is a macOS screen-recording tool that automatically applies professional video effects, transforms cursor movement into smooth animations, and generates transcripts with subtitles\u2014all processed locally on your machine.\n\nStudents with a university email address qualify for an automatic 40% discount on Screen Studio licenses. Those without a university email can request a discount code by submitting proof of student status (such as a student ID) to team@screen.studio. The 40% student discount applies to all Screen Studio features, including system audio recording from specific apps, cursor smoothing, and automatic subtitle generation\u2014making it accessible for creating demo videos, tutorials, and coursework documentation.",
     "benefitType": "Screen Studio",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -11617,9 +11922,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://screen.studio/license/request-educational-discount",
     "claimUrl": "https://screen.studio/license/request-educational-discount",
     "tags": [
-      "Discount",
+      "Global",
       "macOS",
-      "Global"
+      "Discount"
     ]
   },
   {
@@ -11629,8 +11934,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/savethestudent.org?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Credits & Savings",
-    "offerSummary": "Student discount aggregator",
-    "description": "Directory of verified student discounts and financial saving tips",
+    "offerSummary": "Directory of verified student discounts and financial saving tips",
+    "description": "Save the Student is a UK-based directory that aggregates verified student discounts and money-saving resources for school, college, and university students. The platform collects active discount codes from major retailers across electronics, software, food, and retail categories, alongside budgeting guides and financial literacy content.\n\nSave the Student is free to use. To access listed discounts, you verify your student status through third-party services like UNiDAYS or Student Beans, which confirm enrollment and provide unique codes for checkout. Save the Student also publishes lists of birthday freebies and free resources.\n\nMost discounts are UK-focused, though Save the Student includes information for international students, including ISIC membership options.",
     "benefitType": "SaveTheStudent",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -11639,9 +11944,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://www.savethestudent.org/student-discounts",
     "claimUrl": "https://www.savethestudent.org/student-discounts",
     "tags": [
-      "Discount",
       "Web",
-      "UK"
+      "UK",
+      "Discount"
     ]
   },
   {
@@ -11651,8 +11956,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/roboflow.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Software & Tools",
-    "offerSummary": "Additional platform credits for students",
-    "description": "Computer vision platform for building and deploying ML models",
+    "offerSummary": "Computer vision platform for building and deploying ML models",
+    "description": "Roboflow is a computer vision platform for dataset management, annotation, model training, and deployment of machine learning models. Students with an active academic email address can apply for additional platform credits to support non-commercial academic work and research.\n\nTo qualify, log into your Roboflow account, navigate to the billing page, select \"Using Roboflow for research or education?\", and click \"Request Access\". Students working on classroom projects or sharing their work publicly may also qualify for additional image and training credits. For custom account configuration or classroom setups, contact help@roboflow.com directly.",
     "benefitType": "Roboflow",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -11661,10 +11966,10 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://research.roboflow.com/credits",
     "claimUrl": "https://research.roboflow.com/credits",
     "tags": [
-      "AI",
       "Credit",
       "Web",
-      "Global"
+      "Global",
+      "AI"
     ]
   },
   {
@@ -11674,8 +11979,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/rhino3d.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Credits & Savings",
-    "offerSummary": "Save up to 80% on commercial Rhino license",
-    "description": "3D modeling software for industrial design and architecture",
+    "offerSummary": "3D modeling software for industrial design and architecture",
+    "description": "Rhino3D is a 3D modeling software for industrial design, architecture, jewelry, and digital fabrication. It provides full-featured tools for professional-grade design work across multiple disciplines.\n\nStudents and faculty can purchase full-featured Rhino3D licenses at up to 80% discount through an educational program. Proof of current student or faculty status is required at purchase. Educational licenses include identical features to commercial versions and support single-user deployment, floating licenses for up to 30 users via on-premises server, or Cloud Zoo Team access.\n\nSchools may purchase multiple educational licenses and often qualify for additional institutional discounts.",
     "benefitType": "Rhino3D",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -11684,9 +11989,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://www.rhino3d.com/edu/",
     "claimUrl": "https://www.rhino3d.com/edu/",
     "tags": [
-      "Discount",
       "Web",
-      "Global"
+      "Global",
+      "Discount"
     ]
   },
   {
@@ -11696,8 +12001,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/requestly.io?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Software & Tools",
-    "offerSummary": "Professional plan free for 1 year ($270 value)",
-    "description": "Intercept, modify, and test HTTP requests and APIs easily",
+    "offerSummary": "Intercept, modify, and test HTTP requests and APIs easily",
+    "description": "Requestly is an HTTP interceptor and API client that lets you intercept, modify, and test HTTP requests and APIs during development. It includes features for redirecting URLs, replacing domains, modifying API responses, changing request bodies, editing HTTP headers, and injecting custom scripts.\n\nRequestly Professional (worth $270/year) is available free for 1 year to verified post-secondary students via the GitHub Student Developer Pack. To claim it, you must first apply to GitHub Education as a student, complete verification, then redeem the offer through your GitHub account. The offer is available worldwide.\n\nAfter your free year ends, the promotion cannot be redeemed again. You'll have the option to purchase a Requestly subscription or switch to the free plan. If you've already paid for a subscription before redeeming, you'll receive a prorated credit for remaining time.",
     "benefitType": "Requestly",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -11706,9 +12011,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://requestly.io/github-student-pack/",
     "claimUrl": "https://requestly.io/github-student-pack/",
     "tags": [
-      "Free",
       "Web",
-      "Global"
+      "Global",
+      "Free"
     ]
   },
   {
@@ -11718,8 +12023,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/reclaim.ai?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Credits & Savings",
-    "offerSummary": "50% off for 12 months",
-    "description": "Smart calendar that schedules tasks, meetings, and habits automatically",
+    "offerSummary": "Smart calendar that schedules tasks, meetings, and habits automatically",
+    "description": "Reclaim AI is a smart calendar that automatically schedules tasks, meetings, habits, and focused work sessions across your calendars. It defends your time by blocking out focused periods and optimizing your schedule without manual effort. The tool includes smart meeting scheduling, task and habit tracking, automatic buffer time between events, and multi-platform calendar sync.\n\nStudents, educators, and faculty at degree-granting or nonprofit educational institutions qualify for 50% off both Starter and Business plans for 12 months with verified status. After 12 months, you can reapply annually if still active at your institution.",
     "benefitType": "Reclaim AI",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -11728,10 +12033,10 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://reclaim.ai/pricing/education-discount",
     "claimUrl": "https://reclaim.ai/pricing/education-discount",
     "tags": [
-      "AI",
-      "Discount",
       "Web",
-      "Global"
+      "Global",
+      "Discount",
+      "AI"
     ]
   },
   {
@@ -11741,8 +12046,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/raycast.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Credits & Savings",
-    "offerSummary": "50% off Raycast Pro plan",
-    "description": "macOS launcher with AI and workflow automation",
+    "offerSummary": "macOS launcher with AI and workflow automation",
+    "description": "Raycast is a macOS launcher that combines command-style navigation, app shortcuts, workflow automation, and AI-powered features into a single desktop tool. It reduces context switching by letting users search files, launch applications, manage tasks, and access AI assistance without leaving the launcher.\n\nRaycast offers a Student Program with 50% off the Raycast Pro subscription plan. To qualify, students must complete the Raycast Student Program application form on the official website, where they will receive a promo code for the discount. The Pro plan includes advanced automation, AI features, and priority support\u2014useful for students working on coding projects, research, or productivity-heavy coursework.",
     "benefitType": "Raycast",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -11751,9 +12056,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://raycastapp.typeform.com/to/hSoIknLJ",
     "claimUrl": "https://raycastapp.typeform.com/to/hSoIknLJ",
     "tags": [
-      "Discount",
+      "Global",
       "macOS",
-      "Global"
+      "Discount"
     ]
   },
   {
@@ -11763,8 +12068,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/qt.io?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free educational license",
-    "description": "Framework for building cross-platform GUI and mobile applications",
+    "offerSummary": "Framework for building cross-platform GUI and mobile applications",
+    "description": "Qt is a cross-platform application framework for building GUI, mobile, embedded, and device software using C++, Python, JavaScript, and QML. The Qt Educational License provides free access to commercial-grade Qt features for students and instructors at recognized educational institutions.\n\nTo qualify, you must have an active email address issued by your university, college, or similar institution; Qt verifies eligibility automatically during signup. The license includes Qt Design Studio Enterprise features, Qt Device Creation Professional (with Raspberry Pi support), MCU tools, and access to learning materials via Qt Academy\u2014but does not include professional technical support.\n\nThe 12-month license renews automatically upon request, allowing you to continue development projects throughout your studies.",
     "benefitType": "QT",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -11773,9 +12078,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://www.qt.io/qt-educational-license",
     "claimUrl": "https://www.qt.io/qt-educational-license",
     "tags": [
-      "Free",
       "Web",
-      "Global"
+      "Global",
+      "Free"
     ]
   },
   {
@@ -11785,8 +12090,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/ptc.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free Creo University Edition",
-    "description": "Professional 3D CAD software for mechanical and industrial design",
+    "offerSummary": "Professional 3D CAD software for mechanical and industrial design",
+    "description": "PTC Creo is professional 3D CAD software designed for mechanical engineering, industrial design, and product development. It provides integrated tools for modeling, simulation, and analysis, enabling engineers and designers to build, test, and optimize 3D products before manufacturing.\n\nThe Creo University Edition is available free to university students and educators. To access it, register with PTC using your student or educator credentials, then download the software directly. The free edition includes the full suite of design and simulation capabilities, allowing you to work on engineering projects, conduct analyses, and prepare models for production.\n\nPTC Creo University Edition is available globally to eligible students and faculty. Verify your institution and status during registration to activate the license.",
     "benefitType": "PTC Creo",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -11795,9 +12100,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://www.ptc.com/en/products/education/free-software/creo-college-download",
     "claimUrl": "https://www.ptc.com/en/products/education/free-software/creo-college-download",
     "tags": [
-      "Free",
       "Web",
-      "Global"
+      "Global",
+      "Free"
     ]
   },
   {
@@ -11807,8 +12112,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/prowritingaid.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Credits & Savings",
-    "offerSummary": "20% student discount",
-    "description": "Grammar checker and style editor to improve your writing",
+    "offerSummary": "Grammar checker and style editor to improve your writing",
+    "description": "ProWritingAid is a grammar checker and style editor designed to improve writing quality across essays, reports, and long-form documents. The platform analyzes text for grammar errors, style inconsistencies, readability, and tone, providing detailed feedback to help writers refine their work.\n\nStudents writing academic papers, dissertations, or assignments can use the tool to catch errors and strengthen their writing before submission. A student discount is historically offered, though current terms and verification requirements should be confirmed directly with ProWritingAid or through the student verification portal where the offer is listed.",
     "benefitType": "ProWritingAid",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -11817,10 +12122,10 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://www.studentappcentre.com/App/ProWritingAid",
     "claimUrl": "https://www.studentappcentre.com/App/ProWritingAid",
     "tags": [
-      "AI",
-      "Discount",
       "Web",
-      "Global"
+      "Global",
+      "Discount",
+      "AI"
     ]
   },
   {
@@ -11830,8 +12135,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/portfoliobox.net?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Credits & Savings",
-    "offerSummary": "90% off the Pro plan for students at partner schools.",
-    "description": "Create customizable online portfolios for creative professionals",
+    "offerSummary": "Create customizable online portfolios for creative professionals",
+    "description": "Portfolio Box is a website builder that lets creative professionals\u2014designers, photographers, artists, and other creatives\u2014build and showcase their work online. It offers customizable templates and design tools to create a professional portfolio site.\n\nStudents at Portfolio Box's partner schools and universities worldwide can get 90% off the Professional plan by verifying their enrollment through the platform's student verification process. Your student discount remains active for one year and renews annually as long as you stay enrolled.\n\nAfter graduation, you become eligible for an alumni discount.",
     "benefitType": "Portfolio Box",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -11840,9 +12145,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://www.portfoliobox.net/students",
     "claimUrl": "https://www.portfoliobox.net/students",
     "tags": [
-      "Discount",
       "Web",
-      "Limited Universities"
+      "Limited Universities",
+      "Discount"
     ]
   },
   {
@@ -11852,8 +12157,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/pomodoneapp.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free Lite plan for 2 years",
-    "description": "Pomodoro timer to manage tasks and boost concentration",
+    "offerSummary": "Pomodoro timer to manage tasks and boost concentration",
+    "description": "PomoDone is a Pomodoro timer app designed to help students manage tasks, organize workflows, and maintain deep focus during study sessions. The app breaks work into timed intervals to boost productivity and reduce burnout.\n\nVerified students can access PomoDone's Lite plan free for 2 years through the GitHub Student Developer Pack. The Lite plan includes core productivity features, activity history tracking, and weekly and monthly productivity reports to monitor progress over time.\n\nThis offer requires GitHub Student Developer Pack verification and is available to eligible students globally. After 2 years, you can renew your student status to extend access or upgrade to a paid plan. PomoDone's Lite plan does not include team collaboration, unlimited activity logs, or enterprise integrations.",
     "benefitType": "PomoDone",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -11862,9 +12167,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://theroundpie.com/roundpie-timer-for-students.html?utm_source=beamer&utm_medium=standalone&utm_campaign=Pomodoro-Timer-for-Students-with-GitHub&utm_content=imagelink",
     "claimUrl": "https://theroundpie.com/roundpie-timer-for-students.html?utm_source=beamer&utm_medium=standalone&utm_campaign=Pomodoro-Timer-for-Students-with-GitHub&utm_content=imagelink",
     "tags": [
-      "Free",
       "Web",
-      "Global"
+      "Global",
+      "Free"
     ]
   },
   {
@@ -11874,8 +12179,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/poeditor.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free Plus plan for 1 year",
-    "description": "Translate and manage localization projects with collaborative tools",
+    "offerSummary": "Translate and manage localization projects with collaborative tools",
+    "description": "POEditor is a collaborative localization and translation management platform that helps developers and teams translate strings, content, and multilingual projects in one place. The Plus plan includes collaborative translation tools, real-time editing, and version history management\u2014useful for apps, games, websites, and open source projects with international audiences.\n\nStudents receive a free Plus plan subscription for one year through the GitHub Student Developer Pack. To claim the offer, sign in with your GitHub account on POEditor's GitHub Education page and verify your student status through GitHub's verification process.\n\nAfter the one-year period ends, you can choose to upgrade to a paid plan or use POEditor's free tier.",
     "benefitType": "POEditor",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -11884,9 +12189,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://poeditor.com/register/github_education",
     "claimUrl": "https://poeditor.com/register/github_education",
     "tags": [
-      "Free",
       "Web",
-      "Global"
+      "Global",
+      "Free"
     ]
   },
   {
@@ -11896,8 +12201,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/perplexity.ai?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free Perplexity Pro for 1 year for Airtel users",
-    "description": "Free year of Perplexity Pro through Airtel’s exclusive AI partnership offer",
+    "offerSummary": "Free year of Perplexity Pro through Airtel\u2019s exclusive AI partnership offer",
+    "description": "Perplexity Pro is an AI search engine that delivers real-time information retrieval and advanced reasoning capabilities in a single search interface. Through an exclusive partnership with Airtel, all eligible Airtel users in India can access a free one-year subscription to Perplexity Pro at no cost.\n\nTo claim the offer, you must be an active Airtel customer on a postpaid, prepaid, Wi-Fi, or DTH service. Activation is simple\u2014complete the process through the Airtel app or the partnership portal. Once your one-year free access ends, your Perplexity Pro subscription will convert to standard paid pricing unless you choose to cancel or renew manually. This offer is available to all Airtel users across India.",
     "benefitType": "Perplexity Pro x Airtel",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -11906,10 +12211,10 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://www.airtel.in/perplexity-pro/",
     "claimUrl": "https://www.airtel.in/perplexity-pro/",
     "tags": [
-      "AI",
-      "Free",
       "Web",
-      "India"
+      "Free",
+      "India",
+      "AI"
     ]
   },
   {
@@ -11919,8 +12224,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/peacocktv.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Credits & Savings",
-    "offerSummary": "$1.99/mo for 12 months (66% off)",
-    "description": "Stream sports, movies, and Peacock Originals on ad-supported plans",
+    "offerSummary": "Stream sports, movies, and Peacock Originals on ad-supported plans",
+    "description": "Peacock is NBCUniversal's streaming service offering live sports, movies, Peacock Originals, and reality TV on ad-supported and ad-free plans.\n\nEligible students can subscribe to Peacock Premium for $1.99 per month for 12 months\u2014a 66% discount off the standard monthly rate. Verification through Student Beans confirms your student eligibility before the discounted rate is applied.\n\nAfter the promotional 12-month period ends, your Peacock subscription will automatically move to standard pricing unless you cancel or modify your plan. This offer is available in the United States.",
     "benefitType": "Peacock",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -11929,9 +12234,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://www.studentbeans.com/student-discount/us/peacock",
     "claimUrl": "https://www.studentbeans.com/student-discount/us/peacock",
     "tags": [
-      "Discount",
       "Web",
-      "US"
+      "US",
+      "Discount"
     ]
   },
   {
@@ -11941,8 +12246,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/pagecord.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Credits & Savings",
-    "offerSummary": "50% off Pagecord Premium",
-    "description": "Minimal blogging app for effortless note-taking and publishing",
+    "offerSummary": "Minimal blogging app for effortless note-taking and publishing",
+    "description": "Pagecord is a minimal blogging app designed for effortless note-taking, writing, and publishing across phone, desktop, and tablet. The platform offers a free Classic tier indefinitely, with no friction or paywalls for basic use.\n\nActive students can claim 50% off Pagecord Premium, reducing the annual subscription to $15/year (regular price $39/year). To qualify, sign up using an official student email address, then email the Pagecord team to request the discount code. Pagecord Premium includes advanced publishing features, analytics with referrer data, API access for integrations like Obsidian, and tag autocomplete in the post editor.\n\nA free trial of most Premium features is available to all new users before committing to a paid plan.",
     "benefitType": "Pagecord",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -11951,9 +12256,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://blog.pagecord.com/announcing-the-pagecord-discount-for-students",
     "claimUrl": "https://blog.pagecord.com/announcing-the-pagecord-discount-for-students",
     "tags": [
-      "Discount",
       "Web",
-      "Global"
+      "Global",
+      "Discount"
     ]
   },
   {
@@ -11963,8 +12268,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://aobklvmdpcebkbgvvijp.supabase.co/storage/v1/object/public/LOGOs/Pageclip.png",
     "category": "Other",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free basic plan while student",
-    "description": "Form backend for collecting submissions from static websites",
+    "offerSummary": "Form backend for collecting submissions from static websites",
+    "description": "Pageclip is a form backend service that lets developers collect form submissions from static websites without building a server. It's useful for students building portfolio sites, landing pages, project demos, or other static websites that need to capture user input like contact forms or survey responses.\n\nThrough the GitHub Student Developer Pack, students get free access to Pageclip's Basic plan, which includes unlimited forms and 20,000 form submissions per month. To access the offer, verify your student status through GitHub's Student Developer Pack verification process. The free Basic plan remains active as long as your student status is verified.",
     "benefitType": "Pageclip",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -11973,9 +12278,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://pageclip.co/github-students",
     "claimUrl": "https://pageclip.co/github-students",
     "tags": [
-      "Free",
+      "Global",
       "Developer",
-      "Global"
+      "Free"
     ]
   },
   {
@@ -11985,7 +12290,7 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/opensauced.pizza?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free courses + tools",
+    "offerSummary": "Track open-source contributions and discover developer opportunities",
     "description": "Track open-source contributions and discover developer opportunities",
     "benefitType": "OpenSauced",
     "value": "Variable savings",
@@ -11995,10 +12300,10 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://education.github.com/experiences/intro_to_open_source",
     "claimUrl": "https://education.github.com/experiences/intro_to_open_source",
     "tags": [
-      "Open Source",
-      "Free",
       "Web",
-      "Global"
+      "Global",
+      "Open Source",
+      "Free"
     ]
   },
   {
@@ -12008,8 +12313,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/opencv.org?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Credits & Savings",
-    "offerSummary": "30% discount on official courses",
-    "description": "Master computer vision and AI with official OpenCV certification courses",
+    "offerSummary": "Master computer vision and AI with official OpenCV certification courses",
+    "description": "OpenCV University is the official platform for computer vision and AI training, offering structured courses in deep learning, image processing, and vision applications. The platform provides both free bootcamp courses in PyTorch, OpenCV, and TensorFlow & Keras for all learners, as well as paid courses including Mastering OpenCV with Python, Fundamentals of Computer Vision & Image Processing, Deep Learning with PyTorch, Deep Learning with TensorFlow & Keras, and Advanced Vision Applications with Deep Learning & Transformers.\n\nStudents at accredited colleges and universities receive a 30% discount on paid courses through student verification. Verified students also get 24 months of access to course materials.",
     "benefitType": "OpenCV University",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -12018,10 +12323,10 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://opencv.org/university/student-offer-opencv-university/",
     "claimUrl": "https://opencv.org/university/student-offer-opencv-university/",
     "tags": [
-      "Open Source",
-      "Discount",
       "Web",
-      "Global"
+      "Global",
+      "Open Source",
+      "Discount"
     ]
   },
   {
@@ -12031,8 +12336,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/onthehub.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Credits & Savings",
-    "offerSummary": "Up to 95% off academic software for students",
-    "description": "Platform offering discounted software licenses for students and educators",
+    "offerSummary": "Platform offering discounted software licenses for students and educators",
+    "description": "OnTheHub is an academic software distribution platform that enables students, faculty, and staff to purchase software at discounted institutional pricing. Access is managed through your school, which determines which titles and discounts are available to your institution's community members.\n\nStudents can save up to 95% on software licenses through OnTheHub, including Microsoft products and other academic software. You verify eligibility by signing in with your institutional email or ID. Licenses purchased through OnTheHub remain yours after graduation, so you can continue using software beyond your academic years.",
     "benefitType": "OnTheHub",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -12041,9 +12346,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://onthehub.com/",
     "claimUrl": "https://onthehub.com/",
     "tags": [
-      "Discount",
       "Web",
-      "Global"
+      "Global",
+      "Discount"
     ]
   },
   {
@@ -12053,8 +12358,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/github.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Software & Tools",
-    "offerSummary": "Access to open-source icon library",
-    "description": "Official open-source GitHub icon set for developers",
+    "offerSummary": "Official open-source GitHub icon set for developers",
+    "description": "Octicons is GitHub's open-source icon library, a free design system for developers and designers building applications, documentation, and web interfaces. The icon set is publicly available and maintained by GitHub, featuring a consistent design language aligned with GitHub's visual standards.\n\nOcticons can be used in personal projects, commercial applications, and educational work without licensing restrictions. Developers access the icons through the GitHub Brand Toolkit, which includes design guidelines, specifications, and implementation details.\n\nThe library is useful for students building portfolios, open-source projects, and technical dashboards who need a professional, recognizable icon set that pairs naturally with GitHub-integrated workflows.",
     "benefitType": "Octicons",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -12063,10 +12368,10 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://primer.style/octicons/",
     "claimUrl": "https://primer.style/octicons/",
     "tags": [
-      "Open Source",
-      "Free",
       "Web",
-      "Global"
+      "Global",
+      "Open Source",
+      "Free"
     ]
   },
   {
@@ -12076,8 +12381,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/obsidian.md?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Credits & Savings",
-    "offerSummary": "40% off Sync and Publish for students",
-    "description": "Knowledge base and note-taking app with linked notes",
+    "offerSummary": "Knowledge base and note-taking app with linked notes",
+    "description": "Obsidian is a knowledge-base and note-taking app built around linked notes and local-first file storage. The app enables flexible personal knowledge management by allowing users to create interconnected notes, customize workflows with built-in features, and extend functionality with community-built plugins\u2014making it widely used for lecture notes, research organization, thesis planning, and study systems.\n\nStudents qualify for a 40% discount on Obsidian Sync and Publish add-on services through Obsidian's education and non-profit discount program. Sync enables cloud synchronization across devices, while Publish allows sharing a vault as a public web site. Verification of student status is required to claim the discount on these paid add-ons.",
     "benefitType": "Obsidian",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -12086,9 +12391,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://help.obsidian.md/discounts",
     "claimUrl": "https://help.obsidian.md/discounts",
     "tags": [
-      "Discount",
+      "Global",
       "macOS",
-      "Global"
+      "Discount"
     ]
   },
   {
@@ -12098,8 +12403,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/notion.so?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free 7 template collection",
-    "description": "Pre-built Notion templates for courses, hackathons, and portfolios",
+    "offerSummary": "Pre-built Notion templates for courses, hackathons, and portfolios",
+    "description": "Notion is an AI workspace that combines note-taking, databases, wikis, and project management in one platform. Students access Notion free through the GitHub Student Developer Pack, which includes a curated collection of pre-built templates for courses, hackathons, portfolios, and project tracking.\n\nThe template collection helps students organize coursework, build portfolios, and manage group projects without starting from a blank page. After graduation, students transition to Notion's paid plans, which start free but offer optional AI-powered features like writing assistance, meeting notes, and research tools at $18\u2013$40 per user monthly.",
     "benefitType": "Notion Templates",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -12108,10 +12413,10 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://www.notion.com/templates/collections/github-student-developer-pack",
     "claimUrl": "https://www.notion.com/templates/collections/github-student-developer-pack",
     "tags": [
-      "No-Code",
-      "Free",
       "Web",
-      "Global"
+      "Global",
+      "Free",
+      "No-Code"
     ]
   },
   {
@@ -12121,8 +12426,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://aobklvmdpcebkbgvvijp.supabase.co/storage/v1/object/public/LOGOs/Notepadexe.webp",
     "category": "Other",
     "appCategory": "Software & Tools",
-    "offerSummary": "100% Free annual subscription",
-    "description": "Minimal macOS note app with markdown, sync, and quick capture",
+    "offerSummary": "Minimal macOS note app with markdown, sync, and quick capture",
+    "description": "Notepad.exe is a minimal macOS note app with markdown support, sync, and quick capture designed for fast, distraction-free writing.\n\nStudents and teachers can verify their academic status to receive a full year free, normally $19.99/year. Verification is typically approved within 24\u201348 hours and covers anyone actively studying or teaching at any accredited educational institution, including high school, college, graduate school, and homeschool educators with valid documentation.\n\nThe free year auto-renews at full price unless cancelled or re-verified, but you can cancel anytime through the customer portal to avoid future charges while keeping the full year of access.",
     "benefitType": "Notepad.exe",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -12131,9 +12436,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://notepadexe.com/education/discount/",
     "claimUrl": "https://notepadexe.com/education/discount/",
     "tags": [
+      "Global",
       "Free",
-      "macOS",
-      "Global"
+      "macOS"
     ]
   },
   {
@@ -12143,8 +12448,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/newegg.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Credits & Savings",
-    "offerSummary": "Student Store with curated discounts",
-    "description": "Online marketplace for computer components and tech accessories",
+    "offerSummary": "Online marketplace for computer components and tech accessories",
+    "description": "Newegg is a major online retailer specializing in computer components, laptops, gaming gear, and electronics. The company operates a dedicated Student Store offering curated discounts on tech products commonly purchased by students, including PC parts, monitors, peripherals, and laptops.\n\nStudents can access the Student Store to browse reduced-price items, though specific discount percentages vary by product and promotion. Verification of student status is typically required to access student-specific pricing.\n\nThe Student Store curates deals year-round, with availability shifting based on inventory and seasonal promotions.",
     "benefitType": "Newegg",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -12153,9 +12458,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://www.newegg.com/students",
     "claimUrl": "https://www.newegg.com/students",
     "tags": [
-      "Discount",
       "Web",
-      "US"
+      "US",
+      "Discount"
     ]
   },
   {
@@ -12165,8 +12470,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/navicat.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free 1-year NFR license for students",
-    "description": "Database management tool for connecting databases visually",
+    "offerSummary": "Database management tool for connecting databases visually",
+    "description": "Navicat is a database management tool for visual database administration, querying, modeling, and data analysis across multiple database systems. The Academic Partner Program offers eligible students a free 1-year non-commercial license through PremiumSoft.\n\nStudents at accredited high schools, universities, and community colleges can qualify with a valid student email address from an accredited non-profit academic institution. The license includes Navicat Premium, Navicat Data Modeler, Navicat Monitor (Non-Commercial), and Navicat Cloud Pro Plan. The license is non-transferable and for educational use only\u2014commercial use is prohibited.\n\nRenewal options vary by institution after the first year expires.",
     "benefitType": "Navicat",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -12175,9 +12480,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://www.navicat.com/en/sponsorship/education/student",
     "claimUrl": "https://www.navicat.com/en/sponsorship/education/student",
     "tags": [
+      "Global",
       "Free",
-      "macOS",
-      "Global"
+      "macOS"
     ]
   },
   {
@@ -12187,8 +12492,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/namecheap.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free .me domain + SSL for 1 year",
-    "description": "Domain registration and hosting tools for developers and students",
+    "offerSummary": "Domain registration and hosting tools for developers and students",
+    "description": "Namecheap is a domain registrar and hosting provider that offers domain registration, web hosting, and branding tools. Through its Education Program, Namecheap gives university students a free bundle that includes a free .me domain for one year plus SSL certificate.\n\nThe offer also includes access to Namecheap's Logo Maker tool for creating professional logos and student business card design tools, both available free for educational use. Students can use the free domain to host portfolio sites, class projects, or personal projects. To qualify, you must verify as a current university student through the education program portal.\n\nAfter the first year, standard domain renewal rates apply.",
     "benefitType": "Namecheap",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -12197,9 +12502,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://nc.me/",
     "claimUrl": "https://nc.me/",
     "tags": [
-      "Free",
       "Web",
-      "Global"
+      "Global",
+      "Free"
     ]
   },
   {
@@ -12209,8 +12514,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/name.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free domain + SSL + privacy protection for 1 year",
-    "description": "Register a free custom domain from 15 available extension options",
+    "offerSummary": "Register a free custom domain from 15 available extension options",
+    "description": "Name.com is an ICANN-accredited domain name registrar that offers free domain registration to students through the GitHub Student Developer Pack. Students receive a free custom domain name with a one-year registration, one-year Advanced Security subscription, and privacy protection at no cost.\n\nTo qualify, students must verify their eligibility through GitHub Student Pack verification. A payment method is required on file to complete registration, but no charge is applied while the free offer is active. After the first year, the domain and Advanced Security renew at Name.com's standard pricing. Automatic renewal can be disabled to prevent future charges after the trial year ends.",
     "benefitType": "Name.com",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -12219,9 +12524,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://www.name.com/partner/github-students",
     "claimUrl": "https://www.name.com/partner/github-students",
     "tags": [
-      "Free",
       "Web",
-      "Global"
+      "Global",
+      "Free"
     ]
   },
   {
@@ -12231,8 +12536,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://aobklvmdpcebkbgvvijp.supabase.co/storage/v1/object/public/LOGOs/Microsoft365.png",
     "category": "Other",
     "appCategory": "Software & Tools",
-    "offerSummary": "VS Community IDE + $200 Azure credit + Pluralsight access",
-    "description": "Free developer tools, cloud services and training from Microsoft",
+    "offerSummary": "Free developer tools, cloud services and training from Microsoft",
+    "description": "MS Visual Studio Community is a free integrated development environment (IDE) from Microsoft for building applications on Windows, macOS, and Linux. It provides students with a comprehensive development platform for creating modern applications across multiple platforms.\n\nStudents receive MS Visual Studio Community along with $200 Azure credit (valid for the first month), one year of free Azure services including compute, storage, and backend services for mobile and web apps, plus access to Pluralsight training courses. Eligibility requires valid student status verified through Microsoft Dev Essentials enrollment.\n\nMS Visual Studio Community remains free indefinitely and does not expire.",
     "benefitType": "MS Visual Studio",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -12241,9 +12546,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://visualstudio.microsoft.com/dev-essentials/",
     "claimUrl": "https://visualstudio.microsoft.com/dev-essentials/",
     "tags": [
-      "Free",
+      "Global",
       "Developer",
-      "Global"
+      "Free"
     ]
   },
   {
@@ -12253,7 +12558,7 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/mongodb.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Software & Tools",
-    "offerSummary": "$50 credits + MongoDB Compass + Free $150 certification",
+    "offerSummary": "Scalable NoSQL database for storing and managing application data",
     "description": "Scalable NoSQL database for storing and managing application data",
     "benefitType": "MongoDB",
     "value": "Variable savings",
@@ -12275,8 +12580,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/monday.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free Student Program for students",
-    "description": "Work OS for team collaboration, project management, and workflows",
+    "offerSummary": "Work OS for team collaboration, project management, and workflows",
+    "description": "Monday.com is a cloud-based work operating system designed for team collaboration, project management, and workflow automation. The platform lets teams build custom applications, track tasks, and automate workflows without coding.\n\nStudents can access a free or discounted student program by verifying their status through Student Beans. Eligible students and apprentices can claim the offer by registering on Student Beans and confirming their enrollment status.\n\nSpecific trial length, pricing, and regional availability are managed through the Student Beans portal, so check their listing for current terms and any restrictions that may apply to your location.",
     "benefitType": "Monday.com",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -12285,9 +12590,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://www.studentbeans.com/student-discount/us/monday-com",
     "claimUrl": "https://www.studentbeans.com/student-discount/us/monday-com",
     "tags": [
-      "Free",
       "Web",
-      "US"
+      "US",
+      "Free"
     ]
   },
   {
@@ -12297,8 +12602,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/momen.app?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Credits & Savings",
-    "offerSummary": "50% off on Momen plans",
-    "description": "Build custom full-stack web apps and AI agents without writing a single line of code",
+    "offerSummary": "Build custom full-stack web apps and AI agents without writing a single line of code",
+    "description": "Momen is a no-code platform for building full-stack web applications and AI agents without writing code. Students and educators at accredited institutions qualify for 50% off Momen's Pro and Basic plans through the Momen Education Program.\n\nTo claim the discount, you must verify with a valid .edu or .ac email address and confirm you are a current student or educator at an accredited institution. The 50% discount applies to both Pro and Basic plan tiers, making it affordable to build coursework projects, hackathons, capstone work, or startup ideas.\n\nMomen also partners with universities and incubators to host workshops, lectures, and hackathons on campus. After verification, you retain access to your projects at the discounted rate as long as your subscription remains active.",
     "benefitType": "Momen",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -12307,10 +12612,10 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://momen.app/education",
     "claimUrl": "https://momen.app/education",
     "tags": [
-      "No-Code",
-      "Discount",
       "Web",
-      "Global"
+      "Global",
+      "Discount",
+      "No-Code"
     ]
   },
   {
@@ -12320,8 +12625,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/education.minecraft.net?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Software & Tools",
-    "offerSummary": "$5.04 per user/year for eligible educational institutions",
-    "description": "Game-based learning platform with coding, STEM, and teamwork lessons",
+    "offerSummary": "Game-based learning platform with coding, STEM, and teamwork lessons",
+    "description": "Minecraft Education is Microsoft's game-based learning platform designed for classroom use, featuring lessons in coding, STEM, and teamwork. Educators use Minecraft Education to teach computational thinking, collaboration, and problem-solving through game-based activities.\n\nSchools and eligible educational institutions can license Minecraft Education for approximately $5.04 per user per year. The platform is institution-managed, meaning access is provisioned by schools or districts rather than by individual students directly. Pricing and eligibility are determined by Microsoft's education licensing agreements, and institutions should contact Microsoft or an authorized education reseller to verify qualification and set up deployment.",
     "benefitType": "Minecraft Education",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -12330,9 +12635,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://edusupport.minecraft.net/hc/en-us/articles/360047119092-FAQ-Availability-Pricing-and-Licensing",
     "claimUrl": "https://edusupport.minecraft.net/hc/en-us/articles/360047119092-FAQ-Availability-Pricing-and-Licensing",
     "tags": [
-      "Free",
       "Web",
-      "Global"
+      "Global",
+      "Free"
     ]
   },
   {
@@ -12342,8 +12647,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/azure.microsoft.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free App Services, Functions, and MySQL",
-    "description": "Free Azure services for young students under 18",
+    "offerSummary": "Free Azure services for young students under 18",
+    "description": "Microsoft Azure is a cloud computing platform that provides students with free access to services for building, testing, and deploying applications. Through the GitHub Student Developer Pack, verified students gain hands-on experience with professional-grade cloud tools used daily by developers worldwide.\n\nVerified students aged 18 and over receive $100 in Azure credit plus free access to 25+ Azure cloud services with no credit card required. Students under 18 also qualify for free Azure services including App Services, Functions, and MySQL. Eligibility requires verification through GitHub Education by providing a school-issued email address or proof of enrollment at an accredited educational institution.\n\nThe $100 credit and service access are renewed annually, ensuring continued access to Azure's cloud computing resources throughout your studies.",
     "benefitType": "Microsoft Azure",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -12353,8 +12658,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "claimUrl": "https://education.github.com/pack#:~:text=About%20Microsoft%20Azure%20(for%20ages%2013%2D17)",
     "tags": [
       "Credit",
-      "Developer",
-      "Global"
+      "Global",
+      "Developer"
     ]
   },
   {
@@ -12364,7 +12669,7 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://aobklvmdpcebkbgvvijp.supabase.co/storage/v1/object/public/LOGOs/Microsoft365.png",
     "category": "Other",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free Office 365 A1 plan",
+    "offerSummary": "Cloud-based office suite including Word, Excel, and PowerPoint",
     "description": "Cloud-based office suite including Word, Excel, and PowerPoint",
     "benefitType": "Microsoft 365",
     "value": "Variable savings",
@@ -12374,9 +12679,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://www.microsoft.com/education/products/office",
     "claimUrl": "https://www.microsoft.com/education/products/office",
     "tags": [
-      "Free",
       "Web",
-      "Global"
+      "Global",
+      "Free"
     ]
   },
   {
@@ -12386,8 +12691,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/meshy.ai?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free Pro for 1 month then $5.99 for 12 months",
-    "description": "Generate realistic 3D assets and textures from text or images",
+    "offerSummary": "Generate realistic 3D assets and textures from text or images",
+    "description": "Meshy AI is a 3D model generator that converts text prompts and images into production-ready 3D assets and textures. The platform uses AI to automate 3D creation, eliminating the need for manual modeling skills\u2014useful for game developers, animators, and digital creators.\n\nStudents approved for Meshy's Education Plan receive the Pro plan at $5.99/month for 13 months. To qualify, you must register a Meshy account with a school email address (.edu or equivalent) and submit an application through their education portal. Educators also receive discounted access to the Studio plan.\n\nThe Pro plan includes text-to-3D and image-to-3D conversion tools, plus access to Meshy's animation library of 500+ game-ready motions. After your 13-month discounted period ends, standard Pro pricing applies unless you reapply.",
     "benefitType": "Meshy AI",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -12396,9 +12701,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://www.meshy.ai/education",
     "claimUrl": "https://www.meshy.ai/education",
     "tags": [
-      "Trial",
       "Web",
-      "Global"
+      "Global",
+      "Trial"
     ]
   },
   {
@@ -12408,8 +12713,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/maxon.net?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Credits & Savings",
-    "offerSummary": "1-year student license at ~45% off",
-    "description": "Cinema 4D, Redshift, and more in a student plan",
+    "offerSummary": "Cinema 4D, Redshift, and more in a student plan",
+    "description": "Maxon One is a bundled creative suite that includes Cinema 4D, Redshift, ZBrush, and compositing, editing, and motion-design tools for VFX, animation, broadcast graphics, and filmmaking.\n\nStudents at accredited universities and colleges can purchase a one-year Maxon One Student license at a reduced rate compared to the standard annual subscription. Eligibility requires enrollment at an accredited institution and verification via a third party, using your university or school email address, student ID or educational proof, and a valid passport or driver's license.\n\nThe student license is non-commercial and intended for personal learning; suspected commercial use may result in immediate termination under the EULA.",
     "benefitType": "Maxon One",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -12418,9 +12723,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://www.maxon.net/en/buy/plan-pricing-for-students",
     "claimUrl": "https://www.maxon.net/en/buy/plan-pricing-for-students",
     "tags": [
-      "Discount",
       "Web",
-      "Global"
+      "Global",
+      "Discount"
     ]
   },
   {
@@ -12430,8 +12735,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/max.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Credits & Savings",
-    "offerSummary": "$5.49/mo with ads (50% off)",
-    "description": "Student offer for Max with access to HBO originals",
+    "offerSummary": "Student offer for Max with access to HBO originals",
+    "description": "Max is a streaming service offering HBO originals, Warner Bros. films, and a broad entertainment catalog. Verified students can access the HBO Max Basic With Ads plan for a 50% discount.\n\nVerified students can access the HBO Max Basic With Ads plan for $5.49/month\u2014a 50% discount from the regular $10.99/month price. To qualify, you must be 18 or older and currently enrolled at a U.S. accredited college or university, verified through UNiDAYS. The discounted subscription automatically renews each month for up to 12 months and can be cancelled anytime. You will need to reverify your student status annually to maintain eligibility.",
     "benefitType": "Max",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -12440,9 +12745,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://www.max.com/student",
     "claimUrl": "https://www.max.com/student",
     "tags": [
-      "Discount",
       "Web",
-      "US"
+      "US",
+      "Discount"
     ]
   },
   {
@@ -12452,8 +12757,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/mathworks.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Credits & Savings",
-    "offerSummary": "Student Version starting from $49",
-    "description": "Numerical computing environment for engineering calculations",
+    "offerSummary": "Numerical computing environment for engineering calculations",
+    "description": "MATLAB is a numerical computing environment developed by MathWorks for engineering calculations, data analysis, simulation, and algorithm development. It is widely used in technical degree programs and professional engineering work.\n\nStudents have three main access options. First, check if your university has Campus-Wide access\u2014if so, create a MathWorks Account using your student email address to access MATLAB immediately at no cost. Second, the MATLAB and Simulink Student Suite is available for purchase starting from $49 and includes MATLAB, Simulink, online training, and selected add-on products. Third, MathWorks offers a free trial of MATLAB, Simulink, and additional products with no commitment required.\n\nAll student purchases and trials require a valid MathWorks Account. Eligibility for campus access depends on your institution's licensing agreement. Trial access is available globally, though MathWorks recommends using region-specific sites for optimal performance.",
     "benefitType": "MATLAB",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -12462,9 +12767,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://www.mathworks.com/products/matlab/student.html",
     "claimUrl": "https://www.mathworks.com/products/matlab/student.html",
     "tags": [
-      "Discount",
       "Web",
-      "Global"
+      "Global",
+      "Discount"
     ]
   },
   {
@@ -12474,8 +12779,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/lunatask.app?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Credits & Savings",
-    "offerSummary": "50% off monthly and yearly plans",
-    "description": "Private task manager with Pomodoro, habits, and mood tracking",
+    "offerSummary": "Private task manager with Pomodoro, habits, and mood tracking",
+    "description": "Lunatask is a privacy-focused task manager that combines to-do lists, habit tracking, mood logging, and Pomodoro timers in one desktop and mobile app. The app is available for Windows, Linux, Mac, iOS, and Android.\n\nLunatask offers 50% off monthly and yearly subscription plans for students and teachers. To claim the discount, you verify with a school-issued email address during signup. The discount applies to recurring plans but not the one-time $300 lifetime purchase option. Schools can also contact Lunatask directly to arrange bulk licenses at 50% off for distribution to students and staff.\n\nYou can use your personal email address to maintain your account after graduation, since school-issued emails are often deactivated. Subscriptions can be cancelled anytime with access to premium features retained through the end of the paid period. Selected non-profit organizations supporting charitable causes may also qualify\u2014contact Lunatask to confirm eligibility.",
     "benefitType": "Lunatask",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -12484,20 +12789,20 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://lunatask.app/education",
     "claimUrl": "https://lunatask.app/education",
     "tags": [
-      "Discount",
       "Web",
-      "Global"
+      "Global",
+      "Discount"
     ]
   },
   {
-    "title": "Lumion - Free 1-year student license — renewable",
+    "title": "Lumion - Free 1-year student license \u2014 renewable",
     "company": "Lumion",
     "slug": "lumion",
     "logo": "https://img.logo.dev/lumion.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free 1-year student license — renewable",
-    "description": "Rendering software for creating realistic 3D architectural visualizations",
+    "offerSummary": "Rendering software for creating realistic 3D architectural visualizations",
+    "description": "Lumion is 3D rendering software that creates realistic architectural visualizations, walkthroughs, and presentation-ready scenes. It's used by architects, interior designers, and built-environment students to bring design projects to life with photorealistic imagery.\n\nStudents can apply for a free Lumion Student license valid for 1 year. The student license includes all features and tools in Lumion Pro 2026, plus access to Lumion View for SketchUp and Revit. Faculty members qualify for a 3-year free license under the same educational program.\n\nYour license can be renewed for free as long as you maintain active student or faculty status. Upgrades to the latest version are available directly through your Lumion Account, so you stay current with new releases without additional cost.",
     "benefitType": "Lumion",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -12506,9 +12811,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://lumion.com/product/educational-licenses",
     "claimUrl": "https://lumion.com/product/educational-licenses",
     "tags": [
-      "Free",
       "Web",
-      "Global"
+      "Global",
+      "Free"
     ]
   },
   {
@@ -12518,8 +12823,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/lucidchart.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free educational account",
-    "description": "Create flowcharts and technical diagrams collaboratively online",
+    "offerSummary": "Create flowcharts and technical diagrams collaboratively online",
+    "description": "Lucidchart is a web-based diagramming tool for creating flowcharts, technical diagrams, org charts, and process maps. The free account includes Lucidspark, a virtual whiteboard for brainstorming and group work, enabling students to collaborate on visual projects without cost.\n\nStudents can access a free educational account by signing up with a valid school email address. To qualify, create a free Lucid account, enter your educational email, and select \"Student\" at first login. If automatic approval doesn't occur, you can submit an education request form for manual verification.",
     "benefitType": "LucidChart",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -12528,9 +12833,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://help.lucid.co/hc/en-us/articles/360049831771-Sign-up-for-a-free-Educational-account",
     "claimUrl": "https://help.lucid.co/hc/en-us/articles/360049831771-Sign-up-for-a-free-Educational-account",
     "tags": [
-      "Free",
       "Web",
-      "Global"
+      "Global",
+      "Free"
     ]
   },
   {
@@ -12540,8 +12845,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/logitech.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Credits & Savings",
-    "offerSummary": "25% off gaming products",
-    "description": "Save on Logitech G headsets, keyboards, and accessories",
+    "offerSummary": "Save on Logitech G headsets, keyboards, and accessories",
+    "description": "Logitech G is the gaming-focused brand of Logitech, offering headsets, keyboards, mice, microphones, and PC gaming accessories for competitive and casual players alike. The discount applies across the full gaming and streaming product range, including award-winning headsets and mechanical keyboards.\n\nVerified students get 25% off Logitech G products purchased at LogitechG.com. To claim, students in the US and Canada verify their status through SheerID on the official site using a valid student ID or proof of enrollment. Once verified, the Logitech G discount code works on all eligible products, and the site also offers free shipping and easy returns for verified members.",
     "benefitType": "Logitech G",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -12550,9 +12855,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://www.logitechg.com/en-us/programs/sheer-id",
     "claimUrl": "https://www.logitechg.com/en-us/programs/sheer-id",
     "tags": [
-      "Discount",
       "Web",
-      "US"
+      "US",
+      "Discount"
     ]
   },
   {
@@ -12562,7 +12867,7 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://aobklvmdpcebkbgvvijp.supabase.co/storage/v1/object/public/LOGOs/LocalStack.png",
     "category": "Other",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free AWS emulator license",
+    "offerSummary": "Emulate AWS cloud services locally on your machine",
     "description": "Emulate AWS cloud services locally on your machine",
     "benefitType": "LocalStack",
     "value": "Variable savings",
@@ -12572,9 +12877,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://www.localstack.cloud/localstack-for-students",
     "claimUrl": "https://www.localstack.cloud/localstack-for-students",
     "tags": [
-      "Free",
+      "Global",
       "Developer",
-      "Global"
+      "Free"
     ]
   },
   {
@@ -12584,8 +12889,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/live2d.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Credits & Savings",
-    "offerSummary": "80% discount on Cubism PRO 3-Year Plan",
-    "description": "Professional 2D modeling and animation software for VTubers and games",
+    "offerSummary": "Professional 2D modeling and animation software for VTubers and games",
+    "description": "Live2D Cubism is professional 2D modeling and animation software used by VTubers, game developers, and animators to create rigged character animations and interactive illustrations.\n\nStudents can receive 80% off the Cubism PRO 3-Year Plan through Live2D's Student Discount Program. Eligibility is verified via a valid student email address or International Student Identification Card (ISIC). Approved applicants receive a coupon code redeemable at the Live2D Store, plus free access to Live2D JUKU Basic Course Part 1 training videos. The PRO plan is a one-time purchase with no auto-renewal and remains usable after graduation.",
     "benefitType": "Live2D",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -12594,9 +12899,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://student.live2d.com/en/student-discount/",
     "claimUrl": "https://student.live2d.com/en/student-discount/",
     "tags": [
-      "Discount",
       "Web",
-      "Global"
+      "Global",
+      "Discount"
     ]
   },
   {
@@ -12606,8 +12911,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/linkedin.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free 30-day LinkedIn Premium trial",
-    "description": "Access premium job tools, insights, and online professional learning resources",
+    "offerSummary": "Access premium job tools, insights, and online professional learning resources",
+    "description": "LinkedIn Premium is a paid subscription that adds enhanced features to the free LinkedIn platform for job seekers and small business owners. The service includes company insights, visibility of who viewed your profile, resume writing assistance, and applicant tracking tools\u2014features designed to expand professional connections and support career advancement or business growth.\n\nLinkedIn offers eligible members a free 30-day trial of Premium plans, including Premium Career, Premium Business, and Premium All-in-One. The trial is available to anyone with a LinkedIn account who has not redeemed a trial in the past 12 months. After the trial ends, subscription plans convert to paid access unless cancelled. Members can sign in to their LinkedIn account to check eligibility and start a trial.",
     "benefitType": "LinkedIn Premium",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -12616,9 +12921,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://premium.linkedin.com/",
     "claimUrl": "https://premium.linkedin.com/",
     "tags": [
-      "Trial",
       "Web",
-      "Global"
+      "Global",
+      "Trial"
     ]
   },
   {
@@ -12628,8 +12933,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/linearity.io?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Credits & Savings",
-    "offerSummary": "58% off Pro for students & educators",
-    "description": "Vector design and animation software for Mac, iPad and iPhone",
+    "offerSummary": "Vector design and animation software for Mac, iPad and iPhone",
+    "description": "Linearity is a vector design and animation software for Mac, iPad, and iPhone that combines static asset creation with motion graphics capabilities. Students and educators receive 58% off Linearity Pro through the education pricing plan, gaining access to unlimited files, multiple artboards, and the full suite of professional design tools including Curve for vector design and Move for animation.\n\nTo claim the discount, verify your student or educator status by completing a survey and submitting an institution email address or supporting documents (such as a Student ID or educational credentials). Linearity will send your exclusive discount link within two business days of successful verification. Groups of 10 or more students or educators can contact Linearity directly to request a customized group discount.",
     "benefitType": "Linearity",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -12638,9 +12943,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://www.linearity.io/blog/education-pricing/",
     "claimUrl": "https://www.linearity.io/blog/education-pricing/",
     "tags": [
-      "Discount",
+      "Global",
       "macOS",
-      "Global"
+      "Discount"
     ]
   },
   {
@@ -12650,8 +12955,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://aobklvmdpcebkbgvvijp.supabase.co/storage/v1/object/public/LOGOs/Kirta.png",
     "category": "Other",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free for everyone (Open source)",
-    "description": "Free open-source painting and animation software for artists",
+    "offerSummary": "Free open-source painting and animation software for artists",
+    "description": "Krita is a free and open-source digital painting program built for illustration, concept art, comics, and animation workflows. It is professional creative software made to be affordable and accessible for everyone, with serious software capabilities rather than lightweight features.\n\nKrita is highly relevant to students and can be used without academic verification or subscription pricing. The software fits common student searches for free art software, drawing tools for college, painting apps for beginners, and portfolio-building resources. Its value for students comes from real creative capability rather than temporary promotions.\n\nStudents should verify hardware fit and whether they need a more specialized paid tool later, but Krita is one of the strongest public-access art tools available.",
     "benefitType": "Krita",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -12660,10 +12965,10 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://krita.org/",
     "claimUrl": "https://krita.org/",
     "tags": [
-      "Open Source",
-      "Free",
       "Web",
-      "Global"
+      "Global",
+      "Open Source",
+      "Free"
     ]
   },
   {
@@ -12673,8 +12978,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/julius.ai?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Credits & Savings",
-    "offerSummary": "50% off subscription",
-    "description": "AI-powered data analysis and statistical assistant for research",
+    "offerSummary": "AI-powered data analysis and statistical assistant for research",
+    "description": "Julius AI is an AI-powered data analysis and statistical assistant designed for research and knowledge work. The platform helps users analyze datasets, generate visualizations, run statistical exploration, and answer questions over research data through conversational AI interaction.\n\nJulius AI offers a 50% discount on subscription plans for students. The offer is available through the Education section of their platform, making it accessible to students conducting analytics-heavy coursework, dissertations, business projects, and lab research. Verification of student status is required to claim the discount.\n\nThe platform is built by an early-stage AI lab based in San Francisco focused on creating powerful AI tools for knowledge workers. Students should verify current eligibility requirements and discount terms directly on Julius AI's education page, as offer details and application processes may change.",
     "benefitType": "Julius AI",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -12683,10 +12988,10 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://julius.ai/docs/account/discounts",
     "claimUrl": "https://julius.ai/docs/account/discounts",
     "tags": [
-      "AI",
-      "Discount",
       "Web",
-      "Global"
+      "Global",
+      "Discount",
+      "AI"
     ]
   },
   {
@@ -12696,8 +13001,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/atlassian.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Credits & Savings",
-    "offerSummary": "75% off for students via Student Beans",
-    "description": "Project tracking and agile management software for development teams.",
+    "offerSummary": "Project tracking and agile management software for development teams.",
+    "description": "Jira Software is Atlassian's project tracking and agile management platform used by development teams for sprint planning, issue tracking, roadmaps, and team coordination. It helps student teams, development clubs, and individual student developers manage project workflows and collaborate on coding projects.\n\nStudents receive 75% off Jira Software through Student Beans, a student discount platform serving over 163 million students across 50+ countries. To claim the discount, you must register with Student Beans and verify your student status\u2014verification applies to all users, including apprentices. The discount is redeemed externally through Student Beans, and full terms apply to the offer.",
     "benefitType": "Jira Software",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -12706,9 +13011,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://www.studentbeans.com/student-discount/us/atlassian",
     "claimUrl": "https://www.studentbeans.com/student-discount/us/atlassian",
     "tags": [
-      "Discount",
       "Web",
-      "US"
+      "US",
+      "Discount"
     ]
   },
   {
@@ -12718,8 +13023,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/atlassian.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Credits & Savings",
-    "offerSummary": "75% off for students via Student Beans",
-    "description": "IT service management and customer support ticket system.",
+    "offerSummary": "IT service management and customer support ticket system.",
+    "description": "Jira Service Management is Atlassian's IT service management and customer support ticketing platform. It helps teams manage internal service requests, support workflows, and service operations through a centralized ticket system, making it useful for IT departments and support teams handling high volumes of requests.\n\nStudents and apprentices can receive 75% off Jira Service Management through Student Beans, a student verification portal. To claim this discount, you'll need to register with Student Beans, verify your student status at an accredited institution, and then gain access to discounted pricing on Jira Service Management.\n\nStudent Beans verifies eligibility across 50+ countries. Your Jira Service Management discount remains active for the duration of your verified student status.",
     "benefitType": "Jira Service Management",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -12728,9 +13033,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://www.studentbeans.com/student-discount/us/atlassian",
     "claimUrl": "https://www.studentbeans.com/student-discount/us/atlassian",
     "tags": [
-      "Discount",
       "Web",
-      "US"
+      "US",
+      "Discount"
     ]
   },
   {
@@ -12740,7 +13045,7 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/interviewcake.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Software & Tools",
-    "offerSummary": "Full access to prep course for 3 weeks",
+    "offerSummary": "Master coding interviews with structured algorithmic lessons",
     "description": "Master coding interviews with structured algorithmic lessons",
     "benefitType": "InterviewCake",
     "value": "Variable savings",
@@ -12750,9 +13055,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://www.interviewcake.com/github-students",
     "claimUrl": "https://www.interviewcake.com/github-students",
     "tags": [
-      "Free",
       "Web",
-      "Global"
+      "Global",
+      "Free"
     ]
   },
   {
@@ -12762,8 +13067,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/intel.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free Intel academic resources",
-    "description": "Intel developer tools and learning resources for students",
+    "offerSummary": "Intel developer tools and learning resources for students",
+    "description": "Intel Developer Tools provides free access to Intel's developer resources and cloud environment for students. The offering includes the Intel Distribution of OpenVINO toolkit, Intel Developer Cloud with preinstalled Intel-optimized frameworks and libraries, and curated learning materials such as Jupyter Notebook tutorials, video content, code samples, and hands-on labs. This program is designed to help students build skills in AI development and performance computing using industry-standard Intel tools.\n\nStudents can complete self-paced online training courses covering AI acceleration topics including computer vision, audio, speech, and language processing at no cost. Optional paid certification is available for students who want to add credentials to their resume.",
     "benefitType": "Intel Developer Tools",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -12772,9 +13077,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://www.intel.com/content/www/us/en/developer/topic-technology/edge-5g/academic-program/student.html",
     "claimUrl": "https://www.intel.com/content/www/us/en/developer/topic-technology/edge-5g/academic-program/student.html",
     "tags": [
-      "Free",
+      "US",
       "Developer",
-      "US"
+      "Free"
     ]
   },
   {
@@ -12784,8 +13089,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/goindigo.in?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Credits & Savings",
-    "offerSummary": "Up to 10% off flights + 10 kg extra baggage",
-    "description": "Airline offering discounted fares with additional baggage benefits",
+    "offerSummary": "Airline offering discounted fares with additional baggage benefits",
+    "description": "IndiGo is an Indian airline offering a Student Fare program for passengers aged 12\u201330 enrolled in full-time education. Students receive up to 10% discount on base fares for domestic flights, plus 10 kg extra baggage allowance and zero change fees on both domestic and international routes.\n\nInternational flights include the baggage and change-fee benefits but no base fare discount. To qualify, students must present valid documentation (school or university ID, acceptance letter, or valid student visa for international travel) at airport check-in.",
     "benefitType": "Indigo",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -12794,8 +13099,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://www.goindigo.in/add-on-services/student-discount.html",
     "claimUrl": "https://www.goindigo.in/add-on-services/student-discount.html",
     "tags": [
-      "Discount",
       "Web",
+      "Discount",
       "India"
     ]
   },
@@ -12806,8 +13111,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://aobklvmdpcebkbgvvijp.supabase.co/storage/v1/object/public/LOGOs/icollections.png",
     "category": "Other",
     "appCategory": "Credits & Savings",
-    "offerSummary": "40% off licenses (Mac)",
-    "description": "Organize Mac desktop icons, files, and folders visually",
+    "offerSummary": "Organize Mac desktop icons, files, and folders visually",
+    "description": "iCollections is a macOS utility app that organizes desktop icons, files, and folders into visual collections, reducing clutter on Mac screens. It runs natively on 64-bit Intel and Apple Silicon M-series Macs.\n\nSchools and universities qualify for a 40% discount on all subscription and perpetual license options. The app includes a 14-day free trial with no credit card required, and all versions come with free upgrades to newer releases. Monthly subscriptions start at $5/mo, annual plans at $15/yr, and one-time perpetual licenses are available.\n\nStudents can cancel subscriptions anytime, and there are no renewal fees on perpetual licenses.",
     "benefitType": "iCollections",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -12816,9 +13121,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://naarakstudio.com/icollections/store",
     "claimUrl": "https://naarakstudio.com/icollections/store",
     "tags": [
-      "Discount",
+      "Global",
       "macOS",
-      "Global"
+      "Discount"
     ]
   },
   {
@@ -12828,8 +13133,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/skillsbuild.org?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free for all students",
-    "description": "Free digital skills platform with courses in AI, cloud, and more.",
+    "offerSummary": "Free digital skills platform with courses in AI, cloud, and more.",
+    "description": "IBM SkillsBuild is a free digital skills platform offering courses and credentials in AI, cloud computing, cybersecurity, and data science. The platform is available at no cost to both high school and college students globally, with no subscription fees or hidden charges.\n\nStudents can explore a catalog of technology courses, earn digital credentials, and access learning materials from IBM and technology experts. High school students and college students access the platform through separate course catalogs tailored to their level. The platform includes a \"try before you register\" option, allowing students to sample content without commitment.\n\nIBM designed SkillsBuild to help students build job-ready technical skills and career connections. Credentials earned on the platform can be added to professional profiles to demonstrate competency to employers.",
     "benefitType": "IBM SkillsBuild",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -12838,9 +13143,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://skillsbuild.org/",
     "claimUrl": "https://skillsbuild.org/",
     "tags": [
-      "Free",
       "Web",
-      "Global"
+      "Global",
+      "Free"
     ]
   },
   {
@@ -12850,8 +13155,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/highland2.app?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free Highland 2 Pro for 1 year",
-    "description": "Professional screenwriting and writing app with automatic formatting tools",
+    "offerSummary": "Professional screenwriting and writing app with automatic formatting tools",
+    "description": "Highland 2 is a professional screenwriting and writing application designed for distraction-free, long-form writing with automatic formatting tools and customizable interface options. The app is built to help writers maintain focus through writing sprints and a clean editing environment.\n\nStudents enrolled in university writing programs, including film schools, can access all premium features of Highland 2 Pro free for one year. To qualify, you must use an official school email address to verify your student status and unlock the Highland 2 Student Edition. The offer applies to students at institutions that have partnered with Quote-Unquote Apps, including Ivy League universities, large state schools, and international colleges.\n\nAfter the free year ends, you can continue using Highland 2 Basic (which includes most features but watermarks printed documents) or upgrade to a paid subscription. The regular Highland 2 Pro subscription costs $4.99 yearly.",
     "benefitType": "Highland 2",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -12860,9 +13165,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://highland2.app/students",
     "claimUrl": "https://highland2.app/students",
     "tags": [
-      "Trial",
       "Web",
-      "Global"
+      "Global",
+      "Trial"
     ]
   },
   {
@@ -12872,8 +13177,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/hexagon.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free student editions of Hexagon MI tools",
-    "description": "Software for analyzing and visualizing geospatial and industrial data",
+    "offerSummary": "Professional simulation and CAD software suite for design and learning",
+    "description": "Hexagon is an industrial and geospatial software company that develops tools for analyzing and visualizing geospatial and industrial data across surveying, manufacturing, engineering, and design workflows. The company offers free student editions of its MI (measurement and imaging) tools to students in engineering and related disciplines.\n\nStudents can access professional-grade software for learning geospatial analysis, industrial design, and data visualization at no cost during their studies. The exact scope of tools included, duration of access, and eligibility verification process should be confirmed directly with Hexagon's Education and Research division, as student edition offerings vary by product line and region.",
     "benefitType": "Hexagon",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -12882,9 +13187,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://hexagon.com/support-success/manufacturing-intelligence/design-engineering-support/student-editions",
     "claimUrl": "https://hexagon.com/support-success/manufacturing-intelligence/design-engineering-support/student-editions",
     "tags": [
-      "Free",
       "Web",
-      "Global"
+      "Global",
+      "Free"
     ]
   },
   {
@@ -12894,7 +13199,7 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/heroku.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Software & Tools",
-    "offerSummary": "$13/month platform credit for 24 months",
+    "offerSummary": "Platform for deploying and running modern web apps and APIs",
     "description": "Platform for deploying and running modern web apps and APIs",
     "benefitType": "Heroku",
     "value": "Variable savings",
@@ -12916,8 +13221,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/hazeover.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free app license with minor updates",
-    "description": "Dim background windows on Mac to improve focus",
+    "offerSummary": "Dim background windows on Mac to improve focus",
+    "description": "HazeOver is a Mac productivity app that automatically dims background windows to highlight the active window, reducing visual distraction across multiple monitors. It's useful for students who spend extended periods coding, writing, or studying and want to minimize interface clutter. The app is available in 33 languages and works on macOS.\n\nStudents can claim a free personal app license through the GitHub Student Developer Pack, which includes the version available at the time of claiming plus all future minor updates. To qualify, you must first sign up for the GitHub Student Developer Pack via GitHub Education. The license is perpetual for the version claimed, covering minor updates but not major version upgrades.",
     "benefitType": "HazeOver",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -12926,9 +13231,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://hazeover.com/github-students.html",
     "claimUrl": "https://hazeover.com/github-students.html",
     "tags": [
+      "Global",
       "Free",
-      "macOS",
-      "Global"
+      "macOS"
     ]
   },
   {
@@ -12938,8 +13243,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/getharvest.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Credits & Savings",
-    "offerSummary": "15% discount (Monthly) or 25% discount (Yearly)",
-    "description": "Track billable hours, expenses, and invoices for every project",
+    "offerSummary": "Track billable hours, expenses, and invoices for every project",
+    "description": "Harvest is time tracking software with integrated expense tracking and online invoicing, used by 73,000 businesses. The platform provides a full suite of time tracking, project reporting, and invoicing features for student freelancers, agency teams, and those billing clients for project work.\n\nStudents receive a 25% discount on annual plans through Student Beans verification. To claim the discount, verify your student status via Student Beans\u2014the verification process is handled by the external provider. After verification, the 25% discount applies to your subscription.\n\nStandard Harvest terms apply; contact the provider directly for any issues with the offer.",
     "benefitType": "Harvest",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -12948,9 +13253,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://www.studentbeans.com/student-discount/us/harvest",
     "claimUrl": "https://www.studentbeans.com/student-discount/us/harvest",
     "tags": [
-      "Discount",
       "Web",
-      "Global"
+      "Global",
+      "Discount"
     ]
   },
   {
@@ -12960,8 +13265,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/hackthebox.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Credits & Savings",
-    "offerSummary": "Discounted plans via Student Beans",
-    "description": "Cybersecurity penetration testing platform.",
+    "offerSummary": "Cybersecurity penetration testing platform.",
+    "description": "Hack The Box is a cybersecurity platform and infosec community with over 1.1 million members offering hands-on penetration testing labs, offensive-security exercises, and practical hacking challenges. The platform enables students to learn offensive security techniques through real-world environments and exchange methodologies with other security practitioners.\n\nStudents can access discounted Hack The Box plans through Student Beans. To qualify, you must register with Student Beans, verify your student status (including apprentices), and then redeem the offer through the Student Beans portal. Verification is required and is handled by Student Beans as the external discount provider. The offer is available to verified students in the US and other regions where Student Beans operates.",
     "benefitType": "Hack The Box",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -12970,9 +13275,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://www.studentbeans.com/student-discount/us/hack-the-box",
     "claimUrl": "https://www.studentbeans.com/student-discount/us/hack-the-box",
     "tags": [
-      "Discount",
       "Web",
-      "US"
+      "US",
+      "Discount"
     ]
   },
   {
@@ -12982,8 +13287,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/gurobi.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free academic license",
-    "description": "Optimization solver for complex engineering and business problems",
+    "offerSummary": "Optimization solver for complex engineering and business problems",
+    "description": "Gurobi Optimizer is a professional optimization solver for complex engineering, operations research, and business problems. It provides unlimited-use access with no limits on model size, supporting teaching, coursework, and academic research.\n\nStudents, faculty, and staff at accredited degree-granting institutions can access the full-featured Gurobi Optimizer at no cost through Gurobi's Academic License Program. Each academic license provides access for a single person on a single machine and is valid for up to one year. You can request additional licenses through the Gurobi User Portal if needed.\n\nThe academic license can be renewed as long as you maintain eligibility at an accredited institution.",
     "benefitType": "Gurobi",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -12992,10 +13297,10 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://www.gurobi.com/academia/academic-program-and-licenses/",
     "claimUrl": "https://www.gurobi.com/academia/academic-program-and-licenses/",
     "tags": [
-      "AI",
-      "Free",
       "Web",
-      "Global"
+      "Global",
+      "Free",
+      "AI"
     ]
   },
   {
@@ -13005,8 +13310,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/grammarly.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Credits & Savings",
-    "offerSummary": "50% off Grammarly via SheerID",
-    "description": "AI writing assistant for grammar, clarity, and tone correction",
+    "offerSummary": "AI writing assistant for grammar, clarity, and tone correction",
+    "description": "Grammarly is an AI writing assistant that checks grammar, clarity, tone, and style across emails, essays, applications, and other written work. It integrates with most writing platforms and provides real-time suggestions to improve sentence structure, word choice, and communication.\n\nStudents can access a 50% discount on Grammarly Premium through SheerID verification. To claim it, verify your student status via SheerID, which may request official documentation from your school\u2014verification typically takes up to seven business days.\n\nThe discount applies to your first subscription period only; after that, your subscription renews at standard pricing unless you cancel.",
     "benefitType": "Grammarly",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -13015,10 +13320,10 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://support.grammarly.com/hc/articles/39623389691021-Grammarly-promo-offers-on-SheerID",
     "claimUrl": "https://support.grammarly.com/hc/articles/39623389691021-Grammarly-promo-offers-on-SheerID",
     "tags": [
-      "AI",
-      "Discount",
       "Web",
-      "Global"
+      "Global",
+      "Discount",
+      "AI"
     ]
   },
   {
@@ -13028,8 +13333,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/gorails.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free access to all videos & lessons for 12 months",
-    "description": "Web development tutorials for Ruby, Rails, JavaScript, and modern tools",
+    "offerSummary": "Web development tutorials for Ruby, Rails, JavaScript, and modern tools",
+    "description": "GoRails is a Ruby on Rails video tutorial platform with over 300 lessons and 100+ hours of content covering web development, backend systems, and full-stack app building. The platform features 10\u201320 minute video lessons that teach specific coding concepts, from foundational Rails patterns to advanced features like Stripe payments and Hotwire integration.\n\nStudents enrolled in the GitHub Student Developer Pack receive 12 months of free access to GoRails's full premium video library. To qualify, you must verify your GitHub Student status by connecting your GitHub account on the GoRails platform, which automatically sets up your subscription. The offer covers access to all video lessons and is available to students worldwide who meet GitHub's pack eligibility requirements.\n\nAfter the 12-month period ends, the subscription terms revert to standard pricing unless renewed.",
     "benefitType": "GoRails",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -13038,10 +13343,10 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://gorails.com/github-students",
     "claimUrl": "https://gorails.com/github-students",
     "tags": [
-      "No-Code",
-      "Trial",
       "Web",
-      "Global"
+      "Global",
+      "Trial",
+      "No-Code"
     ]
   },
   {
@@ -13051,8 +13356,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/google.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free 1-year Pro subscription",
-    "description": "Cloud-based Jupyter notebooks for data science and ML",
+    "offerSummary": "Cloud-based Jupyter notebooks for data science and ML",
+    "description": "Google Colab Pro is a cloud-based Jupyter notebook environment designed for data science, machine learning, and AI development. You write and run Python code directly in your browser without installing software locally. The Pro tier is ideal for building ML models, analyzing large datasets, prototyping AI applications, or conducting research that demands sustained computational resources.\n\nStudents receive a free 1-year Pro subscription, which unlocks faster GPUs and TPUs, increased memory limits, and longer runtime sessions compared to the free tier. Google Colab Pro also provides access to popular AI models and the Gemini API, letting you integrate advanced language models into your projects.",
     "benefitType": "Google Colab Pro",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -13061,10 +13366,10 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://colab.research.google.com/",
     "claimUrl": "https://colab.research.google.com/",
     "tags": [
-      "Trial",
       "Web",
-      "⏰Expires July 2026",
-      "US"
+      "US",
+      "\u23f0Expires July 2026",
+      "Trial"
     ]
   },
   {
@@ -13074,8 +13379,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/goodnotes.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free for Apple School Manager schools",
-    "description": "Digital note-taking and annotation app for students",
+    "offerSummary": "Digital note-taking and annotation app for students",
+    "description": "GoodNotes is a digital note-taking and PDF annotation app that lets students capture handwritten notes, markup documents, and collaborate in real-time on iPad and other Apple devices. The app includes features for handwriting capture, PDF annotation, real-time collaboration, audio recording with transcription, and whiteboard tools for visual teamwork.\n\nStudents at schools using Apple School Manager can access GoodNotes for free through their institution. This is an institution-managed benefit, meaning eligibility and access are controlled by your school's IT administrator rather than through individual student sign-ups. Schools that have enrolled in Apple School Manager can deploy GoodNotes at no cost to students as part of their digital learning toolkit.\n\nGoodNotes is not available in all markets; availability varies by region. Individual students outside institution-managed deployments can start with a free trial, but ongoing access depends on the pricing plan selected for your account.",
     "benefitType": "GoodNotes",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -13084,9 +13389,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://www.goodnotes.com/schools",
     "claimUrl": "https://www.goodnotes.com/schools",
     "tags": [
+      "Limited Universities",
       "Free",
-      "macOS",
-      "Limited Universities"
+      "macOS"
     ]
   },
   {
@@ -13096,8 +13401,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://aobklvmdpcebkbgvvijp.supabase.co/storage/v1/object/public/LOGOs/GitLens.png",
     "category": "Other",
     "appCategory": "Software & Tools",
-    "offerSummary": "6 months free then 80% off",
-    "description": "Supercharge VS Code with visual Git history, inline blame, and GitHub integrations",
+    "offerSummary": "Supercharge VS Code with visual Git history, inline blame, and GitHub integrations",
+    "description": "GitLens is a Git integration tool for Visual Studio Code that visualizes repository history, displays inline blame annotations, and enables direct GitHub repository management within your editor.\n\nGitKraken offers GitLens free for 6 months to students verified through the GitHub Student Developer Pack, then at GitKraken's lowest student pricing tier after the trial ends. To claim the offer, enroll in the GitHub Student Developer Pack, create or connect a GitKraken account using your GitHub credentials, and activate GitLens from the pack dashboard.\n\nVerification is required annually through GitHub Education; if your student status lapses, you lose access until re-verified. The offer is available worldwide to students who can verify enrollment, with localized pricing in multiple currencies.",
     "benefitType": "GitLens",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -13106,9 +13411,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://www.gitkraken.com/github-student-developer-pack-bundle",
     "claimUrl": "https://www.gitkraken.com/github-student-developer-pack-bundle",
     "tags": [
-      "Trial",
       "Web",
-      "Global"
+      "Global",
+      "Trial"
     ]
   },
   {
@@ -13118,7 +13423,7 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://aobklvmdpcebkbgvvijp.supabase.co/storage/v1/object/public/LOGOs/Github%20Pages.png",
     "category": "Other",
     "appCategory": "Software & Tools",
-    "offerSummary": "1 site per account + unlimited projects",
+    "offerSummary": "Host static websites directly from your GitHub repository",
     "description": "Host static websites directly from your GitHub repository",
     "benefitType": "GitHub Pages",
     "value": "Variable savings",
@@ -13128,10 +13433,10 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://education.github.com/pack#:~:text=GitHub%20Pages-,About%20GitHub%20Pages,-Websites%20for%20you",
     "claimUrl": "https://education.github.com/pack#:~:text=GitHub%20Pages-,About%20GitHub%20Pages,-Websites%20for%20you",
     "tags": [
+      "Global",
       "Open Source",
-      "Free",
       "Developer",
-      "Global"
+      "Free"
     ]
   },
   {
@@ -13141,8 +13446,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/github.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free GitHub Desktop for everyone",
-    "description": "Simplified Git workflow via desktop app for repositories",
+    "offerSummary": "Simplified Git workflow via desktop app for repositories",
+    "description": "GitHub Desktop is a free desktop application that simplifies Git version control workflows by providing a graphical interface to manage repositories, branches, commits, and pull requests without relying on command-line tools. The app eliminates friction for developers new to Git by visualizing repository changes and streamlining common operations like syncing code, creating branches, and submitting pull requests.\n\nAvailable to all users at no cost, GitHub Desktop integrates with your GitHub account and works across Windows and macOS. Once installed and signed in, you can immediately start working with any repository you have access to, with all core Git functionality available to free users.\n\nThe application is ideal for students managing class projects, open source contributions, portfolio work, and team collaboration.",
     "benefitType": "GitHub Desktop",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -13151,10 +13456,10 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://desktop.github.com/",
     "claimUrl": "https://desktop.github.com/",
     "tags": [
+      "Global",
       "Open Source",
-      "Free",
       "Developer",
-      "Global"
+      "Free"
     ]
   },
   {
@@ -13164,7 +13469,7 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/github.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free community access",
+    "offerSummary": "Showcase student projects and connect with open-source contributors",
     "description": "Showcase student projects and connect with open-source contributors",
     "benefitType": "GitHub Community Exchange",
     "value": "Variable savings",
@@ -13174,10 +13479,10 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://education.github.com/pack#:~:text=About%20GitHub%20Community%20Exchange",
     "claimUrl": "https://education.github.com/pack#:~:text=About%20GitHub%20Community%20Exchange",
     "tags": [
+      "Global",
       "Open Source",
-      "Free",
       "Developer",
-      "Global"
+      "Free"
     ]
   },
   {
@@ -13187,8 +13492,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/github.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free Pro access to cloud environments",
-    "description": "Cloud development environment for coding directly in the browser",
+    "offerSummary": "Cloud development environment for coding directly in the browser",
+    "description": "GitHub Codespaces is a cloud-based development environment that lets you code directly in your browser without setting up tools locally. You can open projects from anywhere and start coding immediately in a fully configured environment used by professional developers daily.\n\nVerified students receive free Pro access to GitHub Codespaces as part of the GitHub Student Developer Pack. To qualify, you must be enrolled at an accredited educational institution and verify your status with a school-issued email address or enrollment documentation through your GitHub account settings (Billing > Education benefits > Student). Access is global and available at no cost.\n\nYour student access renews annually and includes 50,000 errors, 100,000 transactions, 1GB attachments, 500 replays, and team features. The Student Developer Pack also includes GitHub Copilot, Azure cloud services with $100 in credits, and 25+ other premium tools normally cost-prohibitive for students.",
     "benefitType": "GitHub Codespaces",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -13197,10 +13502,10 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://education.github.com/pack#:~:text=About%20GitHub%20Codespaces",
     "claimUrl": "https://education.github.com/pack#:~:text=About%20GitHub%20Codespaces",
     "tags": [
+      "Global",
       "Open Source",
-      "Free",
       "Developer",
-      "Global"
+      "Free"
     ]
   },
   {
@@ -13210,7 +13515,7 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/github.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free GitHub exam voucher",
+    "offerSummary": "Free certification for GitHub Foundations or Copilot exam",
     "description": "Free certification for GitHub Foundations or Copilot exam",
     "benefitType": "GitHub Certification",
     "value": "Variable savings",
@@ -13220,11 +13525,11 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://education.github.com/experiences/foundations_certificate",
     "claimUrl": "https://education.github.com/experiences/foundations_certificate",
     "tags": [
+      "Global",
       "Open Source",
-      "Free",
       "Developer",
-      "⏰Expires June, 2026",
-      "Global"
+      "Free",
+      "\u23f0Expires June, 2026"
     ]
   },
   {
@@ -13234,8 +13539,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/github.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Software & Tools",
-    "offerSummary": "Apply to join Campus Experts program while student",
-    "description": "Build student tech communities on campus with GitHub support",
+    "offerSummary": "Build student tech communities on campus with GitHub support",
+    "description": "GitHub Campus Experts is a leadership program for students who build and mentor developer communities on their campus. The program is free to join and requires application; selected students receive GitHub Pro access, mentorship from GitHub staff, event funding support, and exclusive resources to organize workshops, hackathons, and peer learning initiatives.\n\nTo qualify, you must first apply for the GitHub Student Developer Pack, which grants free access to GitHub Pro and industry tools. Campus Experts then receive additional support including GitHub Copilot (AI-powered code assistance), GitHub Actions (workflow automation), Codespaces (instant development environments), and twice-monthly technical guides and best practices. The program is designed for students committed to growing technical communities at their institution and helping peers develop real developer skills.",
     "benefitType": "GitHub Campus Experts",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -13244,10 +13549,10 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://github.com/education/students/campus-expert",
     "claimUrl": "https://github.com/education/students/campus-expert",
     "tags": [
+      "Global",
       "Open Source",
-      "Free",
       "Developer",
-      "Global"
+      "Free"
     ]
   },
   {
@@ -13257,8 +13562,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/frontendmasters.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free 6-month access to all courses",
-    "description": "Advanced JavaScript and frontend engineering video lessons",
+    "offerSummary": "Advanced JavaScript and frontend engineering video lessons",
+    "description": "Frontend Masters is an advanced video learning platform for frontend engineering and JavaScript, with courses taught by industry-leading web developers. The platform covers HTML, CSS, JavaScript fundamentals and advanced frameworks including React, Vue, Webpack, and Angular, with courses regularly updated to reflect industry best practices.\n\nStudents enrolled in the GitHub Student Developer Pack receive free 6-month access to Frontend Masters' complete course library. During this period, you get unlimited access to all courses, live workshops with Q&A, and offline playback on iOS and Android apps. To qualify, you must first enroll in GitHub's Student Developer Pack, then sign up for or log into a Frontend Masters account.\n\nAfter your 6-month trial ends, the offer details regarding conversion to a paid plan are not specified on the platform. Non-students can purchase a subscription directly or explore GitHub's Student Developer Pack eligibility.",
     "benefitType": "Frontend Masters",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -13267,9 +13572,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://frontendmasters.com/welcome/github-student-developers/",
     "claimUrl": "https://frontendmasters.com/welcome/github-student-developers/",
     "tags": [
-      "Free",
       "Web",
-      "Global"
+      "Global",
+      "Free"
     ]
   },
   {
@@ -13279,8 +13584,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/freeforstudents.org?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Credits & Savings",
-    "offerSummary": "Student offers and discounts aggregator",
-    "description": "Global directory of verified student discounts and offers",
+    "offerSummary": "Global directory of verified student discounts and offers",
+    "description": "FreeForStudents is a global directory of verified student discounts and offers across software, subscriptions, and digital tools. The platform aggregates deals specifically curated for students in the United States, United Kingdom, India, and Rest of World regions. The directory is organized by category\u2014including software, tools, education, and more\u2014allowing students to browse verified offers without subscription fees.\n\nStudents access region-specific collections of discounts including 50% off Apple Music with free Apple TV+, 70% off ProtonVPN, 69% off NordVPN, free access to professional developer software, design and modelling tools, and AI app-building platforms. Eligibility typically requires student status verification through the platform, though specific verification methods vary by region and offer.",
     "benefitType": "FreeForStudents",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -13289,20 +13594,20 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://freeforstudents.org/",
     "claimUrl": "https://freeforstudents.org/",
     "tags": [
-      "Discount",
       "Web",
-      "Global"
+      "Global",
+      "Discount"
     ]
   },
   {
-    "title": "ESNcard - €10–€20 annual membership",
+    "title": "ESNcard - \u20ac10\u2013\u20ac20 annual membership",
     "company": "ESNcard",
     "slug": "esncard",
     "logo": "https://img.logo.dev/esncard.org?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Credits & Savings",
-    "offerSummary": "€10–€20 annual membership",
-    "description": "Erasmus membership card offering global partner discounts and travel perks",
+    "offerSummary": "Erasmus membership card offering global partner discounts and travel perks",
+    "description": "ESNcard is an annual membership card issued by Erasmus Student Network (ESN), an international student organization. The card provides access to discounts and travel perks at partner organizations globally, with holders typically receiving discounts on accommodation, food, transport, and cultural activities.\n\nESNcard costs \u20ac10\u2013\u20ac20 per year and is designed for Erasmus exchange students and members of ESN local sections. To obtain an ESNcard, students usually join their local ESN section and purchase the card through that chapter. Specific eligibility criteria and the full list of partner benefits vary by region and ESN chapter.\n\nThe exact benefits and renewal process depend on which ESN section issues the card and the partnerships active in that area.",
     "benefitType": "ESNcard",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -13311,9 +13616,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://esncard.org/",
     "claimUrl": "https://esncard.org/",
     "tags": [
-      "Discount",
       "Web",
-      "Limited Countries"
+      "Limited Countries",
+      "Discount"
     ]
   },
   {
@@ -13323,8 +13628,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/elevenreader.io?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Software & Tools",
-    "offerSummary": "1 year of ElevenReader Plus free",
-    "description": "Turn notes and textbooks into natural AI audio and podcasts",
+    "offerSummary": "Turn notes and textbooks into natural AI audio and podcasts",
+    "description": "ElevenReader converts notes, textbooks, PDFs, and study materials into natural-sounding audio and podcasts. The tool is designed for students who study on the move, need accessibility support, or learn better through listening.\n\nEligible students and educators can receive one year of ElevenReader Plus free. To qualify, you need a valid student or educator email from a supported institution and must be 18 or older. Eligibility varies by school domain and country.\n\nAfter the free year ends, the subscription renews at standard pricing unless canceled.",
     "benefitType": "ElevenReader",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -13333,10 +13638,10 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://elevenreader.io/students",
     "claimUrl": "https://elevenreader.io/students",
     "tags": [
-      "AI",
-      "Free",
       "Web",
-      "Global"
+      "Global",
+      "Free",
+      "AI"
     ]
   },
   {
@@ -13346,8 +13651,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/educative.io?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Software & Tools",
-    "offerSummary": "6 months free (70+ courses) + 30% off on Plans",
-    "description": "Interactive coding courses with browser-based environments",
+    "offerSummary": "Interactive coding courses with browser-based environments",
+    "description": "Educative provides interactive coding courses with browser-based environments for hands-on learning. Courses cover React 19, web development, and modern programming fundamentals with live coding environments built into the browser\u2014no local setup required. Ideal for beginners building web applications and mastering component-based architecture.\n\nThrough GitHub Student Developer Pack, students receive 6 months free access to 70+ courses plus 30% off paid plans. Verification requires GitHub Student status (approved within 1-30 days via student ID or academic proof). Once approved, claim the offer directly in your Educative account and access GitHub pack courses in your My Courses tab.",
     "benefitType": "Educative",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -13356,9 +13661,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://www.educative.io/github-students",
     "claimUrl": "https://www.educative.io/github-students",
     "tags": [
-      "Free",
       "Web",
-      "Global"
+      "Global",
+      "Free"
     ]
   },
   {
@@ -13368,8 +13673,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/duolingo.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free 1 Week Super Trial",
-    "description": "Learn 40+ languages through gamified lessons and challenges",
+    "offerSummary": "Learn 40+ languages through gamified lessons and challenges",
+    "description": "Duolingo is a language-learning app teaching 40+ languages through gamified lessons and interactive challenges. The core app is free for all users with beginner-to-intermediate content.\n\nDuolingo offers a free 1-week Super trial that unlocks premium features like ad-free learning, offline lessons, and streak freezes. This trial is useful for anyone testing premium benefits before committing to a subscription. After the trial ends, your Duolingo account will convert to paid billing unless you cancel. Review cancellation options before your trial window closes to avoid unexpected charges.",
     "benefitType": "Duolingo",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -13378,9 +13683,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://www.duolingo.com/super",
     "claimUrl": "https://www.duolingo.com/super",
     "tags": [
-      "Trial",
       "Web",
-      "Global"
+      "Global",
+      "Trial"
     ]
   },
   {
@@ -13390,8 +13695,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/drime.cloud?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free 500GB cloud storage",
-    "description": "500GB secure cloud storage for students and educators",
+    "offerSummary": "500GB secure cloud storage for students and educators",
+    "description": "Drime has a real education program built around secure collaboration, shared workspaces, document collaboration, and classroom-friendly workflows. Students can get a free Starter plan with 500GB of storage, secure sharing, 30-day file history, AI assistant access, workspaces, and limited signature requests. The product is positioned for students, educators, and team-heavy academic projects.\n\nTo qualify, students must submit proof of current enrollment\u2014a current student card or school certificate. Drime's verification team reviews submissions, and student status must be renewed each year for a maximum of four years. Students should verify document requirements, current enrollment status, and annual renewal timing before depending on the free storage benefit long term.",
     "benefitType": "Drime",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -13400,9 +13705,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://drime.cloud/solutions/education",
     "claimUrl": "https://drime.cloud/solutions/education",
     "tags": [
-      "Free",
       "Web",
-      "Global"
+      "Global",
+      "Free"
     ]
   },
   {
@@ -13412,8 +13717,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/digitalocean.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Software & Tools",
-    "offerSummary": "$200 platform credit for 1 year",
-    "description": "Scalable cloud hosting for deploying and managing web applications",
+    "offerSummary": "Scalable cloud hosting for deploying and managing web applications",
+    "description": "DigitalOcean is a cloud hosting platform for deploying and managing web applications, compute resources, databases, and storage. Students receive $200 in platform credit valid for one year through GitHub Students verification.\n\nThis credit can be applied toward any DigitalOcean services, making it suitable for hosting coursework projects, APIs, side projects, or portfolio applications. Once the credit is consumed or the one-year period expires, standard DigitalOcean pricing applies to any active resources.\n\nStudents should monitor usage during the credit period to avoid unexpected charges after the offer ends.",
     "benefitType": "DigitalOcean",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -13423,8 +13728,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "claimUrl": "https://www.digitalocean.com/github-students",
     "tags": [
       "Credit",
-      "Developer",
-      "Global"
+      "Global",
+      "Developer"
     ]
   },
   {
@@ -13434,7 +13739,7 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/devcycle.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free Starter plan for 1 year",
+    "offerSummary": "Feature flag management and rollout control for development teams",
     "description": "Feature flag management and rollout control for development teams",
     "benefitType": "DevCycle",
     "value": "Variable savings",
@@ -13444,9 +13749,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://devcycle.com/github-education",
     "claimUrl": "https://devcycle.com/github-education",
     "tags": [
-      "Free",
       "Web",
-      "Global"
+      "Global",
+      "Free"
     ]
   },
   {
@@ -13456,8 +13761,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/deepscan.io?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free 6-month trial while student",
-    "description": "Detect and fix JavaScript code issues with static analysis",
+    "offerSummary": "Detect and fix JavaScript code issues with static analysis",
+    "description": "DeepScan is a static analysis tool that detects and fixes JavaScript code issues. The tool integrates with GitHub to provide automated code-quality feedback, making it useful for students working on JavaScript, frontend, or Node-based projects.\n\nStudents can claim a free 6-month trial through the GitHub Student Developer Pack. To redeem, verify your GitHub Student status, then redeem the offer from DeepScan's Student Developer Pack page. Note that the offer is limited to one redemption per user and does not stack with DeepScan's standard introductory trial.",
     "benefitType": "DeepScan",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -13466,9 +13771,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://deepscan.io/github-student-pack/",
     "claimUrl": "https://deepscan.io/github-student-pack/",
     "tags": [
-      "Free",
       "Web",
-      "Global"
+      "Global",
+      "Free"
     ]
   },
   {
@@ -13478,8 +13783,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/datacamp.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Software & Tools",
-    "offerSummary": "3 months of free subscription access",
-    "description": "Learn data and AI skills through interactive, guided practice",
+    "offerSummary": "Learn data and AI skills through interactive, guided practice",
+    "description": "DataCamp is an online learning platform offering interactive courses in Python, R, SQL, and AI skills. Through the GitHub Student Pack, eligible students receive 3 months of free access to DataCamp's course library, including foundational and advanced tracks in data analysis, database design, and software engineering principles.\n\nTo claim this offer, you must first enroll in the GitHub Student Pack, then link your DataCamp and GitHub accounts via GitHub OAuth. No credit card is required during the free period. The three-month trial gives you full access to guided learning paths and projects across DataCamp's platform, letting you explore data and AI topics without upfront payment.\n\nWhen your three months end, you will lose access to the course library unless you purchase a subscription. Your progress and certificates are saved, so you can resume your learning later if you choose to upgrade. DataCamp's subscription pricing is available on their pricing page.",
     "benefitType": "DataCamp",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -13488,10 +13793,10 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://www.datacamp.com/github-students",
     "claimUrl": "https://www.datacamp.com/github-students",
     "tags": [
-      "AI",
-      "Trial",
       "Web",
-      "Global"
+      "Global",
+      "Trial",
+      "AI"
     ]
   },
   {
@@ -13501,7 +13806,7 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/coveralls.io?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free via GitHub Student Pack",
+    "offerSummary": "Code coverage tracking for GitHub repositories.",
     "description": "Code coverage tracking for GitHub repositories.",
     "benefitType": "Coveralls",
     "value": "Variable savings",
@@ -13511,9 +13816,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://coveralls.io/github-students",
     "claimUrl": "https://coveralls.io/github-students",
     "tags": [
-      "Free",
+      "Global",
       "Developer",
-      "Global"
+      "Free"
     ]
   },
   {
@@ -13523,8 +13828,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/atlassian.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Credits & Savings",
-    "offerSummary": "75% off for students via Student Beans",
-    "description": "Team collaboration wiki and knowledge base for documentation.",
+    "offerSummary": "Team collaboration wiki and knowledge base for documentation.",
+    "description": "Confluence is Atlassian's team collaboration wiki and knowledge base platform designed for software development teams, project managers, and organizations that need centralized documentation.\n\nStudents can access Confluence at a 75% discount through Student Beans, a student discount portal that verifies eligibility across 50+ countries. To claim the offer, you register and verify your student status via Student Beans; the discount is redeemed through the external provider.\n\nThe offer applies to students and apprentices worldwide, though specific terms and renewal policies should be confirmed on the Student Beans Atlassian page since this is a portal-mediated discount.",
     "benefitType": "Confluence",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -13533,9 +13838,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://www.studentbeans.com/student-discount/us/atlassian",
     "claimUrl": "https://www.studentbeans.com/student-discount/us/atlassian",
     "tags": [
-      "Discount",
       "Web",
-      "US"
+      "US",
+      "Discount"
     ]
   },
   {
@@ -13545,8 +13850,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/codedex.io?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free 6 months of premium Club membership",
-    "description": "Gamified coding lessons to learn Python, web development and more",
+    "offerSummary": "Gamified coding lessons to learn Python, web development and more",
+    "description": "Codedex is a gamified coding platform offering interactive lessons in Python, web development, SQL, machine learning, and other programming topics. The platform combines lessons, practice challenges, projects, and community support designed for beginners learning practical programming skills.\n\nVerified students can claim 6 months of free Codedex Club membership through GitHub Education. To access the offer, students verify their status through GitHub Education, then connect that verification to their Codedex account. Club membership includes interactive features but excludes mentor project review and course certificates.",
     "benefitType": "Codedex",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -13555,9 +13860,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://www.codedex.io/github-students",
     "claimUrl": "https://www.codedex.io/github-students",
     "tags": [
-      "Trial",
       "Web",
-      "Global"
+      "Global",
+      "Trial"
     ]
   },
   {
@@ -13567,8 +13872,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/codecov.io?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free access for public & private repos",
-    "description": "Measure and track code coverage across test suites",
+    "offerSummary": "Measure and track code coverage across test suites",
+    "description": "Codecov is a code coverage measurement and tracking platform that integrates with your test suites and CI/CD pipelines. It measures what percentage of your codebase is tested and identifies gaps in your test coverage, helping you write more reliable software.\n\nStudents and educators receive free access to Codecov for both public and private repositories. This means you can analyze code coverage across real projects without limits, making it practical for learning how professional teams ensure code quality. Codecov works with most programming languages and popular CI/CD tools like GitHub Actions, GitLab CI, and Jenkins. Track coverage trends over time, set coverage targets, and catch untested code before it reaches production\u2014all at no cost during your studies.",
     "benefitType": "Codecov",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -13577,9 +13882,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://about.codecov.io/for/education/",
     "claimUrl": "https://about.codecov.io/for/education/",
     "tags": [
-      "Free",
       "Web",
-      "Global"
+      "Global",
+      "Free"
     ]
   },
   {
@@ -13589,8 +13894,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/cleanshot.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Credits & Savings",
-    "offerSummary": "30% educational discount",
-    "description": "Capture and annotate screenshots and screen recordings on Mac",
+    "offerSummary": "Capture and annotate screenshots and screen recordings on Mac",
+    "description": "CleanShot X is a Mac screenshot and screen recording tool designed for capturing, annotating, and sharing visual content. The software includes built-in markup tools for adding text, shapes, arrows, and highlights to images and videos, making it ideal for creating clear documentation, tutorials, and visual explanations.\n\nStudents can access CleanShot X with a 30% educational discount by verifying with a university-issued email address. The discount applies to standard subscriptions and is perfect for coursework documentation, bug reporting, creating presentation assets, building portfolios, and collaborative projects.\n\nFor Cloud Pro subscriptions or questions about renewal pricing, students should contact support directly from their university email to confirm eligibility.",
     "benefitType": "CleanShot X",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -13599,9 +13904,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://cleanshot.com/edu",
     "claimUrl": "https://cleanshot.com/edu",
     "tags": [
-      "Discount",
+      "Global",
       "macOS",
-      "Global"
+      "Discount"
     ]
   },
   {
@@ -13611,8 +13916,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://aobklvmdpcebkbgvvijp.supabase.co/storage/v1/object/public/LOGOs/CleanClip.png",
     "category": "Other",
     "appCategory": "Credits & Savings",
-    "offerSummary": "30% off with education email (Mac)",
-    "description": "Fast clipboard manager for Mac with pinning and search features",
+    "offerSummary": "Fast clipboard manager for Mac with pinning and search features",
+    "description": "Clean Clip is a clipboard manager for Mac that stores, organizes, and retrieves copied text and images instantly. It maintains a searchable history of everything you copy, letting you pin frequently used snippets and organize clips into unlimited collections. This is especially useful when working with research notes, code snippets, citations, and repetitive text across multiple projects.\n\nStudents get 30% off with a valid education email address. The discount applies at checkout when you verify your institutional email domain.\n\nNote: Not all educational email domains are recognized by Clean Clip. If your institution's email is rejected, contact Clean Clip support to request manual approval before purchasing.",
     "benefitType": "Clean Clip",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -13621,9 +13926,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://cleanclip.cc/students",
     "claimUrl": "https://cleanclip.cc/students",
     "tags": [
-      "Discount",
+      "Global",
       "macOS",
-      "Global"
+      "Discount"
     ]
   },
   {
@@ -13633,8 +13938,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/carto.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free account upgrades and premium features for 2 years",
-    "description": "Analyze and visualize location data with interactive maps",
+    "offerSummary": "Analyze and visualize location data with interactive maps",
+    "description": "CARTO is a cloud-based mapping platform for analyzing and visualizing location data through interactive maps and geospatial analysis tools. The platform enables you to work with public and premium spatial datasets, create custom visualizations, and conduct geospatial analysis for academic research and projects. You can access spatial analysis tools, advanced mapping capabilities, and dataset repositories to support coursework and research initiatives.\n\nVerified students receive free account upgrades and premium features for 2 years via the GitHub Student Developer Pack. To claim this offer, verify your student status through GitHub Education using a valid university email or enrollment proof. CARTO will recognize your GitHub Student verification and automatically activate premium access for the full 2-year period.\n\nCARTO is widely used in GIS, urban planning, geography, and data science fields.",
     "benefitType": "CARTO",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -13643,10 +13948,10 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://docs.carto.com/faqs/carto-for-education#what-is-the-process-for-getting-a-carto-student-account",
     "claimUrl": "https://docs.carto.com/faqs/carto-for-education#what-is-the-process-for-getting-a-carto-student-account",
     "tags": [
-      "AI",
-      "Free",
       "Web",
-      "Global"
+      "Global",
+      "Free",
+      "AI"
     ]
   },
   {
@@ -13656,8 +13961,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/canva.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free for students through their school or campus",
-    "description": "Design platform for creating graphics, videos, and social media posts",
+    "offerSummary": "Design platform for creating graphics, videos, and social media posts",
+    "description": "Canva is a design platform for creating graphics, videos, presentations, documents, and websites. Students can access Canva Free by signing up directly, or receive free access to Pro and premium features through Canva for Campus if their school or university has an institutional account.\n\nK\u201312 students gain free access to premium features when their teacher invites them to a class; higher education students should contact their university to check eligibility for the campus-wide program. Access is tied to your school email and account \u2014 when you graduate, you lose access but can transfer your designs to a personal account.",
     "benefitType": "Canva",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -13666,9 +13971,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://www.canva.com/education/students/",
     "claimUrl": "https://www.canva.com/education/students/",
     "tags": [
-      "Free",
       "Web",
-      "Global"
+      "Global",
+      "Free"
     ]
   },
   {
@@ -13678,8 +13983,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/cambercloud.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free Student plan: 200 CPU hrs, 75GB Storage, 200 LLM msgs",
-    "description": "Cloud platform for testing, computing, and analysis projects",
+    "offerSummary": "Cloud platform for testing, computing, and analysis projects",
+    "description": "Camber is an AI platform for agentic data science that enables students to build, test, and deploy data workflows and AI agents in the cloud. The platform connects to Snowflake, BigQuery, Google Drive, and other data sources, allowing researchers to automate analysis without managing infrastructure.\n\nStudents can access Camber free through the GitHub Student Developer Pack. The student plan includes 200 CPU hours, 75GB storage, and 200 LLM messages monthly, plus access to Nova, Camber's AI Science Agent for running computational workloads at scale. You qualify by verifying your student status through GitHub Education.\n\nAfter signup, students can build their first agent in 5 minutes using Camber's quickstart guide. The platform includes shared team workspaces, a file system for organizing data and results, and a community Slack channel for support and collaboration on research projects.",
     "benefitType": "Camber",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -13688,9 +13993,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://www.cambercloud.com/github-student-pack",
     "claimUrl": "https://www.cambercloud.com/github-student-pack",
     "tags": [
-      "Free",
       "Web",
-      "Global"
+      "Global",
+      "Free"
     ]
   },
   {
@@ -13700,8 +14005,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/blockchair.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Software & Tools",
-    "offerSummary": "100K free API requests for 1 year",
-    "description": "Access blockchain data and insights via public APIs",
+    "offerSummary": "Access blockchain data and insights via public APIs",
+    "description": "Blockchair is a blockchain data and analytics API platform that provides programmatic access to cryptocurrency and blockchain information across multiple networks. The platform enables developers to query transaction data, address information, and blockchain statistics without building infrastructure from scratch.\n\nBlockchair offers free API access for students, allowing educational users to build projects and learn blockchain development at no cost. Students can access the platform's core API features to retrieve and analyze blockchain data. Verification of student status is typically required through standard credential submission, though specific verification methods should be confirmed directly with Blockchair's support team before signing up.",
     "benefitType": "Blockchair",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -13710,9 +14015,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://blockchair.com/student-pack",
     "claimUrl": "https://blockchair.com/student-pack",
     "tags": [
-      "Free",
+      "Global",
       "Developer",
-      "Global"
+      "Free"
     ]
   },
   {
@@ -13722,8 +14027,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/blender.org?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free open-source 3D creation suite",
-    "description": "Free 3D modeling and animation software for design and VFX",
+    "offerSummary": "Free 3D modeling and animation software for design and VFX",
+    "description": "Blender is a free, open-source 3D creation suite available to all users. It includes professional-grade tools for modeling, sculpting, animation, rigging, VFX tracking, UV work, 2D drawing, rendering, and scripting. The software is widely used in animation, game development, VFX, product design, and architecture.\n\nOriginally developed for production studios, Blender runs on Windows, Mac, and Linux with no licensing fees, paywalls, or registration requirements. Because it's free and open-source forever, Blender offers the same capabilities to students, professionals, and hobbyists alike.\n\nWhile the core software is free, some third-party add-ons, asset libraries, and training courses in the Blender ecosystem may have costs.",
     "benefitType": "Blender",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -13732,10 +14037,10 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://www.blender.org/",
     "claimUrl": "https://www.blender.org/",
     "tags": [
-      "Open Source",
-      "Free",
       "Web",
-      "Global"
+      "Global",
+      "Open Source",
+      "Free"
     ]
   },
   {
@@ -13745,8 +14050,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/blackberry.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free academic license",
-    "description": "Real-time embedded operating system for automotive and industrial use",
+    "offerSummary": "Real-time embedded operating system for automotive and industrial use",
+    "description": "BlackBerry QNX is a real-time embedded operating system designed for automotive and industrial applications. The QNX Everywhere program provides free access to QNX software for students, hobbyists, and prototypers for non-commercial use. This offer is ideal for exploring embedded systems programming, real-time development, and prototyping without commercial licensing costs.\n\nTo get started, users gain access to QNX SDP 8.0, online training resources, community support, and open-source ports through a myQNX account. Verify current non-commercial license terms before use, and note that this access does not include production or commercial deployment rights.",
     "benefitType": "BlackBerry QNX",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -13755,9 +14060,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://blackberry.qnx.com/en/company/qnx-in-education",
     "claimUrl": "https://blackberry.qnx.com/en/company/qnx-in-education",
     "tags": [
-      "Free",
       "Web",
-      "Global"
+      "Global",
+      "Free"
     ]
   },
   {
@@ -13767,8 +14072,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/blacksheepcoffee.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Credits & Savings",
-    "offerSummary": "20% off Black Sheep Coffee orders",
-    "description": "UK coffee chain with verified student drink discounts",
+    "offerSummary": "UK coffee chain with verified student drink discounts",
+    "description": "Black Sheep Coffee is a UK coffee chain offering verified student discounts through UNiDAYS. Students can access 20% off the full menu in-store with verification, providing practical savings for study sessions and everyday campus visits.\n\nTo claim, students need a UNiDAYS account and must show verification in-store at participating locations. The chain also historically offers selected hot or iced drinks for \u00a32 on Mondays. Check the current UNiDAYS page for availability in your region, which items are excluded, and whether the Monday drinks promotion and 20% menu discount can be combined or have separate terms.",
     "benefitType": "Black Sheep Coffee",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -13777,9 +14082,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://www.myunidays.com/GB/en-GB/partners/blacksheep/view",
     "claimUrl": "https://www.myunidays.com/GB/en-GB/partners/blacksheep/view",
     "tags": [
-      "Discount",
       "Web",
-      "UK"
+      "UK",
+      "Discount"
     ]
   },
   {
@@ -13789,8 +14094,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/beautiful.ai?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free Pro subscription for 1 year",
-    "description": "Generative AI presentation maker for professional slides in minutes",
+    "offerSummary": "Generative AI presentation maker for professional slides in minutes",
+    "description": "Beautiful.ai is an AI presentation maker that automates slide design so students can focus on content and ideas rather than formatting. Smart Slides handle alignment, spacing, and animation automatically, allowing you to create polished, professional presentations in minutes without design experience.\n\nVerified students with a .edu email address are eligible for a free annual Pro subscription. To claim the offer, verify your student email at Beautiful.ai's education checkout page. The Pro plan includes unlimited access to all AI presentation features, allowing you to create, edit, and share presentations throughout your first year at no cost.\n\nAfter your free year ends, standard paid plans start at $12 per month billed annually. If you're unsure whether Beautiful.ai is right for you, a 14-day free trial with full feature access is available to all users without requiring a student email.",
     "benefitType": "Beautiful.ai",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -13799,10 +14104,10 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://www.beautiful.ai/education",
     "claimUrl": "https://www.beautiful.ai/education",
     "tags": [
-      "AI",
-      "Free",
       "Web",
-      "Global"
+      "Global",
+      "Free",
+      "AI"
     ]
   },
   {
@@ -13812,8 +14117,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/bhphotovideo.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Credits & Savings",
-    "offerSummary": "Discounted pricing for students",
-    "description": "Retailer for professional photo, video, and creative gear",
+    "offerSummary": "Retailer for professional photo, video, and creative gear",
+    "description": "B&H Photo Video is a retailer specializing in professional photo, video, and creative equipment including cameras, computers, audio gear, lighting, and design tools. Students at U.S.-based accredited institutions can access the EDU Advantage program through UNiDAYS verification.\n\nThe program offers exclusive discounts and free shipping on thousands of qualifying items across hundreds of brands. Eligible users include college students, professors, and educators. Coverage includes cameras, laptops, monitors, audio equipment, lighting, and creator accessories.\n\nVerify your institution's eligibility and confirm specific products are included in EDU pricing before ordering, as some brands and items may have regional restrictions.",
     "benefitType": "B&H Photo Video",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -13822,9 +14127,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://www.bhphotovideo.com/find/eduAdvantage.jsp",
     "claimUrl": "https://www.bhphotovideo.com/find/eduAdvantage.jsp",
     "tags": [
-      "Discount",
       "Web",
-      "US"
+      "US",
+      "Discount"
     ]
   },
   {
@@ -13834,8 +14139,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/avid.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Credits & Savings",
-    "offerSummary": "Discounted education pricing",
-    "description": "Professional software for music production and sound engineering",
+    "offerSummary": "Professional software for music production and sound engineering",
+    "description": "Avid Pro Tools is professional software for music production, sound engineering, and audio post-production. It is the industry standard in many professional studios and production environments.\n\nStudents, faculty, and staff at qualifying academic institutions can access discounted education pricing. This pricing makes Avid Pro Tools more accessible to those pursuing careers in audio production and engineering. Eligibility typically includes university and college students, some secondary school students, and qualifying academic staff.\n\nBefore purchasing, verify your school type qualifies and prepare valid proof such as a tuition statement or enrollment confirmation.",
     "benefitType": "Avid Pro Tools",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -13844,9 +14149,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://www.avid.com/academic-eligibility",
     "claimUrl": "https://www.avid.com/academic-eligibility",
     "tags": [
-      "Discount",
       "Web",
-      "US"
+      "US",
+      "Discount"
     ]
   },
   {
@@ -13856,8 +14161,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://aobklvmdpcebkbgvvijp.supabase.co/storage/v1/object/public/LOGOs/AuraAI.png",
     "category": "Other",
     "appCategory": "Credits & Savings",
-    "offerSummary": "30% discount on premium plans",
-    "description": "Generate professional AI videos using top models like Veo, Sora and more",
+    "offerSummary": "Generate professional AI videos using top models like Veo, Sora and more",
+    "description": "Aura AI lets you generate professional videos using AI models like Veo and Sora without filming or editing skills. Create polished content for presentations, portfolios, and coursework in minutes. The platform handles video production directly, so you get broadcast-quality results without technical expertise or expensive equipment.\n\nStudents receive 30% off premium plans by verifying an eligible school email. Premium access includes faster video generation, watermark-free exports, and full model library access. Verify your student email to unlock the discount and access all premium features for your academic and creative projects.\n\nIdeal for thesis projects, class assignments, and portfolio building.",
     "benefitType": "Aura AI",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -13866,10 +14171,10 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://auraai.app/student-discount",
     "claimUrl": "https://auraai.app/student-discount",
     "tags": [
-      "AI",
-      "Discount",
       "Web",
-      "Global"
+      "Global",
+      "Discount",
+      "AI"
     ]
   },
   {
@@ -13879,8 +14184,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/getastra.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Software & Tools",
-    "offerSummary": "6-month website firewall and scanner access",
-    "description": "Website security suite with malware scanning, firewall, and protection tools",
+    "offerSummary": "Website security suite with malware scanning, firewall, and protection tools",
+    "description": "Astra Security is a website protection suite that delivers malware scanning, firewall defense, and active threat monitoring for production websites. The platform identifies vulnerabilities, blocks malicious traffic, and provides real-time alerts to keep sites secure.\n\nVerified GitHub Student Developer Pack members can claim six months of Astra Security's Pro Plan at no cost, with no credit card required. This gives students building production websites, portfolios, or hackathon projects access to enterprise-grade security infrastructure.\n\nTo claim, verify through GitHub Student Developer Pack and maintain a public GitHub profile. Confirm Astra Security supports your specific platform and site type before activation. The free access period requires active GitHub Student Pack membership.",
     "benefitType": "AstraSecurity",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -13889,9 +14194,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://www.getastra.com/github-student-developer-pack",
     "claimUrl": "https://www.getastra.com/github-student-developer-pack",
     "tags": [
-      "Free",
       "Web",
-      "Global"
+      "Global",
+      "Free"
     ]
   },
   {
@@ -13901,8 +14206,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/arrow.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Credits & Savings",
-    "offerSummary": "20% off via Student Beans",
-    "description": "Exclusive discounts on electronic components, sensors, and development boards",
+    "offerSummary": "Exclusive discounts on electronic components, sensors, and development boards",
+    "description": "Arrow is an electronics component distributor offering electronic components, sensors, and development boards. This discount is useful for students building embedded systems, robotics projects, IoT applications, or other hardware-based coursework requiring components and boards.\n\nStudents receive a 20% discount on orders through Student Beans verification. To claim the discount, register with Student Beans, verify your student status (including apprentices), and apply the provided code at checkout.\n\nThe offer is valid in the US and is redeemed directly through Student Beans.",
     "benefitType": "Arrow",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -13911,9 +14216,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://www.studentbeans.com/student-discount/us/arrow",
     "claimUrl": "https://www.studentbeans.com/student-discount/us/arrow",
     "tags": [
-      "Discount",
       "Web",
-      "US"
+      "US",
+      "Discount"
     ]
   },
   {
@@ -13923,8 +14228,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/apple.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free with Apple Music Student",
-    "description": "Stream Apple Originals included with Apple Music Student plan",
+    "offerSummary": "Stream Apple Originals included with Apple Music Student plan",
+    "description": "Apple TV+ is included free with the Apple Music Student plan, Apple's discounted music subscription for verified college students. The student plan costs $5.99/month after a free 1-month trial and includes access to over 100 million songs ad-free, plus Apple TV+ streaming at no extra cost. Students also get Spatial Audio, lossless audio quality, Apple Music Classical, and exclusive artist content.\n\nTo qualify, you must be a verified college or university student. Verification is required during signup, and your student pricing remains active for up to four years as long as you maintain student status. After four years, the subscription automatically converts to individual pricing ($10.99/month). Apple TV+ access ends if you no longer qualify as a student or if you cancel the Apple Music Student subscription. The offer is available to new subscribers only, and the plan automatically renews each month until you cancel.",
     "benefitType": "Apple TV+",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -13933,9 +14238,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://www.apple.com/apple-music/",
     "claimUrl": "https://www.apple.com/apple-music/",
     "tags": [
-      "Trial",
+      "Global",
       "macOS",
-      "Global"
+      "Trial"
     ]
   },
   {
@@ -13945,8 +14250,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/apple.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Software & Tools",
-    "offerSummary": "1 month free, then ~50% off for up to 48 months",
-    "description": "Stream 100M+ songs with offline playback and curated playlists",
+    "offerSummary": "Stream 100M+ songs with offline playback and curated playlists",
+    "description": "Apple Music is a streaming service offering ad-free access to over 100 million songs, 30,000 playlists, lossless audio, Spatial Audio with Dolby Atmos, real-time lyrics, and exclusive live concerts. The student plan also includes free access to Apple TV.\n\nCollege students receive 1 month free, then $5.99/month after the trial ends. Verified college students can maintain student pricing for up to four years; after that, the subscription renews at the standard individual member rate. Student verification through your college or university is required at signup and periodically during the membership.\n\nThe subscription auto-renews monthly and can be cancelled anytime with no commitment.",
     "benefitType": "Apple Music",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -13955,9 +14260,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://offers.applemusic.apple/student-offer",
     "claimUrl": "https://offers.applemusic.apple/student-offer",
     "tags": [
-      "Trial",
+      "Global",
       "macOS",
-      "Global"
+      "Trial"
     ]
   },
   {
@@ -13967,8 +14272,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/apple.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Credits & Savings",
-    "offerSummary": "Up to 10% off Macs iPads and accessories",
-    "description": "Student pricing on Macs, iPads, and accessories",
+    "offerSummary": "Student pricing on Macs, iPads, and accessories",
+    "description": "Apple Education offers verified students and educators discounted pricing on Macs, iPads, iPhones, Apple Watches, and accessories through Apple's dedicated education store. Eligible buyers save up to 10% on these devices, plus up to 10% on AppleCare+ protection. The program is available in India and requires verification of student or educator status before purchase.\n\nTo access education pricing, students must verify their eligibility through Apple's verification process on the education store. Once verified, discounts apply to new device purchases and can be combined with trade-in credit: eligible Macs, iPads, and Apple Watches can be traded in-store only for instant credit ranging from \u20b92,500 to \u20b957,000 depending on condition and configuration. Free engraving is also included on purchases. University students can additionally subscribe to Apple Music Student for \u20b9199 per month (or \u20b91,999 per year), which includes free Apple TV access as a limited-time offer.",
     "benefitType": "Apple Education",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -13977,9 +14282,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://student-redirect.studentoffersteam.workers.dev/apple",
     "claimUrl": "https://student-redirect.studentoffersteam.workers.dev/apple",
     "tags": [
-      "Discount",
+      "Global",
       "macOS",
-      "Global"
+      "Discount"
     ]
   },
   {
@@ -13989,8 +14294,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/appfigures.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free universal analytics and performance reports for 1 year",
-    "description": "Track app downloads, performance, and rankings across app stores",
+    "offerSummary": "Track app downloads, performance, and rankings across app stores",
+    "description": "Appfigures is an app analytics and App Store Optimization platform that tracks downloads, revenue, rankings, and performance across iOS, Android, and other major app stores in real-time. The platform provides daily tracking of downloads and revenue, allows you to benchmark performance across countries and categories, and includes access to AI-powered trends and market anomalies.\n\nStudents get free access to universal analytics and ASO tools for one full year through the GitHub Student Developer Pack, with no credit card required. After the free year, standard pricing applies unless you maintain GitHub Student Pack eligibility.",
     "benefitType": "Appfigures",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -13999,9 +14304,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://appfigures.com/landing/github-student",
     "claimUrl": "https://appfigures.com/landing/github-student",
     "tags": [
-      "Free",
       "Web",
-      "Global"
+      "Global",
+      "Free"
     ]
   },
   {
@@ -14011,8 +14316,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/apify.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Credits & Savings",
-    "offerSummary": "50% off paid plans for 4 months",
-    "description": "Build and run web scrapers, crawlers, and data extraction bots at scale in the cloud.",
+    "offerSummary": "Build and run web scrapers, crawlers, and data extraction bots at scale in the cloud.",
+    "description": "Apify is a cloud platform for building and running web scrapers, crawlers, and data extraction bots at scale. Students and researchers at accredited educational institutions can receive 50% off any paid plan (Starter, Scale, or Business) for up to four months to support academic projects.\n\nTo qualify, create an Apify account using your university email for verification. If you don't have a university email, Apify will accept ISIC verification or other student status documentation. High school and secondary school students are also eligible\u2014enter your high school in the University name field. Applications are reviewed and Apify reserves the right to verify that platform usage aligns with your stated project description.\n\nThe discount is capped at one semester (four months maximum). Apify may make exceptions for noble causes or other compelling reasons beyond standard student eligibility. Apply via their student discount form at apify.com.",
     "benefitType": "Apify",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -14021,9 +14326,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://apify.com/resources/universities",
     "claimUrl": "https://apify.com/resources/universities",
     "tags": [
-      "Discount",
+      "Global",
       "Developer",
-      "Global"
+      "Discount"
     ]
   },
   {
@@ -14033,8 +14338,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/anydesk.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free access for unlimited private use",
-    "description": "Remote desktop software for accessing and controlling computers securely",
+    "offerSummary": "Remote desktop software for accessing and controlling computers securely",
+    "description": "AnyDesk is remote desktop software that enables secure access and control of computers from any device. It uses military-grade encryption to protect connections during remote sessions.\n\nStudents can use AnyDesk free of charge for unlimited private use. The free version includes remote desktop access, integrated text chat for communication during sessions, and role-based address book features. This allows students to collaborate on projects, help classmates with presentations, or access their own devices remotely without paying for a subscription.\n\nThe free tier for private use has no stated expiration date. AnyDesk's free offering is available to all users globally, not exclusively to students\u2014the platform positions it as a free option for personal, non-commercial remote access needs.",
     "benefitType": "AnyDesk",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -14043,9 +14348,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://anydesk.com/en/students",
     "claimUrl": "https://anydesk.com/en/students",
     "tags": [
-      "Free",
       "Web",
-      "Global"
+      "Global",
+      "Free"
     ]
   },
   {
@@ -14055,8 +14360,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/antarestech.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Credits & Savings",
-    "offerSummary": "Student discounts via Studentbeans (availability varies)",
-    "description": "Suite of professional vocal processing tools including Auto-Tune",
+    "offerSummary": "Suite of professional vocal processing tools including Auto-Tune",
+    "description": "Antares is a suite of professional vocal processing tools best known for Auto-Tune, used in music production, recording, and audio editing. The company offers student discounts through Student Beans, a verification portal that connects students to exclusive brand offers.\n\nEligible students can access up to 75% off Antares products, with a specific offer of 50% off Auto-Tune Unlimited available for a limited time. To claim the discount, you must register and verify your student status with Student Beans; verification requirements are handled by the external provider. The offer is available in the US and requires valid student enrollment or apprenticeship status.\n\nStudent Beans serves over 163 million students across 50+ countries and regularly tests all discount codes to ensure they work. If you encounter issues redeeming the Antares offer, contact Student Beans directly, as the redemption is processed externally through their platform.",
     "benefitType": "Antares",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -14065,9 +14370,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://www.studentbeans.com/student-discount/us/antares",
     "claimUrl": "https://www.studentbeans.com/student-discount/us/antares",
     "tags": [
-      "Discount",
       "Web",
-      "US"
+      "US",
+      "Discount"
     ]
   },
   {
@@ -14078,7 +14383,7 @@ export const studentBenefits2026: StudentBenefit[] = [
     "category": "Other",
     "appCategory": "Credits & Savings",
     "offerSummary": "Free 20 coding interview questions + 10% off on all products",
-    "description": "Practice coding problems and algorithms for interviews",
+    "description": "AlgoExpert is a coding interview preparation platform with 200 hand-picked interview questions, 100+ hours of video explanations, a data structures crash course, and written solutions in 9 programming languages.\n\nStudents verified through the GitHub Student Developer Pack receive free access to 20 practice coding interview questions plus a 10% discount on all AlgoExpert products. To claim the offer, you must first sign up for the GitHub Student Developer Pack (available to students at degree-or-diploma-granting institutions), then use the claim button to activate your student benefits. No credit card is required to claim the offer\u2014you only need one if you choose to purchase additional AlgoExpert products later.\n\nIf you already own an AlgoExpert account, you can still claim the offer but will only receive the 10% discount, since the free questions benefit applies only to new users.",
     "benefitType": "AlgoExpert",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -14087,9 +14392,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://www.algoexpert.io/github-students",
     "claimUrl": "https://www.algoexpert.io/github-students",
     "tags": [
-      "Discount",
       "Web",
-      "Global"
+      "Global",
+      "Discount"
     ]
   },
   {
@@ -14099,8 +14404,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/aiapply.co?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Credits & Savings",
-    "offerSummary": "40% discount on Premium",
-    "description": "AI tools to auto-apply for jobs and generate tailored resumes",
+    "offerSummary": "AI tools to auto-apply for jobs and generate tailored resumes",
+    "description": "AiApply is an AI tool that automates job applications and generates tailored resumes and cover letters for job seekers. The platform is built for early-career users and helps with internship searches, entry-level job applications, interview preparation, and CV generation.\n\nStudents can access premium features at a 40% discount using a valid student email address. To claim the discount, verify your student email, receive a discount code, and apply it to activate premium access. Check the current page to confirm your school email domain is accepted and verify which premium features are included in the discounted plan.",
     "benefitType": "AiApply",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -14109,9 +14414,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://aiapply.co/en-GB/students",
     "claimUrl": "https://aiapply.co/en-GB/students",
     "tags": [
-      "Discount",
       "Web",
-      "Global"
+      "Global",
+      "Discount"
     ]
   },
   {
@@ -14121,8 +14426,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/affinity.studio?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Software & Tools",
-    "offerSummary": "100% Free for everyone",
-    "description": "Professional photo, design, and layout apps free for everyone",
+    "offerSummary": "Professional photo, design, and layout apps free for everyone",
+    "description": "Affinity is professional creative software for photo editing, design, and page layout that is free for everyone. The suite includes Affinity Photo, Affinity Designer, and Affinity Publisher\u2014tools typically found in paid subscriptions. It works as an all-in-one creative environment, eliminating the need to switch between separate applications for different tasks.\n\nThere is no student verification required; the free version is available to all users. Whether you're working on visual coursework, portfolios, posters, or editorial projects, Affinity provides professional-grade capabilities at no cost.",
     "benefitType": "Affinity",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -14131,9 +14436,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://www.affinity.studio/",
     "claimUrl": "https://www.affinity.studio/",
     "tags": [
-      "Free",
       "Web",
-      "Global"
+      "Global",
+      "Free"
     ]
   },
   {
@@ -14143,7 +14448,7 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/adafruit.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Credits & Savings",
-    "offerSummary": "1 year of Adafruit IO+ & hardware discounts",
+    "offerSummary": "Electronics platform for building smart hardware and IoT devices",
     "description": "Electronics platform for building smart hardware and IoT devices",
     "benefitType": "Adafruit",
     "value": "Variable savings",
@@ -14153,9 +14458,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://www.adafruit.com/github-students",
     "claimUrl": "https://www.adafruit.com/github-students",
     "tags": [
-      "Discount",
       "Web",
-      "Global"
+      "Global",
+      "Discount"
     ]
   },
   {
@@ -14165,8 +14470,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://aobklvmdpcebkbgvvijp.supabase.co/storage/v1/object/public/LOGOs/1001%20TVs.png",
     "category": "Other",
     "appCategory": "Credits & Savings",
-    "offerSummary": "50% off first year (iOS)",
-    "description": "Screen mirroring and sharing software for Mac and iOS",
+    "offerSummary": "Screen mirroring and sharing software for Mac and iOS",
+    "description": "1001 TVs is screen mirroring and sharing software for Mac and iOS devices. It enables seamless content sharing between your devices.\n\nStudents and teachers can get 50% off the first year of the iOS version through the education program. Verification is handled manually via email, and the discount is delivered as an App Store redemption code. To claim it, contact the company with proof of enrollment and your Apple ID email address.\n\nThis offer applies to the iOS version only, not other platforms. Check that App Store redemption codes work in your region before applying, and confirm you need the iOS or iPadOS version for your use case.",
     "benefitType": "1001 TVs",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -14175,9 +14480,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://www.1001tvs.com/education/",
     "claimUrl": "https://www.1001tvs.com/education/",
     "tags": [
+      "Global",
       "Discount",
-      "iOS",
-      "Global"
+      "iOS"
     ]
   },
   {
@@ -14187,8 +14492,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/1001record.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Credits & Savings",
-    "offerSummary": "$9.99 for the first year",
-    "description": "Screen recorder for Mac with annotation features",
+    "offerSummary": "Screen recorder for Mac with annotation features",
+    "description": "1001 Record is a Mac screen recorder with annotation and presentation features designed for creating tutorials, demos, and lesson recordings. The app supports 60fps recording and simultaneous system and microphone audio capture, making it suitable for screen capture workflows on macOS.\n\nStudents and educators have historically been eligible for an educational discount of $9.99 for the first year through a direct application process. However, the education discount program is currently paused while the developer reviews and updates the offering. Interested students should contact 1001tvs@nero.com to inquire about the status of the program or request future eligibility updates.",
     "benefitType": "1001 Record",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -14197,9 +14502,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://1001record.com/educational-discount",
     "claimUrl": "https://1001record.com/educational-discount",
     "tags": [
-      "Discount",
+      "Global",
       "macOS",
-      "Global"
+      "Discount"
     ]
   },
   {
@@ -14209,8 +14514,8 @@ export const studentBenefits2026: StudentBenefit[] = [
     "logo": "https://img.logo.dev/get.tech?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Other",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free .TECH domain for 1 year",
-    "description": "Domain extensions for tech startups, projects, and portfolios",
+    "offerSummary": "Domain extensions for tech startups, projects, and portfolios",
+    "description": ".tech is a Top-Level Domain (nTLD) designed for technology startups, projects, and developer portfolios. It signals to venture capitalists, customers, and peers that your site's core is technology\u2014differentiating it from generic .com or .org domains.\n\nStudents in the GitHub Student Developer Pack receive a free .tech domain for one year when they verify their GitHub account at checkout. The domain is fully functional and can be managed through .tech's control panel or transferred to registrars like GoDaddy, Namecheap, Cloudflare, or Domain.com. This offer is available to students worldwide across most countries.\n\nAfter the first year, renewal charges apply at standard rates. .tech does not include hosting; you'll need a separate web host. If you forget to renew, you have a 36-day grace period to renew at regular price before the domain enters a redemption phase with additional restoration fees.",
     "benefitType": ".TECH",
     "value": "Variable savings",
     "eligibility": "Students",
@@ -14219,9 +14524,9 @@ export const studentBenefits2026: StudentBenefit[] = [
     "url": "https://get.tech/github-student-developer-pack",
     "claimUrl": "https://get.tech/github-student-developer-pack",
     "tags": [
-      "Free",
       "Web",
-      "Global"
+      "Global",
+      "Free"
     ]
   },
   {
@@ -14260,33 +14565,41 @@ export const studentBenefits2026: StudentBenefit[] = [
     "title": "Azure for Students",
     "company": "Microsoft",
     "slug": "azure-for-students",
-    "logo": "https://www.google.com/s2/favicons?domain=microsoft.com&sz=128",
+    "logo": "https://img.logo.dev/azure.microsoft.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Cloud & Credits",
     "appCategory": "Software & Tools",
-    "offerSummary": "$100 credit + 25+ free services (SQL, AI, App Service)",
-    "description": "$100 credit + 25+ free services (SQL, AI, App Service)",
+    "offerSummary": "Cloud platform with $100 signup credit, annual renewal, no card needed.",
+    "description": "Azure for Students is Microsoft's cloud computing platform offering free access to cloud services for verified students. The program provides $100 in free Azure credits with no credit card required, enabling students to learn and build projects on Microsoft's cloud infrastructure.\n\nTo qualify, you must verify your student status through Microsoft's verification process. The $100 credit allocation gives students hands-on experience with Azure's compute, storage, database, and AI services. Credits are applied to your account upon successful verification and can be used across Azure's full service catalog.",
     "benefitType": "Credits",
     "value": "$100+",
     "eligibility": "Age 18+, Students",
     "region": "Global",
     "verification": "Edu Email / SheerIDazure.",
-    "url": "https://microsoft.com/en-us/free/students"
+    "url": "https://microsoft.com/en-us/free/students",
+    "tags": [
+      "Credit",
+      "Developer"
+    ]
   },
   {
     "title": "AWS Educate",
     "company": "Amazon Web Services",
     "slug": "aws-educate",
-    "logo": "https://www.google.com/s2/favicons?domain=amazon.com&sz=128",
+    "logo": "https://aobklvmdpcebkbgvvijp.supabase.co/storage/v1/object/public/LOGOs/AWS.png",
     "category": "Cloud & Credits",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free cloud content, labs, and career pathways",
-    "description": "Free cloud content, labs, and career pathways",
+    "offerSummary": "Self-paced cloud computing courses with labs and a student job board.",
+    "description": "AWS Educate is a free cloud computing learning platform open to anyone, regardless of education level, technical experience, or career stage. The platform offers self-paced online training, hands-on labs, and guided learning paths covering cloud computing and AI skills.\n\nLearners as young as 13 can register with just an email address\u2014no credit card required\u2014and gain immediate access to real-time labs, video courses, and hands-on projects like building cloud storage solutions and hosting static websites using Amazon S3. AWS Educate learners can earn shareable digital badges to demonstrate their skills. The entire platform is completely free, with no paywall or subscription required.",
     "benefitType": "Hybrid",
     "value": "Variable",
     "eligibility": "Students",
     "region": "Global",
     "verification": "Edu Emailaws.",
-    "url": "https://amazon.com/education/awseducate"
+    "url": "https://amazon.com/education/awseducate",
+    "tags": [
+      "Web",
+      "Free"
+    ]
   },
   {
     "title": "Google Cloud for Students",
@@ -14468,17 +14781,21 @@ export const studentBenefits2026: StudentBenefit[] = [
     "title": "Mailgun",
     "company": "Mailgun",
     "slug": "mailgun",
-    "logo": "https://www.google.com/s2/favicons?domain=github.com&sz=128",
+    "logo": "https://img.logo.dev/mailgun.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Developer Tools",
     "appCategory": "Software & Tools",
-    "offerSummary": "20,000 free emails/mo for 12 months",
-    "description": "20,000 free emails/mo for 12 months",
+    "offerSummary": "Email API and SMTP relay service for sending, receiving, and tracking transactional emails",
+    "description": "Mailgun is an email API and SMTP relay service that enables developers to send, receive, and track transactional emails at scale. The platform provides a free plan with 100 emails per day, allowing students and developers to build and test email functionality without upfront costs.\n\nThe free tier includes access to Mailgun's core features: Send Email API, SMTP relay, Email Validation API, email list validation tools, and an email template builder. After signup, you are billed a prorated amount for your selected plan in the current month, then charged monthly at the start of each month for the previous month's usage. Mailgun's infrastructure is hosted in both the US and EU, so you can choose your data region. Support is available at multiple levels depending on your needs.",
     "benefitType": "Credits",
     "value": "Usage",
     "eligibility": "Students",
     "region": "Global",
     "verification": "GitHub Packeducation.",
-    "url": "https://github.com/pack"
+    "url": "https://github.com/pack",
+    "tags": [
+      "Developer",
+      "Free"
+    ]
   },
   {
     "title": "LambdaTestLambda",
@@ -14740,33 +15057,41 @@ export const studentBenefits2026: StudentBenefit[] = [
     "title": "Adobe Creative Cloud",
     "company": "Adobe",
     "slug": "adobe-creative-cloud",
-    "logo": "https://www.google.com/s2/favicons?domain=docadobe.com&sz=128",
+    "logo": "https://img.logo.dev/adobe.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Design & Creative",
     "appCategory": "Credits & Savings",
-    "offerSummary": "60%+ Discount on All Apps (Photoshop, etc.)",
-    "description": "60%+ Discount on All Apps (Photoshop, etc.)",
+    "offerSummary": "All-in-one creative suite for photo, video, and graphic design",
+    "description": "Adobe Creative Cloud Pro is a comprehensive suite of creative applications for design, photo editing, video production, illustration, PDF work, and AI-assisted workflows. It includes Photoshop, Acrobat Pro, Firefly generative AI, and access to over one million free Adobe Stock assets.\n\nStudents and teachers qualify for a discounted introductory rate on Creative Cloud Pro for the first three months. Eligible users also receive 4,000 monthly generative credits for premium Firefly AI features, unlimited generations on select Firefly models for the first year, and a special student discount on Adobe Certified Professional certifications. Verification of student or teacher status is required to access the education pricing.",
     "benefitType": "Discount",
     "value": "~$360/yr",
     "eligibility": "Students 13+",
     "region": "Global",
     "verification": "Edu Email /",
-    "url": "https://Docadobe.com/students"
+    "url": "https://Docadobe.com/students",
+    "tags": [
+      "Web",
+      "Discount"
+    ]
   },
   {
     "title": "Autodesk Education",
     "company": "Autodesk",
     "slug": "autodesk-education",
-    "logo": "https://www.google.com/s2/favicons?domain=000sstudentsglobalsheeridautodesk.com&sz=128",
+    "logo": "https://img.logo.dev/autodesk.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Design & Creative",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free 1-Year Renewable (AutoCAD, Maya, Revit)",
-    "description": "Free 1-Year Renewable (AutoCAD, Maya, Revit)",
+    "offerSummary": "Professional 3D design, modeling, and engineering software suite",
+    "description": "Autodesk provides professional 2D and 3D CAD, design, modeling, and engineering software used across architecture, product design, manufacturing, and animation workflows.\n\nEligible students and educators receive free one-year, single-user access to the full Autodesk software suite for educational purposes, including AutoCAD, specialized toolsets, and mobile apps. Verification is required: Autodesk confirms student or faculty status and minimum age requirements at a qualified educational institution. You can begin the renewal process 30 days before expiration, with email reminders sent automatically.\n\nAccess is renewable annually as long as you remain eligible.",
     "benefitType": "License",
     "value": "$1,",
     "eligibility": "Student",
     "region": "Global",
     "verification": "N/A",
-    "url": "https://000sStudentsGlobalSheerIDautodesk.com/education"
+    "url": "https://000sStudentsGlobalSheerIDautodesk.com/education",
+    "tags": [
+      "Web",
+      "Discount"
+    ]
   },
   {
     "title": "Shapr3DShapr3",
@@ -14900,17 +15225,22 @@ export const studentBenefits2026: StudentBenefit[] = [
     "title": "Framer",
     "company": "Framer",
     "slug": "framer",
-    "logo": "https://www.google.com/s2/favicons?domain=mostudentsglobalcodeframer.com&sz=128",
+    "logo": "https://img.logo.dev/framer.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Design & Creative",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free Site Plan (Education)",
-    "description": "Free Site Plan (Education)",
+    "offerSummary": "Interactive design and prototyping platform with code export",
+    "description": "Framer is an interactive design and prototyping platform for creating websites, portfolios, and landing pages with code export capability. It provides unlimited access to design and prototyping features that help you build and test your ideas.\n\nStudents can access Framer's Basic plan free, which includes the Design Canvas, CMS, hosting, and AI tools\u2014a $120 annual value. Eligibility requires verification through a valid school email address and proof of enrollment at an accredited high school, college, or university.\n\nAccess continues for the duration of your enrollment; Framer tracks your expected graduation date to determine when your free access expires.",
     "benefitType": "Subscription",
     "value": "$15/",
     "eligibility": "Student",
     "region": "Global",
     "verification": "N/A",
-    "url": "https://moStudentsGlobalCodeframer.com/education"
+    "url": "https://moStudentsGlobalCodeframer.com/education",
+    "tags": [
+      "Web",
+      "Free",
+      "No-Code"
+    ]
   },
   {
     "title": "IconScoutIcon",
@@ -15380,17 +15710,21 @@ export const studentBenefits2026: StudentBenefit[] = [
     "title": "Miro",
     "company": "Miro",
     "slug": "miro",
-    "logo": "https://www.google.com/s2/favicons?domain=amiro.com&sz=128",
+    "logo": "https://img.logo.dev/miro.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "Productivity",
     "appCategory": "Software & Tools",
-    "offerSummary": "Free (3 boards)",
-    "description": "Free (3 boards)",
+    "offerSummary": "Online collaborative whiteboard for brainstorming and workshops",
+    "description": "Miro is an online collaborative whiteboard platform designed for brainstorming, diagramming, design, and remote teamwork. Students, educators, and schools can apply for a free Education plan that includes unlimited boards, one workspace with unlimited projects, and unlimited external visitors at no cost for two years.\n\nThe Education plan is verified through Miro's application process on their education page. Applicants select their role (student, educator, or school) and complete verification. After the two-year free period, pricing details and renewal options should be confirmed directly with Miro, as transition terms are not specified in standard offer materials.",
     "benefitType": "Free",
     "value": "N/A",
     "eligibility": "Everyone",
     "region": "Global",
     "verification": "N/",
-    "url": "https://Amiro.com/pricing"
+    "url": "https://Amiro.com/pricing",
+    "tags": [
+      "Web",
+      "Free"
+    ]
   },
   {
     "title": "Tally Forms",
@@ -16239,5 +16573,2415 @@ export const studentBenefits2026: StudentBenefit[] = [
     "region": "US",
     "verification": "about.",
     "url": "https://bankofamerica.com"
+  },
+  {
+    "title": "1Password - Free for 1 year, then 50% off",
+    "company": "1Password",
+    "slug": "1password",
+    "logo": "https://img.logo.dev/1password.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
+    "category": "Password Manager",
+    "appCategory": "Software & Tools",
+    "offerSummary": "Manage passwords and sensitive credentials securely",
+    "description": "1Password is a password manager and secret-storage tool that secures logins, developer credentials, recovery codes, and shared vaults across devices. The free year includes full access to 1Password's features for managing secrets throughout the software development lifecycle.\n\nStudents can get 1Password free for one year through the GitHub Student Developer Pack, then access a 50% student discount on paid plans afterward. To claim this offer, you must apply to GitHub Global Campus as a verified post-secondary student, then redeem the promotion via the Student Developer Pack. If you've already paid for a subscription, you'll receive a prorated credit applied after your free year ends.\n\nThis promotion can only be redeemed once per student account, and is available worldwide\u2014during signup you can choose data storage in the United States, Canada, or the EU.",
+    "benefitType": "Free",
+    "value": "Free for 1 year, then 50% off",
+    "eligibility": "Students",
+    "region": "Global",
+    "verification": "Student Email",
+    "url": "https://1password.com/developers/students",
+    "claimUrl": "https://1password.com/developers/students",
+    "tags": [
+      "Free",
+      "Web"
+    ]
+  },
+  {
+    "title": "Air India - Up to 10% off fares + extra baggage and flexible date change",
+    "company": "Air India",
+    "slug": "air-india",
+    "logo": "https://img.logo.dev/airindia.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
+    "category": "Airlines",
+    "appCategory": "Software & Tools",
+    "offerSummary": "Airline offering special discounted fares for academic travelers",
+    "description": "Air India offers up to 10% off fares on domestic and international flights for eligible students. To qualify, you must be enrolled full-time in an accredited school, university, or college for at least one academic year. Student status is verified online using your APAAR ID at booking, and identity verification is mandatory again at airport check-in\u2014bring a valid student ID, acceptance letter, or visa to confirm your eligibility.\n\nThe discount applies when you book directly on the Air India website or app and select the student concession option at checkout. You can combine this with additional promotions, such as the UPIPROMO code, which offers up to INR 2,000 extra off when paying by UPI. The offer covers both domestic and international bookings and is available to students traveling from India.",
+    "benefitType": "Discount",
+    "value": "Up to 10% off fares + extra baggage and flexible date change",
+    "eligibility": "Students",
+    "region": "India",
+    "verification": "Student Email",
+    "url": "https://www.airindia.com/in/en/book/exclusive-deals/student-flight-offer.html",
+    "claimUrl": "https://www.airindia.com/in/en/book/exclusive-deals/student-flight-offer.html",
+    "tags": [
+      "Discount",
+      "Web"
+    ]
+  },
+  {
+    "title": "Airtable - 120-day free Team trial + 6\u201324 months free on approval",
+    "company": "Airtable",
+    "slug": "airtable",
+    "logo": "https://img.logo.dev/airtable.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
+    "category": "No-Code Platform",
+    "appCategory": "Software & Tools",
+    "offerSummary": "Collaborative database platform for organizing and managing projects",
+    "description": "Airtable is a collaborative database platform for organizing, managing, and visualizing projects without coding. Students can access Airtable free for 6\u201324 months based on expected graduation date through the student plan application.\n\nEligible college and university students must apply with an existing Airtable account and valid student credentials; the duration of free access depends on when you graduate. After your free period ends, you can downgrade to a paid plan or cancel anytime. International students are eligible for student plans.",
+    "benefitType": "Trial",
+    "value": "120-day free Team trial + 6\u201324 months free on approval",
+    "eligibility": "Students",
+    "region": "Global",
+    "verification": "Student Email",
+    "url": "https://support.airtable.com/docs/nonprofit-and-educational-plans-faqs#applying-for-discounted-airtable-plans",
+    "claimUrl": "https://support.airtable.com/docs/nonprofit-and-educational-plans-faqs#applying-for-discounted-airtable-plans",
+    "tags": [
+      "No-Code",
+      "Trial",
+      "Web"
+    ]
+  },
+  {
+    "title": "Akiflow - Exclusive student discount (Contact Support)",
+    "company": "Akiflow",
+    "slug": "akiflow",
+    "logo": "https://img.logo.dev/akiflow.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
+    "category": "Calendar & Scheduling",
+    "appCategory": "Software & Tools",
+    "offerSummary": "Centralize tasks from every app into a single calendar view",
+    "description": "Akiflow is a productivity platform that consolidates tasks, calendars, and meetings from multiple apps into a single unified view with AI-powered scheduling. The platform includes Aki, an AI Executive Assistant that automates scheduling and task organization across unlimited integrations.\n\nStudents and researchers can access Akiflow through an exclusive student discount by contacting support. The offer includes a 7-day free trial of the Pro plan, which normally costs $34 per month and provides unlimited tasks, unlimited meetings, unlimited integrations, all power features, and a free 1:1 onboarding call. After the trial ends, you can cancel anytime with no lock-in contract.\n\nAkiflow is trusted by over 10,000 professionals and teams worldwide and holds a 4.7 rating on GetApp and Software Advice.",
+    "benefitType": "Discount",
+    "value": "Exclusive student discount (Contact Support)",
+    "eligibility": "Students",
+    "region": "Global",
+    "verification": "Student Email",
+    "url": "https://akiflow.com/pricing#:~:text=University%20student%20or%20researcher%3F",
+    "claimUrl": "https://akiflow.com/pricing#:~:text=University%20student%20or%20researcher%3F",
+    "tags": [
+      "Discount",
+      "Web"
+    ]
+  },
+  {
+    "title": "Amazon Prime - Free 3\u20136 month Prime trial, then 50% off",
+    "company": "Amazon Prime",
+    "slug": "amazon-prime",
+    "logo": "https://img.logo.dev/amazon.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
+    "category": "Retail & Marketplace",
+    "appCategory": "Software & Tools",
+    "offerSummary": "Prime membership with streaming, delivery, and exclusive perks",
+    "description": "Amazon Prime for Students is a discounted membership program offering unlimited fast delivery, exclusive shopping deals, and Prime Video access at reduced rates for students and young adults aged 19\u201324. The membership includes unlimited premium delivery on millions of items, early access to Lightning Deals, and special Prime member discounts.\n\nEligible members receive a 6-month free trial, followed by 50% off the regular Prime price: $4.99 per month or $49 per year (compared to $9.99 per month or $99 per year for standard Prime). After the trial ends, the discounted rate applies automatically\u2014members can cancel anytime without penalty.\n\nThis offer is available in Canada and Germany.",
+    "benefitType": "Trial",
+    "value": "Free 3\u20136 month Prime trial, then 50% off",
+    "eligibility": "Students",
+    "region": "Limited Countries",
+    "verification": "Student Email",
+    "url": "https://www.studentoffers.co/offer/amazon-prime",
+    "claimUrl": "https://www.studentoffers.co/offer/amazon-prime",
+    "tags": [
+      "Trial",
+      "Web"
+    ]
+  },
+  {
+    "title": "AT&T Student - Student plans from $10/mo + benefits based on your school",
+    "company": "AT&T Student",
+    "slug": "at-t-student",
+    "logo": "https://img.logo.dev/att.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
+    "category": "Telecom & Mobile",
+    "appCategory": "Software & Tools",
+    "offerSummary": "Student wireless savings via participating AT&T programs",
+    "description": "AT&T Student offers discounted wireless plans starting at $10/month for eligible students through its Signature Savings program. Savings are recurring and applied to your monthly bill, making this useful for students looking to reduce their phone service costs while away at college or living on campus.\n\nThe discount amount varies depending on which unlimited plan you choose and your school's participation in AT&T's student programs. To qualify, you'll need to verify your student status through the verification process AT&T requires.",
+    "benefitType": "Discount",
+    "value": "Student plans from $10/mo + benefits based on your school",
+    "eligibility": "Students",
+    "region": "US",
+    "verification": "Student Email",
+    "url": "https://www.att.com/verification/signaturehub/#student",
+    "claimUrl": "https://www.att.com/verification/signaturehub/#student",
+    "tags": [
+      "Discount",
+      "Web"
+    ]
+  },
+  {
+    "title": "Audible - Free 30-day trial + $0.99/mo for 3 months in select regions",
+    "company": "Audible",
+    "slug": "audible",
+    "logo": "https://img.logo.dev/audible.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
+    "category": "Audiobooks",
+    "appCategory": "Software & Tools",
+    "offerSummary": "Audiobook and podcast platform with monthly listening credits",
+    "description": "Audible is Amazon's audiobook and podcast streaming platform offering access to thousands of titles including audiobooks, Audible Originals, and podcasts with no cap on listening time. The Plus Catalogue includes thousands of titles available to stream unlimited hours each month.\n\nNew members receive a 30-day free trial to explore the full catalog. After the trial ends, membership renews automatically at \u20b9199 per month in India, though you can cancel anytime. The platform is available to all users and is not restricted to students, though the trial period makes it accessible for students exploring audiobook listening without upfront cost.",
+    "benefitType": "Trial",
+    "value": "Free 30-day trial + $0.99/mo for 3 months in select regions",
+    "eligibility": "Students",
+    "region": "Limited Countries",
+    "verification": "Student Email",
+    "url": "https://www.studentoffers.co/offer/audible",
+    "claimUrl": "https://www.studentoffers.co/offer/audible",
+    "tags": [
+      "Trial",
+      "Web"
+    ]
+  },
+  {
+    "title": "BoltAI - 50% off first year, plus 40% off on renewal (stacked)",
+    "company": "BoltAI",
+    "slug": "boltai",
+    "logo": "https://img.logo.dev/boltai.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
+    "category": "AI Assistants",
+    "appCategory": "Software & Tools",
+    "offerSummary": "Native macOS AI assistant integrating GPT into your workflow",
+    "description": "BoltAI is a native macOS AI assistant that integrates GPT and other AI models directly into your workflow. It supports screenshots, PDFs, local chats, and custom agents for research, coding, writing, and document analysis. The app prioritizes privacy with local storage options and works across multiple AI providers, giving Mac users a dedicated AI workspace outside the browser.\n\nStudents receive 50% off the first year plus 40% off renewal (both discounts stacked). Verify your student status through the official offer to claim this pricing.\n\nBoltAI works on macOS and requires verification of active student enrollment. Renewal discounts apply when you extend your subscription.",
+    "benefitType": "Discount",
+    "value": "50% off first year, plus 40% off on renewal (stacked)",
+    "eligibility": "Students",
+    "region": "Global",
+    "verification": "Student Email",
+    "url": "https://boltai.com/",
+    "claimUrl": "https://boltai.com/",
+    "tags": [
+      "AI",
+      "Discount",
+      "Web"
+    ]
+  },
+  {
+    "title": "Bubble - 30% discount on all paid plans and workload tiers 1 & 2",
+    "company": "Bubble",
+    "slug": "bubble",
+    "logo": "https://img.logo.dev/bubble.io?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
+    "category": "No-Code Platform",
+    "appCategory": "Software & Tools",
+    "offerSummary": "Full-stack platform to build web apps and AI agents without code",
+    "description": "Bubble is a no-code platform that enables users to build functional web applications without writing code. It provides a visual development environment where you can design interfaces, set up databases, and create workflows through a drag-and-drop interface, making web app development accessible to non-technical founders and teams.\n\nBubble offers 30% off its subscription plans for students. To access this discount, you'll need to verify your student status through the platform's verification process. This reduction applies to Bubble's standard pricing tiers, allowing student developers to build and test applications at a lower cost while learning no-code development.",
+    "benefitType": "Discount",
+    "value": "30% discount on all paid plans and workload tiers 1 & 2",
+    "eligibility": "Students",
+    "region": "Global",
+    "verification": "Student Email",
+    "url": "https://bubble.io/",
+    "claimUrl": "https://bubble.io/",
+    "tags": [
+      "No-Code",
+      "Discount",
+      "Web"
+    ]
+  },
+  {
+    "title": "Chaos - Up to 80% off Chaos student licenses",
+    "company": "Chaos",
+    "slug": "chaos",
+    "logo": "https://img.logo.dev/chaos.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
+    "category": "3D & Animation",
+    "appCategory": "Software & Tools",
+    "offerSummary": "Student-priced Chaos Education Collections for rendering and visualization",
+    "description": "Chaos provides rendering and visualization software used in architecture, product design, media, and entertainment workflows. Students can access the Chaos Education Collections at discounted rates, which includes tools like V-Ray and Enscape for 3D rendering and visualization work.\n\nEligible students must be enrolled in an academic program and provide proof of student status. Educational licenses are designed to support coursework, portfolio development, and the transition into professional visualization work.\n\nStudents should verify which specific Chaos product or collection fits their needs and review renewal terms before signing up.",
+    "benefitType": "Discount",
+    "value": "Up to 80% off Chaos student licenses",
+    "eligibility": "Students",
+    "region": "Global",
+    "verification": "Student Email",
+    "url": "https://www.chaos.com/education/students",
+    "claimUrl": "https://www.chaos.com/education/students",
+    "tags": [
+      "Discount",
+      "Web"
+    ]
+  },
+  {
+    "title": "Claude Pro - Free Access at Select Universities",
+    "company": "Claude Pro",
+    "slug": "claude-pro",
+    "logo": "https://img.logo.dev/claude.ai?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
+    "category": "AI Assistants",
+    "appCategory": "Software & Tools",
+    "offerSummary": "AI assistant for writing, reasoning, and coding efficiently",
+    "description": "Claude is an enterprise-level generative AI assistant developed by Anthropic for writing, reasoning, visual analysis, multilingual translation, and code generation. Select universities have partnered with Anthropic to provide their students, faculty, and staff free access to Claude Pro, including advanced features, large context windows, and high usage limits\u2014features normally available only on paid accounts.\n\nEligibility is institution-specific. At Northeastern University and Champlain College, all active students can access Claude at no cost by signing up with their university email address. After account creation, Anthropic's support team automatically upgrades eligible accounts to the Pro tier. Access includes the full range of Claude models and advanced capabilities. Users must follow their institution's AI usage policies and guidelines for responsible use, including awareness of Claude's limitations and potential for inaccurate or biased output. No payment is required, and use is optional.",
+    "benefitType": "Discount",
+    "value": "Free Access at Select Universities",
+    "eligibility": "Students",
+    "region": "Global",
+    "verification": "Student Email",
+    "url": "https://www.studentoffers.co/offer/claude-pro",
+    "claimUrl": "https://www.studentoffers.co/offer/claude-pro",
+    "tags": [
+      "AI",
+      "Discount",
+      "Web"
+    ]
+  },
+  {
+    "title": "ClickUp - Contact for student discount",
+    "company": "ClickUp",
+    "slug": "clickup",
+    "logo": "https://img.logo.dev/clickup.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
+    "category": "Project Management",
+    "appCategory": "Software & Tools",
+    "offerSummary": "All-in-one project management and productivity platform.",
+    "description": "ClickUp is an all-in-one project management and productivity platform that combines task management, docs, chat, whiteboards, time tracking, and AI-powered features in a single workspace. Students and teams use ClickUp to organize group projects, coordinate academic work, and manage workflows at scale\u2014the platform reports that organizations have saved over 92,400 hours by reducing manual work.\n\nThe platform offers a free forever plan with no credit card required, including access to projects, chat, Brain AI (powered by ChatGPT, Claude, and Gemini), calendar, docs, whiteboards, sprints, automations, and more. A student discount may be available by contacting ClickUp directly; prospective users should verify current eligibility and terms with their sales team.",
+    "benefitType": "Discount",
+    "value": "Contact for student discount",
+    "eligibility": "Students",
+    "region": "Global",
+    "verification": "Student Email",
+    "url": "https://clickup.com",
+    "claimUrl": "https://clickup.com",
+    "tags": [
+      "Discount",
+      "Web"
+    ]
+  },
+  {
+    "title": "Coursera Plus - Free 7-day trial + Up to 40% off on the first 3 months",
+    "company": "Coursera Plus",
+    "slug": "coursera-plus",
+    "logo": "https://img.logo.dev/coursera.org?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
+    "category": "Online Courses",
+    "appCategory": "Software & Tools",
+    "offerSummary": "Unlimited access to courses, certificates, and degree programs",
+    "description": "Coursera Plus is an annual subscription that provides unlimited access to over 10,000 online courses and professional certificates from 350+ top universities and companies including IBM, Microsoft, Google, and Meta. The subscription covers courses across AI, business, technology, data analytics, cybersecurity, and other in-demand fields, with certificates awarded upon course completion at no additional cost.\n\nCurrently, Coursera Plus offers 50% off the annual subscription, bringing the price down to \u20b96,999.50 per year (approximately \u20b9584 per month when billed annually), or alternatively \u20b92,099 per month on a monthly billing cycle following a 7-day free trial. This promotional offer is valid through June 17, 2026. Learners can access expert-led courses with AI-enabled personalization and guidance to build career-relevant skills.",
+    "benefitType": "Trial",
+    "value": "Free 7-day trial + Up to 40% off on the first 3 months",
+    "eligibility": "Students",
+    "region": "Global",
+    "verification": "Student Email",
+    "url": "https://www.studentoffers.co/offer/coursera-plus",
+    "claimUrl": "https://www.studentoffers.co/offer/coursera-plus",
+    "tags": [
+      "Trial",
+      "Web"
+    ]
+  },
+  {
+    "title": "Cursor Pro - 1 year Pro free ($20/mo value)",
+    "company": "Cursor Pro",
+    "slug": "cursor-pro",
+    "logo": "https://img.logo.dev/cursor.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
+    "category": "AI Code Editors",
+    "appCategory": "Software & Tools",
+    "offerSummary": "AI-powered code editor that helps you write, debug, and build faster",
+    "description": "$6c",
+    "benefitType": "Free",
+    "value": "1 year Pro free ($20/mo value)",
+    "eligibility": "Students",
+    "region": "Limited Countries",
+    "verification": "Student Email",
+    "url": "https://cursor.com/students",
+    "claimUrl": "https://cursor.com/students",
+    "tags": [
+      "Vibe Coding",
+      "Free",
+      "Web"
+    ]
+  },
+  {
+    "title": "Desearch - $$5 free credits on signup",
+    "company": "Desearch",
+    "slug": "desearch",
+    "logo": "https://img.logo.dev/desearch.ai?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
+    "category": "API Tools",
+    "appCategory": "Software & Tools",
+    "offerSummary": "AI search APIs for web & Twitter/X data.",
+    "description": "Desearch provides live search APIs that connect AI agents to web search results, AI-powered summaries, clean web crawl extraction, and real-time X (Twitter) data through a single developer-friendly API layer. The service is designed for developers building AI agents, search tools, research applications, or data integration projects.\n\nOn signup, new users receive $5 in free credits to test the service. This offer is available to all users\u2014not limited to students. After the free credits are used, billing follows Desearch's standard pricing model; check their pricing page for current rates and plan details.",
+    "benefitType": "Credit",
+    "value": "$$5 free credits on signup",
+    "eligibility": "Students",
+    "region": "Global",
+    "verification": "Student Email",
+    "url": "https://desearch.ai/",
+    "claimUrl": "https://desearch.ai/",
+    "tags": [
+      "Credit",
+      "Web"
+    ]
+  },
+  {
+    "title": "Fireflies - 10% discount on Pro, Business, or Enterprise tiers",
+    "company": "Fireflies",
+    "slug": "fireflies",
+    "logo": "https://img.logo.dev/fireflies.ai?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
+    "category": "AI Transcription",
+    "appCategory": "Software & Tools",
+    "offerSummary": "AI-powered notetaker that transcribes and summarizes meetings automatically",
+    "description": "Fireflies.ai is an AI-powered meeting assistant that transcribes, records, and summarizes conversations across calls, emails, chat, and CRM platforms. It captures high-quality transcripts with speaker identification and timestamps, allowing users to search and retrieve specific discussion points from past meetings.\n\nFireflies offers a free tier for users to try the platform, with paid tiers available at Pro, Business, and Enterprise levels. A 10% discount is available on paid subscription tiers. The platform is used by CIOs and teams across Fortune 500 companies and emphasizes security and admin controls for enterprise deployment. Verification requirements and student-specific eligibility for the discount have not been confirmed.",
+    "benefitType": "Discount",
+    "value": "10% discount on Pro, Business, or Enterprise tiers",
+    "eligibility": "Students",
+    "region": "Global",
+    "verification": "Student Email",
+    "url": "https://fireflies.ai/",
+    "claimUrl": "https://fireflies.ai/",
+    "tags": [
+      "AI",
+      "Discount",
+      "Web"
+    ]
+  },
+  {
+    "title": "Flexibits Premium - 20% educational discount on request",
+    "company": "Flexibits Premium",
+    "slug": "flexibits-premium",
+    "logo": "https://img.logo.dev/flexibits.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
+    "category": "Calendar & Scheduling",
+    "appCategory": "Software & Tools",
+    "offerSummary": "Unlock premium features for Fantastical calendar and Cardhop contacts apps",
+    "description": "Flexibits Premium unlocks paid features across Fantastical (calendar and task management) and Cardhop (contacts app). Fantastical syncs events and tasks from iCloud, Google, Exchange, iCloud Reminders, and Todoist into a unified calendar view. Cardhop provides dedicated contact management with premium capabilities.\n\nFlexibits offers a 14-day free trial for paid plans. The company has historically provided a 20% educational discount available on request, though this offer is not automatically applied and requires direct contact with Flexibits. Individual and Family plan tiers are available with reduced pricing for families. Premium features include unlimited calendar syncing to all devices including Apple Watch, advanced scheduling tools, and priority support.\n\nThis is a general-public subscription service; the educational discount is an optional offer rather than a dedicated student program. Verify current eligibility and discount availability directly with Flexibits before purchase.",
+    "benefitType": "Discount",
+    "value": "20% educational discount on request",
+    "eligibility": "Students",
+    "region": "Global",
+    "verification": "Student Email",
+    "url": "https://flexibits.com/pricing",
+    "claimUrl": "https://flexibits.com/pricing",
+    "tags": [
+      "Discount",
+      "Web"
+    ]
+  },
+  {
+    "title": "Flipkart - Up to \u20b913,500 off laptops + extra earbud & tablet discounts",
+    "company": "Flipkart",
+    "slug": "flipkart",
+    "logo": "https://img.logo.dev/flipkart.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
+    "category": "Retail & Marketplace",
+    "appCategory": "Software & Tools",
+    "offerSummary": "Online marketplace for electronics, fashion, and lifestyle products",
+    "description": "Flipkart is India's leading online marketplace for electronics, fashion, and lifestyle products. The platform offers student-specific discounts through its student program, including up to \u20b913,500 off laptops, plus additional savings on earbuds and tablets. These discounts are designed to help students access essential tech devices at reduced prices.\n\nThe offer focuses on electronics and back-to-college categories rather than sitewide products. Students can enroll in Flipkart's student pass program by verifying their student status through the platform's verification process.\n\nEligibility and participating product categories may vary by location and time period, so students should check Flipkart's current student program page for the most up-to-date terms, renewal requirements, and any geographic restrictions before making purchases.",
+    "benefitType": "Discount",
+    "value": "Up to \u20b913,500 off laptops + extra earbud & tablet discounts",
+    "eligibility": "Students",
+    "region": "India",
+    "verification": "Student Email",
+    "url": "https://www.flipkart.com/elec-student-pass-store",
+    "claimUrl": "https://www.flipkart.com/elec-student-pass-store",
+    "tags": [
+      "Discount",
+      "Web"
+    ]
+  },
+  {
+    "title": "Flux - Free Pro Plan for students",
+    "company": "Flux",
+    "slug": "flux",
+    "logo": "https://img.logo.dev/flux.ai?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
+    "category": "DevOps",
+    "appCategory": "Software & Tools",
+    "offerSummary": "Modern PCB design tool with AI assistance, real-time collaboration, and built-in simulation",
+    "description": "Flux is a modern PCB design tool that combines schematic capture, layout, and simulation in a browser-based platform with AI assistance and real-time collaboration features. It's designed for electronics design, hardware prototyping, embedded systems projects, and engineering coursework where professional-grade PCB design tools are needed but licensing costs can be prohibitive.\n\nStudents can access Flux's Pro plan for free through an educational program. To qualify, you must verify your student status during signup. The Pro tier includes advanced design features, real-time multiplayer collaboration, built-in circuit simulation, and AI-assisted design tools\u2014functionality typically reserved for paid users.",
+    "benefitType": "Free",
+    "value": "Free Pro Plan for students",
+    "eligibility": "Students",
+    "region": "Global",
+    "verification": "Student Email",
+    "url": "https://docs.flux.ai/faq/pricing#i-am-a-student-how-do-i-access-the-free-pro-plan:~:text=on%20%22Manage%20Plan%22.-,I%20am%20a%20student.%20How%20do%20I%20access%20the%20educational%20plan%3F,-Students%20get%20free",
+    "claimUrl": "https://docs.flux.ai/faq/pricing#i-am-a-student-how-do-i-access-the-free-pro-plan:~:text=on%20%22Manage%20Plan%22.-,I%20am%20a%20student.%20How%20do%20I%20access%20the%20educational%20plan%3F,-Students%20get%20free",
+    "tags": [
+      "Free",
+      "Web"
+    ]
+  },
+  {
+    "title": "Folk - 50% discount for students",
+    "company": "Folk",
+    "slug": "folk",
+    "logo": "https://img.logo.dev/folk.app?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
+    "category": "Launch Platforms",
+    "appCategory": "Software & Tools",
+    "offerSummary": "Lightweight CRM to manage relationships and contacts effortlessly",
+    "description": "Folk is a lightweight CRM designed to manage contacts, relationships, and outreach workflows in one place. It connects to LinkedIn and 7+ platforms, enabling users to track conversations, schedule bulk email campaigns, and automate follow-up sequences with AI-powered drafting assistance.\n\nStudents receive a 50% discount on Folk. The offer requires student verification and provides access to core CRM features including WhatsApp integration, email automation, AI sales assistants that work 24/7, and the Recap Assistant for call preparation and lead re-engagement. Students can start with a 14-day free trial to test the platform before committing to a paid subscription.\n\nFolk's workflow automation generates trackable campaigns where you can monitor sent, opened, replied, or bounced emails. You maintain full control over inactive conversation thresholds, which contacts are included, and monthly credit limits for message sequences.",
+    "benefitType": "Discount",
+    "value": "50% discount for students",
+    "eligibility": "Students",
+    "region": "Global",
+    "verification": "Student Email",
+    "url": "https://www.folk.app/",
+    "claimUrl": "https://www.folk.app/",
+    "tags": [
+      "Discount",
+      "Web"
+    ]
+  },
+  {
+    "title": "GitHub Copilot - Free Copilot Student (sign-ups paused)",
+    "company": "GitHub Copilot",
+    "slug": "github-copilot",
+    "logo": "https://img.logo.dev/github.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
+    "category": "AI Code Editors",
+    "appCategory": "Software & Tools",
+    "offerSummary": "AI-powered code completions for faster software development",
+    "description": "GitHub Copilot is an AI-powered code completion tool that generates code suggestions and autocomplete in real time within supported code editors like VS Code, JetBrains IDEs, Neovim, and Visual Studio. It uses machine learning trained on public code repositories to assist with writing, debugging, and refactoring across multiple programming languages.\n\nGitHub has historically offered free access to Copilot for students through the GitHub Student Developer Pack, which bundles Copilot Student with other educational resources. However, sign-ups for the free student plan are currently paused. Students interested in accessing Copilot should verify the current status on GitHub's official Education page, as availability and terms are subject to change. When active, the student offer typically provides full Copilot functionality at no cost for eligible learners.",
+    "benefitType": "Free",
+    "value": "Free Copilot Student (sign-ups paused)",
+    "eligibility": "Students",
+    "region": "Global",
+    "verification": "Student Email",
+    "url": "https://github.com/settings/education/benefits",
+    "claimUrl": "https://github.com/settings/education/benefits",
+    "tags": [
+      "Vibe Coding",
+      "Free",
+      "Developer"
+    ]
+  },
+  {
+    "title": "GLM Coding Plan - 10% off first subscription",
+    "company": "GLM Coding Plan",
+    "slug": "glm-coding-plan",
+    "logo": "https://img.logo.dev/z.ai?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg\n",
+    "category": "AI Code Editors",
+    "appCategory": "Software & Tools",
+    "offerSummary": "GLM-4.7 & GLM-5 AI coding models. Use via Claude Code, Cursor, Cline & more.",
+    "description": "GLM Coding Plan is a paid subscription tier for Z.ai that provides access to GLM-4.7 and GLM-5 AI models optimized for code generation and assisted development workflows. The plan integrates with popular coding tools including Claude Code, Cursor, Cline, Kilo Code, and others, enabling developers to use advanced AI models directly within their existing development environments.\n\nNew subscribers receive 10% off their first subscription. The plan is available to all users globally and does not appear to be student-exclusive, though developers of any background can use it. Subscription details and activation occur through Z.ai's account dashboard at /manage-apikey/subscription, where users manage API keys and billing settings.\n\nZ.ai also offers a free tier with access to GLM models, so users can test the service before upgrading to the paid Coding Plan.",
+    "benefitType": "Discount",
+    "value": "10% off first subscription",
+    "eligibility": "Students",
+    "region": "Global",
+    "verification": "Student Email",
+    "url": "https://z.ai/subscribe?ic=TIBE1RCESB",
+    "claimUrl": "https://z.ai/subscribe?ic=TIBE1RCESB",
+    "tags": [
+      "Discount",
+      "Web"
+    ]
+  },
+  {
+    "title": "Google Cloud Skills Boost - $$200 Google Cloud Skills Boost credits + Skills Arcade",
+    "company": "Google Cloud Skills Boost",
+    "slug": "google-cloud-skills-boost",
+    "logo": "https://img.logo.dev/cloud.google.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
+    "category": "Online Courses",
+    "appCategory": "Software & Tools",
+    "offerSummary": "Gamified Google Cloud learning with credits, badges, and certification prep",
+    "description": "Google Cloud Skills Boost is Google Cloud's learning platform that provides students with hands-on training, skill badges, and certificates in cloud computing and AI technologies. The program includes access to Google Skills Arcade, a gamified learning environment where students complete challenges to earn badges and exclusive rewards, plus the ability to earn shareable Google Cloud Certificates recognized by employers.\n\nStudents receive 200 free Google Skills credits to access online labs, courses, and skill badge programs. No prerequisites are required to start, and students can learn at their own pace while building a portfolio of credentials to demonstrate technical proficiency to potential employers in high-growth cloud roles.\n\nCredits expire one year after issuance.",
+    "benefitType": "Credit",
+    "value": "$$200 Google Cloud Skills Boost credits + Skills Arcade",
+    "eligibility": "Students",
+    "region": "Limited Universities",
+    "verification": "Student Email",
+    "url": "https://www.studentoffers.co/offer/google-cloud-skills-boost",
+    "claimUrl": "https://www.studentoffers.co/offer/google-cloud-skills-boost",
+    "tags": [
+      "Credit",
+      "Web"
+    ]
+  },
+  {
+    "title": "Grab - Free GrabUnlimited plus student perks",
+    "company": "Grab",
+    "slug": "grab",
+    "logo": "https://img.logo.dev/grab.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
+    "category": "Travel",
+    "appCategory": "Software & Tools",
+    "offerSummary": "Savings on rides and food delivery in Southeast Asia",
+    "description": "Grab is an on-demand ride-hailing and delivery service operating across Southeast Asia. The company offers GrabUnlimited for Students, a membership plan exclusively for tertiary students in eligible markets including Singapore and Thailand.\n\nEligible students receive a free trial of GrabUnlimited via email invitation and push notification on their registered Grab app account. Students must activate the offer through their Grab app using the provided discount code to unlock additional student perks and discounts. The offer includes access to GrabUnlimited benefits and student discount codes.\n\nIn Thailand, the free trial period is 12 months. Eligibility is verified through tertiary student status, and the offer is market-specific rather than globally available.",
+    "benefitType": "Free",
+    "value": "Free GrabUnlimited plus student perks",
+    "eligibility": "Students",
+    "region": "Limited Countries",
+    "verification": "Student Email",
+    "url": "https://www.studentoffers.co/offer/grab",
+    "claimUrl": "https://www.studentoffers.co/offer/grab",
+    "tags": [
+      "Free",
+      "Web"
+    ]
+  },
+  {
+    "title": "Huddle01 - $$250 Cloud Credits for free",
+    "company": "Huddle01",
+    "slug": "huddle01",
+    "logo": "https://aobklvmdpcebkbgvvijp.supabase.co/storage/v1/object/public/LOGOs/Huddle01Cloud.png",
+    "category": "Compute Platform",
+    "appCategory": "Credits & Savings",
+    "offerSummary": "High-performance cloud compute with GPUs, VMs & K8s.",
+    "description": "Huddle01 Cloud is a cloud compute platform offering GPUs, virtual machines, and Kubernetes infrastructure for developers and builders. It is designed for high-performance workloads including AI model training, containerized applications, and scalable compute tasks.\n\nThe platform historically offered $250 in cloud credits, though current eligibility and availability should be verified directly on their website. Students and developers interested in cloud infrastructure may find the credits useful for development and testing, but the specific student-verification process and current terms are not clearly documented in available public sources.\n\nConfirm the offer details and any eligibility requirements by visiting Huddle01 Cloud directly or checking their current promotions page.",
+    "benefitType": "Credit",
+    "value": "$$250 Cloud Credits for free",
+    "eligibility": "Students",
+    "region": "Global",
+    "verification": "Student Email",
+    "url": "https://console.huddle01.com/auth/signin",
+    "claimUrl": "https://console.huddle01.com/auth/signin",
+    "tags": [
+      "Credit",
+      "Web"
+    ]
+  },
+  {
+    "title": "Hugging Face - Free Hub for university students",
+    "company": "Hugging Face",
+    "slug": "hugging-face",
+    "logo": "https://img.logo.dev/huggingface.co?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
+    "category": "Machine Learning",
+    "appCategory": "Software & Tools",
+    "offerSummary": "AI model hub and community for machine learning models and datasets",
+    "description": "Hugging Face is an open-source AI model hub and community platform hosting pre-trained machine learning models, datasets, and collaborative projects. The platform serves researchers, educators, and developers building AI applications.\n\nIndividual students can access Hugging Face's public ecosystem free of charge, including thousands of pre-trained models and datasets across NLP, computer vision, and other domains. Universities and academic institutions can apply for Hugging Face Academia Hub, an institution-managed program offering additional benefits: managed access, compute resources, collaboration tools, and publishing capabilities for research and coursework. Academia Hub is designed to support AI education at scale.\n\nHugging Face is widely integrated into university computer science and machine learning curricula worldwide.",
+    "benefitType": "Free",
+    "value": "Free Hub for university students",
+    "eligibility": "Students",
+    "region": "Global",
+    "verification": "Student Email",
+    "url": "https://huggingface.co/docs/hub/en/academia-hub",
+    "claimUrl": "https://huggingface.co/docs/hub/en/academia-hub",
+    "tags": [
+      "AI",
+      "Free",
+      "Web"
+    ]
+  },
+  {
+    "title": "IRCTC - Student concessions under IRCA Coaching Tariff rules",
+    "company": "IRCTC",
+    "slug": "irctc",
+    "logo": "https://img.logo.dev/indianrailways.gov.in?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
+    "category": "Rail & Bus",
+    "appCategory": "Software & Tools",
+    "offerSummary": "Railway booking and concession platform for travelers",
+    "description": "IRCTC (Indian Railway Catering and Tourism Corporation) is the online ticketing platform for Indian Railways, allowing users to book train tickets across India's extensive rail network. The platform offers student concession fares on eligible train journeys, reducing ticket costs for verified student passengers.\n\nStudent travelers can access concessional ticket pricing through IRCTC by providing valid student verification at the time of booking. The exact discount percentage and applicable train categories vary depending on the route, class of travel, and current railway tariff rules. Students must meet Indian Railways' eligibility criteria and provide documentation such as a valid student ID or educational institution certificate to qualify for the concession.",
+    "benefitType": "Discount",
+    "value": "Student concessions under IRCA Coaching Tariff rules",
+    "eligibility": "Students",
+    "region": "India",
+    "verification": "Student Email",
+    "url": "https://www.irctc.co.in/",
+    "claimUrl": "https://www.irctc.co.in/",
+    "tags": [
+      "Discount",
+      "Web"
+    ]
+  },
+  {
+    "title": "Jasper AI - 20% off Jasper annual plan",
+    "company": "Jasper AI",
+    "slug": "jasper-ai",
+    "logo": "https://img.logo.dev/jasper.ai?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
+    "category": "AI Writing",
+    "appCategory": "Software & Tools",
+    "offerSummary": "AI marketing co-pilot to generate on-brand content faster",
+    "description": "Jasper is an AI agent workspace designed for marketing teams to generate on-brand content at scale. The platform includes 100+ specialized AI agents for SEO, email, social media, campaign execution, and personalization, each applying your brand voice and style guides automatically across outputs.\n\nThe workspace connects content pipelines into structured, end-to-end workflows that move marketing from strategy to execution, with built-in governance controls and support for multiple brand voices across regions and audiences. Jasper offers a free trial to explore the platform.",
+    "benefitType": "Discount",
+    "value": "20% off Jasper annual plan",
+    "eligibility": "Students",
+    "region": "Global",
+    "verification": "Student Email",
+    "url": "https://www.jasper.ai/",
+    "claimUrl": "https://www.jasper.ai/",
+    "tags": [
+      "AI",
+      "Discount",
+      "Web"
+    ]
+  },
+  {
+    "title": "Kiro for Students - 1,000 credits/month free for 1 year",
+    "company": "Kiro for Students",
+    "slug": "kiro-for-students",
+    "logo": "https://img.logo.dev/kiro.dev?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
+    "category": "AI Code Editors",
+    "appCategory": "Software & Tools",
+    "offerSummary": "AI-native IDE with vibe coding and spec-driven development modes",
+    "description": "Kiro is an AI-native IDE that combines vibe coding and spec-driven development modes to accelerate your workflow. Vibe coding lets you describe what you want in natural language, while spec-driven development helps you build from detailed specifications.\n\nEligible students at partner universities receive 1,000 credits per month free for one full year with no credit card required. Verify your student status through SheerID after signing up at app.kiro.dev. Credits are available immediately and do not roll over month to month.\n\nWhen the year expires, your account automatically downgrades to Kiro's free tier while preserving all your code, specs, and projects.",
+    "benefitType": "Credit",
+    "value": "1,000 credits/month free for 1 year",
+    "eligibility": "Students",
+    "region": "Global",
+    "verification": "Student Email",
+    "url": "https://kiro.dev/students/",
+    "claimUrl": "https://kiro.dev/students/",
+    "tags": [
+      "Vibe Coding",
+      "Credit",
+      "Web"
+    ]
+  },
+  {
+    "title": "LastPass - 20% off LastPass via Student Beans",
+    "company": "LastPass",
+    "slug": "lastpass",
+    "logo": "https://img.logo.dev/lastpass.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
+    "category": "Password Manager",
+    "appCategory": "Software & Tools",
+    "offerSummary": "Password manager for faculty, staff, and students in higher education",
+    "description": "LastPass is a cloud-based password manager that securely stores and autofills passwords, usernames, billing addresses, and credit card information across devices. The service helps students protect their academic, email, banking, and internship accounts with a single secure password vault.\n\nStudents, faculty, staff, and apprentices in higher education can access a 20% discount on LastPass subscriptions through Student Beans by verifying their enrollment status. To qualify, register and verify your current student status with Student Beans, then use your Student Beans account to apply the discount code at checkout. The 20% savings applies to LastPass premium plans.",
+    "benefitType": "Discount",
+    "value": "20% off LastPass via Student Beans",
+    "eligibility": "Students",
+    "region": "Limited Universities",
+    "verification": "Student Email",
+    "url": "https://www.studentbeans.com/student-discount/us/lastpass",
+    "claimUrl": "https://www.studentbeans.com/student-discount/us/lastpass",
+    "tags": [
+      "Discount",
+      "Web"
+    ]
+  },
+  {
+    "title": "Lightning AI - 80% off Pro plan + 100 annual credits",
+    "company": "Lightning AI",
+    "slug": "lightning-ai",
+    "logo": "https://img.logo.dev/lightning.ai?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
+    "category": "Cloud Platforms",
+    "appCategory": "Credits & Savings",
+    "offerSummary": "Cloud platform for building, training, and deploying ML models.",
+    "description": "Lightning AI is a cloud platform for building, training, and deploying machine learning models. The free tier includes 80 GPU hours monthly and the ability to run one Studio instance 24/7 (with required 4-hour restarts).\n\nStudents receive 80% off the Pro plan plus 100 annual credits through academic pricing. The Pro plan unlocks unlimited background execution, unlimited multi-node training, and unlimited concurrent GPUs, plus enterprise features like bring-your-own-cloud integration, AWS/GCP credit support, SOC2, HIPAA compliance, and 24/7 support. Additional GPU hours are available on a pay-as-you-go basis.",
+    "benefitType": "Discount",
+    "value": "80% off Pro plan + 100 annual credits",
+    "eligibility": "Students",
+    "region": "Global",
+    "verification": "Student Email",
+    "url": "https://lightning.ai/pricing",
+    "claimUrl": "https://lightning.ai/pricing",
+    "tags": [
+      "AI",
+      "Discount",
+      "Web"
+    ]
+  },
+  {
+    "title": "MacWhisper - 30% off MacWhisper on request",
+    "company": "MacWhisper",
+    "slug": "macwhisper",
+    "logo": "https://img.logo.dev/macwhisper.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
+    "category": "AI Transcription",
+    "appCategory": "Software & Tools",
+    "offerSummary": "Transcribe audio on Mac using OpenAI Whisper and Nvidia Parakeet",
+    "description": "MacWhisper is a Mac transcription application that uses OpenAI Whisper and Nvidia Parakeet for local audio-to-text conversion. It processes speech directly on your device without cloud uploads, making it suitable for confidential recordings like lectures, interviews, and meetings.\n\nStudents can request a 30% discount by contacting MacWhisper support directly via email. The offer is available on request rather than through an automated discount code; you'll need to verify your student status as part of the application process. This pricing is explicitly extended to students, journalists, and nonprofit organizations.",
+    "benefitType": "Discount",
+    "value": "30% off MacWhisper on request",
+    "eligibility": "Students",
+    "region": "Global",
+    "verification": "Student Email",
+    "url": "https://goodsnooze.gumroad.com/l/macwhisper",
+    "claimUrl": "https://goodsnooze.gumroad.com/l/macwhisper",
+    "tags": [
+      "AI",
+      "Discount",
+      "macOS"
+    ]
+  },
+  {
+    "title": "Mapbox - Free Mapbox access for students",
+    "company": "Mapbox",
+    "slug": "mapbox",
+    "logo": "https://img.logo.dev/mapbox.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
+    "category": "API Tools",
+    "appCategory": "Software & Tools",
+    "offerSummary": "Mapping APIs and location data tools for student projects",
+    "description": "Mapbox is a mapping and location platform that provides APIs, design tools, and location data for building interactive maps and geospatial applications. It is free to create a Mapbox account and use Mapbox services for student projects. Pricing is based on usage, with generous free tiers designed to cover almost all student work\u2014sign up using an email address from an educational institution to access student-eligible rates.\n\nThe platform includes custom map design tools (Mapbox Studio), static maps, geocoding and search, traffic and movement data, and access to global boundary datasets. Students commonly use Mapbox for GIS coursework, urban technology projects, transportation dashboards, hackathons, and capstone work that requires real mapping infrastructure rather than static embeds. Mapbox also hosts GIS Day events and workshops at universities and colleges annually.",
+    "benefitType": "Free",
+    "value": "Free Mapbox access for students",
+    "eligibility": "Students",
+    "region": "Global",
+    "verification": "Student Email",
+    "url": "https://www.mapbox.com/education",
+    "claimUrl": "https://www.mapbox.com/education",
+    "tags": [
+      "Free",
+      "Web"
+    ]
+  },
+  {
+    "title": "Meta Blueprint - Free courses + 30% off certifications",
+    "company": "Meta Blueprint",
+    "slug": "meta-blueprint",
+    "logo": "https://img.logo.dev/facebookblueprint.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
+    "category": "Online Courses",
+    "appCategory": "Software & Tools",
+    "offerSummary": "Digital marketing courses and certifications from Meta.",
+    "description": "$ad",
+    "benefitType": "Free",
+    "value": "Free courses + 30% off certifications",
+    "eligibility": "Students",
+    "region": "Global",
+    "verification": "Student Email",
+    "url": "https://www.facebookblueprint.com/",
+    "claimUrl": "https://www.facebookblueprint.com/",
+    "tags": [
+      "Free",
+      "Web"
+    ]
+  },
+  {
+    "title": "MindMac - 55% off (7-day trial then $20/year)",
+    "company": "MindMac",
+    "slug": "mindmac",
+    "logo": "https://img.logo.dev/mindmac.app?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
+    "category": "AI Assistants",
+    "appCategory": "Software & Tools",
+    "offerSummary": "Minimal, privacy-first macOS ChatGPT client for students",
+    "description": "MindMac is a privacy-focused macOS ChatGPT client designed for users who prioritize a minimal, streamlined interface on Apple's desktop operating system. The application enables direct interaction with ChatGPT while emphasizing data privacy and a lightweight user experience compared to browser-based alternatives.\n\nHistorically, MindMac has been offered through student app marketplaces at discounted rates. However, current verification of active student pricing, the exact discount percentage, trial terms, and eligibility requirements could not be confirmed from available sources. Prospective users should check the official MindMac website or student marketplace portals directly to confirm current pricing and any available student offers.",
+    "benefitType": "Trial",
+    "value": "55% off (7-day trial then $20/year)",
+    "eligibility": "Students",
+    "region": "Global",
+    "verification": "Student Email",
+    "url": "https://www.studentappcentre.com/App/MindMac",
+    "claimUrl": "https://www.studentappcentre.com/App/MindMac",
+    "tags": [
+      "AI",
+      "Trial",
+      "macOS"
+    ]
+  },
+  {
+    "title": "MiniMax - 10% off on any Minimax Plan",
+    "company": "MiniMax",
+    "slug": "minimax",
+    "logo": "https://img.logo.dev/minimax.io?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
+    "category": "Generative AI",
+    "appCategory": "Software & Tools",
+    "offerSummary": "Multimodal AI platform with text, voice, image, video & music generation.",
+    "description": "MiniMax is a multimodal AI platform offering API access to large language models, voice generation, image creation, video synthesis, and music generation. The platform provides models including MiniMax-M3 (positioned for coding and agent tasks) and MiniMax-M2.7, accessible via API for developers and applications.\n\nMiniMax offers 10% off any plan. Access requires API key registration through the MiniMax platform, and the discount applies to standard subscription costs, though exact savings depend on the plan tier selected and usage volume. Pricing details and specific plan tiers are available on the MiniMax pricing page.",
+    "benefitType": "Discount",
+    "value": "10% off on any Minimax Plan",
+    "eligibility": "Students",
+    "region": "Global",
+    "verification": "Student Email",
+    "url": "https://platform.minimax.io/subscribe/token-plan?code=76ilCzWK9X&source=link",
+    "claimUrl": "https://platform.minimax.io/subscribe/token-plan?code=76ilCzWK9X&source=link",
+    "tags": [
+      "AI",
+      "Discount",
+      "Web"
+    ]
+  },
+  {
+    "title": "Monomail - 40% off Monomail for students",
+    "company": "Monomail",
+    "slug": "monomail",
+    "logo": "https://img.logo.dev/monomail.co?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
+    "category": "Focus & Productivity",
+    "appCategory": "Software & Tools",
+    "offerSummary": "Minimal email app focused on clarity, speed, and distraction-free use",
+    "description": "Monomail is a next-generation email app designed for simplicity and efficiency, featuring auto-replies, forwards, scheduling, and AI-powered filtering to reduce inbox distractions. The app offers a free tier as well as paid plans starting from $16 per month billed yearly.\n\nStudents and educators can access a 40% discount on Monomail's paid plans. To claim the discount, eligible students and educators should contact Monomail directly via email at hello@monomail.co with the subject line \"About Education Plan.\" The discounted plan unlocks all features including unlimited Google accounts, unlimited Spaces, unlimited email history, and AI-powered tools.\n\nAfter verification, the discounted subscription can be cancelled anytime, with no long-term commitment required.",
+    "benefitType": "Discount",
+    "value": "40% off Monomail for students",
+    "eligibility": "Students",
+    "region": "Global",
+    "verification": "Student Email",
+    "url": "https://monomail.co/pricing",
+    "claimUrl": "https://monomail.co/pricing",
+    "tags": [
+      "Discount",
+      "Web"
+    ]
+  },
+  {
+    "title": "Morgen - 25% off Morgen Pro forever",
+    "company": "Morgen",
+    "slug": "morgen",
+    "logo": "https://img.logo.dev/morgen.so?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
+    "category": "Calendar & Scheduling",
+    "appCategory": "Software & Tools",
+    "offerSummary": "Consolidate calendars, tasks, and scheduling into one unified interface",
+    "description": "Morgen is a unified calendar, task, and scheduling application that consolidates multiple planning tools into one interface across Windows, macOS, Linux, mobile, and browser. The platform lets users sync unlimited calendars and task integrations, manage meetings and assignments, and automate scheduling workflows in a single workspace.\n\nMorgen offers a 14-day free trial with full access and no credit card required. After the trial, Morgen Pro costs $30 per month (billed monthly) or $15 per month (billed yearly). Academic, student, and nonprofit users are eligible for discounts; specific discount amounts and redemption process should be verified directly with Morgen. You can cancel anytime.",
+    "benefitType": "Discount",
+    "value": "25% off Morgen Pro forever",
+    "eligibility": "Students",
+    "region": "Global",
+    "verification": "Student Email",
+    "url": "https://www.morgen.so/pricing#:~:text=Academic%2C%20Student%20%26%20Nonprofit%20Discounts",
+    "claimUrl": "https://www.morgen.so/pricing#:~:text=Academic%2C%20Student%20%26%20Nonprofit%20Discounts",
+    "tags": [
+      "Discount",
+      "Web"
+    ]
+  },
+  {
+    "title": "MUBI - Free 2 months then discounted monthly rate (~%35 Off)",
+    "company": "MUBI",
+    "slug": "mubi",
+    "logo": "https://img.logo.dev/mubi.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
+    "category": "Video Streaming",
+    "appCategory": "Software & Tools",
+    "offerSummary": "Curated streaming platform for international and classic films",
+    "description": "MUBI is a curated streaming platform where every film is chosen by their team of curators. You'll discover thought-provoking international and classic films like Priscilla, Frances Ha, How to Have Sex, and Perfect Days.\n\nStudents at accredited universities can access MUBI's student offer through Student Beans verification: 2 months free streaming, then \u00a37.99 per month (reduced from \u00a311.99). This is a one-time offer per account and cannot be redeemed more than once. After you graduate, your subscription automatically converts to a standard monthly plan, though you can cancel anytime through your MUBI account settings.\n\nThe student discount is available globally to university-level students. If your graduation date changes and you need to extend your student subscription, you must contact MUBI support before expiry\u2014extensions cannot be applied retroactively.",
+    "benefitType": "Trial",
+    "value": "Free 2 months then discounted monthly rate (~%35 Off)",
+    "eligibility": "Students",
+    "region": "Global",
+    "verification": "Student Email",
+    "url": "https://www.studentoffers.co/offer/mubi",
+    "claimUrl": "https://www.studentoffers.co/offer/mubi",
+    "tags": [
+      "Trial",
+      "Web"
+    ]
+  },
+  {
+    "title": "NY Times - Student plan ~$1/week + free access via partnered schools",
+    "company": "NY Times",
+    "slug": "ny-times",
+    "logo": "https://img.logo.dev/nytimes.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
+    "category": "News & Media",
+    "appCategory": "Software & Tools",
+    "offerSummary": "Digital news and magazine platform with articles and podcasts",
+    "description": "The New York Times is a digital news platform offering articles, analysis, podcasts, and multimedia journalism covering politics, business, world news, science, technology, and opinion. The student plan provides full digital access to all New York Times content, including archives and interactive features.\n\nStudents can access The New York Times at approximately $1 per week, with some students also eligible for free access through their school's institutional subscription. Eligibility requires verification of current student status through your school's access portal or email verification.",
+    "benefitType": "Discount",
+    "value": "Student plan ~$1/week + free access via partnered schools",
+    "eligibility": "Students",
+    "region": "Global",
+    "verification": "Student Email",
+    "url": "https://www.studentoffers.co/offer/ny-times",
+    "claimUrl": "https://www.studentoffers.co/offer/ny-times",
+    "tags": [
+      "Discount",
+      "Web"
+    ]
+  },
+  {
+    "title": "OpenAI Codex - $$100 in Codex Credits for Students",
+    "company": "OpenAI Codex",
+    "slug": "openai-codex",
+    "logo": "https://aobklvmdpcebkbgvvijp.supabase.co/storage/v1/object/public/LOGOs/Codex.png",
+    "category": "AI Code Editors",
+    "appCategory": "Software & Tools",
+    "offerSummary": "OpenAI's AI coding partner that reads, writes and debugs code",
+    "description": "OpenAI Codex is an AI coding assistant that reads, writes, and debugs code. It helps developers accelerate their workflow by automating routine coding tasks and providing intelligent suggestions.\n\nVerified university students in the United States and Canada can claim $100 in Codex credits through SheerID verification. To qualify, you must be currently enrolled at a degree-granting university and reside in the US or Canada. Credits are applied automatically to your account after verification and can be used to extend Codex usage beyond your plan's standard limits.\n\nEach student is eligible for one credit offer only, and credits expire 12 months after the grant date.",
+    "benefitType": "Credit",
+    "value": "$$100 in Codex Credits for Students",
+    "eligibility": "Students",
+    "region": "US",
+    "verification": "Student Email",
+    "url": "https://chatgpt.com/codex/students",
+    "claimUrl": "https://chatgpt.com/codex/students",
+    "tags": [
+      "AI",
+      "Credit",
+      "Web"
+    ]
+  },
+  {
+    "title": "Oracle Cloud - Free tier + $300 credits",
+    "company": "Oracle Cloud",
+    "slug": "oracle-cloud",
+    "logo": "https://img.logo.dev/oracle.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
+    "category": "Cloud Platforms",
+    "appCategory": "Credits & Savings",
+    "offerSummary": "Cloud infrastructure and platform services with free tier.",
+    "description": "$c5",
+    "benefitType": "Credit",
+    "value": "Free tier + $300 credits",
+    "eligibility": "Students",
+    "region": "Global",
+    "verification": "Student Email",
+    "url": "https://www.oracle.com/cloud/free/",
+    "claimUrl": "https://www.oracle.com/cloud/free/",
+    "tags": [
+      "Credit",
+      "Web"
+    ]
+  },
+  {
+    "title": "Paramount+ - 50% off any plan for 1 year",
+    "company": "Paramount+",
+    "slug": "paramount",
+    "logo": "https://img.logo.dev/paramount.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
+    "category": "Video Streaming",
+    "appCategory": "Software & Tools",
+    "offerSummary": "Stream movies, series, and sports with Essential or Premium plans",
+    "description": "Paramount+ is a streaming service offering movies, series, and sports content through Essential or Premium plans. The Essential plan includes ads, while the Premium plan offers ad-free viewing with offline downloads.\n\nStudents can access 50% off any Paramount+ plan for 1 year through a verified student discount. The offer is verified via SheerID, which confirms student status using a .edu email address or other eligible documentation. The discount applies to both the Essential and Premium plan options.\n\nAfter the 1-year discount period ends, the subscription will renew at the standard plan rate unless cancelled.",
+    "benefitType": "Discount",
+    "value": "50% off any plan for 1 year",
+    "eligibility": "Students",
+    "region": "Global",
+    "verification": "SheerID",
+    "url": "https://services.sheerid.com/verify/682635507e27651996a8f25d/",
+    "claimUrl": "https://services.sheerid.com/verify/682635507e27651996a8f25d/",
+    "tags": [
+      "Discount",
+      "Web"
+    ]
+  },
+  {
+    "title": "Pdf Pals - 50% off for students",
+    "company": "Pdf Pals",
+    "slug": "pdf-pals",
+    "logo": "https://aobklvmdpcebkbgvvijp.supabase.co/storage/v1/object/public/LOGOs/PDF%20Pals.png",
+    "category": "Document Tools",
+    "appCategory": "Software & Tools",
+    "offerSummary": "Chat with PDFs using AI for faster study help",
+    "description": "PDF Pals is a native macOS app that lets you chat with PDF documents using AI, helping you extract and understand information faster. The app uses local processing with built-in OCR, keeping your data private without relying on cloud vector databases.\n\nYou can use the app with your own API key or rent one through the platform, making it flexible for different study workflows\u2014whether you're reviewing lecture notes, research papers, academic articles, or e-books. Students receive a 50% discount on PDF Pals licenses, and a free trial is available to test the application before purchasing.",
+    "benefitType": "Discount",
+    "value": "50% off for students",
+    "eligibility": "Students",
+    "region": "Global",
+    "verification": "Student Email",
+    "url": "https://pdfpals.com/",
+    "claimUrl": "https://pdfpals.com/",
+    "tags": [
+      "AI",
+      "Discount",
+      "Web"
+    ]
+  },
+  {
+    "title": "Perplexity Partner Offers - Free Perplexity Pro for 1 year",
+    "company": "Perplexity Partner Offers",
+    "slug": "perplexity-partner-offers",
+    "logo": "https://img.logo.dev/perplexity.ai?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
+    "category": "AI Search",
+    "appCategory": "Software & Tools",
+    "offerSummary": "Partner programs offering complimentary Perplexity Pro",
+    "description": "Perplexity Pro is an AI search engine that offers advanced features including access to the latest AI models and image generation. Through select partner programs, eligible users can receive complimentary Perplexity Pro for 12 months at no cost.\n\nPartner eligibility varies by organization\u2014for example, certain Optus prepaid customers received redemption codes. Access is granted via a redemption code provided by your partner, with no charge during the 12-month period.\n\nAfter the free year ends, your account reverts to Perplexity's free standard version unless you subscribe to a paid plan.",
+    "benefitType": "Free",
+    "value": "Free Perplexity Pro for 1 year",
+    "eligibility": "Students",
+    "region": "Limited Partners",
+    "verification": "Student Email",
+    "url": "https://www.studentoffers.co/offer/perplexity-partner-offers",
+    "claimUrl": "https://www.studentoffers.co/offer/perplexity-partner-offers",
+    "tags": [
+      "AI",
+      "Free",
+      "Web"
+    ]
+  },
+  {
+    "title": "ProtoPie - Discounted 1-year student license for select universities",
+    "company": "ProtoPie",
+    "slug": "protopie",
+    "logo": "https://img.logo.dev/protopie.io?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
+    "category": "UI/UX Tools",
+    "appCategory": "Software & Tools",
+    "offerSummary": "Advanced interaction prototyping for mobile, web, and IoT apps",
+    "description": "ProtoPie is an advanced interaction prototyping tool that lets designers create realistic, interactive prototypes for mobile, web, desktop, and IoT applications without writing production code. Students studying design, UX, UI, and related fields use ProtoPie to build portfolio-ready prototypes that function like actual digital products.\n\nProtoPie offers a discounted 1-year student license for eligible students at select universities. The offer is verified through Student Beans and requires proof of current student status during sign-up. Apprentices are also eligible. To access the discount, students register with Student Beans, verify their status, and then redeem the offer through the external provider.",
+    "benefitType": "Discount",
+    "value": "Discounted 1-year student license for select universities",
+    "eligibility": "Students",
+    "region": "Global",
+    "verification": "Student Email",
+    "url": "https://www.studentoffers.co/offer/protopie",
+    "claimUrl": "https://www.studentoffers.co/offer/protopie",
+    "tags": [
+      "Discount",
+      "Web"
+    ]
+  },
+  {
+    "title": "Red Hat Academy - 50% off certification exams",
+    "company": "Red Hat Academy",
+    "slug": "red-hat-academy",
+    "logo": "https://img.logo.dev/redhat.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
+    "category": "Coding Education",
+    "appCategory": "Software & Tools",
+    "offerSummary": "Enterprise Linux and open-source technologies.",
+    "description": "$d4",
+    "benefitType": "Discount",
+    "value": "50% off certification exams",
+    "eligibility": "Students",
+    "region": "Global",
+    "verification": "Student Email",
+    "url": "https://www.redhat.com/en/services/training/red-hat-academy",
+    "claimUrl": "https://www.redhat.com/en/services/training/red-hat-academy",
+    "tags": [
+      "Discount",
+      "Web"
+    ]
+  },
+  {
+    "title": "Sendwich - Free 3 months of Starter plan",
+    "company": "Sendwich",
+    "slug": "sendwich",
+    "logo": "https://img.logo.dev/sendwich.dev?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
+    "category": "Testing & QA",
+    "appCategory": "Software & Tools",
+    "offerSummary": "A simple, powerful tool for testing Apple Push Notifications (APNs)",
+    "description": "Sendwich is a transactional email API that lets developers send password resets, order receipts, magic links, and account notifications through a single backend integration. The service handles domain verification, email queueing, webhooks, and deliverability feedback automatically, so you don't manage these infrastructure details yourself.\n\nSendwich offers a free 3-month trial of the Starter plan, which includes 10,000 emails per month. After the trial ends, the Starter plan costs $9.99/month. All plans support unlimited domains\u2014you verify your domain once by configuring SPF and DKIM records, then start sending immediately. Sendwich has global infrastructure optimized for delivery to major mailbox providers worldwide.",
+    "benefitType": "Trial",
+    "value": "Free 3 months of Starter plan",
+    "eligibility": "Students",
+    "region": "Global",
+    "verification": "Student Email",
+    "url": "https://sendwich.dev/",
+    "claimUrl": "https://sendwich.dev/",
+    "tags": [
+      "No-Code",
+      "Trial",
+      "Web"
+    ]
+  },
+  {
+    "title": "SimpleAnalytics - Free Starter plan for 1 year + 100k page views per month",
+    "company": "SimpleAnalytics",
+    "slug": "simpleanalytics",
+    "logo": "https://img.logo.dev/simpleanalytics.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
+    "category": "Observability",
+    "appCategory": "Software & Tools",
+    "offerSummary": "Privacy-friendly analytics platform without cookies, personal tracking, or complexity",
+    "description": "SimpleAnalytics is a privacy-friendly website analytics platform that measures traffic without cookies, personal tracking, or complex consent requirements. It gives you insight into visitor behavior while respecting user privacy\u2014no invasive tracking, no cookie banners, no data selling.\n\nStudents get one year of the SimpleAnalytics Starter plan free through the GitHub Student Developer Pack, including 100,000 pageviews per month. This covers most portfolio sites, project documentation, and small applications. Verify your student status via GitHub's education program to claim this benefit.\n\nAfter the free year ends, your SimpleAnalytics account transitions to paid pricing based on your needs.",
+    "benefitType": "Free",
+    "value": "Free Starter plan for 1 year + 100k page views per month",
+    "eligibility": "Students",
+    "region": "Global",
+    "verification": "Student Email",
+    "url": "https://www.simpleanalytics.com/students",
+    "claimUrl": "https://www.simpleanalytics.com/students",
+    "tags": [
+      "Free",
+      "Web"
+    ]
+  },
+  {
+    "title": "Spaces for macOS - Spaces Pro lifetime for $6.99",
+    "company": "Spaces for macOS",
+    "slug": "spaces-for-macos",
+    "logo": "https://aobklvmdpcebkbgvvijp.supabase.co/storage/v1/object/public/LOGOs/Spacesmacos.png",
+    "category": "Focus & Productivity",
+    "appCategory": "Software & Tools",
+    "offerSummary": "Window management tool for boosting concentration on Mac",
+    "description": "Spaces for macOS is a window management tool that organizes your workspace in a single click by creating customizable layouts and app groups called Workspaces and Launchers. The app reduces desktop clutter and helps you switch between different work contexts\u2014studying, coding, writing\u2014without manually repositioning windows each time.\n\nStudents worldwide and residents of low-income countries can purchase Spaces Pro with a lifetime license for $6.99. To claim this offer, request it through the chat box on the product page. The Pro version includes unlimited Workspaces and Launchers, 16+ custom layouts, layout switcher, Siri Shortcuts, Raycast integration, and lifetime updates. The license also includes Zen Mode app access with lifetime updates for both applications on a single device.",
+    "benefitType": "Discount",
+    "value": "Spaces Pro lifetime for $6.99",
+    "eligibility": "Students",
+    "region": "Global",
+    "verification": "Student Email",
+    "url": "https://spacesformac.xyz/#pricing",
+    "claimUrl": "https://spacesformac.xyz/#pricing",
+    "tags": [
+      "Discount",
+      "macOS"
+    ]
+  },
+  {
+    "title": "Spaceship - 40% off .com domains with code COM67",
+    "company": "Spaceship",
+    "slug": "spaceship",
+    "logo": "https://img.logo.dev/spaceship.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
+    "category": "Domain Registrar",
+    "appCategory": "Credits & Savings",
+    "offerSummary": "Domain registrar with fast search and WHOIS privacy included",
+    "description": "Spaceship is an ICANN-accredited domain registrar that offers registration for globally recognized extensions including .com, .net, and .org domains. The registrar provides fast domain search and WHOIS privacy included with registrations, serving customers since 2022.\n\nSpaceship promotes .com domains with periodic discount codes\u2014historically offering 40% off with code COM67. The offer is available to all users, not restricted to students. After domain registration, customers can optionally add Spaceship's hosting services, including Starlight Cloud for containerized app deployment from GitHub, or virtual cloud servers, with trial pricing starting at $0.98/month or $5.00/month depending on the service tier after an initial 30-day free trial period.",
+    "benefitType": "Discount",
+    "value": "40% off .com domains with code COM67",
+    "eligibility": "Students",
+    "region": "Global",
+    "verification": "Student Email",
+    "url": "https://www.spaceship.com/domains/com/",
+    "claimUrl": "https://www.spaceship.com/domains/com/",
+    "tags": [
+      "Discount",
+      "Web"
+    ]
+  },
+  {
+    "title": "Stable Pizza - Student discounts available (check local)",
+    "company": "Stable Pizza",
+    "slug": "stable-pizza",
+    "logo": "https://img.logo.dev/stablepizza.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
+    "category": "Restaurants",
+    "appCategory": "Credits & Savings",
+    "offerSummary": "Sourdough pizza and cider with student offers at select locations",
+    "description": "Stable Pizza is a British sourdough pizza and cider restaurant serving fresh pizzas made daily with West Country ingredients and a curated selection of craft beers and ciders. The chain operates multiple locations across the South West, including venues in Winchester, Bath, and other regional sites.\n\nStudent discounts are available at select Stable Pizza locations, though offers vary by site and are subject to local participation. Discounts typically apply to food and drinks during standard service hours. Eligibility and discount terms differ between restaurants, so verification of current offers at your nearest location is recommended before visiting.\n\nStable Pizza also runs seasonal promotions, including a Bottomless Pizza Brunch on Saturdays (\u00a332.95 for 90 minutes of pizza, sharers, and free-flowing drinks). Check the restaurant's website or contact your local site directly to confirm active student pricing and any ID or verification requirements.",
+    "benefitType": "Discount",
+    "value": "Student discounts available (check local)",
+    "eligibility": "Students",
+    "region": "UK",
+    "verification": "Student Email",
+    "url": "https://stablepizza.com/",
+    "claimUrl": "https://stablepizza.com/",
+    "tags": [
+      "Discount",
+      "Web"
+    ]
+  },
+  {
+    "title": "Starbucks - 20% off in select markets",
+    "company": "Starbucks",
+    "slug": "starbucks",
+    "logo": "https://img.logo.dev/starbucks.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
+    "category": "Coffee & Cafes",
+    "appCategory": "Credits & Savings",
+    "offerSummary": "Student pricing on coffee and food in select markets",
+    "description": "Starbucks offers 20% student discounts on beverages and food at participating UK locations. Students can receive the discount by showing a valid student card in-store at participating Starbucks branches.\n\nThe discount applies to one beverage or one food item per transaction and is valid until 31 December 2026. In-store purchases only \u2014 the discount cannot be used on Starbucks Delivers or via the Starbucks UK app, and it cannot be combined with other discounts or promotions. UNiDAYS app members also have access to additional Starbucks student offers, including 20% off selected food and beverages from 4 September 2025, redeemed by showing a barcode and UNiDAYS ID at checkout. Two-step verification is required for UNiDAYS redemptions.\n\nStarbucks reserves the right to change or withdraw these offers at any time.",
+    "benefitType": "Discount",
+    "value": "20% off in select markets",
+    "eligibility": "Students",
+    "region": "Limited Countries",
+    "verification": "Student Email",
+    "url": "https://www.studentoffers.co/offer/starbucks",
+    "claimUrl": "https://www.studentoffers.co/offer/starbucks",
+    "tags": [
+      "Discount",
+      "Web"
+    ]
+  },
+  {
+    "title": "Sunsama - 50% off for students",
+    "company": "Sunsama",
+    "slug": "sunsama",
+    "logo": "https://img.logo.dev/sunsama.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
+    "category": "Calendar & Scheduling",
+    "appCategory": "Software & Tools",
+    "offerSummary": "Plan your day calmly by combining tasks and calendar",
+    "description": "Sunsama is a daily planning app that combines tasks and calendar events into one unified schedule to reduce distractions and help you manage your workday calmly. The app displays all your calendars in one place and lets you timebox tasks directly onto your schedule, so you can see what actually fits in your day.\n\nStudents receive 50% off Sunsama. The offer works as a trial: you can start with a 14-day free trial (no credit card required) and the student discount applies to paid plans after the trial ends. Sunsama integrates with major work tools including Asana, Monday, ClickUp, Microsoft Teams, Slack, and Linear, so tasks from your existing platforms sync into your daily plan.\n\nWirecutter named Sunsama the Best Scheduling Tool. To claim the student discount, verify your student status through the signup process.",
+    "benefitType": "Discount",
+    "value": "50% off for students",
+    "eligibility": "Students",
+    "region": "Global",
+    "verification": "Student Email",
+    "url": "https://www.sunsama.com/",
+    "claimUrl": "https://www.sunsama.com/",
+    "tags": [
+      "Discount",
+      "Web"
+    ]
+  },
+  {
+    "title": "Swiggy - Swiggy One Lite for 3 months at Rs 9 and more",
+    "company": "Swiggy",
+    "slug": "swiggy",
+    "logo": "https://img.logo.dev/swiggy.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
+    "category": "Food Delivery",
+    "appCategory": "Credits & Savings",
+    "offerSummary": "Swiggy student perks with One Lite, Instamart, and referral-based savings",
+    "description": "Swiggy is a food and grocery delivery platform in India that offers a dedicated student rewards program. Students can access Swiggy One Lite, the platform's membership tier, which unlocks faster delivery and reduced service fees on food orders, plus savings on Swiggy Instamart (grocery delivery) and referral-based rewards.\n\nTo qualify, students must verify an active student email address during signup. They can access the membership at a discounted introductory rate of Rs 9 for 3 months.\n\nAfter the introductory period, standard membership pricing applies, and renewal terms depend on the membership tier selected.",
+    "benefitType": "Discount",
+    "value": "Swiggy One Lite for 3 months at Rs 9 and more",
+    "eligibility": "Students",
+    "region": "India",
+    "verification": "Student Email",
+    "url": "https://webviews.swiggy.com/portal-static-page/student-partner-rewards/?pid=student_rewards_user_invite&is_retargeting=true&c=student_rewards_referral&af_xp=referral&af_force_deeplink=true&deep_link_value=swiggy%3A%2F%2FwebviewV2%3FpushScreen%3Dtrue%26webview_url%3Dhttps%3A%2F%2Fwww.swiggy.com%2Fpartner-student-rewards-referral%2F62695212",
+    "claimUrl": "https://webviews.swiggy.com/portal-static-page/student-partner-rewards/?pid=student_rewards_user_invite&is_retargeting=true&c=student_rewards_referral&af_xp=referral&af_force_deeplink=true&deep_link_value=swiggy%3A%2F%2FwebviewV2%3FpushScreen%3Dtrue%26webview_url%3Dhttps%3A%2F%2Fwww.swiggy.com%2Fpartner-student-rewards-referral%2F62695212",
+    "tags": [
+      "Discount",
+      "Web"
+    ]
+  },
+  {
+    "title": "TablePlus - 50% off for students",
+    "company": "TablePlus",
+    "slug": "tableplus",
+    "logo": "https://img.logo.dev/tableplus.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
+    "category": "Databases",
+    "appCategory": "Software & Tools",
+    "offerSummary": "Modern database GUI tool for macOS and Windows.",
+    "description": "TablePlus is a modern, native database GUI tool for relational databases on macOS and Windows. It provides a simple interface and powerful features for SQL database management, making it useful for developers, students, and database administrators.\n\nTablePlus offers 50% off for students and teachers. To claim the discount, you must email support@tableplus.io with the subject line \"Student Discount\" from your student email address, or attach a photo of your student ID card or certificate. TablePlus will verify your education status and send you a discount code via email.\n\nVerification is manual and reviewed by the TablePlus team. The company requests that emails be well-written and direct\u2014include your verification details rather than asking whether an education discount exists. This discount is available to students and educators worldwide.",
+    "benefitType": "Discount",
+    "value": "50% off for students",
+    "eligibility": "Students",
+    "region": "Global",
+    "verification": "Student Email",
+    "url": "https://tableplus.com/blog/2018/04/education-plan.html",
+    "claimUrl": "https://tableplus.com/blog/2018/04/education-plan.html",
+    "tags": [
+      "Discount",
+      "macOS"
+    ]
+  },
+  {
+    "title": "Tinder - 50% off Plus/Gold Plans via UNiDAYS",
+    "company": "Tinder",
+    "slug": "tinder",
+    "logo": "https://img.logo.dev/tinder.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
+    "category": "Dating & Social",
+    "appCategory": "Software & Tools",
+    "offerSummary": "Dating app with student premium plans and unlimited features",
+    "description": "Tinder is a dating app that connects you with potential matches based on location and interests. The app features browsing, messaging, and profile customization, with premium plans unlocking additional features like unlimited likes and advanced filters.\n\nStudents verified through UNiDAYS can access Tinder Plus and Tinder Gold at approximately 50% off standard subscription rates. Both plans remove ads, increase daily matches visibility, and provide extra control over who sees your profile.\n\nPricing and plan availability vary by country and subscription length. Verify your student status via UNiDAYS to unlock the discount and review current plan options in your region before subscribing.",
+    "benefitType": "Discount",
+    "value": "50% off Plus/Gold Plans via UNiDAYS",
+    "eligibility": "Students",
+    "region": "Global",
+    "verification": "Student Email",
+    "url": "https://www.myunidays.com/partners/tinder/view",
+    "claimUrl": "https://www.myunidays.com/partners/tinder/view",
+    "tags": [
+      "Discount",
+      "Web"
+    ]
+  },
+  {
+    "title": "TryHackMe - 20% off annual subscriptions",
+    "company": "TryHackMe",
+    "slug": "tryhackme",
+    "logo": "https://img.logo.dev/tryhackme.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
+    "category": "Cybersecurity",
+    "appCategory": "Software & Tools",
+    "offerSummary": "Learn cybersecurity through hands-on virtual labs.",
+    "description": "TryHackMe is a hands-on cybersecurity training platform offering interactive virtual labs, attack-defense exercises, and guided learning paths for security learners at all levels.\n\nStudents receive 20% off annual subscriptions through TryHackMe's direct student discount program. The discount is automatically applied at checkout once you've completed your student information in your account details\u2014no verification portal or codes required. Note that the 20% discount applies only to annual plans; monthly subscriptions and voucher purchases are not eligible.\n\nIf you don't see the discount applied, update your Occupation Details to \"Student/Intern\" in your account settings. TryHackMe reserves the right to revoke student pricing if institution information is found to be inaccurate.",
+    "benefitType": "Discount",
+    "value": "20% off annual subscriptions",
+    "eligibility": "Students",
+    "region": "Global",
+    "verification": "Student Email",
+    "url": "https://help.tryhackme.com/en/articles/6494960-student-discount",
+    "claimUrl": "https://help.tryhackme.com/en/articles/6494960-student-discount",
+    "tags": [
+      "Discount",
+      "Web"
+    ]
+  },
+  {
+    "title": "Udemy - 10-60% off via partner verifications",
+    "company": "Udemy",
+    "slug": "udemy",
+    "logo": "https://img.logo.dev/udemy.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
+    "category": "Online Courses",
+    "appCategory": "Software & Tools",
+    "offerSummary": "Learn from global instructors through expert-led online courses",
+    "description": "Udemy is an online course marketplace offering thousands of courses across technology, business, creative skills, and personal development. Instructors from around the world create and sell courses on the platform, with learners able to purchase individual courses at their own pace.\n\nUdemy frequently runs promotional campaigns offering discounts up to 90% off course prices. These discounts are typically available to all users during seasonal sales events and marketing promotions, not exclusively for students. Pricing is dynamic and varies by course, instructor, and promotion timing. To access current discounts, visit Udemy directly during active promotional periods or check course pages for sale badges.",
+    "benefitType": "Discount",
+    "value": "10-60% off via partner verifications",
+    "eligibility": "Students",
+    "region": "US",
+    "verification": "Student Email",
+    "url": "https://www.studentoffers.co/offer/udemy",
+    "claimUrl": "https://www.studentoffers.co/offer/udemy",
+    "tags": [
+      "Discount",
+      "Web"
+    ]
+  },
+  {
+    "title": "v0 - Free 1 year of v0 Premium",
+    "company": "v0",
+    "slug": "v0",
+    "logo": "https://aobklvmdpcebkbgvvijp.supabase.co/storage/v1/object/public/LOGOs/v0.png",
+    "category": "AI App Builders",
+    "appCategory": "Software & Tools",
+    "offerSummary": "Generate production-ready UI components and code from simple text prompts",
+    "description": "v0 is an AI-powered code generation tool by Vercel that transforms text prompts into production-ready UI components, React code, and full-stack web applications. It generates landing pages, dashboards, interactive features, and deployable apps instantly from natural language descriptions.\n\nStudents receive one year of free v0 Premium access by verifying their student status during signup. This gives you full access to v0's code generation, component libraries, and deployment capabilities for coursework, hackathons, portfolios, and development projects.\n\nAfter the one-year benefit ends, standard subscription pricing applies to continue using v0 Premium features.",
+    "benefitType": "Free",
+    "value": "Free 1 year of v0 Premium",
+    "eligibility": "Students",
+    "region": "Limited Universities",
+    "verification": "Student Email",
+    "url": "https://v0.app/students",
+    "claimUrl": "https://v0.app/students",
+    "tags": [
+      "Vibe Coding",
+      "Free",
+      "Web"
+    ]
+  },
+  {
+    "title": "Walmart+ - 30-day trial then $6.47/mo (50% off Walmart+)",
+    "company": "Walmart+",
+    "slug": "walmart",
+    "logo": "https://img.logo.dev/walmart.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
+    "category": "Retail & Marketplace",
+    "appCategory": "Software & Tools",
+    "offerSummary": "Free delivery and student-exclusive Walmart+ savings",
+    "description": "Walmart+ is a membership service offering free delivery, shipping perks, fuel savings, and access to a rotating streaming choice. Members enjoy benefits including grocery delivery, in-store pickup, and fuel discounts at Walmart and Murphy USA stations.\n\nEligible college and grad students receive 50% off Walmart+, paying $6.47 per month after a 30-day free trial. You'll verify your student status through Walmart's verification portal to access the full member benefit stack. The discounted rate applies as long as you maintain valid student status.\n\nDelivery and fuel discount availability varies by location\u2014confirm key benefits are accessible in your area before your trial ends, as coverage differs across regions.",
+    "benefitType": "Trial",
+    "value": "30-day trial then $6.47/mo (50% off Walmart+)",
+    "eligibility": "Students",
+    "region": "US",
+    "verification": "Student Email",
+    "url": "https://www.walmart.com/plus/student",
+    "claimUrl": "https://www.walmart.com/plus/student",
+    "tags": [
+      "Trial",
+      "Web"
+    ]
+  },
+  {
+    "title": "WorkingCopy - Free Pro while student",
+    "company": "WorkingCopy",
+    "slug": "workingcopy",
+    "logo": "https://img.logo.dev/workingcopy.app?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
+    "category": "Git Clients",
+    "appCategory": "Software & Tools",
+    "offerSummary": "Full-featured Git client for iPhone and iPad developers",
+    "description": "Working Copy is a full-featured Git client for iPhone and iPad that lets developers manage repositories and perform Git operations from mobile devices. With Pro unlocked, you can clone repositories, edit files, commit changes, push to remote branches, and open pull requests directly from your iPhone or iPad. This is useful for developers who code on the go or want real Git workflows on mobile.\n\nStudents with verified GitHub Education status can access Working Copy Pro features for free through the GitHub Student Developer Pack. Pro features normally require a paid unlock, but remain free for students with active GitHub Education verification.",
+    "benefitType": "Free",
+    "value": "Free Pro while student",
+    "eligibility": "Students",
+    "region": "Global",
+    "verification": "Student Email",
+    "url": "https://workingcopy.app/education/",
+    "claimUrl": "https://workingcopy.app/education/",
+    "tags": [
+      "Free",
+      "iOS"
+    ]
+  },
+  {
+    "title": "Zeabur - 20% off first month via referral",
+    "company": "Zeabur",
+    "slug": "zeabur",
+    "logo": "https://img.logo.dev/zeabur.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
+    "category": "Compute Platform",
+    "appCategory": "Credits & Savings",
+    "offerSummary": "Cloud platform for deploying and managing web applications",
+    "description": "Zeabur is a cloud platform for deploying and managing web applications with AI-assisted DevOps tools. It provides access to compute resources from providers like AWS, Hetzner, and Linode, along with email services and a unified API for multiple AI models on pay-as-you-go pricing. The platform uses a natural language agent to simplify infrastructure tasks, allowing you to describe your needs and have the system configure and deploy accordingly.\n\nYou can deploy services, manage configurations, and rent servers across multiple regions with dedicated compute and full infrastructure control. While available to all users, Zeabur offers a 20% discount on the first month when you sign up via a referral link. Pricing is consumption-based, so you only pay for what you use.",
+    "benefitType": "Discount",
+    "value": "20% off first month via referral",
+    "eligibility": "Students",
+    "region": "Global",
+    "verification": "Student Email",
+    "url": "https://zeabur.com",
+    "claimUrl": "https://zeabur.com",
+    "tags": [
+      "Discount",
+      "Developer"
+    ]
+  },
+  {
+    "title": "Zen Mode for macOS - $$6.99 Zen Mode student plan",
+    "company": "Zen Mode for macOS",
+    "slug": "zen-mode-for-macos",
+    "logo": "https://aobklvmdpcebkbgvvijp.supabase.co/storage/v1/object/public/LOGOs/Zenmode.png",
+    "category": "Focus & Productivity",
+    "appCategory": "Software & Tools",
+    "offerSummary": "Minimalist distraction-free app for deep writing and focus",
+    "description": "Zen Mode for macOS is a minimalist, distraction-free app designed for focused writing and deep work. It hides open windows, dock icons, Wi-Fi, and Bluetooth with a single click, creating a clean environment for concentration or presentations.\n\nStudents can request a reduced student plan priced at $6.99 by contacting support via the website chat. Verify current pricing, device licensing terms, and eligibility requirements before purchasing, as the Zen Mode for macOS student plan is handled through direct outreach rather than automatic checkout.",
+    "benefitType": "Discount",
+    "value": "$$6.99 Zen Mode student plan",
+    "eligibility": "Students",
+    "region": "Global",
+    "verification": "Student Email",
+    "url": "https://zenmode.app/#pricing",
+    "claimUrl": "https://zenmode.app/#pricing",
+    "tags": [
+      "Discount",
+      "macOS"
+    ]
+  },
+  {
+    "title": "AWS Free Tier - $$100\u2013200 free credits for new AWS accounts",
+    "company": "AWS Free Tier",
+    "slug": "aws-free-tier",
+    "logo": "https://aobklvmdpcebkbgvvijp.supabase.co/storage/v1/object/public/LOGOs/AWS.png",
+    "category": "Cloud Platforms",
+    "appCategory": "Credits & Savings",
+    "offerSummary": "Cloud computing platform with always-free compute, storage, and serverless services for new customers.",
+    "description": "AWS Free Tier is Amazon Web Services' free cloud computing offer for new accounts, providing $100 in promotional credits immediately plus up to $100 more through exploration activities. The credits can be used across select AWS services including compute, storage, and serverless offerings. Students, developers, and organizations use Free Tier to build projects, experiment with infrastructure, and test AWS services without financial risk.\n\nThe credits are valid for 6 months and no charges are incurred unless you upgrade to a paid plan or activate paid-only services. The account automatically closes after 6 months or when credits run out, whichever comes first.",
+    "benefitType": "Credit",
+    "value": "$$100\u2013200 free credits for new AWS accounts",
+    "eligibility": "Students",
+    "region": "Global",
+    "verification": "Student Email",
+    "url": "https://aws.amazon.com/free/",
+    "claimUrl": "https://aws.amazon.com/free/",
+    "tags": [
+      "Credit",
+      "Developer"
+    ]
+  },
+  {
+    "title": "Google Cloud Free Trial - $$300 free credit for new GCP accounts",
+    "company": "Google Cloud Free Trial",
+    "slug": "google-cloud-free-trial",
+    "logo": "https://img.logo.dev/cloud.google.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
+    "category": "Cloud Platforms",
+    "appCategory": "Credits & Savings",
+    "offerSummary": "Build and deploy apps on Google Cloud with $300 in credits, valid for 90 days.",
+    "description": "Google Cloud Free Trial provides new users with $300 in free credit valid for 90 days to build and deploy applications on Google Cloud Platform. The credit can be used across eligible services including Compute Engine, BigQuery, and AI APIs. You won't be charged until you manually activate a paid account.\n\nBeyond the trial credit, Google Cloud offers perpetual free tier access to 20+ products with monthly usage limits\u2014such as 1 e2-micro Compute Engine instance and 5 GB of Cloud Shell storage\u2014that don't expire and remain separate from your trial credit.\n\nThis offer is available to all new users globally.",
+    "benefitType": "Credit",
+    "value": "$$300 free credit for new GCP accounts",
+    "eligibility": "Students",
+    "region": "Global",
+    "verification": "Student Email",
+    "url": "https://cloud.google.com/free/",
+    "claimUrl": "https://cloud.google.com/free/",
+    "tags": [
+      "Credit",
+      "Web"
+    ]
+  },
+  {
+    "title": "Marvel Rivals - 10 free costumes + MVPs every season",
+    "company": "Marvel Rivals",
+    "slug": "marvel-rivals",
+    "logo": "https://img.logo.dev/marvelrivals.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
+    "category": "Gaming",
+    "appCategory": "Software & Tools",
+    "offerSummary": "6v6 superhero team shooter with student College Perks rewards",
+    "description": "Marvel Rivals is a free-to-play 6v6 superhero team-based shooter developed by NetEase Games, available on PC via Steam. The game features fast-paced combat with Marvel characters across seasonal content updates.\n\nStudents may be eligible for College Perks rewards through verified student status; historically, this has included seasonal cosmetic offers such as free character costumes and MVP rewards, though specific current eligibility terms and reward details should be confirmed directly on the official Marvel Rivals website or through the College Perks portal. The base game is free to download and play for all users; cosmetic purchases and battle pass progression are optional.\n\nSeasonal content rotates regularly, so reward availability varies by season.",
+    "benefitType": "Free",
+    "value": "10 free costumes + MVPs every season",
+    "eligibility": "Students",
+    "region": "Global",
+    "verification": "Student Email",
+    "url": "https://www.marvelrivals.com/",
+    "claimUrl": "https://www.marvelrivals.com/",
+    "tags": [
+      "Free",
+      "Web"
+    ]
+  },
+  {
+    "title": "Avira Prime - Free 3 months of all premium features",
+    "company": "Avira Prime",
+    "slug": "avira-prime",
+    "logo": "https://img.logo.dev/avira.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
+    "category": "Cybersecurity",
+    "appCategory": "Software & Tools",
+    "offerSummary": "Security suite with antivirus VPN password manager and optimization tools",
+    "description": "Avira Prime is a security suite combining antivirus, VPN, password manager, and optimization tools in one platform. It protects your devices from malware, encrypts your internet connection, secures passwords, and cleans up system clutter.\n\nThis offer gives you free access to all premium features for three months without requiring a credit card upfront. The trial is available to all users and ends automatically after the three-month period, with no surprise charges. This is a straightforward way to experience Avira Prime's full capabilities before deciding whether to purchase a paid subscription.\n\nAfter the trial expires, you can choose to subscribe to ongoing protection or discontinue use entirely.",
+    "benefitType": "Trial",
+    "value": "Free 3 months of all premium features",
+    "eligibility": "Students",
+    "region": "Global",
+    "verification": "Student Email",
+    "url": "https://campaigns.avira.com/en/crm/trial/prime-trial-3m",
+    "claimUrl": "https://campaigns.avira.com/en/crm/trial/prime-trial-3m",
+    "tags": [
+      "Trial",
+      "Web"
+    ]
+  },
+  {
+    "title": "Cavalry - Free 2D animation software for everyone",
+    "company": "Cavalry",
+    "slug": "cavalry",
+    "logo": "https://img.logo.dev/cavalry.studio?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
+    "category": "3D & Animation",
+    "appCategory": "Software & Tools",
+    "offerSummary": "Professional real-time 2D animation tool with procedural rigs and Lottie export",
+    "description": "Cavalry is free 2D animation software available to all users. It's a professional real-time animation and motion graphics tool featuring procedural rigs and Lottie export, designed for animators, motion designers, and digital media creators. The software runs on Mac and Windows.\n\nBecause Cavalry is free for everyone\u2014not a student-specific discount\u2014it removes the cost barrier for students learning animation or building portfolios.\n\nCheck the official site for the current feature set, system requirements, and any paid enterprise options before adopting it for coursework.",
+    "benefitType": "Free",
+    "value": "Free 2D animation software for everyone",
+    "eligibility": "Students",
+    "region": "Global",
+    "verification": "Student Email",
+    "url": "https://cavalry.studio/en/#download",
+    "claimUrl": "https://cavalry.studio/en/#download",
+    "tags": [
+      "Free",
+      "macOS"
+    ]
+  },
+  {
+    "title": "Autograph - Free 2D/3D motion graphics app for all",
+    "company": "Autograph",
+    "slug": "autograph",
+    "logo": "https://img.logo.dev/maxon.net?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
+    "category": "3D & Animation",
+    "appCategory": "Software & Tools",
+    "offerSummary": "Professional motion graphics and VFX tool combining 2D and 3D in one workflow",
+    "description": "Autograph is a free motion graphics and VFX or compositing application that combines 2D and 3D workflows, external data connections, and multi-format rendering in one environment. This makes it especially relevant to media, design, VFX, and motion students who want portfolio-quality tooling without an upfront license fee.\n\nThe real value for students comes from public free access rather than a student-only education plan. The app is positioned as free for all users, which directly addresses the questions students typically have: whether Autograph is worth learning and whether it is really free.\n\nStudents should still verify whether any related Maxon ecosystem tools are paid, understand the current free access scope, and confirm that the workflow matches the kinds of projects they want to build.",
+    "benefitType": "Free",
+    "value": "Free 2D/3D motion graphics app for all",
+    "eligibility": "Students",
+    "region": "Global",
+    "verification": "Student Email",
+    "url": "https://www.maxon.net/en/autograph",
+    "claimUrl": "https://www.maxon.net/en/autograph",
+    "tags": [
+      "Free",
+      "macOS"
+    ]
+  },
+  {
+    "title": "DaVinci Resolve - Free Hollywood-grade video editor",
+    "company": "DaVinci Resolve",
+    "slug": "davinci-resolve",
+    "logo": "https://img.logo.dev/blackmagicdesign.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
+    "category": "Video Editing",
+    "appCategory": "Software & Tools",
+    "offerSummary": "Professional video editing color correction VFX motion graphics and audio post",
+    "description": "DaVinci Resolve is a professional video editing platform offering a free version available to all users. The free tier includes video editing, color correction, VFX, motion graphics, and audio post-production tools\u2014capabilities historically found only in paid software. A paid Studio upgrade is available for users needing advanced features.\n\nStudents can build real editing and color workflows without upfront costs, making it practical for film and media coursework. Before starting a project, verify that your hardware meets the software's requirements and whether the free version covers your specific editing or VFX needs.",
+    "benefitType": "Free",
+    "value": "Free Hollywood-grade video editor",
+    "eligibility": "Students",
+    "region": "Global",
+    "verification": "Student Email",
+    "url": "https://www.blackmagicdesign.com/products/davinciresolve",
+    "claimUrl": "https://www.blackmagicdesign.com/products/davinciresolve",
+    "tags": [
+      "Free",
+      "Web"
+    ]
+  },
+  {
+    "title": "Docker Desktop - Free Docker Desktop for individuals",
+    "company": "Docker Desktop",
+    "slug": "docker-desktop",
+    "logo": "https://img.logo.dev/docker.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
+    "category": "DevOps",
+    "appCategory": "Software & Tools",
+    "offerSummary": "Build, ship, and run containerized applications on your local machine.",
+    "description": "Docker Desktop is a local development platform that lets you build, ship, and run containerized applications on your computer. It packages applications and their dependencies into lightweight containers, making it simple to move code between development, testing, and production environments without compatibility issues.\n\nDocker Desktop is free for individual use and available to everyone\u2014including students\u2014with no special verification required. You can download and use it immediately on macOS, Windows, or Linux to build and test containerized apps locally, reproduce development environments consistently, and run modern application stacks. Docker Desktop is widely used in software engineering, DevOps, backend development, and cloud computing education and professional work.",
+    "benefitType": "Free",
+    "value": "Free Docker Desktop for individuals",
+    "eligibility": "Students",
+    "region": "Global",
+    "verification": "Student Email",
+    "url": "https://www.docker.com/products/docker-desktop/",
+    "claimUrl": "https://www.docker.com/products/docker-desktop/",
+    "tags": [
+      "Free",
+      "Developer"
+    ]
+  },
+  {
+    "title": "GitLab for Education - Free Ultimate plan for students and educators",
+    "company": "GitLab for Education",
+    "slug": "gitlab-for-education",
+    "logo": "https://img.logo.dev/gitlab.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
+    "category": "Git Clients",
+    "appCategory": "Software & Tools",
+    "offerSummary": "DevSecOps platform with version control, CI/CD pipelines, and built-in AI tools.",
+    "description": "GitLab for Education is a DevSecOps platform that provides students, educators, researchers, and institutions with version control, CI/CD pipelines, security tools, and AI-powered code suggestions. The program offers free access to GitLab's Ultimate plan, enabling academic users to build real software engineering skills from theory to application without tool fragmentation or shadow IT complexity.\n\nEligibility includes students, faculty, researchers, and IT leaders across participating countries. Access is managed through centralized institutional dashboards, allowing unlimited user seats for entire academic organizations. The platform includes built-in security features\u2014code suggestions, SAST, dependency scanning, and container scanning\u2014reducing the need for multiple separate tools. GitLab's transparency-first AI features ensure institutional compliance and keep code and data under user control.",
+    "benefitType": "Free",
+    "value": "Free Ultimate plan for students and educators",
+    "eligibility": "Students",
+    "region": "Global",
+    "verification": "Student Email",
+    "url": "https://about.gitlab.com/solutions/education/",
+    "claimUrl": "https://about.gitlab.com/solutions/education/",
+    "tags": [
+      "Open Source",
+      "Free",
+      "Web"
+    ]
+  },
+  {
+    "title": "Crowdin - Free Academic License for educational projects",
+    "company": "Crowdin",
+    "slug": "crowdin",
+    "logo": "https://img.logo.dev/crowdin.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
+    "category": "Localization",
+    "appCategory": "Software & Tools",
+    "offerSummary": "Collaborative localization platform for translating apps, websites, and content.",
+    "description": "Crowdin is a collaborative localization platform for translating apps, websites, and content. The platform offers free academic licenses for educational localization projects, making it relevant to students working on software localization, app translation, research projects, or educational content in multiple languages.\n\nStudents and academic teams can request an academic license by submitting an application with an educational email address matching a school domain. Crowdin provides two types of academic licenses: fully free open licenses for public projects and discounted private licenses for projects requiring restricted access. Eligibility is based on project-level academic use rather than personal discounts.",
+    "benefitType": "Free",
+    "value": "Free Academic License for educational projects",
+    "eligibility": "Students",
+    "region": "Global",
+    "verification": "Student Email",
+    "url": "https://crowdin.com/product/for-academic",
+    "claimUrl": "https://crowdin.com/product/for-academic",
+    "tags": [
+      "Free",
+      "Web"
+    ]
+  },
+  {
+    "title": "Aiven SQL Optimizer - Free online SQL optimizer for PostgreSQL & MySQL",
+    "company": "Aiven SQL Optimizer",
+    "slug": "aiven-sql-optimizer",
+    "logo": "https://img.logo.dev/aiven.io?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
+    "category": "Databases",
+    "appCategory": "Software & Tools",
+    "offerSummary": "Online SQL query optimizer with indexing and rewrite recommendations.",
+    "description": "Aiven SQL Optimizer is a free online tool for optimizing PostgreSQL and MySQL queries. It analyzes your SQL code and provides indexing and query rewrite recommendations to improve performance.\n\nThe tool accepts manually uploaded SQL and metadata, making it useful for debugging slow queries during database coursework, backend projects, or one-off optimization tasks. It's available to all users at no cost during its early availability period.\n\nNote that this is different from Aiven's paid database monitoring product, which offers continuous, integrated performance tracking.",
+    "benefitType": "Free",
+    "value": "Free online SQL optimizer for PostgreSQL & MySQL",
+    "eligibility": "Students",
+    "region": "Global",
+    "verification": "Student Email",
+    "url": "https://aiven.io/tools/sql-query-optimizer",
+    "claimUrl": "https://aiven.io/tools/sql-query-optimizer",
+    "tags": [
+      "Free",
+      "Web"
+    ]
+  },
+  {
+    "title": "Astah - Free student license for Astah UML",
+    "company": "Astah",
+    "slug": "astah",
+    "logo": "https://img.logo.dev/astah.net?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
+    "category": "DevOps",
+    "appCategory": "Software & Tools",
+    "offerSummary": "UML diagram editor for software architecture and design planning",
+    "description": "Astah is a UML diagram editor for software architecture and design planning. It's a practical tool for students studying software design, architecture, and systems modeling.\n\nStudents with a valid academic email address can get a free personal-use license. The license can be used on multiple machines as long as one student is the only user. The free student license is not for instructors, shared classroom machines, or lab-wide use. Support is limited for free student license users.\n\nRenewals require resubmitting the application each year.",
+    "benefitType": "Free",
+    "value": "Free student license for Astah UML",
+    "eligibility": "Students",
+    "region": "Global",
+    "verification": "Student Email",
+    "url": "https://astah.net/products/free-student-license/",
+    "claimUrl": "https://astah.net/products/free-student-license/",
+    "tags": [
+      "Free",
+      "Developer"
+    ]
+  },
+  {
+    "title": "Kodika - Free plan with 5 screens",
+    "company": "Kodika",
+    "slug": "kodika",
+    "logo": "https://img.logo.dev/kodika.io?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
+    "category": "No-Code Platform",
+    "appCategory": "Software & Tools",
+    "offerSummary": "No-code platform for building iOS and Android apps with drag-and-drop interface",
+    "description": "Kodika is a no-code platform for building iOS and Android apps using a drag-and-drop interface. The free plan is available to all users and includes up to 5 screens, making it accessible for anyone learning mobile app development.\n\nThe paid Pro plan unlocks unlimited screens, imports, integrations, and mobile publishing capabilities. The free tier lets you prototype and experiment with app building without upfront cost, though you'll need to evaluate whether the screen limit and publishing restrictions suit your project needs.",
+    "benefitType": "Free",
+    "value": "Free plan with 5 screens",
+    "eligibility": "Students",
+    "region": "Global",
+    "verification": "Student Email",
+    "url": "https://kodika.io/pricing",
+    "claimUrl": "https://kodika.io/pricing",
+    "tags": [
+      "Free",
+      "iOS"
+    ]
+  },
+  {
+    "title": "LingoHub - 14-day free LingoHub trial",
+    "company": "LingoHub",
+    "slug": "lingohub",
+    "logo": "https://img.logo.dev/lingohub.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
+    "category": "Localization",
+    "appCategory": "Software & Tools",
+    "offerSummary": "Translation management platform for localizing apps, websites, and software",
+    "description": "LingoHub is a translation management platform designed to streamline localization of apps, websites, and software. It centralizes translation workflows with tools like translation memory, style guides, QA checks, and third-party integrations\u2014moving teams beyond manual copy-paste processes. The platform helps coordinate multilingual projects across distributed teams while maintaining consistency and quality.\n\nLingoHub offers a 14-day free trial available to all users, with no credit card required. The trial period gives you full access to core features so you can evaluate whether LingoHub fits your localization workflow before committing to a paid plan.",
+    "benefitType": "Trial",
+    "value": "14-day free LingoHub trial",
+    "eligibility": "Students",
+    "region": "Global",
+    "verification": "Student Email",
+    "url": "https://lingohub.com/pricing",
+    "claimUrl": "https://lingohub.com/pricing",
+    "tags": [
+      "Trial",
+      "Web"
+    ]
+  },
+  {
+    "title": "Red Hat Developer Sandbox - 30-day free Developer Sandbox trial",
+    "company": "Red Hat Developer Sandbox",
+    "slug": "red-hat-developer-sandbox",
+    "logo": "https://img.logo.dev/redhat.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
+    "category": "Compute Platform",
+    "appCategory": "Credits & Savings",
+    "offerSummary": "Cloud dev sandbox for OpenShift, Kubernetes, and Red Hat learning",
+    "description": "Red Hat Developer Sandbox is a free 30-day trial environment that provides instant access to Red Hat enterprise products and cloud-native development tools. The sandbox includes a pre-configured OpenShift cluster where you can evaluate OpenShift Pipelines (based on Tekton), OpenShift AI, and other Red Hat platform services without requiring a subscription or payment method.\n\nThe trial is open to anyone and includes access to an AI platform featuring popular open source tools like Jupyter, TensorFlow, and PyTorch, plus MLOps components for model serving and data science pipelines. You can use the sandbox to learn Kubernetes workflows, experiment with container orchestration, and test Red Hat's development tools in a production-like environment. After your 30 days expire, access ends unless you upgrade to a paid Red Hat subscription or renew through a Red Hat Developer membership, which unlocks ongoing access to product trials and learning resources.",
+    "benefitType": "Trial",
+    "value": "30-day free Developer Sandbox trial",
+    "eligibility": "Students",
+    "region": "Global",
+    "verification": "Student Email",
+    "url": "https://developers.redhat.com/developer-sandbox",
+    "claimUrl": "https://developers.redhat.com/developer-sandbox",
+    "tags": [
+      "Open Source",
+      "Trial",
+      "Developer"
+    ]
+  },
+  {
+    "title": "Semaphore - $$15/mo free credits for all users",
+    "company": "Semaphore",
+    "slug": "semaphore",
+    "logo": "https://img.logo.dev/semaphore.io?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
+    "category": "DevOps",
+    "appCategory": "Software & Tools",
+    "offerSummary": "CI/CD platform offering $15/month in free credits for students and developers. Unlimited pipelines, parallel execution, and integrations with GitHub, GitLab, and Bitbucket.",
+    "description": "Semaphore is a cloud-based CI/CD platform that automates testing and deployment workflows for software projects. It integrates with GitHub, GitLab, and Bitbucket, offering unlimited pipelines and parallel job execution to speed up build and test cycles.\n\nSemaphore is free to start with no credit card required. New users receive $15/month in free credits, which can be applied toward compute usage. The platform uses pay-per-use pricing starting at $0.003 per job minute across different job types, so developers and students can control costs by running only the builds and tests they need. Each project includes 9.6 GB of cache storage and up to 20 concurrent jobs by default, with higher limits available on request.\n\nAfter the free credits are consumed, users can purchase additional credits or pause their account. Semaphore's AI-powered test failure analysis helps developers identify and fix issues faster, and the platform reports that users typically reduce CI build times by 30\u201350% after migration.",
+    "benefitType": "Free",
+    "value": "$$15/mo free credits for all users",
+    "eligibility": "Students",
+    "region": "Global",
+    "verification": "Student Email",
+    "url": "https://semaphore.io/pricing",
+    "claimUrl": "https://semaphore.io/pricing",
+    "tags": [
+      "Free",
+      "Developer"
+    ]
+  },
+  {
+    "title": "Enscape - Free educational license for students",
+    "company": "Enscape",
+    "slug": "enscape",
+    "logo": "https://img.logo.dev/enscape3d.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
+    "category": "3D & Animation",
+    "appCategory": "Software & Tools",
+    "offerSummary": "Real-time rendering plugin for ArchiCAD, Revit, SketchUp, and Rhino. Generates photorealistic visualizations and virtual walkthroughs directly within BIM and CAD software.",
+    "description": "Enscape is a real-time rendering plugin that integrates with ArchiCAD, Revit, SketchUp, and Rhino to generate photorealistic visualizations and virtual walkthroughs directly within BIM and CAD software. The platform includes access to training resources and community support for architecture, product design, and visualization workflows.\n\nStudents qualify for educational licenses that save up to 80% on standard pricing. To access the student offer, verify your status through Chaos's education program, then activate your educational license.\n\nEnscape subscriptions renew automatically, so you'll need to cancel before renewal if you don't wish to continue.",
+    "benefitType": "Free",
+    "value": "Free educational license for students",
+    "eligibility": "Students",
+    "region": "Global",
+    "verification": "Student Email",
+    "url": "https://enscape3d.com/education/",
+    "claimUrl": "https://enscape3d.com/education/",
+    "tags": [
+      "Free",
+      "Web"
+    ]
+  },
+  {
+    "title": "Envato Elements - 30% off for students",
+    "company": "Envato Elements",
+    "slug": "envato-elements",
+    "logo": "https://img.logo.dev/envato.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
+    "category": "Graphic Design Tools",
+    "appCategory": "Software & Tools",
+    "offerSummary": "Subscription service for design assets including templates, graphics, fonts, photos, and video templates. Over 2 million creative assets for unlimited downloads.",
+    "description": "Envato Elements has a clear student plan rather than a vague promo code. Eligible students aged 18 and over, plus qualifying faculty and staff at accredited institutions, can verify an educational email address and get 30% off the Core plan. The discounted plan includes the same Core features: unlimited downloads across more than 28 million creative assets plus access to Envato's AI tools.\n\nThis offering is especially relevant to design, video, content, marketing, and portfolio-heavy students who need templates, fonts, graphics, stock footage, presentation assets, and mockups regularly. The strongest value proposition is not just the discount number, but affordable access to a large creative asset library that students can actually use across assignments and freelance-style work.\n\nStudents should verify that their institution qualifies, complete the email verification flow, and compare the monthly cost against how often they really need unlimited downloads.",
+    "benefitType": "Discount",
+    "value": "30% off for students",
+    "eligibility": "Students",
+    "region": "Global",
+    "verification": "Student Email",
+    "url": "https://elements.envato.com/pricing/students",
+    "claimUrl": "https://elements.envato.com/pricing/students",
+    "tags": [
+      "Discount",
+      "Web"
+    ]
+  },
+  {
+    "title": "Columbia+ - 2 AI courses free via code ($99 each)",
+    "company": "Columbia+",
+    "slug": "columbia",
+    "logo": "https://aobklvmdpcebkbgvvijp.supabase.co/storage/v1/object/public/LOGOs/Columbia+.png",
+    "category": "Online Courses",
+    "appCategory": "Software & Tools",
+    "offerSummary": "Online courses from Columbia University faculty on AI, coding, climate, and more",
+    "description": "Columbia+ is an online learning platform offering courses from Columbia University faculty across AI, data science, business, engineering, climate, and public health. The platform hosts courses at varying price points\u2014some free, others $99, $199, or $750\u2014taught by faculty from Columbia's schools including Engineering, Business School, Climate School, and the School of Public Health.\n\nSpecific Columbia+ courses on AI and related topics are available. Some courses, such as those on prompt engineering, OpenAI API coding, and LLM application design, teach practical skills in building AI features and automating workflows. Courses cover foundational to advanced topics across computer science, finance, environmental studies, and professional development. The platform is open to the general public\u2014no student verification is required to enroll.",
+    "benefitType": "Free",
+    "value": "2 AI courses free via code ($99 each)",
+    "eligibility": "Students",
+    "region": "US",
+    "verification": "Student Email",
+    "url": "https://plus.columbia.edu/course-catalog",
+    "claimUrl": "https://plus.columbia.edu/course-catalog",
+    "tags": [
+      "AI",
+      "Free",
+      "Web"
+    ]
+  },
+  {
+    "title": "Anthropic Academy - 17+ free AI courses (no code needed)",
+    "company": "Anthropic Academy",
+    "slug": "anthropic-academy",
+    "logo": "https://aobklvmdpcebkbgvvijp.supabase.co/storage/v1/object/public/LOGOs/Anthropic%20Academy.png",
+    "category": "Online Courses",
+    "appCategory": "Software & Tools",
+    "offerSummary": "Free AI courses from Anthropic on Claude, Claude Code, MCP, and more",
+    "description": "Anthropic Academy is a free learning hub offering 17+ AI courses on Claude, Claude Code, Model Context Protocol, API development, and more. The courses and guides cover practical workflows, AI fluency, and use cases for developers and teams, with some courses including certificates.\n\nAvailable to everyone\u2014no verification or code needed. This is vendor-published educational material, making it a direct source for learning Anthropic's tools and best practices. No paid plan or separate account is required to access the courses themselves, though hands-on Claude or API usage may require a separate Claude subscription or API account.",
+    "benefitType": "Free",
+    "value": "17+ free AI courses (no code needed)",
+    "eligibility": "Students",
+    "region": "Global",
+    "verification": "Student Email",
+    "url": "https://www.anthropic.com/learn",
+    "claimUrl": "https://www.anthropic.com/learn",
+    "tags": [
+      "AI",
+      "Free",
+      "Web"
+    ]
+  },
+  {
+    "title": "Ready.bd - Free personal subdomain (.pro.bd, .ami.bd, .iam.bd)",
+    "company": "Ready.bd",
+    "slug": "ready-bd",
+    "logo": "https://aobklvmdpcebkbgvvijp.supabase.co/storage/v1/object/public/LOGOs/Ready.bd.png",
+    "category": "Domain Registrar",
+    "appCategory": "Credits & Savings",
+    "offerSummary": "Free personal subdomain names for Bangladesh residents with DNS control and SSL",
+    "description": "Ready.bd is Bangladesh's free domain registration service that provides personal .bd subdomains for websites, blogs, and online projects. The platform offers free subdomains including .pro.bd, .ami.bd, and .iam.bd with full DNS control and SSL certificates included\u2014no hidden costs.\n\nThe offer is available to all users with no verification requirements. Bangladesh residents can register and maintain their chosen subdomain indefinitely at no cost. Ready.bd includes DNS management tools and automatic SSL encryption for all registered subdomains, making it straightforward to launch and manage your online presence without registration or renewal fees.",
+    "benefitType": "Free",
+    "value": "Free personal subdomain (.pro.bd, .ami.bd, .iam.bd)",
+    "eligibility": "Students",
+    "region": "Bangladesh",
+    "verification": "Student Email",
+    "url": "https://ready.bd/",
+    "claimUrl": "https://ready.bd/",
+    "tags": [
+      "Free",
+      "Web"
+    ]
+  },
+  {
+    "title": "Gname - 3 free .eu.cc domain registrations ($0/yr)",
+    "company": "Gname",
+    "slug": "gname",
+    "logo": "https://aobklvmdpcebkbgvvijp.supabase.co/storage/v1/object/public/LOGOs/Gname.png",
+    "category": "Domain Registrar",
+    "appCategory": "Credits & Savings",
+    "offerSummary": "Domain registrar offering .eu.cc and 100+ TLDs at discounted prices",
+    "description": "Gname is a domain registrar that provides domain registration services across multiple top-level domains (TLDs). The platform offers free .cc and .eu domains to registered users, allowing students and others to establish an online presence without upfront registration costs for these specific extensions.\n\nTo access the free .cc and .eu domains, users must first create an account with Gname. The offer applies to new domain registrations under these two TLDs only; renewal terms and pricing for other extensions or subsequent years are not specified in available data. No student-specific verification process has been confirmed, meaning this offer may be available to all registered users rather than students exclusively.",
+    "benefitType": "Free",
+    "value": "3 free .eu.cc domain registrations ($0/yr)",
+    "eligibility": "Students",
+    "region": "Global",
+    "verification": "Student Email",
+    "url": "https://www.gname.com/tld-eu-cc.html",
+    "claimUrl": "https://www.gname.com/tld-eu-cc.html",
+    "tags": [
+      "Free",
+      "Web"
+    ]
+  },
+  {
+    "title": "Brain.fm - 20% off \u2014 email .edu to support",
+    "company": "Brain.fm",
+    "slug": "brain-fm",
+    "logo": "https://img.logo.dev/brain.fm?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
+    "category": "Mental Wellness",
+    "appCategory": "Credits & Savings",
+    "offerSummary": "Functional music for focus, work, and sleep",
+    "description": "Brain.fm offers music designed for deep work, learning, motivation, relaxation, and sleep. The product is positioned to help users reach a focused state quickly, with modes tailored to different tasks. It's a paid focus-audio service that may help students sustain attention during reading, coding, writing, or revision sessions.\n\nActive students can get 20% off by emailing support from a .edu address or by sending a student ID or equivalent proof of enrollment. Students should verify the current coupon process and make sure the discount still applies to their plan before subscribing.\n\nWhen evaluating Brain.fm, students should decide whether the subscription offers enough value compared with free playlists or other study-audio options available elsewhere.",
+    "benefitType": "Discount",
+    "value": "20% off \u2014 email .edu to support",
+    "eligibility": "Students",
+    "region": "Global",
+    "verification": "Student Email",
+    "url": "https://www.brain.fm/",
+    "claimUrl": "https://www.brain.fm/",
+    "tags": [
+      "Discount",
+      "Web"
+    ]
+  },
+  {
+    "title": "Aiven SQL Optimizer - Free SQL optimizer for PostgreSQL & MySQL",
+    "company": "Aiven SQL Optimizer",
+    "slug": "aiven-sql-optimizer-2",
+    "logo": "https://img.logo.dev/aiven.io?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
+    "category": "Databases",
+    "appCategory": "Software & Tools",
+    "offerSummary": "Paste your SQL and get AI-powered indexing recommendations to speed up queries.",
+    "description": "Aiven SQL Optimizer is a free tool that analyzes SQL queries for PostgreSQL and MySQL databases. You paste your SQL and metadata into the tool, and it returns AI-powered indexing recommendations and query-rewrite suggestions to help speed up slow queries.\n\nAvailable to all users at no cost during its Early Availability period, it's useful for developers, computer science students, and bootcamp learners who want to optimize database performance without subscribing to a paid monitoring platform. Verify current availability and whether the free status remains active before adding it to your workflow.",
+    "benefitType": "Free",
+    "value": "Free SQL optimizer for PostgreSQL & MySQL",
+    "eligibility": "Students",
+    "region": "Global",
+    "verification": "Student Email",
+    "url": "https://aiven.io/tools/sql-query-optimizer",
+    "claimUrl": "https://aiven.io/tools/sql-query-optimizer",
+    "tags": [
+      "API",
+      "Free",
+      "Developer"
+    ]
+  },
+  {
+    "title": "ACM Digital Library - $$42/yr student membership + Digital Library Premium",
+    "company": "ACM Digital Library",
+    "slug": "acm-digital-library",
+    "logo": "https://img.logo.dev/acm.org?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
+    "category": "Academic Library",
+    "appCategory": "Software & Tools",
+    "offerSummary": "Computing publications, TechTalks, and O'Reilly courses for CS students.",
+    "description": "ACM Digital Library is the computing field's premier online resource for peer-reviewed research, publications, and technical content maintained by ACM, the world's largest educational and scientific computing society. Students can access the Digital Library through an ACM student membership priced at $42 per year, which includes Digital Library Premium access.\n\nThis membership provides computing students with access to ACM's full collection of conference proceedings, journals, and technical publications, plus TechTalks and the ACM Learning Center, which offers online courses, books, and instructional videos. Student membership also connects members to ACM's worldwide Professional and Student Chapters, which organize seminars, lectures, and networking events across the computing field.\n\nAfter graduation, students can renew their membership at standard rates or access dedicated resources for graduating members.",
+    "benefitType": "Discount",
+    "value": "$$42/yr student membership + Digital Library Premium",
+    "eligibility": "Students",
+    "region": "Global",
+    "verification": "Student Email",
+    "url": "https://www.acm.org/membership/join-acm",
+    "claimUrl": "https://www.acm.org/membership/join-acm",
+    "tags": [
+      "Discount",
+      "Web"
+    ]
+  },
+  {
+    "title": "Surfshark VPN - 87% off + 3 months extra from $1.99/mo",
+    "company": "Surfshark VPN",
+    "slug": "surfshark-vpn",
+    "logo": "https://img.logo.dev/surfshark.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
+    "category": "Cybersecurity",
+    "appCategory": "Software & Tools",
+    "offerSummary": "VPN service with student discounts through Surfshark and Student Beans",
+    "description": "Surfshark VPN is a privacy-focused VPN service that encrypts your internet connection and masks your IP address to protect your online activity. The service offers unlimited simultaneous connections across 4,500+ servers in over 100 countries, making it easy to access content globally while maintaining privacy. Surfshark maintains an audited no-logs policy, meaning your browsing activity isn't recorded or sold.\n\nStudents can access Surfshark VPN at a reduced rate through Student Beans verification. After confirming your student status via the Student Beans portal, you'll receive a discount code to apply at checkout. All subscriptions include a 30-day money-back guarantee, so you can test the service risk-free.",
+    "benefitType": "Discount",
+    "value": "87% off + 3 months extra from $1.99/mo",
+    "eligibility": "Students",
+    "region": "Limited Countries",
+    "verification": "Student Email",
+    "url": "https://www.studentoffers.co/offer/surfshark-vpn",
+    "claimUrl": "https://www.studentoffers.co/offer/surfshark-vpn",
+    "tags": [
+      "Discount",
+      "Web"
+    ]
+  },
+  {
+    "title": "Reve - 1 year free Pro plan",
+    "company": "Reve",
+    "slug": "reve",
+    "logo": "https://img.logo.dev/reve.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
+    "category": "Generative AI",
+    "appCategory": "Software & Tools",
+    "offerSummary": "AI image generation and editing tool for visual creative work",
+    "description": "Reve is an AI image generation and editing tool designed for visual creative work. The platform is marketed toward common student use cases including storyboarding, presentation visuals, club branding, concept art, and portfolio building.\n\nStudents with a .edu email can register to receive one year of free Pro access before the end of May 2026; students signing up after that deadline qualify for a Student Tier instead. Reve also runs campus programs including ambassador initiatives, faculty partnerships, and classroom activations.",
+    "benefitType": "Free",
+    "value": "1 year free Pro plan",
+    "eligibility": "Students",
+    "region": "Global",
+    "verification": "Student Email",
+    "url": "https://app.reve.com/community/students",
+    "claimUrl": "https://app.reve.com/community/students",
+    "tags": [
+      "AI",
+      "Free",
+      "Web"
+    ]
+  },
+  {
+    "title": "Chaos Pro Upgrade - 30% off first annual commercial license",
+    "company": "Chaos Pro Upgrade",
+    "slug": "chaos-pro-upgrade",
+    "logo": "https://img.logo.dev/chaos.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
+    "category": "3D & Animation",
+    "appCategory": "Software & Tools",
+    "offerSummary": "Upgrade discount for annual V-Ray, Corona, and Enscape licenses",
+    "description": "Chaos Pro Upgrade is a discounted pathway for students and recent graduates to move from educational licenses to commercial licenses for V-Ray, Corona, and Enscape. This is positioned as a bridge into professional work and freelancing rather than a standard education discount.\n\nEligible users\u2014those with an active student license or whose student license expired within the last six months\u2014can purchase their first annual commercial license at 30% off regular pricing. To claim the offer, sign into your Chaos account and submit a Help with Purchasing request so the team can verify your eligibility.\n\nNote that the discount applies only to your first commercial purchase; renewals revert to standard commercial pricing.",
+    "benefitType": "Discount",
+    "value": "30% off first annual commercial license",
+    "eligibility": "Students",
+    "region": "Global",
+    "verification": "Student Email",
+    "url": "https://www.chaos.com/education/student-to-professional",
+    "claimUrl": "https://www.chaos.com/education/student-to-professional",
+    "tags": [
+      "Discount",
+      "Web"
+    ]
+  },
+  {
+    "title": "eEducation - Up to 30% off dental education membership",
+    "company": "eEducation",
+    "slug": "eeducation",
+    "logo": "https://img.logo.dev/eeducation.in?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
+    "category": "Online Courses",
+    "appCategory": "Software & Tools",
+    "offerSummary": "Case-based dental education videos by Dr. Agam Bhatnagar",
+    "description": "eEducation is a dental education platform offering case-based learning videos created by Dr. Agam Bhatnagar. The videos focus on clinical cases and techniques designed to supplement dental school coursework.\n\neEducation offers up to 30% off membership pricing for dental students. Undergraduate and postgraduate dental students can verify their status by submitting a valid college ID via email or WhatsApp to claim the discount. Once verified, students receive a special discount payment link for reduced membership access. This pricing structure makes eEducation an affordable option for dental students seeking supplementary clinical learning resources and detailed case studies throughout their studies.",
+    "benefitType": "Discount",
+    "value": "Up to 30% off dental education membership",
+    "eligibility": "Students",
+    "region": "India",
+    "verification": "Student Email",
+    "url": "https://www.eeducation.in/student-discounts",
+    "claimUrl": "https://www.eeducation.in/student-discounts",
+    "tags": [
+      "Discount",
+      "Web"
+    ]
+  },
+  {
+    "title": "FreeLLMAPI - 1B+ free LLM tokens/month across 60 models",
+    "company": "FreeLLMAPI",
+    "slug": "freellmapi",
+    "logo": "https://img.logo.dev/github.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
+    "category": "AI API Access",
+    "appCategory": "Software & Tools",
+    "offerSummary": "Self-hosted proxy routing 60 LLMs across 11 free-tier providers",
+    "description": "FreeLLMAPI is a self-hosted, open-source proxy that routes requests across 60 LLM models from 11 free-tier providers. It aggregates approximately 1 billion+ free tokens per month into a single OpenAI-compatible interface, making it useful for developers, researchers, and hobbyists experimenting with multiple LLM options without upfront costs.\n\nAvailable to all users, FreeLLMAPI requires you to bring your own API keys from each provider and manage access locally. This setup allows you to access a vast range of models while maintaining direct control over your usage and credentials.\n\nFreeLLMAPI is designed for personal self-hosted use and does not bypass individual provider usage limits. Users should check current provider quotas and review each provider's terms before deployment.",
+    "benefitType": "Free",
+    "value": "1B+ free LLM tokens/month across 60 models",
+    "eligibility": "Students",
+    "region": "Global",
+    "verification": "Student Email",
+    "url": "https://tashfeenahmed.github.io/freellmapi/",
+    "claimUrl": "https://tashfeenahmed.github.io/freellmapi/",
+    "tags": [
+      "API",
+      "Free",
+      "Developer"
+    ]
+  },
+  {
+    "title": "Typeless - 50% off Pro plan",
+    "company": "Typeless",
+    "slug": "typeless",
+    "logo": "https://img.logo.dev/typeless.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
+    "category": "AI Transcription",
+    "appCategory": "Software & Tools",
+    "offerSummary": "AI dictation app turning voice into polished text across all platforms",
+    "description": "Typeless is an AI dictation app that converts voice into polished text across Mac, Windows, iOS, and Android. The Pro plan unlocks unlimited dictation and premium features, making it useful for students drafting essays, capturing notes, and writing quickly across applications.\n\nEligible students can get 50% off the Pro plan by verifying with a school email at checkout. Verification is available through school email sign-in or manual review if your institution requires it.\n\nNote that the discount applies to new Pro subscribers only and is valid for Desktop checkout.",
+    "benefitType": "Discount",
+    "value": "50% off Pro plan",
+    "eligibility": "Students",
+    "region": "Global",
+    "verification": "Student Email",
+    "url": "https://www.typeless.com/students",
+    "claimUrl": "https://www.typeless.com/students",
+    "tags": [
+      "AI",
+      "Discount",
+      "Web"
+    ]
+  },
+  {
+    "title": "Overflow - Educational discount on Pro plan",
+    "company": "Overflow",
+    "slug": "overflow",
+    "logo": "https://img.logo.dev/overflow.io?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
+    "category": "UI/UX Tools",
+    "appCategory": "Software & Tools",
+    "offerSummary": "User flow design tool for presenting and sharing interactive designs",
+    "description": "Overflow is a user flow design tool that lets you present and share interactive design flows for critique and collaboration. The platform offers desktop apps, cloud sharing, PDF export, and integrations with Figma, Sketch, and Adobe XD, along with commenting and external reviewer features.\n\nStudents and academic institutions can request an educational discount on Overflow's Pro plan by contacting the team with their institution email address. The standard Pro plan costs $19.95 per user/month, and all users can start with a 14-day free trial with no credit card required. After your trial ends, you have up to 60 days to activate a paid subscription before your trial access expires.",
+    "benefitType": "Discount",
+    "value": "Educational discount on Pro plan",
+    "eligibility": "Students",
+    "region": "Global",
+    "verification": "Student Email",
+    "url": "https://overflow.io/pricing/",
+    "claimUrl": "https://overflow.io/pricing/",
+    "tags": [
+      "Discount",
+      "Web"
+    ]
+  },
+  {
+    "title": "Overleaf - Student plan \u2014 up to 56% off Standard pricing",
+    "company": "Overleaf",
+    "slug": "overleaf",
+    "logo": "https://img.logo.dev/overleaf.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
+    "category": "Document Tools",
+    "appCategory": "Software & Tools",
+    "offerSummary": "Collaborative online LaTeX editor for writing research papers and theses",
+    "description": "$107",
+    "benefitType": "Discount",
+    "value": "Student plan \u2014 up to 56% off Standard pricing",
+    "eligibility": "Students",
+    "region": "Global",
+    "verification": "Student Email",
+    "url": "https://www.overleaf.com/user/subscription/plans?plan=student&period=monthly",
+    "claimUrl": "https://www.overleaf.com/user/subscription/plans?plan=student&period=monthly",
+    "tags": [
+      "Discount",
+      "Web"
+    ]
+  },
+  {
+    "title": "Shodan - Free Membership upgrade with academic email",
+    "company": "Shodan",
+    "slug": "shodan",
+    "logo": "https://img.logo.dev/shodan.io?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
+    "category": "Cybersecurity",
+    "appCategory": "Software & Tools",
+    "offerSummary": "Internet-wide search engine for finding internet-connected devices",
+    "description": "Shodan is an internet-wide search engine that identifies and maps internet-connected devices and their exposed services globally. It crawls the entire internet weekly to provide visibility into networked infrastructure, making it a core tool for cybersecurity education, penetration testing, and network security research.\n\nStudents with a valid academic email address can access a free membership upgrade. The platform provides direct access to device tracking, service enumeration, and exposure assessment\u2014functionality typically reserved for paid tiers. This includes the full Shodan API for developers, enabling integration into security research workflows and coursework projects.\n\nVerification is email-based; academic email credentials confirm student status. The upgrade applies globally, and API access is included with the membership tier.",
+    "benefitType": "Free",
+    "value": "Free Membership upgrade with academic email",
+    "eligibility": "Students",
+    "region": "Global",
+    "verification": "Student Email",
+    "url": "https://www.shodan.io/",
+    "claimUrl": "https://www.shodan.io/",
+    "tags": [
+      "Free",
+      "Web"
+    ]
+  },
+  {
+    "title": "General Compute - Free $10 API credits on signup",
+    "company": "General Compute",
+    "slug": "general-compute",
+    "logo": "https://img.logo.dev/generalcompute.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
+    "category": "AI API Access",
+    "appCategory": "Software & Tools",
+    "offerSummary": "High-speed inference API for Minimax, DeepSeek and other frontier models",
+    "description": "General Compute is a high-speed inference API for accessing frontier models like Minimax and DeepSeek. The platform provides an OpenAI-compatible API with straightforward key-based onboarding, designed for developers building AI applications, testing inference providers, or experimenting with model access.\n\nAll new users receive $10 in free API credits upon signup with no verification required. The free credit lets you evaluate General Compute's performance, integration, and model availability before committing to paid usage. Use the credits to run inference requests, test latency, and assess whether General Compute fits your production or development needs.",
+    "benefitType": "Credit",
+    "value": "Free $10 API credits on signup",
+    "eligibility": "Students",
+    "region": "Global",
+    "verification": "Student Email",
+    "url": "https://www.generalcompute.com/",
+    "claimUrl": "https://www.generalcompute.com/",
+    "tags": [
+      "API",
+      "Credit",
+      "Developer"
+    ]
+  },
+  {
+    "title": "Microlaunch - 50% off Pro Launch (reg. $49)",
+    "company": "Microlaunch",
+    "slug": "microlaunch",
+    "logo": "https://img.logo.dev/microlaunch.net?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
+    "category": "Launch Platforms",
+    "appCategory": "Software & Tools",
+    "offerSummary": "Product launch platform for indie founders to get visibility",
+    "description": "Microlaunch is a product launch platform that gives founders, indie makers, and early-stage startups 30 days of continuous visibility across a network of 320,000+ unique visitors monthly. The platform is used by 500+ startups and founders to generate traffic, sales, and product validation, with users reporting it as a top-tier alternative to ProductHunt and some receiving 14.5% of their monthly traffic from the platform.\n\nThe Pro Launch tier, regularly $49, provides placement in the platform's marketplace, community feedback, and distribution to 40,000+ monthly page views. Unlimited re-launches and feature updates are included, allowing founders to share new iterations and maintain long-term visibility.\n\nThe platform operates globally across 190+ countries with localized pricing.",
+    "benefitType": "Discount",
+    "value": "50% off Pro Launch (reg. $49)",
+    "eligibility": "Students",
+    "region": "Global",
+    "verification": "Student Email",
+    "url": "https://microlaunch.net/premium",
+    "claimUrl": "https://microlaunch.net/premium",
+    "tags": [
+      "Discount",
+      "Web"
+    ]
+  },
+  {
+    "title": "Curiosity - 90% off Pro desktop app",
+    "company": "Curiosity",
+    "slug": "curiosity",
+    "logo": "https://img.logo.dev/curiosity.ai?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
+    "category": "Focus & Productivity",
+    "appCategory": "Software & Tools",
+    "offerSummary": "AI-powered desktop search app that connects all your apps and files",
+    "description": "Curiosity is an AI-powered desktop search app that connects across your applications and files to provide unified search and quick app launching. The free version includes up to 5 apps, search across apps and folders, and app/meeting launch functionality.\n\nThe Pro desktop app expands this to unlimited apps (including pro-tier apps) and deeper file-content search powered by advanced AI assistants. Curiosity offers a 14-day free trial of the Pro app with no credit card required\u2014you can cancel anytime during the trial period. After the trial ends, Pro features require a paid subscription, with pricing shown at \u20ac9.99/month on their pricing page.",
+    "benefitType": "Discount",
+    "value": "90% off Pro desktop app",
+    "eligibility": "Students",
+    "region": "Global",
+    "verification": "Student Email",
+    "url": "https://curiosity.ai/app/pricing",
+    "claimUrl": "https://curiosity.ai/app/pricing",
+    "tags": [
+      "AI",
+      "Discount",
+      "Web"
+    ]
+  },
+  {
+    "title": "Escape Motions - 40% off all apps (lifetime licenses)",
+    "company": "Escape Motions",
+    "slug": "escape-motions",
+    "logo": "https://img.logo.dev/escapemotions.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
+    "category": "Graphic Design Tools",
+    "appCategory": "Software & Tools",
+    "offerSummary": "Suite of hyper-realistic painting and creative design desktop apps",
+    "description": "Escape Motions is a suite of hyper-realistic painting and creative design desktop apps. The collection includes tools like Rebelle, Flame Painter, Amberlight, and Inspirit that provide professional-grade capabilities for digital artists.\n\nFull-time students and teachers receive 40% off lifetime licenses. Unlike subscription models, these are one-time purchases with no recurring fees, making them accessible for students who prefer permanent ownership. The discount applies across individual licenses, and classroom volume pricing is available for schools and art programs. Students in fine arts, illustration, digital painting, and creative technology benefit from these reduced rates.\n\nEducation verification is handled via email, and you should confirm your license type\u2014individual or classroom\u2014before purchase.",
+    "benefitType": "Discount",
+    "value": "40% off all apps (lifetime licenses)",
+    "eligibility": "Students",
+    "region": "Global",
+    "verification": "Student Email",
+    "url": "https://www.escapemotions.com/education",
+    "claimUrl": "https://www.escapemotions.com/education",
+    "tags": [
+      "Discount",
+      "macOS"
+    ]
+  },
+  {
+    "title": "Runway - 25% off any paid plan via SheerID",
+    "company": "Runway",
+    "slug": "runway",
+    "logo": "https://img.logo.dev/runwayml.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
+    "category": "Generative AI",
+    "appCategory": "Software & Tools",
+    "offerSummary": "Generate and edit videos from text prompts using AI",
+    "description": "Runway is an AI video generation and editing platform that creates and edits videos from text prompts, used for generative video, motion design, concept work, and visual storytelling.\n\nStudents and educators receive 25% off any paid plan by verifying their status through SheerID, Runway's education partner. Verification takes minutes and applies immediately to Standard, Pro, Unlimited, and Enterprise plans. Educators managing classroom licenses of 3 or more can negotiate up to 25% off as well.\n\nThe discount is available globally and requires proof of current enrollment or employment status through SheerID's verification system.",
+    "benefitType": "Discount",
+    "value": "25% off any paid plan via SheerID",
+    "eligibility": "Students",
+    "region": "Global",
+    "verification": "Student Email",
+    "url": "https://runwayml.com/educators",
+    "claimUrl": "https://runwayml.com/educators",
+    "tags": [
+      "AI",
+      "Discount",
+      "Web"
+    ]
+  },
+  {
+    "title": "Sonix - 20% off all plans forever",
+    "company": "Sonix",
+    "slug": "sonix",
+    "logo": "https://img.logo.dev/sonix.ai?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
+    "category": "AI Transcription",
+    "appCategory": "Software & Tools",
+    "offerSummary": "AI transcription and translation platform for audio and video",
+    "description": "Sonix is an AI transcription and translation platform that converts audio and video files into text. It supports subtitle generation, AI analysis, and collaborative editing with integrations for Zoom, Zapier, and Adobe Premiere.\n\nStudents, educators, and staff with a verifiable school email receive 20% off all plans. The discount applies to every seat and renewal, covering individual accounts and team projects like research groups, classes, and labs. Start with a free trial, then claim the discount from your dashboard after verifying your school email. The 20% discount remains active as long as your account stays eligible.",
+    "benefitType": "Discount",
+    "value": "20% off all plans forever",
+    "eligibility": "Students",
+    "region": "Global",
+    "verification": "Student Email",
+    "url": "https://sonix.ai/discounts",
+    "claimUrl": "https://sonix.ai/discounts",
+    "tags": [
+      "AI",
+      "Discount",
+      "Web"
+    ]
+  },
+  {
+    "title": "Motra - 50% off student plan",
+    "company": "Motra",
+    "slug": "motra",
+    "logo": "https://img.logo.dev/motra.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
+    "category": "Fitness & Health",
+    "appCategory": "Credits & Savings",
+    "offerSummary": "AI fitness app with personalized workout plans and exercise tracking",
+    "description": "Motra is an AI fitness app that creates personalized workout plans tailored to your goals and tracks exercise performance in real time. The app uses smartwatch integration to log strength training sessions and monitor structured workout data automatically.\n\nStudents receive 50% off Motra's standard student plan with verified student status. The discount applies to eligible students who complete verification through Motra's student portal.\n\nAfter graduation, pricing will revert to standard rates unless you switch to a different plan. Motra supports flexible billing cycles, and you can cancel your subscription at any time.",
+    "benefitType": "Discount",
+    "value": "50% off student plan",
+    "eligibility": "Students",
+    "region": "Global",
+    "verification": "Student Email",
+    "url": "https://www.motra.com/student-discount",
+    "claimUrl": "https://www.motra.com/student-discount",
+    "tags": [
+      "AI",
+      "Discount",
+      "iOS"
+    ]
+  },
+  {
+    "title": "PromeAI - 20% off all plans",
+    "company": "PromeAI",
+    "slug": "promeai",
+    "logo": "https://img.logo.dev/promeai.pro?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
+    "category": "Generative AI",
+    "appCategory": "Software & Tools",
+    "offerSummary": "AI platform for generating images, videos and renders from text or sketches",
+    "description": "PromeAI is an AI platform for generating images, videos, and renders from text or sketches. The platform is designed for design and creative workflows, including sketch rendering, image generation, prototyping, and collaboration\u2014making it relevant for architecture, interior design, visual communication, and creative-technology students.\n\nStudents and teachers at eligible schools can access 20% off all plans through PromeAI's education licensing program. To apply, users log in with an educational email and submit for review.\n\nVerify your school's eligibility and confirm which plans qualify for the discount before upgrading.",
+    "benefitType": "Discount",
+    "value": "20% off all plans",
+    "eligibility": "Students",
+    "region": "Global",
+    "verification": "Student Email",
+    "url": "https://www.promeai.pro/apply-education-licensing",
+    "claimUrl": "https://www.promeai.pro/apply-education-licensing",
+    "tags": [
+      "AI",
+      "Discount",
+      "Web"
+    ]
+  },
+  {
+    "title": "Read AI - EDU plan from $5/mo (reg. $19.75/mo)",
+    "company": "Read AI",
+    "slug": "read-ai",
+    "logo": "https://img.logo.dev/read.ai?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
+    "category": "AI Transcription",
+    "appCategory": "Software & Tools",
+    "offerSummary": "AI meeting notetaker with transcription, summaries and action items",
+    "description": "Read AI is an AI meeting notetaker that automatically transcribes, summarizes, and extracts action items from meetings. The platform integrates with Zoom, Meet, Teams, Slack, and other tools, making it useful for lectures, study groups, research interviews, and academic collaboration.\n\nActive higher-education students and staff can access EDU plans starting at $5 per month on annual billing by signing up with a .edu email address. EDU plans include transcription and meeting summaries, with a higher EDU + Video tier available for additional features.\n\nVerify which tier suits your needs and meeting volume before signing up.",
+    "benefitType": "Discount",
+    "value": "EDU plan from $5/mo (reg. $19.75/mo)",
+    "eligibility": "Students",
+    "region": "Global",
+    "verification": "Student Email",
+    "url": "https://www.read.ai/edu-pricing",
+    "claimUrl": "https://www.read.ai/edu-pricing",
+    "tags": [
+      "AI",
+      "Discount",
+      "Web"
+    ]
+  },
+  {
+    "title": "The Great Escape Game - \u00a319 student tickets + free drink Tuesdays",
+    "company": "The Great Escape Game",
+    "slug": "the-great-escape-game",
+    "logo": "https://img.logo.dev/thegreatescapegame.co.uk?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
+    "category": "Dating & Social",
+    "appCategory": "Software & Tools",
+    "offerSummary": "Immersive escape rooms and live action games in Sheffield and Leeds",
+    "description": "The Great Escape Game operates immersive escape rooms and live action games across Sheffield and Leeds locations. Players work together to solve puzzles, communicate under pressure, and complete themed challenges\u2014ranging from The Doctor's Chophouse to Submerged submarine scenarios\u2014designed for groups of 2\u20139 people.\n\nStudents receive \u00a319 tickets plus a free drink on Tuesdays when they present a valid NUS card, college or university ID card with photo and expiry date, or use verified student apps like UNiDAYS or Student Beans. This Student Tuesdays offer is ideal for groups of housemates or course friends wanting a break from study stress or a way to celebrate exam results together.\n\nThe escape room experiences are designed to test communication, problem-solving, and sometimes physical courage. Large groups can be accommodated across multiple games with custom itineraries available by contacting the venue directly on 0330 088 3032.",
+    "benefitType": "Discount",
+    "value": "\u00a319 student tickets + free drink Tuesdays",
+    "eligibility": "Students",
+    "region": "UK",
+    "verification": "Student Email",
+    "url": "https://thegreatescapegame.co.uk/offers/students/",
+    "claimUrl": "https://thegreatescapegame.co.uk/offers/students/",
+    "tags": [
+      "Discount",
+      "Web"
+    ]
+  },
+  {
+    "title": "PDF2Go - Free premium access with student email",
+    "company": "PDF2Go",
+    "slug": "pdf2go",
+    "logo": "https://img.logo.dev/pdf2go.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
+    "category": "Document Tools",
+    "appCategory": "Software & Tools",
+    "offerSummary": "Online PDF toolkit for editing, converting, merging and compressing files",
+    "description": "PDF2Go is an online toolkit for editing, converting, merging, compressing, and processing PDF files. The toolkit includes document editing, format conversion, file merging, compression, OCR, signing, redacting, and repair functions\u2014tasks commonly needed for assignments, applications, and administrative paperwork.\n\nStudents and teachers can access the full premium suite for free by signing up with a school email, with automatic verification for most institutions. The education license is for non-commercial educational use and can be renewed while you remain eligible.\n\nVerify that your institution email is supported before signing up.",
+    "benefitType": "Free",
+    "value": "Free premium access with student email",
+    "eligibility": "Students",
+    "region": "Global",
+    "verification": "Student Email",
+    "url": "https://www.pdf2go.com/solution/education",
+    "claimUrl": "https://www.pdf2go.com/solution/education",
+    "tags": [
+      "Free",
+      "Web"
+    ]
+  },
+  {
+    "title": "Kickresume - Free Premium for 6 months",
+    "company": "Kickresume",
+    "slug": "kickresume",
+    "logo": "https://img.logo.dev/kickresume.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
+    "category": "Career Tools",
+    "appCategory": "Software & Tools",
+    "offerSummary": "AI resume and cover letter builder with ATS checker and career tools",
+    "description": "Kickresume is an AI-powered resume and cover letter builder with an ATS checker and career tools. It's designed to help students and early-career professionals create polished application materials for internships, part-time roles, or entry-level positions.\n\nStudents and teachers can get up to 180 days of Premium free after verifying with ISIC, ITIC, or UNiDAYS. The Premium tier includes AI-assisted resume writing, cover letter creation, ATS optimization, resume tailoring, and website resumes.\n\nAfter the free period ends, your account reverts to the free plan while your data remains accessible.",
+    "benefitType": "Free",
+    "value": "Free Premium for 6 months",
+    "eligibility": "Students",
+    "region": "Global",
+    "verification": "Student Email",
+    "url": "https://www.kickresume.com/en/students/",
+    "claimUrl": "https://www.kickresume.com/en/students/",
+    "tags": [
+      "AI",
+      "Free",
+      "Web"
+    ]
+  },
+  {
+    "title": "NoteGPT - Free 1 Month Pro",
+    "company": "NoteGPT",
+    "slug": "notegpt",
+    "logo": "https://img.logo.dev/notegpt.io?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
+    "category": "Study Tools",
+    "appCategory": "Software & Tools",
+    "offerSummary": "AI tool for summarizing YouTube videos, PDFs, and notes",
+    "description": "NoteGPT is an AI note-taking and summarization tool that helps students extract key information from YouTube videos, lectures, PDFs, and documents. The platform offers unlimited YouTube transcript summaries, audio and video transcription, PDF chat, AI writing, mind mapping, and voice cloning features across web and browser extension formats.\n\nStudents can access one free month of NoteGPT Pro, which includes unlimited basic quotas for transcription and summarization tasks. After the trial period, the Pro plan costs $99/month or $829/year (30% annual discount). NoteGPT does not auto-renew after the free month ends, so no ongoing charges occur unless you manually upgrade to a paid plan.",
+    "benefitType": "Free",
+    "value": "Free 1 Month Pro",
+    "eligibility": "Students",
+    "region": "Global",
+    "verification": "Student Email",
+    "url": "https://notegpt.io/pricing",
+    "claimUrl": "https://notegpt.io/pricing",
+    "tags": [
+      "AI",
+      "Free",
+      "Web"
+    ]
+  },
+  {
+    "title": "Fender - Up to 20% off + 25% off Fender Studio",
+    "company": "Fender",
+    "slug": "fender",
+    "logo": "https://img.logo.dev/fender.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
+    "category": "Music Production",
+    "appCategory": "Software & Tools",
+    "offerSummary": "Iconic guitar brand selling guitars, amps, basses, and Fender Studio music software",
+    "description": "Iconic guitar brand selling guitars, amps, basses, and Fender Studio music software",
+    "benefitType": "Discount",
+    "value": "Up to 20% off + 25% off Fender Studio",
+    "eligibility": "Students",
+    "region": "Limited Countries",
+    "verification": "Student Email",
+    "url": "https://www.studentoffers.co/offer/fender",
+    "claimUrl": "https://www.studentoffers.co/offer/fender",
+    "tags": [
+      "Discount",
+      "Web"
+    ]
+  },
+  {
+    "title": "Wordtune - 30% off paid plans",
+    "company": "Wordtune",
+    "slug": "wordtune",
+    "logo": "https://img.logo.dev/wordtune.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
+    "category": "AI Writing",
+    "appCategory": "Software & Tools",
+    "offerSummary": "AI writing assistant that rewrites, rephrases, and summarizes text for students",
+    "description": "AI writing assistant that rewrites, rephrases, and summarizes text for students",
+    "benefitType": "Discount",
+    "value": "30% off paid plans",
+    "eligibility": "Students",
+    "region": "Global",
+    "verification": "Student Email",
+    "url": "https://www.studentoffers.co/offer/wordtune",
+    "claimUrl": "https://www.studentoffers.co/offer/wordtune",
+    "tags": [
+      "AI",
+      "Discount",
+      "Web"
+    ]
   }
 ];
