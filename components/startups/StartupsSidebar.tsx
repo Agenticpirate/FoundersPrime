@@ -120,38 +120,6 @@ export default function StartupsSidebar({
         </div>
       </div>
 
-      {/* Weekly Digest */}
-      <div className="relative bg-[#0c0c0c] border border-white/10 rounded-xl p-4 md:p-5 overflow-hidden">
-        <Mandala
-          variant="petal"
-          colorClass="text-white/5"
-          opacity={0.03}
-          speed={110}
-          className="absolute -bottom-10 -left-10 w-36 h-36"
-        />
-        <div className="relative">
-          <h3 className="font-mono text-[11px] font-black uppercase tracking-[0.15em] mb-2 text-white flex items-center gap-2">
-            <span className="material-symbols-outlined text-[16px] text-accent-yellow">mail</span>
-            Weekly Ideas Digest
-          </h3>
-          <p className="font-sans text-[11.5px] text-gray-400 mb-3.5 leading-relaxed">
-            Get fresh validated startup ideas delivered to your inbox every week.
-          </p>
-          <div className="space-y-2">
-            <input
-              className="w-full h-9 bg-white/5 hover:bg-white/8 focus:bg-[#111] border border-white/10 text-white px-3 font-mono text-[12px] focus:outline-none focus:ring-1 focus:ring-accent-yellow focus:border-accent-yellow placeholder:text-gray-500 rounded-lg transition-colors"
-              placeholder="you@email.com"
-              type="email"
-            />
-            <button className="w-full h-9 text-[12px] bg-[#ffd700] text-black hover:bg-[#ffe033] font-mono font-bold rounded-lg transition-colors">
-              Subscribe
-            </button>
-            <p className="font-mono text-[9px] text-gray-500 text-center mt-1">
-              Join 12,543+ builders
-            </p>
-          </div>
-        </div>
-      </div>
     </div>
   );
 }

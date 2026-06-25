@@ -43,38 +43,46 @@ export default function ContactFAQ() {
   ]
 
   return (
-    <div className="relative bg-white dark:bg-[#0d0d0d] border border-gray-200 dark:border-zinc-800 rounded-xl p-6 md:p-8 overflow-hidden transition-all duration-300">
-      <div className="relative mb-6 flex items-center gap-3">
-        <div className="size-10 bg-yellow-400 flex items-center justify-center rounded-md">
-          <span className="material-symbols-outlined !text-[20px] text-black">quiz</span>
+    <div className="relative bg-white dark:bg-[#08080a] border border-gray-200 dark:border-zinc-800/80 rounded-2xl p-6 md:p-8 overflow-hidden transition-all duration-300 shadow-xl fp-fade-up">
+      <div className="relative mb-8 flex items-center gap-4">
+        <div className="size-12 bg-yellow-400/10 border border-yellow-400/20 flex items-center justify-center rounded-xl text-yellow-400">
+          <span className="material-symbols-outlined !text-[24px]">question_answer</span>
         </div>
         <div>
-          <h2 className="font-mono text-sm font-bold text-gray-900 dark:text-white uppercase tracking-wider">
+          <h2 className="font-heading text-lg font-black text-gray-900 dark:text-white uppercase tracking-wider">
             Frequently Asked Questions
           </h2>
-          <p className="font-sans text-[11px] text-gray-500 dark:text-gray-400 mt-0.5">Answers to the most common questions</p>
+          <p className="font-mono text-[10px] text-gray-400 dark:text-zinc-500 uppercase tracking-widest mt-0.5">
+            Quick responses to popular inquiries
+          </p>
         </div>
       </div>
 
-      <div className="relative grid grid-cols-1 md:grid-cols-2 gap-3 items-start">
+      <div className="relative grid grid-cols-1 md:grid-cols-2 gap-4 items-start">
         {faqs.map((faq, index) => {
           const open = openFAQ === index
           return (
             <div
               key={index}
-              className={`border border-gray-200 dark:border-zinc-800 bg-gray-50 dark:bg-[#131316] rounded-lg overflow-hidden transition-all duration-300 ${open ? 'border-zinc-700 ring-1 ring-zinc-700 dark:border-zinc-700 dark:ring-zinc-700' : ''}`}
+              className={`border rounded-xl overflow-hidden transition-all duration-300 ${
+                open
+                  ? 'border-yellow-400/40 bg-yellow-400/[0.02] dark:border-yellow-400/20 dark:bg-yellow-400/[0.01] ring-1 ring-yellow-400/20'
+                  : 'border-gray-200 dark:border-zinc-800/75 bg-gray-50/50 dark:bg-zinc-900/10 hover:border-gray-300 dark:hover:border-zinc-700/50'
+              }`}
             >
               <button
                 onClick={() => setOpenFAQ(open ? null : index)}
                 aria-expanded={open}
-                className="w-full p-4 text-left flex items-center justify-between gap-3 transition-colors bg-gray-50 dark:bg-[#131316] hover:bg-gray-100 dark:hover:bg-zinc-800/30"
+                className="w-full p-4.5 text-left flex items-center justify-between gap-4 transition-colors"
               >
-                <h3 className="font-sans text-xs font-bold text-gray-900 dark:text-white pr-1">
+                <h3 className="font-sans text-xs font-bold text-gray-900 dark:text-white pr-2 leading-relaxed">
                   {faq.q}
                 </h3>
                 <span
-                  className={`material-symbols-outlined !text-[16px] size-5 flex-shrink-0 border border-gray-200 dark:border-zinc-800 flex items-center justify-center rounded-full bg-white dark:bg-black text-gray-500 dark:text-gray-400 transition-all duration-350 ${
-                    open ? 'rotate-45 text-yellow-400 border-yellow-400/30' : ''
+                  className={`material-symbols-outlined !text-[16px] size-6 flex-shrink-0 border flex items-center justify-center rounded-full bg-white dark:bg-black transition-all duration-300 ${
+                    open
+                      ? 'rotate-45 text-yellow-400 border-yellow-400/30 shadow-[0_0_10px_rgba(255,215,0,0.2)]'
+                      : 'border-gray-200 dark:border-zinc-800 text-gray-400 dark:text-zinc-500'
                   }`}
                 >
                   add
@@ -87,7 +95,7 @@ export default function ContactFAQ() {
                 }`}
               >
                 <div className="overflow-hidden">
-                  <p className="p-4 bg-white dark:bg-[#0e0e10] border-t border-gray-200 dark:border-zinc-800 font-sans text-[11px] text-gray-600 dark:text-gray-400 leading-relaxed">
+                  <p className="p-4.5 bg-white/70 dark:bg-black/30 border-t border-gray-150 dark:border-zinc-800/60 font-sans text-[11.5px] text-gray-600 dark:text-zinc-400 leading-relaxed">
                     {faq.a}
                   </p>
                 </div>
@@ -98,19 +106,25 @@ export default function ContactFAQ() {
       </div>
 
       {/* Still have questions */}
-      <div className="relative mt-8 border border-gray-200 dark:border-zinc-800 bg-gray-50 dark:bg-[#131316] p-6 rounded-xl flex flex-col sm:flex-row items-center justify-between gap-4 overflow-hidden">
+      <div className="relative mt-8 border border-gray-200 dark:border-zinc-800/80 bg-gray-50/80 dark:bg-zinc-900/20 p-6 rounded-2xl flex flex-col sm:flex-row items-center justify-between gap-6 overflow-hidden">
+        <div className="absolute -right-24 -bottom-24 w-48 h-48 bg-yellow-400/10 dark:bg-yellow-400/5 rounded-full blur-3xl pointer-events-none" />
+        
         <div className="relative text-center sm:text-left flex flex-col sm:flex-row items-center gap-4">
-          <div className="size-10 bg-yellow-400/10 border border-yellow-400/20 text-yellow-400 flex items-center justify-center rounded-full">
-            <span className="material-symbols-outlined !text-[20px]">help_outline</span>
+          <div className="size-11 bg-yellow-400/10 border border-yellow-400/20 text-yellow-400 flex items-center justify-center rounded-full">
+            <span className="material-symbols-outlined !text-[20px]">help_center</span>
           </div>
           <div>
-            <p className="font-mono text-xs font-bold text-gray-900 dark:text-white uppercase tracking-wider">Still have questions?</p>
-            <p className="font-sans text-xs text-gray-600 dark:text-gray-400 mt-1">Drop us a line — we read every message.</p>
+            <p className="font-heading text-sm font-bold text-gray-900 dark:text-white uppercase tracking-wider">
+              Still seeking answers?
+            </p>
+            <p className="font-sans text-xs text-gray-500 dark:text-zinc-400 mt-1">
+              Contact our direct support desk — we will resolve your inquiry fast.
+            </p>
           </div>
         </div>
         <a
           href="mailto:support@foundersprime.com"
-          className="relative shrink-0 inline-flex items-center gap-2 bg-yellow-400 hover:bg-yellow-500 text-black font-sans font-bold text-xs uppercase px-5 py-2.5 rounded-md transition-all shadow-md"
+          className="relative shrink-0 inline-flex items-center gap-2 bg-yellow-400 hover:bg-yellow-500 text-black font-mono font-bold text-xs uppercase px-5 py-3 rounded-xl transition-all shadow-lg hover:shadow-yellow-400/10 btn-shiny"
         >
           <span className="material-symbols-outlined !text-[16px]">mail</span>
           Email Support

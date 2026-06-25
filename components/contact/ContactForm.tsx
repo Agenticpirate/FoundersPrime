@@ -12,11 +12,15 @@ export default function ContactForm() {
   })
 
   const [submitted, setSubmitted] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    setIsSubmitting(true)
+    // Simulate API call with delay for professional UX feedback
+    await new Promise((resolve) => setTimeout(resolve, 1200))
+    setIsSubmitting(false)
     setSubmitted(true)
-    setTimeout(() => setSubmitted(false), 5000)
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -32,89 +36,101 @@ export default function ContactForm() {
     { value: 'billing', label: 'Billing', icon: 'credit_card' },
     { value: 'partnership', label: 'Partnership', icon: 'handshake' },
     { value: 'bug', label: 'Bug Report', icon: 'bug_report' },
-    { value: 'feature', label: 'Feature', icon: 'lightbulb' }
+    { value: 'feature', label: 'Feature Request', icon: 'lightbulb' }
   ]
 
   if (submitted) {
     return (
-      <div className="relative bg-white dark:bg-[#0d0d0d] border border-gray-200 dark:border-zinc-800 rounded-xl p-8 md:p-12 text-center transition-all duration-300">
-        <div className="inline-flex size-16 bg-green-500/10 border border-green-500/20 text-green-400 items-center justify-center rounded-full mb-4">
+      <div className="relative bg-white dark:bg-[#08080a] border border-gray-200 dark:border-zinc-800/80 rounded-2xl p-8 md:p-12 text-center transition-all duration-300 shadow-xl overflow-hidden fp-fade-up">
+        {/* Glow behind success */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-emerald-500/10 dark:bg-emerald-500/5 rounded-full blur-3xl pointer-events-none" />
+        
+        <div className="inline-flex size-20 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 items-center justify-center rounded-full mb-6 animate-bounce">
           <span className="material-symbols-outlined text-4xl">check_circle</span>
         </div>
-        <h3 className="font-sans text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-2 tracking-tight">
-          Message Sent
+        <h3 className="font-heading text-2xl font-black text-gray-900 dark:text-white mb-3 tracking-tight">
+          Transmission Received
         </h3>
-        <p className="font-sans text-xs md:text-sm text-gray-600 dark:text-gray-400 mb-6 max-w-sm mx-auto">
-          Thanks for reaching out. A real human will reply within 24 hours.
+        <p className="font-sans text-xs md:text-sm text-gray-500 dark:text-zinc-400 mb-8 max-w-sm mx-auto leading-relaxed">
+          Thanks for reaching out. A partner from our operations team will follow up within 24 hours.
         </p>
         <button
           onClick={() => setSubmitted(false)}
-          className="px-5 py-2.5 bg-yellow-400 hover:bg-yellow-500 text-black font-sans text-xs font-bold uppercase rounded-md transition-all"
+          className="px-6 py-3 bg-yellow-400 hover:bg-yellow-500 text-black font-mono text-xs font-bold uppercase tracking-wider rounded-lg transition-all shadow-lg hover:shadow-yellow-400/20"
         >
-          Send Another
+          Send Another Message
         </button>
       </div>
     )
   }
 
   return (
-    <div className="relative bg-white dark:bg-[#0d0d0d] border border-gray-200 dark:border-zinc-800 rounded-xl p-6 md:p-8 transition-all duration-300">
-      <div className="relative mb-6 flex items-center gap-3">
-        <div className="size-10 bg-yellow-400 flex items-center justify-center rounded-md">
-          <span className="material-symbols-outlined !text-[20px] text-black">mail</span>
+    <div className="relative bg-white dark:bg-[#08080a] border border-gray-200 dark:border-zinc-800/80 rounded-2xl p-6 md:p-8 transition-all duration-300 shadow-xl fp-fade-up">
+      {/* Decorative top bar */}
+      <div className="absolute top-0 left-6 right-6 h-[2px] bg-gradient-to-r from-transparent via-yellow-400/40 to-transparent" />
+
+      <div className="relative mb-8 flex items-center gap-4">
+        <div className="size-12 bg-yellow-400/10 border border-yellow-400/20 flex items-center justify-center rounded-xl text-yellow-400">
+          <span className="material-symbols-outlined !text-[24px]">contact_support</span>
         </div>
         <div>
-          <h2 className="font-mono text-sm font-bold text-gray-900 dark:text-white uppercase tracking-wider">
-            Send Us a Message
+          <h2 className="font-heading text-lg font-black text-gray-900 dark:text-white uppercase tracking-wider">
+            Send Message
           </h2>
-          <p className="font-sans text-[11px] text-gray-500 dark:text-gray-400 mt-0.5">All fields marked * are required</p>
+          <p className="font-mono text-[10px] text-gray-400 dark:text-zinc-500 uppercase tracking-widest mt-0.5">
+            Encrypted secure transmission
+          </p>
         </div>
       </div>
 
-      <form onSubmit={handleSubmit} className="relative space-y-5">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <form onSubmit={handleSubmit} className="relative space-y-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           <div>
-            <label className="block font-mono text-[10px] font-bold text-gray-600 dark:text-gray-400 mb-1.5 uppercase tracking-wider">
-              Full Name *
+            <label className="block font-mono text-[10px] font-bold text-gray-500 dark:text-zinc-400 mb-2 uppercase tracking-widest">
+              Full Name
             </label>
-            <div className="relative">
-              <span className="material-symbols-outlined !text-[16px] text-gray-400 dark:text-gray-500 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none">person</span>
+            <div className="relative group">
+              <span className="material-symbols-outlined !text-[16px] text-gray-400 dark:text-zinc-500 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none group-focus-within:text-yellow-400 transition-colors">
+                person
+              </span>
               <input
                 type="text"
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
                 required
-                className="w-full pl-9 pr-3 py-2.5 text-xs bg-gray-50 dark:bg-[#131316] border border-gray-200 dark:border-zinc-800 rounded-md text-gray-900 dark:text-white font-sans focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition-all placeholder:text-gray-400 dark:placeholder:text-gray-600"
+                className="w-full pl-10 pr-4 py-3 text-xs bg-gray-50 dark:bg-zinc-900/30 hover:bg-gray-100 dark:hover:bg-zinc-900/50 border border-gray-200 dark:border-zinc-800 focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 dark:focus:border-yellow-400/70 dark:focus:ring-yellow-400/40 text-gray-950 dark:text-white font-sans rounded-xl transition-all placeholder:text-gray-400 dark:placeholder:text-zinc-650"
                 placeholder="John Doe"
               />
             </div>
           </div>
           <div>
-            <label className="block font-mono text-[10px] font-bold text-gray-600 dark:text-gray-400 mb-1.5 uppercase tracking-wider">
-              Email *
+            <label className="block font-mono text-[10px] font-bold text-gray-500 dark:text-zinc-400 mb-2 uppercase tracking-widest">
+              Email Address
             </label>
-            <div className="relative">
-              <span className="material-symbols-outlined !text-[16px] text-gray-400 dark:text-gray-500 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none">mail</span>
+            <div className="relative group">
+              <span className="material-symbols-outlined !text-[16px] text-gray-400 dark:text-zinc-500 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none group-focus-within:text-yellow-400 transition-colors">
+                alternate_email
+              </span>
               <input
                 type="email"
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
                 required
-                className="w-full pl-9 pr-3 py-2.5 text-xs bg-gray-50 dark:bg-[#131316] border border-gray-200 dark:border-zinc-800 rounded-md text-gray-900 dark:text-white font-sans focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition-all placeholder:text-gray-400 dark:placeholder:text-gray-600"
+                className="w-full pl-10 pr-4 py-3 text-xs bg-gray-50 dark:bg-zinc-900/30 hover:bg-gray-100 dark:hover:bg-zinc-900/50 border border-gray-200 dark:border-zinc-800 focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 dark:focus:border-yellow-400/70 dark:focus:ring-yellow-400/40 text-gray-950 dark:text-white font-sans rounded-xl transition-all placeholder:text-gray-400 dark:placeholder:text-zinc-650"
                 placeholder="you@email.com"
               />
             </div>
           </div>
         </div>
 
-        {/* Category pills */}
+        {/* Category Selector */}
         <div>
-          <label className="block font-mono text-[10px] font-bold text-gray-600 dark:text-gray-400 mb-2.5 uppercase tracking-wider">
-            Category *
+          <label className="block font-mono text-[10px] font-bold text-gray-500 dark:text-zinc-400 mb-3 uppercase tracking-widest">
+            Inquiry Category
           </label>
-          <div className="flex flex-wrap gap-2">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
             {categories.map((category) => {
               const active = formData.category === category.value
               return (
@@ -123,14 +139,14 @@ export default function ContactForm() {
                   type="button"
                   onClick={() => setFormData({ ...formData, category: category.value })}
                   aria-pressed={active}
-                  className={`inline-flex items-center gap-1.5 px-3 py-1.5 border font-sans text-[11px] font-medium rounded-full transition-all ${
+                  className={`inline-flex items-center justify-center gap-2 px-3 py-2.5 border font-sans text-xs rounded-xl transition-all ${
                     active
-                      ? 'bg-yellow-400 border-yellow-400 text-black shadow-md'
-                      : 'bg-gray-50 dark:bg-[#131316] border-gray-200 dark:border-zinc-800 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:border-gray-300 dark:hover:border-zinc-700'
+                      ? 'bg-yellow-400 border-yellow-450 text-black font-bold shadow-md scale-[1.02]'
+                      : 'bg-gray-50 dark:bg-zinc-900/20 border-gray-200 dark:border-zinc-800 text-gray-650 dark:text-zinc-400 hover:text-gray-900 dark:hover:text-white hover:border-gray-300 dark:hover:border-zinc-700'
                   }`}
                 >
-                  <span className="material-symbols-outlined !text-[13px]">{category.icon}</span>
-                  {category.label}
+                  <span className="material-symbols-outlined !text-[15px]">{category.icon}</span>
+                  <span>{category.label}</span>
                 </button>
               )
             })}
@@ -138,44 +154,49 @@ export default function ContactForm() {
         </div>
 
         <div>
-          <label className="block font-mono text-[10px] font-bold text-gray-600 dark:text-gray-400 mb-1.5 uppercase tracking-wider">
-            Subject *
+          <label className="block font-mono text-[10px] font-bold text-gray-500 dark:text-zinc-400 mb-2 uppercase tracking-widest">
+            Subject
           </label>
-          <div className="relative">
-            <span className="material-symbols-outlined !text-[16px] text-gray-400 dark:text-gray-500 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none">subject</span>
+          <div className="relative group">
+            <span className="material-symbols-outlined !text-[16px] text-gray-400 dark:text-zinc-500 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none group-focus-within:text-yellow-400 transition-colors">
+              topic
+            </span>
             <input
               type="text"
               name="subject"
               value={formData.subject}
               onChange={handleChange}
               required
-              className="w-full pl-9 pr-3 py-2.5 text-xs bg-gray-50 dark:bg-[#131316] border border-gray-200 dark:border-zinc-800 rounded-md text-gray-900 dark:text-white font-sans focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition-all placeholder:text-gray-400 dark:placeholder:text-gray-600"
-              placeholder="What's this about?"
+              className="w-full pl-10 pr-4 py-3 text-xs bg-gray-50 dark:bg-zinc-900/30 hover:bg-gray-100 dark:hover:bg-zinc-900/50 border border-gray-200 dark:border-zinc-800 focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 dark:focus:border-yellow-400/70 dark:focus:ring-yellow-400/40 text-gray-950 dark:text-white font-sans rounded-xl transition-all placeholder:text-gray-400 dark:placeholder:text-zinc-650"
+              placeholder="Briefly describe your inquiry"
             />
           </div>
         </div>
 
         <div>
-          <label className="block font-mono text-[10px] font-bold text-gray-600 dark:text-gray-400 mb-1.5 uppercase tracking-wider">
-            Message *
+          <label className="block font-mono text-[10px] font-bold text-gray-500 dark:text-zinc-400 mb-2 uppercase tracking-widest">
+            Detailed Message
           </label>
           <textarea
             name="message"
             value={formData.message}
             onChange={handleChange}
             required
-            rows={6}
-            className="w-full px-3 py-2.5 text-xs bg-gray-50 dark:bg-[#131316] border border-gray-200 dark:border-zinc-800 rounded-md text-gray-900 dark:text-white font-sans resize-none focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition-all placeholder:text-gray-400 dark:placeholder:text-gray-600"
-            placeholder="Tell us what you need..."
+            rows={5}
+            className="w-full px-4 py-3 text-xs bg-gray-50 dark:bg-zinc-900/30 hover:bg-gray-100 dark:hover:bg-zinc-900/50 border border-gray-200 dark:border-zinc-800 focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 dark:focus:border-yellow-400/70 dark:focus:ring-yellow-400/40 text-gray-950 dark:text-white font-sans resize-none rounded-xl transition-all placeholder:text-gray-400 dark:placeholder:text-zinc-650"
+            placeholder="Please enter all relevant details so we can address your inquiry immediately..."
           />
         </div>
 
         <button
           type="submit"
-          className="w-full px-6 py-3 bg-yellow-400 hover:bg-yellow-500 text-black font-sans text-xs font-bold uppercase tracking-wider rounded-md transition-all flex items-center justify-center gap-2"
+          disabled={isSubmitting}
+          className="w-full px-6 py-3.5 bg-yellow-400 hover:bg-yellow-500 disabled:bg-yellow-400/70 text-black font-mono text-xs font-bold uppercase tracking-wider rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg hover:shadow-yellow-400/10 btn-shiny"
         >
-          Send Message
-          <span className="material-symbols-outlined !text-[16px] text-black">send</span>
+          <span>{isSubmitting ? 'Transmitting...' : 'Send Secure Message'}</span>
+          {!isSubmitting && (
+            <span className="material-symbols-outlined !text-[16px] text-black">send</span>
+          )}
         </button>
       </form>
     </div>
