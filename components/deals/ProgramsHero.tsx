@@ -5,7 +5,7 @@ import Mandala from '@/components/ui/Mandala'
 
 export default function ProgramsHero() {
   return (
-    <div className="relative mb-6 md:mb-8">
+    <div className="relative mb-6 md:mb-8 bg-black dark:bg-[#000000] border border-white/10 rounded-2xl p-4 md:bg-transparent md:border-none md:p-0">
       {/* Decorative background mandala */}
       <Mandala
         variant="rings"
@@ -27,12 +27,12 @@ export default function ProgramsHero() {
           </div>
 
           {/* Title */}
-          <h1 className="font-mono text-3xl md:text-4xl lg:text-[40px] font-black tracking-tight text-white leading-[1.1] mb-2">
+          <h1 className="font-mono text-3xl md:text-4xl lg:text-[40px] font-black tracking-tight text-white md:text-black md:dark:text-white leading-[1.1] mb-2">
             Power your <span className="text-accent-yellow">startup</span> journey.
           </h1>
 
           {/* Subtitle */}
-          <p className="font-sans text-sm md:text-[15px] text-gray-400 leading-relaxed max-w-2xl mb-4">
+          <p className="font-sans text-sm md:text-[15px] text-gray-400 md:text-gray-600 md:dark:text-gray-400 leading-relaxed max-w-2xl mb-4">
             Discover verified accelerators, incubators, and grants. Fuel your idea. Get funded. Scale faster.
           </p>
 
@@ -45,7 +45,7 @@ export default function ProgramsHero() {
             ].map((pill, i) => (
               <div
                 key={i}
-                className="flex items-center gap-1.5 px-3 py-1.5 bg-[#0f0f0f] border border-white/10 rounded-sm font-mono text-[10px] font-semibold text-gray-300"
+                className="flex items-center gap-1.5 px-3 py-1.5 bg-[#0f0f0f] border border-white/10 rounded-sm font-mono text-[10px] font-semibold text-gray-300 md:bg-gray-100 md:border-gray-250 md:text-gray-600 md:dark:bg-[#0f0f0f] md:dark:border-white/10 md:dark:text-gray-300"
               >
                 <span className="material-symbols-outlined !text-[12px] text-accent-yellow">{pill.icon}</span>
                 <span>{pill.text}</span>

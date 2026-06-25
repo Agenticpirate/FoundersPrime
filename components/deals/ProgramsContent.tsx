@@ -106,29 +106,35 @@ export default function ProgramsContent({ initialIsPro, initialType, initialFilt
       {/* Header Featured Banner — rotating, full width, shown on all sizes */}
       <FeaturedSlot variant="banner" count={1} intervalMs={5000} offset={0} className="mb-2" />
 
-      {/* Horizontal Tabs Switcher */}
-      <div className="flex items-center border-b border-white/10 font-mono text-[11px] font-bold uppercase tracking-[0.12em]">
-        {[
-          { id: 'all', label: 'All Programs' },
-          { id: 'accelerators', label: 'Accelerators' },
-          { id: 'incubators', label: 'Incubators' },
-          { id: 'grants', label: 'Grants' }
-        ].map((tab) => {
-          const isActive = activeType === tab.id
-          return (
-            <button
-              key={tab.id}
-              onClick={() => handleTypeSelect(tab.id as any)}
-              className={`px-5 py-3 border-b-2 transition-all relative ${
-                isActive
-                  ? 'border-accent-yellow text-accent-yellow font-black'
-                  : 'border-transparent text-gray-400 hover:text-white hover:border-white/20'
-              }`}
-            >
-              {tab.label}
-            </button>
-          )
-        })}
+      {/* Horizontal Tabs Switcher - scrollable on mobile with fade indicator */}
+      <div className="relative">
+        <div 
+          className="absolute inset-y-0 right-0 w-12 bg-gradient-to-l from-gray-50 dark:from-[#000000] to-transparent pointer-events-none z-10 lg:hidden"
+          aria-hidden="true"
+        />
+        <div className="flex items-center border-b border-white/10 font-mono text-[11px] font-bold uppercase tracking-[0.12em] overflow-x-auto whitespace-nowrap mobile-scroll-hide pr-12 lg:pr-0">
+          {[
+            { id: 'all', label: 'All Programs' },
+            { id: 'accelerators', label: 'Accelerators' },
+            { id: 'incubators', label: 'Incubators' },
+            { id: 'grants', label: 'Grants' }
+          ].map((tab) => {
+            const isActive = activeType === tab.id
+            return (
+              <button
+                key={tab.id}
+                onClick={() => handleTypeSelect(tab.id as any)}
+                className={`flex-shrink-0 px-5 py-3 border-b-2 transition-all relative ${
+                  isActive
+                    ? 'border-accent-yellow text-accent-yellow font-black'
+                    : 'border-transparent text-gray-400 hover:text-white hover:border-white/20'
+                }`}
+              >
+                {tab.label}
+              </button>
+            )
+          })}
+        </div>
       </div>
 
       {/* Main layout with Right Rail */}

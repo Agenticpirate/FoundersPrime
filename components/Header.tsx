@@ -99,9 +99,9 @@ export default function Header() {
       href: '#',
       icon: 'school',
       children: [
-        { label: 'Funding & Opportunities', href: '/student-benefits?type=funding', icon: 'monetization_on', colorClass: 'text-emerald-400' },
-        { label: 'Campus Edge', href: '/student-benefits?type=free-access', icon: 'workspace_premium', colorClass: 'text-pink-400' },
         { label: 'Credits & Savings', href: '/student-benefits?type=credits-savings', icon: 'savings', colorClass: 'text-green-400' },
+        { label: 'Campus Edge', href: '/student-benefits?type=free-access', icon: 'workspace_premium', colorClass: 'text-pink-400' },
+        { label: 'Funding & Opportunities', href: '/student-benefits?type=funding', icon: 'monetization_on', colorClass: 'text-emerald-400' },
       ],
     },
     {
@@ -235,17 +235,17 @@ export default function Header() {
               </Link>
               <div className={dropdownClasses}>
                 <div className={dropdownPanelClasses}>
-                  <Link href="/student-benefits?type=funding" className={dropdownItemClasses}>
-                    <span className="material-symbols-outlined text-base text-emerald-400">monetization_on</span>
-                    Funding &amp; Opportunities
+                  <Link href="/student-benefits?type=credits-savings" className={dropdownItemClasses}>
+                    <span className="material-symbols-outlined text-base text-green-400">savings</span>
+                    Credits &amp; Savings
                   </Link>
                   <Link href="/student-benefits?type=free-access" className={dropdownItemClasses}>
                     <span className="material-symbols-outlined text-base text-pink-400">workspace_premium</span>
                     Campus Edge
                   </Link>
-                  <Link href="/student-benefits?type=credits-savings" className={dropdownItemClasses}>
-                    <span className="material-symbols-outlined text-base text-green-400">savings</span>
-                    Credits &amp; Savings
+                  <Link href="/student-benefits?type=funding" className={dropdownItemClasses}>
+                    <span className="material-symbols-outlined text-base text-emerald-400">monetization_on</span>
+                    Funding &amp; Opportunities
                   </Link>
                 </div>
               </div>

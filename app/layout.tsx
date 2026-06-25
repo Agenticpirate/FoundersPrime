@@ -117,7 +117,7 @@ export default function RootLayout({
               (function() {
                 try {
                   var theme = localStorage.getItem('theme');
-                  if (theme === 'light') {
+                  if (theme === 'light' && window.innerWidth >= 1024) {
                     document.documentElement.classList.remove('dark');
                     document.documentElement.classList.add('light');
                   } else {

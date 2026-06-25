@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import Header from '@/components/Header'
@@ -15,6 +15,84 @@ export default function SignupPage() {
   const [success, setSuccess] = useState(false)
   const [loading, setLoading] = useState(false)
   const router = useRouter()
+
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  useEffect(() => {
+    if (!mounted) return
+
+    const handleCredentialResponse = async (response: any) => {
+      setError(null)
+      setLoading(true)
+      try {
+        const supabase = createClient()
+        const { error } = await supabase.auth.signInWithIdToken({
+          provider: 'google',
+          token: response.credential,
+        })
+        if (error) {
+          setError(error.message)
+        } else {
+          window.location.href = '/dashboard'
+        }
+      } catch {
+        setError('An unexpected error occurred during Google authentication.')
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    const initGoogleGSI = () => {
+      const g = (window as any).google
+      if (g && g.accounts && g.accounts.id) {
+        g.accounts.id.initialize({
+          client_id: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || '310275392560-0g3esttkosm3tehjpc6rmu128okh44kr.apps.googleusercontent.com',
+          callback: handleCredentialResponse,
+        })
+        
+        g.accounts.id.prompt()
+
+        const el = document.getElementById('google-signup-btn')
+        if (el && el.children.length === 0) {
+          g.accounts.id.renderButton(el, {
+            type: 'standard',
+            shape: 'rectangular',
+            theme: 'outline',
+            size: 'large',
+            width: 120,
+          })
+        }
+      }
+    }
+
+    let script = document.querySelector('script[src="https://accounts.google.com/gsi/client"]') as HTMLScriptElement
+    if (!script) {
+      script = document.createElement('script')
+      script.src = 'https://accounts.google.com/gsi/client'
+      script.async = true
+      script.defer = true
+      document.body.appendChild(script)
+    }
+
+    const g = (window as any).google
+    if (g && g.accounts && g.accounts.id) {
+      initGoogleGSI()
+    } else {
+      script.addEventListener('load', initGoogleGSI)
+    }
+
+    const observer = new MutationObserver(() => {
+      initGoogleGSI()
+    })
+    observer.observe(document.body, { childList: true, subtree: true })
+
+    return () => {
+      observer.disconnect()
+    }
+  }, [mounted])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -231,9 +309,9 @@ export default function SignupPage() {
               <p className="text-xs text-center text-gray-500 uppercase font-bold mb-4">Or sign up with</p>
               <div className="grid grid-cols-3 gap-3">
                 <button
-                  onClick={() => handleOAuthSignup('google')}
+                  type="button"
                   disabled={loading}
-                  className="h-12 border-3 border-black bg-white font-bold text-xs md:text-sm uppercase hover:bg-gray-50 flex items-center justify-center gap-2 shadow-[3px_3px_0px_#111111] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[2px_2px_0px_#111111] transition-all disabled:opacity-50 px-1"
+                  className="relative overflow-hidden h-12 border-3 border-black bg-white font-bold text-xs md:text-sm uppercase hover:bg-gray-50 flex items-center justify-center gap-2 shadow-[3px_3px_0px_#111111] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[2px_2px_0px_#111111] transition-all disabled:opacity-50 px-1"
                 >
                   <svg className="w-5 h-5 flex-shrink-0" viewBox="0 0 24 24">
                     <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
@@ -242,6 +320,7 @@ export default function SignupPage() {
                     <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
                   </svg>
                   <span className="hidden md:inline">Google</span>
+                  <div id="google-signup-btn" className="absolute inset-0 opacity-0 scale-[3] origin-center cursor-pointer" />
                 </button>
                 <button
                   onClick={() => handleOAuthSignup('github')}

@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useMemo } from 'react'
+import React, { useState, useMemo, useEffect, useRef } from 'react'
 import DealCard from './DealCard'
 import Pagination from '@/components/Pagination'
 import { studentBenefits2026, StudentBenefit } from '@/data/student-benefits-2026'
@@ -167,9 +167,16 @@ export default function StudentBenefitsGrid({ activeType, filters }: StudentBene
     (activeType === 'all' || activeType === 'funding' ? fundingList.length : 0) +
     (activeType === 'all' || activeType === 'programs' ? programsList.length : 0)
 
-  // Reset pagination on filter or type tab change
-  useMemo(() => {
-    setCurrentPage(1)
+  const lastFiltersAndType = useRef({ filters, activeType })
+  // Reset pagination on filter or type tab change (but not on initial render)
+  useEffect(() => {
+    if (
+      lastFiltersAndType.current.activeType !== activeType ||
+      JSON.stringify(lastFiltersAndType.current.filters) !== JSON.stringify(filters)
+    ) {
+      lastFiltersAndType.current = { filters, activeType }
+      setCurrentPage(1)
+    }
   }, [filters, activeType])
 
   // Handle dynamic scroll

@@ -156,17 +156,17 @@ export default function HeroSection() {
         <PlusMark className="hidden md:block absolute right-0 -top-1 lg:left-[58%] lg:right-auto" />
 
         {/* ─── Mobile Hero Section ─── */}
-        <div className="block lg:hidden pt-6 pb-6 bg-[#000000] text-white -mx-4 px-4 relative z-10 grid-bg dark">
+        <div className="block lg:hidden pt-6 pb-6 bg-[#f6f8f8] dark:bg-[#000000] text-[#1a1a1a] dark:text-white -mx-4 px-4 relative z-10 grid-bg">
           {/* Top badge */}
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 border border-white/10 rounded-full bg-white/[0.03] w-fit mb-5">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 border border-gray-250 dark:border-white/10 rounded-full bg-white/60 dark:bg-white/[0.03] w-fit mb-5">
             <span className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse" />
-            <span className="font-sans text-[9px] font-black uppercase tracking-[0.18em] text-white">LIVE</span>
-            <span className="font-sans text-[9px] font-bold uppercase tracking-[0.18em] text-gray-400">FOUNDER-APPROVED</span>
+            <span className="font-sans text-[9px] font-black uppercase tracking-[0.18em] text-[#1a1a1a] dark:text-white">LIVE</span>
+            <span className="font-sans text-[9px] font-bold uppercase tracking-[0.18em] text-gray-500 dark:text-gray-400">FOUNDER-APPROVED</span>
           </div>
-
+ 
           {/* Hero Content */}
           <div className="flex flex-col justify-start mb-6">
-            <h1 className="font-heading font-black text-white tracking-[-0.02em] uppercase leading-[0.9]">
+            <h1 className="font-heading font-black text-[#1a1a1a] dark:text-white tracking-[-0.02em] uppercase leading-[0.9]">
               <span className="block text-[44px] sm:text-5xl">Build More</span>
               <span className="block text-[44px] sm:text-5xl mt-2">
                 Burn{' '}
@@ -177,58 +177,58 @@ export default function HeroSection() {
                 </span>
               </span>
             </h1>
-
-            {/* Sub-headline / Tagline (Enhanced size & contrast) */}
-            <p className="font-sans font-medium text-gray-100 text-[14px] sm:text-base tracking-tight leading-relaxed mt-5 mb-4">
+ 
+            {/* Sub-headline / Tagline */}
+            <p className="font-sans font-medium text-gray-700 dark:text-gray-100 text-[14px] sm:text-base tracking-tight leading-relaxed mt-5 mb-4">
               Unlock up to{' '}
-              <span className="text-[#FFD500] font-bold">$500K</span>{' '}
+              <span className="text-[#FFD500] dark:text-accent-yellow font-black">$500K</span>{' '}
               in verified startup credits, grants, tools, and founder perks.
             </p>
-
-            {/* Bullet Points (Enhanced font sizes) */}
+ 
+            {/* Bullet Points */}
             <div className="flex flex-col gap-3 mt-1.5">
-              <div className="flex items-center gap-2 text-xs sm:text-sm text-gray-200 font-sans font-semibold">
+              <div className="flex items-center gap-2 text-xs sm:text-sm text-gray-700 dark:text-gray-200 font-sans font-semibold">
                 <span className="material-symbols-outlined text-[#FFD500] !text-base" style={{ fontVariationSettings: "'FILL' 0" }}>verified_user</span>
                 Founder-vetted. Always.
               </div>
-              <div className="flex items-center gap-2 text-xs sm:text-sm text-gray-200 font-sans font-semibold">
+              <div className="flex items-center gap-2 text-xs sm:text-sm text-gray-700 dark:text-gray-200 font-sans font-semibold">
                 <span className="material-symbols-outlined text-[#FFD500] !text-base" style={{ fontVariationSettings: "'FILL' 0" }}>account_balance_wallet</span>
                 Save thousands. Every month.
               </div>
-              <div className="flex items-center gap-2 text-xs sm:text-sm text-gray-200 font-sans font-semibold">
+              <div className="flex items-center gap-2 text-xs sm:text-sm text-gray-700 dark:text-gray-200 font-sans font-semibold">
                 <span className="material-symbols-outlined text-[#FFD500] !text-base" style={{ fontVariationSettings: "'FILL' 0" }}>bolt</span>
                 Zero dilution. 100% founder-first.
               </div>
             </div>
           </div>
-
+ 
           {/* 4-column key metrics row */}
-          <div className="flex justify-between items-center border border-white/10 bg-[#0a0a0a]/60 rounded-2xl p-3 mb-6">
+          <div className="flex justify-between items-center border border-gray-250 dark:border-white/10 bg-white/80 dark:bg-[#0a0a0a]/60 shadow-sm dark:shadow-none rounded-2xl p-3 mb-6">
             <div className="flex-1 flex flex-col items-center text-center">
-              <span className="material-symbols-outlined text-green-400 !text-base mb-0.5" style={{ fontVariationSettings: "'FILL' 0" }}>cloud</span>
-              <span className="text-[11px] font-sans font-black text-green-400 leading-none">$500K</span>
-              <span className="text-[7.5px] font-sans text-gray-400 uppercase tracking-tight mt-0.5 font-semibold">In Credits</span>
+              <span className="material-symbols-outlined text-green-500 dark:text-green-400 !text-base mb-0.5" style={{ fontVariationSettings: "'FILL' 0" }}>cloud</span>
+              <span className="text-[11px] font-sans font-black text-green-500 dark:text-green-400 leading-none">$500K</span>
+              <span className="text-[7.5px] font-sans text-gray-500 dark:text-gray-400 uppercase tracking-tight mt-0.5 font-semibold">In Credits</span>
             </div>
-            <div className="w-px h-6 bg-white/10" />
+            <div className="w-px h-6 bg-gray-200 dark:bg-white/10" />
             <div className="flex-1 flex flex-col items-center text-center">
-              <span className="material-symbols-outlined text-green-400 !text-base mb-0.5" style={{ fontVariationSettings: "'FILL' 0" }}>verified_user</span>
-              <span className="text-[11px] font-sans font-black text-green-400 leading-none">Verified</span>
-              <span className="text-[7.5px] font-sans text-gray-400 uppercase tracking-tight mt-0.5 font-semibold">Deals & Grants</span>
+              <span className="material-symbols-outlined text-green-500 dark:text-green-400 !text-base mb-0.5" style={{ fontVariationSettings: "'FILL' 0" }}>verified_user</span>
+              <span className="text-[11px] font-sans font-black text-green-500 dark:text-green-400 leading-none">Verified</span>
+              <span className="text-[7.5px] font-sans text-gray-500 dark:text-gray-400 uppercase tracking-tight mt-0.5 font-semibold">Deals & Grants</span>
             </div>
-            <div className="w-px h-6 bg-white/10" />
+            <div className="w-px h-6 bg-gray-200 dark:bg-white/10" />
             <div className="flex-1 flex flex-col items-center text-center">
-              <span className="material-symbols-outlined text-purple-400 !text-base mb-0.5" style={{ fontVariationSettings: "'FILL' 0" }}>workspace_premium</span>
-              <span className="text-[11px] font-sans font-black text-purple-400 leading-none">Founder</span>
-              <span className="text-[7.5px] font-sans text-gray-400 uppercase tracking-tight mt-0.5 font-semibold">Vetted Only</span>
+              <span className="material-symbols-outlined text-purple-600 dark:text-purple-400 !text-base mb-0.5" style={{ fontVariationSettings: "'FILL' 0" }}>workspace_premium</span>
+              <span className="text-[11px] font-sans font-black text-purple-600 dark:text-purple-400 leading-none">Founder</span>
+              <span className="text-[7.5px] font-sans text-gray-500 dark:text-gray-400 uppercase tracking-tight mt-0.5 font-semibold">Vetted Only</span>
             </div>
-            <div className="w-px h-6 bg-white/10" />
+            <div className="w-px h-6 bg-gray-200 dark:bg-white/10" />
             <div className="flex-1 flex flex-col items-center text-center">
-              <span className="material-symbols-outlined text-sky-400 !text-base mb-0.5" style={{ fontVariationSettings: "'FILL' 0" }}>bolt</span>
-              <span className="text-[11px] font-sans font-black text-sky-400 leading-none">Save $50K</span>
-              <span className="text-[7.5px] font-sans text-gray-400 uppercase tracking-tight mt-0.5 font-semibold">In 3 Months</span>
+              <span className="material-symbols-outlined text-sky-600 dark:text-sky-400 !text-base mb-0.5" style={{ fontVariationSettings: "'FILL' 0" }}>bolt</span>
+              <span className="text-[11px] font-sans font-black text-sky-600 dark:text-sky-400 leading-none">Save $50K</span>
+              <span className="text-[7.5px] font-sans text-gray-500 dark:text-gray-400 uppercase tracking-tight mt-0.5 font-semibold">In 3 Months</span>
             </div>
           </div>
-
+ 
           {/* CTA Buttons */}
           <div className="flex flex-col gap-2.5 mb-4">
             <Link
@@ -241,28 +241,26 @@ export default function HeroSection() {
             </Link>
             <Link
               href="/pricing"
-              className="flex items-center justify-center gap-1.5 border border-white/10 bg-[#0c0c0c] hover:bg-white/5 text-white font-mono font-black text-xs py-3.5 px-5 transition-all uppercase tracking-wider w-full rounded-xl shadow-sm"
+              className="flex items-center justify-center gap-1.5 border border-gray-200 dark:border-white/10 bg-white dark:bg-[#0c0c0c] hover:bg-gray-50 dark:hover:bg-white/5 text-gray-800 dark:text-white font-mono font-black text-xs py-3.5 px-5 transition-all uppercase tracking-wider w-full rounded-xl shadow-sm"
             >
               See Pricing
               <span className="material-symbols-outlined !text-[16px]">arrow_forward</span>
             </Link>
           </div>
-
+ 
           {/* Brand logos scroller animation under See Pricing button */}
-          <div className="w-full overflow-hidden my-4 relative py-2 bg-white/[0.01] border-y border-white/[0.04] -mx-4 px-4">
-            <div className="absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-[#000000] to-transparent z-10 pointer-events-none" />
-            <div className="absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-[#000000] to-transparent z-10 pointer-events-none" />
-            <div className="flex gap-8 animate-[marquee_25s_linear_infinite] whitespace-nowrap w-max">
+          <div className="w-full overflow-hidden my-4 relative py-2 bg-gray-500/[0.03] dark:bg-white/[0.01] border-y border-gray-200 dark:border-white/[0.04] -mx-4 px-4">
+            <div className="absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-[#f6f8f8] dark:from-[#000000] to-transparent z-10 pointer-events-none" />
+            <div className="absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-[#f6f8f8] dark:from-[#000000] to-transparent z-10 pointer-events-none" />
+            <div className="flex gap-8 animate-[marquee_60s_linear_infinite] whitespace-nowrap w-max">
               {[...TRUSTED_BRANDS, ...TRUSTED_BRANDS, ...TRUSTED_BRANDS].map((brand, idx) => (
                 <div key={`${brand.name}-${idx}`} className="inline-flex items-center gap-1.5 opacity-90 transition-all hover:opacity-100">
                   <BrandLogo name={brand.name} domain={brand.domain} size="sm" eager />
-                  <span className="font-mono text-[8px] font-bold text-gray-400 uppercase tracking-wider">{brand.name}</span>
+                  <span className="font-mono text-[8px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">{brand.name}</span>
                 </div>
               ))}
             </div>
           </div>
-
-
         </div>
 
         <div className="hidden lg:grid grid-cols-12 gap-12 items-center">
