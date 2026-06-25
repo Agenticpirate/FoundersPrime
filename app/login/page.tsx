@@ -152,7 +152,7 @@ function LoginContent() {
     try {
       const supabase = createClient()
       const { error } = await supabase.auth.signInWithOAuth({
-        provider,
+        provider: provider === 'linkedin' ? 'linkedin_oidc' : provider,
         options: { redirectTo: `${window.location.origin}/auth/callback?next=${redirect}` },
       })
       if (error) setError(error.message)
