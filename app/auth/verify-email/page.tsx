@@ -112,7 +112,7 @@ function VerifyEmailContent() {
                 </div>
                 <div className="space-y-3">
                   <Link 
-                    href="/signup"
+                    href="/login?view=signup"
                     className="inline-block w-full h-12 bg-primary text-black font-bold uppercase border-3 border-black shadow-[4px_4px_0px_#111111] hover:bg-black hover:text-white hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_#111111] transition-all leading-[44px]"
                   >
                     Sign Up Again

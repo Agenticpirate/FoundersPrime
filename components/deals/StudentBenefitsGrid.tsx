@@ -218,7 +218,7 @@ export default function StudentBenefitsGrid({ activeType, filters }: StudentBene
     const paginated = items.slice(startIndex, startIndex + pageSize)
 
     const gridContent = (
-      <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-4 items-start">
         {(() => {
           const cardItems: React.ReactNode[] = paginated.map((b, idx) => (
             <DealCard key={b.slug || `${b.company}-${idx}`} deal={convertToCard(b, idx)} basePath="/student-benefits" />
@@ -240,7 +240,7 @@ export default function StudentBenefitsGrid({ activeType, filters }: StudentBene
                     count={1}
                     intervalMs={5500}
                     offset={6 + adIdx * 3}
-                    className="h-full"
+                    className="h-[200px]"
                   />
                 )
               }
@@ -355,7 +355,7 @@ export default function StudentBenefitsGrid({ activeType, filters }: StudentBene
   const allDisplayEnd = Math.min(allStartIndex + allPageSize, allBenefitsMerged.length)
 
   const allGridContent = (
-    <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-4">
+    <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-4 items-start">
       {(() => {
         const cardItems: React.ReactNode[] = allCurrentItems.map((b, idx) => (
           <DealCard
@@ -379,7 +379,7 @@ export default function StudentBenefitsGrid({ activeType, filters }: StudentBene
                   count={1}
                   intervalMs={5500}
                   offset={6 + idx * 3}
-                  className="h-full"
+                  className="h-[200px]"
                 />
               )
             }

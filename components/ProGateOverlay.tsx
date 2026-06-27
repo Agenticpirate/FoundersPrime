@@ -139,7 +139,7 @@ export default function ProGateOverlay({
                                 marginBottom: 0,
                             }}
                         >
-                            You&apos;re seeing a preview — unlock the full collection
+                            The average founder saves a minimum of $3,000+ in their first week alone. Unlock full access.
                         </p>
 
                         {/* Divider */}
@@ -154,10 +154,10 @@ export default function ProGateOverlay({
                         {/* Feature list */}
                         <ul style={{ margin: '0 0 24px', padding: 0, listStyle: 'none' }}>
                             {[
+                                'Save a minimum of $3,000+ in your first week',
                                 `Unlimited access to all verified ${label.toLowerCase()}`,
                                 'Direct application links & verified deadlines',
-                                'Full funding amounts & equity terms',
-                                'New deals added weekly — never miss an opportunity',
+                                'Full funding amounts, cohort details, and equity terms',
                             ].map((item) => (
                                 <li
                                     key={item}

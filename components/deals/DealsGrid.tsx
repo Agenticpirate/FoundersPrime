@@ -59,27 +59,27 @@ export default function DealsGrid({ filters, initialIsPro }: DealsGridProps) {
     const fetchDeals = cacheValid
       ? Promise.resolve(globalDealsCache as Deal[])
       : (() => {
-          if (!globalDealsPromise) {
-            // `no-store` so the browser always revalidates (a stale browser
-            // copy would keep showing deleted deals). The CDN still serves
-            // cached responses via s-maxage, so this stays scalable.
-            globalDealsPromise = fetch('/api/deals', { cache: 'no-store' })
-              .then(res => res.json())
-              .then(data => {
-                const result = data.success ? data.deals : []
-                globalDealsCache = result
-                globalDealsCacheTime = Date.now()
-                globalDealsPromise = null // clear so the TTL can trigger a refetch later
-                return result
-              })
-              .catch(err => {
-                console.error('Error loading deals:', err)
-                globalDealsPromise = null // allow retry
-                return []
-              })
-          }
-          return globalDealsPromise
-        })()
+        if (!globalDealsPromise) {
+          // `no-store` so the browser always revalidates (a stale browser
+          // copy would keep showing deleted deals). The CDN still serves
+          // cached responses via s-maxage, so this stays scalable.
+          globalDealsPromise = fetch('/api/deals', { cache: 'no-store' })
+            .then(res => res.json())
+            .then(data => {
+              const result = data.success ? data.deals : []
+              globalDealsCache = result
+              globalDealsCacheTime = Date.now()
+              globalDealsPromise = null // clear so the TTL can trigger a refetch later
+              return result
+            })
+            .catch(err => {
+              console.error('Error loading deals:', err)
+              globalDealsPromise = null // allow retry
+              return []
+            })
+        }
+        return globalDealsPromise
+      })()
 
     if (initialIsPro !== undefined) {
       fetchDeals.then((dealList) => {
@@ -93,9 +93,9 @@ export default function DealsGrid({ filters, initialIsPro }: DealsGridProps) {
 
     const fetchAuth = user
       ? checkProStatus().then(({ isPro: hasPro, user: userProfile }) => ({
-          isPro: hasPro,
-          isNextFounder: !!userProfile?.isNextFounder,
-        }))
+        isPro: hasPro,
+        isNextFounder: !!userProfile?.isNextFounder,
+      }))
       : Promise.resolve({ isPro: false, isNextFounder: false })
 
     Promise.all([fetchDeals, fetchAuth]).then(([dealList, access]) => {
@@ -201,9 +201,9 @@ export default function DealsGrid({ filters, initialIsPro }: DealsGridProps) {
       } else if (!searchScores) {
         // Exclude accelerators and incubators if no category is selected (All Deals)
         // — but keep them when the user is searching, so search can find them.
-        result = result.filter(deal => 
-          deal.category !== 'startup-programs' && 
-          deal.subcategory !== 'accelerators' && 
+        result = result.filter(deal =>
+          deal.category !== 'startup-programs' &&
+          deal.subcategory !== 'accelerators' &&
           deal.subcategory !== 'incubators' &&
           deal.category !== 'accelerators' &&
           deal.category !== 'incubators'
@@ -244,87 +244,87 @@ export default function DealsGrid({ filters, initialIsPro }: DealsGridProps) {
         })
       } else {
         switch (filters.sort) {
-        case 'newest':
-          result.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
-          break
-        case 'value-high':
-          result.sort((a, b) => {
-            const aValue = parseInt((a.value || '').replace(/[^0-9]/g, '')) || 0
-            const bValue = parseInt((b.value || '').replace(/[^0-9]/g, '')) || 0
-            return bValue - aValue
-          })
-          break
-        case 'value-low':
-          result.sort((a, b) => {
-            const aValue = parseInt((a.value || '').replace(/[^0-9]/g, '')) || 0
-            const bValue = parseInt((b.value || '').replace(/[^0-9]/g, '')) || 0
-            return aValue - bValue
-          })
-          break
-        case 'deadline':
-          result.sort((a, b) => {
-            if (!a.expiryDate && !b.expiryDate) return 0
-            if (!a.expiryDate) return 1
-            if (!b.expiryDate) return -1
-            return new Date(a.expiryDate).getTime() - new Date(b.expiryDate).getTime()
-          })
-          break
-        case 'alphabetical':
-          result.sort((a, b) => a.title.localeCompare(b.title))
-          break
-        default:
-          // For "All Deals" (no category filter), show paid Featured first, then recommended, then popular brands
-          if (!filters?.category) {
+          case 'newest':
+            result.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+            break
+          case 'value-high':
             result.sort((a, b) => {
-              // Paid Featured pinned at top (only if featured_until is in the future)
-              const now = Date.now()
-              const aFeatActive = a.featured && a.featuredUntil && new Date(a.featuredUntil).getTime() > now ? 1 : 0
-              const bFeatActive = b.featured && b.featuredUntil && new Date(b.featuredUntil).getTime() > now ? 1 : 0
-              if (aFeatActive !== bFeatActive) return bFeatActive - aFeatActive
-
-              // Recommended deals next
-              const aRec = a.recommended ? 1 : 0;
-              const bRec = b.recommended ? 1 : 0;
-              if (aRec !== bRec) return bRec - aRec;
-
-              const priorityBrands = [
-                'github', 'airtable', 'aws', 'google for startups', 'microsoft for startups',
-                'linear', 'stripe', 'notion', 'webflow', 'alibaba', 'algolia', 'auth0',
-                'cloudflare', 'customer.io', 'datadog', 'databricks', 'devrev', 'digitalocean',
-                'document360', 'elevenlabs', 'flippa', 'framer', 'gitlab', 'heroku',
-                'instatus', 'intercom', 'linkedin'
-              ];
-              const aIdx = priorityBrands.findIndex(brand => (a.title || '').toLowerCase().includes(brand) || (a.provider || '').toLowerCase().includes(brand));
-              const bIdx = priorityBrands.findIndex(brand => (b.title || '').toLowerCase().includes(brand) || (b.provider || '').toLowerCase().includes(brand));
-              const aPriority = aIdx >= 0 ? aIdx : 9999;
-              const bPriority = bIdx >= 0 ? bIdx : 9999;
-              if (aPriority !== bPriority) return aPriority - bPriority;
-
-              const aHasOriginalLogo = a.logoUrl && !a.logoUrl.includes('rocket') && !a.logoUrl.includes('ui-avatars') ? 1 : 0;
-              const bHasOriginalLogo = b.logoUrl && !b.logoUrl.includes('rocket') && !b.logoUrl.includes('ui-avatars') ? 1 : 0;
-              if (aHasOriginalLogo !== bHasOriginalLogo) return bHasOriginalLogo - aHasOriginalLogo;
-              const aOrder = (a as any).sortOrder ?? 9999
-              const bOrder = (b as any).sortOrder ?? 9999
-              if (aOrder !== bOrder) return aOrder - bOrder
-              return a.title.localeCompare(b.title)
+              const aValue = parseInt((a.value || '').replace(/[^0-9]/g, '')) || 0
+              const bValue = parseInt((b.value || '').replace(/[^0-9]/g, '')) || 0
+              return bValue - aValue
             })
-          } else {
+            break
+          case 'value-low':
             result.sort((a, b) => {
-              const now = Date.now()
-              const aFeatActive = a.featured && a.featuredUntil && new Date(a.featuredUntil).getTime() > now ? 1 : 0
-              const bFeatActive = b.featured && b.featuredUntil && new Date(b.featuredUntil).getTime() > now ? 1 : 0
-              if (aFeatActive !== bFeatActive) return bFeatActive - aFeatActive
-
-              if (a.recommended && !b.recommended) return -1
-              if (!a.recommended && b.recommended) return 1
-              if (a.featured && !b.featured) return -1
-              if (!a.featured && b.featured) return 1
-              if (a.status === 'active' && b.status !== 'active') return -1
-              if (a.status !== 'active' && b.status === 'active') return 1
-              return 0
+              const aValue = parseInt((a.value || '').replace(/[^0-9]/g, '')) || 0
+              const bValue = parseInt((b.value || '').replace(/[^0-9]/g, '')) || 0
+              return aValue - bValue
             })
-          }
-      }
+            break
+          case 'deadline':
+            result.sort((a, b) => {
+              if (!a.expiryDate && !b.expiryDate) return 0
+              if (!a.expiryDate) return 1
+              if (!b.expiryDate) return -1
+              return new Date(a.expiryDate).getTime() - new Date(b.expiryDate).getTime()
+            })
+            break
+          case 'alphabetical':
+            result.sort((a, b) => a.title.localeCompare(b.title))
+            break
+          default:
+            // For "All Deals" (no category filter), show paid Featured first, then recommended, then popular brands
+            if (!filters?.category) {
+              result.sort((a, b) => {
+                // Paid Featured pinned at top (only if featured_until is in the future)
+                const now = Date.now()
+                const aFeatActive = a.featured && a.featuredUntil && new Date(a.featuredUntil).getTime() > now ? 1 : 0
+                const bFeatActive = b.featured && b.featuredUntil && new Date(b.featuredUntil).getTime() > now ? 1 : 0
+                if (aFeatActive !== bFeatActive) return bFeatActive - aFeatActive
+
+                // Recommended deals next
+                const aRec = a.recommended ? 1 : 0;
+                const bRec = b.recommended ? 1 : 0;
+                if (aRec !== bRec) return bRec - aRec;
+
+                const priorityBrands = [
+                  'github', 'airtable', 'aws', 'google for startups', 'microsoft for startups',
+                  'linear', 'stripe', 'notion', 'webflow', 'alibaba', 'algolia', 'auth0',
+                  'cloudflare', 'customer.io', 'datadog', 'databricks', 'devrev', 'digitalocean',
+                  'document360', 'elevenlabs', 'flippa', 'framer', 'gitlab', 'heroku',
+                  'instatus', 'intercom', 'linkedin'
+                ];
+                const aIdx = priorityBrands.findIndex(brand => (a.title || '').toLowerCase().includes(brand) || (a.provider || '').toLowerCase().includes(brand));
+                const bIdx = priorityBrands.findIndex(brand => (b.title || '').toLowerCase().includes(brand) || (b.provider || '').toLowerCase().includes(brand));
+                const aPriority = aIdx >= 0 ? aIdx : 9999;
+                const bPriority = bIdx >= 0 ? bIdx : 9999;
+                if (aPriority !== bPriority) return aPriority - bPriority;
+
+                const aHasOriginalLogo = a.logoUrl && !a.logoUrl.includes('rocket') && !a.logoUrl.includes('ui-avatars') ? 1 : 0;
+                const bHasOriginalLogo = b.logoUrl && !b.logoUrl.includes('rocket') && !b.logoUrl.includes('ui-avatars') ? 1 : 0;
+                if (aHasOriginalLogo !== bHasOriginalLogo) return bHasOriginalLogo - aHasOriginalLogo;
+                const aOrder = (a as any).sortOrder ?? 9999
+                const bOrder = (b as any).sortOrder ?? 9999
+                if (aOrder !== bOrder) return aOrder - bOrder
+                return a.title.localeCompare(b.title)
+              })
+            } else {
+              result.sort((a, b) => {
+                const now = Date.now()
+                const aFeatActive = a.featured && a.featuredUntil && new Date(a.featuredUntil).getTime() > now ? 1 : 0
+                const bFeatActive = b.featured && b.featuredUntil && new Date(b.featuredUntil).getTime() > now ? 1 : 0
+                if (aFeatActive !== bFeatActive) return bFeatActive - aFeatActive
+
+                if (a.recommended && !b.recommended) return -1
+                if (!a.recommended && b.recommended) return 1
+                if (a.featured && !b.featured) return -1
+                if (!a.featured && b.featured) return 1
+                if (a.status === 'active' && b.status !== 'active') return -1
+                if (a.status !== 'active' && b.status === 'active') return 1
+                return 0
+              })
+            }
+        }
       }
     }
 
@@ -423,11 +423,43 @@ export default function DealsGrid({ filters, initialIsPro }: DealsGridProps) {
     lastFiltersRef.current = filterKey
   }, [filters, searchParams])
 
-  const totalPages = Math.ceil(filteredDeals.length / dealsPerPage) || 1
-  const currentPage = Math.min(Math.max(1, localPage), totalPages)
+  // Dynamically compute page boundaries so that each page's total grid items (deals + ads) is a multiple of 3,
+  // preventing any blank spots in the grid on desktop.
+  const pageBoundaries: { start: number; end: number }[] = []
+  let currentIdx = 0
+  let pageNum = 1
+  while (currentIdx < filteredDeals.length) {
+    let adCount = 0
+    if (pageNum === 1) {
+      const adPositions = [4, 10]
+      adPositions.forEach((pos) => {
+        if (filteredDeals.length - currentIdx >= pos) {
+          adCount++
+        }
+      })
+    }
+    
+    let dealsCount = dealsPerPage // 12
+    const initialTotal = dealsCount + adCount
+    const remainder = initialTotal % 3
+    if (remainder !== 0) {
+      dealsCount += (3 - remainder)
+    }
+    
+    const remainingDeals = filteredDeals.length - currentIdx
+    if (remainingDeals <= dealsCount) {
+      dealsCount = remainingDeals
+    }
+    
+    pageBoundaries.push({ start: currentIdx, end: currentIdx + dealsCount })
+    currentIdx += dealsCount
+    pageNum++
+  }
 
-  const startIndex = (currentPage - 1) * dealsPerPage
-  const endIndex = startIndex + dealsPerPage
+  const totalPages = pageBoundaries.length || 1
+  const currentPage = Math.min(Math.max(1, localPage), totalPages)
+  
+  const { start: startIndex, end: endIndex } = pageBoundaries[currentPage - 1] || { start: 0, end: 0 }
   const currentDeals = filteredDeals.slice(startIndex, endIndex)
 
   // ── "Free resource" marketing unlock ──────────────────────────────────
@@ -552,11 +584,11 @@ export default function DealsGrid({ filters, initialIsPro }: DealsGridProps) {
         let isLocked = false;
         let lockTitle = "Don't Leave Deals On The Table";
         let lockSubtitle = "Members-only access";
-        let lockMessage = "You're one click from cloud credits, SaaS discounts, and verified grants. Founders who unlock the catalog start stacking savings in their first month.";
+        let lockMessage = "Unlock instant access to the web's largest collection of startup perks. The average founder saves a minimum of $3,000+ in their first week alone by activating cloud credits, software discounts, and grant opportunities.";
         let bullets: string[] = [
-          'Stack cloud credits across AWS, GCP and Azure',
-          'Hundreds of vetted SaaS discounts (Notion, Linear, HubSpot, more)',
-          'Grant programs reviewed and matched to your stage',
+          'Save a minimum of $3,000+ in your first week (average founder metrics)',
+          'Stack six-figure cloud credits across AWS, GCP, Azure & OpenAI',
+          'Vetted SaaS discounts & government grants matched to your stage',
         ];
         let primaryCta = "See Plans · Unlock Now";
         let reassurance = "Cancel anytime · Instant access · No risk";
@@ -571,20 +603,20 @@ export default function DealsGrid({ filters, initialIsPro }: DealsGridProps) {
           if (isNextFounder) {
             lockTitle = "Unlock The Full Catalog";
             lockSubtitle = "Founder plan removes the limit";
-            lockMessage = "You're on page one of the catalog. Upgrade to Founder to unlock every page — six-figure cloud credits, premium SaaS, accelerators, and grant programs.";
+            lockMessage = "You're on page one of the catalog. Upgrade to Founder to unlock every page — six-figure cloud credits, premium SaaS, accelerators, and grant programs. Average founder saves a minimum of $3,000+ in their first week.";
             bullets = [
+              'Average founder saves a minimum of $3,000+ in the first week',
               '$200K+ in additional cloud and infra credits',
-              'Premium SaaS deals reserved for funded founders',
-              'Accelerators, incubators, and grants matched to your stage',
+              'Premium SaaS deals & grants reserved for funded founders',
             ];
           } else {
             lockTitle = "Don't Leave Deals On The Table";
             lockSubtitle = "Members-only access";
-            lockMessage = "You're one click from cloud credits, SaaS discounts, and verified grants. Founders who unlock the catalog start stacking savings in their first month.";
+            lockMessage = "Unlock instant access to the web's largest collection of startup perks. The average founder saves a minimum of $3,000+ in their first week alone by activating cloud credits, software discounts, and grant opportunities.";
             bullets = [
-              'Stack cloud credits across AWS, GCP and Azure',
-              'Hundreds of vetted SaaS discounts (Notion, Linear, HubSpot, more)',
-              'Grant programs reviewed and matched to your stage',
+              'Save a minimum of $3,000+ in your first week (average founder metrics)',
+              'Stack six-figure cloud credits across AWS, GCP, Azure & OpenAI',
+              'Vetted SaaS discounts & government grants matched to your stage',
             ];
           }
         }
@@ -592,9 +624,8 @@ export default function DealsGrid({ filters, initialIsPro }: DealsGridProps) {
         return (
           <div className="relative mb-4 md:mb-5">
             <div
-              className={`grid grid-cols-2 lg:grid-cols-3 grid-fill-row gap-3 md:gap-4 transition-all duration-300 ${
-                isLocked ? 'pointer-events-none select-none' : ''
-              }`}
+              className={`grid grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4 transition-all duration-300 ${isLocked ? 'pointer-events-none select-none' : ''
+                }`}
               aria-hidden={isLocked}
               style={isLocked ? { filter: 'blur(7px) saturate(0.8)' } : undefined}
             >

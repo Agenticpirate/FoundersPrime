@@ -45,7 +45,9 @@ export default function BillingPanel({
   memberSinceFull,
 }: BillingPanelProps) {
   const router = useRouter()
-  const [showCancelModal, setShowCancelModal] = useState(false)
+  const [cancelStep, setCancelStep] = useState<'feedback' | 'confirm'>('feedback')
+  const [cancelReason, setCancelReason] = useState('Too expensive / pricing')
+  const [cancelComments, setCancelComments] = useState('')
   const [isCancelling, setIsCancelling] = useState(false)
   const [cancelResult, setCancelResult] = useState<{ ok: boolean; message: string } | null>(null)
 
@@ -67,16 +69,28 @@ export default function BillingPanel({
     setIsCancelling(true)
     setCancelResult(null)
     try {
-      const res = await fetch('/api/billing/cancel', { method: 'POST' })
+      const res = await fetch('/api/billing/cancel', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          reason: cancelReason,
+          feedback: cancelComments,
+        }),
+      })
       const data = await res.json()
       if (res.ok && data.success) {
         setCancelResult({ ok: true, message: data.message })
+        setShowCancelModal(false)
         setTimeout(() => router.refresh(), 1200)
       } else {
         setCancelResult({ ok: false, message: data.error || 'Could not cancel. Please email support.' })
+        setShowCancelModal(false)
       }
     } catch (err) {
       setCancelResult({ ok: false, message: 'Network error. Please try again.' })
+      setShowCancelModal(false)
     } finally {
       setIsCancelling(false)
     }
@@ -85,12 +99,23 @@ export default function BillingPanel({
   const closeModal = () => {
     if (isCancelling) return
     setShowCancelModal(false)
+    setCancelStep('feedback')
+    setCancelComments('')
+    setCancelReason('Too expensive / pricing')
   }
+
+  const FEEDBACK_OPTIONS = [
+    'Too expensive / pricing',
+    'Found a better alternative',
+    'Missing features I need',
+    'No longer need these credits/deals',
+    'Other (please specify below)',
+  ]
 
   return (
     <section>
       <div className="flex items-center justify-between mb-3">
-        <h2 className="font-mono text-[11px] font-black uppercase tracking-[0.16em] text-gray-700 inline-flex items-center gap-1.5">
+        <h2 className="font-mono text-[11px] font-black uppercase tracking-[0.16em] text-gray-700 dark:text-gray-300 inline-flex items-center gap-1.5">
           <span className="w-1.5 h-1.5 rounded-full bg-accent-yellow" />
           Billing &amp; Subscription
         </h2>
@@ -100,39 +125,39 @@ export default function BillingPanel({
       {cancelResult && (
         <div
           role="status"
-          className={`mb-5 px-4 py-3 border-2 border-black rounded-sm shadow-[3px_3px_0px_#111] flex items-start gap-2.5 ${
-            cancelResult.ok ? 'bg-emerald-50' : 'bg-red-50'
+          className={`mb-5 px-4 py-3 border-2 border-black dark:border-white/20 rounded-sm shadow-[3px_3px_0px_#111] dark:shadow-[3px_3px_0px_rgba(255,255,255,0.06)] flex items-start gap-2.5 ${
+            cancelResult.ok ? 'bg-emerald-50 dark:bg-emerald-900/20' : 'bg-red-50 dark:bg-red-900/20'
           }`}
         >
           <span className={`material-symbols-outlined !text-[18px] flex-shrink-0 mt-0.5 ${cancelResult.ok ? 'text-emerald-600' : 'text-red-600'}`}>
             {cancelResult.ok ? 'check_circle' : 'error'}
           </span>
-          <p className="text-[12.5px] text-gray-800 leading-relaxed">{cancelResult.message}</p>
+          <p className="text-[12.5px] text-gray-800 dark:text-gray-200 leading-relaxed">{cancelResult.message}</p>
         </div>
       )}
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-5">
         {/* Current Plan card */}
-        <div className="lg:col-span-2 bg-white border-2 border-black shadow-[3px_3px_0px_#111] rounded-sm p-5 md:p-6">
+        <div className="lg:col-span-2 bg-white dark:bg-[#0d0d0d] border-2 border-black dark:border-white/10 shadow-[3px_3px_0px_#111] dark:shadow-[3px_3px_0px_rgba(255,255,255,0.06)] rounded-sm p-5 md:p-6">
           <div className="flex items-start justify-between gap-3 mb-4">
             <div>
-              <p className="font-mono text-[10px] font-black uppercase tracking-[0.14em] text-gray-500 mb-1">
+              <p className="font-mono text-[10px] font-black uppercase tracking-[0.14em] text-gray-500 dark:text-gray-400 mb-1">
                 Current Plan
               </p>
-              <h3 className="font-mono text-lg md:text-xl font-black uppercase text-black leading-tight">
+              <h3 className="font-mono text-lg md:text-xl font-black uppercase text-black dark:text-white leading-tight">
                 {planLabel}
               </h3>
               {planPrice && (
-                <p className="text-[12px] text-gray-600 mt-1 font-mono">{planPrice}</p>
+                <p className="text-[12px] text-gray-600 dark:text-gray-400 mt-1 font-mono">{planPrice}</p>
               )}
             </div>
             <div
-              className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-sm border-2 border-black shadow-[1px_1px_0px_#111] font-mono text-[10px] font-black uppercase tracking-wide ${
+              className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-sm border-2 border-black dark:border-white/20 shadow-[1px_1px_0px_#111] dark:shadow-[1px_1px_0px_rgba(255,255,255,0.06)] font-mono text-[10px] font-black uppercase tracking-wide ${
                 cancelPending
-                  ? 'bg-amber-100 text-amber-900'
+                  ? 'bg-amber-100 dark:bg-amber-900/30 text-amber-900 dark:text-amber-300'
                   : isPro
                     ? 'bg-accent-yellow text-black'
-                    : 'bg-gray-100 text-gray-700'
+                    : 'bg-gray-100 dark:bg-white/5 text-gray-700 dark:text-gray-300'
               }`}
             >
               <span
@@ -145,11 +170,11 @@ export default function BillingPanel({
           </div>
 
           {cancelPending && renewalDate && (
-            <div className="bg-amber-50 border-2 border-black border-dashed rounded-sm p-3 flex items-start gap-2.5 mb-4">
-              <span className="material-symbols-outlined !text-[18px] text-amber-700 flex-shrink-0 mt-0.5">schedule</span>
+            <div className="bg-amber-50 dark:bg-amber-900/20 border-2 border-black dark:border-amber-700/50 border-dashed rounded-sm p-3 flex items-start gap-2.5 mb-4">
+              <span className="material-symbols-outlined !text-[18px] text-amber-700 dark:text-amber-400 flex-shrink-0 mt-0.5">schedule</span>
               <div className="text-[12.5px] leading-relaxed">
-                <p className="font-bold text-amber-900">Auto-renewal off</p>
-                <p className="text-amber-800">
+                <p className="font-bold text-amber-900 dark:text-amber-300">Auto-renewal off</p>
+                <p className="text-amber-800 dark:text-amber-400">
                   You&apos;ll keep full access until <span className="font-bold">{renewalDate}</span>. After that, your account moves to the Free plan.
                 </p>
               </div>
@@ -158,7 +183,7 @@ export default function BillingPanel({
 
           {!isPro && (
             <div>
-              <p className="text-[13px] text-gray-700 mb-3 leading-relaxed">
+              <p className="text-[13px] text-gray-700 dark:text-gray-400 mb-3 leading-relaxed">
                 You&apos;re on the free preview. Upgrade to unlock the full founder dashboard.
               </p>
               <Link
@@ -172,9 +197,9 @@ export default function BillingPanel({
           )}
 
           {isPro && subscription?.period_end && !cancelPending && (
-            <div className="bg-gray-50 border border-gray-200 rounded-sm p-3 text-[12px] text-gray-700">
+            <div className="bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-sm p-3 text-[12px] text-gray-700 dark:text-gray-300">
               <p>
-                <span className="font-bold text-black">Next renewal:</span>{' '}
+                <span className="font-bold text-black dark:text-white">Next renewal:</span>{' '}
                 <span className="font-mono">{renewalDate}</span>
                 {isLifetime ? '' : ' · auto-renews unless cancelled'}
               </p>
@@ -182,7 +207,7 @@ export default function BillingPanel({
           )}
 
           {isPro && isLifetime && (
-            <div className="bg-amber-50 border border-amber-200 rounded-sm p-3 text-[12px] text-amber-900">
+            <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-700/50 rounded-sm p-3 text-[12px] text-amber-900 dark:text-amber-300">
               <p>
                 <span className="font-bold">Lifetime access</span> — one-time payment. Nothing to renew or cancel.
               </p>
@@ -191,30 +216,30 @@ export default function BillingPanel({
         </div>
 
         {/* Account snapshot card */}
-        <div className="bg-white border-2 border-black shadow-[3px_3px_0px_#111] rounded-sm p-5 md:p-6">
-          <p className="font-mono text-[10px] font-black uppercase tracking-[0.14em] text-gray-500 mb-3">
+        <div className="bg-white dark:bg-[#0d0d0d] border-2 border-black dark:border-white/10 shadow-[3px_3px_0px_#111] dark:shadow-[3px_3px_0px_rgba(255,255,255,0.06)] rounded-sm p-5 md:p-6">
+          <p className="font-mono text-[10px] font-black uppercase tracking-[0.14em] text-gray-500 dark:text-gray-400 mb-3">
             Account
           </p>
           <dl className="space-y-2">
             <div>
-              <dt className="text-[10px] text-gray-500 font-mono uppercase tracking-wide">Name</dt>
-              <dd className="text-[12.5px] font-bold text-black truncate">{userName}</dd>
+              <dt className="text-[10px] text-gray-500 dark:text-gray-400 font-mono uppercase tracking-wide">Name</dt>
+              <dd className="text-[12.5px] font-bold text-black dark:text-white truncate">{userName}</dd>
             </div>
             <div>
-              <dt className="text-[10px] text-gray-500 font-mono uppercase tracking-wide">Email</dt>
-              <dd className="text-[12.5px] font-bold font-mono text-black truncate">{userEmail}</dd>
+              <dt className="text-[10px] text-gray-500 dark:text-gray-400 font-mono uppercase tracking-wide">Email</dt>
+              <dd className="text-[12.5px] font-bold font-mono text-black dark:text-white truncate">{userEmail}</dd>
             </div>
             <div>
-              <dt className="text-[10px] text-gray-500 font-mono uppercase tracking-wide">Member Since</dt>
-              <dd className="text-[12.5px] font-bold text-black">{memberSinceFull}</dd>
+              <dt className="text-[10px] text-gray-500 dark:text-gray-400 font-mono uppercase tracking-wide">Member Since</dt>
+              <dd className="text-[12.5px] font-bold text-black dark:text-white">{memberSinceFull}</dd>
             </div>
           </dl>
         </div>
       </div>
 
       {/* Manage row */}
-      <div className="mt-4 md:mt-5 bg-white border-2 border-black shadow-[3px_3px_0px_#111] rounded-sm p-5 md:p-6">
-        <p className="font-mono text-[10px] font-black uppercase tracking-[0.14em] text-gray-500 mb-4">Manage</p>
+      <div className="mt-4 md:mt-5 bg-white dark:bg-[#0d0d0d] border-2 border-black dark:border-white/10 shadow-[3px_3px_0px_#111] dark:shadow-[3px_3px_0px_rgba(255,255,255,0.06)] rounded-sm p-5 md:p-6">
+        <p className="font-mono text-[10px] font-black uppercase tracking-[0.14em] text-gray-500 dark:text-gray-400 mb-4">Manage</p>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-2.5">
           {[
             { href: '/pricing', icon: 'swap_horiz', label: 'Change Plan', sub: 'Upgrade or compare plans' },
@@ -224,18 +249,18 @@ export default function BillingPanel({
             <Link
               key={item.label}
               href={item.href}
-              className="group flex items-center justify-between gap-3 px-3.5 py-3 border-2 border-black border-dashed rounded-sm hover:bg-accent-yellow/10 transition-colors"
+              className="group flex items-center justify-between gap-3 px-3.5 py-3 border-2 border-black dark:border-white/10 border-dashed rounded-sm hover:bg-accent-yellow/10 dark:hover:bg-accent-yellow/5 transition-colors"
             >
               <div className="flex items-center gap-3 min-w-0">
-                <div className="w-9 h-9 bg-gray-100 border-2 border-black rounded-sm flex items-center justify-center flex-shrink-0">
-                  <span className="material-symbols-outlined !text-[16px] text-black">{item.icon}</span>
+                <div className="w-9 h-9 bg-gray-100 dark:bg-white/5 border-2 border-black dark:border-white/20 rounded-sm flex items-center justify-center flex-shrink-0">
+                  <span className="material-symbols-outlined !text-[16px] text-black dark:text-white">{item.icon}</span>
                 </div>
                 <div className="min-w-0">
-                  <p className="font-mono text-[11.5px] font-black uppercase tracking-tight text-black leading-tight">{item.label}</p>
-                  <p className="text-[10px] text-gray-500 mt-0.5 truncate">{item.sub}</p>
+                  <p className="font-mono text-[11.5px] font-black uppercase tracking-tight text-black dark:text-white leading-tight">{item.label}</p>
+                  <p className="text-[10px] text-gray-500 dark:text-gray-400 mt-0.5 truncate">{item.sub}</p>
                 </div>
               </div>
-              <span className="material-symbols-outlined !text-[16px] text-gray-400 group-hover:translate-x-0.5 group-hover:text-black transition-all flex-shrink-0">
+              <span className="material-symbols-outlined !text-[16px] text-gray-400 group-hover:translate-x-0.5 group-hover:text-black dark:group-hover:text-white transition-all flex-shrink-0">
                 chevron_right
               </span>
             </Link>
@@ -245,24 +270,27 @@ export default function BillingPanel({
 
       {/* Cancel auto-renewal */}
       {isPro && subscription && !isLifetime && !cancelPending && (
-        <div className="mt-4 md:mt-5 bg-white border-2 border-red-300 shadow-[3px_3px_0px_rgba(239,68,68,0.35)] rounded-sm p-5 md:p-6">
+        <div className="mt-4 md:mt-5 bg-white dark:bg-[#0d0d0d] border-2 border-red-300 dark:border-red-800/50 shadow-[3px_3px_0px_rgba(239,68,68,0.35)] rounded-sm p-5 md:p-6">
           <p className="font-mono text-[10px] font-black uppercase tracking-[0.14em] text-red-500 mb-3 inline-flex items-center gap-1.5">
             <span className="material-symbols-outlined !text-[12px]">warning</span>
             Cancel Auto-Renewal
           </p>
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
             <div className="min-w-0 flex-1">
-              <p className="font-mono text-[13px] font-black uppercase text-black leading-tight mb-1">Stop future charges</p>
-              <p className="text-[12px] text-gray-700 leading-relaxed">
+              <p className="font-mono text-[13px] font-black uppercase text-black dark:text-white leading-tight mb-1">Stop future charges</p>
+              <p className="text-[12px] text-gray-700 dark:text-gray-400 leading-relaxed">
                 Your subscription will auto-renew on{' '}
                 <span className="font-bold">{renewalDate || 'the next billing date'}</span>. Cancel now to stop the renewal — you&apos;ll keep full access until then.
               </p>
-              <p className="text-[11px] text-gray-500 mt-1.5 italic">
+              <p className="text-[11px] text-gray-500 dark:text-gray-400 mt-1.5 italic">
                 Note: payments already made are non-refundable per our terms.
               </p>
             </div>
             <button
-              onClick={() => setShowCancelModal(true)}
+              onClick={() => {
+                setCancelStep('feedback')
+                setShowCancelModal(true)
+              }}
               className="inline-flex items-center justify-center gap-1.5 bg-white text-red-600 font-mono font-black text-[11px] uppercase tracking-wider px-4 py-2.5 border-2 border-red-500 rounded-sm shadow-[2px_2px_0px_rgba(239,68,68,0.4)] hover:bg-red-50 hover:shadow-[3px_3px_0px_rgba(239,68,68,0.4)] hover:-translate-x-px hover:-translate-y-px transition-all flex-shrink-0"
             >
               <span className="material-symbols-outlined !text-[14px]">cancel</span>
@@ -274,18 +302,18 @@ export default function BillingPanel({
 
       {/* Comped/Admin/Allowlist Pro access — explain why cancel isn't shown */}
       {isPro && !subscription && (
-        <div className="mt-4 md:mt-5 bg-white border-2 border-black shadow-[3px_3px_0px_#111] rounded-sm p-5 md:p-6">
-          <p className="font-mono text-[10px] font-black uppercase tracking-[0.14em] text-gray-500 mb-3 inline-flex items-center gap-1.5">
+        <div className="mt-4 md:mt-5 bg-white dark:bg-[#0d0d0d] border-2 border-black dark:border-white/10 shadow-[3px_3px_0px_#111] dark:shadow-[3px_3px_0px_rgba(255,255,255,0.06)] rounded-sm p-5 md:p-6">
+          <p className="font-mono text-[10px] font-black uppercase tracking-[0.14em] text-gray-500 dark:text-gray-400 mb-3 inline-flex items-center gap-1.5">
             <span className="w-1 h-1 rounded-full bg-accent-yellow" />
             Subscription Status
           </p>
-          <div className="flex items-start gap-3 bg-amber-50 border-2 border-black border-dashed rounded-sm p-3.5">
-            <span className="material-symbols-outlined !text-[18px] text-amber-700 flex-shrink-0 mt-0.5">info</span>
+          <div className="flex items-start gap-3 bg-amber-50 dark:bg-amber-900/20 border-2 border-black dark:border-amber-700/50 border-dashed rounded-sm p-3.5">
+            <span className="material-symbols-outlined !text-[18px] text-amber-700 dark:text-amber-400 flex-shrink-0 mt-0.5">info</span>
             <div className="text-[12.5px] leading-relaxed">
-              <p className="font-bold text-amber-900 mb-1">
+              <p className="font-bold text-amber-900 dark:text-amber-300 mb-1">
                 {isAdmin ? 'Admin / complimentary access' : 'Granted access'}
               </p>
-              <p className="text-amber-800">
+              <p className="text-amber-800 dark:text-amber-400">
                 Your account has full access without an active paid subscription, so there&apos;s nothing to cancel here.
                 If you believe this is wrong or want to upgrade to a paid plan,{' '}
                 <a href="mailto:support@foundersprime.com?subject=Subscription%20Question" className="underline font-semibold">
@@ -298,12 +326,12 @@ export default function BillingPanel({
       )}
 
       {isPro && subscription && cancelPending && (
-        <div className="mt-4 md:mt-5 bg-white border-2 border-black shadow-[3px_3px_0px_#111] rounded-sm p-5 md:p-6">
-          <p className="font-mono text-[10px] font-black uppercase tracking-[0.14em] text-gray-500 mb-3 inline-flex items-center gap-1.5">
+        <div className="mt-4 md:mt-5 bg-white dark:bg-[#0d0d0d] border-2 border-black dark:border-white/10 shadow-[3px_3px_0px_#111] dark:shadow-[3px_3px_0px_rgba(255,255,255,0.06)] rounded-sm p-5 md:p-6">
+          <p className="font-mono text-[10px] font-black uppercase tracking-[0.14em] text-gray-500 dark:text-gray-400 mb-3 inline-flex items-center gap-1.5">
             <span className="w-1 h-1 rounded-full bg-amber-500" />
             Renewal Cancelled
           </p>
-          <p className="text-[12.5px] text-gray-700 leading-relaxed mb-3">
+          <p className="text-[12.5px] text-gray-700 dark:text-gray-400 leading-relaxed mb-3">
             Want to keep your access? Re-subscribe before {renewalDate} and your access continues uninterrupted.
           </p>
           <Link
@@ -324,73 +352,132 @@ export default function BillingPanel({
             role="dialog"
             aria-modal="true"
             aria-labelledby="cancel-modal-title"
-            className="relative w-full max-w-md bg-white border-2 border-black shadow-[6px_6px_0px_#111] rounded-sm overflow-hidden cancel-modal-pop"
+            className="relative w-full max-w-lg bg-white dark:bg-[#0d0d0d] border-2 border-black dark:border-white/10 shadow-[6px_6px_0px_#111] dark:shadow-[6px_6px_0px_rgba(255,255,255,0.08)] rounded-sm overflow-hidden cancel-modal-pop"
           >
-            <div className="bg-red-50 px-5 py-3.5 border-b-2 border-black flex justify-between items-center">
-              <h2 id="cancel-modal-title" className="font-mono text-[13px] font-black uppercase tracking-[0.1em] text-black inline-flex items-center gap-2">
+            <div className="bg-red-50 dark:bg-red-900/20 px-5 py-3.5 border-b-2 border-black dark:border-white/10 flex justify-between items-center">
+              <h2 id="cancel-modal-title" className="font-mono text-[13px] font-black uppercase tracking-[0.1em] text-black dark:text-white inline-flex items-center gap-2">
                 <span className="material-symbols-outlined !text-[16px] text-red-600">warning</span>
-                Cancel Auto-Renewal?
+                {cancelStep === 'feedback' ? 'Help Us Improve' : 'Confirm Cancellation'}
               </h2>
               <button
                 onClick={closeModal}
                 aria-label="Close"
-                className="w-7 h-7 flex items-center justify-center bg-white border-2 border-black hover:bg-black hover:text-white transition-colors rounded-sm shadow-[1px_1px_0px_#111]"
+                className="w-7 h-7 flex items-center justify-center bg-white border-2 border-black hover:bg-black hover:text-white transition-colors rounded-sm shadow-[1px_1px_0px_#111] text-black"
               >
                 <span className="material-symbols-outlined !text-[14px]">close</span>
               </button>
             </div>
 
             <div className="p-5 md:p-6">
-              <p className="text-[13px] text-gray-700 leading-relaxed mb-4">
-                You&apos;ll keep full access until{' '}
-                <span className="font-bold text-black">{renewalDate || 'your current period ends'}</span>. After that, your account moves to the Free plan.
-              </p>
+              {cancelStep === 'feedback' ? (
+                <div>
+                  <p className="text-[13px] text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
+                    We are sad to see you go! Please share why you are cancelling your auto-renewal:
+                  </p>
+                  
+                  <div className="space-y-2 mb-4">
+                    {FEEDBACK_OPTIONS.map((opt) => (
+                      <label 
+                        key={opt}
+                        className="flex items-center gap-3 p-3 bg-gray-50 dark:bg-white/5 border-2 border-black dark:border-white/10 rounded-sm cursor-pointer hover:bg-gray-100 dark:hover:bg-white/10 transition-colors"
+                      >
+                        <input 
+                          type="radio" 
+                          name="cancelReason" 
+                          value={opt}
+                          checked={cancelReason === opt}
+                          onChange={(e) => setCancelReason(e.target.value)}
+                          className="w-4 h-4 accent-red-600"
+                        />
+                        <span className="text-[12.5px] text-gray-800 dark:text-gray-200 font-mono uppercase tracking-tight">{opt}</span>
+                      </label>
+                    ))}
+                  </div>
 
-              <ul className="bg-gray-50 border-2 border-black border-dashed rounded-sm p-3.5 space-y-2 mb-5">
-                <li className="flex items-start gap-2 text-[12px] text-gray-800">
-                  <span className="material-symbols-outlined !text-[14px] text-emerald-600 flex-shrink-0 mt-0.5" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
-                  <span>You keep access until {renewalDate || 'period end'}</span>
-                </li>
-                <li className="flex items-start gap-2 text-[12px] text-gray-800">
-                  <span className="material-symbols-outlined !text-[14px] text-emerald-600 flex-shrink-0 mt-0.5" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
-                  <span>No further charges to your card</span>
-                </li>
-                <li className="flex items-start gap-2 text-[12px] text-gray-800">
-                  <span className="material-symbols-outlined !text-[14px] text-emerald-600 flex-shrink-0 mt-0.5" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
-                  <span>You can resume anytime before period end</span>
-                </li>
-                <li className="flex items-start gap-2 text-[12px] text-amber-900">
-                  <span className="material-symbols-outlined !text-[14px] text-amber-600 flex-shrink-0 mt-0.5">info</span>
-                  <span>Payments already made are non-refundable</span>
-                </li>
-              </ul>
+                  <div className="mb-5">
+                    <label className="block text-[10px] font-mono font-bold text-gray-500 uppercase mb-1">
+                      Additional details (optional)
+                    </label>
+                    <textarea
+                      value={cancelComments}
+                      onChange={(e) => setCancelComments(e.target.value)}
+                      placeholder="Help us understand your decision better..."
+                      className="w-full h-24 p-3 text-[12.5px] bg-gray-50 dark:bg-white/5 text-black dark:text-white border-2 border-black dark:border-white/20 rounded-sm outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 font-mono"
+                      maxLength={500}
+                    />
+                  </div>
 
-              <div className="flex flex-col-reverse sm:flex-row gap-2.5">
-                <button
-                  onClick={closeModal}
-                  disabled={isCancelling}
-                  className="flex-1 inline-flex items-center justify-center gap-1.5 bg-white text-black font-mono font-black text-[11px] uppercase tracking-wider px-4 py-2.5 border-2 border-black rounded-sm shadow-[2px_2px_0px_#111] hover:bg-gray-50 hover:shadow-[3px_3px_0px_#111] hover:-translate-x-px hover:-translate-y-px transition-all disabled:opacity-60"
-                >
-                  Keep Subscription
-                </button>
-                <button
-                  onClick={handleCancel}
-                  disabled={isCancelling}
-                  className="flex-1 inline-flex items-center justify-center gap-1.5 bg-red-500 text-white font-mono font-black text-[11px] uppercase tracking-wider px-4 py-2.5 border-2 border-black rounded-sm shadow-[2px_2px_0px_#111] hover:bg-red-600 hover:shadow-[3px_3px_0px_#111] hover:-translate-x-px hover:-translate-y-px transition-all disabled:opacity-60"
-                >
-                  {isCancelling ? (
-                    <>
-                      <span className="material-symbols-outlined !text-[14px] animate-spin">refresh</span>
-                      Cancelling…
-                    </>
-                  ) : (
-                    <>
-                      <span className="material-symbols-outlined !text-[14px]">cancel</span>
-                      Yes, Cancel
-                    </>
-                  )}
-                </button>
-              </div>
+                  <div className="flex gap-2.5">
+                    <button
+                      onClick={closeModal}
+                      className="flex-1 inline-flex items-center justify-center gap-1.5 bg-white text-black font-mono font-black text-[11px] uppercase tracking-wider px-4 py-2.5 border-2 border-black rounded-sm shadow-[2px_2px_0px_#111] hover:bg-gray-50 transition-all"
+                    >
+                      Keep Subscription
+                    </button>
+                    <button
+                      onClick={() => setCancelStep('confirm')}
+                      className="flex-1 inline-flex items-center justify-center gap-1.5 bg-black dark:bg-white text-white dark:text-black font-mono font-black text-[11px] uppercase tracking-wider px-4 py-2.5 border-2 border-black rounded-sm shadow-[2px_2px_0px_#111] hover:bg-gray-800 dark:hover:bg-gray-100 transition-all"
+                    >
+                      Continue
+                      <span className="material-symbols-outlined !text-[14px]">arrow_forward</span>
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <div>
+                  <p className="text-[13px] text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
+                    You&apos;ll keep full access until{' '}
+                    <span className="font-bold text-black dark:text-white">{renewalDate || 'your current period ends'}</span>. After that, your account moves to the Free plan.
+                  </p>
+
+                  <ul className="bg-gray-50 dark:bg-white/5 border-2 border-black dark:border-white/10 border-dashed rounded-sm p-3.5 space-y-2 mb-5">
+                    <li className="flex items-start gap-2 text-[12px] text-gray-800 dark:text-gray-200">
+                      <span className="material-symbols-outlined !text-[14px] text-emerald-600 flex-shrink-0 mt-0.5" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
+                      <span>You keep access until {renewalDate || 'period end'}</span>
+                    </li>
+                    <li className="flex items-start gap-2 text-[12px] text-gray-800 dark:text-gray-200">
+                      <span className="material-symbols-outlined !text-[14px] text-emerald-600 flex-shrink-0 mt-0.5" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
+                      <span>No further charges to your card</span>
+                    </li>
+                    <li className="flex items-start gap-2 text-[12px] text-gray-800 dark:text-gray-200">
+                      <span className="material-symbols-outlined !text-[14px] text-emerald-600 flex-shrink-0 mt-0.5" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
+                      <span>You can resume anytime before period end</span>
+                    </li>
+                    <li className="flex items-start gap-2 text-[12px] text-amber-900 dark:text-amber-300">
+                      <span className="material-symbols-outlined !text-[14px] text-amber-600 flex-shrink-0 mt-0.5">info</span>
+                      <span>Payments already made are non-refundable</span>
+                    </li>
+                  </ul>
+
+                  <div className="flex flex-col-reverse sm:flex-row gap-2.5">
+                    <button
+                      onClick={() => setCancelStep('feedback')}
+                      disabled={isCancelling}
+                      className="flex-1 inline-flex items-center justify-center gap-1.5 bg-white text-black font-mono font-black text-[11px] uppercase tracking-wider px-4 py-2.5 border-2 border-black rounded-sm shadow-[2px_2px_0px_#111] hover:bg-gray-50 hover:shadow-[3px_3px_0px_#111] hover:-translate-x-px hover:-translate-y-px transition-all disabled:opacity-60"
+                    >
+                      <span className="material-symbols-outlined !text-[14px]">arrow_back</span>
+                      Back
+                    </button>
+                    <button
+                      onClick={handleCancel}
+                      disabled={isCancelling}
+                      className="flex-1 inline-flex items-center justify-center gap-1.5 bg-red-500 text-white font-mono font-black text-[11px] uppercase tracking-wider px-4 py-2.5 border-2 border-black rounded-sm shadow-[2px_2px_0px_#111] hover:bg-red-600 hover:shadow-[3px_3px_0px_#111] hover:-translate-x-px hover:-translate-y-px transition-all disabled:opacity-60"
+                    >
+                      {isCancelling ? (
+                        <>
+                          <span className="material-symbols-outlined !text-[14px] animate-spin">refresh</span>
+                          Cancelling…
+                        </>
+                      ) : (
+                        <>
+                          <span className="material-symbols-outlined !text-[14px]">cancel</span>
+                          Yes, Cancel
+                        </>
+                      )}
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
 
@@ -411,3 +498,4 @@ export default function BillingPanel({
     </section>
   )
 }
+

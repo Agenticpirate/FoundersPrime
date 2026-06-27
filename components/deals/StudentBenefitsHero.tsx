@@ -24,7 +24,7 @@ export default function StudentBenefitsHero() {
       stats={[
         {
           label: 'Student Deals',
-          value: '450+',
+          value: '900+',
           delta: 'Verified &amp; active',
           icon: 'school',
           iconColor: 'text-cyan-600',

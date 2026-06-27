@@ -26,10 +26,13 @@ const loginPartners = [
 function LoginContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
-  const redirect = searchParams.get('redirect') || '/dashboard'
+  const redirect = searchParams.get('redirect') || searchParams.get('next') || '/'
   const errorParam = searchParams.get('error')
+  const viewParam = searchParams.get('view')
 
-  const [view, setView] = useState<'login' | 'signup' | 'forgot' | 'mfa'>('login')
+  const [view, setView] = useState<'login' | 'signup' | 'forgot' | 'mfa'>(
+    (viewParam === 'signup' || viewParam === 'login' || viewParam === 'forgot' || viewParam === 'mfa') ? viewParam : 'login'
+  )
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [fullName, setFullName] = useState('')
@@ -58,6 +61,14 @@ function LoginContent() {
       }
     }
   }, [])
+
+  // Sync view state if the query parameter changes dynamically
+  useEffect(() => {
+    const v = searchParams.get('view')
+    if (v === 'signup' || v === 'login' || v === 'forgot' || v === 'mfa') {
+      setView(v)
+    }
+  }, [searchParams])
 
   // Load Google Client library for client-side custom domain branding login
   useEffect(() => {
@@ -88,7 +99,7 @@ function LoginContent() {
       const g = (window as any).google
       if (g && g.accounts && g.accounts.id) {
         g.accounts.id.initialize({
-          client_id: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || '310275392560-0g3esttkosm3tehjpc6rmu128okh44kr.apps.googleusercontent.com',
+          client_id: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || '132073880376-qr7qulfnamrejngjljd35tm84atvf40e.apps.googleusercontent.com',
           callback: handleCredentialResponse,
         })
         

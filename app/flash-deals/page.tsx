@@ -4,6 +4,7 @@ import Footer from '@/components/Footer'
 import FlashHero from '@/components/flash/FlashHero'
 import FlashDealsBrowse from '@/components/flash/FlashDealsBrowse'
 import FlashPremiumCTA from '@/components/flash/FlashPremiumCTA'
+import FoundingMemberBanner from '@/components/flash/FoundingMemberBanner'
 
 export const metadata = {
   title: 'Flash Deals — Limited-Time Startup Offers',
@@ -117,6 +118,8 @@ export default function FlashDealsPage() {
             ))}
           </div>
         </section>
+
+        <FoundingMemberBanner />
 
         <FlashDealsBrowse />
 

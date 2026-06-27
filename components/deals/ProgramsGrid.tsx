@@ -19,7 +19,7 @@ function getLogoUrl(logo: string | undefined, name: string, website: string | un
   if (website) {
     try {
       domain = new URL(website).hostname.replace('www.', '')
-    } catch {}
+    } catch { }
   }
   const chain = [
     logo,
@@ -87,11 +87,10 @@ function ProgramCard({
       {/* Top badges */}
       <div className="flex flex-wrap gap-1.5 mb-3">
         {type && (
-          <span className={`px-2 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider font-mono ${
-            type === 'accelerator' ? 'bg-orange-950/40 text-orange-400 border border-orange-500/20' :
-            type === 'incubator' ? 'bg-teal-950/40 text-teal-400 border border-teal-500/20' :
-            'bg-emerald-950/40 text-emerald-400 border border-emerald-500/20'
-          }`}>
+          <span className={`px-2 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider font-mono ${type === 'accelerator' ? 'bg-orange-950/40 text-orange-400 border border-orange-500/20' :
+              type === 'incubator' ? 'bg-teal-950/40 text-teal-400 border border-teal-500/20' :
+                'bg-emerald-950/40 text-emerald-400 border border-emerald-500/20'
+            }`}>
             {type}
           </span>
         )}
@@ -292,11 +291,10 @@ function PaginationControls({ currentPage, totalPages, onPageChange }: Paginatio
             <button
               key={idx}
               onClick={() => onPageChange(pageNum)}
-              className={`w-8 h-8 flex items-center justify-center rounded border transition-colors ${
-                currentPage === pageNum
+              className={`w-8 h-8 flex items-center justify-center rounded border transition-colors ${currentPage === pageNum
                   ? 'bg-accent-yellow text-black font-black border-accent-yellow'
                   : 'bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white border-white/5'
-              }`}
+                }`}
             >
               {pageNum}
             </button>
@@ -384,7 +382,7 @@ function ProgramsProGateOverlay({
             </h3>
 
             <p className="font-mono text-[11px] text-gray-400 text-center mb-6">
-              Exclusive directory for verified founders &amp; members.
+              Exclusive directory for verified founders &amp; members. The average founder saves a minimum of $3,000+ in their first week alone.
             </p>
 
             {/* Divider */}
@@ -393,10 +391,10 @@ function ProgramsProGateOverlay({
             {/* Bullet points */}
             <ul className="w-full space-y-3.5 mb-8">
               {[
+                `Save a minimum of $3,000+ in your first week`,
                 `Unlimited access to all verified ${label.toLowerCase()}`,
                 'Direct application links & verified deadlines',
-                'Full funding amounts & equity terms',
-                'New programs added weekly — never miss a cohort',
+                'Full funding amounts, cohorts, and equity terms',
               ].map((item, idx) => (
                 <li key={idx} className="flex items-start gap-2.5 font-mono text-[11.5px] text-gray-300 font-semibold leading-relaxed">
                   <span className="material-symbols-outlined !text-[16px] text-accent-yellow flex-shrink-0 mt-0.5" style={{ fontVariationSettings: "'FILL' 1" }}>
@@ -577,7 +575,7 @@ export default function ProgramsGrid({ activeType, filters, initialIsPro }: Prog
 
   const combinedPrograms = useMemo(() => {
     const list: UnifiedProgram[] = []
-    
+
     if (activeType === 'all' || activeType === 'accelerators') {
       filteredAccelerators.forEach(acc => {
         list.push({
@@ -595,7 +593,7 @@ export default function ProgramsGrid({ activeType, filters, initialIsPro }: Prog
         })
       })
     }
-    
+
     if (activeType === 'all' || activeType === 'incubators') {
       filteredIncubators.forEach(inc => {
         list.push({
@@ -613,7 +611,7 @@ export default function ProgramsGrid({ activeType, filters, initialIsPro }: Prog
         })
       })
     }
-    
+
     if (activeType === 'all' || activeType === 'grants') {
       filteredGrants.forEach(grant => {
         list.push({
@@ -631,7 +629,7 @@ export default function ProgramsGrid({ activeType, filters, initialIsPro }: Prog
         })
       })
     }
-    
+
     return list.sort((a, b) => {
       const aActive = a.applicationStatus === 'Active'
       const bActive = b.applicationStatus === 'Active'

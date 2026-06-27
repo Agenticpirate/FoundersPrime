@@ -33,7 +33,7 @@ export default function FlashDealsBrowse() {
             aria-hidden="true"
             style={{ boxShadow: '0 0 8px rgba(255,215,0,0.6)' }}
           />
-          <h2 className="font-mono font-black text-[12px] md:text-[13px] uppercase tracking-[0.18em] text-gray-300">
+          <h2 className="font-mono font-black text-[12px] md:text-[13px] uppercase tracking-[0.18em] text-gray-600 dark:text-gray-300">
             Browse Flash Deals by Category
           </h2>
         </div>
@@ -60,7 +60,7 @@ export default function FlashDealsBrowse() {
               className={`inline-flex items-center gap-1.5 font-mono font-bold text-[10px] uppercase tracking-[0.08em] px-3.5 py-1.5 border transition-all duration-150 ${
                 isActive
                   ? 'bg-accent-yellow text-black border-accent-yellow shadow-[0_0_12px_rgba(255,215,0,0.3)]'
-                  : 'bg-white/[0.03] border-white/10 text-gray-400 hover:text-white hover:border-white/30 hover:bg-white/[0.06]'
+                  : 'bg-gray-50 dark:bg-white/[0.03] border-gray-200 dark:border-white/10 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:border-gray-300 dark:hover:border-white/30 hover:bg-gray-100 dark:hover:bg-white/[0.06]'
               }`}
               aria-pressed={isActive}
             >
@@ -68,7 +68,7 @@ export default function FlashDealsBrowse() {
               {count > 0 && (
                 <span
                   className={`text-[9px] font-black px-1 py-px leading-none ${
-                    isActive ? 'bg-black/20 text-black' : 'bg-white/10 text-gray-500'
+                    isActive ? 'bg-black/20 text-black' : 'bg-black/5 dark:bg-white/10 text-gray-500'
                   }`}
                 >
                   {count}
@@ -87,7 +87,7 @@ export default function FlashDealsBrowse() {
           ))}
         </div>
       ) : (
-        <div className="border border-dashed border-white/10 py-20 text-center bg-white/[0.01]">
+        <div className="border border-dashed border-gray-200 dark:border-white/10 py-20 text-center bg-gray-50/50 dark:bg-white/[0.01]">
           <span
             className="material-symbols-outlined text-5xl text-accent-yellow/30"
             style={{ fontVariationSettings: "'FILL' 1" }}
@@ -98,7 +98,7 @@ export default function FlashDealsBrowse() {
             No flash deals in this category right now
           </p>
           <p className="font-sans text-[13px] text-gray-600 mt-1.5">
-            New drops land every Monday &amp; Thursday — check back soon.
+            New drops land every week — check back soon.
           </p>
         </div>
       )}

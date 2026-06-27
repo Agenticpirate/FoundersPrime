@@ -168,6 +168,12 @@ const nextConfig = {
         destination: '/deals?category=ad-credits',
         permanent: true,
       },
+      // Unify signup page under login page with a view parameter
+      {
+        source: '/signup',
+        destination: '/login?view=signup',
+        permanent: true,
+      },
     ]
   },
 }

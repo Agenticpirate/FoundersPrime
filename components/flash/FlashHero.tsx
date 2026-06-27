@@ -98,14 +98,14 @@ export default function FlashHero() {
               </span>
               Flash Deals.
             </span>
-            <span className="block text-[26px] md:text-[34px] lg:text-[38px] text-white mt-1.5 leading-tight">
+            <span className="block text-[26px] md:text-[34px] lg:text-[38px] text-gray-900 dark:text-white mt-1.5 leading-tight">
               Deals that disappear fast.
             </span>
           </h1>
 
-          <p className="font-sans text-[13px] md:text-sm text-gray-400 leading-relaxed mt-4 max-w-md">
+          <p className="font-sans text-[13px] md:text-sm text-gray-650 dark:text-gray-400 leading-relaxed mt-4 max-w-md">
             Limited-time offers on top tools and credits.{' '}
-            <span className="text-gray-300 font-medium">New deals every week.</span>{' '}
+            <span className="text-gray-800 dark:text-gray-300 font-medium">New deals every week.</span>{' '}
             Gone when the timer hits zero.
           </p>
 
@@ -177,7 +177,7 @@ export default function FlashHero() {
             <div className="mt-5 flex items-center gap-2 bg-black/50 border border-white/[0.08] px-3 py-2.5">
               <span className="material-symbols-outlined text-accent-yellow text-[17px]">calendar_month</span>
               <span className="font-mono text-[11px] font-bold uppercase tracking-[0.06em] text-gray-300">
-                New flash deals drop every Monday &amp; Thursday
+                New flash deals drop every week
               </span>
             </div>
           </div>

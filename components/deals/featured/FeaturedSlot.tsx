@@ -76,7 +76,7 @@ function DealView({ deal, variant }: { deal: Deal; variant: Variant }) {
         return (
             <Link
                 href={`/deals/${deal.slug}`}
-                className="group relative flex h-full flex-col bg-amber-50 dark:bg-[#1a1510] border-2 border-amber-500 dark:border-amber-500/50 rounded-xl shadow-[3px_3px_0px_#b45309] dark:shadow-[3px_3px_0px_rgba(245,158,11,0.2)] hover:shadow-[5px_5px_0px_#b45309] dark:hover:shadow-[5px_5px_0px_rgba(245,158,11,0.3)] hover:-translate-x-px hover:-translate-y-px transition-all overflow-hidden"
+                className="group relative flex h-[200px] flex-col bg-amber-50 dark:bg-[#1a1510] border-2 border-amber-500 dark:border-amber-500/50 rounded-xl shadow-[3px_3px_0px_#b45309] dark:shadow-[3px_3px_0px_rgba(245,158,11,0.2)] hover:shadow-[5px_5px_0px_#b45309] dark:hover:shadow-[5px_5px_0px_rgba(245,158,11,0.3)] hover:-translate-x-px hover:-translate-y-px transition-all overflow-hidden"
             >
                 <div className="px-3 pt-2.5">
                     <span className="inline-block px-1.5 py-0.5 bg-amber-400 text-black text-[8px] font-black uppercase tracking-wider rounded-sm">
@@ -197,7 +197,7 @@ function Promo({ variant, compact = false, dense = false }: { variant: Variant; 
         return (
             <Link
                 href="/submit-deal"
-                className="group relative flex h-full flex-col items-center justify-center text-center bg-gradient-to-br from-gray-900 via-gray-900 to-black text-white border-2 border-dashed border-amber-400 rounded-xl shadow-[3px_3px_0px_#111] hover:shadow-[5px_5px_0px_#111] hover:-translate-x-px hover:-translate-y-px transition-all p-4 overflow-hidden"
+                className="group relative flex h-[200px] flex-col items-center justify-center text-center bg-gradient-to-br from-gray-900 via-gray-900 to-black text-white border-2 border-dashed border-amber-400 rounded-xl shadow-[3px_3px_0px_#111] hover:shadow-[5px_5px_0px_#111] hover:-translate-x-px hover:-translate-y-px transition-all p-4 overflow-hidden"
             >
                 <span className="inline-flex items-center gap-1.5 bg-accent-yellow text-black font-mono text-[8px] font-black uppercase tracking-[0.12em] px-2 py-0.5 border border-black mb-2">
                     Open Slot
@@ -275,7 +275,7 @@ function FeaturedSlotSkeleton({ variant, dense }: { variant: Variant; dense?: bo
     }
     if (variant === 'inline') {
         return (
-            <div className="w-full h-full min-h-[220px] rounded-xl bg-gray-200 dark:bg-neutral-900 animate-pulse border border-gray-300 dark:border-neutral-800" />
+            <div className="w-full h-[200px] rounded-xl bg-gray-200 dark:bg-neutral-900 animate-pulse border border-gray-300 dark:border-neutral-800" />
         )
     }
     // rail

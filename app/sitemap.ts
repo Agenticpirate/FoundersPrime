@@ -63,7 +63,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
         '/cookie-policy',
         '/refund-policy',
         '/login',
-        '/signup',
     ].map((route) => ({
         url: `${baseUrl}${route}`,
         lastModified: BUILD_DATE,

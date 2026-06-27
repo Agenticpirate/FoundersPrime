@@ -101,9 +101,9 @@ export default function ProfileManager({ initialName, initialEmail, initialAvata
   const hasValidAvatar = avatar && !avatarError
 
   return (
-    <div className="bg-white border-2 border-black shadow-[3px_3px_0px_#111] p-5 md:p-6">
+    <div className="bg-white dark:bg-[#0d0d0d] border-2 border-black dark:border-white/10 shadow-[3px_3px_0px_#111] dark:shadow-[3px_3px_0px_rgba(255,255,255,0.06)] p-5 md:p-6">
       <div className="flex items-center justify-between mb-5">
-        <h2 className="font-mono font-bold text-sm uppercase text-gray-400">Profile</h2>
+        <h2 className="font-mono font-bold text-sm uppercase text-gray-400 dark:text-gray-500">Profile</h2>
         {!isEditing ? (
           <button onClick={() => setIsEditing(true)} className="text-xs font-mono font-bold text-primary hover:underline uppercase flex items-center gap-1">
             <span className="material-symbols-outlined text-sm">edit</span> Edit
@@ -111,11 +111,11 @@ export default function ProfileManager({ initialName, initialEmail, initialAvata
         ) : (
           <div className="flex items-center gap-2">
             <button onClick={() => { setIsEditing(false); setName(initialName) }}
-              className="text-xs font-mono font-bold text-gray-400 hover:text-black uppercase px-2 py-1">
+              className="text-xs font-mono font-bold text-gray-400 hover:text-black dark:hover:text-white uppercase px-2 py-1">
               Cancel
             </button>
             <button onClick={handleSave} disabled={saving}
-              className="text-xs font-mono font-bold bg-black text-white px-3 py-1 uppercase hover:bg-gray-800 disabled:opacity-50 flex items-center gap-1">
+              className="text-xs font-mono font-bold bg-black dark:bg-white text-white dark:text-black px-3 py-1 uppercase hover:bg-gray-800 dark:hover:bg-gray-100 disabled:opacity-50 flex items-center gap-1">
               {saving ? <><span className="material-symbols-outlined text-xs animate-spin">progress_activity</span> Saving</> : 'Save'}
             </button>
           </div>
@@ -123,7 +123,7 @@ export default function ProfileManager({ initialName, initialEmail, initialAvata
       </div>
 
       {message && (
-        <div className={`mb-4 px-3 py-2 text-xs font-mono font-bold flex items-center gap-2 ${message.type === 'success' ? 'bg-green-50 text-green-700 border border-green-200' : 'bg-red-50 text-red-700 border border-red-200'}`}>
+        <div className={`mb-4 px-3 py-2 text-xs font-mono font-bold flex items-center gap-2 ${message.type === 'success' ? 'bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-300 border border-green-200 dark:border-green-700' : 'bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-300 border border-red-200 dark:border-red-700'}`}>
           <span className="material-symbols-outlined text-sm">{message.type === 'success' ? 'check_circle' : 'error'}</span>
           {message.text}
         </div>
@@ -138,7 +138,7 @@ export default function ProfileManager({ initialName, initialEmail, initialAvata
             disabled={uploading}
             className="relative group cursor-pointer disabled:cursor-wait focus:outline-none focus:ring-2 focus:ring-primary"
           >
-            <div className="w-16 h-16 md:w-20 md:h-20 bg-gray-100 flex items-center justify-center overflow-hidden border-2 border-black">
+            <div className="w-16 h-16 md:w-20 md:h-20 bg-gray-100 dark:bg-white/5 flex items-center justify-center overflow-hidden border-2 border-black dark:border-white/20">
               {hasValidAvatar ? (
                 <img
                   src={avatar!}
@@ -147,10 +147,10 @@ export default function ProfileManager({ initialName, initialEmail, initialAvata
                   onError={() => setAvatarError(true)}
                 />
               ) : (
-                <span className="material-symbols-outlined text-3xl md:text-4xl text-gray-400">account_circle</span>
+                <span className="material-symbols-outlined text-3xl md:text-4xl text-gray-400 dark:text-gray-600">account_circle</span>
               )}
             </div>
-            <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity border-2 border-black">
+            <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity border-2 border-black dark:border-white/20">
               {uploading ? (
                 <span className="material-symbols-outlined text-white text-lg animate-spin">progress_activity</span>
               ) : (
@@ -167,28 +167,28 @@ export default function ProfileManager({ initialName, initialEmail, initialAvata
         {/* Details */}
         <div className="flex-1 space-y-3 min-w-0">
           <div>
-            <label className="text-[10px] font-mono font-bold text-gray-400 uppercase block mb-1">Display Name</label>
+            <label className="text-[10px] font-mono font-bold text-gray-400 dark:text-gray-500 uppercase block mb-1">Display Name</label>
             {isEditing ? (
               <input
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 maxLength={50}
-                className="w-full px-3 py-2 border-2 border-black text-sm font-medium bg-gray-50 focus:bg-white focus:shadow-[2px_2px_0px_#111] outline-none transition-all font-mono"
+                className="w-full px-3 py-2 border-2 border-black dark:border-white/20 bg-gray-50 dark:bg-white/5 text-black dark:text-white focus:bg-white dark:focus:bg-white/10 focus:shadow-[2px_2px_0px_#111] dark:focus:shadow-[2px_2px_0px_rgba(255,255,255,0.2)] outline-none transition-all font-mono text-sm font-medium"
                 placeholder="Your name"
                 autoFocus
               />
             ) : (
-              <p className="text-sm font-bold">{name}</p>
+              <p className="text-sm font-bold text-black dark:text-white">{name}</p>
             )}
           </div>
           <div>
-            <label className="text-[10px] font-mono font-bold text-gray-400 uppercase block mb-1">Email</label>
-            <p className="text-sm font-mono text-gray-600 truncate">{initialEmail}</p>
+            <label className="text-[10px] font-mono font-bold text-gray-400 dark:text-gray-500 uppercase block mb-1">Email</label>
+            <p className="text-sm font-mono text-gray-600 dark:text-gray-400 truncate">{initialEmail}</p>
           </div>
           <div>
-            <label className="text-[10px] font-mono font-bold text-gray-400 uppercase block mb-1">Member Since</label>
-            <p className="text-sm text-gray-600">{memberSince}</p>
+            <label className="text-[10px] font-mono font-bold text-gray-400 dark:text-gray-500 uppercase block mb-1">Member Since</label>
+            <p className="text-sm text-gray-600 dark:text-gray-400">{memberSince}</p>
           </div>
         </div>
       </div>

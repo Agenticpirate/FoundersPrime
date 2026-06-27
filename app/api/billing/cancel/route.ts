@@ -12,12 +12,22 @@ import { createClient } from '@/lib/supabase/server'
  *   `subscription.cancelled` webhook when Dodo finalizes the cancellation
  *   at period end.
  */
-export async function POST(_req: NextRequest) {
+export async function POST(req: NextRequest) {
   try {
     const supabase = createClient()
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+    }
+
+    let reason = 'Not specified'
+    let feedback = ''
+    try {
+      const body = await req.json()
+      reason = body.reason || 'Not specified'
+      feedback = body.feedback || ''
+    } catch (e) {
+      // Ignore body parsing issues if none provided
     }
 
     const apiKey = process.env.DODO_PAYMENTS_API_KEY
@@ -64,11 +74,15 @@ export async function POST(_req: NextRequest) {
       )
     }
 
-    // Tell Dodo to stop auto-renewal at the next billing date
+    // Tell Dodo to stop auto-renewal at the next billing date and attach feedback in metadata
     const dodo = new DodoPayments({ bearerToken: apiKey, environment: env })
     try {
       await dodo.subscriptions.update(sub.stripe_subscription_id, {
         cancel_at_next_billing_date: true,
+        metadata: {
+          cancel_reason: reason,
+          cancel_feedback: feedback,
+        }
       })
     } catch (e: any) {
       console.error('Dodo cancel error:', e?.message || e)
@@ -81,14 +95,39 @@ export async function POST(_req: NextRequest) {
       )
     }
 
-    // Reflect locally so the UI updates immediately
-    await supabase
-      .from('user_subscriptions')
-      .update({
-        cancel_at_period_end: true,
-        updated_at: new Date().toISOString(),
-      })
-      .eq('id', sub.id)
+    // Reflect locally so the UI updates immediately. Try updating with reason & feedback fields,
+    // falling back to only cancel_at_period_end if the columns aren't migrated yet.
+    try {
+      const { error: updateErr } = await supabase
+        .from('user_subscriptions')
+        .update({
+          cancel_at_period_end: true,
+          cancel_reason: reason,
+          cancel_feedback: feedback,
+          updated_at: new Date().toISOString(),
+        })
+        .eq('id', sub.id)
+
+      if (updateErr) {
+        // Fallback update if columns do not exist
+        await supabase
+          .from('user_subscriptions')
+          .update({
+            cancel_at_period_end: true,
+            updated_at: new Date().toISOString(),
+          })
+          .eq('id', sub.id)
+      }
+    } catch (dbErr) {
+      console.error('Database update error, attempting fallback:', dbErr)
+      await supabase
+        .from('user_subscriptions')
+        .update({
+          cancel_at_period_end: true,
+          updated_at: new Date().toISOString(),
+        })
+        .eq('id', sub.id)
+    }
 
     return NextResponse.json({
       success: true,

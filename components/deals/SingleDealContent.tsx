@@ -389,7 +389,7 @@ export default function SingleDealContent({
                     <span className="material-symbols-outlined !text-[15px]">ios_share</span> Share
                   </button>
                   {showShareMenu && (
-                    <div className="absolute top-full left-0 right-0 mt-1.5 bg-white dark:bg-[#0c0c0c] border-2 border-black dark:border-white/10 rounded-sm shadow-[3px_3px_0px_#111] dark:shadow-none z-50 overflow-hidden">
+                    <div className="absolute bottom-full left-0 right-0 mb-1.5 bg-white dark:bg-[#0c0c0c] border-2 border-black dark:border-white/10 rounded-sm shadow-[3px_3px_0px_#111] dark:shadow-none z-50 overflow-hidden">
                       <button onClick={() => handleShare('copy')} className="w-full px-3 py-2 text-left text-[11px] font-bold hover:bg-gray-100 dark:hover:bg-white/5 flex items-center gap-2 text-black dark:text-white">
                         <span className="material-symbols-outlined !text-[14px]">content_copy</span>
                         {showCopied ? 'Copied!' : 'Copy Link'}

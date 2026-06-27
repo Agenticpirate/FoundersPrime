@@ -7,6 +7,7 @@ import DealLogo from '@/components/deals/DealLogo'
 import { studentBenefits2026, StudentBenefit } from '@/data/student-benefits-2026'
 import { GlowingEffect } from '@/components/ui/GlowingEffect'
 import { merchantReturnPolicy } from '@/lib/seo/merchant-return-policy'
+import { checkProStatusServer } from '@/lib/auth/user-server'
 
 // Force dynamic rendering
 export const dynamic = 'force-dynamic'
@@ -159,6 +160,10 @@ export default async function StudentBenefitDetailPage({ params }: PageProps) {
 
         const deal = convertBenefitToDeal(benefitData, studentBenefits2026)
 
+        // Resolve pro status server-side so the client never sees a loading flash
+        const { isPro: serverIsPro, user: serverUser } = await checkProStatusServer()
+        const serverIsNextFounder = !!serverUser?.isNextFounder
+
         // Structured Data (JSON-LD)
         const jsonLd = {
             '@context': 'https://schema.org',
@@ -294,7 +299,12 @@ export default async function StudentBenefitDetailPage({ params }: PageProps) {
 
                     {/* Main content */}
                     <div className="max-w-[1600px] mx-auto px-4 lg:px-6 py-4 lg:py-6">
-                        <SingleDealContent deal={deal} freeAccess={true} basePath="/student-benefits" />
+                        <SingleDealContent
+                            deal={deal}
+                            basePath="/student-benefits"
+                            initialIsPro={serverIsPro}
+                            initialIsNextFounder={serverIsNextFounder}
+                        />
                     </div>
                 </main>
                 <Footer />

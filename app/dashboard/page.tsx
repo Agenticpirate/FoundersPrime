@@ -93,7 +93,7 @@ export default async function DashboardPage({
   return (
     <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden">
       <Header />
-      <main className="flex-1 bg-[#fafafa]">
+      <main className="flex-1 bg-[#fafafa] dark:bg-black">
         <DashboardClient
           userName={userName}
           userEmail={userEmail}

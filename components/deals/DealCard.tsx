@@ -117,11 +117,11 @@ export default function DealCard({ deal, basePath = '/deals', overrideHref }: De
   }
 
   return (
-    <div className="relative h-full rounded-sm">
+    <div className="relative h-[200px] flex flex-col rounded-sm">
       <GlowingEffect spread={40} glow={false} disabled={false} proximity={64} inactiveZone={0.01} borderWidth={2} />
       <LinkComponent
         {...linkProps}
-        className="relative flex flex-col bg-white dark:bg-[#0c0c0c] border border-gray-200 dark:border-white/10 shadow-sm hover:shadow-[0_8px_30px_rgb(0,0,0,0.12)] dark:hover:shadow-[0_8px_30px_rgba(255,255,255,0.05)] hover:-translate-y-1 transition-all duration-300 overflow-hidden group h-full rounded-xl text-left"
+        className="relative flex flex-col bg-white dark:bg-[#0c0c0c] border border-gray-200 dark:border-white/10 shadow-sm hover:shadow-[0_8px_30px_rgb(0,0,0,0.12)] dark:hover:shadow-[0_8px_30px_rgba(255,255,255,0.05)] hover:-translate-y-1 transition-all duration-300 overflow-hidden group flex-1 rounded-xl text-left"
         aria-label={`View details for ${title}`}
       >
         {/* Badge */}

@@ -65,11 +65,7 @@ export default function SavedDealsSection({ savedDealSlugs }: SavedDealsSectionP
   if (loading) {
     return (
       <div className="mb-4 md:mb-6">
-        <h2 className="text-2xl font-black uppercase mb-4 flex items-center gap-2">
-          <span className="material-symbols-outlined text-primary">bookmark</span>
-          Saved Deals
-        </h2>
-        <div className="border-3 border-black bg-white shadow-[4px_4px_0px_#111111] p-8 text-center">
+        <div className="border-3 border-black dark:border-white/10 bg-white dark:bg-[#0d0d0d] shadow-[4px_4px_0px_#111111] dark:shadow-[4px_4px_0px_rgba(255,255,255,0.06)] p-8 text-center">
           <div className="animate-spin rounded-full h-8 w-8 border-4 border-primary border-t-transparent mx-auto"></div>
         </div>
       </div>
@@ -83,7 +79,7 @@ export default function SavedDealsSection({ savedDealSlugs }: SavedDealsSectionP
   return (
     <div className="mb-4 md:mb-6">
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-2xl font-black uppercase flex items-center gap-2">
+        <h2 className="text-2xl font-black uppercase flex items-center gap-2 text-black dark:text-white">
           <span className="material-symbols-outlined text-primary">bookmark</span>
           Saved Deals ({deals.length})
         </h2>
@@ -100,10 +96,10 @@ export default function SavedDealsSection({ savedDealSlugs }: SavedDealsSectionP
         {deals.map((deal) => (
           <div
             key={deal.id}
-            className="border-3 border-black bg-white shadow-[4px_4px_0px_#111111] p-4 hover:shadow-[6px_6px_0px_#111111] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all"
+            className="border-2 border-black dark:border-white/10 bg-white dark:bg-[#0d0d0d] shadow-[4px_4px_0px_#111111] dark:shadow-[4px_4px_0px_rgba(255,255,255,0.06)] p-4 hover:shadow-[6px_6px_0px_#111111] dark:hover:shadow-[6px_6px_0px_rgba(255,255,255,0.1)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all"
           >
             <div className="flex items-start gap-3 mb-3">
-              <div className="w-10 h-10 bg-gray-100 border-2 border-black rounded flex items-center justify-center overflow-hidden flex-shrink-0 relative">
+              <div className="w-10 h-10 bg-gray-100 dark:bg-white/5 border-2 border-black dark:border-white/20 rounded flex items-center justify-center overflow-hidden flex-shrink-0 relative">
                 {deal.logoUrl ? (
                   <Image
                     src={deal.logoUrl}
@@ -113,12 +109,12 @@ export default function SavedDealsSection({ savedDealSlugs }: SavedDealsSectionP
                     className="object-contain"
                   />
                 ) : (
-                  <span className="text-lg font-bold">{deal.provider.charAt(0)}</span>
+                  <span className="text-lg font-bold text-black dark:text-white">{deal.provider.charAt(0)}</span>
                 )}
               </div>
               <div className="flex-1 min-w-0">
-                <h3 className="font-bold text-sm truncate">{deal.title}</h3>
-                <p className="text-xs text-gray-500">{deal.provider}</p>
+                <h3 className="font-bold text-sm truncate text-black dark:text-white">{deal.title}</h3>
+                <p className="text-xs text-gray-500 dark:text-gray-400">{deal.provider}</p>
               </div>
               <button
                 onClick={() => handleRemove(deal.slug || deal.id)}
@@ -129,10 +125,10 @@ export default function SavedDealsSection({ savedDealSlugs }: SavedDealsSectionP
               </button>
             </div>
 
-            <p className="text-xs text-gray-600 mb-3 line-clamp-2">{deal.shortDescription}</p>
+            <p className="text-xs text-gray-600 dark:text-gray-400 mb-3 line-clamp-2">{deal.shortDescription}</p>
 
             <div className="flex items-center justify-between">
-              <span className="text-sm font-bold text-green-600">{deal.value}</span>
+              <span className="text-sm font-bold text-green-600 dark:text-green-400">{deal.value}</span>
               <Link
                 href={`/deals/${deal.slug || deal.id}`}
                 className="text-xs font-bold text-primary hover:underline flex items-center gap-1"

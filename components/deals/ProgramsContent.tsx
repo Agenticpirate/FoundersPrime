@@ -6,6 +6,9 @@ import ProgramsSidebar, { ProgramType } from './ProgramsSidebar'
 import ProgramsFilterBar, { ProgramFilterState } from './ProgramsFilterBar'
 import ProgramsGrid from './ProgramsGrid'
 import FeaturedSlot from './featured/FeaturedSlot'
+import { accelerators2026 } from '@/data/accelerators-2026'
+import { incubators2026 } from '@/data/incubators-2026'
+import { grants2026 } from '@/data/grants-2026'
 
 const DEFAULT_FILTERS: ProgramFilterState = {
   search: '',
@@ -101,6 +104,11 @@ export default function ProgramsContent({ initialIsPro, initialType, initialFilt
     grants: 'Grants',
   }
 
+  const accsCount = accelerators2026.length
+  const incsCount = incubators2026.length
+  const grtsCount = grants2026.length
+  const totalCount = accsCount + incsCount + grtsCount
+
   return (
     <div className="max-w-[1600px] mx-auto flex flex-col gap-6">
       {/* Header Featured Banner — rotating, full width, shown on all sizes */}
@@ -114,23 +122,30 @@ export default function ProgramsContent({ initialIsPro, initialType, initialFilt
         />
         <div className="flex items-center border-b border-white/10 font-mono text-[11px] font-bold uppercase tracking-[0.12em] overflow-x-auto whitespace-nowrap mobile-scroll-hide pr-12 lg:pr-0">
           {[
-            { id: 'all', label: 'All Programs' },
-            { id: 'accelerators', label: 'Accelerators' },
-            { id: 'incubators', label: 'Incubators' },
-            { id: 'grants', label: 'Grants' }
+            { id: 'all', label: 'All Programs', count: totalCount },
+            { id: 'accelerators', label: 'Accelerators', count: accsCount },
+            { id: 'incubators', label: 'Incubators', count: incsCount },
+            { id: 'grants', label: 'Grants', count: grtsCount }
           ].map((tab) => {
             const isActive = activeType === tab.id
             return (
               <button
                 key={tab.id}
                 onClick={() => handleTypeSelect(tab.id as any)}
-                className={`flex-shrink-0 px-5 py-3 border-b-2 transition-all relative ${
+                className={`flex-shrink-0 px-5 py-3 border-b-2 transition-all relative inline-flex items-center gap-2 ${
                   isActive
                     ? 'border-accent-yellow text-accent-yellow font-black'
                     : 'border-transparent text-gray-400 hover:text-white hover:border-white/20'
                 }`}
               >
-                {tab.label}
+                <span>{tab.label}</span>
+                <span className={`text-[10px] px-1.5 py-0.5 rounded font-mono font-bold leading-none ${
+                  isActive
+                    ? 'bg-accent-yellow/20 text-accent-yellow'
+                    : 'bg-white/5 text-gray-500'
+                }`}>
+                  {tab.count}
+                </span>
               </button>
             )
           })}

@@ -8,6 +8,7 @@ import SavedDealsSection from './SavedDealsSection'
 import DashboardMandala from './DashboardMandala'
 import BillingPanel from './BillingPanel'
 import { createClient } from '@/lib/supabase/client'
+import { motion, AnimatePresence } from 'framer-motion'
 
 
 type Tab = 'overview' | 'billing' | 'account'
@@ -40,8 +41,17 @@ export default function DashboardClient({
   const router = useRouter()
   const searchParams = useSearchParams()
   const [tab, setTab] = useState<Tab>(initialTab)
+  const [currentName, setCurrentName] = useState(userName)
+  const [isEditingName, setIsEditingName] = useState(false)
+  const [savingName, setSavingName] = useState(false)
+  const [tempName, setTempName] = useState(userName)
 
-  const firstName = userName.split(' ')[0]
+  useEffect(() => {
+    setCurrentName(userName)
+    setTempName(userName)
+  }, [userName])
+
+  const firstName = currentName.split(' ')[0]
   const hour = new Date().getHours()
   const greeting = hour < 12 ? 'Good morning' : hour < 18 ? 'Good afternoon' : 'Good evening'
 
@@ -69,6 +79,28 @@ export default function DashboardClient({
     }
   }, [])
 
+  const handleSaveName = async () => {
+    if (!tempName.trim() || tempName.trim().length < 2) {
+      alert('Name must be at least 2 characters')
+      return
+    }
+    setSavingName(true)
+    try {
+      const supabase = createClient()
+      const { error } = await supabase.auth.updateUser({
+        data: { full_name: tempName.trim() }
+      })
+      if (error) throw error
+      setCurrentName(tempName.trim())
+      setIsEditingName(false)
+      router.refresh()
+    } catch (err: any) {
+      alert(err.message || 'Failed to update name')
+    } finally {
+      setSavingName(false)
+    }
+  }
+
   const tabs: { id: Tab; label: string; icon: string }[] = [
     { id: 'overview', label: 'Overview', icon: 'dashboard' },
     { id: 'billing', label: 'Billing', icon: 'credit_card' },
@@ -91,9 +123,58 @@ export default function DashboardClient({
                 <span className="w-1.5 h-1.5 rounded-full bg-accent-yellow animate-pulse" />
                 {greeting}
               </p>
-              <h1 className="font-mono text-2xl md:text-4xl font-black uppercase tracking-tight leading-tight">
-                Hey, <span className="text-accent-yellow">{firstName}</span>
-              </h1>
+              {isEditingName ? (
+                <div className="flex items-center gap-2 max-w-full md:max-w-md mt-1">
+                  <input
+                    type="text"
+                    value={tempName}
+                    onChange={(e) => setTempName(e.target.value)}
+                    maxLength={50}
+                    className="bg-black/60 text-white font-mono text-xl md:text-3xl font-black border-b-2 border-accent-yellow outline-none px-2 py-0.5 w-full uppercase"
+                    autoFocus
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') handleSaveName()
+                      if (e.key === 'Escape') setIsEditingName(false)
+                    }}
+                  />
+                  <button
+                    onClick={handleSaveName}
+                    disabled={savingName}
+                    className="p-1.5 bg-accent-yellow text-black border border-black hover:bg-yellow-400 font-mono text-xs font-black uppercase tracking-wider disabled:opacity-50 flex items-center justify-center h-8 w-8 rounded-sm flex-shrink-0"
+                    title="Save name"
+                  >
+                    {savingName ? (
+                      <span className="material-symbols-outlined !text-[14px] animate-spin">progress_activity</span>
+                    ) : (
+                      <span className="material-symbols-outlined !text-[14px]">check</span>
+                    )}
+                  </button>
+                  <button
+                    onClick={() => setIsEditingName(false)}
+                    disabled={savingName}
+                    className="p-1.5 bg-white/10 text-white border border-white/20 hover:bg-white/20 font-mono text-xs font-black uppercase tracking-wider h-8 w-8 rounded-sm flex-shrink-0 flex items-center justify-center"
+                    title="Cancel"
+                  >
+                    <span className="material-symbols-outlined !text-[14px]">close</span>
+                  </button>
+                </div>
+              ) : (
+                <div className="flex items-center gap-2.5 flex-wrap">
+                  <h1 className="font-mono text-2xl md:text-4xl font-black uppercase tracking-tight leading-tight">
+                    Hey, <span className="text-accent-yellow">{firstName}</span>
+                  </h1>
+                  <button
+                    onClick={() => {
+                      setTempName(currentName)
+                      setIsEditingName(true)
+                    }}
+                    className="p-1 text-gray-500 hover:text-accent-yellow transition-colors inline-flex items-center"
+                    title="Customize display name"
+                  >
+                    <span className="material-symbols-outlined !text-[16px] md:!text-[20px]">edit</span>
+                  </button>
+                </div>
+              )}
               <p className="text-gray-400 text-[12px] md:text-[13px] mt-2 font-mono truncate inline-flex items-center gap-1.5 flex-wrap">
                 <span className="material-symbols-outlined !text-[14px] text-gray-500">mail</span>
                 {userEmail}
@@ -189,7 +270,7 @@ export default function DashboardClient({
       </section>
 
       {/* ── Tab navigation — sticky right under hero ── */}
-      <div className="sticky top-14 md:top-16 z-30 bg-[#fafafa] border-b-2 border-black">
+      <div className="sticky top-14 md:top-16 z-30 bg-[#fafafa] dark:bg-black border-b-2 border-black dark:border-white/10">
         <div className="max-w-[1400px] mx-auto px-4 md:px-8">
           <div className="flex gap-1 md:gap-2 overflow-x-auto mobile-scroll-hide" role="tablist">
             {tabs.map((t) => {
@@ -202,8 +283,8 @@ export default function DashboardClient({
                   onClick={() => handleTabChange(t.id)}
                   className={`flex items-center gap-1.5 md:gap-2 px-3 md:px-4 py-3 md:py-3.5 font-mono text-[11px] md:text-[12px] font-black uppercase tracking-[0.08em] whitespace-nowrap transition-all border-b-[3px] ${
                     active
-                      ? 'text-black border-accent-yellow'
-                      : 'text-gray-500 border-transparent hover:text-black hover:border-gray-300'
+                      ? 'text-black dark:text-white border-accent-yellow'
+                      : 'text-gray-500 dark:text-gray-400 border-transparent hover:text-black dark:hover:text-white hover:border-gray-300 dark:hover:border-gray-600'
                   }`}
                 >
                   <span className={`material-symbols-outlined !text-[16px] ${active ? 'text-accent-yellow' : ''}`}>
@@ -218,37 +299,63 @@ export default function DashboardClient({
       </div>
 
       {/* ── Tab content ── */}
-      <div id="dashboard-tab-content" className="max-w-[1400px] mx-auto px-4 md:px-8 py-6 md:py-10 space-y-6 md:space-y-8">
-        {tab === 'overview' && (
-          <OverviewTab
-            isPro={isPro}
-            savedDealSlugs={savedDealSlugs}
-            onChangeTab={handleTabChange}
-          />
-        )}
+      <div id="dashboard-tab-content" className="max-w-[1400px] mx-auto px-4 md:px-8 py-6 md:py-10 bg-[#fafafa] dark:bg-black overflow-hidden">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={tab}
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -15 }}
+            transition={{ duration: 0.2, ease: 'easeOut' }}
+            className="space-y-6 md:space-y-8"
+          >
+            {tab === 'overview' && (
+              <OverviewTab
+                isPro={isPro}
+                savedDealSlugs={savedDealSlugs}
+                onChangeTab={handleTabChange}
+              />
+            )}
 
-        {tab === 'billing' && (
-          <BillingPanel
-            isPro={isPro}
-            isAdmin={isAdmin}
-            subscription={subscription}
-            userName={userName}
-            userEmail={userEmail}
-            memberSinceFull={memberSinceFull}
-          />
-        )}
+            {tab === 'billing' && (
+              <BillingPanel
+                isPro={isPro}
+                isAdmin={isAdmin}
+                subscription={subscription}
+                userName={userName}
+                userEmail={userEmail}
+                memberSinceFull={memberSinceFull}
+              />
+            )}
 
-        {tab === 'account' && (
-          <AccountTab
-            userName={userName}
-            userEmail={userEmail}
-            memberSince={memberSince}
-            avatarUrl={avatarUrl}
-          />
-        )}
+            {tab === 'account' && (
+              <AccountTab
+                userName={userName}
+                userEmail={userEmail}
+                memberSince={memberSince}
+                avatarUrl={avatarUrl}
+              />
+            )}
+          </motion.div>
+        </AnimatePresence>
       </div>
     </>
   )
+}
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.06
+    }
+  }
+}
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 12 },
+  show: { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 110, damping: 15 } }
 }
 
 /* ─── Overview Tab ─────────────────────────────────────── */
@@ -262,12 +369,17 @@ function OverviewTab({
   onChangeTab: (tab: Tab) => void
 }) {
   return (
-    <>
+    <motion.div
+      variants={containerVariants}
+      initial="hidden"
+      animate="show"
+      className="space-y-6 md:space-y-8"
+    >
       {/* Upgrade banner — free users */}
       {!isPro && (
-        <section className="relative bg-white border-2 border-black shadow-[4px_4px_0px_#111,7px_7px_0px_#FFD500] overflow-hidden rounded-sm">
+        <motion.section variants={itemVariants} className="relative bg-white dark:bg-[#0d0d0d] border-2 border-black dark:border-white/10 shadow-[4px_4px_0px_#111,7px_7px_0px_#FFD500] dark:shadow-[4px_4px_0px_rgba(255,255,255,0.08),7px_7px_0px_#FFD500] overflow-hidden rounded-sm">
           <div className="absolute -top-10 -right-10 w-40 h-40 pointer-events-none opacity-[0.10]" aria-hidden="true">
-            <svg viewBox="0 0 200 200" className="w-full h-full text-gray-900 dashboard-upgrade-mandala-spin" fill="none" stroke="currentColor" strokeWidth="0.7">
+            <svg viewBox="0 0 200 200" className="w-full h-full text-gray-900 dark:text-white dashboard-upgrade-mandala-spin" fill="none" stroke="currentColor" strokeWidth="0.7">
               <circle cx="100" cy="100" r="40" />
               <circle cx="100" cy="100" r="60" strokeDasharray="2 4" />
               <circle cx="100" cy="100" r="80" strokeDasharray="1 6" />
@@ -282,17 +394,17 @@ function OverviewTab({
           </div>
           <div className="relative flex flex-col md:flex-row items-start md:items-center justify-between gap-4 p-5 md:p-6">
             <div className="flex items-start gap-3.5 md:gap-4 flex-1 min-w-0">
-              <div className="w-10 h-10 md:w-12 md:h-12 bg-accent-yellow border-2 border-black rounded-sm flex items-center justify-center flex-shrink-0 shadow-[2px_2px_0px_#111]">
+              <div className="w-10 h-10 md:w-12 md:h-12 bg-accent-yellow border-2 border-black dark:border-accent-yellow rounded-sm flex items-center justify-center flex-shrink-0 shadow-[2px_2px_0px_#111]">
                 <span className="material-symbols-outlined !text-[20px] md:!text-[22px] text-black">bolt</span>
               </div>
               <div className="min-w-0">
-                <p className="font-mono text-[10px] font-black uppercase tracking-[0.12em] text-gray-500 mb-1">
+                <p className="font-mono text-[10px] font-black uppercase tracking-[0.12em] text-gray-500 dark:text-gray-400 mb-1">
                   You&apos;re on the Free preview
                 </p>
-                <h2 className="font-mono text-base md:text-xl font-black uppercase text-black leading-tight mb-1">
+                <h2 className="font-mono text-base md:text-xl font-black uppercase text-black dark:text-white leading-tight mb-1">
                   Unlock the full catalog.
                 </h2>
-                <p className="text-[12px] md:text-[13px] text-gray-600 leading-relaxed">
+                <p className="text-[12px] md:text-[13px] text-gray-600 dark:text-gray-400 leading-relaxed">
                   Cloud credits, SaaS deals, grants, and accelerator programs — all in one founder dashboard.
                 </p>
               </div>
@@ -305,108 +417,144 @@ function OverviewTab({
               <span className="material-symbols-outlined !text-[16px] group-hover/cta:translate-x-1 transition-transform">arrow_forward</span>
             </Link>
           </div>
-        </section>
+        </motion.section>
       )}
+
+      {/* Student Benefits Showcase Banner */}
+      <motion.section variants={itemVariants}>
+        <div className="relative bg-gradient-to-r from-indigo-900 via-indigo-950 to-purple-950 text-white border-2 border-black dark:border-white/10 shadow-[4px_4px_0px_#111,7px_7px_0px_#6366f1] overflow-hidden rounded-sm p-5 md:p-6">
+          <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none" />
+          <div className="relative flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+            <div className="flex items-start gap-3.5 md:gap-4 flex-1 min-w-0">
+              <div className="w-11 h-11 bg-indigo-500 border-2 border-white rounded-sm flex items-center justify-center flex-shrink-0 shadow-[2px_2px_0px_#111]">
+                <span className="material-symbols-outlined !text-[22px] text-white">school</span>
+              </div>
+              <div className="min-w-0">
+                <span className="font-mono text-[9px] font-black uppercase tracking-[0.16em] text-indigo-300 bg-indigo-950/80 px-2 py-0.5 border border-indigo-500/30 rounded-sm">
+                  Academic Perks
+                </span>
+                <h3 className="font-mono text-base md:text-xl font-black uppercase mt-1">
+                  900+ Student Benefits & Funding
+                </h3>
+                <p className="text-[12.5px] text-indigo-200/90 leading-relaxed mt-1">
+                  Claim student startup packages: free professional tools, student cloud credits (Figma, GitHub, Notion, etc.), and non-dilutive funding or scholarships matched for students.
+                </p>
+              </div>
+            </div>
+            <Link
+              href="/student-benefits"
+              className="group/btn inline-flex items-center gap-2 bg-white text-indigo-950 font-mono font-black text-[11px] uppercase tracking-[0.1em] px-4 py-3 border-2 border-black rounded-sm shadow-[3px_3px_0px_#111] hover:bg-indigo-50 hover:shadow-[5px_5px_0px_#111] hover:-translate-x-px hover:-translate-y-px transition-all flex-shrink-0 self-stretch md:self-auto justify-center"
+            >
+              Access Student Perks
+              <span className="material-symbols-outlined !text-[15px] group-hover/btn:translate-x-0.5 transition-transform">arrow_forward</span>
+            </Link>
+          </div>
+        </div>
+      </motion.section>
 
       {/* Saved Deals */}
       {savedDealSlugs.length > 0 ? (
-        <section>
+        <motion.section variants={itemVariants}>
           <div className="flex items-center justify-between mb-3">
-            <h2 className="font-mono text-[11px] font-black uppercase tracking-[0.16em] text-gray-700 inline-flex items-center gap-1.5">
+            <h2 className="font-mono text-[11px] font-black uppercase tracking-[0.16em] text-gray-700 dark:text-gray-300 inline-flex items-center gap-1.5">
               <span className="w-1.5 h-1.5 rounded-full bg-accent-yellow" />
               Your Saved Deals
             </h2>
             <Link
               href="/deals"
-              className="font-mono text-[10px] font-bold uppercase tracking-wide text-gray-500 hover:text-black inline-flex items-center gap-1 transition-colors"
+              className="font-mono text-[10px] font-bold uppercase tracking-wide text-gray-500 hover:text-black dark:hover:text-white inline-flex items-center gap-1 transition-colors"
             >
               Browse all
               <span className="material-symbols-outlined !text-[12px]">arrow_forward</span>
             </Link>
           </div>
           <SavedDealsSection savedDealSlugs={savedDealSlugs} />
-        </section>
+        </motion.section>
       ) : (
-        <section>
+        <motion.section variants={itemVariants}>
           <div className="flex items-center justify-between mb-3">
-            <h2 className="font-mono text-[11px] font-black uppercase tracking-[0.16em] text-gray-700 inline-flex items-center gap-1.5">
+            <h2 className="font-mono text-[11px] font-black uppercase tracking-[0.16em] text-gray-700 dark:text-gray-300 inline-flex items-center gap-1.5">
               <span className="w-1.5 h-1.5 rounded-full bg-accent-yellow" />
               Your Saved Deals
             </h2>
           </div>
-          <div className="relative bg-white border-2 border-dashed border-gray-300 rounded-sm p-6 md:p-7 flex flex-col md:flex-row items-center gap-4 md:gap-5 text-center md:text-left">
-            <div className="w-12 h-12 bg-sky-100 border-2 border-black rounded-sm flex items-center justify-center flex-shrink-0 shadow-[2px_2px_0px_#111]">
-              <span className="material-symbols-outlined !text-[22px] text-black">bookmark_add</span>
+          <div className="relative bg-white dark:bg-[#0d0d0d] border-2 border-dashed border-gray-300 dark:border-white/10 rounded-sm p-6 md:p-7 flex flex-col md:flex-row items-center gap-4 md:gap-5 text-center md:text-left">
+            <div className="w-12 h-12 bg-sky-100 dark:bg-sky-900/30 border-2 border-black dark:border-white/20 rounded-sm flex items-center justify-center flex-shrink-0 shadow-[2px_2px_0px_#111] dark:shadow-[2px_2px_0px_rgba(255,255,255,0.08)]">
+              <span className="material-symbols-outlined !text-[22px] text-black dark:text-sky-400">bookmark_add</span>
             </div>
             <div className="flex-1 min-w-0">
-              <h3 className="font-mono text-sm md:text-base font-black uppercase text-black leading-tight">
+              <h3 className="font-mono text-sm md:text-base font-black uppercase text-black dark:text-white leading-tight">
                 No saved deals yet
               </h3>
-              <p className="text-[12px] md:text-[13px] text-gray-600 leading-relaxed mt-1">
+              <p className="text-[12px] md:text-[13px] text-gray-600 dark:text-gray-400 leading-relaxed mt-1">
                 Tap the bookmark on any deal to pin it here for quick access later.
               </p>
             </div>
             <Link
               href="/deals"
-              className="group/cta inline-flex items-center gap-2 bg-black text-white font-mono font-black text-[11px] uppercase tracking-[0.1em] px-4 py-2.5 border-2 border-black rounded-sm hover:bg-accent-yellow hover:text-black transition-colors flex-shrink-0"
+              className="group/cta inline-flex items-center gap-2 bg-black dark:bg-white dark:text-black text-white font-mono font-black text-[11px] uppercase tracking-[0.1em] px-4 py-2.5 border-2 border-black rounded-sm hover:bg-accent-yellow hover:text-black transition-colors flex-shrink-0"
             >
               Browse Deals
               <span className="material-symbols-outlined !text-[15px] group-hover/cta:translate-x-0.5 transition-transform">arrow_forward</span>
             </Link>
           </div>
-        </section>
+        </motion.section>
       )}
 
       {/* Explore Catalog */}
-      <section>
+      <motion.section variants={itemVariants}>
         <div className="flex items-center justify-between mb-3">
-          <h2 className="font-mono text-[11px] font-black uppercase tracking-[0.16em] text-gray-700 inline-flex items-center gap-1.5">
+          <h2 className="font-mono text-[11px] font-black uppercase tracking-[0.16em] text-gray-700 dark:text-gray-300 inline-flex items-center gap-1.5">
             <span className="w-1.5 h-1.5 rounded-full bg-accent-yellow" />
             Explore the Catalog
           </h2>
         </div>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
           {[
-            { href: '/deals', icon: 'local_offer', label: 'All Deals', sub: 'Cloud, SaaS, Ad credits', color: 'bg-accent-yellow', tag: 'Browse' },
-            { href: '/programs?type=grants', icon: 'payments', label: 'Grants', sub: 'Non-dilutive funding', color: 'bg-emerald-200', tag: 'Funding' },
-            { href: '/programs?type=accelerators', icon: 'rocket_launch', label: 'Accelerators', sub: 'Top global programs', color: 'bg-orange-200', tag: 'Programs' },
-            { href: '/startups', icon: 'verified', label: 'Verified Startups', sub: 'Funded companies', color: 'bg-sky-200', tag: 'Research' },
-            { href: '/ideas', icon: 'emoji_objects', label: 'Startup Ideas', sub: 'Validated opportunities', color: 'bg-yellow-200', tag: 'Inspiration' },
-            { href: '/resources', icon: 'folder_open', label: 'Resources', sub: 'Templates & guides', color: 'bg-purple-200', tag: 'Library' },
-            { href: '/deals?category=saas-discounts', icon: 'apps', label: 'SaaS Stack', sub: 'Tools at founder rates', color: 'bg-pink-200', tag: 'Stack' },
-            { href: '/submit-deal', icon: 'add_circle', label: 'Submit Deal', sub: 'Share with founders', color: 'bg-gray-200', tag: 'Contribute' },
+            { href: '/deals', icon: 'local_offer', label: 'All Deals', sub: 'Cloud, SaaS, Ad credits', color: 'bg-accent-yellow' },
+            { href: '/programs?type=grants', icon: 'payments', label: 'Grants', sub: 'Non-dilutive funding', color: 'bg-emerald-200 dark:bg-emerald-900/40' },
+            { href: '/programs?type=accelerators', icon: 'rocket_launch', label: 'Accelerators', sub: 'Top global programs', color: 'bg-orange-200 dark:bg-orange-900/40' },
+            { href: '/student-benefits', icon: 'school', label: 'Student Benefits', sub: 'Credits, funding & tools', color: 'bg-indigo-200 dark:bg-indigo-900/40' },
+            { href: '/startups', icon: 'verified', label: 'Verified Startups', sub: 'Funded companies', color: 'bg-sky-200 dark:bg-sky-900/40' },
+            { href: '/ideas', icon: 'emoji_objects', label: 'Startup Ideas', sub: 'Validated opportunities', color: 'bg-yellow-200 dark:bg-yellow-900/40' },
+            { href: '/resources', icon: 'folder_open', label: 'Resources', sub: 'Templates & guides', color: 'bg-purple-200 dark:bg-purple-900/40' },
+            { href: '/deals?category=saas-discounts', icon: 'apps', label: 'SaaS Stack', sub: 'Tools at founder rates', color: 'bg-pink-200 dark:bg-pink-900/40' },
+            { href: '/submit-deal', icon: 'add_circle', label: 'Submit Deal', sub: 'Share with founders', color: 'bg-gray-200 dark:bg-gray-700' },
           ].map((a) => (
-            <Link
+            <motion.div
               key={a.href}
-              href={a.href}
-              className="group relative bg-white border-2 border-black shadow-[3px_3px_0px_#111] hover:shadow-[5px_5px_0px_#111] hover:-translate-x-px hover:-translate-y-px transition-all rounded-sm p-3.5 md:p-4 flex flex-col gap-2.5 overflow-hidden"
+              whileHover={{ scale: 1.02, y: -2 }}
+              whileTap={{ scale: 0.98 }}
+              className="h-full"
             >
-              <div className="flex items-start justify-between">
-                <div className={`w-10 h-10 ${a.color} border-2 border-black rounded-sm flex items-center justify-center flex-shrink-0 shadow-[1px_1px_0px_#111]`}>
-                  <span className="material-symbols-outlined !text-[18px] text-black">{a.icon}</span>
+              <Link
+                href={a.href}
+                className="group relative bg-white dark:bg-[#0d0d0d] border-2 border-black dark:border-white/10 shadow-[3px_3px_0px_#111] dark:shadow-[3px_3px_0px_rgba(255,255,255,0.06)] hover:shadow-[5px_5px_0px_#111] dark:hover:shadow-[5px_5px_0px_rgba(255,255,255,0.1)] transition-all rounded-sm p-3.5 md:p-4 flex flex-col items-center text-center gap-2.5 overflow-hidden h-full"
+              >
+                <div className="flex justify-center w-full">
+                  <div className={`w-10 h-10 ${a.color} border-2 border-black dark:border-white/20 rounded-sm flex items-center justify-center flex-shrink-0 shadow-[1px_1px_0px_#111] dark:shadow-[1px_1px_0px_rgba(255,255,255,0.06)]`}>
+                    <span className="material-symbols-outlined !text-[18px] text-black dark:text-white">{a.icon}</span>
+                  </div>
                 </div>
-                <span className="font-mono text-[8.5px] font-black uppercase tracking-[0.1em] text-gray-500 bg-white border border-gray-200 px-1.5 py-0.5 rounded-sm">
-                  {a.tag}
-                </span>
-              </div>
-              <div className="min-w-0">
-                <p className="font-mono text-[12px] md:text-[12.5px] font-black uppercase text-black leading-tight tracking-tight">{a.label}</p>
-                <p className="text-[10.5px] md:text-[11px] text-gray-500 leading-snug mt-0.5">{a.sub}</p>
-              </div>
-              <div className="mt-auto pt-2 border-t border-dashed border-gray-200 flex items-center justify-between">
-                <span className="font-mono text-[9.5px] font-bold uppercase tracking-wider text-gray-500">Open</span>
-                <span className="material-symbols-outlined !text-[14px] text-gray-500 group-hover:translate-x-0.5 group-hover:text-black transition-all">arrow_forward</span>
-              </div>
-            </Link>
+                <div className="min-w-0">
+                  <p className="font-mono text-[12px] md:text-[12.5px] font-black uppercase text-black dark:text-white leading-tight tracking-tight">{a.label}</p>
+                  <p className="text-[10.5px] md:text-[11px] text-gray-500 dark:text-gray-400 leading-snug mt-0.5">{a.sub}</p>
+                </div>
+                <div className="mt-auto w-full pt-2 border-t border-dashed border-gray-200 dark:border-white/10 flex items-center justify-between">
+                  <span className="font-mono text-[9.5px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">Open</span>
+                  <span className="material-symbols-outlined !text-[14px] text-gray-500 dark:text-gray-400 group-hover:translate-x-0.5 group-hover:text-black dark:group-hover:text-white transition-all">arrow_forward</span>
+                </div>
+              </Link>
+            </motion.div>
           ))}
         </div>
-      </section>
+      </motion.section>
 
       {/* Tip */}
-      <section>
-        <div className="relative bg-white border-2 border-black shadow-[3px_3px_0px_#111] rounded-sm p-5 overflow-hidden">
+      <motion.section variants={itemVariants}>
+        <div className="relative bg-white dark:bg-[#0d0d0d] border-2 border-black dark:border-white/10 shadow-[3px_3px_0px_#111] dark:shadow-[3px_3px_0px_rgba(255,255,255,0.06)] rounded-sm p-5 overflow-hidden">
           <div className="absolute -bottom-10 -left-10 w-32 h-32 pointer-events-none opacity-[0.07]" aria-hidden="true">
-            <svg viewBox="0 0 200 200" className="w-full h-full text-gray-900 dashboard-tip-mandala-spin" fill="none" stroke="currentColor" strokeWidth="0.6">
+            <svg viewBox="0 0 200 200" className="w-full h-full text-gray-900 dark:text-white dashboard-tip-mandala-spin" fill="none" stroke="currentColor" strokeWidth="0.6">
               {[20, 35, 50, 65].map((r, i) => (
                 <ellipse key={i} cx="100" cy="100" rx={r} ry={r / 1.8} transform={`rotate(${i * 30} 100 100)`} />
               ))}
@@ -414,21 +562,21 @@ function OverviewTab({
             </svg>
           </div>
           <div className="relative">
-            <p className="font-mono text-[10px] font-black uppercase tracking-[0.16em] text-gray-500 mb-2 inline-flex items-center gap-1.5">
+            <p className="font-mono text-[10px] font-black uppercase tracking-[0.16em] text-gray-500 dark:text-gray-400 mb-2 inline-flex items-center gap-1.5">
               <span className="w-1 h-1 rounded-full bg-accent-yellow" />
               Founder Tip
             </p>
-            <h3 className="font-mono text-base font-black uppercase text-black leading-tight mb-2">
+            <h3 className="font-mono text-base font-black uppercase text-black dark:text-white leading-tight mb-2">
               Apply with your work email.
             </h3>
-            <p className="text-[12.5px] text-gray-700 leading-relaxed">
+            <p className="text-[12.5px] text-gray-700 dark:text-gray-400 leading-relaxed">
               Most providers approve faster when the application email matches your domain. Set up{' '}
-              <span className="font-bold text-black">name@yourstartup.com</span> before you claim deals.
+              <span className="font-bold text-black dark:text-white">name@yourstartup.com</span> before you claim deals.
             </p>
           </div>
         </div>
-      </section>
-    </>
+      </motion.section>
+    </motion.div>
   )
 }
 
@@ -591,7 +739,7 @@ function AccountTab({
   return (
     <section>
       <div className="flex items-center justify-between mb-3">
-        <h2 className="font-mono text-[11px] font-black uppercase tracking-[0.16em] text-gray-700 inline-flex items-center gap-1.5">
+        <h2 className="font-mono text-[11px] font-black uppercase tracking-[0.16em] text-gray-700 dark:text-gray-300 inline-flex items-center gap-1.5">
           <span className="w-1.5 h-1.5 rounded-full bg-accent-yellow" />
           Account &amp; Settings
         </h2>
@@ -606,16 +754,16 @@ function AccountTab({
           />
 
           {/* Two-Step Verification enrollment UI */}
-          <div className="bg-white border-2 border-black shadow-[3px_3px_0px_#111] p-5 md:p-6">
-            <div className="flex items-center justify-between mb-4 border-b-2 border-black border-dashed pb-3">
+          <div className="bg-white dark:bg-[#0d0d0d] border-2 border-black dark:border-white/10 shadow-[3px_3px_0px_#111] dark:shadow-[3px_3px_0px_rgba(255,255,255,0.06)] p-5 md:p-6">
+            <div className="flex items-center justify-between mb-4 border-b-2 border-black dark:border-white/10 border-dashed pb-3">
               <div>
-                <h3 className="font-mono font-black uppercase text-sm text-black">Two-Step Verification</h3>
-                <p className="text-[11px] text-gray-500 font-mono mt-0.5">Secure your terminal with a 2FA passcode</p>
+                <h3 className="font-mono font-black uppercase text-sm text-black dark:text-white">Two-Step Verification</h3>
+                <p className="text-[11px] text-gray-500 dark:text-gray-400 font-mono mt-0.5">Secure your terminal with a 2FA passcode</p>
               </div>
               <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full font-mono text-[9px] font-black uppercase tracking-wider ${
                 mfaEnabled 
-                  ? 'bg-emerald-100 text-emerald-800 border border-emerald-300' 
-                  : 'bg-rose-100 text-rose-800 border border-rose-300'
+                  ? 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-700' 
+                  : 'bg-rose-100 dark:bg-rose-900/30 text-rose-800 dark:text-rose-300 border border-rose-300 dark:border-rose-700'
               }`}>
                 <span className={`w-1.5 h-1.5 rounded-full ${mfaEnabled ? 'bg-emerald-600' : 'bg-rose-600 animate-pulse'}`} />
                 {mfaEnabled ? 'Protected' : 'Unprotected'}
@@ -624,7 +772,7 @@ function AccountTab({
 
             {!showEnroll ? (
               <div className="space-y-4">
-                <p className="text-xs text-gray-600 leading-relaxed">
+                <p className="text-xs text-gray-600 dark:text-gray-400 leading-relaxed">
                   Protect your FoundersPrime account from unauthorized access. When enabled, signing in will require both your password and a verification code generated by your authenticator app (such as Google Authenticator, Duo, or 1Password).
                 </p>
                 {mfaEnabled ? (
@@ -646,46 +794,46 @@ function AccountTab({
             ) : (
               <div className="space-y-5">
                 {enrollError && (
-                  <div className="p-3 bg-rose-50 border border-rose-200 text-rose-700 text-xs font-mono font-bold flex items-center gap-2">
+                  <div className="p-3 bg-rose-50 dark:bg-rose-900/20 border border-rose-200 dark:border-rose-700 text-rose-700 dark:text-rose-300 text-xs font-mono font-bold flex items-center gap-2">
                     <span className="material-symbols-outlined text-sm">error</span>
                     {enrollError}
                   </div>
                 )}
                 {enrollSuccess && (
-                  <div className="p-3 bg-green-50 border border-green-200 text-green-700 text-xs font-mono font-bold flex items-center gap-2">
+                  <div className="p-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-700 text-green-700 dark:text-green-300 text-xs font-mono font-bold flex items-center gap-2">
                     <span className="material-symbols-outlined text-sm">check_circle</span>
                     {enrollSuccess}
                   </div>
                 )}
 
-                <div className="flex flex-col md:flex-row gap-5 items-center md:items-start bg-gray-50 border border-gray-200 p-4">
-                  <div className="bg-white p-2 border-2 border-black shadow-[2px_2px_0px_#000] flex-shrink-0">
+                <div className="flex flex-col md:flex-row gap-5 items-center md:items-start bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 p-4">
+                  <div className="bg-white p-2 border-2 border-black dark:border-white/20 shadow-[2px_2px_0px_#000] flex-shrink-0">
                     {qrCode ? (
                       <img src={qrCode} alt="TOTP QR Code" className="w-36 h-36" />
                     ) : (
-                      <div className="w-36 h-36 bg-gray-100 flex items-center justify-center font-mono text-[10px] text-gray-400">Loading QR...</div>
+                      <div className="w-36 h-36 bg-gray-100 dark:bg-white/5 flex items-center justify-center font-mono text-[10px] text-gray-400">Loading QR...</div>
                     )}
                   </div>
                   <div className="space-y-3 flex-1 min-w-0">
-                    <h4 className="font-mono font-bold text-xs uppercase text-gray-700">1. Scan the QR Code</h4>
-                    <p className="text-[11px] text-gray-600 leading-normal">
+                    <h4 className="font-mono font-bold text-xs uppercase text-gray-700 dark:text-gray-300">1. Scan the QR Code</h4>
+                    <p className="text-[11px] text-gray-600 dark:text-gray-400 leading-normal">
                       Scan this code with your authenticator app. If you cannot scan it, enter the manual secret key below:
                     </p>
-                    <div className="bg-black/5 border border-black/10 rounded px-2.5 py-1.5 font-mono text-[10.5px] select-all break-all text-gray-800 font-bold">
+                    <div className="bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded px-2.5 py-1.5 font-mono text-[10.5px] select-all break-all text-gray-800 dark:text-gray-200 font-bold">
                       {mfaSecret}
                     </div>
                   </div>
                 </div>
 
                 <div className="space-y-3">
-                  <h4 className="font-mono font-bold text-xs uppercase text-gray-700">2. Verify Verification Code</h4>
-                  <p className="text-[11px] text-gray-600 leading-normal">
+                  <h4 className="font-mono font-bold text-xs uppercase text-gray-700 dark:text-gray-300">2. Verify Verification Code</h4>
+                  <p className="text-[11px] text-gray-600 dark:text-gray-400 leading-normal">
                     Enter the 6-digit verification code generated by your authenticator app below to confirm setup.
                   </p>
                   
                   {/* Test note */}
-                  <div className="p-3 bg-amber-50 border border-amber-200 text-amber-800 text-[10.5px] font-mono leading-normal">
-                    <span className="font-black">TESTING DIRECTIVE:</span> For quick demonstration in local development without scanning the code, enter <span className="font-black text-black underline">123456</span> to successfully verify.
+                  <div className="p-3 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-700 text-amber-800 dark:text-amber-300 text-[10.5px] font-mono leading-normal">
+                    <span className="font-black">TESTING DIRECTIVE:</span> For quick demonstration in local development without scanning the code, enter <span className="font-black text-black dark:text-white underline">123456</span> to successfully verify.
                   </div>
 
                   <div className="flex gap-2.5 max-w-[280px]">
@@ -695,23 +843,23 @@ function AccountTab({
                       value={verificationCode}
                       onChange={(e) => setVerificationCode(e.target.value.replace(/\D/g, ''))}
                       placeholder="000000"
-                      className="w-full h-10 px-3 border-2 border-black font-mono text-center text-sm font-bold placeholder:text-gray-400 focus:shadow-[2px_2px_0px_#000] outline-none transition-all"
+                      className="w-full h-10 px-3 border-2 border-black dark:border-white/20 bg-white dark:bg-white/5 text-black dark:text-white font-mono text-center text-sm font-bold placeholder:text-gray-400 focus:shadow-[2px_2px_0px_#000] dark:focus:shadow-[2px_2px_0px_rgba(255,255,255,0.2)] outline-none transition-all"
                       disabled={verifying}
                     />
                     <button
                       onClick={verifyEnrollment}
                       disabled={verifying}
-                      className="h-10 px-4 bg-black text-white hover:bg-gray-800 font-mono font-black uppercase text-xs tracking-wider border-2 border-black shadow-[2px_2px_0px_#000] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[1px_1px_0px_#000] transition-all disabled:opacity-50"
+                      className="h-10 px-4 bg-black dark:bg-white text-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-100 font-mono font-black uppercase text-xs tracking-wider border-2 border-black dark:border-white/20 shadow-[2px_2px_0px_#000] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[1px_1px_0px_#000] transition-all disabled:opacity-50"
                     >
                       {verifying ? 'Verifying...' : 'Verify'}
                     </button>
                   </div>
                 </div>
 
-                <div className="pt-2 border-t border-gray-200">
+                <div className="pt-2 border-t border-gray-200 dark:border-white/10">
                   <button
                     onClick={() => { setShowEnroll(false); setVerificationCode(''); setEnrollError(null); }}
-                    className="font-mono text-xs text-gray-400 hover:text-black uppercase font-bold"
+                    className="font-mono text-xs text-gray-400 hover:text-black dark:hover:text-white uppercase font-bold"
                   >
                     Cancel Setup
                   </button>
@@ -721,27 +869,27 @@ function AccountTab({
           </div>
         </div>
 
-        <div className="bg-white border-2 border-black shadow-[3px_3px_0px_#111] rounded-sm overflow-hidden divide-y-2 divide-black divide-dashed">
+        <div className="bg-white dark:bg-[#0d0d0d] border-2 border-black dark:border-white/10 shadow-[3px_3px_0px_#111] dark:shadow-[3px_3px_0px_rgba(255,255,255,0.06)] rounded-sm overflow-hidden divide-y-2 divide-black dark:divide-white/10 divide-dashed">
           {[
-            { href: '/auth/reset-password', icon: 'lock_reset', iconBg: 'bg-rose-100', label: 'Password & Security', sub: 'Update credentials' },
-            { href: '#notifications', icon: 'notifications', iconBg: 'bg-amber-100', label: 'Notifications', sub: 'Email & app preferences' },
-            { href: '/contact', icon: 'support_agent', iconBg: 'bg-purple-100', label: 'Help & Support', sub: 'Talk to our team' },
+            { href: '/auth/reset-password', icon: 'lock_reset', iconBg: 'bg-rose-100 dark:bg-rose-900/30', label: 'Password & Security', sub: 'Update credentials' },
+            { href: '#notifications', icon: 'notifications', iconBg: 'bg-amber-100 dark:bg-amber-900/30', label: 'Notifications', sub: 'Email & app preferences' },
+            { href: '/contact', icon: 'support_agent', iconBg: 'bg-purple-100 dark:bg-purple-900/30', label: 'Help & Support', sub: 'Talk to our team' },
           ].map((item) => (
             <Link
               key={item.label}
               href={item.href}
-              className="group flex items-center justify-between gap-3 px-4 py-3 hover:bg-gray-50 transition-colors"
+              className="group flex items-center justify-between gap-3 px-4 py-3 hover:bg-gray-50 dark:hover:bg-white/5 transition-colors"
             >
               <div className="flex items-center gap-3 min-w-0">
-                <div className={`w-9 h-9 ${item.iconBg} border-2 border-black rounded-sm flex items-center justify-center flex-shrink-0 shadow-[1px_1px_0px_#111]`}>
-                  <span className="material-symbols-outlined !text-[16px] text-black">{item.icon}</span>
+                <div className={`w-9 h-9 ${item.iconBg} border-2 border-black dark:border-white/20 rounded-sm flex items-center justify-center flex-shrink-0 shadow-[1px_1px_0px_#111] dark:shadow-[1px_1px_0px_rgba(255,255,255,0.06)]`}>
+                  <span className="material-symbols-outlined !text-[16px] text-black dark:text-white">{item.icon}</span>
                 </div>
                 <div className="min-w-0">
-                  <p className="font-mono text-[11.5px] font-black uppercase tracking-[0.04em] text-black leading-tight">{item.label}</p>
-                  <p className="text-[10px] text-gray-500 mt-0.5 truncate">{item.sub}</p>
+                  <p className="font-mono text-[11.5px] font-black uppercase tracking-[0.04em] text-black dark:text-white leading-tight">{item.label}</p>
+                  <p className="text-[10px] text-gray-500 dark:text-gray-400 mt-0.5 truncate">{item.sub}</p>
                 </div>
               </div>
-              <span className="material-symbols-outlined !text-[16px] text-gray-400 group-hover:translate-x-0.5 group-hover:text-black transition-all flex-shrink-0">chevron_right</span>
+              <span className="material-symbols-outlined !text-[16px] text-gray-400 group-hover:translate-x-0.5 group-hover:text-black dark:group-hover:text-white transition-all flex-shrink-0">chevron_right</span>
             </Link>
           ))}
         </div>
