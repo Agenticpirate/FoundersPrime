@@ -1,0 +1,5 @@
+Contact: mailto:security@foundersprime.com
+Expires: 2027-01-01T00:00:00.000Z
+Preferred-Languages: en
+Canonical: https://www.foundersprime.com/.well-known/security.txt
+Policy: https://www.foundersprime.com/privacy
