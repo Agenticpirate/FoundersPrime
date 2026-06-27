@@ -16,6 +16,10 @@ const securityHeaders = [
   },
   // XSS Protection (legacy browsers)
   { key: 'X-XSS-Protection', value: '1; mode=block' },
+  // Cross-Origin-Opener-Policy: allows Google OAuth popup while blocking cross-origin opener attacks.
+  // 'same-origin-allow-popups' is required for Google Sign-In popup flow;
+  // 'same-origin' would block OAuth popups.
+  { key: 'Cross-Origin-Opener-Policy', value: 'same-origin-allow-popups' },
   // Content Security Policy — allows Next.js inline scripts, Google Fonts, Supabase, Dodo, and Cloudflare Turnstile
   {
     key: 'Content-Security-Policy',

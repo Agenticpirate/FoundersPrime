@@ -18,52 +18,42 @@ export interface TokenValidationResult {
 
 /**
  * Validate the current JWT token (server-side)
+ *
+ * SECURITY: Uses getUser() which revalidates the token against the Supabase
+ * Auth server — not getSession(), which only decodes the cookie without
+ * server-side verification. Session expiry metadata is read separately for
+ * display purposes only, matching the pattern in lib/auth/session.ts.
  */
 export async function validateToken(): Promise<TokenValidationResult> {
   try {
     const supabase = createClient()
-    const { data: { session }, error } = await supabase.auth.getSession()
 
-    if (error) {
+    // Authoritative server-side token verification
+    const { data: { user }, error } = await supabase.auth.getUser()
+
+    if (error || !user) {
       return {
         valid: false,
         user: null,
         session: null,
-        error: error.message
+        error: 'Invalid or expired token',
       }
     }
 
-    if (!session) {
-      return {
-        valid: false,
-        user: null,
-        session: null,
-        error: 'No active session'
-      }
-    }
-
-    // Check if token is expired
-    const expiresAt = session.expires_at
-    if (expiresAt && expiresAt * 1000 < Date.now()) {
-      return {
-        valid: false,
-        user: null,
-        session: null,
-        error: 'Token expired'
-      }
-    }
+    // User is verified — read session only for non-authoritative expiry metadata
+    const { data: { session } } = await supabase.auth.getSession()
 
     return {
       valid: true,
-      user: session.user,
-      session: session
+      user,
+      session: session ?? null,
     }
-  } catch (error: any) {
+  } catch (error: unknown) {
     return {
       valid: false,
       user: null,
       session: null,
-      error: error.message || 'Token validation failed'
+      error: 'Token validation failed',
     }
   }
 }

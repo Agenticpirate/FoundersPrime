@@ -1,6 +1,7 @@
 import DodoPayments from 'dodopayments';
 import { NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
+import { billingLimiter, rateLimitHeaders } from '@/lib/security/rate-limit';
 
 // Check if environment variables are set
 const DODO_API_KEY = process.env.DODO_PAYMENTS_API_KEY || '';
@@ -29,6 +30,18 @@ export async function POST(request: Request) {
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) {
     return NextResponse.json({ error: 'Unauthorized: Please log in to subscribe' }, { status: 401 });
+  }
+
+  // Rate-limit by authenticated user ID (10 payment attempts per 5 min)
+  const rateLimitResult = billingLimiter(user.id)
+  if (!rateLimitResult.allowed) {
+    return NextResponse.json(
+      { error: 'Too many payment requests. Please wait before trying again.' },
+      {
+        status: 429,
+        headers: rateLimitHeaders(rateLimitResult),
+      }
+    );
   }
 
   try {

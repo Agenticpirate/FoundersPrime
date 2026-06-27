@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import DodoPayments from 'dodopayments'
 import { createClient } from '@/lib/supabase/server'
+import { billingLimiter, rateLimitHeaders } from '@/lib/security/rate-limit'
 
 /**
  * Cancel auto-renewal for the signed-in user's active subscription.
@@ -18,6 +19,18 @@ export async function POST(req: NextRequest) {
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+    }
+
+    // Rate-limit cancellation by user ID (10 attempts per 5 min)
+    const rateLimitResult = billingLimiter(user.id)
+    if (!rateLimitResult.allowed) {
+      return NextResponse.json(
+        { error: 'Too many cancellation requests. Please wait before trying again.' },
+        {
+          status: 429,
+          headers: rateLimitHeaders(rateLimitResult),
+        }
+      )
     }
 
     let reason = 'Not specified'

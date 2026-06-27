@@ -1,7 +1,10 @@
 /**
  * Current User API Route
- * 
+ *
  * GET /api/auth/me - Get current authenticated user information
+ *
+ * Security: Error details are never returned to the client.
+ * Full exceptions are logged server-side via apiError().
  */
 
 import { NextRequest } from 'next/server'
@@ -27,7 +30,9 @@ export async function GET(request: NextRequest) {
     return apiResponse({
       id: sessionInfo.user.id,
       email: sessionInfo.user.email,
-      name: sessionInfo.user.user_metadata?.full_name || sessionInfo.user.email?.split('@')[0],
+      name:
+        sessionInfo.user.user_metadata?.full_name ||
+        sessionInfo.user.email?.split('@')[0],
       emailVerified: emailStatus.verified,
       emailVerifiedAt: emailStatus.verifiedAt,
       isPro: proStatus.isPro,
@@ -35,10 +40,11 @@ export async function GET(request: NextRequest) {
       subscription: proStatus.user?.subscription,
       createdAt: sessionInfo.createdAt,
       session: {
-        expiresAt: sessionInfo.expiresAt
-      }
+        expiresAt: sessionInfo.expiresAt,
+      },
     })
-  } catch (error: any) {
-    return apiError('Failed to get user information', 500, error.message)
+  } catch (error: unknown) {
+    // Log full error server-side; return opaque message to client
+    return apiError('Failed to get user information', 500, error)
   }
 }

@@ -1,7 +1,13 @@
 /**
  * Authentication Middleware Utilities
- * 
- * Provides middleware functions for route protection and authentication checks
+ *
+ * Provides middleware functions for route protection and authentication checks.
+ *
+ * Security hardening applied:
+ * - Error details never sent to the client (only logged server-side)
+ * - CORS origins read from ALLOWED_ORIGINS env var
+ * - Hardcoded Pro-user email bypass removed (DB subscription is authoritative)
+ * - rateLimit() re-exported from lib/security/rate-limit for backward compatibility
  */
 
 import { NextResponse } from 'next/server'
@@ -16,7 +22,13 @@ export interface RouteProtectionConfig {
 }
 
 /**
- * Protect API routes with authentication
+ * Protect API routes with authentication.
+ *
+ * SECURITY: Uses supabase.auth.getUser() which revalidates the token
+ * against the Supabase Auth server — not getSession(), which only decodes
+ * the cookie without server verification.
+ *
+ * Error details are logged server-side only; clients receive opaque messages.
  */
 export async function withAuth(
   request: NextRequest,
@@ -32,7 +44,7 @@ export async function withAuth(
         authorized: false,
         user: null,
         response: NextResponse.json(
-          { error: 'Unauthorized - Authentication required' },
+          { error: 'Unauthorized' },
           { status: 401 }
         )
       }
@@ -42,7 +54,7 @@ export async function withAuth(
     if (config.requireAdmin && user) {
       const { data: adminData } = await supabase
         .from('admin_users')
-        .select('*')
+        .select('email')
         .eq('email', user.email)
         .eq('is_active', true)
         .single()
@@ -52,7 +64,7 @@ export async function withAuth(
           authorized: false,
           user: user,
           response: NextResponse.json(
-            { error: 'Forbidden - Admin access required' },
+            { error: 'Forbidden' },
             { status: 403 }
           )
         }
@@ -61,25 +73,36 @@ export async function withAuth(
 
     // Check if Pro access is required
     if (config.requirePro && user) {
-      // Check if user has Pro access (implement your Pro check logic)
-      const PRO_USERS = ['raviteja.journal@gmail.com'] // This should come from a config
-      const isPro = PRO_USERS.includes(user.email || '')
+      // DB subscription is the authoritative source for Pro status.
+      // Admin users also receive Pro access.
+      const [subResult, adminResult] = await Promise.all([
+        supabase
+          .from('user_subscriptions')
+          .select('plan, status')
+          .eq('user_id', user.id)
+          .eq('status', 'active')
+          .maybeSingle(),
+        supabase
+          .from('admin_users')
+          .select('email')
+          .eq('email', user.email)
+          .eq('is_active', true)
+          .single(),
+      ])
 
-      const { data: adminData } = await supabase
-        .from('admin_users')
-        .select('*')
-        .eq('email', user.email)
-        .eq('is_active', true)
-        .single()
+      const isAdmin = !!adminResult.data
+      const plan = subResult.data?.plan as string | undefined
+      const isProPlan = plan ? ['founder', 'legend'].includes(plan) : false
 
-      const hasProAccess = isPro || !!adminData
+      // Also accept legacy plan names stored before the schema migration
+      const isLegacyPro = plan ? ['pro', 'pro-plus'].includes(plan) : false
 
-      if (!hasProAccess) {
+      if (!isAdmin && !isProPlan && !isLegacyPro) {
         return {
           authorized: false,
           user: user,
           response: NextResponse.json(
-            { error: 'Forbidden - Pro subscription required' },
+            { error: 'Forbidden' },
             { status: 403 }
           )
         }
@@ -90,107 +113,86 @@ export async function withAuth(
       authorized: true,
       user: user
     }
-  } catch (error: any) {
+  } catch (error: unknown) {
+    // Log full error server-side; never expose to client
+    console.error('[withAuth] Authentication check failed:', error)
     return {
       authorized: false,
       user: null,
       response: NextResponse.json(
-        { error: 'Authentication check failed', details: error.message },
+        { error: 'Authentication check failed' },
         { status: 500 }
       )
     }
   }
 }
 
-/**
- * Rate limiting configuration
- */
-interface RateLimitConfig {
-  maxRequests: number
-  windowMs: number
-}
-
-const rateLimitStore = new Map<string, { count: number; resetAt: number }>()
+// ─── CORS ────────────────────────────────────────────────────────────────────
 
 /**
- * Simple rate limiting middleware
+ * Build the allowed origins list.
+ *
+ * Priority:
+ *   1. ALLOWED_ORIGINS env var (comma-separated, no trailing slashes)
+ *   2. Hard-coded production + localhost fallback
+ *
+ * Example env value:
+ *   ALLOWED_ORIGINS=https://www.foundersprime.com,https://foundersprime.com
  */
-export function rateLimit(config: RateLimitConfig = { maxRequests: 100, windowMs: 60000 }) {
-  return (identifier: string): { allowed: boolean; remaining: number; resetAt: number } => {
-    const now = Date.now()
-    const record = rateLimitStore.get(identifier)
-
-    // Clean up expired records
-    if (record && record.resetAt < now) {
-      rateLimitStore.delete(identifier)
-    }
-
-    const current = rateLimitStore.get(identifier)
-
-    if (!current) {
-      // First request
-      rateLimitStore.set(identifier, {
-        count: 1,
-        resetAt: now + config.windowMs
-      })
-      return {
-        allowed: true,
-        remaining: config.maxRequests - 1,
-        resetAt: now + config.windowMs
-      }
-    }
-
-    if (current.count >= config.maxRequests) {
-      return {
-        allowed: false,
-        remaining: 0,
-        resetAt: current.resetAt
-      }
-    }
-
-    current.count++
-    return {
-      allowed: true,
-      remaining: config.maxRequests - current.count,
-      resetAt: current.resetAt
-    }
+function buildAllowedOrigins(): string[] {
+  const envOrigins = process.env.ALLOWED_ORIGINS
+  if (envOrigins && envOrigins.trim()) {
+    return envOrigins
+      .split(',')
+      .map((o) => o.trim())
+      .filter(Boolean)
   }
+
+  // Safe defaults — production domains + local dev
+  const defaults = [
+    'https://www.foundersprime.com',
+    'https://foundersprime.com',
+  ]
+
+  // Only add localhost origins in non-production environments
+  if (process.env.NODE_ENV !== 'production') {
+    defaults.push('http://localhost:3000', 'http://localhost:3001')
+  }
+
+  return defaults
 }
 
-/**
- * CORS headers for API routes — restrict to known origins
- */
-const ALLOWED_ORIGINS = [
-  'https://www.foundersprime.com',
-  'https://foundersprime.com',
-  'http://localhost:3000',
-  'http://localhost:3001',
-]
+// Evaluated once per process start (env vars don't change at runtime)
+const ALLOWED_ORIGINS = buildAllowedOrigins()
 
-export function corsHeaders(origin?: string) {
-  const allowedOrigin = origin && ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0]
+export function corsHeaders(origin?: string): Record<string, string> {
+  const allowedOrigin =
+    origin && ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0]
   return {
     'Access-Control-Allow-Origin': allowedOrigin,
     'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type, Authorization',
     'Access-Control-Allow-Credentials': 'true',
     'Access-Control-Max-Age': '86400',
-    'Vary': 'Origin',
+    Vary: 'Origin',
   }
 }
 
 /**
- * Handle OPTIONS requests for CORS
+ * Handle OPTIONS preflight requests for CORS.
  */
 export function handleCorsOptions(request: NextRequest): NextResponse {
   return new NextResponse(null, {
     status: 200,
-    headers: corsHeaders(request.headers.get('origin') || undefined)
+    headers: corsHeaders(request.headers.get('origin') || undefined),
   })
 }
 
+// ─── Request Body Validation ──────────────────────────────────────────────────
+
 /**
- * Validate request body
+ * Validate request body has required fields.
+ * Returns the parsed body on success, or an error string on failure.
  */
 export async function validateRequestBody<T>(
   request: NextRequest,
@@ -203,25 +205,27 @@ export async function validateRequestBody<T>(
       if (!(field in body) || body[field] === undefined || body[field] === null) {
         return {
           valid: false,
-          error: `Missing required field: ${field}`
+          error: `Missing required field: ${field}`,
         }
       }
     }
 
     return {
       valid: true,
-      data: body as T
+      data: body as T,
     }
-  } catch (error) {
+  } catch {
     return {
       valid: false,
-      error: 'Invalid JSON body'
+      error: 'Invalid JSON body',
     }
   }
 }
 
+// ─── Standard Response Helpers ────────────────────────────────────────────────
+
 /**
- * Create standardized API response
+ * Create a standardized JSON API response.
  */
 export function apiResponse<T>(
   data: T,
@@ -232,25 +236,40 @@ export function apiResponse<T>(
     status,
     headers: {
       'Content-Type': 'application/json',
-      ...headers
-    }
+      ...headers,
+    },
   })
 }
 
 /**
- * Create standardized error response
+ * Create a standardized error response.
+ *
+ * SECURITY: Only the `message` is returned to the client.
+ * Internal `details` (stack traces, DB errors) are logged server-side only.
  */
 export function apiError(
   message: string,
   status: number = 400,
-  details?: any
+  internalDetails?: unknown
 ): NextResponse {
+  // Log internal details server-side only — never send to client
+  if (internalDetails !== undefined) {
+    console.error(`[API Error ${status}] ${message}:`, internalDetails)
+  }
+
   return NextResponse.json(
     {
       error: message,
-      details,
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
     },
     { status }
   )
 }
+
+// ─── Backward Compatibility: rate limiting ────────────────────────────────────
+// The old rateLimit() function was an in-memory Map-based fixed-window limiter.
+// We re-export the new createRateLimiter factory so existing callers that
+// imported rateLimit from this module still work after updating their call sites.
+
+export { createRateLimiter as rateLimit } from '@/lib/security/rate-limit'
+export { getClientIp } from '@/lib/security/ip'

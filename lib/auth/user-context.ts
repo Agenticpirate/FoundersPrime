@@ -16,11 +16,16 @@ export interface UserProfile {
   }
 }
 
-// Admin/Pro users who get full access
-const PRO_USERS = [
-  'raviteja.journal@gmail.com',
-  'hello@axionxlab.com',
-]
+// Pro-override emails — admin access without a subscription row.
+// Configurable via PRO_OVERRIDE_EMAILS (comma-separated).
+// The DB subscription check is the primary, authoritative source.
+// Leave this env var empty in production unless absolutely required.
+const PRO_OVERRIDE_EMAILS: Set<string> = new Set(
+  (process.env.PRO_OVERRIDE_EMAILS || '')
+    .split(',')
+    .map((e) => e.trim().toLowerCase())
+    .filter(Boolean)
+)
 
 // Memory cache for user status
 let cachedStatus: {
@@ -130,8 +135,8 @@ async function fetchAndCacheProStatus(): Promise<{
       return emptyResult
     }
 
-    // Check if user is in Pro users list
-    const isHardcodedPro = PRO_USERS.includes(user.email || '')
+    // Check if user email is in the override list (env-var-driven)
+    const isHardcodedPro = PRO_OVERRIDE_EMAILS.has((user.email || '').toLowerCase())
     
     // Check if user is admin
     const { data: adminData } = await supabase
