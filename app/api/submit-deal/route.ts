@@ -1,9 +1,7 @@
 import { createClient } from '@supabase/supabase-js'
 import { NextResponse, NextRequest } from 'next/server'
-import { rateLimit } from '@/lib/auth/middleware'
-
-// 5 submissions per IP per hour
-const submitRateLimit = rateLimit({ maxRequests: 5, windowMs: 60 * 60 * 1000 })
+import { submitLimiter, rateLimitHeaders } from '@/lib/security/rate-limit'
+import { getClientIp } from '@/lib/security/ip'
 
 // Helpers
 function isValidUrl(url: string): boolean {
@@ -94,18 +92,19 @@ async function insertSubmission(supabase: any, payload: Record<string, any>) {
 
 export async function POST(request: NextRequest) {
     try {
-        // Rate limit by IP
-        const ip =
-            request.headers.get('x-forwarded-for')?.split(',')[0].trim() ||
-            request.headers.get('x-real-ip') ||
-            'unknown'
+        // Cloudflare-aware IP extraction (CF-Connecting-IP → X-Forwarded-For)
+        const ip = getClientIp(request)
         const userAgent = request.headers.get('user-agent') || 'unknown'
 
-        const rateLimitResult = submitRateLimit(ip)
+        // 5 submissions per IP per hour — configurable via RATE_LIMIT_SUBMIT
+        const rateLimitResult = submitLimiter(ip)
         if (!rateLimitResult.allowed) {
             return NextResponse.json(
                 { error: 'Too many submissions from this IP. Try again in an hour.' },
-                { status: 429 }
+                {
+                    status: 429,
+                    headers: rateLimitHeaders(rateLimitResult),
+                }
             )
         }
 

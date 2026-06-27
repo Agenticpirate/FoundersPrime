@@ -38,7 +38,7 @@ export async function GET(request: NextRequest) {
         expiresAt: sessionInfo.expiresAt
       }
     })
-  } catch (error: any) {
-    return apiError('Failed to get user information', 500, error.message)
+  } catch {
+    return apiError('Failed to get user information', 500)
   }
 }

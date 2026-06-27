@@ -1,14 +1,19 @@
 /**
  * Session Management API Route
- * 
- * GET /api/auth/session - Get current session information
- * DELETE /api/auth/session - End current session (logout)
- * POST /api/auth/session/refresh - Refresh current session
+ *
+ * GET /api/auth/session         — Get current session information
+ * DELETE /api/auth/session         — End current session (logout)
+ * POST   /api/auth/session/refresh — Refresh current session
+ *
+ * Security: POST (token refresh) is rate-limited per IP to prevent
+ * brute-force token refresh attacks.
  */
 
-import { NextRequest } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 import { getSession, endSession, refreshSession } from '@/lib/auth/session'
 import { apiResponse, apiError } from '@/lib/auth/middleware'
+import { authLimiter, rateLimitHeaders } from '@/lib/security/rate-limit'
+import { getClientIp } from '@/lib/security/ip'
 
 export async function GET(request: NextRequest) {
   try {
@@ -30,8 +35,8 @@ export async function GET(request: NextRequest) {
         isAuthenticated: sessionInfo.isAuthenticated
       }
     })
-  } catch (error: any) {
-    return apiError('Failed to get session', 500, error.message)
+  } catch {
+    return apiError('Failed to get session', 500)
   }
 }
 
@@ -44,12 +49,26 @@ export async function DELETE(request: NextRequest) {
     }
 
     return apiResponse({ message: 'Session ended successfully' })
-  } catch (error: any) {
-    return apiError('Failed to end session', 500, error.message)
+  } catch {
+    return apiError('Failed to end session', 500)
   }
 }
 
 export async function POST(request: NextRequest) {
+  // Rate-limit token refresh: 10 attempts per IP per 60s
+  const clientIp = getClientIp(request)
+  const rateLimitResult = authLimiter(clientIp)
+
+  if (!rateLimitResult.allowed) {
+    return NextResponse.json(
+      { error: 'Too many refresh attempts. Please try again later.' },
+      {
+        status: 429,
+        headers: rateLimitHeaders(rateLimitResult),
+      }
+    )
+  }
+
   try {
     const sessionInfo = await refreshSession()
 
@@ -57,11 +76,15 @@ export async function POST(request: NextRequest) {
       return apiError('Failed to refresh session', 401)
     }
 
-    return apiResponse({
-      message: 'Session refreshed successfully',
-      expiresAt: sessionInfo.expiresAt
-    })
-  } catch (error: any) {
-    return apiError('Failed to refresh session', 500, error.message)
+    return apiResponse(
+      {
+        message: 'Session refreshed successfully',
+        expiresAt: sessionInfo.expiresAt,
+      },
+      200,
+      rateLimitHeaders(rateLimitResult)
+    )
+  } catch {
+    return apiError('Failed to refresh session', 500)
   }
 }

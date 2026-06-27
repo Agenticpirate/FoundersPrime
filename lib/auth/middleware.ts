@@ -61,8 +61,8 @@ export async function withAuth(
 
     // Check if Pro access is required
     if (config.requirePro && user) {
-      // Check if user has Pro access (implement your Pro check logic)
-      const PRO_USERS = ['raviteja.journal@gmail.com'] // This should come from a config
+      // Pro users are configured via environment variable (comma-separated emails)
+      const PRO_USERS = (process.env.PRO_USER_EMAILS || '').split(',').map(e => e.trim()).filter(Boolean)
       const isPro = PRO_USERS.includes(user.email || '')
 
       const { data: adminData } = await supabase
@@ -90,12 +90,12 @@ export async function withAuth(
       authorized: true,
       user: user
     }
-  } catch (error: any) {
+  } catch {
     return {
       authorized: false,
       user: null,
       response: NextResponse.json(
-        { error: 'Authentication check failed', details: error.message },
+        { error: 'Authentication check failed' },
         { status: 500 }
       )
     }
@@ -238,17 +238,16 @@ export function apiResponse<T>(
 }
 
 /**
- * Create standardized error response
+ * Create standardized error response — never leaks internal error details
  */
 export function apiError(
   message: string,
   status: number = 400,
-  details?: any
+  _details?: unknown
 ): NextResponse {
   return NextResponse.json(
     {
       error: message,
-      details,
       timestamp: new Date().toISOString()
     },
     { status }
