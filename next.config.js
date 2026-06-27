@@ -3,6 +3,8 @@
 const securityHeaders = [
   // Prevent clickjacking: disallow embedding in iframes from other origins
   { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
+  // Prevent cross-origin window.opener access (Tabnabbing / COOP)
+  { key: 'Cross-Origin-Opener-Policy', value: 'same-origin-allow-popups' },
   // Prevent MIME type sniffing
   { key: 'X-Content-Type-Options', value: 'nosniff' },
   // Control referrer information sent with requests
