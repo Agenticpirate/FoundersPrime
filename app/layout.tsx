@@ -2,6 +2,36 @@ import type { Metadata } from 'next'
 import Script from 'next/script'
 import './globals.css'
 import CookieConsentProvider from '@/components/cookie/CookieConsentProvider'
+import CursorCompanion from '@/components/ui/CursorCompanion'
+import { Archivo, IBM_Plex_Mono, IBM_Plex_Sans, Space_Grotesk } from 'next/font/google'
+
+const archivo = Archivo({
+  subsets: ['latin'],
+  weight: ['700', '800', '900'],
+  variable: '--font-heading',
+  display: 'swap',
+})
+
+const ibmPlexMono = IBM_Plex_Mono({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-mono',
+  display: 'swap',
+})
+
+const ibmPlexSans = IBM_Plex_Sans({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-sans',
+  display: 'swap',
+})
+
+const spaceGrotesk = Space_Grotesk({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-display',
+  display: 'swap',
+})
 
 const GA_MEASUREMENT_ID = 'G-X2EQLZJD8C'
 
@@ -108,9 +138,9 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en" className={`dark ${archivo.variable} ${ibmPlexMono.variable} ${ibmPlexSans.variable} ${spaceGrotesk.variable}`}>
       <head>
-        {/* Inline theme-switching script to prevent FOUC */}
+        {/* Inline theme-switching script to prevent FOUC & Google Translate Layout Blocker */}
         <script
           dangerouslySetInnerHTML={{
             __html: `
@@ -124,6 +154,43 @@ export default function RootLayout({
                     document.documentElement.classList.remove('light');
                     document.documentElement.classList.add('dark');
                   }
+                } catch (e) {}
+
+                try {
+                  // Immediately reset any offsets already present
+                  var resetOffsets = function() {
+                    var props = ['top', 'margin-top', 'padding-top'];
+                    props.forEach(function(p) {
+                      document.documentElement.style.setProperty(p, '0px', 'important');
+                    });
+                    if (document.body) {
+                      props.forEach(function(p) {
+                        document.body.style.setProperty(p, '0px', 'important');
+                      });
+                      // Google Translate also sets position:relative on body
+                      if (document.body.style.position && document.body.style.position !== 'static') {
+                        document.body.style.setProperty('position', 'static', 'important');
+                      }
+                      // Hide the .skiptranslate div Google injects at body top
+                      var skip = document.querySelector('body > .skiptranslate');
+                      if (skip) { skip.style.setProperty('display', 'none', 'important'); skip.style.setProperty('height', '0', 'important'); }
+                    }
+                  };
+                  resetOffsets();
+                  var observer = new MutationObserver(resetOffsets);
+                  observer.observe(document.documentElement, { attributes: true, attributeFilter: ['style'], childList: true, subtree: false });
+                  var watchBody = function() {
+                    if (document.body) {
+                      observer.observe(document.body, { attributes: true, attributeFilter: ['style'], childList: true, subtree: false });
+                      resetOffsets();
+                    } else {
+                      setTimeout(watchBody, 50);
+                    }
+                  };
+                  watchBody();
+                  // Also reset after DOM fully loads (Google Translate fires late)
+                  document.addEventListener('DOMContentLoaded', resetOffsets);
+                  window.addEventListener('load', resetOffsets);
                 } catch (e) {}
               })();
             `
@@ -169,19 +236,11 @@ export default function RootLayout({
           }
         ` }} />
 
-        {/* Google Fonts — loaded with display=swap so fallback fonts render immediately
-            and the webfont swaps in without blocking first paint */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         {/* Warm up connections to third-party CDNs for deal logos and avatars */}
         <link rel="preconnect" href="https://www.google.com" />
         <link rel="dns-prefetch" href="https://logo.clearbit.com" />
         <link rel="dns-prefetch" href="https://images.unsplash.com" />
         <link rel="dns-prefetch" href="https://lh3.googleusercontent.com" />
-        <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;800;900&family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
-        />
         {/* Material Symbols — display=swap so icons don't block render */}
         <link
           rel="stylesheet"
@@ -195,6 +254,7 @@ export default function RootLayout({
         />
         <CookieConsentProvider>
           {children}
+          <CursorCompanion />
         </CookieConsentProvider>
       </body>
     </html>

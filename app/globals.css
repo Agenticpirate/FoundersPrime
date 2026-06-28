@@ -6,6 +6,9 @@ html {
   -webkit-overflow-scrolling: touch;
   scrollbar-gutter: stable;
   scroll-behavior: smooth;
+  top: 0 !important;
+  margin-top: 0 !important;
+  padding-top: 0 !important;
 }
 
 /* Custom Sleek Scrollbar */
@@ -90,9 +93,55 @@ img {
   display: none !important;
 } */
 
-/* Hide the top frame */
-.goog-te-banner-frame {
+/* ── Google Translate: kill ALL layout side-effects ────────────────────────
+   Google Translate injects a banner iframe AND sets body { top: 40px } via
+   inline style. We must suppress both the visual frame AND the body shift.
+   ────────────────────────────────────────────────────────────────────────── */
+
+/* Hide the banner iframe and tooltip overlays */
+.goog-te-banner-frame,
+#goog-gt-tt,
+.goog-te-balloon-frame,
+.goog-tooltip,
+.goog-tooltip:hover,
+.skiptranslate > iframe {
   display: none !important;
+  visibility: hidden !important;
+  height: 0 !important;
+  max-height: 0 !important;
+  width: 0 !important;
+  overflow: hidden !important;
+  position: absolute !important;
+  top: -9999px !important;
+  left: -9999px !important;
+}
+
+/* Suppress the .skiptranslate wrapper Google injects at body top */
+body > .skiptranslate {
+  display: none !important;
+  height: 0 !important;
+  overflow: hidden !important;
+}
+
+/* Counter the inline `body { top: 40px; }` Google Translate sets */
+html, body {
+  top: 0px !important;
+  margin-top: 0px !important;
+  padding-top: 0px !important;
+  position: static !important; /* prevent top from shifting layout */
+}
+
+/* Reallow body to be flex (overridden only for position:static above) */
+body {
+  display: flex !important;
+  flex-direction: column !important;
+  min-height: 100vh !important;
+}
+
+.goog-text-highlight {
+  background-color: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
 }
 
 :root {
@@ -119,9 +168,8 @@ html.light body {
   color: #1a1a1a !important;
 }
 
-body {
-  top: 0 !important;
-}
+
+
 
 /* Fonts loaded via <link> in app/layout.tsx — no @import needed here */
 
