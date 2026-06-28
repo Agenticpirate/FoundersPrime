@@ -17,7 +17,14 @@ export default function PricingPlans({ currency }: PricingPlansProps) {
   const handleCheckout = async (plan: string) => {
     if (authLoading) return
 
-    if (!user) {
+    // Re-verify the session directly from the Supabase client to get the freshest client state
+    // before executing redirect logic.
+    const { createClient } = await import('@/lib/supabase/client')
+    const supabase = createClient()
+    const { data: { session } } = await supabase.auth.getSession()
+    const currentUser = session?.user || user
+
+    if (!currentUser) {
       router.push('/login?redirect=/pricing')
       return
     }
@@ -30,10 +37,8 @@ export default function PricingPlans({ currency }: PricingPlansProps) {
         body: JSON.stringify({ plan }),
       })
 
-      // Cloudflare WAF block returns HTML, not JSON — detect this case
       const contentType = res.headers.get('content-type') || ''
       if (!contentType.includes('application/json')) {
-        // WAF block or unexpected response
         alert(`Payment blocked (HTTP ${res.status}). Please contact support@foundersprime.com`)
         return
       }
@@ -47,7 +52,6 @@ export default function PricingPlans({ currency }: PricingPlansProps) {
         alert(data.error || 'Something went wrong. Please try again.')
       }
     } catch (err) {
-      // fetch() itself threw — likely a CORS block or Cloudflare challenge page
       console.error('Payment fetch error:', err)
       alert('Unable to reach payment server. This may be a network issue. Please try again or contact support@foundersprime.com')
     } finally {
