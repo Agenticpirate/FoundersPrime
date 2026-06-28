@@ -33,12 +33,14 @@ const securityHeaders = [
       "font-src 'self' https://fonts.gstatic.com",
       "img-src 'self' data: blob: https:",
       // Supabase, Dodo Payments, Cloudflare Turnstile, Google Accounts API, and any other API origin
-      "connect-src 'self' https://*.supabase.co wss://*.supabase.co https://api.dodopayments.com https://challenges.cloudflare.com https://accounts.google.com",
+      "connect-src 'self' https://*.supabase.co wss://*.supabase.co https://api.dodopayments.com https://checkout.dodopayments.com https://challenges.cloudflare.com https://accounts.google.com",
       // Allow Cloudflare Turnstile and Google Sign-in iframe
       "frame-src 'self' https://checkout.dodopayments.com https://challenges.cloudflare.com https://accounts.google.com",
       "frame-ancestors 'self'",
       "base-uri 'self'",
-      "form-action 'self'",
+      // form-action must allow OAuth provider redirects (Supabase redirects the browser
+      // to GitHub, Google, LinkedIn for the OAuth dance) and Dodo Payments checkout.
+      "form-action 'self' https://*.supabase.co https://accounts.google.com https://github.com https://www.linkedin.com https://checkout.dodopayments.com",
       "upgrade-insecure-requests",
     ].join('; '),
   },

@@ -18,6 +18,9 @@ function isExemptFromRateLimit(pathname: string): boolean {
     pathname.startsWith('/api/webhooks/') ||
     pathname === '/api/health' ||
     pathname === '/api/ping' ||
+    // OAuth callback — provider-initiated redirect, not a user-repeated request.
+    // Rate-limiting this causes Cloudflare to flag the code= param as an attack.
+    pathname === '/auth/callback' ||
     // Static asset extensions
     /\.(?:svg|png|jpg|jpeg|gif|webp|ico|woff2?|ttf|otf|css|js)$/.test(pathname)
   )
@@ -154,6 +157,17 @@ export async function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    '/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
+    /*
+     * Match all request paths EXCEPT:
+     * - _next/static  (Next.js static chunks)
+     * - _next/image   (Next.js image optimisation)
+     * - favicon.ico
+     * - Common static file extensions (images, fonts, manifests)
+     *
+     * Keeping this tight reduces the number of Supabase session-refresh
+     * calls, which was causing users to appear logged out when Cloudflare
+     * blocked an upstream request mid-flow.
+     */
+    '/((?!_next/static|_next/image|favicon\.ico|.*\.(?:svg|png|jpg|jpeg|gif|webp|ico|woff2?|ttf|otf|css|js|map)$).*)',
   ],
 }
