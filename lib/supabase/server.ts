@@ -69,12 +69,22 @@ export function createClient(): SupabaseClient {
   // where cookies are dropped on cross-site/SameSite boundaries.
   // Fall back to reading the raw Authorization Bearer token header if present.
   const cookieStore = cookies()
+  
+  // Safe dynamic read of headers on the server side
+  let authHeader = ''
+  if (typeof window === 'undefined') {
+    try {
+      const { headers: getHeaders } = require('next/headers')
+      authHeader = getHeaders().get('Authorization') || ''
+    } catch (e) {
+      // Ignore if headers API is not readable in current context
+    }
+  }
 
   return createServerClient(url, anonKey, {
     global: {
       headers: {
-        // Pass standard Edge/Serverless cookies or fetch/xhr authorization header if present
-        Authorization: typeof window === 'undefined' ? (require('next/headers').headers().get('Authorization') || '') : ''
+        Authorization: authHeader
       }
     },
     cookies: {
