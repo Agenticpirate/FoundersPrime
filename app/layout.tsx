@@ -157,17 +157,9 @@ export default function RootLayout({
           `}
         </Script>
 
-        {/* Critical font fallback: prevent FOUC by matching fallback font metrics to loaded fonts.
-            font-size-adjust makes system fonts the same cap-height as IBM Plex Mono/Sans,
-            so the layout doesn't shift when the webfonts arrive. */}
+        {/* Prevent icon text from collapsing before Material Symbols font loads */}
         <style dangerouslySetInnerHTML={{ __html: `
-          /* Hide Material Symbol icons as raw text until the icon font loads.
-             Once loaded, the font-family assignment makes them render as icons. */
           .material-symbols-outlined {
-            font-family: 'Material Symbols Outlined', 'Courier New', monospace;
-            font-optical-sizing: auto;
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-            -webkit-font-smoothing: antialiased;
             display: inline-block;
             width: 1em;
             height: 1em;
@@ -175,19 +167,8 @@ export default function RootLayout({
             overflow: hidden;
             vertical-align: text-bottom;
           }
-          /* Fallback font metrics for IBM Plex Mono — prevents layout shift when webfont loads */
-          @font-face {
-            font-family: 'IBM Plex Mono';
-            size-adjust: 98%;
-            ascent-override: 95%;
-            descent-override: 25%;
-            font-style: normal;
-            font-weight: 400 700;
-            src: local('Courier New');
-          }
-          /* Ensure header/nav elements have a minimum height during font load */
-          nav, header { min-height: 56px; }
         ` }} />
+
         {/* Google Fonts — loaded with display=swap so fallback fonts render immediately
             and the webfont swaps in without blocking first paint */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
