@@ -31,9 +31,19 @@ export default function PricingPlans({ currency }: PricingPlansProps) {
 
     setLoadingPlan(plan)
     try {
+      const headers: Record<string, string> = {
+        'Content-Type': 'application/json'
+      }
+      
+      // Explicitly pass the session access token (JWT) to secure the API call 
+      // without relying purely on automatic cookies which get dropped on cross-site flows
+      if (session?.access_token) {
+        headers['Authorization'] = `Bearer ${session.access_token}`
+      }
+
       const res = await fetch('/api/payment/create-link', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers,
         body: JSON.stringify({ plan }),
       })
 

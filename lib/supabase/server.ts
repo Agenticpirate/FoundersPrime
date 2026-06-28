@@ -65,9 +65,18 @@ export function createClient(): SupabaseClient {
     return createServerStub()
   }
 
+  // Next.js page components/route handlers might run in edge/serverless environments
+  // where cookies are dropped on cross-site/SameSite boundaries.
+  // Fall back to reading the raw Authorization Bearer token header if present.
   const cookieStore = cookies()
 
   return createServerClient(url, anonKey, {
+    global: {
+      headers: {
+        // Pass standard Edge/Serverless cookies or fetch/xhr authorization header if present
+        Authorization: typeof window === 'undefined' ? (require('next/headers').headers().get('Authorization') || '') : ''
+      }
+    },
     cookies: {
       get(name: string) {
         return cookieStore.get(name)?.value
