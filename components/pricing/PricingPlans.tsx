@@ -15,14 +15,9 @@ export default function PricingPlans({ currency }: PricingPlansProps) {
   const [loadingPlan, setLoadingPlan] = useState<string | null>(null)
 
   const handleCheckout = async (plan: string) => {
-    // ── Auth guard: check client-side FIRST before hitting the API ──
-    // This prevents the 401 → login redirect race condition where the
-    // server-side cookie hasn't propagated yet even though the user IS
-    // logged in on the client.
-    if (authLoading) return // Still resolving session — wait
+    if (authLoading) return
 
     if (!user) {
-      // Not logged in — send to login with redirect back to pricing
       router.push('/login?redirect=/pricing')
       return
     }
@@ -34,17 +29,27 @@ export default function PricingPlans({ currency }: PricingPlansProps) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ plan }),
       })
+
+      // Cloudflare WAF block returns HTML, not JSON — detect this case
+      const contentType = res.headers.get('content-type') || ''
+      if (!contentType.includes('application/json')) {
+        // WAF block or unexpected response
+        alert(`Payment blocked (HTTP ${res.status}). Please contact support@foundersprime.com`)
+        return
+      }
+
       const data = await res.json()
       if (res.ok && data.url) {
         window.location.href = data.url
       } else if (res.status === 401) {
-        // Fallback: session expired between check and API call
         router.push('/login?redirect=/pricing')
       } else {
         alert(data.error || 'Something went wrong. Please try again.')
       }
     } catch (err) {
-      alert('Network error. Please try again.')
+      // fetch() itself threw — likely a CORS block or Cloudflare challenge page
+      console.error('Payment fetch error:', err)
+      alert('Unable to reach payment server. This may be a network issue. Please try again or contact support@foundersprime.com')
     } finally {
       setLoadingPlan(null)
     }
