@@ -58,7 +58,11 @@ export async function POST(request: Request) {
 
     const sessionPayload: any = {
       product_cart: [{ product_id: productId, quantity: 1 }],
-      return_url: `${appUrl}/dashboard?status={status}`,
+      // Route through /checkout (a client-rendered page) instead of directly to /dashboard.
+      // Mobile browsers drop SameSite=Lax cookies on cross-site top-level navigations
+      // from dodopayments.com back to foundersprime.com, causing session loss on /dashboard
+      // which is a server-rendered page that immediately redirects to /login when no session.
+      return_url: `${appUrl}/checkout?status={status}`,
       customer: { email: user.email },
     };
 

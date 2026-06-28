@@ -21,17 +21,46 @@ export default function CheckoutContent() {
   const router = useRouter()
   const { user, loading: authLoading } = useAuth()
 
+  // Dodo Payments return URL includes ?status={status}
+  const returnStatus = searchParams.get('status')
+  const isPaymentReturn = returnStatus !== null
+
   const rawPlan = searchParams.get('plan') || 'founder'
   const plan = PLAN_KEY_MAP[rawPlan] || 'founder'
 
   const [error, setError] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(true)
+  const [redirectCountdown, setRedirectCountdown] = useState(3)
 
+  // ── Payment return flow ──────────────────────────────────────────────────────
+  // When Dodo Payments redirects back here with ?status=, we handle it client-side.
+  // This avoids the mobile SameSite=Lax cookie issue where /dashboard (server-rendered)
+  // loses the session cookie on cross-site navigation and immediately redirects to /login.
   useEffect(() => {
-    // Wait for auth to resolve before proceeding
+    if (!isPaymentReturn) return
     if (authLoading) return
 
-    // Redirect unauthenticated users to login, then back here
+    // Give the client-side auth store a moment to re-hydrate from localStorage
+    // before redirecting to dashboard (which checks server-side session).
+    const timer = setInterval(() => {
+      setRedirectCountdown((c) => {
+        if (c <= 1) {
+          clearInterval(timer)
+          router.replace('/dashboard')
+          return 0
+        }
+        return c - 1
+      })
+    }, 1000)
+
+    return () => clearInterval(timer)
+  }, [isPaymentReturn, authLoading, router])
+
+  // ── Initiate checkout flow ───────────────────────────────────────────────────
+  useEffect(() => {
+    if (isPaymentReturn) return
+    if (authLoading) return
+
     if (!user) {
       router.replace(`/login?redirect=/pricing`)
       return
@@ -42,7 +71,6 @@ export default function CheckoutContent() {
         const response = await fetch('/api/payment/create-link', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          // Do NOT pass customerEmail — the API reads it from the session securely
           body: JSON.stringify({ plan }),
         })
 
@@ -66,9 +94,59 @@ export default function CheckoutContent() {
     }
 
     initiateCheckout()
-  }, [plan, authLoading, user, router])
+  }, [plan, authLoading, user, router, isPaymentReturn])
 
-  // Show nothing while auth resolves — avoids a flash before redirecting unauthenticated users
+  // ── Payment return UI ────────────────────────────────────────────────────────
+  if (isPaymentReturn) {
+    const succeeded = returnStatus === 'succeeded'
+    return (
+      <div className="max-w-md w-full mx-4 bg-[#0a0a0a] border border-white/10 shadow-[0_20px_60px_rgba(0,0,0,0.5)] p-8 text-center">
+        <div className="mb-6">
+          <span className={`material-symbols-outlined text-5xl ${succeeded ? 'text-green-400' : 'text-red-400'}`}>
+            {succeeded ? 'check_circle' : 'cancel'}
+          </span>
+        </div>
+
+        <h1 className="font-mono text-xl font-black uppercase tracking-[0.08em] text-white mb-3">
+          {succeeded ? 'Payment Successful!' : 'Payment Failed'}
+        </h1>
+
+        <p className="text-sm text-gray-400 font-sans mb-6">
+          {succeeded
+            ? 'Welcome to FoundersPrime! Your subscription is now active.'
+            : 'Something went wrong with your payment. Please try again.'}
+        </p>
+
+        {succeeded ? (
+          <div className="flex flex-col items-center gap-3">
+            <div className="animate-spin h-5 w-5 border-2 border-white/20 border-t-white rounded-full" />
+            <p className="font-mono text-xs text-gray-500">
+              Redirecting to your dashboard in {redirectCountdown}s...
+            </p>
+          </div>
+        ) : (
+          <div className="flex gap-3 justify-center">
+            <button
+              onClick={() => router.push('/pricing')}
+              className="px-4 py-2 border border-white/20 text-white font-mono text-xs uppercase hover:bg-white/10 transition-colors"
+            >
+              Back to Pricing
+            </button>
+            <button
+              onClick={() => router.push('/checkout?plan=' + rawPlan)}
+              className="px-4 py-2 bg-accent-yellow text-black font-mono font-black text-xs uppercase hover:bg-yellow-400 transition-colors"
+            >
+              Try Again
+            </button>
+          </div>
+        )}
+
+        <p className="mt-6 text-xs text-gray-600 font-mono">Secured by Dodo Payments</p>
+      </div>
+    )
+  }
+
+  // ── Initiating checkout UI ───────────────────────────────────────────────────
   if (authLoading) {
     return (
       <div className="max-w-md w-full mx-4 bg-[#0a0a0a] border border-white/10 p-8 text-center">
