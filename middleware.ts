@@ -133,7 +133,11 @@ export async function middleware(request: NextRequest) {
       }
     )
 
-    await supabase.auth.getSession()
+    // IMPORTANT: Use getUser() not getSession() here.
+    // getUser() revalidates the JWT with the Supabase Auth server and refreshes
+    // the session cookie. getSession() only reads from cookies without validating,
+    // which can cause stale sessions to persist or valid sessions to appear missing.
+    await supabase.auth.getUser()
   } catch {
     // Supabase auth failed — continue without session
   }

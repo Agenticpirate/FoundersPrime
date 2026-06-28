@@ -157,12 +157,42 @@ export default function RootLayout({
           `}
         </Script>
 
-        {/* Material Symbols icons — async load so it doesn't block first paint */}
+        {/* Critical font fallback: prevent FOUC by matching fallback font metrics to loaded fonts.
+            font-size-adjust makes system fonts the same cap-height as IBM Plex Mono/Sans,
+            so the layout doesn't shift when the webfonts arrive. */}
+        <style dangerouslySetInnerHTML={{ __html: `
+          /* Hide Material Symbol icons as raw text until the icon font loads.
+             Once loaded, the font-family assignment makes them render as icons. */
+          .material-symbols-outlined {
+            font-family: 'Material Symbols Outlined', 'Courier New', monospace;
+            font-optical-sizing: auto;
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            -webkit-font-smoothing: antialiased;
+            display: inline-block;
+            width: 1em;
+            height: 1em;
+            line-height: 1;
+            overflow: hidden;
+            vertical-align: text-bottom;
+          }
+          /* Fallback font metrics for IBM Plex Mono — prevents layout shift when webfont loads */
+          @font-face {
+            font-family: 'IBM Plex Mono';
+            size-adjust: 98%;
+            ascent-override: 95%;
+            descent-override: 25%;
+            font-style: normal;
+            font-weight: 400 700;
+            src: local('Courier New');
+          }
+          /* Ensure header/nav elements have a minimum height during font load */
+          nav, header { min-height: 56px; }
+        ` }} />
+        {/* Google Fonts — loaded with display=swap so fallback fonts render immediately
+            and the webfont swaps in without blocking first paint */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        {/* Warm up connections to the third-party CDNs that serve deal brand
-            logos (favicons) and testimonial avatars, so image fetches don't pay
-            a fresh DNS+TLS handshake on first paint. */}
+        {/* Warm up connections to third-party CDNs for deal logos and avatars */}
         <link rel="preconnect" href="https://www.google.com" />
         <link rel="dns-prefetch" href="https://logo.clearbit.com" />
         <link rel="dns-prefetch" href="https://images.unsplash.com" />
@@ -171,11 +201,7 @@ export default function RootLayout({
           rel="stylesheet"
           href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;800;900&family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
         />
-        <link
-          rel="preload"
-          as="style"
-          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0..1,0&display=swap"
-        />
+        {/* Material Symbols — display=swap so icons don't block render */}
         <link
           rel="stylesheet"
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0..1,0&display=swap"

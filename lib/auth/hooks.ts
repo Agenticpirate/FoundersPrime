@@ -13,14 +13,15 @@ export function useAuth() {
   const supabase = useMemo(() => createClient(), [])
 
   useEffect(() => {
-    // Get initial session
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session)
-      setUser(session?.user ?? null)
+    // getUser() validates the session with the Supabase server on every call.
+    // Do NOT use getSession() here — it only reads from local cache and can
+    // return a stale/null session on cold loads, firing a false SIGNED_OUT event.
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      setUser(user)
       setLoading(false)
     })
 
-    // Listen for auth changes
+    // Listen for auth changes (token refresh, sign-in, sign-out)
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, session) => {
