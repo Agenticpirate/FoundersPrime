@@ -96,6 +96,11 @@ export async function withAuth(
         'pulligellaraviteja@gmail.com'
       ].includes((user.email || '').toLowerCase())
 
+      const isAdmin = !!adminResult.data
+      const dbPlan = subResult.data?.plan as string | undefined
+      const isProPlan = dbPlan === 'founder' || dbPlan === 'legend'
+      const isLegacyPro = dbPlan === 'pro' || dbPlan === 'pro-plus'
+
       if (!isAdmin && !isProPlan && !isLegacyPro && !isHardcodedPro) {
         return {
           authorized: false,

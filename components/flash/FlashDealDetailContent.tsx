@@ -36,7 +36,7 @@ export default function FlashDealDetailContent({ deal }: { deal: FlashDeal }) {
               <div className="flex items-start gap-4">
                 {/* Logo */}
                 <div className="w-16 h-16 flex-shrink-0 bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-xl flex items-center justify-center overflow-hidden p-2">
-                  <FlashLogo deal={deal} size="w-12 h-12" />
+                  <FlashLogo deal={deal} />
                 </div>
 
                 <div className="flex-1 min-w-0">
@@ -274,7 +274,7 @@ export default function FlashDealDetailContent({ deal }: { deal: FlashDeal }) {
               <span className="material-symbols-outlined text-[14px]" style={{ fontVariationSettings: "'FILL' 1" }}>bolt</span>
               Deal Expires In
             </p>
-            <FlashCountdown deal={deal} variant="compact" />
+            <FlashCountdown endsAt={deal.endsAt} durationHours={deal.durationHours} variant="inline" />
           </div>
 
           {/* Main CTA */}

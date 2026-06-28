@@ -4,7 +4,7 @@ export interface StudentBenefit {
   slug?: string;
   logo?: string;
   category: string;
-  appCategory: 'Software & Tools' | 'Credits & Savings' | 'Funding & Opportunities' | 'Programs';
+  appCategory: 'Software & Tools' | 'Credits & Savings' | 'Funding & Opportunities' | 'Programs' | 'Lifestyle';
   offerSummary: string;
   description?: string;
   benefitType: string;

@@ -18,7 +18,7 @@
  */
 
 export type FlashBadge = 'hot' | 'recommended' | 'new'
-export type FlashDiscountColor = 'violet' | 'orange' | 'red'
+export type FlashDiscountColor = 'violet' | 'orange' | 'red' | 'emerald'
 
 export interface FlashDealOption {
   label: string
@@ -30,6 +30,7 @@ export interface FlashDealStep {
   title: string
   description: string
   icon: string
+  url?: string
 }
 
 export interface FlashDeal {
