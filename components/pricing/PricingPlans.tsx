@@ -106,7 +106,7 @@ export default function PricingPlans({ currency }: PricingPlansProps) {
             {/* Price section */}
             <div className="my-5">
               <div className="flex items-baseline gap-1.5 flex-wrap">
-                <span className="font-mono text-[42px] font-black text-gray-900 dark:text-white leading-none">$23</span>
+                <span className="font-mono text-[42px] font-black text-gray-900 dark:text-white leading-none">$24</span>
                 <span className="font-mono text-base text-gray-400 dark:text-gray-500 line-through font-bold">$59</span>
                 <span className="font-mono text-[10.5px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">/YR</span>
                 <span className="ml-1 px-1.5 py-0.5 bg-emerald-500/10 border border-emerald-500/25 rounded-sm font-mono text-[9px] font-bold text-emerald-500 uppercase tracking-wide">60% OFF</span>
@@ -116,7 +116,7 @@ export default function PricingPlans({ currency }: PricingPlansProps) {
             <div className="h-px border-t border-gray-200 dark:border-white/10 my-4" />
 
             {/* Features list */}
-            <ul className="space-y-3 my-5">
+            <ul className="space-y-3 my-5 overflow-visible pl-0.5">
               {[
                 'Premium AI & SaaS credits curated for student builders',
                 'Student-exclusive hackathons, fellowships & campus programs',
@@ -125,12 +125,12 @@ export default function PricingPlans({ currency }: PricingPlansProps) {
                 'Opportunity Hub: internships, co-founders, and student networks',
               ].map((feat) => (
                 <li key={feat} className="flex items-start gap-2.5 text-[13px] text-gray-700 dark:text-gray-300">
-                  <span className="material-symbols-outlined !text-[16px] text-gray-500 dark:text-gray-400 mt-0.5" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
+                  <span className="material-symbols-outlined !text-[16px] flex-shrink-0 text-gray-500 dark:text-gray-400 mt-0.5" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
                   <span>{feat}</span>
                 </li>
               ))}
               <li className="flex items-start gap-2.5 text-[13px] text-accent-yellow font-bold">
-                <span className="material-symbols-outlined !text-[16px] text-accent-yellow mt-0.5" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
+                <span className="material-symbols-outlined !text-[16px] flex-shrink-0 text-accent-yellow mt-0.5" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
                 <span>Made for students, indie hackers & first-time founders still figuring it out</span>
               </li>
             </ul>
@@ -143,7 +143,7 @@ export default function PricingPlans({ currency }: PricingPlansProps) {
               disabled={loadingPlan === 'nextfounder'}
               className="w-full inline-flex items-center justify-center gap-2 py-3.5 px-4 font-mono font-black text-[12px] uppercase tracking-[0.1em] text-black dark:text-white border border-black dark:border-white hover:bg-black/5 dark:hover:bg-white/15 rounded-lg transition-all"
             >
-              <span>{loadingPlan === 'nextfounder' ? 'REDIRECTING...' : 'START BUILDING FOR FREE*'}</span>
+              <span>{loadingPlan === 'nextfounder' ? 'REDIRECTING...' : 'START BUILDING'}</span>
               <span className="material-symbols-outlined !text-[16px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
             </button>
             <p className="mt-3 text-center text-[10.5px] text-gray-500 dark:text-gray-400 font-mono">
@@ -185,7 +185,7 @@ export default function PricingPlans({ currency }: PricingPlansProps) {
             {/* Price section */}
             <div className="my-5 flex flex-col gap-2.5 items-start">
               <div className="flex items-baseline gap-1.5 flex-wrap">
-                <span className="font-mono text-[42px] font-black text-gray-900 dark:text-white leading-none">$74</span>
+                <span className="font-mono text-[42px] font-black text-gray-900 dark:text-white leading-none">$75</span>
                 <span className="font-mono text-base text-gray-400 dark:text-gray-500 line-through font-bold">$149</span>
                 <span className="font-mono text-[10.5px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">/YR</span>
                 <span className="ml-1 px-1.5 py-0.5 bg-accent-yellow/15 border border-accent-yellow/25 rounded-sm font-mono text-[9px] font-bold text-accent-yellow uppercase tracking-wide">50% OFF</span>
@@ -199,9 +199,9 @@ export default function PricingPlans({ currency }: PricingPlansProps) {
             <div className="h-px border-t border-gray-200 dark:border-white/10 my-4" />
 
             {/* Features list */}
-            <ul className="space-y-3 my-5">
+            <ul className="space-y-3 my-5 overflow-visible pl-0.5">
               <li className="flex items-start gap-2.5 text-[11px] font-bold font-mono uppercase tracking-wide text-gray-900 dark:text-white">
-                <span className="material-symbols-outlined !text-[16px] text-gray-900 dark:text-white" style={{ fontVariationSettings: "'FILL' 1" }}>add_circle</span>
+                <span className="material-symbols-outlined !text-[16px] flex-shrink-0 text-gray-900 dark:text-white" style={{ fontVariationSettings: "'FILL' 1" }}>add_circle</span>
                 <span>EVERYTHING IN NEXT&apos;FOUNDER, PLUS:</span>
               </li>
               {[
@@ -212,8 +212,8 @@ export default function PricingPlans({ currency }: PricingPlansProps) {
                 'Accelerators, fellowships, and operator programs in one place',
                 'Access to Founders Resources (including ideas database, existing startups, and more)',
               ].map((feat) => (
-                <li key={feat} className="flex items-start gap-2.5 text-[13px] text-gray-700 dark:text-gray-300 pl-0.5">
-                  <span className="material-symbols-outlined !text-[16px] text-accent-yellow mt-0.5" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
+                <li key={feat} className="flex items-start gap-2.5 text-[13px] text-gray-700 dark:text-gray-300">
+                  <span className="material-symbols-outlined !text-[16px] flex-shrink-0 text-accent-yellow mt-0.5" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
                   <span>{feat}</span>
                 </li>
               ))}
@@ -267,23 +267,19 @@ export default function PricingPlans({ currency }: PricingPlansProps) {
             {/* Price section */}
             <div className="my-5 flex flex-col gap-2.5 items-start">
               <div className="flex items-baseline gap-1.5 flex-wrap">
-                <span className="font-mono text-[42px] font-black text-gray-900 dark:text-white leading-none">$119</span>
+                <span className="font-mono text-[42px] font-black text-gray-900 dark:text-white leading-none">$120</span>
                 <span className="font-mono text-base text-gray-400 dark:text-gray-500 line-through font-bold">$299</span>
                 <span className="font-mono text-[10.5px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">/ONCE</span>
                 <span className="ml-1 px-1.5 py-0.5 bg-purple-500/20 border border-purple-500/25 rounded-sm font-mono text-[9px] font-bold text-purple-400 uppercase tracking-wide">60% OFF</span>
-              </div>
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-white dark:bg-black text-gray-900 dark:text-accent-yellow border border-gray-200 dark:border-accent-yellow/30 rounded-sm tracking-wide">
-                <span className="material-symbols-outlined !text-[12px] text-accent-yellow">bolt</span>
-                Founding members cohort
               </div>
             </div>
 
             <div className="h-px border-t border-gray-200 dark:border-white/10 my-4" />
 
             {/* Features list */}
-            <ul className="space-y-3 my-5">
+            <ul className="space-y-3 my-5 overflow-visible pl-0.5">
               <li className="flex items-start gap-2.5 text-[11px] font-bold font-mono uppercase tracking-wide text-gray-900 dark:text-white">
-                <span className="material-symbols-outlined !text-[16px] text-gray-900 dark:text-white" style={{ fontVariationSettings: "'FILL' 1" }}>add_circle</span>
+                <span className="material-symbols-outlined !text-[16px] flex-shrink-0 text-gray-900 dark:text-white" style={{ fontVariationSettings: "'FILL' 1" }}>add_circle</span>
                 <span>EVERYTHING IN FOUNDER – FOR LIFE</span>
               </li>
               {[
@@ -293,8 +289,8 @@ export default function PricingPlans({ currency }: PricingPlansProps) {
                 'Launch-locked pricing: rate increases or closes later',
                 'Just 2 years of Founder already costs more — after that is pure upside',
               ].map((feat) => (
-                <li key={feat} className="flex items-start gap-2.5 text-[13px] text-gray-700 dark:text-gray-300 pl-0.5">
-                  <span className="material-symbols-outlined !text-[16px] text-amber-500 mt-0.5" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
+                <li key={feat} className="flex items-start gap-2.5 text-[13px] text-gray-700 dark:text-gray-300">
+                  <span className="material-symbols-outlined !text-[16px] flex-shrink-0 text-amber-500 mt-0.5" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
                   <span>{feat}</span>
                 </li>
               ))}
@@ -312,7 +308,7 @@ export default function PricingPlans({ currency }: PricingPlansProps) {
               <span className="material-symbols-outlined !text-[16px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
             </button>
             <p className="mt-3 text-center text-[10.5px] text-gray-500 dark:text-gray-400 font-mono">
-              ★ One-time payment • Lifetime updates • Founding cohort
+              ★ One-time payment • Lifetime updates
             </p>
           </div>
         </div>

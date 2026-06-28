@@ -50,6 +50,7 @@ export default function BillingPanel({
   const [cancelComments, setCancelComments] = useState('')
   const [isCancelling, setIsCancelling] = useState(false)
   const [cancelResult, setCancelResult] = useState<{ ok: boolean; message: string } | null>(null)
+  const [showCancelModal, setShowCancelModal] = useState(false)
 
   const planLabel = isAdmin
     ? 'Admin'

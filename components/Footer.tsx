@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import GoogleTranslate from './GoogleTranslate'
 
 export default function Footer() {
@@ -134,9 +135,11 @@ export default function Footer() {
           {/* Brand Column */}
           <div className="lg:col-span-4 flex flex-col gap-5 relative">
             <Link href="/" className="inline-flex items-center gap-2.5 no-underline w-fit group">
-              <img
+              <Image
                 src="/logo-icon.png"
                 alt="FoundersPrime"
+                width={48}
+                height={48}
                 className="h-10 md:h-12 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
               />
               <span className="font-mono font-black text-xl md:text-2xl tracking-[0.18em] text-white uppercase whitespace-nowrap">
@@ -259,11 +262,11 @@ export default function Footer() {
       <div className="relative border-t border-white/[0.08] bg-zinc-950/60 backdrop-blur-md">
         <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 py-5 flex flex-col-reverse sm:flex-row justify-between items-center gap-4">
           <div className="flex flex-col sm:flex-row items-center gap-1 sm:gap-4">
-            <span className="font-mono text-[10px] md:text-[11px] text-zinc-500 text-center sm:text-left">
+            <span className="font-mono text-[10px] md:text-[11px] text-zinc-400 text-center sm:text-left">
               © 2026 FoundersPrime · Built by founders, for founders.
             </span>
             <span className="hidden sm:inline text-zinc-700">·</span>
-            <span className="font-mono text-[10px] md:text-[11px] text-zinc-500">
+            <span className="font-mono text-[10px] md:text-[11px] text-zinc-400">
               Made with <span className="text-red-500">♥</span> for the underdogs.
             </span>
           </div>

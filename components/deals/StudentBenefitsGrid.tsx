@@ -24,13 +24,28 @@ const getLogo = (benefit: StudentBenefit) => {
 
 // Map to DealCard props
 const convertToCard = (benefit: StudentBenefit, idx: number) => {
+  const isFreeForAnyone = benefit.eligibility === 'Anyone'
   const isFree = benefit.benefitType === 'Free' || benefit.appCategory === 'Software & Tools'
+  
+  let badge: string
+  let badgeColor: string
+  if (isFreeForAnyone) {
+    badge = 'Open to All 🌐'
+    badgeColor = 'bg-teal-500'
+  } else if (isFree) {
+    badge = 'Free Forever'
+    badgeColor = 'bg-green-500'
+  } else {
+    badge = benefit.benefitType
+    badgeColor = 'bg-blue-500'
+  }
+
   return {
     id: benefit.slug || `${benefit.company}-${idx}`,
     logo: getLogo(benefit),
     category: benefit.category,
-    badge: isFree ? 'Free Forever' : benefit.benefitType,
-    badgeColor: isFree ? 'bg-green-500' : 'bg-blue-500',
+    badge,
+    badgeColor,
     title: benefit.title,
     provider: benefit.company,
     value: benefit.value === 'N/A' || benefit.value === 'Free' ? 'Free' : benefit.value,
@@ -43,6 +58,7 @@ const convertToCard = (benefit: StudentBenefit, idx: number) => {
     verified: true,
   }
 }
+
 
 const PRIORITY_COMPANIES = [
   'thiel fellowship', 'peter thiel', 'y combinator', 'techstars', '500 global',

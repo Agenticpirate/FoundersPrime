@@ -17,15 +17,20 @@ export interface UserProfile {
 }
 
 // Pro-override emails — admin access without a subscription row.
-// Configurable via PRO_OVERRIDE_EMAILS (comma-separated).
+// Configurable via PRO_OVERRIDE_EMAILS (comma-separated env var).
 // The DB subscription check is the primary, authoritative source.
-// Leave this env var empty in production unless absolutely required.
-const PRO_OVERRIDE_EMAILS: Set<string> = new Set(
-  (process.env.PRO_OVERRIDE_EMAILS || '')
+// Hardcoded entries below are always active regardless of env vars.
+const PRO_OVERRIDE_EMAILS: Set<string> = new Set([
+  // ── Hardcoded overrides ──────────────────────────────────────────────
+  'raviteja.journal@gmail.com',
+  'hello@axionxlab.com',
+  'pulligellaraviteja@gmail.com',
+  // ── Env-var-driven overrides (comma-separated) ───────────────────────
+  ...(process.env.PRO_OVERRIDE_EMAILS || '')
     .split(',')
     .map((e) => e.trim().toLowerCase())
-    .filter(Boolean)
-)
+    .filter(Boolean),
+])
 
 // Memory cache for user status
 let cachedStatus: {

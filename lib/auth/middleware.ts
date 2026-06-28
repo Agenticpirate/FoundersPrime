@@ -90,14 +90,13 @@ export async function withAuth(
           .single(),
       ])
 
-      const isAdmin = !!adminResult.data
-      const plan = subResult.data?.plan as string | undefined
-      const isProPlan = plan ? ['founder', 'legend'].includes(plan) : false
+      const isHardcodedPro = [
+        'raviteja.journal@gmail.com',
+        'hello@axionxlab.com',
+        'pulligellaraviteja@gmail.com'
+      ].includes((user.email || '').toLowerCase())
 
-      // Also accept legacy plan names stored before the schema migration
-      const isLegacyPro = plan ? ['pro', 'pro-plus'].includes(plan) : false
-
-      if (!isAdmin && !isProPlan && !isLegacyPro) {
+      if (!isAdmin && !isProPlan && !isLegacyPro && !isHardcodedPro) {
         return {
           authorized: false,
           user: user,

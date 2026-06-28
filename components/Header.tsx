@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { useAuth } from '@/lib/auth/hooks'
 import { useEffect, useRef, useState } from 'react'
 import { checkProStatus } from '@/lib/auth/user-context'
@@ -148,11 +149,13 @@ export default function Header() {
               href="/"
               className="inline-flex items-center gap-2.5 no-underline group"
             >
-              <img
+              <Image
                 src="/logo-icon.png"
                 alt="FoundersPrime"
+                width={48}
+                height={48}
+                priority
                 className="h-10 md:h-12 w-auto object-contain group-hover:scale-105 transition-transform duration-300"
-                onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
               />
               <span className="font-mono font-black text-xl md:text-2xl tracking-[0.18em] text-white uppercase whitespace-nowrap">
                 FOUNDERS<span className="text-accent-yellow">[</span>PRIME<span className="text-accent-yellow">]</span>

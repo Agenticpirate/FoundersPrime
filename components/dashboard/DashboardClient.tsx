@@ -511,38 +511,38 @@ function OverviewTab({
         </div>
         <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
           {[
-            { href: '/deals', icon: 'local_offer', label: 'All Deals', sub: 'Cloud, SaaS, Ad credits', color: 'bg-accent-yellow' },
-            { href: '/programs?type=grants', icon: 'payments', label: 'Grants', sub: 'Non-dilutive funding', color: 'bg-emerald-200 dark:bg-emerald-900/40' },
-            { href: '/programs?type=accelerators', icon: 'rocket_launch', label: 'Accelerators', sub: 'Top global programs', color: 'bg-orange-200 dark:bg-orange-900/40' },
-            { href: '/student-benefits', icon: 'school', label: 'Student Benefits', sub: 'Credits, funding & tools', color: 'bg-indigo-200 dark:bg-indigo-900/40' },
-            { href: '/startups', icon: 'verified', label: 'Verified Startups', sub: 'Funded companies', color: 'bg-sky-200 dark:bg-sky-900/40' },
-            { href: '/ideas', icon: 'emoji_objects', label: 'Startup Ideas', sub: 'Validated opportunities', color: 'bg-yellow-200 dark:bg-yellow-900/40' },
-            { href: '/resources', icon: 'folder_open', label: 'Resources', sub: 'Templates & guides', color: 'bg-purple-200 dark:bg-purple-900/40' },
-            { href: '/deals?category=saas-discounts', icon: 'apps', label: 'SaaS Stack', sub: 'Tools at founder rates', color: 'bg-pink-200 dark:bg-pink-900/40' },
-            { href: '/submit-deal', icon: 'add_circle', label: 'Submit Deal', sub: 'Share with founders', color: 'bg-gray-200 dark:bg-gray-700' },
+            { href: '/deals', icon: 'local_offer', label: 'All Deals', sub: 'Cloud, SaaS, Ad credits', iconColor: 'text-accent-yellow', bgClass: 'bg-accent-yellow/10 dark:bg-accent-yellow/5 border-accent-yellow/20', hoverBorder: 'hover:border-accent-yellow/50' },
+            { href: '/programs?type=grants', icon: 'payments', label: 'Grants', sub: 'Non-dilutive funding', iconColor: 'text-emerald-400', bgClass: 'bg-emerald-500/10 dark:bg-emerald-500/5 border-emerald-500/20', hoverBorder: 'hover:border-emerald-500/50' },
+            { href: '/programs?type=accelerators', icon: 'rocket_launch', label: 'Accelerators', sub: 'Top global programs', iconColor: 'text-orange-400', bgClass: 'bg-orange-500/10 dark:bg-orange-500/5 border-orange-500/20', hoverBorder: 'hover:border-orange-500/50' },
+            { href: '/student-benefits', icon: 'school', label: 'Student Benefits', sub: 'Credits, funding & tools', iconColor: 'text-indigo-400', bgClass: 'bg-indigo-500/10 dark:bg-indigo-500/5 border-indigo-500/20', hoverBorder: 'hover:border-indigo-500/50' },
+            { href: '/startups', icon: 'verified', label: 'Verified Startups', sub: 'Funded companies', iconColor: 'text-sky-400', bgClass: 'bg-sky-500/10 dark:bg-sky-500/5 border-sky-500/20', hoverBorder: 'hover:border-sky-500/50' },
+            { href: '/ideas', icon: 'emoji_objects', label: 'Startup Ideas', sub: 'Validated opportunities', iconColor: 'text-yellow-400', bgClass: 'bg-yellow-500/10 dark:bg-yellow-500/5 border-yellow-500/20', hoverBorder: 'hover:border-yellow-500/50' },
+            { href: '/resources', icon: 'folder_open', label: 'Resources', sub: 'Templates & guides', iconColor: 'text-purple-400', bgClass: 'bg-purple-500/10 dark:bg-purple-500/5 border-purple-500/20', hoverBorder: 'hover:border-purple-500/50' },
+            { href: '/deals?category=saas-discounts', icon: 'apps', label: 'SaaS Stack', sub: 'Tools at founder rates', iconColor: 'text-pink-400', bgClass: 'bg-pink-500/10 dark:bg-pink-500/5 border-pink-500/20', hoverBorder: 'hover:border-pink-500/50' },
+            { href: '/submit-deal', icon: 'add_circle', label: 'Submit Deal', sub: 'Share with founders', iconColor: 'text-zinc-400 dark:text-zinc-300', bgClass: 'bg-zinc-500/10 dark:bg-zinc-500/5 border-zinc-500/20', hoverBorder: 'hover:border-zinc-500/50' }
           ].map((a) => (
             <motion.div
               key={a.href}
-              whileHover={{ scale: 1.02, y: -2 }}
-              whileTap={{ scale: 0.98 }}
+              whileHover={{ scale: 1.015, y: -2 }}
+              whileTap={{ scale: 0.985 }}
               className="h-full"
             >
               <Link
                 href={a.href}
-                className="group relative bg-white dark:bg-[#0d0d0d] border-2 border-black dark:border-white/10 shadow-[3px_3px_0px_#111] dark:shadow-[3px_3px_0px_rgba(255,255,255,0.06)] hover:shadow-[5px_5px_0px_#111] dark:hover:shadow-[5px_5px_0px_rgba(255,255,255,0.1)] transition-all rounded-sm p-3.5 md:p-4 flex flex-col items-center text-center gap-2.5 overflow-hidden h-full"
+                className={`group relative bg-white dark:bg-[#0d0d0d] border-2 border-black dark:border-white/10 ${a.hoverBorder} shadow-[3px_3px_0px_#111] dark:shadow-[3px_3px_0px_rgba(255,255,255,0.06)] hover:shadow-[5px_5px_0px_#111] dark:hover:shadow-[5px_5px_0px_rgba(255,255,255,0.1)] transition-all rounded-sm p-4 md:p-5 flex flex-col items-center text-center gap-3 overflow-hidden h-full`}
               >
                 <div className="flex justify-center w-full">
-                  <div className={`w-10 h-10 ${a.color} border-2 border-black dark:border-white/20 rounded-sm flex items-center justify-center flex-shrink-0 shadow-[1px_1px_0px_#111] dark:shadow-[1px_1px_0px_rgba(255,255,255,0.06)]`}>
-                    <span className="material-symbols-outlined !text-[18px] text-black dark:text-white">{a.icon}</span>
+                  <div className={`w-11 h-11 ${a.bgClass} border-2 border-black dark:border-white/20 rounded-sm flex items-center justify-center flex-shrink-0 shadow-[1px_1px_0px_#111] dark:shadow-[1px_1px_0px_rgba(255,255,255,0.06)] group-hover:scale-110 group-hover:rotate-[6deg] transition-all duration-300`}>
+                    <span className={`material-symbols-outlined !text-[20px] ${a.iconColor}`}>{a.icon}</span>
                   </div>
                 </div>
-                <div className="min-w-0">
-                  <p className="font-mono text-[12px] md:text-[12.5px] font-black uppercase text-black dark:text-white leading-tight tracking-tight">{a.label}</p>
-                  <p className="text-[10.5px] md:text-[11px] text-gray-500 dark:text-gray-400 leading-snug mt-0.5">{a.sub}</p>
+                <div className="min-w-0 flex-1">
+                  <p className="font-mono text-[13px] font-black uppercase text-black dark:text-white leading-tight tracking-wide group-hover:text-accent-yellow transition-colors duration-200">{a.label}</p>
+                  <p className="text-[11px] text-gray-500 dark:text-gray-400 leading-snug mt-1">{a.sub}</p>
                 </div>
-                <div className="mt-auto w-full pt-2 border-t border-dashed border-gray-200 dark:border-white/10 flex items-center justify-between">
-                  <span className="font-mono text-[9.5px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">Open</span>
-                  <span className="material-symbols-outlined !text-[14px] text-gray-500 dark:text-gray-400 group-hover:translate-x-0.5 group-hover:text-black dark:group-hover:text-white transition-all">arrow_forward</span>
+                <div className="mt-4 w-full pt-2.5 border-t border-dashed border-gray-200 dark:border-white/10 flex items-center justify-between">
+                  <span className="font-mono text-[9.5px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400 group-hover:text-black dark:group-hover:text-white transition-colors">Open</span>
+                  <span className="material-symbols-outlined !text-[15px] text-gray-400 dark:text-gray-500 group-hover:translate-x-1 group-hover:text-black dark:group-hover:text-white transition-all">arrow_forward</span>
                 </div>
               </Link>
             </motion.div>

@@ -5,6 +5,7 @@ import { UserProfile } from './user-context'
 const PRO_USERS = [
   'raviteja.journal@gmail.com',
   'hello@axionxlab.com',
+  'pulligellaraviteja@gmail.com',
 ]
 
 export async function checkProStatusServer(): Promise<{

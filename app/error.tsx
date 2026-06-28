@@ -2,6 +2,7 @@
 
 import { useEffect } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 
 export default function Error({
   error,
@@ -20,9 +21,12 @@ export default function Error({
       <header className="sticky top-0 z-50 w-full border-b-2 border-black dark:border-white/10 bg-[#FAF9F5] dark:bg-[#000000]">
         <div className="mx-auto flex h-16 max-w-[1600px] items-center justify-between px-4 sm:px-6 lg:px-8">
           <Link href="/" className="flex items-center gap-2.5 no-underline">
-            <img
+            <Image
               src="/logo-icon.png"
               alt="FoundersPrime"
+              width={40}
+              height={40}
+              priority
               className="h-10 w-auto object-contain"
             />
             <span className="font-mono text-xl font-black tracking-widest uppercase text-black dark:text-white">

@@ -195,7 +195,7 @@ export default function CookieBanner() {
                             padding: 0,
                             fontFamily: 'var(--font-mono, monospace)',
                             fontSize: '10px',
-                            color: '#6b7280',
+                            color: '#d1d5db',
                             textTransform: 'uppercase',
                             letterSpacing: '0.06em',
                             textDecoration: 'underline',

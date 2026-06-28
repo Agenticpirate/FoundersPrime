@@ -74,10 +74,13 @@ export function createClient(): SupabaseClient {
   let authHeader = ''
   if (typeof window === 'undefined') {
     try {
+      // ONLY read headers inside a dynamic request execution context.
+      // Next.js static page compilation calls createClient() during build time where next/headers is not allowed.
       const { headers: getHeaders } = require('next/headers')
-      authHeader = getHeaders().get('Authorization') || ''
+      const headersList = getHeaders()
+      authHeader = headersList.get('Authorization') || ''
     } catch (e) {
-      // Ignore if headers API is not readable in current context
+      // Ignore if headers API is not readable during static build or serverless init
     }
   }
 

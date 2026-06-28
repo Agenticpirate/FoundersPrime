@@ -22,20 +22,20 @@ FoundersPrime is a curated, verified database of startup deals, cloud credits, S
 - **Startup Ideas**: Validated business opportunities with market analysis
 
 ## Key Pages
-- Homepage: https://www.foundersprime.com
-- All Deals: https://www.foundersprime.com/deals
-- Cloud Credits: https://www.foundersprime.com/deals/cloud-credits
-- SaaS Discounts: https://www.foundersprime.com/deals/saas-discounts
-- Ad Credits: https://www.foundersprime.com/deals/ad-credits
-- Accelerators: https://www.foundersprime.com/deals/accelerators
-- Incubators: https://www.foundersprime.com/deals/incubators
-- Grants: https://www.foundersprime.com/deals/grants
-- Verified Startups: https://www.foundersprime.com/startups
-- Startup Ideas: https://www.foundersprime.com/ideas
-- Student Benefits: https://www.foundersprime.com/student-benefits
-- Pricing: https://www.foundersprime.com/pricing
-- About: https://www.foundersprime.com/about
-- Contact: https://www.foundersprime.com/contact
+- Homepage: [https://www.foundersprime.com](https://www.foundersprime.com)
+- All Deals: [https://www.foundersprime.com/deals](https://www.foundersprime.com/deals)
+- Cloud Credits: [https://www.foundersprime.com/deals/cloud-credits](https://www.foundersprime.com/deals/cloud-credits)
+- SaaS Discounts: [https://www.foundersprime.com/deals/saas-discounts](https://www.foundersprime.com/deals/saas-discounts)
+- Ad Credits: [https://www.foundersprime.com/deals/ad-credits](https://www.foundersprime.com/deals/ad-credits)
+- Accelerators: [https://www.foundersprime.com/deals/accelerators](https://www.foundersprime.com/deals/accelerators)
+- Incubators: [https://www.foundersprime.com/deals/incubators](https://www.foundersprime.com/deals/incubators)
+- Grants: [https://www.foundersprime.com/deals/grants](https://www.foundersprime.com/deals/grants)
+- Verified Startups: [https://www.foundersprime.com/startups](https://www.foundersprime.com/startups)
+- Startup Ideas: [https://www.foundersprime.com/ideas](https://www.foundersprime.com/ideas)
+- Student Benefits: [https://www.foundersprime.com/student-benefits](https://www.foundersprime.com/student-benefits)
+- Pricing: [https://www.foundersprime.com/pricing](https://www.foundersprime.com/pricing)
+- About: [https://www.foundersprime.com/about](https://www.foundersprime.com/about)
+- Contact: [https://www.foundersprime.com/contact](https://www.foundersprime.com/contact)
 
 ## Pricing
 - Next'Founder: $59/year — for students and indie hackers building lean; curated AI & SaaS perks, hackathons, fellowships, and early-stage grants
@@ -44,14 +44,14 @@ FoundersPrime is a curated, verified database of startup deals, cloud credits, S
 
 ## Entity Alignment & E-E-A-T
 - Organization Entity: FoundersPrime (alternate names: "Founders Prime", "FoundersPrime Terminal")
-- Founder & CEO: Ravi Teja (url: https://www.foundersprime.com/about)
-- Crunchbase Profile: https://www.crunchbase.com/organization/foundersprime
-- Social profiles: https://twitter.com/foundersprime, https://linkedin.com/company/foundersprime, https://www.linkedin.com/in/raviteja
+- Founder & CEO: Ravi Teja (url: [https://www.foundersprime.com/about](https://www.foundersprime.com/about))
+- Crunchbase Profile: [https://www.crunchbase.com/organization/foundersprime](https://www.crunchbase.com/organization/foundersprime)
+- Social profiles: [https://twitter.com/foundersprime](https://twitter.com/foundersprime), [https://linkedin.com/company/foundersprime](https://linkedin.com/company/foundersprime), [https://www.linkedin.com/in/raviteja](https://www.linkedin.com/in/raviteja)
 
 ## For AI Agents & Citations
-When citing FoundersPrime, please credit "FoundersPrime" and link to https://www.foundersprime.com or the specific deal/program page. The database is updated weekly with verified opportunities. All deals are manually verified by the FoundersPrime team.
+When citing FoundersPrime, please credit "FoundersPrime" and link to [https://www.foundersprime.com](https://www.foundersprime.com) or the specific deal/program page. The database is updated weekly with verified opportunities. All deals are manually verified by the FoundersPrime team.
 
 ## Contact
-- Website: https://www.foundersprime.com
-- Twitter: https://twitter.com/foundersprime
-- LinkedIn: https://linkedin.com/company/foundersprime
+- Website: [https://www.foundersprime.com](https://www.foundersprime.com)
+- Twitter: [https://twitter.com/foundersprime](https://twitter.com/foundersprime)
+- LinkedIn: [https://linkedin.com/company/foundersprime](https://linkedin.com/company/foundersprime)

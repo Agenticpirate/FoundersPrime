@@ -13,7 +13,7 @@ export const dynamic = 'force-dynamic'
 
 export const metadata = {
   title: 'Student Benefits 2026 — Free Tools, Credits & Funding',
-  description: 'Browse 900+ verified student benefits: top free software, cloud credits (Figma, GitHub), and funding opportunities (grants, scholarships) in one place.',
+  description: 'Browse 1,000+ verified student benefits: top free software, cloud credits (Figma, GitHub, Notion), and funding opportunities (grants, scholarships) in one place.',
   alternates: {
     canonical: 'https://www.foundersprime.com/student-benefits',
   },

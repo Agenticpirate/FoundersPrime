@@ -71,7 +71,7 @@ export default async function DashboardPage({
   }
 
   const isPaymentSuccess = searchParams?.status === 'succeeded' || searchParams?.status === 'completed'
-  const PRO_USERS = ['raviteja.journal@gmail.com', 'hello@axionxlab.com']
+  const PRO_USERS = ['raviteja.journal@gmail.com', 'hello@axionxlab.com', 'pulligellaraviteja@gmail.com']
   const userEmail = user?.email || ''
   const isPro = !!adminUser || PRO_USERS.includes(userEmail) || isPaymentSuccess || isLocalDev || !!subscription
   const isAdmin = !!adminUser || isLocalDev

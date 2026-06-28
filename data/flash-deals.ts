@@ -81,12 +81,6 @@ export const FLASH_CATEGORIES: { key: string; label: string }[] = [
   { key: 'productivity', label: 'Productivity & Design' },
 ]
 
-/** The promo coupon shown in the hero. */
-export const FLASH_COUPON = {
-  code: 'FPFLASH10',
-  label: '10% OFF on membership',
-  note: 'Use at checkout to unlock your discount.',
-}
 
 export const flashDeals: FlashDeal[] = [
   {
@@ -150,7 +144,7 @@ export const flashDeals: FlashDeal[] = [
     longDescription: 'Lovable is offering 1 full year of their Premium plan completely free to LinkedIn Premium subscribers. If you have or are eligible for LinkedIn Premium (especially through Airtel Thanks), you can stack this offer on top to get the AI-powered app builder at zero cost.',
     badge: 'hot',
     category: 'ai-credits',
-    logo: 'https://logo.clearbit.com/lovable.dev',
+    logo: 'https://img.logo.dev/lovable.dev?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg',
     domain: 'lovable.dev',
     price: '1 Year',
     priceUnit: 'Free',
@@ -190,7 +184,7 @@ export const flashDeals: FlashDeal[] = [
     longDescription: 'Airtel is offering its Thanks subscribers an incredible stacking deal: 1 year of Adobe Express Premium plus up to 6 months of LinkedIn Premium at absolutely no cost. This is accessible directly through the My Airtel App rewards section.',
     badge: 'new',
     category: 'productivity',
-    logo: 'https://logo.clearbit.com/adobe.com',
+    logo: 'https://img.logo.dev/adobe.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg',
     domain: 'adobe.com',
     price: '1 Year',
     priceUnit: 'Free',
@@ -232,7 +226,7 @@ export const flashDeals: FlashDeal[] = [
     longDescription: 'Gravatar and WordPress.com are offering a free custom profile domain for 12 full months. Perfect for developers, designers, creators, and anyone building a personal brand. You get a real domain — no tricks, just complete the checkout process with a real card (charged $0).',
     badge: 'new',
     category: 'productivity',
-    logo: 'https://logo.clearbit.com/gravatar.com',
+    logo: 'https://img.logo.dev/gravatar.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg',
     domain: 'gravatar.com',
     price: '1 Year',
     priceUnit: 'Free',

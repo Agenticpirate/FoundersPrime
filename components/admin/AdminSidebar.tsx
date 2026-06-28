@@ -1,6 +1,6 @@
 'use client'
 
-import Link from 'next/link'
+import Link from 'Link'
 import { usePathname } from 'next/navigation'
 import { useState } from 'react'
 import {
@@ -28,7 +28,7 @@ export default function AdminSidebar() {
   }
 
   const NavContent = () => (
-    <div className="flex-1 overflow-y-auto p-2 flex flex-col gap-0.5">
+    <div className="flex-1 overflow-y-auto p-3 flex flex-col gap-1">
       {navigation.map((item) => {
         const active = isActive(item.href)
         return (
@@ -36,26 +36,26 @@ export default function AdminSidebar() {
             key={item.href}
             href={item.href}
             onClick={() => setMobileOpen(false)}
-            className={`flex items-center gap-2.5 px-3 py-2 rounded-sm transition-all font-mono text-xs ${
+            className={`flex items-center gap-2.5 px-3 py-2.5 rounded transition-all font-mono text-xs ${
               active
-                ? 'bg-black text-white font-bold shadow-[2px_2px_0px_#333]'
-                : 'hover:bg-primary/15 text-black/80 hover:text-black font-medium'
+                ? 'bg-accent-yellow/10 text-accent-yellow border border-accent-yellow/20 font-bold'
+                : 'hover:bg-white/5 text-zinc-400 hover:text-white font-medium border border-transparent'
             }`}
           >
-            <item.icon className={`w-4 h-4 flex-shrink-0 ${active ? 'text-primary' : 'text-black/40'}`} />
-            <span className="uppercase tracking-wide">{item.name}</span>
+            <item.icon className={`w-4 h-4 flex-shrink-0 ${active ? 'text-accent-yellow' : 'text-zinc-500'}`} />
+            <span className="uppercase tracking-wider">{item.name}</span>
           </Link>
         )
       })}
 
-      <div className="mt-auto pt-3 border-t border-black/10">
+      <div className="mt-auto pt-4 border-t border-white/10">
         <Link
           href="/"
           onClick={() => setMobileOpen(false)}
-          className="flex items-center gap-2.5 px-3 py-2 rounded-sm hover:bg-blue-50 font-mono text-xs font-medium text-blue-600 hover:text-blue-800 transition-all"
+          className="flex items-center gap-2.5 px-3 py-2.5 rounded hover:bg-sky-500/10 font-mono text-xs font-medium text-sky-400 hover:text-sky-300 transition-all border border-transparent"
         >
           <ExternalLink className="w-4 h-4 flex-shrink-0" />
-          <span className="uppercase tracking-wide">View Live Site</span>
+          <span className="uppercase tracking-wider">View Live Site</span>
         </Link>
       </div>
     </div>
@@ -64,45 +64,45 @@ export default function AdminSidebar() {
   return (
     <>
       {/* Desktop Sidebar */}
-      <nav className="hidden md:flex w-56 bg-white border-r-2 border-black flex-shrink-0 flex-col h-screen sticky top-0 z-50">
-        <div className="px-4 py-3 border-b-2 border-black bg-primary">
-          <h1 className="font-mono font-black text-sm tracking-tight text-black">FoundersPrime</h1>
-          <p className="font-mono text-[9px] font-bold text-black/60 uppercase">Admin v2.0</p>
+      <nav className="hidden md:flex w-56 bg-[#0d0e12] border-r border-white/10 flex-shrink-0 flex-col h-screen sticky top-0 z-50">
+        <div className="px-4 py-4.5 border-b border-white/10 bg-[#121318]">
+          <h1 className="font-mono font-black text-sm tracking-wider text-white">FoundersPrime</h1>
+          <p className="font-mono text-[8px] font-bold text-zinc-500 uppercase mt-0.5">Admin v2.0</p>
         </div>
         <NavContent />
       </nav>
 
       {/* Mobile Top Bar */}
-      <div className="md:hidden sticky top-0 z-50 bg-primary border-b-2 border-black flex items-center justify-between px-3 h-11">
+      <div className="md:hidden sticky top-0 z-50 bg-[#0d0e12] border-b border-white/10 flex items-center justify-between px-4 h-14">
         <div>
-          <h1 className="font-mono font-black text-sm tracking-tight text-black leading-none">FoundersPrime</h1>
-          <p className="font-mono text-[8px] font-bold text-black/60 uppercase">Admin</p>
+          <h1 className="font-mono font-black text-sm tracking-wider text-white leading-none">FoundersPrime</h1>
+          <p className="font-mono text-[8px] font-bold text-zinc-500 uppercase mt-1">Admin</p>
         </div>
         <button
           onClick={() => setMobileOpen(!mobileOpen)}
-          className="flex items-center justify-center w-8 h-8 border border-black bg-white"
+          className="flex items-center justify-center w-9 h-9 border border-white/10 bg-[#121318] text-white rounded hover:bg-white/5 transition-colors"
           aria-label={mobileOpen ? 'Close sidebar' : 'Open sidebar'}
         >
-          {mobileOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
+          {mobileOpen ? <X className="w-4.5 h-4.5" /> : <Menu className="w-4.5 h-4.5" />}
         </button>
       </div>
 
       {/* Mobile Sidebar Drawer */}
       {mobileOpen && (
         <>
-          <div className="fixed inset-0 bg-black/40 z-40 md:hidden" onClick={() => setMobileOpen(false)} />
-          <nav className="fixed inset-y-0 left-0 z-50 w-60 bg-white border-r-2 border-black flex flex-col md:hidden overflow-y-auto">
-            <div className="px-3 py-2.5 border-b-2 border-black bg-primary flex items-center justify-between">
+          <div className="fixed inset-0 bg-black/60 z-40 md:hidden backdrop-blur-sm" onClick={() => setMobileOpen(false)} />
+          <nav className="fixed inset-y-0 left-0 z-50 w-60 bg-[#0d0e12] border-r border-white/10 flex flex-col md:hidden overflow-y-auto">
+            <div className="px-4 py-4 border-b border-white/10 bg-[#121318] flex items-center justify-between">
               <div>
-                <h1 className="font-mono font-black text-sm tracking-tight text-black">FoundersPrime</h1>
-                <p className="font-mono text-[8px] font-bold text-black/60 uppercase">Admin v2.0</p>
+                <h1 className="font-mono font-black text-sm tracking-wider text-white">FoundersPrime</h1>
+                <p className="font-mono text-[8px] font-bold text-zinc-500 uppercase mt-0.5">Admin v2.0</p>
               </div>
               <button
                 onClick={() => setMobileOpen(false)}
-                className="flex items-center justify-center w-7 h-7 border border-black bg-white"
+                className="flex items-center justify-center w-8 h-8 border border-white/10 bg-[#121318] text-white rounded"
                 aria-label="Close sidebar"
               >
-                <X className="w-3.5 h-3.5" />
+                <X className="w-4 h-4" />
               </button>
             </div>
             <NavContent />

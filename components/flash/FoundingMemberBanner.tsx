@@ -1,27 +1,15 @@
 'use client'
 
-import { useState } from 'react'
 import Link from 'next/link'
 
 const DEALS = [
   {
-    plan: 'FOUNDER Plan',
-    period: '1 Year',
-    discount: '50% OFF',
-    code: 'FOUNDERLAUNCH50',
-    color: '#FFD700',
-    glow: 'rgba(255,215,0,0.35)',
-    border: 'rgba(255,215,0,0.5)',
-    bg: 'rgba(255,215,0,0.06)',
-    icon: 'rocket_launch',
-    badge: 'FOUNDER',
-    description: 'For early adopters ready to build',
-  },
-  {
-    plan: 'NEXTFOUNDERS Plan',
+    plan: "Next' Founder Plan",
     period: 'For Students',
-    discount: '60% OFF',
-    code: 'NEXTLAUNCH60',
+    discount: '80% OFF',
+    originalPrice: '$120',
+    discountedPrice: '$24',
+    perLabel: '/ year',
     color: '#60a5fa',
     glow: 'rgba(96,165,250,0.35)',
     border: 'rgba(96,165,250,0.5)',
@@ -29,12 +17,31 @@ const DEALS = [
     icon: 'school',
     badge: 'STUDENT',
     description: 'Exclusive rate for student founders',
+    highlights: ['All deals & credits', 'Student benefits library', 'AI tools access'],
   },
   {
-    plan: 'LEGEND Lifetime',
+    plan: 'Founder Plan',
+    period: '1 Year Access',
+    discount: '38% OFF',
+    originalPrice: '$120',
+    discountedPrice: '$75',
+    perLabel: '/ year',
+    color: '#FFD700',
+    glow: 'rgba(255,215,0,0.35)',
+    border: 'rgba(255,215,0,0.5)',
+    bg: 'rgba(255,215,0,0.06)',
+    icon: 'rocket_launch',
+    badge: 'FOUNDER',
+    description: 'For early adopters ready to build',
+    highlights: ['1,000+ verified deals', 'Flash deal alerts', 'Priority access'],
+  },
+  {
+    plan: 'Legend Lifetime',
     period: 'Lifetime Access',
-    discount: '60% OFF',
-    code: 'LEGENDLAUNCH60',
+    discount: '33% OFF',
+    originalPrice: '$180',
+    discountedPrice: '$120',
+    perLabel: 'one-time',
     color: '#a78bfa',
     glow: 'rgba(167,139,250,0.35)',
     border: 'rgba(167,139,250,0.5)',
@@ -42,22 +49,14 @@ const DEALS = [
     icon: 'workspace_premium',
     badge: 'LEGEND',
     description: 'One-time payment, forever access',
+    highlights: ['Everything forever', 'VIP community access', 'Founder concierge'],
   },
 ]
 
-function CouponCard({ deal, index }: { deal: typeof DEALS[number]; index: number }) {
-  const [copied, setCopied] = useState(false)
-
-  const copy = () => {
-    navigator.clipboard.writeText(deal.code).then(() => {
-      setCopied(true)
-      setTimeout(() => setCopied(false), 2000)
-    })
-  }
-
+function PriceCard({ deal, index }: { deal: typeof DEALS[number]; index: number }) {
   return (
     <div
-      className="relative flex flex-col rounded-xl overflow-hidden group"
+      className="relative flex flex-col rounded-xl overflow-hidden group transition-transform duration-300 hover:-translate-y-1"
       style={{
         background: deal.bg,
         border: `1.5px solid ${deal.border}`,
@@ -65,7 +64,7 @@ function CouponCard({ deal, index }: { deal: typeof DEALS[number]; index: number
         animationDelay: `${index * 0.15}s`,
       }}
     >
-      {/* Animated shimmer sweep */}
+      {/* Shimmer sweep on hover */}
       <div
         className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-700 z-0"
         style={{
@@ -75,16 +74,13 @@ function CouponCard({ deal, index }: { deal: typeof DEALS[number]; index: number
         }}
       />
 
-      {/* Top pulse badge */}
+      {/* Top badge row */}
       <div className="relative z-10 flex items-center justify-between px-4 pt-4 pb-0">
         <span
           className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[9px] font-black uppercase tracking-widest font-mono"
           style={{ background: `${deal.color}22`, color: deal.color, border: `1px solid ${deal.color}44` }}
         >
-          <span
-            className="w-1.5 h-1.5 rounded-full animate-pulse"
-            style={{ background: deal.color }}
-          />
+          <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: deal.color }} />
           {deal.badge}
         </span>
         <span className="font-mono text-[10px] text-gray-500 uppercase tracking-wider">{deal.period}</span>
@@ -129,44 +125,55 @@ function CouponCard({ deal, index }: { deal: typeof DEALS[number]; index: number
       {/* Divider */}
       <div className="mx-4 border-t" style={{ borderColor: `${deal.color}20` }} />
 
-      {/* Coupon code — copy button */}
+      {/* Price display — no coupon code */}
       <div className="relative z-10 px-4 py-4">
-        <p className="text-[9px] font-mono uppercase tracking-widest text-gray-500 dark:text-gray-400 mb-1.5">Promo Code</p>
-        <button
-          onClick={copy}
-          className="w-full flex items-center justify-between gap-2 px-3 py-2.5 rounded-lg font-mono font-black text-sm tracking-widest transition-all duration-200 active:scale-95"
-          style={{
-            background: `${deal.color}12`,
-            border: `1.5px dashed ${deal.color}60`,
-            color: deal.color,
-          }}
-        >
-          <span>{deal.code}</span>
-          <span
-            className="material-symbols-outlined text-[16px] transition-all duration-200"
-            style={{ color: copied ? '#22c55e' : deal.color, fontVariationSettings: "'FILL' 1" }}
-          >
-            {copied ? 'check_circle' : 'content_copy'}
-          </span>
-        </button>
-        <p className="text-[9px] text-gray-500 dark:text-gray-400 mt-1.5 text-center">
-          {copied ? '✓ Copied to clipboard!' : 'Click to copy · Apply at checkout'}
+        <p className="text-[9px] font-mono uppercase tracking-widest text-gray-500 dark:text-gray-400 mb-2">
+          Launch Price
         </p>
+        <div className="flex items-end gap-2">
+          <span
+            className="font-mono font-black text-3xl leading-none"
+            style={{ color: deal.color, textShadow: `0 0 16px ${deal.glow}` }}
+          >
+            {deal.discountedPrice}
+          </span>
+          <div className="flex flex-col mb-0.5">
+            <span className="text-[10px] font-mono text-gray-500 line-through">{deal.originalPrice}</span>
+            <span className="text-[10px] font-mono text-gray-500">{deal.perLabel}</span>
+          </div>
+        </div>
+
+        {/* Highlights */}
+        <ul className="mt-3 space-y-1.5">
+          {deal.highlights.map((h) => (
+            <li key={h} className="flex items-center gap-1.5 text-[11px] text-gray-600 dark:text-gray-400">
+              <span
+                className="material-symbols-outlined text-[13px] flex-shrink-0"
+                style={{ color: deal.color, fontVariationSettings: "'FILL' 1" }}
+              >
+                check_circle
+              </span>
+              {h}
+            </li>
+          ))}
+        </ul>
       </div>
 
-      {/* CTA */}
+      {/* CTA — link to pricing page */}
       <div className="relative z-10 px-4 pb-4 mt-auto">
         <Link
           href="/pricing"
-          className="flex items-center justify-center gap-1.5 w-full py-2 rounded-lg font-mono font-black text-[11px] uppercase tracking-wider transition-all duration-200 hover:opacity-90 active:scale-95"
+          className="flex items-center justify-center gap-1.5 w-full py-2.5 rounded-lg font-mono font-black text-[11px] uppercase tracking-wider transition-all duration-200 hover:opacity-90 active:scale-95 group/btn"
           style={{
             background: deal.color,
             color: '#000',
             boxShadow: `0 4px 16px ${deal.glow}`,
           }}
         >
-          Claim This Deal
-          <span className="material-symbols-outlined text-[14px]">arrow_forward</span>
+          Get This Price
+          <span className="material-symbols-outlined text-[14px] group-hover/btn:translate-x-0.5 transition-transform">
+            arrow_forward
+          </span>
         </Link>
       </div>
     </div>
@@ -179,33 +186,34 @@ export default function FoundingMemberBanner() {
       {/* Header */}
       <div className="text-center mb-8">
         <div className="inline-flex items-center gap-2 px-3 py-1 bg-amber-500/10 border border-amber-500/30 rounded-full mb-4">
-          <span
-            className="w-2 h-2 rounded-full bg-amber-400 animate-pulse"
-          />
+          <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
           <span className="font-mono text-[10px] font-black uppercase tracking-[0.15em] text-amber-400">
             Founding Member Launch Offer
           </span>
         </div>
         <h2 className="font-mono font-black text-2xl md:text-3xl text-gray-900 dark:text-white leading-tight mb-2">
-          Early Adopter Launch Discounts
+          Early Adopter Launch Prices
         </h2>
         <p className="text-[13px] text-gray-600 dark:text-gray-400 max-w-xl mx-auto leading-relaxed">
-          FoundersPrime is opening founding member launch discounts for early adopters — making this the strongest time for founders who want immediate savings <em>and</em> long-term access to verified startup offers.
+          Lock in the lowest price we'll ever offer — these rates disappear once we hit capacity.{' '}
+          <Link href="/pricing" className="text-amber-400 hover:underline font-semibold">
+            See full plan details →
+          </Link>
         </p>
       </div>
 
-      {/* 3 coupon cards */}
+      {/* 3 price cards */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-5">
         {DEALS.map((deal, i) => (
-          <CouponCard key={deal.code} deal={deal} index={i} />
+          <PriceCard key={deal.plan} deal={deal} index={i} />
         ))}
       </div>
 
       {/* Bottom note */}
-      <p className="text-center text-[11px] text-gray-600 mt-6 font-mono">
-        Apply promo codes at checkout on the{' '}
+      <p className="text-center text-[11px] text-gray-500 dark:text-gray-500 mt-6 font-mono">
+        All plans include full access to the deals library.{' '}
         <Link href="/pricing" className="text-amber-400 hover:underline">
-          Pricing page →
+          Compare plans on the Pricing page →
         </Link>
       </p>
 
