@@ -40,11 +40,11 @@ export default function AboutStory() {
             </div>
             
             <p className="font-sans text-lg text-gray-700 leading-relaxed mb-6">
-              What started as a simple spreadsheet shared with friends quickly grew into a comprehensive platform. By 2021, we had cataloged over 1,000 deals and were helping hundreds of founders save time and money. Today, FoundersPrime serves over 50,000 founders worldwide and has facilitated access to over $2.8 billion in deals and credits.
+              We&apos;re a team of ex-founders, operators, and startup enthusiasts who know how hard it is to build a company. We&apos;ve been in the trenches, we&apos;ve negotiated with vendors, and we&apos;ve felt the pain of burn rate. That&apos;s why we built FoundersPrime. time and money. Today, FoundersPrime serves over 50,000 founders worldwide and has facilitated access to over $2.8 billion in deals and credits.
             </p>
             
             <p className="font-sans text-lg text-gray-700 leading-relaxed">
-              We're not just building a database—we're creating the infrastructure that helps founders focus on what matters most: building great products and serving customers.
+             It shouldn&apos;t cost a fortune to build a startup. We&apos;re here to level the playing field.rastructure that helps founders focus on what matters most: building great products and serving customers.
             </p>
           </div>
         </div>

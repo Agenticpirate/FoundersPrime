@@ -398,7 +398,7 @@ export default function UniversalDealImporter({ onClose, onImport }: UniversalDe
             <div className="space-y-4">
               <div className="bg-yellow-50 border-2 border-yellow-400 p-4">
                 <h3 className="font-bold mb-2">💡 Smart Text Extraction</h3>
-                <p className="text-sm text-gray-700">Paste any text containing deal information. The system will automatically extract deal details. For best results, include labels like "Title:", "Company:", "Value:", "URL:"</p>
+                <p className="text-sm text-gray-700">Paste any text containing deal information. The system will automatically extract deal details. For best results, include labels like &quot;Title:&quot;, &quot;Company:&quot;, &quot;Value:&quot;, &quot;URL:&quot;</p>
               </div>
               <textarea
                 rows={12}

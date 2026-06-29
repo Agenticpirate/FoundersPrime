@@ -171,8 +171,7 @@ export default function AdminAuthGuard({ children, requiredPermission }: AdminAu
                 <strong>Need admin access?</strong>
               </p>
               <p className="text-sm text-gray-600">
-                Contact the site administrator at{' '}
-                <a href="mailto:support@foundersprime.com" className="text-[#13b6ec] hover:underline">
+                If you believe you should have access, please contact the system administrator or ensure you&apos;re logged into the correct account. Contact us at <a href="mailto:support@foundersprime.com" className="text-[#13b6ec] hover:underline">
                   support@foundersprime.com
                 </a>
               </p>

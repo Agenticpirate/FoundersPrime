@@ -57,7 +57,7 @@ export default function AboutTeam() {
           Meet Our Team
         </h2>
         <p className="font-sans text-lg text-gray-600 max-w-3xl mx-auto">
-          We're a team of experienced founders, operators, and builders who are passionate about helping other entrepreneurs succeed. We've been in your shoes and understand the challenges you face.
+          We&apos;re a team of experienced founders, operators, and builders who are passionate about helping other entrepreneurs succeed. We&apos;ve been in your shoes and understand the challenges you face.
         </p>
       </div>
       
@@ -104,7 +104,7 @@ export default function AboutTeam() {
           Join Our Team
         </h3>
         <p className="font-sans text-lg text-gray-700 mb-6 max-w-2xl mx-auto">
-          We're always looking for talented, passionate people to join our mission. If you're excited about helping founders succeed, we'd love to hear from you.
+          We&apos;re always looking for passionate people who understand the startup journey. If you&apos;re excited about helping founders build the next generation of great companies, we&apos;d love to hear from you.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <button className="px-6 py-3 bg-primary hover:bg-black hover:text-white border-2 border-black text-black font-mono font-bold rounded-sm transition-all">

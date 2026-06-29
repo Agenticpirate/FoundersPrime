@@ -31,7 +31,7 @@ export default function ContactHero() {
 
         {/* Heading */}
         <h1 className="font-heading text-4xl sm:text-5xl md:text-6xl font-black tracking-tight text-gray-900 dark:text-white mb-6 leading-none">
-          Let's build something <br />
+          Let&apos;s build something <br />
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-yellow-400 to-amber-500 animate-pulse-slow">
             extraordinary
           </span>{' '}

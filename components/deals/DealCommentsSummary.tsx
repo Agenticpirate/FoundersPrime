@@ -40,11 +40,11 @@ export default function DealCommentsSummary({
       <div className="space-y-2 mb-4">
         <div className="text-sm">
           <span className="font-bold text-black">Sarah Chen:</span>
-          <span className="text-gray-700 ml-1">"Just got approved for the full $100k! The key is to be very specific..."</span>
+          <span className="text-gray-700 ml-1">&quot;Just got approved for the full $100k! The key is to be very specific...&quot;</span>
         </div>
         <div className="text-sm">
           <span className="font-bold text-black">Mike Rodriguez:</span>
-          <span className="text-gray-700 ml-1">"Thanks for the tip! Did you apply through the Founders tier..."</span>
+          <span className="text-gray-700 ml-1">&quot;Thanks for the tip! Did you apply through the Founders tier...&quot;</span>
         </div>
       </div>
       

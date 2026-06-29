@@ -5,8 +5,8 @@ import Link from 'next/link'
 const PLANS = [
   {
     plan: "Next' Founder",
-    price: '$24',
-    originalPrice: '$120',
+    price: '$12',
+    originalPrice: '$59',
     discount: '80% OFF',
     period: '/ year',
     color: '#60a5fa',

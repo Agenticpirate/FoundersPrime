@@ -46,7 +46,7 @@ export default function AcceleratorsStrategy() {
                 <h2 className="font-mono text-[13px] md:text-[14px] font-black uppercase tracking-[0.06em] text-black leading-none">
                   State of Acceleration
                 </h2>
-                <p className="text-[11px] text-gray-500 mt-1">What's actually working in 2026 cohorts</p>
+                <p className="text-[11px] text-gray-500 mt-1">What&apos;s actually working in 2026 cohorts</p>
               </div>
             </div>
 
@@ -104,7 +104,7 @@ export default function AcceleratorsStrategy() {
               Standard Deal Terms
             </p>
             <h3 className="font-mono text-base font-black uppercase tracking-tight leading-tight mb-3">
-              Know what you're signing.
+              Know what you&apos;re signing.
             </h3>
             <div className="space-y-2 text-[11.5px]">
               {dealTerms.map((d) => (

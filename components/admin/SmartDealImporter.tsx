@@ -325,7 +325,7 @@ export default function SmartDealImporter({ onClose, onImport }: SmartDealImport
         <div className="bg-gradient-to-r from-cyan-500 to-purple-500 p-4 border-b-4 border-black flex justify-between items-center">
           <div>
             <h2 className="text-2xl font-black text-white">🚀 Smart Deal Importer</h2>
-            <p className="text-white/80 text-sm">Paste any format - we'll figure it out</p>
+            <p className="text-white/80 text-sm">Paste any format - we&apos;ll figure it out</p>
           </div>
           <button onClick={onClose} className="bg-white/20 hover:bg-white/30 text-white p-2 rounded">
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>

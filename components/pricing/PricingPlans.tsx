@@ -106,10 +106,10 @@ export default function PricingPlans({ currency }: PricingPlansProps) {
             {/* Price section */}
             <div className="my-5">
               <div className="flex items-baseline gap-1.5 flex-wrap">
-                <span className="font-mono text-[42px] font-black text-gray-900 dark:text-white leading-none">$24</span>
+                <span className="font-mono text-[42px] font-black text-gray-900 dark:text-white leading-none">$12</span>
                 <span className="font-mono text-base text-gray-400 dark:text-gray-500 line-through font-bold">$59</span>
                 <span className="font-mono text-[10.5px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">/YR</span>
-                <span className="ml-1 px-1.5 py-0.5 bg-emerald-500/10 border border-emerald-500/25 rounded-sm font-mono text-[9px] font-bold text-emerald-500 uppercase tracking-wide">60% OFF</span>
+                <span className="ml-1 px-1.5 py-0.5 bg-emerald-500/10 border border-emerald-500/25 rounded-sm font-mono text-[9px] font-bold text-emerald-500 uppercase tracking-wide">80% OFF</span>
               </div>
             </div>
 

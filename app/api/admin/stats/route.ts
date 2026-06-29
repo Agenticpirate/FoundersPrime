@@ -4,7 +4,7 @@ import { verifyAdminServer as verifyAdmin } from '@/lib/admin/verify-admin-serve
 
 // Plan pricing used to compute realized revenue (USD, excl. tax).
 const PLAN_PRICE: Record<string, number> = {
-  nextfounder: 59,
+  nextfounder: 12,
   founder: 149,
   legend: 299,
 }

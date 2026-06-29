@@ -188,7 +188,7 @@ export default function CookieSidebar() {
           <div className="mt-4 p-3 bg-yellow-50 border-3 border-yellow-500 shadow-[3px_3px_0px_0px_rgba(234,179,8,1)]">
             <p className="text-xs text-yellow-700">
               <span className="font-bold">Note:</span> Cookie management varies by browser. 
-              Check your browser's help section for specific instructions.
+              Check your browser&apos;s help section for specific instructions.
             </p>
           </div>
         </div>

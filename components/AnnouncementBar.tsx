@@ -6,7 +6,7 @@ const MESSAGES = [
   '47 new deals added this week',
   'Founder Yearly · $149/yr · unlimited deals',
   'Hundreds of credits, grants & accelerators',
-  "Next'Founder · $59/yr for students",
+  "Next'Founder · $12/yr for students",
 ]
 
 export default function AnnouncementBar() {

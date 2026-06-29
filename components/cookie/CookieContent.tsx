@@ -308,7 +308,7 @@ export default function CookieContent() {
 
         <div className="space-y-4">
           <p className="text-sm text-gray-800 leading-relaxed font-sans">
-            We use several third-party services that may set their own cookies. Here's what you need to know:
+            We use several third-party services that may set their own cookies. Here&apos;s what you need to know:
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -402,9 +402,9 @@ export default function CookieContent() {
               How We Handle Updates
             </h3>
             <ul className="space-y-1 text-xs text-gray-800 font-sans">
-              <li>• We'll notify you of significant changes via email or website banner</li>
-              <li>• Minor updates will be reflected in the "Last Updated" date</li>
-              <li>• You'll be asked to review and accept major changes</li>
+              <li>• We&apos;ll notify you of significant changes via email or website banner</li>
+              <li>• Minor updates will be reflected in the &quot;Last Updated&quot; date</li>
+              <li>• You&apos;ll be asked to review and accept major changes</li>
               <li>• Previous versions are archived for reference</li>
               <li>• Changes take effect 30 days after notification</li>
             </ul>

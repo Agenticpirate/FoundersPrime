@@ -68,7 +68,7 @@ export default function AboutValues() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="text-center">
             <div className="font-mono text-3xl font-bold text-primary mb-2">24h</div>
-            <p className="font-sans text-sm text-gray-700">Average response time to founder feedback</p>
+            <p className="font-sans text-gray-600">We don&apos;t just list discounts; we verify they&apos;re actually useful for early-stage companies.</p>
           </div>
           <div className="text-center">
             <div className="font-mono text-3xl font-bold text-primary mb-2">100%</div>

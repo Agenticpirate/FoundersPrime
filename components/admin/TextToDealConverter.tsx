@@ -118,7 +118,7 @@ export default function TextToDealConverter({ onConvert, onClose }: TextToDealCo
           <div className="flex justify-between items-center mb-6">
             <div>
               <h2 className="text-2xl font-bold">Convert Text to Deal</h2>
-              <p className="text-gray-600 mt-1">Paste deal information and we'll extract the key details</p>
+              <p className="text-gray-600 mt-1">Paste deal information and we&apos;ll extract the key details</p>
             </div>
             <button
               onClick={onClose}
@@ -220,7 +220,7 @@ https://stripe.com/atlas - Stripe Atlas helps you incorporate your startup for f
               ) : (
                 <div className="bg-gray-50 border-2 border-gray-300 p-8 text-center text-gray-500">
                   <span className="material-symbols-outlined text-4xl mb-2 block">smart_toy</span>
-                  <p>Paste your deal information and click "Extract" to see the magic!</p>
+                  <p>Paste your deal information and click &quot;Extract&quot; to see the magic!</p>
                 </div>
               )}
             </div>
