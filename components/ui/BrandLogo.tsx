@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Image from 'next/image'
 import { getBestLogoUrl } from '@/lib/logo-utils'
 
 interface BrandLogoProps {
@@ -48,11 +49,13 @@ export default function BrandLogo({ logo, name, domain, size = 'md', className =
   }
 
   return (
-    <img
+    <Image
       src={getCurrentSrc()}
       alt={`${name} logo`}
+      width={64}
+      height={64}
       className={`${sizeClasses[size]} object-contain ${className}`}
-      loading={eager ? 'eager' : 'lazy'}
+      priority={eager}
       onError={handleError}
     />
   )

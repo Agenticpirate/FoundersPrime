@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 
 const AVATARS = [
   'https://i.pravatar.cc/64?img=12',
@@ -92,14 +93,13 @@ export default function FlashPremiumCTA() {
               <div className="flex items-center gap-2.5">
                 <div className="flex -space-x-2">
                   {AVATARS.map((src, i) => (
-                    <img
+                    <Image
                       key={i}
                       src={src}
                       alt=""
                       aria-hidden="true"
                       width={26}
                       height={26}
-                      loading="lazy"
                       className="w-[26px] h-[26px] rounded-full object-cover ring-2 ring-[#0c0c0c]"
                     />
                   ))}

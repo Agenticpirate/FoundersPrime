@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import Image from 'next/image'
 import { StudentBenefit } from '@/data/student-benefits-2026'
 
 // Extract domain from URL
@@ -100,9 +101,11 @@ function BenefitLogo({ benefit }: { benefit: StudentBenefit }) {
     }
 
     return (
-        <img
+        <Image
             src={currentSrc}
             alt={benefit.company}
+            width={128}
+            height={128}
             className={`w-full h-full object-contain transition-opacity duration-200 ${loaded ? 'opacity-100' : 'opacity-0'}`}
             onLoad={() => setLoaded(true)}
             onError={handleError}

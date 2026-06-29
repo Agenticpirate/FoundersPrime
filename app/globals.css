@@ -116,8 +116,10 @@ img {
   left: -9999px !important;
 }
 
-/* Suppress the .skiptranslate wrapper Google injects at body top */
-body > .skiptranslate {
+/* Suppress the .skiptranslate wrapper and other spacers Google injects */
+body > .skiptranslate,
+.VIpgJd-ZVi9od-aZ2wEe-wOHMyf,
+body > div[style*="z-index: 10000;"] {
   display: none !important;
   height: 0 !important;
   overflow: hidden !important;

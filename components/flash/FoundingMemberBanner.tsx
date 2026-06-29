@@ -195,7 +195,7 @@ export default function FoundingMemberBanner() {
           Early Adopter Launch Prices
         </h2>
         <p className="text-[13px] text-gray-600 dark:text-gray-400 max-w-xl mx-auto leading-relaxed">
-          Lock in the lowest price we'll ever offer — these rates disappear once we hit capacity.{' '}
+          Lock in the lowest price we&apos;ll ever offer — these rates disappear once we hit capacity.{' '}
           <Link href="/pricing" className="text-amber-400 hover:underline font-semibold">
             See full plan details →
           </Link>

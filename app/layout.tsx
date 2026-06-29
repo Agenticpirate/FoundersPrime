@@ -171,9 +171,9 @@ export default function RootLayout({
                       if (document.body.style.position && document.body.style.position !== 'static') {
                         document.body.style.setProperty('position', 'static', 'important');
                       }
-                      // Hide the .skiptranslate div Google injects at body top
-                      var skip = document.querySelector('body > .skiptranslate');
-                      if (skip) { skip.style.setProperty('display', 'none', 'important'); skip.style.setProperty('height', '0', 'important'); }
+                      // Hide the .skiptranslate div and other spacers Google injects
+                      var skip = document.querySelectorAll('body > .skiptranslate, .VIpgJd-ZVi9od-aZ2wEe-wOHMyf');
+                      skip.forEach(function(el) { el.style.setProperty('display', 'none', 'important'); el.style.setProperty('height', '0', 'important'); });
                     }
                   };
                   resetOffsets();

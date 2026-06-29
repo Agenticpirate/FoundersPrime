@@ -133,7 +133,7 @@ export default function SearchSidebar() {
             <span className="material-symbols-outlined text-primary text-sm mt-0.5">tips_and_updates</span>
             <div>
               <p className="font-mono font-bold text-black mb-1">Use quotes for exact phrases</p>
-              <p className="font-sans text-gray-700">"AWS credits" finds exact matches</p>
+              <p className="font-sans text-gray-700">&quot;AWS credits&quot; finds exact matches</p>
             </div>
           </div>
           <div className="flex items-start gap-2">

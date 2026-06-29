@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Image from "next/image";
 import { YCCompany } from "@/types/startup";
 import { Globe, Linkedin, Twitter, ArrowLeft, MapPin, Users, Calendar, ExternalLink } from "lucide-react";
 import Link from "next/link";
@@ -43,7 +44,7 @@ const FounderAvatar = ({ founder }: { founder: { name: string; avatar?: string }
   return (
     <div className="w-12 h-12 rounded-full border border-white/20 overflow-hidden flex-shrink-0 bg-white/10 flex items-center justify-center relative">
       {src ? (
-        <img src={src} alt={founder.name} loading="lazy" className="w-full h-full object-cover" onError={onError} />
+        <Image src={src} alt={founder.name} width={48} height={48} className="w-full h-full object-cover" onError={onError} />
       ) : (
         <span className="text-lg font-bold text-white/60 capitalize">{founder.name.charAt(0)}</span>
       )}
@@ -141,7 +142,7 @@ export default function StartupDetails({ company }: StartupDetailsProps) {
                 {/* Logo */}
                 <div className="w-16 h-16 md:w-20 md:h-20 bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-xl flex items-center justify-center p-2 flex-shrink-0 overflow-hidden shadow-sm">
                   {logo.src ? (
-                    <img src={logo.src} alt={company.name} className="w-full h-full object-contain" onError={logo.onError} />
+                    <Image src={logo.src} alt={company.name} width={80} height={80} className="w-full h-full object-contain" onError={logo.onError} />
                   ) : (
                     <span className="text-2xl md:text-3xl font-black text-gray-300 dark:text-white/20">{company.name.charAt(0)}</span>
                   )}
@@ -425,7 +426,7 @@ export default function StartupDetails({ company }: StartupDetailsProps) {
                   </h4>
                 </div>
                 <p className="font-sans text-[11px] text-gray-400 leading-relaxed mb-3">
-                  Sourced directly from Y Combinator's public company database. Real metrics, vetted founders.
+                  Sourced directly from Y Combinator&apos;s public company database. Real metrics, vetted founders.
                 </p>
                 <div className="bg-white/5 border border-white/10 rounded-lg p-2.5">
                   <p className="font-mono text-[9px] font-bold uppercase tracking-wide text-accent-yellow mb-1 flex items-center gap-1">

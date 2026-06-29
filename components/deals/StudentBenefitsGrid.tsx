@@ -119,7 +119,7 @@ export default function StudentBenefitsGrid({ activeType, filters }: StudentBene
   const itemsPerPage = getPageSize(currentPage)
 
   // ── Filter and sort benefits ─────────────────────────────
-  const filterAndSort = (appCategory: string | null) => {
+  const filterAndSort = React.useCallback((appCategory: string | null) => {
     let list = studentBenefits2026
  
     if (appCategory) {
@@ -174,12 +174,12 @@ export default function StudentBenefitsGrid({ activeType, filters }: StudentBene
         return valB - valA
       }
     })
-  }
+  }, [filters])
 
-  const freeAccessList = useMemo(() => filterAndSort('Software & Tools'), [filters, activeType])
-  const creditsSavingsList = useMemo(() => filterAndSort('Credits & Savings'), [filters, activeType])
-  const fundingList = useMemo(() => filterAndSort('Funding & Opportunities'), [filters, activeType])
-  const programsList = useMemo(() => filterAndSort('Programs'), [filters, activeType])
+  const freeAccessList = useMemo(() => filterAndSort('Software & Tools'), [filterAndSort])
+  const creditsSavingsList = useMemo(() => filterAndSort('Credits & Savings'), [filterAndSort])
+  const fundingList = useMemo(() => filterAndSort('Funding & Opportunities'), [filterAndSort])
+  const programsList = useMemo(() => filterAndSort('Programs'), [filterAndSort])
 
   const totalFilteredCount =
     (activeType === 'all' || activeType === 'free-access' ? freeAccessList.length : 0) +
@@ -209,6 +209,19 @@ export default function StudentBenefitsGrid({ activeType, filters }: StudentBene
       window.scrollTo({ top: 300, behavior: 'smooth' })
     }
   }
+
+  // ── "All Benefits" View — flat merged list with pagination (same as All Deals) ──
+  const allBenefitsMerged = useMemo(() => {
+    const lists = [freeAccessList, creditsSavingsList, fundingList, programsList]
+    const merged: typeof freeAccessList = []
+    const maxLen = Math.max(...lists.map(l => l.length))
+    for (let i = 0; i < maxLen; i++) {
+      for (const list of lists) {
+        if (i < list.length) merged.push(list[i])
+      }
+    }
+    return merged
+  }, [freeAccessList, creditsSavingsList, fundingList, programsList])
 
   if (totalFilteredCount === 0) {
     return (
@@ -343,18 +356,7 @@ export default function StudentBenefitsGrid({ activeType, filters }: StudentBene
     )
   }
 
-  // ── "All Benefits" View — flat merged list with pagination (same as All Deals) ──
-  const allBenefitsMerged = useMemo(() => {
-    const lists = [freeAccessList, creditsSavingsList, fundingList, programsList]
-    const merged: typeof freeAccessList = []
-    const maxLen = Math.max(...lists.map(l => l.length))
-    for (let i = 0; i < maxLen; i++) {
-      for (const list of lists) {
-        if (i < list.length) merged.push(list[i])
-      }
-    }
-    return merged
-  }, [freeAccessList, creditsSavingsList, fundingList, programsList])
+  // "All Benefits" view list has been calculated above early returns.
 
   // Adaptive page sizes: page 1 = 10 items + 2 ads = 12 cells; pages 2+ = 12 items + 0 ads = 12 cells
   const allFirstPageSize = 10

@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-
+import Image from 'next/image';
 
 type Testimonial = {
     quote: string;
@@ -162,13 +162,11 @@ function AvatarImage({ src, name }: { src: string; name: string }) {
     }
 
     return (
-        <img
+        <Image
             src={src}
             alt={name}
             width={40}
             height={40}
-            loading="lazy"
-            decoding="async"
             className="object-cover w-full h-full"
             onError={() => setImgError(true)}
         />

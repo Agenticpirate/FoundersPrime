@@ -55,6 +55,7 @@ export default function StudentBenefitsFilterBar({ activeType, onFilterChange, c
     if (currentFilters && !isInitialMount.current) setFilters(currentFilters)
   }, [currentFilters])
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (isInitialMount.current) { isInitialMount.current = false; return }
     const t = setTimeout(() => onFilterChange?.(filters), 100)

@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 
 export default function SaasDiscountsGrid() {
   const saasDeals = [
@@ -29,9 +30,11 @@ export default function SaasDiscountsGrid() {
           <div key={index} className="bg-white border-2 border-black p-2.5 md:p-3 hover:shadow-[2px_2px_0px_#111] cursor-pointer transition-all group rounded-sm">
             <div className="flex items-center gap-2 mb-1.5">
               <div className="w-8 h-8 bg-gray-100 border border-gray-200 rounded-sm flex items-center justify-center flex-shrink-0">
-                <img
+                <Image
                   src={`https://www.google.com/s2/favicons?domain=${deal.name.toLowerCase().replace(/\s+/g, '')}.com&sz=64`}
                   alt=""
+                  width={20}
+                  height={20}
                   className="w-5 h-5 object-contain"
                   onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
                 />

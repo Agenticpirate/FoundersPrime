@@ -60,7 +60,7 @@ export default function PrivacyHeader() {
           <div className="flex items-start gap-3">
             <span className="material-symbols-outlined text-green-500 mt-0.5 md:mt-1">check_circle</span>
             <div>
-              <h3 className="font-mono text-sm font-bold text-gray-900 dark:text-white mb-1">We Don't Sell Your Data</h3>
+              <h3 className="font-mono text-sm font-bold text-gray-900 dark:text-white mb-1">We Don&apos;t Sell Your Data</h3>
               <p className="font-sans text-sm text-gray-700 dark:text-gray-400">Your personal information is never sold to third parties.</p>
             </div>
           </div>
@@ -74,7 +74,7 @@ export default function PrivacyHeader() {
           <div className="flex items-start gap-3">
             <span className="material-symbols-outlined text-green-500 mt-0.5 md:mt-1">person</span>
             <div>
-              <h3 className="font-mono text-sm font-bold text-gray-900 dark:text-white mb-1">You're in Control</h3>
+              <h3 className="font-mono text-sm font-bold text-gray-900 dark:text-white mb-1">You&apos;re in Control</h3>
               <p className="font-sans text-sm text-gray-700 dark:text-gray-400">Access, modify, or delete your data anytime.</p>
             </div>
           </div>

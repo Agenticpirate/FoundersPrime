@@ -24,7 +24,7 @@ export default function RefundContent() {
                   FoundersPrime maintains a <strong>Strict No-Refund Policy</strong>. We do not offer refunds, returns, or exchanges for any subscription plans, credits, or digital products once purchased.
                 </p>
                 <div className="bg-accent-yellow/10 border border-accent-yellow/30 p-3 text-xs font-mono rounded-lg text-gray-900 dark:text-white">
-                  "Refunds are ONLY granted if FoundersPrime terminates the service entirely or if all deals are permanently removed from the platform."
+                  &quot;Refunds are ONLY granted if FoundersPrime terminates the service entirely or if all deals are permanently removed from the platform.&quot;
                 </div>
               </div>
             </div>
@@ -100,7 +100,7 @@ export default function RefundContent() {
               <ol className="list-decimal list-inside space-y-1 text-xs text-gray-800 dark:text-gray-300 font-sans">
                 <li>Log in to your FoundersPrime account</li>
                 <li>Go to <strong>Settings</strong> &gt; <strong>Billing</strong></li>
-                <li>Click <strong>"Cancel Subscription"</strong></li>
+                <li>Click <strong>&quot;Cancel Subscription&quot;</strong></li>
                 <li>Confirm your choice</li>
               </ol>
             </div>
@@ -111,7 +111,7 @@ export default function RefundContent() {
                 <li>• You retain access until the end of the current period</li>
                 <li>• No further charges will be applied</li>
                 <li>• No pro-rated refunds for remaining days</li>
-                <li>• Account reverts to "Free" status after period ends</li>
+                <li>• Account reverts to &quot;Free&quot; status after period ends</li>
               </ul>
             </div>
           </div>

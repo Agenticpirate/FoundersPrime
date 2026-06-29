@@ -52,7 +52,7 @@ export default function SingleStartupContent({ startup }: SingleStartupContentPr
           <div>
             <h3 className="font-mono text-lg font-bold text-blue-900 mb-2">Privacy & Security Notice</h3>
             <p className="font-sans text-sm text-blue-800 leading-relaxed">
-              For privacy and security reasons, sensitive information such as the <strong>actual website URL</strong>, <strong>founder/owner details</strong>, and <strong>contact information</strong> are only shared with verified buyers on {startup.source}. Click "View Full Listing" below to access complete details and connect with the seller.
+              For privacy and security reasons, sensitive information such as the <strong>actual website URL</strong>, <strong>founder/owner details</strong>, and <strong>contact information</strong> are only shared with verified buyers on {startup.source}. Click &quot;View Full Listing&quot; below to access complete details and connect with the seller.
             </p>
           </div>
         </div>

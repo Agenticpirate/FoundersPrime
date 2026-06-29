@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState } from 'react'
+import Image from 'next/image'
 
 function PartnerLogo({ partner }: { partner: { name: string; domain: string } }) {
     const [fallbackIndex, setFallbackIndex] = useState(0)
@@ -14,11 +15,13 @@ function PartnerLogo({ partner }: { partner: { name: string; domain: string } })
     if (failed) return null
 
     return (
-        <img
+        <Image
             src={fallbackChain[fallbackIndex]}
             alt={`${partner.name}`}
+            width={32}
+            height={32}
             className="w-6 h-6 md:w-8 md:h-8 object-contain"
-            loading="eager"
+            priority
             onError={() => {
                 const next = fallbackIndex + 1
                 if (next < fallbackChain.length) setFallbackIndex(next)

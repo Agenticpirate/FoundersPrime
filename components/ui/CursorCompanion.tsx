@@ -133,6 +133,7 @@ export default function CursorCompanion() {
   }, []) // ← CRITICAL: empty deps — runs exactly once on mount
 
   // ── hover bubble — only depends on isHovered, not bubbleState ──────────────
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (isRollingRef.current) return
     if (bubbleState === 'rolling' || bubbleState === 'quote') return

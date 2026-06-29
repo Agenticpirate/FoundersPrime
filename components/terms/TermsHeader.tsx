@@ -74,7 +74,7 @@ export default function TermsHeader() {
             <span className="material-symbols-outlined text-blue-500 mt-0.5 md:mt-1">verified</span>
             <div>
               <h3 className="font-mono text-sm font-bold text-gray-900 dark:text-white mb-1">Deals & Eligibility</h3>
-              <p className="font-sans text-sm text-gray-700 dark:text-gray-400">We curate and list third-party deals. We don't guarantee their availability, eligibility, or terms.</p>
+              <p className="font-sans text-sm text-gray-700 dark:text-gray-400">We curate and list third-party deals. We don&apos;t guarantee their availability, eligibility, or terms.</p>
             </div>
           </div>
         </div>

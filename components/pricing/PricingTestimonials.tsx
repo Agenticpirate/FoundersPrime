@@ -45,7 +45,7 @@ export default function PricingTestimonials() {
             <div className="max-w-4xl mx-auto text-center">
                 <div className="mb-6 md:mb-4 md:mb-6">
                     <h2 className="font-mono text-3xl font-black uppercase mb-4 text-[#111111] tracking-tight">
-                        Don't Take Our Word For It
+                        Don&apos;t Take Our Word For It
                     </h2>
                     <p className="text-sm font-bold uppercase tracking-widest text-gray-500">
                         Join thousands of founders who are building smarter, faster, and cheaper.
@@ -60,7 +60,7 @@ export default function PricingTestimonials() {
                     </div>
 
                     <h3 className="font-mono text-2xl md:text-3xl font-bold leading-relaxed mb-4 md:mb-6 text-[#111111]">
-                        "{activeTestimonial.quote}"
+                        &quot;{activeTestimonial.quote}&quot;
                     </h3>
 
                     <div className="flex items-center justify-center gap-4 mb-4 md:mb-6">

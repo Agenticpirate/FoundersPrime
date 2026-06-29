@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { StartupCardData } from "@/lib/startups-data";
 import { MapPin, ArrowRight, Bookmark } from "lucide-react";
@@ -19,9 +20,11 @@ const FounderAvatar = ({ founder }: { founder: { name: string; avatar?: string }
       title={founder.name}
     >
       {founder.avatar && !error ? (
-        <img
+        <Image
           src={founder.avatar}
           alt={founder.name}
+          width={24}
+          height={24}
           className="w-full h-full object-cover"
           onError={() => setError(true)}
         />
@@ -86,12 +89,11 @@ export default function StartupCard({ company }: StartupCardProps) {
           {/* Logo */}
           <div className="w-11 h-11 flex-shrink-0 bg-white/5 border border-white/10 rounded-lg flex items-center justify-center overflow-hidden group-hover:border-accent-yellow/20 transition-colors">
             {imgSrc ? (
-              <img
+              <Image
                 src={imgSrc}
                 alt={`${company.name} logo`}
                 width={44}
                 height={44}
-                loading="lazy"
                 className="w-full h-full object-contain"
                 onError={handleImageError}
               />

@@ -333,7 +333,7 @@ export default function PrivacyContent() {
             <h3 className="font-mono text-base font-bold text-gray-900 dark:text-white mb-2">Data Requests</h3>
             <div className="space-y-1">
               <p className="font-sans text-sm text-gray-800 dark:text-gray-300">
-                To request access, correction, or deletion of your personal data, email us with the subject line <strong>"Privacy Request"</strong>.
+                To request access, correction, or deletion of your personal data, email us with the subject line <strong>&quot;Privacy Request&quot;</strong>.
               </p>
             </div>
           </div>

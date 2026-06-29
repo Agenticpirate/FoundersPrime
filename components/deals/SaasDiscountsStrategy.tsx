@@ -62,7 +62,7 @@ export default function SaasDiscountsStrategy() {
           </div>
           <h3 className="font-mono text-base font-bold mb-2 uppercase">Pro Tip</h3>
           <p className="font-mono text-xs leading-relaxed font-medium">
-            Many SaaS companies offer startup programs that aren't publicly advertised. Reach out to their sales team mentioning you're early-stage.
+            Many SaaS companies offer startup programs that aren&apos;t publicly advertised. Reach out to their sales team mentioning you&apos;re early-stage.
           </p>
         </div>
 

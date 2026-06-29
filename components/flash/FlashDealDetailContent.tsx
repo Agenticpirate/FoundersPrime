@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Image from 'next/image'
 import Link from 'next/link'
 import type { FlashDeal } from '@/data/flash-deals'
 import FlashCountdown from './FlashCountdown'
@@ -120,9 +121,11 @@ export default function FlashDealDetailContent({ deal }: { deal: FlashDeal }) {
                   { logo: 'https://logo.clearbit.com/nordvpn.com', name: 'NordVPN Basic', perk: '3 Months Free', desc: 'Fast, secure, and private internet browse access.' },
                 ].map((item) => (
                   <div key={item.name} className="flex items-start gap-3.5 p-3.5 bg-gray-50 dark:bg-white/[0.02] border border-gray-200 dark:border-white/5 rounded-xl hover:border-gray-300 dark:hover:border-white/10 transition-colors">
-                    <img 
+                    <Image 
                       src={item.logo} 
-                      alt={item.name} 
+                      alt={item.name}
+                      width={40}
+                      height={40} 
                       className="w-10 h-10 rounded-lg object-contain bg-white p-1.5 border border-gray-200 dark:border-white/10 flex-shrink-0"
                       onError={(e) => {
                         // Fallback icon if logo fails to load
