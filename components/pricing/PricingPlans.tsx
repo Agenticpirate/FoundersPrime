@@ -118,11 +118,11 @@ export default function PricingPlans({ currency }: PricingPlansProps) {
             {/* Features list */}
             <ul className="space-y-3 my-5 overflow-visible pl-0.5">
               {[
-                'Premium AI & SaaS credits curated for student builders',
-                'Student-exclusive hackathons, fellowships & campus programs',
-                'Early-stage grants & non-dilutive funding for student founders',
-                'Dev tools, discounts & credits matched to pre-revenue projects',
-                'Opportunity Hub: internships, co-founders, and student networks',
+                "The world's largest student deals dashboard: 900+ verified discounts in one place",
+                'Premium AI, cloud & SaaS credits curated specifically for student builders',
+                'Student-exclusive hackathons, fellowships & early-stage grants',
+                'Dev tools & free tiers matched perfectly to pre-revenue projects',
+                'Opportunity Hub: Internships, co-founder matching, and student networks',
               ].map((feat) => (
                 <li key={feat} className="flex items-start gap-2.5 text-[13px] text-gray-700 dark:text-gray-300">
                   <span className="material-symbols-outlined !text-[16px] flex-shrink-0 text-gray-500 dark:text-gray-400 mt-0.5" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
@@ -285,9 +285,8 @@ export default function PricingPlans({ currency }: PricingPlansProps) {
               {[
                 'Everything in Founder — locked in for life, no renewals ever',
                 'Every future deal, credit, and catalog update included',
-                'Founding member perks and priority partner access',
+                'Lifetime access to Founders Resources, Accelerators, Grants, and Programs',
                 'Launch-locked pricing: rate increases or closes later',
-                'Just 2 years of Founder already costs more — after that is pure upside',
               ].map((feat) => (
                 <li key={feat} className="flex items-start gap-2.5 text-[13px] text-gray-700 dark:text-gray-300">
                   <span className="material-symbols-outlined !text-[16px] flex-shrink-0 text-amber-500 mt-0.5" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>

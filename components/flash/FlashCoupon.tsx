@@ -17,8 +17,8 @@ const PLANS = [
   {
     plan: 'Founder',
     price: '$75',
-    originalPrice: '$120',
-    discount: '38% OFF',
+    originalPrice: '$149',
+    discount: '50% OFF',
     period: '/ year',
     color: '#FFD700',
     glow: 'rgba(255,215,0,0.5)',
@@ -28,8 +28,8 @@ const PLANS = [
   {
     plan: 'Legend',
     price: '$120',
-    originalPrice: '$180',
-    discount: '33% OFF',
+    originalPrice: '$299',
+    discount: '60% OFF',
     period: 'lifetime',
     color: '#a78bfa',
     glow: 'rgba(167,139,250,0.5)',
@@ -46,7 +46,7 @@ export default function FlashCoupon() {
         <span className="material-symbols-outlined text-[12px] text-accent-yellow" style={{ fontVariationSettings: "'FILL' 1" }}>
           local_offer
         </span>
-        Founding Member Prices — Limited Time
+        Membership Prices — Limited Time
       </p>
 
       {/* Price pills */}

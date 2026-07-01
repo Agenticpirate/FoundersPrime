@@ -241,10 +241,10 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="https://logo.clearbit.com" />
         <link rel="dns-prefetch" href="https://images.unsplash.com" />
         <link rel="dns-prefetch" href="https://lh3.googleusercontent.com" />
-        {/* Material Symbols — display=swap so icons don't block render */}
+        {/* Material Symbols — display=block so icons don't block render with raw text */}
         <link
           rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0..1,0&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0..1,0&display=block"
         />
       </head>
       <body className="bg-[#000000] text-white dark:bg-[#000000] dark:text-white transition-colors duration-300 flex flex-col min-h-screen overflow-x-hidden w-full relative">
