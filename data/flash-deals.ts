@@ -145,7 +145,7 @@ export const flashDeals: FlashDeal[] = [
     longDescription: 'Lovable is offering 1 full year of their Premium plan completely free to LinkedIn Premium subscribers. If you have or are eligible for LinkedIn Premium (especially through Airtel Thanks), you can stack this offer on top to get the AI-powered app builder at zero cost.',
     badge: 'hot',
     category: 'ai-credits',
-    logo: 'https://img.logo.dev/lovable.dev?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg',
+    logo: '/logos/lovable.png',
     domain: 'lovable.dev',
     price: '1 Year',
     priceUnit: 'Free',
@@ -299,6 +299,108 @@ export const flashDeals: FlashDeal[] = [
       'Use your .edu university email for the fastest verification',
       'Credits can be used with the OpenAI API for any Codex-powered project',
       'US and Canada only — check the offer page for the latest eligibility details',
+    ],
+  },
+  {
+    id: 'lovable-pro-1month-free',
+    name: 'Lovable Pro',
+    description: 'Get 1 Month of Lovable Pro FREE! (New Account)',
+    longDescription: 'Enjoy 1 month of Lovable Pro completely for free when you sign up for a new account. Use the promo code SIMONPRO26 during checkout on the Pro Plan ($25).',
+    badge: 'new',
+    category: 'productivity',
+    logo: '/logos/lovable.png',
+    domain: 'lovable.dev',
+    price: '1 Month',
+    priceUnit: 'Free',
+    originalPrice: '$25',
+    discount: '100% FREE',
+    discountColor: 'violet',
+    durationHours: 72,
+    dealUrl: 'https://lovable.dev',
+    eligibility: [
+      'Must be a new account',
+      'Valid for the Lovable Pro Plan'
+    ],
+    highlights: [
+      '1 Month of Lovable Pro completely free',
+      'Save $25 on your first month'
+    ],
+    steps: [
+      { step: 1, title: 'Open Lovable', description: 'Go to Lovable.dev and create a new account.', icon: 'open_in_new' },
+      { step: 2, title: 'Select Pro Plan', description: 'Choose the Pro Plan ($25) and proceed to checkout.', icon: 'shopping_cart' },
+      { step: 3, title: 'Apply Promo Code', description: 'Apply the promo code SIMONPRO26 during checkout to get your first month free.', icon: 'local_offer' },
+    ],
+    tips: [
+      'Promo code: SIMONPRO26'
+    ],
+  },
+  {
+    id: 'deepgram-200-credits',
+    name: 'Deepgram',
+    description: 'Transform your products with cutting edge voice AI. Get $200 in credit absolutely free.',
+    longDescription: 'Transform your products with cutting edge voice AI. Get $200 in credit absolutely free. That can fuel a voice agent for at least 50 hours. No credit card needed.',
+    badge: 'hot',
+    category: 'ai-credits',
+    logo: '/logos/deepgram.png',
+    domain: 'deepgram.com',
+    price: '$200',
+    priceUnit: 'Credits',
+    originalPrice: '$200',
+    discount: '100% FREE',
+    discountColor: 'emerald',
+    durationHours: 72,
+    dealUrl: 'https://console.deepgram.com/signup',
+    eligibility: [
+      'New account signup required',
+      'No credit card needed'
+    ],
+    highlights: [
+      '$200 in free API credits',
+      'Fuel a voice agent for at least 50 hours',
+      'Cutting edge voice AI'
+    ],
+    steps: [
+      { step: 1, title: 'Visit Deepgram', description: 'Go to the Deepgram signup console.', icon: 'open_in_new' },
+      { step: 2, title: 'Create Account', description: 'Sign up for a new account (no credit card required).', icon: 'account_circle' },
+      { step: 3, title: 'Get Credits', description: 'Enjoy your $200 in free voice AI credits automatically.', icon: 'check_circle' },
+    ],
+    tips: [
+      'No credit card is required to claim your free credits.'
+    ],
+  },
+  {
+    id: 'freebuff-web',
+    name: 'Freebuff',
+    description: 'The 100% free AI app builder. Build, preview, and deploy full-stack apps.',
+    longDescription: 'Describe your idea and Freebuff builds, previews, and deploys a full-stack app. No subscription, no API keys. Freebuff is supported by unobtrusive text ads. There are no subscriptions, credit cards, or usage paywalls to build and ship your app. Includes a live preview URL and one-click deploy at no cost.',
+    badge: 'hot',
+    category: 'productivity',
+    logo: '/logos/freebuff.png',
+    domain: 'freebuff.com',
+    price: '$0',
+    priceUnit: 'Forever',
+    originalPrice: '$600/yr',
+    discount: '100% FREE',
+    discountColor: 'violet',
+    durationHours: 72,
+    dealUrl: 'https://freebuff.com/web',
+    eligibility: [
+      'Available to everyone',
+      'No credit card or API keys required'
+    ],
+    highlights: [
+      '100% free AI app builder',
+      'No subscription or usage paywalls',
+      'Live preview URL and one-click deploy at no cost',
+      'Supported by unobtrusive text ads'
+    ],
+    steps: [
+      { step: 1, title: 'Visit Freebuff Web', description: 'Go to freebuff.com/web.', icon: 'open_in_new' },
+      { step: 2, title: 'Describe Your App Idea', description: 'Type in your prompt and let the AI generate your app.', icon: 'edit_note' },
+      { step: 3, title: 'Deploy for Free', description: 'Get a live preview URL and deploy with one click.', icon: 'rocket_launch' },
+    ],
+    tips: [
+      'Save $600+/yr compared to other AI app builders'
     ],
   },
 ]
