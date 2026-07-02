@@ -6,9 +6,10 @@ import Link from 'next/link'
 interface ProUpgradeModalProps {
     isOpen: boolean
     onClose: () => void
+    isStudentBenefit?: boolean
 }
 
-export default function ProUpgradeModal({ isOpen, onClose }: ProUpgradeModalProps) {
+export default function ProUpgradeModal({ isOpen, onClose, isStudentBenefit = false }: ProUpgradeModalProps) {
     if (!isOpen) return null
 
     return (
@@ -64,8 +65,10 @@ export default function ProUpgradeModal({ isOpen, onClose }: ProUpgradeModalProp
                         id="upgrade-modal-title"
                         className="font-mono text-[13px] md:text-[15px] font-black uppercase tracking-[0.1em] leading-tight flex items-center gap-2 text-black"
                     >
-                        <span className="material-symbols-outlined !text-[16px] md:!text-[18px]">workspace_premium</span>
-                        Founder Members Only
+                        <span className="material-symbols-outlined !text-[16px] md:!text-[18px]">
+                            {isStudentBenefit ? 'school' : 'workspace_premium'}
+                        </span>
+                        {isStudentBenefit ? 'Membership Required' : 'Founder Members Only'}
                     </h2>
                     <button
                         onClick={onClose}
@@ -96,15 +99,19 @@ export default function ProUpgradeModal({ isOpen, onClose }: ProUpgradeModalProp
                                 ))}
                             </svg>
                             <div className="absolute inset-2.5 bg-accent-yellow border-2 border-black dark:border-white/10 flex items-center justify-center shadow-[2px_2px_0px_#111] dark:shadow-[2px_2px_0px_rgba(255,255,255,0.05)] rounded-sm upgrade-icon-pulse">
-                                <span className="material-symbols-outlined text-2xl md:text-3xl text-black">rocket_launch</span>
+                                <span className="material-symbols-outlined text-2xl md:text-3xl text-black">
+                                    {isStudentBenefit ? 'local_library' : 'rocket_launch'}
+                                </span>
                             </div>
                         </div>
 
                         <h3 className="font-mono text-base md:text-lg font-black uppercase text-center mb-1.5 leading-tight tracking-tight text-black dark:text-white">
-                            Unlock the entire founder catalog.
+                            {isStudentBenefit ? 'Unlock student & founder benefits.' : 'Unlock the entire founder catalog.'}
                         </h3>
                         <p className="text-center text-gray-600 dark:text-gray-400 leading-relaxed text-[12.5px] md:text-[13px] max-w-sm">
-                            This deal is reserved for Founder members. Upgrade now to claim it instantly — plus every credit, grant, and program in the dashboard.
+                            {isStudentBenefit
+                                ? "This benefit is available to Next' Founder (Students), Founder, and Legend members. Upgrade your account to claim it instantly."
+                                : "This deal is reserved for Founder members. Upgrade now to claim it instantly — plus every credit, grant, and program in the dashboard."}
                         </p>
                     </div>
 
@@ -115,11 +122,19 @@ export default function ProUpgradeModal({ isOpen, onClose }: ProUpgradeModalProp
                             What you unlock
                         </p>
                         <ul className="space-y-2">
-                            {[
-                                'Unlimited deal claims across every category',
-                                'Grants, accelerators, and incubator programs',
-                                'Verified Startups + Startup Ideas database',
-                            ].map((item) => (
+                            {(isStudentBenefit
+                                ? [
+                                    '900+ student benefits and verified discounts',
+                                    'Premium AI, cloud & developer credits',
+                                    'Grants, hackathons, and early-stage fellowships',
+                                    'Also included in Founder & Legend plans',
+                                  ]
+                                : [
+                                    'Unlimited deal claims across every category',
+                                    'Grants, accelerators, and incubator programs',
+                                    'Verified Startups + Startup Ideas database',
+                                  ]
+                            ).map((item) => (
                                 <li key={item} className="flex items-start gap-2.5">
                                     <span
                                         className="material-symbols-outlined !text-[16px] text-emerald-600 dark:text-emerald-400 flex-shrink-0 mt-0.5"

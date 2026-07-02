@@ -77,7 +77,8 @@ async function getFeaturedDealsServer(): Promise<Deal[]> {
 }
 
 export default async function StudentBenefitsPage({ searchParams }: { searchParams: { [key: string]: string | string[] | undefined } }) {
-  const { isPro } = await checkProStatusServer()
+  const { isPro, user } = await checkProStatusServer()
+  const isNextFounder = !!user?.isNextFounder
   const featuredDeals = await getFeaturedDealsServer()
 
   const typeParam = typeof searchParams.type === 'string' ? searchParams.type : 'all'
@@ -90,7 +91,7 @@ export default async function StudentBenefitsPage({ searchParams }: { searchPara
   }
 
   return (
-    <FeaturedDealsProvider initialFeaturedDeals={featuredDeals} initialIsPro={isPro}>
+    <FeaturedDealsProvider initialFeaturedDeals={featuredDeals} initialIsPro={isPro} initialIsNextFounder={isNextFounder}>
       <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden bg-gray-50 dark:bg-[#000000] text-[#1a1a1a] dark:text-white transition-colors duration-300">
         <Header />
         <main className="flex-1">

@@ -768,6 +768,7 @@ export default function SingleDealContent({
       <ProUpgradeModal
         isOpen={showUpgradeModal}
         onClose={() => setShowUpgradeModal(false)}
+        isStudentBenefit={basePath === '/student-benefits'}
       />
     </div>
   )

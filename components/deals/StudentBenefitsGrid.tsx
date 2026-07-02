@@ -111,7 +111,8 @@ interface StudentBenefitsGridProps {
 
 export default function StudentBenefitsGrid({ activeType, filters }: StudentBenefitsGridProps) {
   const [currentPage, setCurrentPage] = useState(1)
-  const { isPro } = useHydratedDeals()
+  const { isPro, isNextFounder } = useHydratedDeals()
+  const hasAccess = isPro || isNextFounder
 
   // Page 1 uses 10 items so that 10 items + 2 ads = 12 cells (divisible by 3 → no empty grid slots).
   // All subsequent pages use 12 items (no ads) = 12 cells, also complete.
@@ -281,7 +282,7 @@ export default function StudentBenefitsGrid({ activeType, filters }: StudentBene
       </div>
     )
 
-    if (!isPro && currentPage > 1) {
+    if (!hasAccess && currentPage > 1) {
       return (
         <div>
           <ProGateOverlay
@@ -408,7 +409,7 @@ export default function StudentBenefitsGrid({ activeType, filters }: StudentBene
     </div>
   )
 
-  if (!isPro && currentPage > 1) {
+  if (!hasAccess && currentPage > 1) {
     return (
       <div>
         <p className="text-xs md:text-[13px] text-gray-600 dark:text-gray-400 px-1 mb-4">
