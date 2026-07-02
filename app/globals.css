@@ -147,10 +147,6 @@ body {
 }
 
 :root {
-  --font-sans: 'IBM Plex Sans', sans-serif;
-  --font-mono: 'IBM Plex Mono', monospace;
-  --font-display: 'Space Grotesk', sans-serif;
-  --font-heading: 'Archivo', sans-serif;
   --ruler-color: rgba(0, 0, 0, 0.2);
 }
 

@@ -80,6 +80,13 @@ const nextConfig = {
   experimental: {
     optimizePackageImports: ['framer-motion', 'lucide-react'],
   },
+  webpack: (config, { dev }) => {
+    if (dev) {
+      // Disable Webpack cache in dev mode to prevent corruption crashes
+      config.cache = false;
+    }
+    return config;
+  },
   async headers() {
     return [
       {

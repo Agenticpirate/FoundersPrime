@@ -63,7 +63,7 @@ export default function Header() {
   }
 
   const dropdownClasses =
-    'invisible opacity-0 translate-y-1 group-hover:visible group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-200 ease-out absolute left-0 top-full pt-2 z-50'
+    'header-dropdown-wrapper invisible opacity-0 translate-y-1 group-hover:visible group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-200 ease-out absolute left-0 top-full pt-2 z-50'
   const dropdownPanelClasses =
     'relative bg-[#0a0a0a]/95 backdrop-blur-xl border border-white/10 shadow-[0_20px_50px_-12px_rgba(0,0,0,0.8),0_0_0_1px_rgba(255,221,0,0.08)] min-w-[240px] overflow-hidden header-dropdown-panel'
   const dropdownItemClasses =

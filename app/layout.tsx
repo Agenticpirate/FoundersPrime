@@ -224,15 +224,26 @@ export default function RootLayout({
           `}
         </Script>
 
-        {/* Prevent icon text from collapsing before Material Symbols font loads */}
+        {/* Prevent icon text from collapsing and dropdowns from flashing before CSS/Fonts load */}
         <style dangerouslySetInnerHTML={{ __html: `
           .material-symbols-outlined {
-            display: inline-block;
-            width: 1em;
-            height: 1em;
-            line-height: 1;
-            overflow: hidden;
-            vertical-align: text-bottom;
+            display: inline-block !important;
+            width: 1em !important;
+            height: 1em !important;
+            max-width: 1em !important;
+            line-height: 1 !important;
+            overflow: hidden !important;
+            vertical-align: text-bottom !important;
+            flex-shrink: 0 !important;
+          }
+          .header-dropdown-wrapper {
+            position: absolute !important;
+            visibility: hidden !important;
+            opacity: 0 !important;
+          }
+          .group:hover .header-dropdown-wrapper {
+            visibility: visible !important;
+            opacity: 1 !important;
           }
         ` }} />
 
