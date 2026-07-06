@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 
 const MESSAGES = [
   '47 new deals added this week',
-  'Founder Yearly · $149/yr · unlimited deals',
+  'Founder Yearly · $49/yr · unlimited deals',
   'Hundreds of credits, grants & accelerators',
   "Next'Founder · $12/yr for students",
 ]

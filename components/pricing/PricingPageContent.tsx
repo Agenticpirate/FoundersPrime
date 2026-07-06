@@ -138,10 +138,6 @@ export default function PricingPageContent() {
                         <p className="text-gray-600 dark:text-gray-400 text-sm sm:text-base leading-relaxed mt-4">
                             One dashboard of vetted startup deals, credits, and programs so you stop hunting links and start saving real money on every tool.
                         </p>
-                        
-                        <p className="text-accent-yellow font-mono text-[11px] font-bold uppercase tracking-wider mt-3">
-                            ✦ Most builders recover 10–20× their subscription fee in year one from cloud credits, SaaS discounts, and grants alone.
-                        </p>
                     </div>
 
                     {/* Right: Badges */}
@@ -216,11 +212,6 @@ export default function PricingPageContent() {
 
                 <p className="text-gray-600 dark:text-gray-400 text-xs leading-relaxed mt-4">
                     One dashboard of vetted startup deals, credits, and programs so you stop hunting links and start saving real money on every tool.
-                </p>
-                
-                <p className="text-accent-yellow font-mono text-[9.5px] font-bold uppercase tracking-wide mt-3 flex items-start gap-1.5">
-                    <span className="text-[11px] leading-none mt-[1px]">✦</span>
-                    <span>Most builders recover 10–20× their subscription fee in year one from cloud credits, SaaS discounts, and grants alone.</span>
                 </p>
 
                 {/* Mobile Badges */}
