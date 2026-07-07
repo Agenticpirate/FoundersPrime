@@ -6,6 +6,7 @@ import Link from 'next/link'
 import type { FlashDeal } from '@/data/flash-deals'
 import FlashCountdown from './FlashCountdown'
 import FlashLogo from './FlashLogo'
+import { useAuth } from '@/lib/auth/hooks'
 
 const BADGE_STYLES = {
   hot: { label: '🔥 Hot Deal', className: 'bg-red-500 text-white' },
@@ -16,9 +17,28 @@ const BADGE_STYLES = {
 export default function FlashDealDetailContent({ deal }: { deal: FlashDeal }) {
   const [copiedRegion, setCopiedRegion] = useState<string | null>(null)
   const badge = BADGE_STYLES[deal.badge]
+  const { loading, isAuthenticated, signInWithGoogle, signInWithGithub } = useAuth()
 
   const handleRegionClick = (url: string) => {
     window.open(url, '_blank', 'noopener,noreferrer')
+  }
+
+  if (loading) {
+    return (
+      <div className="max-w-[1100px] mx-auto px-4 sm:px-6 lg:px-8 py-8 animate-pulse">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
+          <div className="lg:col-span-2 space-y-6">
+            <div className="bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-xl p-6 h-56" />
+            <div className="bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-xl p-6 h-36" />
+            <div className="bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-xl p-6 h-40" />
+          </div>
+          <div className="space-y-4">
+            <div className="bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-xl p-6 h-36" />
+            <div className="bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-xl p-6 h-28" />
+          </div>
+        </div>
+      </div>
+    )
   }
 
   return (
@@ -79,9 +99,77 @@ export default function FlashDealDetailContent({ deal }: { deal: FlashDeal }) {
             </div>
           </div>
 
-          {/* Highlights */}
-          {deal.highlights && deal.highlights.length > 0 && (
-            <div className="bg-white dark:bg-[#0c0c0c] border border-gray-200 dark:border-white/10 rounded-xl p-6">
+          {!isAuthenticated && (
+            <div id="unlock-gate-card" className="relative overflow-hidden border-2 border-accent-yellow bg-gradient-to-br from-[#1a1710]/95 via-[#0c0c0c]/98 to-black p-6 md:p-8 rounded-xl shadow-[0_0_40px_rgba(255,213,0,0.25)] z-20">
+              {/* Scanline background grid overlay */}
+              <div
+                aria-hidden="true"
+                className="absolute inset-0 opacity-[0.25] pointer-events-none"
+                style={{
+                  backgroundImage: 'radial-gradient(rgba(255,215,0,0.15) 1px, transparent 1.5px)',
+                  backgroundSize: '16px 16px',
+                }}
+              />
+              <div className="relative flex flex-col items-center text-center max-w-xl mx-auto py-3">
+                <div className="relative flex items-center justify-center w-14 h-14 bg-accent-yellow/15 border-2 border-accent-yellow rounded-full mb-4 animate-[pulse_2.5s_ease-in-out_infinite] shadow-[0_0_15px_rgba(255,215,0,0.3)]">
+                  <span className="material-symbols-outlined text-[24px] text-accent-yellow" style={{ fontVariationSettings: "'FILL' 1" }}>lock</span>
+                </div>
+                <h2 className="font-mono font-black text-lg md:text-xl uppercase tracking-wider text-white mb-2">
+                  Sign Up to Unlock This Deal
+                </h2>
+                <p className="font-sans text-xs md:text-sm text-gray-400 mb-6 leading-relaxed">
+                  Join FoundersPrime for free. Verify your account in seconds to instantly reveal the promo code, access dynamic claim URLs, and get step-by-step instructions for this flash deal.
+                </p>
+
+                {/* OAuth Login buttons */}
+                <div className="flex flex-col w-full max-w-sm gap-2.5">
+                  <button
+                    onClick={() => signInWithGoogle(`/flash-deals/${deal.id}`)}
+                    className="flex items-center justify-center gap-2.5 w-full py-3 bg-white hover:bg-gray-150 text-black font-mono font-black text-xs uppercase tracking-wide rounded-lg transition-all shadow-md"
+                  >
+                    <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4" />
+                      <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853" />
+                      <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z" fill="#FBBC05" />
+                      <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z" fill="#EA4335" />
+                    </svg>
+                    Continue with Google
+                  </button>
+
+                  <button
+                    onClick={() => signInWithGithub(`/flash-deals/${deal.id}`)}
+                    className="flex items-center justify-center gap-2.5 w-full py-3 bg-[#24292e] hover:bg-[#2c3238] text-white font-mono font-black text-xs uppercase tracking-wide rounded-lg transition-all shadow-md"
+                  >
+                    <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                      <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 3.293-.01 5.955-.01 6.8 0 .325.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
+                    </svg>
+                    Continue with GitHub
+                  </button>
+                </div>
+
+                <div className="flex flex-col sm:flex-row items-center gap-4 text-xs font-mono mt-6">
+                  <Link
+                    href={`/login?view=signup&redirect=${encodeURIComponent(`/flash-deals/${deal.id}`)}`}
+                    className="text-accent-yellow hover:underline"
+                  >
+                    Create Account with Email
+                  </Link>
+                  <span className="text-gray-600 hidden sm:inline">•</span>
+                  <Link
+                    href={`/login?view=login&redirect=${encodeURIComponent(`/flash-deals/${deal.id}`)}`}
+                    className="text-gray-400 hover:text-white hover:underline"
+                  >
+                    Already registered? Sign In
+                  </Link>
+                </div>
+              </div>
+            </div>
+          )}
+
+          <div className={`space-y-6 ${!isAuthenticated ? 'blur-[5px] select-none pointer-events-none opacity-25' : ''}`}>
+            {/* Highlights */}
+            {deal.highlights && deal.highlights.length > 0 && (
+              <div className="bg-white dark:bg-[#0c0c0c] border border-gray-200 dark:border-white/10 rounded-xl p-6">
               <h2 className="font-mono font-black text-sm uppercase tracking-wider text-gray-900 dark:text-white flex items-center gap-2 mb-4">
                 <span className="material-symbols-outlined text-accent-yellow text-[18px]" style={{ fontVariationSettings: "'FILL' 1" }}>
                   star
@@ -266,6 +354,7 @@ export default function FlashDealDetailContent({ deal }: { deal: FlashDeal }) {
               </ul>
             </div>
           )}
+          </div>
         </div>
 
         {/* ── RIGHT: Sidebar ── */}
@@ -285,7 +374,20 @@ export default function FlashDealDetailContent({ deal }: { deal: FlashDeal }) {
             <p className="font-mono font-black text-xs uppercase tracking-wider text-gray-900 dark:text-white mb-3">
               Ready to claim?
             </p>
-            {deal.options && deal.options.length > 0 ? (
+            {!isAuthenticated ? (
+              <button
+                onClick={() => {
+                  const el = document.getElementById('unlock-gate-card')
+                  if (el) {
+                    el.scrollIntoView({ behavior: 'smooth', block: 'center' })
+                  }
+                }}
+                className="flex items-center justify-center gap-2 w-full py-3 bg-accent-yellow hover:bg-yellow-400 text-black font-mono font-black text-sm uppercase tracking-wide rounded-lg transition-colors shadow-[0_4px_16px_rgba(255,215,0,0.25)]"
+              >
+                Unlock to Claim
+                <span className="material-symbols-outlined text-[16px]">lock</span>
+              </button>
+            ) : deal.options && deal.options.length > 0 ? (
               <div>
                 <p className="text-[11px] text-gray-500 mb-3">Select your region above to get your promo link.</p>
                 <a

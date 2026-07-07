@@ -16,9 +16,9 @@ const PLANS = [
   },
   {
     plan: 'Founder',
-    price: '$49',
+    price: '$48',
     originalPrice: '$149',
-    discount: '67% OFF',
+    discount: '68% OFF',
     period: '/ year',
     color: '#FFD700',
     glow: 'rgba(255,215,0,0.5)',

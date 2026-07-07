@@ -5,6 +5,7 @@ import type { FlashDeal, FlashBadge, FlashDiscountColor } from '@/data/flash-dea
 import FlashCountdown from './FlashCountdown'
 import FlashLogo from './FlashLogo'
 import { GlowingEffect } from '@/components/ui/GlowingEffect'
+import { useAuth } from '@/lib/auth/hooks'
 
 
 const BADGE_STYLES: Record<FlashBadge, { label: string; className: string }> = {
@@ -24,6 +25,7 @@ const BADGE_STYLES: Record<FlashBadge, { label: string; className: string }> = {
 
 export default function FlashDealCard({ deal }: { deal: FlashDeal }) {
   const badge = BADGE_STYLES[deal.badge]
+  const { isAuthenticated, loading } = useAuth()
 
 
   return (
@@ -59,9 +61,20 @@ export default function FlashDealCard({ deal }: { deal: FlashDeal }) {
               className="relative rounded-sm flex-shrink-0"
             >
               <GlowingEffect spread={30} glow={false} disabled={false} proximity={48} inactiveZone={0.01} borderWidth={1} />
-              <span className="relative inline-flex items-center gap-0.5 bg-black dark:bg-white text-white dark:text-black text-[9px] font-bold uppercase px-2.5 py-1.5 rounded-sm group-hover:bg-accent-yellow dark:group-hover:bg-accent-yellow group-hover:text-black dark:group-hover:text-black transition-all duration-200 shadow-[2px_2px_0px_#333] dark:shadow-[2px_2px_0px_rgba(255,255,255,0.15)] group-hover:shadow-[3px_3px_0px_#111] dark:group-hover:shadow-[3px_3px_0px_#111]">
-                Claim Now
-                <span className="material-symbols-outlined text-[10px] group-hover:translate-x-0.5 transition-transform">arrow_forward</span>
+              <span className="relative inline-flex items-center gap-1 bg-black dark:bg-white text-white dark:text-black text-[9px] font-bold uppercase px-2.5 py-1.5 rounded-sm group-hover:bg-accent-yellow dark:group-hover:bg-accent-yellow group-hover:text-black dark:group-hover:text-black transition-all duration-200 shadow-[2px_2px_0px_#333] dark:shadow-[2px_2px_0px_rgba(255,255,255,0.15)] group-hover:shadow-[3px_3px_0px_#111] dark:group-hover:shadow-[3px_3px_0px_#111]">
+                {loading ? (
+                  <span>Loading...</span>
+                ) : isAuthenticated ? (
+                  <>
+                    Claim Now
+                    <span className="material-symbols-outlined text-[10px] group-hover:translate-x-0.5 transition-transform">arrow_forward</span>
+                  </>
+                ) : (
+                  <>
+                    Unlock Deal
+                    <span className="material-symbols-outlined text-[10px] group-hover:scale-110 transition-transform">lock</span>
+                  </>
+                )}
               </span>
             </Link>
           </div>
