@@ -1,5 +1,49 @@
 [
   {
+    "slug": "yandex-cloud-trial-credits",
+    "title": "Yandex Cloud — Up to $20,000 Free Credits",
+    "provider": "Yandex Cloud",
+    "category": "cloud-credits",
+    "subcategory": "cloud-hosting",
+    "description": "Yandex Cloud offers a trial for its secure and scalable cloud solutions. Leverage Yandex’s high-end technologies for your IT projects. Take advantage of cloud credits of up to $20,000 to try out their solutions.\n\nHow to use the deal:\nApply through the Yandex Cloud trial page.\n\nWhat's Included:\n• Up to $20,000 in cloud credits\n• Access to various Yandex Cloud services and infrastructure",
+    "short_description": "Explore secure and scalable cloud solutions from Yandex with up to $20,000 in cloud credits.",
+    "shortDescription": "Explore secure and scalable cloud solutions from Yandex with up to $20,000 in cloud credits.",
+    "value": "Up to $20,000 in credits",
+    "savings": "Up to $20,000",
+    "eligibility": [
+      "New users",
+      "IT Projects testing solutions"
+    ],
+    "requirements": [
+      "Sign up through the trial page"
+    ],
+    "application_process": [
+      "Visit the Yandex Cloud trial page",
+      "Register for a Yandex Cloud account",
+      "Receive up to $20,000 in credits to try the platform"
+    ],
+    "applicationProcess": [
+      "Visit the Yandex Cloud trial page",
+      "Register for a Yandex Cloud account",
+      "Receive up to $20,000 in credits to try the platform"
+    ],
+    "application_url": "https://yandex.cloud/en/cloud-credits-for-trial",
+    "applicationUrl": "https://yandex.cloud/en/cloud-credits-for-trial",
+    "provider_website": "https://yandex.cloud",
+    "providerWebsite": "https://yandex.cloud",
+    "brandIcon": "https://www.google.com/s2/favicons?domain=yandex.cloud&sz=128",
+    "logoUrl": "https://www.google.com/s2/favicons?domain=yandex.cloud&sz=128",
+    "tags": [
+      "cloud",
+      "hosting",
+      "trial",
+      "yandex"
+    ],
+    "featured": false,
+    "verified": true,
+    "id": "yandex-cloud-trial-credits"
+  },
+  {
     "id": "deal-kajabi-30-day-free-1781571107226",
     "slug": "kajabi",
     "title": "Kajabi — 30 Days Free (Exclusive Offer)",
