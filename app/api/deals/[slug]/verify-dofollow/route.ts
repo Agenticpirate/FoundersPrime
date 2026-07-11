@@ -22,7 +22,7 @@ export async function GET(request: Request, { params }: Params) {
     }
 
     const isDofollow = deal.tags?.includes('dofollow') || false
-    const targetUrl = deal.providerWebsite || `https://www.${deal.provider.toLowerCase().replace(/\s+/g, '')}.com`
+    const targetUrl = deal.providerWebsite || `https://www.${(deal.provider || 'unknown').toLowerCase().replace(/\s+/g, '')}.com`
     
     return NextResponse.json({
       success: true,

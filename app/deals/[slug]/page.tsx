@@ -416,7 +416,7 @@ export default async function SingleDealPage({ params }: PageProps) {
 
     // Structured Data (JSON-LD)
     const dealUrl = `https://www.foundersprime.com/deals/${params.slug}`
-    const dealImage = dealData.logoUrl || `https://www.foundersprime.com/logos/${deal.provider.toLowerCase().replace(/\s+/g, '-')}.png`
+    const dealImage = dealData.logoUrl || `https://www.foundersprime.com/logos/${(deal.provider || 'unknown').toLowerCase().replace(/\s+/g, '-')}.png`
 
     // Primary entity schema — typed by category so we describe each listing
     // accurately instead of forcing everything into Product (which mis-flags

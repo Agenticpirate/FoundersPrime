@@ -55,3 +55,4 @@ logo-report.json
 
 # gstack local artifacts (security reports, checkpoints) — keep out of git
 .gstack/
+.env*
