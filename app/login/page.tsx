@@ -103,11 +103,23 @@ function LoginContent() {
     }
     try {
       const supabase = createClient()
-      const { error } = await supabase.auth.signInWithOAuth({
+      const { data, error } = await supabase.auth.signInWithOAuth({
         provider: provider === 'linkedin' ? 'linkedin_oidc' : provider,
-        options: { redirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent(redirect)}` },
+        options: {
+          redirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent(redirect)}`,
+          // Explicit navigation — more reliable than relying on default browser redirect alone
+          skipBrowserRedirect: true,
+        },
       })
-      if (error) setError(error.message)
+      if (error) {
+        setError(error.message)
+        return
+      }
+      if (data?.url) {
+        window.location.assign(data.url)
+        return
+      }
+      setError('OAuth provider did not return a redirect URL. Check Supabase provider settings.')
     } catch { setError('An unexpected error occurred') }
     finally { setLoading(false) }
   }

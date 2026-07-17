@@ -36,6 +36,7 @@ export async function signInWithOAuth(config: OAuthConfig): Promise<OAuthResult>
       options: {
         redirectTo,
         scopes: config.scopes,
+        skipBrowserRedirect: true,
         queryParams: {
           access_type: 'offline',
           prompt: 'consent',
@@ -50,9 +51,13 @@ export async function signInWithOAuth(config: OAuthConfig): Promise<OAuthResult>
       }
     }
 
+    if (data.url && typeof window !== 'undefined') {
+      window.location.assign(data.url)
+    }
+
     return {
       success: true,
-      url: data.url
+      url: data.url ?? undefined
     }
   } catch (error: any) {
     return {

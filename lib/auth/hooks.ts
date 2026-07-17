@@ -47,24 +47,28 @@ export function useAuth() {
 
   const signInWithGoogle = async (redirectAfter?: string) => {
     const next = redirectAfter || window.location.pathname + window.location.search
-    const { error } = await supabase.auth.signInWithOAuth({
+    const { data, error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
         redirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent(next)}`,
+        skipBrowserRedirect: true,
       },
     })
     if (error) throw error
+    if (data?.url) window.location.assign(data.url)
   }
 
   const signInWithGithub = async (redirectAfter?: string) => {
     const next = redirectAfter || window.location.pathname + window.location.search
-    const { error } = await supabase.auth.signInWithOAuth({
+    const { data, error } = await supabase.auth.signInWithOAuth({
       provider: 'github',
       options: {
         redirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent(next)}`,
+        skipBrowserRedirect: true,
       },
     })
     if (error) throw error
+    if (data?.url) window.location.assign(data.url)
   }
 
   return {
