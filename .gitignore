@@ -24,6 +24,8 @@ ts-debug.log*
 
 # local env files
 .env*.local
+.env*
+!.env.example
 
 # vercel
 .vercel
@@ -56,4 +58,3 @@ logo-report.json
 
 # gstack local artifacts (security reports, checkpoints) — keep out of git
 .gstack/
-.env*

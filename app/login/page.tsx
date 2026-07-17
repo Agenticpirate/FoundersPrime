@@ -26,9 +26,15 @@ const loginPartners = [
 function LoginContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
-  const redirect = searchParams.get('redirect') || searchParams.get('next') || '/'
+  const redirect = searchParams.get('redirect') || searchParams.get('next') || '/dashboard'
   const errorParam = searchParams.get('error')
   const viewParam = searchParams.get('view')
+  const supabaseConfigured = !!(
+    process.env.NEXT_PUBLIC_SUPABASE_URL &&
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY &&
+    process.env.NEXT_PUBLIC_SUPABASE_URL !== 'http://localhost:54321' &&
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY !== 'placeholder-anon-key'
+  )
 
   const [view, setView] = useState<'login' | 'signup' | 'forgot' | 'mfa'>(
     (viewParam === 'signup' || viewParam === 'login' || viewParam === 'forgot' || viewParam === 'mfa') ? viewParam : 'login'
@@ -88,11 +94,18 @@ function LoginContent() {
   const handleOAuthLogin = async (provider: 'google' | 'github' | 'linkedin') => {
     setError(null)
     setLoading(true)
+    if (!supabaseConfigured) {
+      setError(
+        'Local auth is not configured. Add NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY to .env.local, then restart npm run dev.'
+      )
+      setLoading(false)
+      return
+    }
     try {
       const supabase = createClient()
       const { error } = await supabase.auth.signInWithOAuth({
         provider: provider === 'linkedin' ? 'linkedin_oidc' : provider,
-        options: { redirectTo: `${window.location.origin}/auth/callback?next=${redirect}` },
+        options: { redirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent(redirect)}` },
       })
       if (error) setError(error.message)
     } catch { setError('An unexpected error occurred') }
@@ -111,28 +124,27 @@ function LoginContent() {
     if (!turnstileToken) { setError('Please complete the security verification'); setLoading(false); return }
 
     try {
-      const supabase = createClient()
-      const isStub = !process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-
-      // Mock client scenario
-      if (isStub) {
-        // If mock MFA is enabled for this email, switch to MFA code challenge
-        const isMockMfa = localStorage.getItem('foundersprime_mock_mfa_enabled_' + email.trim().toLowerCase()) === 'true'
-        if (isMockMfa) {
-          setView('mfa')
-          setLoading(false)
-          return
-        }
-        // Otherwise, mock login success
-        router.push(redirect)
-        router.refresh()
+      // Local without Supabase env — cannot create a real session
+      if (!supabaseConfigured) {
+        setError(
+          'Local auth is not configured. Add NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY to .env.local (from Supabase project settings), then restart npm run dev.'
+        )
+        setLoading(false)
         return
       }
 
-      const { data, error } = await supabase.auth.signInWithPassword({ 
-        email: email.trim(), 
+      const supabase = createClient()
+
+      // Never send Turnstile bypass token to Supabase captcha — only real tokens
+      const captchaOptions =
+        turnstileToken && turnstileToken !== 'bypass'
+          ? { captchaToken: turnstileToken }
+          : undefined
+
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email: email.trim(),
         password,
-        options: { captchaToken: turnstileToken }
+        ...(captchaOptions ? { options: captchaOptions } : {}),
       })
       if (error) {
         const msg = error.message || ''
@@ -141,6 +153,8 @@ function LoginContent() {
           setError('Your email isn\'t verified yet. Check your inbox, or resend the verification email below.')
         } else if (/invalid login credentials|invalid/i.test(msg)) {
           setError('Invalid email or password. Please try again.')
+        } else if (/captcha|turnstile/i.test(msg)) {
+          setError('Security check failed. Refresh the page and try again. On localhost Turnstile is optional.')
         } else {
           setError(msg || 'Unable to sign in. Please try again.')
         }
@@ -208,15 +222,17 @@ function LoginContent() {
     }
 
     try {
-      const supabase = createClient()
-      const isStub = !process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-
-      if (isStub) {
-        setSuccessMsg('Account created successfully! Check your email to verify your account.')
-        setFullName('')
+      if (!supabaseConfigured) {
+        setError(
+          'Local auth is not configured. Add NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY to .env.local, then restart npm run dev.'
+        )
         setLoading(false)
         return
       }
+
+      const supabase = createClient()
+      const captchaToken =
+        turnstileToken && turnstileToken !== 'bypass' ? turnstileToken : undefined
 
       const { error } = await supabase.auth.signUp({
         email: email.trim(),
@@ -224,7 +240,7 @@ function LoginContent() {
         options: {
           data: { full_name: fullName.trim() },
           emailRedirectTo: `${window.location.origin}/auth/callback`,
-          captchaToken: turnstileToken,
+          ...(captchaToken ? { captchaToken } : {}),
         },
       })
 
@@ -481,6 +497,22 @@ function LoginContent() {
                   <span className="material-symbols-outlined !text-[10px] fill-current">lock</span>
                   {view === 'mfa' ? 'Security Gate' : 'Members area'}
                 </div>
+
+                {/* Local config warning */}
+                {mounted && !supabaseConfigured && (
+                  <div className="mb-3.5 p-3 bg-amber-950/40 border border-amber-500/30 text-amber-200 text-xs flex items-start gap-2">
+                    <span className="material-symbols-outlined text-sm">warning</span>
+                    <div className="flex-1 space-y-1">
+                      <p className="font-bold">Supabase is not configured for local login</p>
+                      <p className="text-amber-100/80">
+                        Add <code className="font-mono text-[10px]">NEXT_PUBLIC_SUPABASE_URL</code> and{' '}
+                        <code className="font-mono text-[10px]">NEXT_PUBLIC_SUPABASE_ANON_KEY</code> to{' '}
+                        <code className="font-mono text-[10px]">.env.local</code>, then restart{' '}
+                        <code className="font-mono text-[10px]">npm run dev</code>.
+                      </p>
+                    </div>
+                  </div>
+                )}
 
                 {/* Error alerts */}
                 {(error || errorParam) && (
