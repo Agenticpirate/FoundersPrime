@@ -13,22 +13,29 @@ export function useAuth() {
   const supabase = useMemo(() => createClient(), [])
 
   useEffect(() => {
-    // onAuthStateChange fires with INITIAL_SESSION synchronously on mount
-    // using the stored session from cookies/localStorage. This is the correct
-    // and only way to initialise client-side auth state.
-    //
-    // Do NOT add a separate getUser() call here — it creates a race condition
-    // where the async network response can override the correct session state
-    // with null (e.g. if the JWT has minor clock skew), causing false logouts.
+    // onAuthStateChange fires with INITIAL_SESSION on mount using the stored
+    // session. Do NOT add a separate getUser() call — it can race and force
+    // false logouts.
+    let settled = false
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, session) => {
+      settled = true
       setSession(session)
       setUser(session?.user ?? null)
       setLoading(false)
     })
 
-    return () => subscription.unsubscribe()
+    // If Supabase never emits INITIAL_SESSION (network hang / bad client),
+    // stop blocking the UI after a short timeout.
+    const timeout = setTimeout(() => {
+      if (!settled) setLoading(false)
+    }, 2500)
+
+    return () => {
+      clearTimeout(timeout)
+      subscription.unsubscribe()
+    }
   }, [supabase])
 
 

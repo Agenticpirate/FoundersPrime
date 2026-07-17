@@ -462,22 +462,37 @@ export default function ProgramsGrid({ activeType, filters, initialIsPro }: Prog
   const [localPage, setLocalPage] = useState(1)
 
   useEffect(() => {
+    // Server already resolved pro status — never block the grid on client auth.
     if (initialIsPro !== undefined) {
       setIsPro(initialIsPro)
       setCheckingAccess(false)
       return
     }
     if (authLoading) return
+    let cancelled = false
     const run = async () => {
-      if (user) {
-        const { isPro: hasPro } = await checkProStatus()
-        setIsPro(hasPro)
-      } else {
-        setIsPro(false)
+      try {
+        if (user) {
+          const { isPro: hasPro } = await checkProStatus()
+          if (!cancelled) setIsPro(hasPro)
+        } else if (!cancelled) {
+          setIsPro(false)
+        }
+      } catch {
+        if (!cancelled) setIsPro(false)
+      } finally {
+        if (!cancelled) setCheckingAccess(false)
       }
-      setCheckingAccess(false)
     }
     run()
+    // Safety: never leave the grid on skeleton forever if auth hangs.
+    const t = setTimeout(() => {
+      if (!cancelled) setCheckingAccess(false)
+    }, 2500)
+    return () => {
+      cancelled = true
+      clearTimeout(t)
+    }
   }, [authLoading, user?.id, initialIsPro])
 
   useEffect(() => {
@@ -639,17 +654,23 @@ export default function ProgramsGrid({ activeType, filters, initialIsPro }: Prog
     })
   }, [activeType, filteredAccelerators, filteredIncubators, filteredGrants])
 
-  if (authLoading || checkingAccess) return <GridSkeleton />
+  // Only block on auth when we did NOT get server-side isPro.
+  if (initialIsPro === undefined && (authLoading || checkingAccess)) {
+    return <GridSkeleton />
+  }
 
   const totalVisible = combinedPrograms.length
-  const FREE_LIMIT = 0
+  // Show a full first page free so the tab never feels empty / stuck loading.
+  const FREE_LIMIT = 12
   const itemsPerPage = 12
   const totalPages = Math.ceil(totalVisible / itemsPerPage) || 1
   const currentPage = Math.min(Math.max(1, localPage), totalPages)
 
   const startIndex = (currentPage - 1) * itemsPerPage
   const endIndex = startIndex + itemsPerPage
-  const paginatedPrograms = isPro ? combinedPrograms.slice(startIndex, endIndex) : combinedPrograms.slice(0, FREE_LIMIT)
+  const paginatedPrograms = isPro
+    ? combinedPrograms.slice(startIndex, endIndex)
+    : combinedPrograms.slice(0, FREE_LIMIT)
 
   const handlePageChange = (page: number) => {
     setLocalPage(page)

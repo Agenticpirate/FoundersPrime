@@ -1,14 +1,29 @@
 'use client'
 
 import { useState, useCallback, useEffect, useRef } from 'react'
+import dynamic from 'next/dynamic'
 import { useRouter, useSearchParams, usePathname } from 'next/navigation'
-import ProgramsSidebar, { ProgramType } from './ProgramsSidebar'
+import type { ProgramType } from './ProgramsSidebar'
 import ProgramsFilterBar, { ProgramFilterState } from './ProgramsFilterBar'
-import ProgramsGrid from './ProgramsGrid'
 import FeaturedSlot from './featured/FeaturedSlot'
 import { accelerators2026 } from '@/data/accelerators-2026'
 import { incubators2026 } from '@/data/incubators-2026'
 import { grants2026 } from '@/data/grants-2026'
+
+// Heavy grid (full program catalogs) loads after the shell paints.
+const ProgramsGrid = dynamic(() => import('./ProgramsGrid'), {
+  ssr: false,
+  loading: () => (
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
+      {Array.from({ length: 8 }).map((_, i) => (
+        <div
+          key={i}
+          className="h-64 rounded-lg border border-white/10 bg-[#0b0b0b] animate-pulse"
+        />
+      ))}
+    </div>
+  ),
+})
 
 const DEFAULT_FILTERS: ProgramFilterState = {
   search: '',

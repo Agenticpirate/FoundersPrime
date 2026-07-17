@@ -1,15 +1,11 @@
 'use client'
 
-import { useEffect, useState } from 'react'
-import { accelerators2026 } from '@/data/accelerators-2026'
-import { incubators2026 } from '@/data/incubators-2026'
-import { grants2026 } from '@/data/grants-2026'
-
 export type ProgramType = 'all' | 'accelerators' | 'incubators' | 'grants'
 
 interface ProgramsSidebarProps {
   selectedType: ProgramType
   onTypeSelect: (type: ProgramType) => void
+  counts?: Record<ProgramType, number>
 }
 
 const PROGRAM_TABS: {
@@ -54,13 +50,11 @@ const PROGRAM_TABS: {
   },
 ]
 
-export default function ProgramsSidebar({ selectedType, onTypeSelect }: ProgramsSidebarProps) {
-  const counts: Record<ProgramType, number> = {
-    all: accelerators2026.length + incubators2026.length + grants2026.length,
-    accelerators: accelerators2026.length,
-    incubators: incubators2026.length,
-    grants: grants2026.length,
-  }
+export default function ProgramsSidebar({
+  selectedType,
+  onTypeSelect,
+  counts = { all: 0, accelerators: 0, incubators: 0, grants: 0 },
+}: ProgramsSidebarProps) {
 
   return (
     <aside className="w-full">
