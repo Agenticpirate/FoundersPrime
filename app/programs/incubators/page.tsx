@@ -1,5 +1,9 @@
-import { redirect } from 'next/navigation'
+import ProgramsTypePage from '@/components/programs/ProgramsTypePage'
 
-export default function IncubatorsPage() {
-  redirect('/programs?type=incubators')
+export default async function IncubatorsPage({
+  searchParams,
+}: {
+  searchParams: { [key: string]: string | string[] | undefined }
+}) {
+  return <ProgramsTypePage type="incubators" searchParams={searchParams} />
 }

@@ -24,7 +24,7 @@ export default function SearchHero() {
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault()
     // Handle search submission
-    console.log('Searching for:', searchQuery, 'in:', searchType)
+
   }
 
   return (

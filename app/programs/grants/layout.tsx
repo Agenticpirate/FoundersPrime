@@ -14,14 +14,14 @@ export const metadata: Metadata = {
     'startup competitions',
   ],
   alternates: {
-    canonical: 'https://www.foundersprime.com/programs/grants',
+    canonical: 'https://www.foundersprime.com/programs',
   },
   openGraph: {
     type: 'website',
     title: 'Startup Grants | Non-Dilutive Funding',
     description:
       'Verified startup grants, competitions, and non-dilutive capital from government agencies, foundations, and global programs — all in one place.',
-    url: 'https://www.foundersprime.com/programs/grants',
+    url: 'https://www.foundersprime.com/programs',
     siteName: 'FoundersPrime',
   },
   twitter: {
@@ -38,13 +38,13 @@ const structuredData = {
   name: 'Startup Grants',
   description:
     'Verified startup grants, competitions, and non-dilutive capital from government agencies, foundations, and global programs.',
-  url: 'https://www.foundersprime.com/programs/grants',
+  url: 'https://www.foundersprime.com/programs',
   breadcrumb: {
     '@type': 'BreadcrumbList',
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.foundersprime.com' },
-      { '@type': 'ListItem', position: 2, name: 'Programs', item: 'https://www.foundersprime.com/programs/grants' },
-      { '@type': 'ListItem', position: 3, name: 'Grants', item: 'https://www.foundersprime.com/programs/grants' },
+      { '@type': 'ListItem', position: 2, name: 'Programs', item: 'https://www.foundersprime.com/programs' },
+      { '@type': 'ListItem', position: 3, name: 'Grants', item: 'https://www.foundersprime.com/programs' },
     ],
   },
 }

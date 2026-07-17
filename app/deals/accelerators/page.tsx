@@ -1,5 +1,6 @@
-import { redirect } from 'next/navigation'
+import { permanentRedirect } from 'next/navigation'
 
+/** Canonical program hub lives under /programs/* */
 export default function RedirectAcceleratorsPage() {
-  redirect('/programs?type=accelerators')
+  permanentRedirect('/programs/accelerators')
 }

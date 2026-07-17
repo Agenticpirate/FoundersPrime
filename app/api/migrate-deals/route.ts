@@ -52,6 +52,18 @@ import { createClient } from '@supabase/supabase-js';
 // ... (skipping up to the GET function)
 
 export async function GET(request: Request) {
+  // Hard-disable in production. One-off migration tooling must not stay live
+  // on the public origin even when a secret is configured.
+  if (process.env.NODE_ENV === 'production' && process.env.ALLOW_MIGRATE_DEALS !== 'true') {
+    return NextResponse.json(
+      {
+        error:
+          'Migration endpoint is disabled in production. Set ALLOW_MIGRATE_DEALS=true only for a controlled one-off run, then remove it.',
+      },
+      { status: 404 }
+    )
+  }
+
   // 🔒 Destructive endpoint: requires a dedicated secret in ALL environments.
   // MIGRATION_SECRET must be set; the service role key is intentionally NOT
   // accepted (it bypasses RLS and must never travel in request headers).

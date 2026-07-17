@@ -2,6 +2,12 @@ import { createServerClient, type CookieOptions } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
 import { globalApiLimiter, rateLimitHeaders } from '@/lib/security/rate-limit'
 import { getClientIp } from '@/lib/security/ip'
+import { discoveryLinkHeader } from '@/lib/agent-ready/config'
+import {
+  estimateTokens,
+  pageToMarkdown,
+  prefersMarkdown,
+} from '@/lib/agent-ready/markdown'
 
 // ─── Route classification helpers ─────────────────────────────────────────────
 
@@ -33,18 +39,92 @@ function isApiRoute(pathname: string): boolean {
   return pathname.startsWith('/api/')
 }
 
+/** HTML page routes that support Accept: text/markdown negotiation */
+function supportsMarkdownNegotiation(pathname: string): boolean {
+  if (isApiRoute(pathname)) return false
+  if (pathname.startsWith('/.well-known/')) return false
+  if (pathname.startsWith('/_next/')) return false
+  if (pathname.startsWith('/admin')) return false
+  if (
+    pathname === '/llms.txt' ||
+    pathname === '/llms-full.txt' ||
+    pathname === '/auth.md' ||
+    pathname === '/robots.txt' ||
+    pathname === '/sitemap.xml'
+  ) {
+    return false
+  }
+  if (/\.[a-z0-9]+$/i.test(pathname)) return false
+  return true
+}
+
+function applyAgentDiscoveryHeaders(response: NextResponse, pathname: string) {
+  // RFC 8288 Link headers for agent discovery (homepage is required by scanners;
+  // also useful on other public pages).
+  if (
+    supportsMarkdownNegotiation(pathname) ||
+    pathname === '/' ||
+    pathname === ''
+  ) {
+    response.headers.set('Link', discoveryLinkHeader())
+  }
+  // Content Signals as an HTTP header (complements robots.txt Content-Signal)
+  response.headers.set(
+    'Content-Signal',
+    'search=yes, ai-train=no, ai-input=yes'
+  )
+  // Advertise alternate markdown representation
+  if (supportsMarkdownNegotiation(pathname)) {
+    const vary = response.headers.get('Vary')
+    response.headers.set(
+      'Vary',
+      vary ? `${vary}, Accept` : 'Accept'
+    )
+  }
+  return response
+}
+
 // ─── Main middleware ───────────────────────────────────────────────────────────
 
 export async function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname
 
+  // ── Step 0: Markdown for Agents (content negotiation) ─────────────────────
+  // When an agent sends Accept: text/markdown, return a compact Markdown
+  // representation instead of HTML. HTML remains the default for browsers.
+  if (
+    request.method === 'GET' &&
+    supportsMarkdownNegotiation(pathname) &&
+    prefersMarkdown(request.headers.get('accept'))
+  ) {
+    const markdown = pageToMarkdown(pathname)
+    const tokens = estimateTokens(markdown)
+    const response = new NextResponse(markdown, {
+      status: 200,
+      headers: {
+        'Content-Type': 'text/markdown; charset=utf-8',
+        'Cache-Control': 'public, max-age=300',
+        'x-markdown-tokens': String(tokens),
+        'x-original-tokens': String(Math.round(tokens * 4)),
+        Vary: 'Accept',
+        Link: discoveryLinkHeader(),
+        'Content-Signal': 'search=yes, ai-train=no, ai-input=yes',
+        'Access-Control-Allow-Origin': '*',
+      },
+    })
+    return response
+  }
+
   // ── Step 1: Global API rate limiting ──────────────────────────────────────
   // Applied before Supabase session refresh to protect all API routes cheaply.
   // Webhooks and static assets are explicitly exempted.
+  // Capture headers once — do NOT call the limiter again later (it consumes tokens).
+  let apiRateLimitHeaders: Record<string, string> | null = null
   if (isApiRoute(pathname) && !isExemptFromRateLimit(pathname)) {
     const clientIp = getClientIp(request)
     const result = globalApiLimiter(clientIp)
     const rlHeaders = rateLimitHeaders(result)
+    apiRateLimitHeaders = rlHeaders
 
     if (!result.allowed) {
       return new NextResponse(
@@ -58,12 +138,6 @@ export async function middleware(request: NextRequest) {
         }
       )
     }
-
-    // Allowed — attach rate limit headers to the downstream response and continue
-    // We'll set these on the response later after the Supabase session refresh.
-    // Store them in a request header for the response handler below.
-    // (Next.js edge middleware cannot modify response headers after NextResponse.next()
-    //  returns from an async supabase call, so we attach them here via a trick.)
   }
 
   // ── Step 2: Supabase session refresh ──────────────────────────────────────
@@ -83,7 +157,7 @@ export async function middleware(request: NextRequest) {
     supabaseUrl === 'http://localhost:54321' ||
     supabaseAnonKey === 'placeholder-anon-key'
   ) {
-    return response
+    return applyAgentDiscoveryHeaders(response, pathname)
   }
 
   try {
@@ -143,20 +217,14 @@ export async function middleware(request: NextRequest) {
   }
 
   // ── Step 3: Attach rate limit headers to API responses ────────────────────
-  // Attach informational RateLimit-* headers so API clients can self-throttle.
-  if (isApiRoute(pathname) && !isExemptFromRateLimit(pathname)) {
-    const clientIp = getClientIp(request)
-    // Re-check (does NOT consume another token — just reads current state)
-    // We call the limiter again; since we already consumed a token in Step 1,
-    // this will reflect the correct remaining count.
-    const result = globalApiLimiter(clientIp)
-    const rlHeaders = rateLimitHeaders(result)
-    for (const [key, value] of Object.entries(rlHeaders)) {
+  // Reuse the Step 1 result — calling the limiter again would double-count.
+  if (apiRateLimitHeaders) {
+    for (const [key, value] of Object.entries(apiRateLimitHeaders)) {
       response.headers.set(key, value)
     }
   }
 
-  return response
+  return applyAgentDiscoveryHeaders(response, pathname)
 }
 
 export const config = {

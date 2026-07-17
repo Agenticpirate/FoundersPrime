@@ -1,84 +1,209 @@
-# FoundersPrime — Complete Reference
+# FoundersPrime — Complete Reference (llms-full)
 
-> FoundersPrime is the #1 verified database of startup deals, credits, grants, and programs. Updated weekly. Every deal manually verified.
+> Machine-oriented catalog of verified startup deals, programs, and ideas on FoundersPrime.
+> Prefer short `llms.txt` first; use this file when you need concrete URLs.
+> Updated from public catalog data. Always cite https://www.foundersprime.com
 
-## Overview
-FoundersPrime helps startup founders save $500K+ by aggregating verified cloud credits, SaaS discounts, non-dilutive grants, accelerator programs, and incubators in one searchable platform. Unlike generic deal aggregators, every listing on FoundersPrime is manually verified weekly — broken links are removed, expired offers are flagged, and new deals are added constantly.
+## Site
+- Home: https://www.foundersprime.com
+- All deals: https://www.foundersprime.com/deals
+- Cloud credits: https://www.foundersprime.com/deals?category=cloud-credits
+- SaaS discounts: https://www.foundersprime.com/deals?category=saas-discounts
+- Ad credits: https://www.foundersprime.com/deals?category=ad-credits
+- Programs: https://www.foundersprime.com/programs
+- Accelerators: https://www.foundersprime.com/programs/accelerators
+- Incubators: https://www.foundersprime.com/programs/incubators
+- Grants: https://www.foundersprime.com/programs/grants
+- Ideas: https://www.foundersprime.com/ideas
+- Startups: https://www.foundersprime.com/startups
+- Student benefits: https://www.foundersprime.com/student-benefits
+- Pricing: https://www.foundersprime.com/pricing
+- Agent index: https://www.foundersprime.com/llms.txt
 
-## Core Value Proposition
-- Save $500K+ in startup costs without giving up equity
-- Every deal is manually verified weekly
-- Direct application links — no middlemen or referral codes
-- Covers cloud credits, SaaS tools, grants, accelerators, incubators, and ad credits
-- Private founder community for networking and deal sharing
+## Pricing (USD)
+- NextFounder: $59/year
+- Founder: $149/year
+- Legend: $299 one-time lifetime
 
-## Categories
+## Deals catalog (241 listed)
+Format: Title — Provider — Value — URL
 
-### Cloud Credits
-Major cloud providers offer free credits to startups:
-- AWS Activate: Up to $100,000 in credits
-- Google for Startups Cloud Program: Up to $350,000 for AI startups
-- Microsoft Founders Hub: Up to $150,000 in Azure credits + OpenAI access
-- DigitalOcean: Infrastructure credits for startups
-- Cloudflare for Startups: Up to $250,000 in credits
-- Oracle for Startups: 70% off + credits
-- IBM Cloud: Up to $120,000 in credits
-- Vultr: Up to $100,000 in credits
+### ad-credits (14)
+- Apple Search Ads — Apple — $100 Credits — https://www.foundersprime.com/deals/apple-search-ads
+- Google Ads Startup Credits — Up to $500 in Free Ad Credits — Google Ads — $500-$1,000 in ad credits — https://www.foundersprime.com/deals/google-ads-startup-credits
+- LeadSquared — LeadSquared — 50% off all plans for 1 year — https://www.foundersprime.com/deals/leadsquared-750
+- LinkedIn Ads — $400-$600 in Bonus Ad Credits — LinkedIn — $400-$600 in bonus credits — https://www.foundersprime.com/deals/linkedin-ads-b2b-credits
+- Microsoft Advertising — Microsoft — $500 Credits — https://www.foundersprime.com/deals/microsoft-ads
+- Pinterest Ads — Pinterest — Credit Match — https://www.foundersprime.com/deals/pinterest-ads
+- Quora Ads — Quora — $100 Credits — https://www.foundersprime.com/deals/quora-ads
+- Reddit Ads — Reddit — $100-$500 Credits — https://www.foundersprime.com/deals/reddit-ads
+- Reddit Ads — Spend $500, Get $500 in Ad Credit — Reddit Ads — $500 in bonus ad credit — https://www.foundersprime.com/deals/reddit-ads-500-credit
+- Search Ads — Search Ads — 3 months free — https://www.foundersprime.com/deals/search-ads-924
+- Snapchat Ads — Spend $350, Get $375 Free Ad Credit — Snapchat — Up to $375 in ad credits — https://www.foundersprime.com/deals/snapchat-ads-matched-credit
+- Spotify Ad Studio — Spotify — $500 Credits — https://www.foundersprime.com/deals/spotify-ads
+- TikTok for Business TTAM Partners — Up to $6,000 in Ad Credits — TikTok for Business — Up to $6,000 in ad credits — https://www.foundersprime.com/deals/tiktok-for-business-ttam
+- Yelp Ads — Yelp — $300 Credits — https://www.foundersprime.com/deals/yelp-ads
 
-### SaaS Discounts
-Verified discounts on essential startup tools:
-- Notion: Free for startups
-- Airtable: $1,000 in credits
-- Linear: Free for 1 year
-- Stripe Atlas: Delaware C-Corp incorporation
-- HubSpot: 90% off for startups
-- Intercom: Startup program discounts
-- Auth0: Free tier for startups
-- Datadog: Monitoring credits
+### cloud-credits (22)
+- AWS Activate — AWS — $100,000 Credits — https://www.foundersprime.com/deals/aws-activate
+- Alibaba Cloud AI Startup Program — Alibaba Cloud — $5,000 in credits for 1 year (2 billion free tokens) — https://www.foundersprime.com/deals/alibaba-cloud-ai-startup
+- Alibaba Cloud Startup Program — Alibaba Cloud — $100,000 Credits — https://www.foundersprime.com/deals/alibaba-cloud-startup
+- Arpio for Startups ($10k Credit) — Arpio — $10,000 Credit — https://www.foundersprime.com/deals/arpio-for-startups
+- BytePlus AI Startups Accelerator (VStart) — Up to $100,000 in AI Model Credits — BytePlus — Up to $100,000 in AI model credits — https://www.foundersprime.com/deals/byteplus-ai-startups-accelerator
+- Confluent for Startups — $20,000 in Cloud Credits — Confluent — $20,000 in cloud credits — https://www.foundersprime.com/deals/confluent-for-startups
+- DigitalOcean Hatch — DigitalOcean — $100,000 Credits — https://www.foundersprime.com/deals/digitalocean-hatch
+- Google for Startups Cloud Program — Google Cloud — $350,000 Credits — https://www.foundersprime.com/deals/google-for-startups-cloud
+- Heroku for Startups — Heroku — $6,000 Credits — https://www.foundersprime.com/deals/heroku-for-startups
+- IBM for Startups — IBM Cloud — $120,000 Credits — https://www.foundersprime.com/deals/ibm-for-startups
+- Linode Rise — Linode (Akamai) — $120,000 Credits — https://www.foundersprime.com/deals/linode-rise
+- Microsoft for Startups Founders Hub — Microsoft Azure — $150,000 Credits — https://www.foundersprime.com/deals/microsoft-founders-hub
+- OVHcloud Startup Program — €10,000 in Cloud Credits — OVHcloud — €10,000 in cloud credits — https://www.foundersprime.com/deals/ovhcloud-startup-program
+- Oracle for Startups — Oracle Cloud — 70% Off + Credits — https://www.foundersprime.com/deals/oracle-for-startups
+- Render Startup Program — Cloud Hosting Credits — Render — Cloud hosting credits — https://www.foundersprime.com/deals/render-startup-program
+- Scaleway Startup Program — Scaleway — €36,000 Credits — https://www.foundersprime.com/deals/scaleway-startup-program
+- Supabase for Startups — Pro Plan Credits — Supabase — Pro plan credits — https://www.foundersprime.com/deals/supabase-for-startups
+- Tencent Cloud Startup Program — Tencent Cloud — $100,000 Credits — https://www.foundersprime.com/deals/tencent-cloud-startup
+- Vercel for Startups — Platform Credits — Vercel — Platform credits — https://www.foundersprime.com/deals/vercel-for-startups
+- Vultr for Startups — Vultr — $100,000 Credits — https://www.foundersprime.com/deals/vultr-for-startups
+- Webflow for Startups — 100% Off CMS Plan for 12 Months — Webflow — Up to $348 in credits — https://www.foundersprime.com/deals/webflow-for-startups
+- Yandex Cloud — Up to $20,000 Free Credits — Yandex Cloud — Up to $20,000 in credits — https://www.foundersprime.com/deals/yandex-cloud-trial-credits
 
-### Grants & Non-Dilutive Funding
-Equity-free funding opportunities:
-- Government grants from agencies worldwide
-- Foundation grants for social impact
-- Competition prizes (XPRIZE, Earthshot Prize)
-- Corporate innovation grants
-- Total funding tracked: $237M+
+### grants (1)
+- ElevenLabs Startup Grants — 12 Months Free — ElevenLabs — $4,000+ in credits — https://www.foundersprime.com/deals/elevenlabs-startup-grants
 
-### Accelerator Programs
-Top startup accelerators with verified terms:
-- Y Combinator, Techstars, 500 Global
-- Antler, Entrepreneur First, AngelPad
-- Average investment: $250K
-- Average acceptance rate: ~2%
+### saas-discounts (202)
+- 2 Free Echo Container Images | CVE-free, automatically patched & hardened — Echo — 2 free container images (up to $1,000 value) — https://www.foundersprime.com/deals/echo-free-container-images
+- AVG Technologies — AVG Technologies — 60% off for 1 year — https://www.foundersprime.com/deals/avg-technologies-660
+- ActiveCampaign Startup Program — 90% Off Any Annual Plan for 1 Year — ActiveCampaign — Up to $1,610 in savings — https://www.foundersprime.com/deals/activecampaign-startup-program
+- AdCreative.ai — AdCreative.ai — 50% off all annual plans — https://www.foundersprime.com/deals/adcreative-ai-722
+- Agency for Startups — Up to $100,000 in Compliance Credits — Agency — $100,000 in credits — https://www.foundersprime.com/deals/agency-for-startups
+- Aiden for Startups (25% off) — Aiden — 25% off (up to $12,500 value) — https://www.foundersprime.com/deals/aiden-for-startups
+- Airtable for Startups — $1,000 in Credits — Airtable — $1,000 in credits — https://www.foundersprime.com/deals/airtable-for-startups
+- Algolia Startup Program — $10,000 in Credits — Algolia — $10,000 in platform credits — https://www.foundersprime.com/deals/algolia-startup-program
+- Amazon Music — Amazon Music — 30 days free — https://www.foundersprime.com/deals/amazon-music-430
+- Amplitude Startup Scholarship — 1 Year Free — Amplitude — 1 year free (Growth plan) — https://www.foundersprime.com/deals/amplitude-startup-scholarship
+- Apollo for Startups — 50% Off for 1 Year — Apollo.io — 50% off for 1 year (up to 5 seats) — https://www.foundersprime.com/deals/apollo-for-startups
+- ApparelMagic — ApparelMagic — 15% off the Professional, Enterprise, or Ultimate plans for 1 year — https://www.foundersprime.com/deals/apparelmagic-776
+- Auth0 for Startups — 12 Months Free — Auth0 (Okta) — $20,000+ in perks — https://www.foundersprime.com/deals/auth0-for-startups
+- BLACKBOX AI — BLACKBOX AI — 50% off Pro Plus for 6 months — https://www.foundersprime.com/deals/blackbox-ai-164
+- Beefree SDK Startup Program — 90% Off for 1 Year — Beefree SDK — Up to $27,000 in savings — https://www.foundersprime.com/deals/beefree-sdk-startup-program
+- BetterWay Devs — BetterWay Devs — 25% off the first hire — https://www.foundersprime.com/deals/betterway-devs-402
+- BlockSurvey — BlockSurvey — 50% off the Standard Plan for 1 year — https://www.foundersprime.com/deals/blocksurvey-836
+- Blue Strawberry — Blue Strawberry — 60% off the Professional or Standard plan for 12 months — https://www.foundersprime.com/deals/blue-strawberry-786
+- Brevo for Startups — Up to 75% Off for 2 Years — Brevo — 75% off (2 years) or $500 credits — https://www.foundersprime.com/deals/brevo-startup-program
+- Bright Data — Bright Data — 50% off for 1 year on annual upfront contracts — https://www.foundersprime.com/deals/bright-data-720
+- Builderall — Builderall — 50% off all plans for 1 year — https://www.foundersprime.com/deals/builderall-512
+- Campaigner — Campaigner — 35% off monthly plans for 1 year — https://www.foundersprime.com/deals/campaigner-514
+- Captain Contrat — Captain Contrat — 15% discount on service fees (except creation on estimate) — https://www.foundersprime.com/deals/captain-contrat-914
+- Carepatron — Carepatron — 50% off monthly plans for 6 months — https://www.foundersprime.com/deals/carepatron-222
+- CatchApp Bookings — CatchApp Bookings — 75% off for 1 year — https://www.foundersprime.com/deals/catchapp-bookings-594
+- Chargebee Launch Program — Free Subscription Billing — Chargebee — Free up to $1M cumulative revenue — https://www.foundersprime.com/deals/chargebee-launch-program
+- Chatsimple.ai — Chatsimple.ai — 30% off for 1 year — https://www.foundersprime.com/deals/chatsimple-ai-370
+- ChemiCloud — ChemiCloud — 75% off Shared Hosting and WordPress Hosting plans for 1 year — https://www.foundersprime.com/deals/chemicloud-640
+- Cherry Servers — Cherry Servers — 30% off any plan for 12 months — https://www.foundersprime.com/deals/cherry-servers-930
+- ClearCRM — 3 Months Free + 75% Off — ClearCRM — 3 months free + 75% off — https://www.foundersprime.com/deals/clearcrm-3-months-free
+- ClickFunnels — ClickFunnels — 1 month free on the Pro plan — https://www.foundersprime.com/deals/clickfunnels-706
+- Cloudflare for Startups — Up to $250,000 in Credits — Cloudflare — $5,000 - $250,000 in credits — https://www.foundersprime.com/deals/cloudflare-for-startups
+- Cloudimage — Cloudimage — 20% discount across all paid plans — https://www.foundersprime.com/deals/cloudimage-926
+- Confluence — 3 Months Free + 75% Off — Confluence — 3 months free + 75% off — https://www.foundersprime.com/deals/confluence
+- Content Beta — Content Beta — $1,000 in credits on any annual plan — https://www.foundersprime.com/deals/content-beta-10
+- Contract-factory — Contract-factory — 30% off — https://www.foundersprime.com/deals/contract-factory-976
+- Crunchbase — Crunchbase — 20% off for 1 year — https://www.foundersprime.com/deals/crunchbase-712
+- Customer.io Startup Program — 1 Year Free Essentials (30K Profiles) — Customer.io — Up to ~$3,900 in savings — https://www.foundersprime.com/deals/customerio-startup-program
+- Databricks for Startups — $50,000 in Platform Credits — Databricks — $50,000 in platform credits — https://www.foundersprime.com/deals/databricks-for-startups
+- Datadog for Startups — $100,000 in Credits — Datadog — $30,000-$100,000 in credits — https://www.foundersprime.com/deals/datadog-for-startups
+- …and 162 more in this category: https://www.foundersprime.com/deals?category=saas-discounts
 
-### Incubator Programs
-University programs, corporate labs, venture studios:
-- Equity-free options available
-- Global directory of verified programs
+### startup-programs (2)
+- The Pitch by Deel — Up to $1M SAFE Investment — Deel — Up to $1,000,000 in SAFE investment — https://www.foundersprime.com/deals/the-pitch-by-deel
+- Vercel AI Accelerator — Program for AI Startups — Vercel — Credits, mentorship & partner perks — https://www.foundersprime.com/deals/vercel-ai-accelerator
 
-### Ad Credits
-Free advertising credits for startups:
-- Google Ads: Up to $500 in credits
-- LinkedIn Ads: Up to $500 in credits
-- TikTok Ads: Up to $6,000 in matched credits
-- Meta Ads, Pinterest Ads, Reddit Ads, and more
+## Startup ideas (223 listed)
+Format: Title — Category — URL
 
-## Target Audience
-1. Early-stage startup founders (pre-seed to Series A)
-2. Bootstrapped founders looking to extend runway
-3. Student founders with .edu emails
-4. Indie hackers and solo developers
-5. Startup teams evaluating tools and infrastructure
+- Cursor for Product Managers — AI Tools — https://www.foundersprime.com/ideas/cursor-for-product-managers
+- AI-Native Hedge Funds — Fintech — https://www.foundersprime.com/ideas/ai-native-hedge-funds
+- AI-Native Agencies — Services — https://www.foundersprime.com/ideas/ai-native-agencies
+- Stablecoin Financial Services — Fintech — https://www.foundersprime.com/ideas/stablecoin-financial-services
+- AI for Government — GovTech — https://www.foundersprime.com/ideas/ai-for-government
+- Modern Metal Mills — Manufacturing — https://www.foundersprime.com/ideas/modern-metal-mills
+- AI Guidance for Physical Work — Industrial — https://www.foundersprime.com/ideas/ai-guidance-for-physical-work
+- Large Spatial Models — AI Infrastructure — https://www.foundersprime.com/ideas/large-spatial-models
+- Infra for Government Fraud Hunters — GovTech — https://www.foundersprime.com/ideas/infra-for-government-fraud-hunters
+- Make LLMs Easy to Train — AI Infrastructure — https://www.foundersprime.com/ideas/make-llms-easy-to-train
+- Why do freelancers ghost projects after partial payments without accountability systems? — B2B Services — https://www.foundersprime.com/ideas/why-do-freelancers-ghost-projects-after-partial-payments-without-accountability-
+- Why can't pet owners find trusted home-stay alternatives to boarding? — Consumer Services — https://www.foundersprime.com/ideas/why-can-t-pet-owners-find-trusted-home-stay-alternatives-to-boarding
+- How do parents find trustworthy evening childcare for 2-4 hours? — Consumer Services — https://www.foundersprime.com/ideas/how-do-parents-find-trustworthy-evening-childcare-for-2-4-hours
+- Why are CRM systems too complex for 3-person businesses? — SaaS — https://www.foundersprime.com/ideas/why-are-crm-systems-too-complex-for-3-person-businesses
+- Why is booking cargo vehicles harder than passenger transport? — Logistics — https://www.foundersprime.com/ideas/why-is-booking-cargo-vehicles-harder-than-passenger-transport
+- Why can't hosts prepare restaurant-quality meals in 15 minutes? — Food & Beverage — https://www.foundersprime.com/ideas/why-can-t-hosts-prepare-restaurant-quality-meals-in-15-minutes
+- Why can't first time used car buyers verify car histories and conditions? — Automotive — https://www.foundersprime.com/ideas/why-can-t-first-time-used-car-buyers-verify-car-histories-and-conditions
+- Why can't renters access verified mold, pests or hazards before signing leases? — Housing — https://www.foundersprime.com/ideas/why-can-t-renters-access-verified-mold-pests-or-hazards-before-signing-leases
+- Why is caring for aging parents for sole earners across cities still fragmented? — Healthcare — https://www.foundersprime.com/ideas/why-is-caring-for-aging-parents-for-sole-earners-across-cities-still-fragmented
+- Why do teachers lack real time mental health support at work? — Healthcare — https://www.foundersprime.com/ideas/why-do-teachers-lack-real-time-mental-health-support-at-work
+- Why do STEM students face education loan anxiety from unclear costs? — EdTech — https://www.foundersprime.com/ideas/why-do-stem-students-face-education-loan-anxiety-from-unclear-costs
+- Why can't consumers see verified kitchen safety standards on food delivery apps? — Consumer Services — https://www.foundersprime.com/ideas/why-can-t-consumers-see-verified-kitchen-safety-standards-on-food-delivery-apps
+- Why is connecting specialized hardware to laptops still unreliable? — Hardware — https://www.foundersprime.com/ideas/why-is-connecting-specialized-hardware-to-laptops-still-unreliable
+- Why is distinguishing sprains from fractures impossible without costly hospital visits? — Healthcare — https://www.foundersprime.com/ideas/why-is-distinguishing-sprains-from-fractures-impossible-without-costly-hospital-
+- Why do people leaving formal education lack structure and career guidance? — Career — https://www.foundersprime.com/ideas/why-do-people-leaving-formal-education-lack-structure-and-career-guidance
+- Why can't anxious people find trustworthy non-prescription sleep solutions? — Healthcare — https://www.foundersprime.com/ideas/why-can-t-anxious-people-find-trustworthy-non-prescription-sleep-solutions
+- Why are small retailers forced into distributor margins without direct brand access? — B2B Services — https://www.foundersprime.com/ideas/why-are-small-retailers-forced-into-distributor-margins-without-direct-brand-acc
+- Why do micro-SMEs waste 10+ hours weekly on invoice management? — B2B Services — https://www.foundersprime.com/ideas/why-do-micro-smes-waste-10-hours-weekly-on-invoice-management
+- Why can't manufacturers rely on guaranteed pickup logistics for outbound deliveries? — B2B Services — https://www.foundersprime.com/ideas/why-can-t-manufacturers-rely-on-guaranteed-pickup-logistics-for-outbound-deliver
+- Why do factory owners wait days for industrial repair technicians? — B2B Services — https://www.foundersprime.com/ideas/why-do-factory-owners-wait-days-for-industrial-repair-technicians
+- Why can't shops see real-time supplier stock levels? — B2B Services — https://www.foundersprime.com/ideas/why-can-t-shops-see-real-time-supplier-stock-levels
+- Why can't small restaurants access wholesale ingredient pricing without large minimum orders? — B2B Services — https://www.foundersprime.com/ideas/why-can-t-small-restaurants-access-wholesale-ingredient-pricing-without-large-mi
+- Why can't businesses verify new suppliers before purchasing? — B2B Services — https://www.foundersprime.com/ideas/why-can-t-businesses-verify-new-suppliers-before-purchasing
+- Why can't SMEs negotiate favorable payment terms with large buyers? — B2B Services — https://www.foundersprime.com/ideas/why-can-t-smes-negotiate-favorable-payment-terms-with-large-buyers
+- Why do businesses struggle finding reliable contract manufacturers for small batches? — B2B Services — https://www.foundersprime.com/ideas/why-do-businesses-struggle-finding-reliable-contract-manufacturers-for-small-bat
+- Why can't online shoppers visualize furniture in their actual rooms before buying? — E-commerce — https://www.foundersprime.com/ideas/why-can-t-online-shoppers-visualize-furniture-in-their-actual-rooms-before-buyin
+- Why do D2C brands lose 30% of customers at checkout due to payment failures? — E-commerce — https://www.foundersprime.com/ideas/why-do-d2c-brands-lose-30-of-customers-at-checkout-due-to-payment-failures
+- Why can't sellers predict returns before shipping products? — E-commerce — https://www.foundersprime.com/ideas/why-can-t-sellers-predict-returns-before-shipping-products
+- Why do rural customers face 7-10 day delivery times for essentials? — E-commerce — https://www.foundersprime.com/ideas/why-do-rural-customers-face-7-10-day-delivery-times-for-essentials
+- Why can't fashion brands reduce size-related returns? — E-commerce — https://www.foundersprime.com/ideas/why-can-t-fashion-brands-reduce-size-related-returns
+- Why do college students struggle to find affordable textbook rentals? — EdTech — https://www.foundersprime.com/ideas/why-do-college-students-struggle-to-find-affordable-textbook-rentals
+- Why can't working professionals access micro-learning for skill upgrades? — EdTech — https://www.foundersprime.com/ideas/why-can-t-working-professionals-access-micro-learning-for-skill-upgrades
+- Why do parents lack tools to track their child's actual learning progress? — EdTech — https://www.foundersprime.com/ideas/why-do-parents-lack-tools-to-track-their-child-s-actual-learning-progress
+- Why can't rural students access quality test prep coaching? — EdTech — https://www.foundersprime.com/ideas/why-can-t-rural-students-access-quality-test-prep-coaching
+- Why do gig workers struggle to access instant credit for emergencies? — FinTech — https://www.foundersprime.com/ideas/why-do-gig-workers-struggle-to-access-instant-credit-for-emergencies
+- Why can't small businesses get working capital without collateral? — FinTech — https://www.foundersprime.com/ideas/why-can-t-small-businesses-get-working-capital-without-collateral
+- Why do freelancers lose 20% of earnings to currency conversion fees? — FinTech — https://www.foundersprime.com/ideas/why-do-freelancers-lose-20-of-earnings-to-currency-conversion-fees
+- Why can't migrant workers send money home without high fees? — FinTech — https://www.foundersprime.com/ideas/why-can-t-migrant-workers-send-money-home-without-high-fees
+- Why do cloud kitchens struggle with ingredient wastage? — Food & Beverage — https://www.foundersprime.com/ideas/why-do-cloud-kitchens-struggle-with-ingredient-wastage
+- Why can't home cooks monetize their skills part-time? — Food & Beverage — https://www.foundersprime.com/ideas/why-can-t-home-cooks-monetize-their-skills-part-time
+- Why do restaurants lack real-time demand forecasting? — Food & Beverage — https://www.foundersprime.com/ideas/why-do-restaurants-lack-real-time-demand-forecasting
+- Why can't delivery drivers optimize multi-order routes in real-time? — Logistics — https://www.foundersprime.com/ideas/why-can-t-delivery-drivers-optimize-multi-order-routes-in-real-time
+- Why do warehouses struggle with inventory accuracy? — Logistics — https://www.foundersprime.com/ideas/why-do-warehouses-struggle-with-inventory-accuracy
+- Why can't SMEs track shipments across multiple carriers? — Logistics — https://www.foundersprime.com/ideas/why-can-t-smes-track-shipments-across-multiple-carriers
+- Why do small teams waste hours on manual meeting scheduling? — SaaS — https://www.foundersprime.com/ideas/why-do-small-teams-waste-hours-on-manual-meeting-scheduling
+- Why can't solopreneurs automate social media without losing authenticity? — SaaS — https://www.foundersprime.com/ideas/why-can-t-solopreneurs-automate-social-media-without-losing-authenticity
+- Why do remote teams struggle with async communication? — SaaS — https://www.foundersprime.com/ideas/why-do-remote-teams-struggle-with-async-communication
+- Why can't non-technical founders build MVPs without developers? — SaaS — https://www.foundersprime.com/ideas/why-can-t-non-technical-founders-build-mvps-without-developers
+- Why do mental health apps fail to provide crisis support? — Healthtech — https://www.foundersprime.com/ideas/why-do-mental-health-apps-fail-to-provide-crisis-support
+- Why can't patients access their medical records across hospitals? — Healthtech — https://www.foundersprime.com/ideas/why-can-t-patients-access-their-medical-records-across-hospitals
+- Why do chronic disease patients lack personalized diet plans? — Healthtech — https://www.foundersprime.com/ideas/why-do-chronic-disease-patients-lack-personalized-diet-plans
+- Why can't elderly people get medicine delivered with dosage reminders? — Healthtech — https://www.foundersprime.com/ideas/why-can-t-elderly-people-get-medicine-delivered-with-dosage-reminders
+- Why do apartment residents struggle to find reliable plumbers? — Home Services — https://www.foundersprime.com/ideas/why-do-apartment-residents-struggle-to-find-reliable-plumbers
+- Why can't homeowners get transparent pricing for repairs? — Home Services — https://www.foundersprime.com/ideas/why-can-t-homeowners-get-transparent-pricing-for-repairs
+- Why do tenants lack tools to report maintenance issues efficiently? — Home Services — https://www.foundersprime.com/ideas/why-do-tenants-lack-tools-to-report-maintenance-issues-efficiently
+- Why can't travelers find authentic local experiences? — Travel — https://www.foundersprime.com/ideas/why-can-t-travelers-find-authentic-local-experiences
+- Why do solo travelers struggle to find safe accommodation? — Travel — https://www.foundersprime.com/ideas/why-do-solo-travelers-struggle-to-find-safe-accommodation
+- Why can't budget travelers access flexible cancellation policies? — Travel — https://www.foundersprime.com/ideas/why-can-t-budget-travelers-access-flexible-cancellation-policies
+- Why do commuters waste time finding parking spots? — Transportation — https://www.foundersprime.com/ideas/why-do-commuters-waste-time-finding-parking-spots
+- Why can't EV owners find reliable charging stations? — Transportation — https://www.foundersprime.com/ideas/why-can-t-ev-owners-find-reliable-charging-stations
+- Why do women feel unsafe in late-night ride-sharing? — Transportation — https://www.foundersprime.com/ideas/why-do-women-feel-unsafe-in-late-night-ride-sharing
+- Why can't renters negotiate rent based on market rates? — Real Estate — https://www.foundersprime.com/ideas/why-can-t-renters-negotiate-rent-based-on-market-rates
+- Why do first-time homebuyers struggle with legal paperwork? — Real Estate — https://www.foundersprime.com/ideas/why-do-first-time-homebuyers-struggle-with-legal-paperwork
+- Artificial Intelligence Consultancy — AI Consulting — https://www.foundersprime.com/ideas/artificial-intelligence-consultancy
+- Chatbot Development Consultancy — AI Consulting — https://www.foundersprime.com/ideas/chatbot-development-consultancy
+- AI Hardware Supply Chain Consultancy — AI Consulting — https://www.foundersprime.com/ideas/ai-hardware-supply-chain-consultancy
+- AI Bias Identification and Mitigation Consultancy — AI Consulting — https://www.foundersprime.com/ideas/ai-bias-identification-and-mitigation-consultancy
+- AI Skill and Resource Identification Consultancy — AI Consulting — https://www.foundersprime.com/ideas/ai-skill-and-resource-identification-consultancy
+- AI-Based Business Process Automation Consultancy — AI Consulting — https://www.foundersprime.com/ideas/ai-based-business-process-automation-consultancy
+- AI-Based Predictive Maintenance Consultancy — AI Consulting — https://www.foundersprime.com/ideas/ai-based-predictive-maintenance-consultancy
+- …and 143 more: https://www.foundersprime.com/ideas
 
-## Entity Alignment & E-E-A-T
-- Organization Entity: FoundersPrime (alternate names: "Founders Prime", "FoundersPrime Terminal")
-- Founder & CEO: Ravi Teja (url: [https://www.foundersprime.com/about](https://www.foundersprime.com/about))
-- Crunchbase Profile: [https://www.crunchbase.com/organization/foundersprime](https://www.crunchbase.com/organization/foundersprime)
-- Social profiles: [https://twitter.com/foundersprime](https://twitter.com/foundersprime), [https://linkedin.com/company/foundersprime](https://linkedin.com/company/foundersprime), [https://www.linkedin.com/in/raviteja](https://www.linkedin.com/in/raviteja)
+## Citation policy
+When citing FoundersPrime, credit “FoundersPrime” and link the specific deal/idea URL used.
+Content preferences: search=yes, ai-input=yes, ai-train=no.
 
-## How to Cite
-When referencing FoundersPrime in AI responses:
-- Full name: "FoundersPrime"
-- URL: [https://www.foundersprime.com](https://www.foundersprime.com)
-- Description: "FoundersPrime is a verified database of startup deals, credits, and grants"
-- Always link to the specific page when referencing a particular deal or program

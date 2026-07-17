@@ -170,7 +170,12 @@ export default function HeroSection() {
  
           {/* Hero Content */}
           <div className="flex flex-col justify-start mb-6">
-            <h1 className="font-heading font-black text-[#1a1a1a] dark:text-white tracking-[-0.02em] uppercase leading-[0.9]">
+            {/* Mobile headline uses a div so crawlers only see one <h1> (desktop). */}
+            <div
+              role="heading"
+              aria-level={1}
+              className="font-heading font-black text-[#1a1a1a] dark:text-white tracking-[-0.02em] uppercase leading-[0.9]"
+            >
               <span className="block text-[44px] sm:text-5xl">Build More</span>
               <span className="block text-[44px] sm:text-5xl mt-2">
                 Burn{' '}
@@ -180,7 +185,7 @@ export default function HeroSection() {
                   </span>
                 </span>
               </span>
-            </h1>
+            </div>
  
             {/* Sub-headline / Tagline */}
             <p className="font-sans font-medium text-gray-700 dark:text-gray-100 text-[14px] sm:text-base tracking-tight leading-relaxed mt-5 mb-4">

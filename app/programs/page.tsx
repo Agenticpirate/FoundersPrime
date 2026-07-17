@@ -1,4 +1,5 @@
 import { Suspense } from 'react'
+import type { Metadata } from 'next'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import DealsHeader from '@/components/deals/DealsHeader'
@@ -10,6 +11,50 @@ import { createClient } from '@/lib/supabase/server'
 import type { Deal } from '@/lib/deals-database'
 
 export const dynamic = 'force-dynamic'
+
+export async function generateMetadata({
+  searchParams,
+}: {
+  searchParams: { [key: string]: string | string[] | undefined }
+}): Promise<Metadata> {
+  const type = typeof searchParams.type === 'string' ? searchParams.type : ''
+  if (type === 'accelerators') {
+    return {
+      title: 'Startup Accelerators | Top Programs',
+      description:
+        'Discover top startup accelerators worldwide. Y Combinator, Techstars, 500 Global & more.',
+      alternates: { canonical: 'https://www.foundersprime.com/programs/accelerators' },
+    }
+  }
+  if (type === 'incubators') {
+    return {
+      title: 'Startup Incubators | Top Programs',
+      description: 'Browse verified startup incubators and venture studios worldwide.',
+      alternates: { canonical: 'https://www.foundersprime.com/programs/incubators' },
+    }
+  }
+  if (type === 'grants') {
+    return {
+      title: 'Startup Grants | Non-Dilutive Funding',
+      description: 'Non-dilutive grants and funding programs for founders.',
+      alternates: { canonical: 'https://www.foundersprime.com/programs/grants' },
+    }
+  }
+  return {
+    title: 'Startup Programs — Accelerators, Incubators & Grants',
+    description:
+      'Browse 580+ verified startup programs: top accelerators (YC, Techstars), incubators, and non-dilutive grant funding — terms, deadlines, and equity in one place.',
+    alternates: {
+      canonical: 'https://www.foundersprime.com/programs',
+    },
+    openGraph: {
+      title: 'Startup Programs | FoundersPrime',
+      description:
+        'Accelerators, incubators, and grants for founders — verified terms and apply links.',
+      url: 'https://www.foundersprime.com/programs',
+    },
+  }
+}
 
 async function getFeaturedDealsServer(): Promise<Deal[]> {
   try {
@@ -106,12 +151,4 @@ export default async function ProgramsPage({ searchParams }: { searchParams: { [
       </div>
     </FeaturedDealsProvider>
   )
-}
-
-export const metadata = {
-  title: 'Startup Programs — Accelerators, Incubators & Grants',
-  description: 'Browse 580+ verified startup programs: top accelerators (YC, Techstars), incubators, and $237M+ in non-dilutive grant funding — terms, deadlines, and equity in one place.',
-  alternates: {
-    canonical: 'https://www.foundersprime.com/programs',
-  },
 }

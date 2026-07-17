@@ -28,9 +28,11 @@ interface FilterState {
 interface DealsGridProps {
   filters?: FilterState
   initialIsPro?: boolean
+  /** Server-prefetched deals for instant paint + crawler-friendly hydration */
+  initialDeals?: Deal[]
 }
 
-export default function DealsGrid({ filters, initialIsPro }: DealsGridProps) {
+export default function DealsGrid({ filters, initialIsPro, initialDeals }: DealsGridProps) {
   const router = useRouter()
   const searchParams = useSearchParams()
   const pathname = usePathname()
@@ -40,9 +42,15 @@ export default function DealsGrid({ filters, initialIsPro }: DealsGridProps) {
   const [isNextFounder, setIsNextFounder] = useState(false)
   const [checkingAccess, setCheckingAccess] = useState(initialIsPro === undefined)
 
-  const [deals, setDeals] = useState<Deal[]>(globalDealsCache || [])
+  // Seed module cache from SSR so first client paint has data.
+  if (initialDeals?.length && !globalDealsCache) {
+    globalDealsCache = initialDeals
+    globalDealsCacheTime = Date.now()
+  }
+
+  const [deals, setDeals] = useState<Deal[]>(() => globalDealsCache || initialDeals || [])
   const [filteredDeals, setFilteredDeals] = useState<Deal[]>([])
-  const [loading, setLoading] = useState(!globalDealsCache)
+  const [loading, setLoading] = useState(!(globalDealsCache || initialDeals?.length))
   const dealsPerPage = 12
 
   const categories = getAllCategories()
@@ -59,6 +67,11 @@ export default function DealsGrid({ filters, initialIsPro }: DealsGridProps) {
     const fetchDeals = cacheValid
       ? Promise.resolve(globalDealsCache as Deal[])
       : (() => {
+        // Prefer SSR payload for first paint; still revalidate via API.
+        if (initialDeals?.length && !globalDealsPromise) {
+          globalDealsCache = initialDeals
+          globalDealsCacheTime = Date.now()
+        }
         if (!globalDealsPromise) {
           // `no-store` so the browser always revalidates (a stale browser
           // copy would keep showing deleted deals). The CDN still serves
@@ -75,7 +88,7 @@ export default function DealsGrid({ filters, initialIsPro }: DealsGridProps) {
             .catch(err => {
               console.error('Error loading deals:', err)
               globalDealsPromise = null // allow retry
-              return []
+              return initialDeals || []
             })
         }
         return globalDealsPromise

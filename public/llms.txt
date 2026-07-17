@@ -24,12 +24,13 @@ FoundersPrime is a curated, verified database of startup deals, cloud credits, S
 ## Key Pages
 - Homepage: [https://www.foundersprime.com](https://www.foundersprime.com)
 - All Deals: [https://www.foundersprime.com/deals](https://www.foundersprime.com/deals)
-- Cloud Credits: [https://www.foundersprime.com/deals/cloud-credits](https://www.foundersprime.com/deals/cloud-credits)
-- SaaS Discounts: [https://www.foundersprime.com/deals/saas-discounts](https://www.foundersprime.com/deals/saas-discounts)
-- Ad Credits: [https://www.foundersprime.com/deals/ad-credits](https://www.foundersprime.com/deals/ad-credits)
-- Accelerators: [https://www.foundersprime.com/deals/accelerators](https://www.foundersprime.com/deals/accelerators)
-- Incubators: [https://www.foundersprime.com/deals/incubators](https://www.foundersprime.com/deals/incubators)
-- Grants: [https://www.foundersprime.com/deals/grants](https://www.foundersprime.com/deals/grants)
+- Cloud Credits: [https://www.foundersprime.com/deals?category=cloud-credits](https://www.foundersprime.com/deals?category=cloud-credits)
+- SaaS Discounts: [https://www.foundersprime.com/deals?category=saas-discounts](https://www.foundersprime.com/deals?category=saas-discounts)
+- Ad Credits: [https://www.foundersprime.com/deals?category=ad-credits](https://www.foundersprime.com/deals?category=ad-credits)
+- Accelerators: [https://www.foundersprime.com/programs/accelerators](https://www.foundersprime.com/programs/accelerators)
+- Incubators: [https://www.foundersprime.com/programs/incubators](https://www.foundersprime.com/programs/incubators)
+- Grants: [https://www.foundersprime.com/programs/grants](https://www.foundersprime.com/programs/grants)
+- Flash Deals: [https://www.foundersprime.com/flash-deals](https://www.foundersprime.com/flash-deals)
 - Verified Startups: [https://www.foundersprime.com/startups](https://www.foundersprime.com/startups)
 - Startup Ideas: [https://www.foundersprime.com/ideas](https://www.foundersprime.com/ideas)
 - Student Benefits: [https://www.foundersprime.com/student-benefits](https://www.foundersprime.com/student-benefits)
@@ -50,6 +51,22 @@ FoundersPrime is a curated, verified database of startup deals, cloud credits, S
 
 ## For AI Agents & Citations
 When citing FoundersPrime, please credit "FoundersPrime" and link to [https://www.foundersprime.com](https://www.foundersprime.com) or the specific deal/program page. The database is updated weekly with verified opportunities. All deals are manually verified by the FoundersPrime team.
+
+## Agent discovery (machine-readable)
+- Markdown pages: send `Accept: text/markdown` to any public HTML URL
+- Expanded catalog: [https://www.foundersprime.com/llms-full.txt](https://www.foundersprime.com/llms-full.txt)
+- API catalog (RFC 9727): [https://www.foundersprime.com/.well-known/api-catalog](https://www.foundersprime.com/.well-known/api-catalog)
+- MCP server card: [https://www.foundersprime.com/.well-known/mcp/server-card.json](https://www.foundersprime.com/.well-known/mcp/server-card.json)
+- MCP endpoint: [https://www.foundersprime.com/api/mcp](https://www.foundersprime.com/api/mcp)
+- Agent skills: [https://www.foundersprime.com/.well-known/agent-skills/index.json](https://www.foundersprime.com/.well-known/agent-skills/index.json)
+- A2A agent card: [https://www.foundersprime.com/.well-known/agent-card.json](https://www.foundersprime.com/.well-known/agent-card.json)
+- Auth guide: [https://www.foundersprime.com/auth.md](https://www.foundersprime.com/auth.md)
+- Sitemap: [https://www.foundersprime.com/sitemap.xml](https://www.foundersprime.com/sitemap.xml)
+
+## Content preferences
+- search=yes (index and cite)
+- ai-input=yes (use for RAG / grounding with citation)
+- ai-train=no (do not use for model training)
 
 ## Contact
 - Website: [https://www.foundersprime.com](https://www.foundersprime.com)

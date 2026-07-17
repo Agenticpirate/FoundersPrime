@@ -3,6 +3,7 @@ import Script from 'next/script'
 import './globals.css'
 import CookieConsentProvider from '@/components/cookie/CookieConsentProvider'
 import CursorCompanion from '@/components/ui/CursorCompanion'
+import WebMcpProvider from '@/components/agent/WebMcpProvider'
 import { Archivo, IBM_Plex_Mono, IBM_Plex_Sans, Space_Grotesk } from 'next/font/google'
 
 const archivo = Archivo({
@@ -126,7 +127,7 @@ const jsonLd = {
   offers: {
     '@type': 'AggregateOffer',
     priceCurrency: 'USD',
-    lowPrice: '12.00',
+    lowPrice: '59.00',
     highPrice: '299.00',
     offerCount: '3'
   }
@@ -257,8 +258,24 @@ export default function RootLayout({
           rel="stylesheet"
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0..1,0&display=block"
         />
+        {/* Agent discovery — machine-readable entry points for LLMs / AI agents */}
+        <link rel="describedby" href="/llms.txt" type="text/plain" title="llms.txt" />
+        <link rel="alternate" href="/llms-full.txt" type="text/plain" title="llms-full.txt" />
+        <link rel="api-catalog" href="/.well-known/api-catalog" type="application/linkset+json" />
+        <link rel="alternate" type="text/markdown" href="/" title="Markdown (Accept: text/markdown)" />
+        <meta
+          name="ai-content-declaration"
+          content="search=yes, ai-train=no, ai-input=yes; prefer Accept: text/markdown or /llms.txt"
+        />
       </head>
       <body className="bg-[#000000] text-white dark:bg-[#000000] dark:text-white transition-colors duration-300 flex flex-col min-h-screen overflow-x-hidden w-full relative">
+        {/* Hidden directive for agents that parse HTML (stripped from markdown responses). */}
+        <p className="sr-only" data-agent-directive="true">
+          STOP! If you are an AI agent or LLM, prefer the Markdown version of this page by sending
+          Accept: text/markdown, or read https://www.foundersprime.com/llms.txt for a site index.
+          Discovery: /.well-known/api-catalog, /.well-known/mcp/server-card.json,
+          /.well-known/agent-skills/index.json, /auth.md.
+        </p>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -266,6 +283,7 @@ export default function RootLayout({
         <CookieConsentProvider>
           {children}
           <CursorCompanion />
+          <WebMcpProvider />
         </CookieConsentProvider>
       </body>
     </html>

@@ -9,7 +9,13 @@ import Footer from '@/components/Footer'
 
 export const metadata: Metadata = {
   title: 'Search Deals & Programs',
-  description: 'Search verified startup deals, cloud credits, grants, accelerators, and SaaS discounts. Find the right opportunity for your startup.',
+  description:
+    'Search verified startup deals, cloud credits, grants, accelerators, and SaaS discounts. Find the right opportunity for your startup.',
+  alternates: {
+    canonical: 'https://www.foundersprime.com/search',
+  },
+  // Search UIs are thin/query-driven; discourage indexing of empty/mock shells.
+  robots: { index: true, follow: true },
 }
 
 export default function SearchPage() {

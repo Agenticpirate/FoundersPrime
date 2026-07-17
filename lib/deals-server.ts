@@ -119,3 +119,55 @@ export async function fetchAllDealSlugsFromDB(): Promise<string[]> {
     return []
   }
 }
+
+function loadLocalDealsSync(): Deal[] {
+  try {
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    const fs = require('fs') as typeof import('fs')
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    const path = require('path') as typeof import('path')
+    const filePath = path.join(process.cwd(), 'public', 'data', 'all-deals.json')
+    if (!fs.existsSync(filePath)) return []
+    const raw = JSON.parse(fs.readFileSync(filePath, 'utf8'))
+    if (!Array.isArray(raw)) return []
+    return raw.map((d: any) => mapDealRow(d))
+  } catch {
+    return []
+  }
+}
+
+/**
+ * Server-side deal list for SSR HTML (crawler link equity) and optional
+ * client hydration. Prefers Supabase when configured; falls back to JSON.
+ */
+export async function fetchDealsListForSSR(limit = 500): Promise<Deal[]> {
+  const cfg = getSupabaseRestConfig()
+  if (cfg) {
+    try {
+      const endpoint = `${cfg.url}/rest/v1/deals?select=*&limit=${Math.min(limit, 5000)}&order=updated_at.desc.nullslast`
+      const res = await fetch(endpoint, {
+        headers: { apikey: cfg.key, Authorization: `Bearer ${cfg.key}` },
+        next: { revalidate: 300 },
+      })
+      if (res.ok) {
+        const rows = await res.json()
+        if (Array.isArray(rows) && rows.length > 0) {
+          return rows.map((d: any) => mapDealRow(d))
+        }
+      }
+    } catch {
+      // fall through to JSON
+    }
+  }
+  return loadLocalDealsSync().slice(0, limit)
+}
+
+export function filterDealsForCategory(deals: Deal[], category?: string): Deal[] {
+  if (!category) return deals
+  const c = category.toLowerCase()
+  return deals.filter((d) => {
+    const cat = (d.category || '').toLowerCase()
+    const sub = (d.subcategory || '').toLowerCase()
+    return cat === c || cat.includes(c) || sub.includes(c) || (d.tags || []).some((t) => String(t).toLowerCase().includes(c))
+  })
+}

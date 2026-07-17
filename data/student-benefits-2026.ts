@@ -4,7 +4,8 @@ export interface StudentBenefit {
   slug?: string;
   logo?: string;
   category: string;
-  appCategory: 'Software & Tools' | 'Credits & Savings' | 'Funding & Opportunities' | 'Programs' | 'Lifestyle';
+  // Free-form category labels (catalog grew beyond the original union).
+  appCategory: string;
   offerSummary: string;
   description?: string;
   benefitType: string;

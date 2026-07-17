@@ -21,8 +21,8 @@ while IFS= read -r file; do
       FOUND=$((FOUND + 1))
     fi
   fi
-done < <(find /Users/raviteja/KIRO/FoundersPrime/components \
-            /Users/raviteja/KIRO/FoundersPrime/app \
+done < <(find /Users/raviteja/GROK/FoundersPrime/components \
+            /Users/raviteja/GROK/FoundersPrime/app \
             -name "*.tsx" 2>/dev/null | grep -v node_modules)
 
 if [ $FOUND -eq 0 ]; then

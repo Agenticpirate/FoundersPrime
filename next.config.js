@@ -48,11 +48,13 @@ const securityHeaders = [
 
 const nextConfig = {
   optimizeFonts: false,
+  // Lint remains non-blocking (legacy config/version drift). Typecheck is
+  // enforced so broken types cannot ship silently.
   eslint: {
     ignoreDuringBuilds: true,
   },
   typescript: {
-    ignoreBuildErrors: true,
+    ignoreBuildErrors: false,
   },
   compress: true,
   poweredByHeader: false,
@@ -81,10 +83,60 @@ const nextConfig = {
     optimizePackageImports: ['framer-motion', 'lucide-react'],
   },
   async headers() {
+    const agentLinkHeader = [
+      '</.well-known/api-catalog>; rel="api-catalog"',
+      '</.well-known/mcp/server-card.json>; rel="describedby"; type="application/json"',
+      '</.well-known/agent-card.json>; rel="describedby"; type="application/json"',
+      '</.well-known/agent-skills/index.json>; rel="describedby"; type="application/json"',
+      '</llms.txt>; rel="describedby"; type="text/plain"',
+      '</llms-full.txt>; rel="alternate"; type="text/plain"',
+      '</sitemap.xml>; rel="sitemap"; type="application/xml"',
+      '</auth.md>; rel="service-doc"; type="text/markdown"',
+    ].join(', ')
+
     return [
       {
         source: '/(.*)',
         headers: securityHeaders,
+      },
+      // Homepage discovery headers (belt-and-suspenders with middleware Link)
+      {
+        source: '/',
+        headers: [
+          { key: 'Link', value: agentLinkHeader },
+          { key: 'Content-Signal', value: 'search=yes, ai-train=no, ai-input=yes' },
+        ],
+      },
+      {
+        source: '/llms.txt',
+        headers: [
+          { key: 'Content-Type', value: 'text/plain; charset=utf-8' },
+          { key: 'Access-Control-Allow-Origin', value: '*' },
+          { key: 'Cache-Control', value: 'public, max-age=3600' },
+        ],
+      },
+      {
+        source: '/llms-full.txt',
+        headers: [
+          { key: 'Content-Type', value: 'text/plain; charset=utf-8' },
+          { key: 'Access-Control-Allow-Origin', value: '*' },
+          { key: 'Cache-Control', value: 'public, max-age=3600' },
+        ],
+      },
+      {
+        source: '/auth.md',
+        headers: [
+          { key: 'Content-Type', value: 'text/markdown; charset=utf-8' },
+          { key: 'Access-Control-Allow-Origin', value: '*' },
+          { key: 'Cache-Control', value: 'public, max-age=3600' },
+        ],
+      },
+      {
+        source: '/.well-known/:path*',
+        headers: [
+          { key: 'Access-Control-Allow-Origin', value: '*' },
+          { key: 'Cache-Control', value: 'public, max-age=3600' },
+        ],
       },
       // Cache static public assets aggressively
       {
@@ -148,6 +200,38 @@ const nextConfig = {
         source: '/dashboard/:path*',
         headers: [{ key: 'X-Robots-Tag', value: 'noindex, nofollow' }],
       },
+      {
+        source: '/billing',
+        headers: [{ key: 'X-Robots-Tag', value: 'noindex, nofollow' }],
+      },
+      {
+        source: '/checkout',
+        headers: [{ key: 'X-Robots-Tag', value: 'noindex, nofollow' }],
+      },
+      {
+        source: '/login',
+        headers: [{ key: 'X-Robots-Tag', value: 'noindex, nofollow' }],
+      },
+      {
+        source: '/forgot-password',
+        headers: [{ key: 'X-Robots-Tag', value: 'noindex, nofollow' }],
+      },
+      {
+        source: '/auth/:path*',
+        headers: [{ key: 'X-Robots-Tag', value: 'noindex, nofollow' }],
+      },
+      {
+        source: '/featured-thank-you',
+        headers: [{ key: 'X-Robots-Tag', value: 'noindex, nofollow' }],
+      },
+      {
+        source: '/maintenance',
+        headers: [{ key: 'X-Robots-Tag', value: 'noindex, nofollow' }],
+      },
+      {
+        source: '/coming-soon',
+        headers: [{ key: 'X-Robots-Tag', value: 'noindex, nofollow' }],
+      },
     ]
   },
   async redirects() {
@@ -174,6 +258,27 @@ const nextConfig = {
       {
         source: '/deals/ad-credits',
         destination: '/deals?category=ad-credits',
+        permanent: true,
+      },
+      // Program hubs: /programs/* is canonical (avoid /deals/* duplicates).
+      {
+        source: '/deals/accelerators',
+        destination: '/programs/accelerators',
+        permanent: true,
+      },
+      {
+        source: '/deals/incubators',
+        destination: '/programs/incubators',
+        permanent: true,
+      },
+      {
+        source: '/deals/grants',
+        destination: '/programs/grants',
+        permanent: true,
+      },
+      {
+        source: '/deals/grants/:country',
+        destination: '/programs/grants',
         permanent: true,
       },
       // Unify signup page under login page with a view parameter

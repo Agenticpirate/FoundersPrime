@@ -1,3 +1,4 @@
+import Link from "next/link";
 import IdeaSaveButton, { ideaIdFromTitle } from "./IdeaSaveButton";
 
 interface IdeaCardProps {
@@ -79,6 +80,7 @@ export default function IdeaCard({ idea, index = 0 }: IdeaCardProps) {
   const cfg = getCategoryConfig(idea.category);
   const signal = idea.itchScore ? parseInt(idea.itchScore) : getSignalScore(idea.title);
   const srcLabel = getSourceLabel(idea.source);
+  const slug = ideaIdFromTitle(idea.title);
 
   return (
     <div
@@ -120,14 +122,18 @@ export default function IdeaCard({ idea, index = 0 }: IdeaCardProps) {
         </div>
 
         {/* ── Title ── */}
-        <h3 className="font-mono text-[13px] font-bold text-white leading-snug mb-2 group-hover:text-accent-yellow transition-colors line-clamp-2 flex-none">
-          {idea.title}
-        </h3>
+        <Link href={`/ideas/${slug}`} className="block flex-none">
+          <h3 className="font-mono text-[13px] font-bold text-white leading-snug mb-2 group-hover:text-accent-yellow transition-colors line-clamp-2">
+            {idea.title}
+          </h3>
+        </Link>
 
         {/* ── Description ── */}
-        <p className="font-sans text-[11px] text-gray-400 leading-relaxed line-clamp-2 flex-1 mb-3">
-          {idea.description}
-        </p>
+        <Link href={`/ideas/${slug}`} className="block flex-1 mb-3">
+          <p className="font-sans text-[11px] text-gray-400 leading-relaxed line-clamp-2">
+            {idea.description}
+          </p>
+        </Link>
 
         {/* ── Footer: source badge + signal + explore ── */}
         <div className="flex items-center gap-2 pt-3 border-t border-white/[0.07] mt-auto">
@@ -145,11 +151,14 @@ export default function IdeaCard({ idea, index = 0 }: IdeaCardProps) {
           {/* Spacer */}
           <div className="flex-1" />
 
-          {/* Explore button */}
-          <button className="inline-flex items-center gap-0.5 px-2.5 py-1 bg-white/10 hover:bg-accent-yellow text-gray-200 hover:text-black border border-white/10 hover:border-accent-yellow font-mono text-[10px] font-bold rounded-lg transition-all duration-150 whitespace-nowrap">
+          {/* Explore link (crawlable) */}
+          <Link
+            href={`/ideas/${slug}`}
+            className="inline-flex items-center gap-0.5 px-2.5 py-1 bg-white/10 hover:bg-accent-yellow text-gray-200 hover:text-black border border-white/10 hover:border-accent-yellow font-mono text-[10px] font-bold rounded-lg transition-all duration-150 whitespace-nowrap"
+          >
             Explore
             <span className="material-symbols-outlined text-[12px]">arrow_forward</span>
-          </button>
+          </Link>
         </div>
       </div>
 

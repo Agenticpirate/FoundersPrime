@@ -33,7 +33,15 @@ function readFiltersFromUrl(searchParams: URLSearchParams): FilterState {
   }
 }
 
-export default function DealsContent({ initialIsPro, initialFilters }: { initialIsPro?: boolean; initialFilters?: FilterState }) {
+export default function DealsContent({
+  initialIsPro,
+  initialFilters,
+  initialDeals,
+}: {
+  initialIsPro?: boolean
+  initialFilters?: FilterState
+  initialDeals?: import('@/lib/deals-database').Deal[]
+}) {
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
@@ -219,7 +227,7 @@ export default function DealsContent({ initialIsPro, initialFilters }: { initial
         {/* Right Column: Filters & Grid */}
         <div className="flex-1 min-w-0 flex flex-col gap-4">
           <DealsFilterBar onFilterChange={handleFilterChange} currentFilters={filters} />
-          <DealsGrid filters={filters} initialIsPro={initialIsPro} />
+          <DealsGrid filters={filters} initialIsPro={initialIsPro} initialDeals={initialDeals} />
         </div>
 
         {/* Right Rail: stack of Featured slots filling the column — wide

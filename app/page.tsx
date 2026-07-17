@@ -13,10 +13,20 @@ const FounderLogs = dynamic(() => import('@/components/FounderLogs'))
 const ProviderSection = dynamic(() => import('@/components/ProviderSection'))
 
 export const metadata: Metadata = {
-  title: 'FoundersPrime | Verified Startup Deals & Grants',
-  description: 'Join thousands of founders saving millions with our verified database of startup credits, grants, and software deals.',
+  // absolute avoids double brand from root template `%s | FoundersPrime`
+  title: {
+    absolute: 'FoundersPrime | Verified Startup Deals & Grants',
+  },
+  description:
+    'Join thousands of founders saving millions with our verified database of startup credits, grants, and software deals.',
   alternates: {
     canonical: 'https://www.foundersprime.com',
+  },
+  openGraph: {
+    title: 'FoundersPrime | Free Credits. Real Grants. Zero Dilution.',
+    description:
+      'Access verified deals, non-dilutive grants, and startup credits worth $500K+. Built for modern founders.',
+    url: 'https://www.foundersprime.com',
   },
 }
 
