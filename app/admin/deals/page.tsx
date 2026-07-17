@@ -1,13 +1,16 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { useSearchParams } from 'next/navigation'
 import { Deal, dealCategories } from '@/lib/deals-database'
 import SmartDealImporter from '@/components/admin/SmartDealImporter'
+import AdminHeader from '@/components/admin/AdminHeader'
 
 export default function AdminDealsPage() {
+  const searchParams = useSearchParams()
   const [deals, setDeals] = useState<Deal[]>([])
   const [loading, setLoading] = useState(true)
-  const [searchQuery, setSearchQuery] = useState('')
+  const [searchQuery, setSearchQuery] = useState(searchParams.get('q') || '')
   const [selectedCategory, setSelectedCategory] = useState('all')
   const [selectedDeals, setSelectedDeals] = useState<Set<string>>(new Set())
   const [editingDeal, setEditingDeal] = useState<Deal | null>(null)
@@ -170,24 +173,26 @@ export default function AdminDealsPage() {
   }
 
   return (
-    <div className="p-3 md:p-6 space-y-4 bg-gray-50 min-h-full">
+    <>
+    <AdminHeader title="Deals" subtitle="Catalog CRUD · import · export" />
+    <div className="p-3 md:p-6 space-y-4 bg-[#090a0f] min-h-full text-white">
       {/* Header Actions */}
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
-          <h1 className="text-lg md:text-xl font-black text-black font-mono uppercase">Deals</h1>
-          <p className="text-gray-500 font-mono text-[10px]">{stats.total} deals in database</p>
+          <h1 className="text-lg md:text-xl font-black text-white font-mono uppercase">Deals</h1>
+          <p className="text-zinc-500 font-mono text-[10px]">{stats.total} deals in database</p>
         </div>
         <div className="flex gap-2">
-          <button onClick={() => setShowAddModal(true)} className="bg-cyan-500 text-white px-3 py-1.5 border-2 border-black font-bold hover:bg-cyan-600 shadow-[2px_2px_0_0_#000] transition-all font-mono uppercase text-[10px]">+ Add</button>
-          <button onClick={() => setShowImportModal(true)} className="bg-purple-500 text-white px-3 py-1.5 border-2 border-black font-bold hover:bg-purple-600 shadow-[2px_2px_0_0_#000] transition-all font-mono uppercase text-[10px]">Import</button>
+          <button onClick={() => setShowAddModal(true)} className="bg-cyan-600 text-white px-3 py-1.5 border border-white/15 font-bold hover:bg-cyan-600  transition-all font-mono uppercase text-[10px]">+ Add</button>
+          <button onClick={() => setShowImportModal(true)} className="bg-purple-500 text-white px-3 py-1.5 border border-white/15 font-bold hover:bg-purple-600  transition-all font-mono uppercase text-[10px]">Import</button>
           <div className="inline-flex gap-1">
-            <a href="/api/admin/export?format=txt" download className="bg-green-500 text-white px-2.5 py-1.5 border-2 border-black font-bold hover:bg-green-600 shadow-[2px_2px_0_0_#000] transition-all font-mono uppercase text-[10px] flex items-center gap-1">
+            <a href="/api/admin/export?format=txt" download className="bg-green-500 text-white px-2.5 py-1.5 border border-white/15 font-bold hover:bg-green-600  transition-all font-mono uppercase text-[10px] flex items-center gap-1">
               Notepad
             </a>
-            <a href="/api/admin/export?format=csv" download className="bg-emerald-600 text-white px-2.5 py-1.5 border-2 border-black font-bold hover:bg-emerald-700 shadow-[2px_2px_0_0_#000] transition-all font-mono uppercase text-[10px] flex items-center gap-1">
+            <a href="/api/admin/export?format=csv" download className="bg-emerald-600 text-white px-2.5 py-1.5 border border-white/15 font-bold hover:bg-emerald-700  transition-all font-mono uppercase text-[10px] flex items-center gap-1">
               Excel
             </a>
-            <button onClick={exportAsPdf} className="bg-red-500 text-white px-2.5 py-1.5 border-2 border-black font-bold hover:bg-red-600 shadow-[2px_2px_0_0_#000] transition-all font-mono uppercase text-[10px] flex items-center gap-1">
+            <button onClick={exportAsPdf} className="bg-red-500 text-white px-2.5 py-1.5 border border-white/15 font-bold hover:bg-red-600  transition-all font-mono uppercase text-[10px] flex items-center gap-1">
               PDF
             </button>
           </div>
@@ -203,50 +208,50 @@ export default function AdminDealsPage() {
           { label: 'Categories', value: stats.categories, color: 'text-purple-500' },
           { label: 'Duplicates', value: duplicateDeals.length, color: 'text-orange-500', clickable: true },
         ].map(s => (
-          <div key={s.label} className={`bg-white border-2 border-black p-2 shadow-[2px_2px_0_0_#000] ${s.clickable ? 'cursor-pointer hover:bg-yellow-50' : ''}`} onClick={s.clickable ? () => setShowDuplicatesOnly(!showDuplicatesOnly) : undefined}>
+          <div key={s.label} className={`bg-[#0d0e12] border border-white/10 p-2  ${s.clickable ? 'cursor-pointer hover:bg-white/5' : ''}`} onClick={s.clickable ? () => setShowDuplicatesOnly(!showDuplicatesOnly) : undefined}>
             <div className={`text-xl md:text-2xl font-black ${s.color}`}>{s.value}</div>
-            <div className="text-gray-500 font-bold text-[9px] uppercase">{s.label}</div>
+            <div className="text-zinc-500 font-bold text-[9px] uppercase">{s.label}</div>
           </div>
         ))}
       </div>
 
       {/* Filters */}
-      <div className="bg-white border-2 border-black p-2 shadow-[2px_2px_0_0_#000]">
+      <div className="bg-[#0d0e12] border border-white/10 p-2 ">
         <div className="flex flex-wrap gap-2 items-center">
-          <input type="text" placeholder="Search..." value={searchQuery} onChange={e => setSearchQuery(e.target.value)} className="px-3 py-1.5 border-2 border-black w-48 font-mono text-xs" />
-          <select value={selectedCategory} onChange={e => setSelectedCategory(e.target.value)} className="px-2 py-1.5 border-2 border-black bg-white font-mono text-xs">
+          <input type="text" placeholder="Search..." value={searchQuery} onChange={e => setSearchQuery(e.target.value)} className="px-3 py-1.5 border border-white/15 bg-[#121318] text-white w-full sm:w-48 font-mono text-xs rounded-lg" />
+          <select value={selectedCategory} onChange={e => setSelectedCategory(e.target.value)} className="px-2 py-1.5 border border-white/15 bg-[#121318] text-white font-mono text-xs rounded-lg">
             <option value="all">All ({deals.length})</option>
             {dealCategories.map(c => <option key={c.id} value={c.id}>{c.name} ({deals.filter(d => d.category === c.id).length})</option>)}
           </select>
-          <select value={`${sortBy}-${sortOrder}`} onChange={e => { const [f, o] = e.target.value.split('-'); setSortBy(f as any); setSortOrder(o as any) }} className="px-2 py-1.5 border-2 border-black bg-white font-mono text-xs">
+          <select value={`${sortBy}-${sortOrder}`} onChange={e => { const [f, o] = e.target.value.split('-'); setSortBy(f as any); setSortOrder(o as any) }} className="px-2 py-1.5 border border-white/15 bg-[#121318] text-white font-mono text-xs rounded-lg">
             <option value="createdAt-desc">Newest</option>
             <option value="createdAt-asc">Oldest</option>
             <option value="title-asc">A-Z</option>
             <option value="provider-asc">Provider</option>
           </select>
-          <button onClick={() => setShowDuplicatesOnly(!showDuplicatesOnly)} className={`px-2 py-1.5 border-2 border-black font-bold text-[10px] font-mono ${showDuplicatesOnly ? 'bg-orange-500 text-white' : 'bg-white'}`}>
+          <button onClick={() => setShowDuplicatesOnly(!showDuplicatesOnly)} className={`px-2 py-1.5 border border-white/15 font-bold text-[10px] font-mono rounded-lg ${showDuplicatesOnly ? 'bg-orange-500 text-white' : 'bg-[#121318] text-zinc-300'}`}>
             {showDuplicatesOnly ? 'Dupes ✓' : 'Dupes'}
           </button>
           <div className="ml-auto flex gap-1">
-            <button onClick={() => setViewMode('table')} className={`p-1.5 border-2 border-black text-xs ${viewMode === 'table' ? 'bg-cyan-500 text-white' : 'bg-white'}`}>☰</button>
-            <button onClick={() => setViewMode('grid')} className={`p-1.5 border-2 border-black text-xs ${viewMode === 'grid' ? 'bg-cyan-500 text-white' : 'bg-white'}`}>⊞</button>
+            <button onClick={() => setViewMode('table')} className={`p-1.5 border border-white/15 text-xs rounded-lg ${viewMode === 'table' ? 'bg-cyan-600 text-white' : 'bg-[#121318] text-zinc-300'}`}>☰</button>
+            <button onClick={() => setViewMode('grid')} className={`p-1.5 border border-white/15 text-xs rounded-lg ${viewMode === 'grid' ? 'bg-cyan-600 text-white' : 'bg-[#121318] text-zinc-300'}`}>⊞</button>
           </div>
         </div>
       </div>
 
       {/* Bulk Actions */}
       {selectedDeals.size > 0 && (
-        <div className="bg-yellow-100 border-2 border-black p-2 shadow-[2px_2px_0_0_#000]">
+        <div className="bg-yellow-100 border border-white/15 p-2 ">
           <div className="flex items-center gap-3 text-xs font-mono">
             <span className="font-bold">{selectedDeals.size} selected</span>
-            <button onClick={bulkDelete} className="bg-red-500 text-white px-3 py-1 border border-black font-bold hover:bg-red-600 text-[10px]">Delete</button>
-            <button onClick={() => setSelectedDeals(new Set())} className="bg-gray-300 px-3 py-1 border border-black font-bold text-[10px]">Clear</button>
+            <button onClick={bulkDelete} className="bg-red-500 text-white px-3 py-1 border border-white/15 font-bold hover:bg-red-600 text-[10px]">Delete</button>
+            <button onClick={() => setSelectedDeals(new Set())} className="bg-zinc-700 text-white px-3 py-1 border border-white/15 font-bold text-[10px]">Clear</button>
           </div>
         </div>
       )}
 
       {/* Deals Display */}
-      <div className="bg-white border-2 border-black shadow-[2px_2px_0_0_#000] overflow-hidden">
+      <div className="bg-[#0d0e12] border border-white/10  overflow-hidden">
         {loading ? (
           <div className="p-12 text-center">
             <div className="text-4xl animate-spin inline-block">⚡</div>
@@ -256,10 +261,10 @@ export default function AdminDealsPage() {
           <div className="p-12 text-center">
             <div className="text-6xl mb-4">📭</div>
             <p className="text-xl font-bold mb-2">No deals found</p>
-            <p className="text-gray-500 mb-4">Try adjusting your filters or import some deals</p>
+            <p className="text-zinc-500 mb-4">Try adjusting your filters or import some deals</p>
             <button
               onClick={() => setShowImportModal(true)}
-              className="bg-purple-500 text-white px-6 py-3 border-2 border-black font-bold hover:bg-purple-600"
+              className="bg-purple-500 text-white px-6 py-3 border border-white/15 font-bold hover:bg-purple-600"
             >
               📥 Import Deals
             </button>
@@ -267,7 +272,7 @@ export default function AdminDealsPage() {
         ) : viewMode === 'table' ? (
           <div className="overflow-x-auto">
             <table className="w-full font-mono text-[11px] md:text-xs">
-              <thead className="bg-gray-100 border-b-2 border-black">
+              <thead className="bg-[#121318] border-b border-white/10">
                 <tr>
                   <th className="p-2 text-left w-8">
                     <input type="checkbox" checked={selectedDeals.size === filtered.length && filtered.length > 0} onChange={toggleSelectAll} className="w-4 h-4 cursor-pointer accent-cyan-500" />
@@ -283,22 +288,22 @@ export default function AdminDealsPage() {
                 {filtered.slice(0, 100).map(deal => {
                   const isDuplicate = duplicateIds.has(deal.id)
                   return (
-                    <tr key={deal.id} className={`border-b border-gray-100 hover:bg-gray-50 ${isDuplicate ? 'bg-orange-50' : ''}`}>
+                    <tr key={deal.id} className={`border-b border-white/5 hover:bg-white/[0.03] ${isDuplicate ? 'bg-orange-500/10' : ''}`}>
                       <td className="p-2">
                         <input type="checkbox" checked={selectedDeals.has(deal.id)} onChange={() => toggleSelect(deal.id)} className="w-4 h-4 cursor-pointer accent-cyan-500" />
                       </td>
                       <td className="p-2">
                         <div className="font-bold truncate max-w-[200px]">{deal.title}</div>
-                        <div className="text-[10px] text-gray-400">{deal.provider}</div>
+                        <div className="text-[10px] text-zinc-500">{deal.provider}</div>
                       </td>
                       <td className="p-2 hidden sm:table-cell">
-                        <span className="bg-gray-100 px-1.5 py-0.5 text-[9px] font-bold border border-black">
+                        <span className="bg-gray-100 px-1.5 py-0.5 text-[9px] font-bold border border-white/15">
                           {dealCategories.find(c => c.id === deal.category)?.name || deal.category}
                         </span>
                       </td>
                       <td className="p-2 font-bold text-green-600">{deal.value}</td>
                       <td className="p-2 hidden md:table-cell">
-                        <select value={deal.status || 'active'} onChange={e => updateStatus(deal.id, e.target.value)} className={`px-1.5 py-0.5 border border-black text-[9px] font-bold cursor-pointer ${deal.status === 'active' ? 'bg-green-200' : deal.status === 'expired' ? 'bg-red-200' : 'bg-yellow-200'}`}>
+                        <select value={deal.status || 'active'} onChange={e => updateStatus(deal.id, e.target.value)} className={`px-1.5 py-0.5 border border-white/15 text-[9px] font-bold cursor-pointer ${deal.status === 'active' ? 'bg-emerald-500/20 text-emerald-300' : deal.status === 'expired' ? 'bg-red-500/20 text-red-300' : 'bg-amber-500/20 text-amber-200'}`}>
                           <option value="active">Active</option>
                           <option value="expired">Expired</option>
                           <option value="coming-soon">Soon</option>
@@ -306,9 +311,9 @@ export default function AdminDealsPage() {
                       </td>
                       <td className="p-2">
                         <div className="flex gap-1">
-                          <button onClick={() => setEditingDeal(deal)} className="bg-blue-500 text-white px-2 py-0.5 text-[10px] font-bold border border-black">Edit</button>
-                          <a href={`/deals/${deal.slug}`} target="_blank" className="bg-green-500 text-white px-2 py-0.5 text-[10px] font-bold border border-black">View</a>
-                          <button onClick={() => deleteDeal(deal.id, deal.title)} className="bg-red-500 text-white px-2 py-0.5 text-[10px] font-bold border border-black">Del</button>
+                          <button onClick={() => setEditingDeal(deal)} className="bg-blue-500 text-white px-2 py-0.5 text-[10px] font-bold border border-white/15">Edit</button>
+                          <a href={`/deals/${deal.slug}`} target="_blank" className="bg-green-500 text-white px-2 py-0.5 text-[10px] font-bold border border-white/15">View</a>
+                          <button onClick={() => deleteDeal(deal.id, deal.title)} className="bg-red-500 text-white px-2 py-0.5 text-[10px] font-bold border border-white/15">Del</button>
                         </div>
                       </td>
                     </tr>
@@ -317,7 +322,7 @@ export default function AdminDealsPage() {
               </tbody>
             </table>
             {filtered.length > 100 && (
-              <div className="p-4 text-center bg-gray-100 border-t-2 border-black">
+              <div className="p-4 text-center bg-[#121318] border-t border-white/10">
                 <p className="text-gray-600">Showing 100 of {filtered.length} deals</p>
               </div>
             )}
@@ -325,7 +330,7 @@ export default function AdminDealsPage() {
         ) : (
           <div className="p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {filtered.slice(0, 50).map(deal => (
-              <div key={deal.id} className="border-2 border-black p-4 hover:shadow-[4px_4px_0_0_#000] transition-all">
+              <div key={deal.id} className="border border-white/15 p-4 hover:border-accent-yellow/30 transition-all">
                 <div className="flex items-start justify-between mb-2">
                   <input
                     type="checkbox"
@@ -333,25 +338,25 @@ export default function AdminDealsPage() {
                     onChange={() => toggleSelect(deal.id)}
                     className="w-5 h-5 cursor-pointer accent-cyan-500"
                   />
-                  <span className={`px-2 py-1 text-xs font-bold ${deal.status === 'active' ? 'bg-green-200' :
-                    deal.status === 'expired' ? 'bg-red-200' : 'bg-yellow-200'
+                  <span className={`px-2 py-1 text-xs font-bold ${deal.status === 'active' ? 'bg-emerald-500/20 text-emerald-300' :
+                    deal.status === 'expired' ? 'bg-red-500/20 text-red-300' : 'bg-amber-500/20 text-amber-200'
                     }`}>
                     {deal.status}
                   </span>
                 </div>
                 <h3 className="font-bold text-lg mb-1">{deal.title}</h3>
-                <p className="text-gray-500 text-sm mb-2">{deal.provider}</p>
+                <p className="text-zinc-500 text-sm mb-2">{deal.provider}</p>
                 <p className="text-green-600 font-bold mb-3">{deal.value}</p>
                 <div className="flex gap-2">
                   <button
                     onClick={() => setEditingDeal(deal)}
-                    className="flex-1 bg-blue-500 text-white py-1 text-sm font-bold border-2 border-black"
+                    className="flex-1 bg-blue-500 text-white py-1 text-sm font-bold border border-white/15"
                   >
                     Edit
                   </button>
                   <button
                     onClick={() => deleteDeal(deal.id, deal.title)}
-                    className="bg-red-500 text-white px-3 py-1 text-sm font-bold border-2 border-black"
+                    className="bg-red-500 text-white px-3 py-1 text-sm font-bold border border-white/15"
                   >
                     🗑️
                   </button>
@@ -382,6 +387,7 @@ export default function AdminDealsPage() {
         )
       }
     </div>
+    </>
   )
 }
 
@@ -422,8 +428,8 @@ function DealModal({ deal, onClose, onSave }: { deal: Deal | null; onClose: () =
 
   return (
     <div className="fixed inset-0 bg-black/70 flex items-center justify-center p-4 z-[9999]">
-      <div className="bg-white border-4 border-black shadow-[8px_8px_0_0_#000] w-full max-w-2xl max-h-[90vh] overflow-auto">
-        <div className="bg-cyan-500 p-4 border-b-4 border-black">
+      <div className="bg-[#0d0e12] border border-white/10 rounded-2xl w-full max-w-2xl max-h-[90vh] overflow-auto">
+        <div className="bg-[#121318] p-4 border-b border-white/10 rounded-t-2xl">
           <h2 className="text-xl font-black text-white">{deal ? '✏️ Edit Deal' : '➕ Add New Deal'}</h2>
         </div>
         <form onSubmit={submit} className="p-6 space-y-4">
@@ -433,7 +439,7 @@ function DealModal({ deal, onClose, onSave }: { deal: Deal | null; onClose: () =
               required
               value={form.title}
               onChange={e => setForm({ ...form, title: e.target.value })}
-              className="w-full p-3 border-2 border-black"
+              className="w-full p-3 rounded-lg bg-[#121318] text-white border border-white/15"
               placeholder="e.g., AWS Activate Credits"
             />
           </div>
@@ -444,7 +450,7 @@ function DealModal({ deal, onClose, onSave }: { deal: Deal | null; onClose: () =
                 required
                 value={form.provider}
                 onChange={e => setForm({ ...form, provider: e.target.value })}
-                className="w-full p-3 border-2 border-black"
+                className="w-full p-3 rounded-lg bg-[#121318] text-white border border-white/15"
                 placeholder="e.g., Amazon Web Services"
               />
             </div>
@@ -454,7 +460,7 @@ function DealModal({ deal, onClose, onSave }: { deal: Deal | null; onClose: () =
                 required
                 value={form.value}
                 onChange={e => setForm({ ...form, value: e.target.value })}
-                className="w-full p-3 border-2 border-black"
+                className="w-full p-3 rounded-lg bg-[#121318] text-white border border-white/15"
                 placeholder="e.g., $100,000 or 50% off"
               />
             </div>
@@ -465,7 +471,7 @@ function DealModal({ deal, onClose, onSave }: { deal: Deal | null; onClose: () =
               <select
                 value={form.category}
                 onChange={e => setForm({ ...form, category: e.target.value })}
-                className="w-full p-3 border-2 border-black bg-white"
+                className="w-full p-3 border border-white/15 bg-[#121318] text-white rounded-lg"
               >
                 {dealCategories.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
               </select>
@@ -475,7 +481,7 @@ function DealModal({ deal, onClose, onSave }: { deal: Deal | null; onClose: () =
               <select
                 value={form.status}
                 onChange={e => setForm({ ...form, status: e.target.value as any })}
-                className="w-full p-3 border-2 border-black bg-white"
+                className="w-full p-3 border border-white/15 bg-[#121318] text-white rounded-lg"
               >
                 <option value="active">Active</option>
                 <option value="expired">Expired</option>
@@ -490,7 +496,7 @@ function DealModal({ deal, onClose, onSave }: { deal: Deal | null; onClose: () =
               rows={4}
               value={form.description}
               onChange={e => setForm({ ...form, description: e.target.value })}
-              className="w-full p-3 border-2 border-black"
+              className="w-full p-3 rounded-lg bg-[#121318] text-white border border-white/15"
               placeholder="Describe the deal, what's included, and any important details..."
             />
           </div>
@@ -501,7 +507,7 @@ function DealModal({ deal, onClose, onSave }: { deal: Deal | null; onClose: () =
               type="url"
               value={form.applicationUrl}
               onChange={e => setForm({ ...form, applicationUrl: e.target.value })}
-              className="w-full p-3 border-2 border-black"
+              className="w-full p-3 rounded-lg bg-[#121318] text-white border border-white/15"
               placeholder="https://..."
             />
           </div>
@@ -511,7 +517,7 @@ function DealModal({ deal, onClose, onSave }: { deal: Deal | null; onClose: () =
               rows={3}
               value={form.eligibility}
               onChange={e => setForm({ ...form, eligibility: e.target.value })}
-              className="w-full p-3 border-2 border-black"
+              className="w-full p-3 rounded-lg bg-[#121318] text-white border border-white/15"
               placeholder="Early-stage startups&#10;Less than 2 years old&#10;Under $10M funding"
             />
           </div>
@@ -520,22 +526,22 @@ function DealModal({ deal, onClose, onSave }: { deal: Deal | null; onClose: () =
             <input
               value={form.tags}
               onChange={e => setForm({ ...form, tags: e.target.value })}
-              className="w-full p-3 border-2 border-black"
+              className="w-full p-3 rounded-lg bg-[#121318] text-white border border-white/15"
               placeholder="cloud, aws, credits, startup"
             />
           </div>
-          <div className="flex gap-4 pt-4 border-t-2 border-gray-200">
+          <div className="flex gap-4 pt-4 border-t border-white/10">
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 p-3 border-2 border-black font-bold hover:bg-gray-100"
+              className="flex-1 p-3 border border-white/15 font-bold hover:bg-white/5"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={saving}
-              className="flex-1 p-3 bg-cyan-500 text-white border-2 border-black font-bold hover:bg-cyan-600 disabled:opacity-50"
+              className="flex-1 p-3 bg-cyan-600 text-white border border-white/15 font-bold hover:bg-cyan-600 disabled:opacity-50"
             >
               {saving ? 'Saving...' : deal ? 'Update Deal' : 'Create Deal'}
             </button>

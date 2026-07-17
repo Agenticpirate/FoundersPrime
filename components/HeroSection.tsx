@@ -3,8 +3,10 @@
 import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import CountUp from 'react-countup'
+import { motion, useReducedMotion } from 'framer-motion'
 import { GlowingEffect } from '@/components/ui/GlowingEffect'
 import BrandLogo from '@/components/ui/BrandLogo'
+import { FadeUp, SoftFloat, premiumEase } from '@/components/ui/premium-motion'
 
 /* ─── Trusted-by logos (bottom proof bar) ─── */
 const TRUSTED_BRANDS = [
@@ -43,14 +45,14 @@ const STAT_CARDS = [
   { value: '$50K', label: 'Ad Credits', icon: 'ad', href: '/deals?category=ad-credits' },
   { value: '200+', label: 'SaaS Deals', icon: 'apps', href: '/deals?category=saas-discounts' },
   { value: '50+', label: 'Accelerators', icon: 'rocket_launch', href: '/programs?type=accelerators' },
-  { value: '1K+', label: 'Verified Startups', icon: 'verified_user', href: '/startups' },
+  { value: '200+', label: 'Startup Ideas', icon: 'lightbulb', href: '/ideas' },
 ]
 
 /* ─── Deal counts (hero stats strip) ─── */
 const DEAL_STATS = [
   { value: '300+', label: 'Founders Deals', icon: 'local_offer', href: '/deals' },
   { value: '259+', label: 'Programs (Accelerators/Incubators/Grants)', icon: 'rocket_launch', href: '/programs' },
-  { value: '918+', label: 'Student Benefits', icon: 'school', href: '/student-benefits' },
+  { value: '1000+', label: 'Student Benefits', icon: 'school', href: '/student-benefits' },
 ]
 
 /* Chamfered-corner clip paths (brutalist notch detail) */
@@ -93,11 +95,11 @@ function StatTile({ stat }: { stat: (typeof STAT_CARDS)[number] }) {
           arrow_outward
         </span>
 
-        <span className="material-symbols-outlined !text-[26px] text-green-400 mb-3 block">
+        <span className="material-symbols-outlined !text-[26px] text-accent-yellow mb-3 block">
           {stat.icon}
         </span>
 
-        <p className="font-mono text-[7px] md:text-[8px] font-bold uppercase tracking-[0.2em] text-green-400/80 mb-1">
+        <p className="font-mono text-[7px] md:text-[8px] font-bold uppercase tracking-[0.2em] text-accent-yellow/80 mb-1">
           Up to
         </p>
         <p className="font-mono font-black text-xl md:text-2xl text-white leading-none">{stat.value}</p>
@@ -118,6 +120,7 @@ export default function HeroSection() {
   /* Live "total saved by founders" counter — single hero metric */
   const [savedEnd, setSavedEnd] = useState(3_055_362)
   const savedStartRef = useRef(3_055_362)
+  const reduce = useReducedMotion()
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -132,9 +135,13 @@ export default function HeroSection() {
 
   return (
     <section className="relative overflow-hidden grid-bg bg-[#f6f8f8] dark:bg-[#000000] text-[#1a1a1a] dark:text-white pt-8 md:pt-12 pb-0 transition-colors duration-300">
-      {/* Soft glow accents */}
-      <div className="hidden lg:block absolute -top-32 -left-32 w-96 h-96 bg-accent-yellow/15 dark:bg-accent-yellow/5 rounded-full blur-3xl pointer-events-none" />
-      <div className="hidden lg:block absolute -bottom-40 -right-32 w-[28rem] h-[28rem] bg-accent-yellow/10 dark:bg-accent-yellow/5 rounded-full blur-3xl pointer-events-none" />
+      {/* Soft glow accents — slow float for premium depth */}
+      <SoftFloat className="hidden lg:block absolute -top-32 -left-32 w-96 h-96 pointer-events-none" duration={10}>
+        <div className="w-full h-full bg-accent-yellow/15 dark:bg-accent-yellow/5 rounded-full blur-3xl" />
+      </SoftFloat>
+      <SoftFloat className="hidden lg:block absolute -bottom-40 -right-32 w-[28rem] h-[28rem] pointer-events-none" duration={12}>
+        <div className="w-full h-full bg-accent-yellow/10 dark:bg-accent-yellow/5 rounded-full blur-3xl" />
+      </SoftFloat>
 
       {/* ─── Blueprint detailing: left-edge ruler ticks ─── */}
       <div
@@ -160,122 +167,157 @@ export default function HeroSection() {
         <PlusMark className="hidden md:block absolute right-0 -top-1 lg:left-[58%] lg:right-auto" />
 
         {/* ─── Mobile Hero Section ─── */}
-        <div className="block lg:hidden pt-6 pb-6 bg-[#f6f8f8] dark:bg-[#000000] text-[#1a1a1a] dark:text-white -mx-4 px-4 relative z-10 grid-bg">
-          {/* Top badge */}
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 border border-gray-250 dark:border-white/10 rounded-full bg-white/60 dark:bg-white/[0.03] w-fit mb-5">
-            <span className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse" />
-            <span className="font-sans text-[9px] font-black uppercase tracking-[0.18em] text-[#1a1a1a] dark:text-white">LIVE</span>
-            <span className="font-sans text-[9px] font-bold uppercase tracking-[0.18em] text-gray-500 dark:text-gray-400">FOUNDER-APPROVED</span>
-          </div>
- 
-          {/* Hero Content */}
-          <div className="flex flex-col justify-start mb-6">
-            {/* Mobile headline uses a div so crawlers only see one <h1> (desktop). */}
+        <div className="block lg:hidden pt-5 pb-8 bg-[#f6f8f8] dark:bg-[#000000] text-[#1a1a1a] dark:text-white -mx-4 px-4 relative z-10">
+          {/* Ambient gold glow (mobile) */}
+          <div
+            aria-hidden
+            className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 w-[120%] h-48 bg-accent-yellow/[0.07] dark:bg-accent-yellow/[0.09] blur-3xl"
+          />
+
+          <div className="relative">
+            {/* Top badge */}
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 border border-black/10 dark:border-white/12 rounded-full bg-white/80 dark:bg-white/[0.04] backdrop-blur-sm w-fit mb-5 shadow-sm dark:shadow-none">
+              <span className="relative flex h-1.5 w-1.5">
+                <span className="absolute inline-flex h-full w-full rounded-full bg-accent-yellow opacity-60 animate-ping" />
+                <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-accent-yellow" />
+              </span>
+              <span className="font-mono text-[9px] font-black uppercase tracking-[0.16em] text-gray-900 dark:text-white">
+                Live
+              </span>
+              <span className="w-px h-3 bg-black/10 dark:bg-white/15" />
+              <span className="font-mono text-[9px] font-bold uppercase tracking-[0.14em] text-gray-500 dark:text-zinc-400">
+                Founder-approved
+              </span>
+            </div>
+
+            {/* Headline — div so crawlers only get one <h1> (desktop) */}
             <div
               role="heading"
               aria-level={1}
-              className="font-heading font-black text-[#1a1a1a] dark:text-white tracking-[-0.02em] uppercase leading-[0.9]"
+              className="font-heading font-black text-gray-900 dark:text-white tracking-[-0.03em] uppercase leading-[0.88]"
             >
-              <span className="block text-[44px] sm:text-5xl">Build More</span>
-              <span className="block text-[44px] sm:text-5xl mt-2">
+              <span className="block text-[clamp(2.35rem,9.5vw,3.25rem)]">Build More</span>
+              <span className="block text-[clamp(2.35rem,9.5vw,3.25rem)] mt-1.5">
                 Burn{' '}
-                <span className="relative inline-block text-black">
-                  <span className="relative z-10 bg-[#FFD500] px-2.5 py-0.5 leading-none select-none inline-block font-heading font-black">
+                <span className="relative inline-block text-black align-baseline">
+                  <span className="relative z-10 bg-accent-yellow px-2.5 py-0.5 leading-none select-none inline-block font-heading font-black rounded-sm">
                     Less
                   </span>
                 </span>
               </span>
             </div>
- 
-            {/* Sub-headline / Tagline */}
-            <p className="font-sans font-medium text-gray-700 dark:text-gray-100 text-[14px] sm:text-base tracking-tight leading-relaxed mt-5 mb-4">
+
+            <p className="font-sans font-medium text-gray-600 dark:text-zinc-300 text-[14px] sm:text-[15px] tracking-tight leading-relaxed mt-4 mb-5 max-w-[22rem]">
               Unlock up to{' '}
-              <span className="text-[#FFD500] dark:text-accent-yellow font-black">$500K</span>{' '}
-              in verified startup credits, grants, tools, and founder perks.
+              <span className="text-amber-600 dark:text-accent-yellow font-black">$500K</span> in
+              verified startup credits, grants, tools, and founder perks.
             </p>
-          </div>
- 
- 
-          {/* 4-column key metrics row */}
-          <div className="flex justify-between items-center border border-gray-250 dark:border-white/10 bg-white/80 dark:bg-[#0a0a0a]/60 shadow-sm dark:shadow-none rounded-2xl p-3 mb-6">
-            <div className="flex-1 flex flex-col items-center text-center">
-              <span className="material-symbols-outlined text-green-500 dark:text-green-400 !text-base mb-0.5" style={{ fontVariationSettings: "'FILL' 0" }}>cloud</span>
-              <span className="text-[11px] font-sans font-black text-green-500 dark:text-green-400 leading-none">$500K</span>
-              <span className="text-[7.5px] font-sans text-gray-500 dark:text-gray-400 uppercase tracking-tight mt-0.5 font-semibold">In Credits</span>
-            </div>
-            <div className="w-px h-6 bg-gray-200 dark:bg-white/10" />
-            <div className="flex-1 flex flex-col items-center text-center">
-              <span className="material-symbols-outlined text-green-500 dark:text-green-400 !text-base mb-0.5" style={{ fontVariationSettings: "'FILL' 0" }}>verified_user</span>
-              <span className="text-[11px] font-sans font-black text-green-500 dark:text-green-400 leading-none">Verified</span>
-              <span className="text-[7.5px] font-sans text-gray-500 dark:text-gray-400 uppercase tracking-tight mt-0.5 font-semibold">Deals & Grants</span>
-            </div>
-            <div className="w-px h-6 bg-gray-200 dark:bg-white/10" />
-            <div className="flex-1 flex flex-col items-center text-center">
-              <span className="material-symbols-outlined text-purple-600 dark:text-purple-400 !text-base mb-0.5" style={{ fontVariationSettings: "'FILL' 0" }}>workspace_premium</span>
-              <span className="text-[11px] font-sans font-black text-purple-600 dark:text-purple-400 leading-none">Founder</span>
-              <span className="text-[7.5px] font-sans text-gray-500 dark:text-gray-400 uppercase tracking-tight mt-0.5 font-semibold">Vetted Only</span>
-            </div>
-            <div className="w-px h-6 bg-gray-200 dark:bg-white/10" />
-            <div className="flex-1 flex flex-col items-center text-center">
-              <span className="material-symbols-outlined text-sky-600 dark:text-sky-400 !text-base mb-0.5" style={{ fontVariationSettings: "'FILL' 0" }}>bolt</span>
-              <span className="text-[11px] font-sans font-black text-sky-600 dark:text-sky-400 leading-none">Save $50K</span>
-              <span className="text-[7.5px] font-sans text-gray-500 dark:text-gray-400 uppercase tracking-tight mt-0.5 font-semibold">In 3 Months</span>
-            </div>
-          </div>
- 
-          {/* CTA Buttons */}
-          <div className="flex flex-col gap-2.5 mb-4">
-            <Link
-              href="/pricing"
-              className="hero-cta-primary relative overflow-hidden bg-[#FFD500] hover:bg-[#FFE033] text-black text-xs font-black py-3.5 px-5 flex items-center justify-center gap-1.5 transition-all w-full font-mono uppercase tracking-wider rounded-xl border border-black shadow-sm"
-            >
-              <span className="material-symbols-outlined !text-[16px]">bolt</span>
-              Unlock Founder Perks
-              <span className="material-symbols-outlined !text-[16px] hero-arrow-bounce">arrow_forward</span>
-            </Link>
-            <Link
-              href="/pricing"
-              className="flex items-center justify-center gap-1.5 border border-gray-200 dark:border-white/10 bg-white dark:bg-[#0c0c0c] hover:bg-gray-50 dark:hover:bg-white/5 text-gray-800 dark:text-white font-mono font-black text-xs py-3.5 px-5 transition-all uppercase tracking-wider w-full rounded-xl shadow-sm"
-            >
-              See Pricing
-              <span className="material-symbols-outlined !text-[16px]">arrow_forward</span>
-            </Link>
-          </div>
 
-          {/* Deal counts strip — mobile */}
-          <div className="flex flex-col gap-2 mb-4 w-full">
-            {DEAL_STATS.map((stat) => (
-              <Link
-                key={stat.label}
-                href={stat.href}
-                className="group flex items-center gap-2 px-3 py-2 border border-black/10 dark:border-white/10 bg-white/60 dark:bg-white/[0.04] hover:border-accent-yellow hover:bg-accent-yellow/10 rounded-xl transition-all duration-200 w-full"
-              >
-                <span
-                  className="material-symbols-outlined !text-[14px] text-green-600 dark:text-green-400 shrink-0"
-                  style={{ fontVariationSettings: "'FILL' 1" }}
+            {/* Metrics — all gold-synced (site theme) */}
+            <div className="grid grid-cols-2 gap-2 mb-5">
+              {[
+                { icon: 'cloud', value: '$500K', label: 'In credits' },
+                { icon: 'verified_user', value: 'Verified', label: 'Deals & grants' },
+                { icon: 'workspace_premium', value: 'Founder', label: 'Vetted only' },
+                { icon: 'bolt', value: 'Save $50K', label: 'In 3 months' },
+              ].map((m) => (
+                <div
+                  key={m.label}
+                  className="flex items-center gap-2.5 rounded-2xl border border-black/[0.07] dark:border-white/[0.09] bg-white dark:bg-[#0a0a0a] px-3 py-2.5"
                 >
-                  {stat.icon}
-                </span>
-                <span className="font-mono font-black text-[12px] text-black dark:text-white tabular-nums shrink-0">
-                  {stat.value}
-                </span>
-                <span className="font-mono text-[10px] font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide truncate">
-                  {stat.label}
-                </span>
-              </Link>
-            ))}
-          </div>
-
-          <div className="w-full overflow-hidden my-4 relative py-2 bg-gray-500/[0.03] dark:bg-white/[0.01] border-y border-gray-200 dark:border-white/[0.04] -mx-4 px-4">
-            <div className="absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-[#f6f8f8] dark:from-[#000000] to-transparent z-10 pointer-events-none" />
-            <div className="absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-[#f6f8f8] dark:from-[#000000] to-transparent z-10 pointer-events-none" />
-            <div className="flex gap-8 animate-[marquee_60s_linear_infinite] whitespace-nowrap w-max">
-              {[...TRUSTED_BRANDS, ...TRUSTED_BRANDS, ...TRUSTED_BRANDS].map((brand, idx) => (
-                <div key={`${brand.name}-${idx}`} className="inline-flex items-center gap-1.5 opacity-90 transition-all hover:opacity-100">
-                  <BrandLogo name={brand.name} domain={brand.domain} size="sm" eager />
-                  <span className="font-mono text-[8px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">{brand.name}</span>
+                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-accent-yellow/12 border border-accent-yellow/25 text-amber-700 dark:text-accent-yellow">
+                    <span
+                      className="material-symbols-outlined !text-[16px]"
+                      style={{ fontVariationSettings: "'FILL' 1" }}
+                    >
+                      {m.icon}
+                    </span>
+                  </span>
+                  <span className="min-w-0">
+                    <span className="block font-mono text-[12px] font-black text-gray-900 dark:text-white leading-none">
+                      {m.value}
+                    </span>
+                    <span className="block font-mono text-[8px] font-bold uppercase tracking-wide text-gray-500 dark:text-zinc-500 mt-0.5">
+                      {m.label}
+                    </span>
+                  </span>
                 </div>
               ))}
+            </div>
+
+            {/* CTAs */}
+            <div className="flex flex-col gap-2.5 mb-5">
+              <Link
+                href="/pricing"
+                className="hero-cta-primary relative overflow-hidden bg-accent-yellow active:bg-yellow-300 text-black text-[11px] font-black min-h-[52px] py-3.5 px-5 flex items-center justify-center gap-1.5 transition-all w-full font-mono uppercase tracking-[0.1em] rounded-2xl shadow-[0_0_32px_rgba(255,215,0,0.28)]"
+              >
+                <span className="material-symbols-outlined !text-[18px]">bolt</span>
+                Unlock founder perks
+                <span className="material-symbols-outlined !text-[16px] hero-arrow-bounce">
+                  arrow_forward
+                </span>
+              </Link>
+              <Link
+                href="/pricing"
+                className="flex items-center justify-center gap-1.5 border border-black/10 dark:border-white/12 bg-white dark:bg-[#0c0c0c] active:bg-gray-50 dark:active:bg-white/5 text-gray-900 dark:text-white font-mono font-black text-[11px] min-h-[48px] py-3.5 px-5 transition-all uppercase tracking-[0.1em] w-full rounded-2xl"
+              >
+                See pricing
+                <span className="material-symbols-outlined !text-[16px]">arrow_forward</span>
+              </Link>
+            </div>
+
+            {/* Deal counts */}
+            <div className="flex flex-col gap-2 mb-5 w-full">
+              {DEAL_STATS.map((stat) => (
+                <Link
+                  key={stat.label}
+                  href={stat.href}
+                  className="group flex items-center gap-2.5 px-3.5 min-h-[48px] py-2.5 border border-black/[0.07] dark:border-white/[0.09] bg-white dark:bg-[#0a0a0a] active:border-accent-yellow/50 active:bg-accent-yellow/[0.06] rounded-2xl transition-all duration-200 w-full"
+                >
+                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-accent-yellow/10 border border-accent-yellow/20 text-amber-700 dark:text-accent-yellow">
+                    <span
+                      className="material-symbols-outlined !text-[16px]"
+                      style={{ fontVariationSettings: "'FILL' 1" }}
+                    >
+                      {stat.icon}
+                    </span>
+                  </span>
+                  <span className="font-mono font-black text-[13px] text-gray-900 dark:text-white tabular-nums shrink-0">
+                    {stat.value}
+                  </span>
+                  <span className="font-mono text-[10px] font-semibold text-gray-500 dark:text-zinc-400 uppercase tracking-wide truncate flex-1">
+                    {stat.label}
+                  </span>
+                  <span className="material-symbols-outlined !text-[16px] text-gray-300 dark:text-zinc-600 group-active:text-accent-yellow shrink-0">
+                    chevron_right
+                  </span>
+                </Link>
+              ))}
+            </div>
+
+            {/* Trusted brands marquee — white plates so logos never disappear */}
+            <div className="relative -mx-4 overflow-hidden border-y border-black/[0.06] dark:border-white/[0.07] bg-gray-50/80 dark:bg-white/[0.02] py-3">
+              <div className="absolute inset-y-0 left-0 w-10 bg-gradient-to-r from-[#f6f8f8] dark:from-black to-transparent z-10 pointer-events-none" />
+              <div className="absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-[#f6f8f8] dark:from-black to-transparent z-10 pointer-events-none" />
+              <div className="flex gap-5 animate-[marquee_55s_linear_infinite] whitespace-nowrap w-max px-4">
+                {[...TRUSTED_BRANDS, ...TRUSTED_BRANDS, ...TRUSTED_BRANDS].map((brand, idx) => (
+                  <div
+                    key={`${brand.name}-${idx}`}
+                    className="inline-flex items-center gap-2 opacity-95"
+                  >
+                    <BrandLogo
+                      name={brand.name}
+                      domain={brand.domain}
+                      size="sm"
+                      eager
+                      plate
+                    />
+                    <span className="font-mono text-[8px] font-bold text-gray-500 dark:text-zinc-400 uppercase tracking-wider">
+                      {brand.name}
+                    </span>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
@@ -286,50 +328,61 @@ export default function HeroSection() {
           <div className="lg:col-span-7 flex flex-col items-start">
 
             {/* Eyebrow row with corner-bracket flourishes */}
-            <div className="relative w-full mb-5 md:mb-7">
+            <FadeUp className="relative w-full mb-5 md:mb-7">
               <span aria-hidden="true" className="absolute -top-4 -left-4 w-6 h-6 border-t-2 border-l-2 border-black dark:border-white/20" />
               <span aria-hidden="true" className="absolute -top-4 right-0 w-6 h-6 border-t-2 border-r-2 border-black dark:border-white/20 hidden sm:block" />
               <div className="inline-flex items-center gap-2.5 font-mono text-[10px] md:text-xs font-black uppercase tracking-[0.18em]">
                 <span className="inline-flex items-center gap-1.5 text-black dark:text-white">
-                  <span className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse" />
+                  <span className="relative flex h-1.5 w-1.5">
+                    {!reduce && (
+                      <span className="absolute inline-flex h-full w-full rounded-full bg-accent-yellow opacity-60 animate-ping" />
+                    )}
+                    <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-accent-yellow" />
+                  </span>
                   Live
                 </span>
                 <span className="text-gray-400">Founder-Approved</span>
               </div>
-            </div>
+            </FadeUp>
 
             {/* Headline — BUILD MORE / BURN LESS */}
-            <h1 className="font-heading font-black text-black dark:text-white tracking-[-0.02em] uppercase leading-[0.9] mb-5 md:mb-6">
-              <span className="block text-5xl sm:text-6xl md:text-7xl lg:text-[92px]">Build More</span>
-              <span className="block text-5xl sm:text-6xl md:text-7xl lg:text-[92px] mt-2 sm:mt-3">
-                Burn{' '}
-                <span className="relative inline-block text-black dark:text-black">
-                  <span className="relative z-10 bg-accent-yellow border-2 border-black px-3.5 py-0.5 sm:py-1 leading-none select-none inline-block">
-                    Less
+            <FadeUp delay={0.06}>
+              <h1 className="font-heading font-black text-black dark:text-white tracking-[-0.02em] uppercase leading-[0.9] mb-5 md:mb-6">
+                <span className="block text-5xl sm:text-6xl md:text-7xl lg:text-[92px]">Build More</span>
+                <span className="block text-5xl sm:text-6xl md:text-7xl lg:text-[92px] mt-2 sm:mt-3">
+                  Burn{' '}
+                  <span className="relative inline-block text-black dark:text-black">
+                    <span className="relative z-10 bg-accent-yellow border-2 border-black px-3.5 py-0.5 sm:py-1 leading-none select-none inline-block">
+                      Less
+                    </span>
+                    <span
+                      aria-hidden="true"
+                      className="absolute inset-0 translate-x-2 translate-y-2 bg-black dark:bg-white/10 -z-10"
+                    />
                   </span>
-                  <span
-                    aria-hidden="true"
-                    className="absolute inset-0 translate-x-2 translate-y-2 bg-black dark:bg-white/10 -z-10"
-                  />
                 </span>
-              </span>
-            </h1>
+              </h1>
+            </FadeUp>
 
             {/* Sub-headline — offer line */}
-            <p className="font-heading font-extrabold uppercase text-black dark:text-white text-lg sm:text-xl md:text-[26px] tracking-tight leading-[1.15] mb-4 md:mb-5 max-w-xl">
-              Unlock up to{' '}
-              <span className="bg-accent-yellow px-1.5 py-0.5 box-decoration-clone text-black">$500K</span>{' '}
-              in startup credits &amp; founder perks.
-            </p>
+            <FadeUp delay={0.12}>
+              <p className="font-heading font-extrabold uppercase text-black dark:text-white text-lg sm:text-xl md:text-[26px] tracking-tight leading-[1.15] mb-4 md:mb-5 max-w-xl">
+                Unlock up to{' '}
+                <span className="bg-accent-yellow px-1.5 py-0.5 box-decoration-clone text-black">$500K</span>{' '}
+                in startup credits &amp; founder perks.
+              </p>
+            </FadeUp>
 
             {/* Supporting paragraph */}
-            <p className="text-sm md:text-base text-gray-700 dark:text-gray-300 font-medium leading-relaxed mb-6 md:mb-8 max-w-md">
-              Money shouldn&apos;t be the barrier. Access founder-vetted credits, grants, and perks &mdash;{' '}
-              <span className="bg-accent-yellow text-black font-bold px-1.5 py-0.5 rounded-[2px] box-decoration-clone hero-highlight-glow">zero dilution.</span>
-            </p>
+            <FadeUp delay={0.16}>
+              <p className="text-sm md:text-base text-gray-700 dark:text-gray-300 font-medium leading-relaxed mb-6 md:mb-8 max-w-md">
+                Money shouldn&apos;t be the barrier. Access founder-vetted credits, grants, and perks &mdash;{' '}
+                <span className="bg-accent-yellow text-black font-bold px-1.5 py-0.5 rounded-[2px] box-decoration-clone hero-highlight-glow">zero dilution.</span>
+              </p>
+            </FadeUp>
 
             {/* CTAs */}
-            <div className="flex flex-col sm:flex-row gap-3 mb-6 md:mb-8 w-full max-w-lg">
+            <FadeUp delay={0.2} className="flex flex-col sm:flex-row gap-3 mb-6 md:mb-8 w-full max-w-lg">
               <div className="relative flex-1">
                 <GlowingEffect spread={50} glow disabled={false} proximity={80} inactiveZone={0.01} borderWidth={2} />
                 <Link
@@ -347,10 +400,10 @@ export default function HeroSection() {
                 See Pricing
                 <span className="material-symbols-outlined !text-[18px]">arrow_forward</span>
               </Link>
-            </div>
+            </FadeUp>
 
             {/* Deal counts strip */}
-            <div className="flex flex-nowrap items-center gap-1.5 xl:gap-2 w-full overflow-hidden">
+            <FadeUp delay={0.26} className="flex flex-nowrap items-center gap-1.5 xl:gap-2 w-full overflow-hidden">
               {DEAL_STATS.map((stat) => (
                 <Link
                   key={stat.label}
@@ -358,7 +411,7 @@ export default function HeroSection() {
                   className="group flex items-center gap-1.5 px-2.5 xl:px-3 py-1.5 border border-black/10 dark:border-white/10 bg-white/60 dark:bg-white/[0.04] hover:border-accent-yellow hover:bg-accent-yellow/10 dark:hover:border-accent-yellow dark:hover:bg-accent-yellow/10 rounded-full transition-all duration-200 shrink min-w-0"
                 >
                   <span
-                    className="material-symbols-outlined !text-[13px] text-green-600 dark:text-green-400 group-hover:text-black dark:group-hover:text-accent-yellow transition-colors shrink-0"
+                    className="material-symbols-outlined !text-[13px] text-amber-700 dark:text-accent-yellow group-hover:text-black dark:group-hover:text-accent-yellow transition-colors shrink-0"
                     style={{ fontVariationSettings: "'FILL' 1" }}
                   >
                     {stat.icon}
@@ -371,11 +424,16 @@ export default function HeroSection() {
                   </span>
                 </Link>
               ))}
-            </div>
+            </FadeUp>
           </div>
 
           {/* ─── RIGHT: Dark "total saved" card ─── */}
-          <div className="lg:col-span-5 relative">
+          <motion.div
+            className="lg:col-span-5 relative"
+            initial={reduce ? false : { opacity: 0, y: 24, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: 0.55, delay: 0.18, ease: premiumEase }}
+          >
             {/* Double stacked yellow offset blocks (brutalist depth) */}
             <div
               aria-hidden="true"
@@ -408,7 +466,7 @@ export default function HeroSection() {
                   Total Saved By Founders
                 </span>
                 <span className="inline-flex items-center gap-2 font-mono text-xs md:text-sm font-black uppercase tracking-[0.16em] text-white">
-                  <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
+                  <span className="w-2 h-2 bg-accent-yellow rounded-full animate-pulse" />
                   Live
                 </span>
               </div>
@@ -420,7 +478,7 @@ export default function HeroSection() {
               </p>
               <p className="font-mono text-[11px] md:text-[13px] text-gray-300 flex items-center gap-1.5">
                 <span
-                  className="material-symbols-outlined !text-[15px] text-green-400"
+                  className="material-symbols-outlined !text-[15px] text-accent-yellow"
                   style={{ fontVariationSettings: "'FILL' 1" }}
                 >
                   trending_up
@@ -459,16 +517,16 @@ export default function HeroSection() {
                 />
               </Link>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
 
       {/* ─── Trusted-by bar (Infinite Marquee Scroller) ─── */}
-      <div className="hidden lg:block max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 mt-10 md:mt-14 mb-8 md:mb-12 relative z-10">
-        <div className="border-2 border-black dark:border-white/10 bg-white dark:bg-white/[0.04] px-5 md:px-8 py-4 md:py-5 shadow-[4px_4px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_rgba(255,255,255,0.05)] flex flex-col lg:flex-row items-center gap-4 lg:gap-8 transition-colors duration-300 overflow-hidden">
+      <FadeUp delay={0.3} className="hidden lg:block max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 mt-10 md:mt-14 mb-8 md:mb-12 relative z-10">
+        <div className="border-2 border-black dark:border-white/10 bg-white dark:bg-white/[0.04] px-5 md:px-8 py-4 md:py-5 shadow-[4px_4px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_rgba(255,255,255,0.05)] flex flex-col lg:flex-row items-center gap-4 lg:gap-8 transition-colors duration-300 overflow-hidden hover:border-accent-yellow/40 transition-colors duration-300">
           <span className="font-mono text-[10px] md:text-xs font-black uppercase tracking-[0.16em] text-gray-500 dark:text-gray-400 flex items-center gap-2 flex-shrink-0">
             Trusted by founders using
-            <span className="material-symbols-outlined !text-[16px]">arrow_forward</span>
+            <span className="material-symbols-outlined !text-[16px] text-accent-yellow">arrow_forward</span>
           </span>
           <div 
             className="relative flex-1 overflow-hidden"
@@ -480,7 +538,7 @@ export default function HeroSection() {
             <div className="flex gap-12 animate-[marquee_45s_linear_infinite] whitespace-nowrap items-center w-max">
               {[...TRUSTED_BRANDS, ...TRUSTED_BRANDS].map((b, index) => (
                 <div key={`${b.name}-${index}`} className="inline-flex items-center gap-2.5 transition-all flex-shrink-0 hover:scale-105">
-                  <BrandLogo name={b.name} domain={b.domain} size="md" eager />
+                  <BrandLogo name={b.name} domain={b.domain} size="md" eager plate />
                   <span className="font-mono text-xs md:text-sm font-bold text-gray-700 dark:text-gray-300 whitespace-nowrap">
                     {b.name}
                   </span>
@@ -489,7 +547,7 @@ export default function HeroSection() {
             </div>
           </div>
         </div>
-      </div>
+      </FadeUp>
     </section>
   )
 }

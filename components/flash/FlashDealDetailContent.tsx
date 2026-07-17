@@ -65,7 +65,7 @@ export default function FlashDealDetailContent({ deal }: { deal: FlashDeal }) {
                     <span className={`inline-block px-2 py-0.5 text-[9px] font-black uppercase tracking-wider rounded-sm ${badge.className}`}>
                       {badge.label}
                     </span>
-                    <span className="inline-block px-2 py-0.5 text-[9px] font-black uppercase tracking-wider rounded-sm bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                    <span className="inline-block px-2 py-0.5 text-[9px] font-black uppercase tracking-wider rounded-sm bg-accent-yellow/10 text-accent-yellow border border-accent-yellow/25">
                       ⚡ Flash Deal
                     </span>
                   </div>
@@ -81,7 +81,7 @@ export default function FlashDealDetailContent({ deal }: { deal: FlashDeal }) {
               {/* Price + Discount row */}
               <div className="mt-5 flex flex-wrap items-center gap-3 pt-5 border-t border-gray-100 dark:border-white/5">
                 <div className="flex items-baseline gap-1.5">
-                  <span className="font-mono font-black text-3xl text-emerald-500 dark:text-emerald-400">
+                  <span className="font-mono font-black text-3xl text-amber-600 dark:text-accent-yellow">
                     {deal.price}
                   </span>
                   <span className="font-mono text-sm text-gray-400 uppercase tracking-wide">
@@ -91,7 +91,7 @@ export default function FlashDealDetailContent({ deal }: { deal: FlashDeal }) {
                 {deal.originalPrice && (
                   <span className="font-mono text-sm text-gray-500 line-through">{deal.originalPrice}</span>
                 )}
-                <span className="ml-auto inline-flex items-center gap-1 px-3 py-1.5 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 rounded-lg font-mono font-black text-sm uppercase tracking-wide">
+                <span className="ml-auto inline-flex items-center gap-1 px-3 py-1.5 bg-accent-yellow/10 text-accent-yellow border border-accent-yellow/25 rounded-lg font-mono font-black text-sm uppercase tracking-wide">
                   <span className="material-symbols-outlined text-[14px]" style={{ fontVariationSettings: "'FILL' 1" }}>local_offer</span>
                   {deal.discount}
                 </span>
@@ -179,7 +179,7 @@ export default function FlashDealDetailContent({ deal }: { deal: FlashDeal }) {
               <ul className="space-y-2.5">
                 {deal.highlights.map((item, i) => (
                   <li key={i} className="flex items-start gap-3">
-                    <span className="material-symbols-outlined text-emerald-400 text-[16px] mt-0.5 flex-shrink-0" style={{ fontVariationSettings: "'FILL' 1" }}>
+                    <span className="material-symbols-outlined text-accent-yellow text-[16px] mt-0.5 flex-shrink-0" style={{ fontVariationSettings: "'FILL' 1" }}>
                       check_circle
                     </span>
                     <span className="text-sm text-gray-700 dark:text-gray-300 leading-snug">{item}</span>
@@ -222,7 +222,7 @@ export default function FlashDealDetailContent({ deal }: { deal: FlashDeal }) {
                     />
                     <div className="min-w-0">
                       <p className="font-mono font-bold text-xs uppercase tracking-tight text-gray-900 dark:text-white">{item.name}</p>
-                      <p className="text-xs font-black text-emerald-500 dark:text-emerald-400 mt-0.5">{item.perk}</p>
+                      <p className="text-xs font-black text-amber-600 dark:text-accent-yellow mt-0.5">{item.perk}</p>
                       <p className="text-[11px] text-gray-500 dark:text-gray-400 mt-1.5 leading-snug">{item.desc}</p>
                     </div>
                   </div>

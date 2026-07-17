@@ -48,7 +48,8 @@ export default function robots(): MetadataRoute.Robots {
                 // can crawl them, read the directive, and drop them from the
                 // index. Blocking them in robots.txt is what caused the
                 // "Indexed, though blocked by robots.txt" warning.
-                disallow: ['/api/'],
+                // Verified Startups public surface retired (data kept in-repo).
+                disallow: ['/api/', '/startups', '/startups/'],
             },
             {
                 // Explicit allow for major AI crawlers + discovery files.
@@ -62,7 +63,6 @@ export default function robots(): MetadataRoute.Robots {
                     '/.well-known/',
                     '/deals',
                     '/programs',
-                    '/startups',
                     '/ideas',
                     '/resources',
                     '/pricing',
@@ -70,7 +70,7 @@ export default function robots(): MetadataRoute.Robots {
                     '/search',
                     '/student-benefits',
                 ],
-                disallow: ['/api/', '/admin/', '/dashboard/', '/billing/', '/checkout/'],
+                disallow: ['/api/', '/admin/', '/dashboard/', '/billing/', '/checkout/', '/startups', '/startups/'],
             },
         ],
         sitemap: 'https://www.foundersprime.com/sitemap.xml',

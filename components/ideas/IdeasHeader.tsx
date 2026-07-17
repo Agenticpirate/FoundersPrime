@@ -1,112 +1,143 @@
-"use client";
+'use client'
 
-import Link from "next/link";
-import ideasData from "@/data/startup_ideas.json";
-import SectionHero from "@/components/ui/SectionHero";
+import Link from 'next/link'
+import { useReducedMotion } from 'framer-motion'
+import ideasData from '@/data/startup_ideas.json'
+import { FadeUp } from '@/components/ui/premium-motion'
+
+const SOURCES: { label: string; short: string }[] = [
+  { label: 'YC Requests for Startups', short: 'YC RFS' },
+  { label: 'Razorpay Fix My Itch', short: 'Razorpay' },
+  { label: 'AI opportunity briefs', short: 'AI briefs' },
+]
 
 export default function IdeasHeader() {
-  const totalIdeas = ideasData.length;
-  const categories = Array.from(new Set(ideasData.map((idea: any) => idea.category)));
-  const sources = Array.from(new Set(ideasData.map((idea: any) => idea.source)));
+  const reduce = useReducedMotion()
+  const totalIdeas = ideasData.length
+  const categoryCount = new Set(ideasData.map((idea: { category: string }) => idea.category)).size
+  const sourceCount = new Set(ideasData.map((idea: { source: string }) => idea.source)).size
+
+  const metrics = [
+    { value: String(totalIdeas), label: 'ideas' },
+    { value: String(categoryCount), label: 'markets' },
+    { value: String(sourceCount), label: 'sources' },
+  ]
 
   return (
-    <div className="mb-4 md:mb-6">
+    <header className="relative mb-8 md:mb-10">
+      {/* Soft ambient — no heavy panels */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -top-24 left-1/2 h-64 w-[min(90vw,640px)] -translate-x-1/2 rounded-full bg-accent-yellow/[0.07] dark:bg-accent-yellow/[0.05] blur-3xl"
+      />
+
       {/* Breadcrumb */}
-      <nav aria-label="Breadcrumb" className="flex mb-3 md:mb-3.5">
-        <ol className="inline-flex items-center gap-1.5 font-mono text-[11px] md:text-xs text-gray-500 dark:text-gray-400 whitespace-nowrap">
-          <li><Link className="hover:text-gray-900 dark:hover:text-white transition-colors" href="/">Home</Link></li>
-          <li className="text-gray-300 dark:text-white/20">/</li>
-          <li><Link className="hover:text-gray-900 dark:hover:text-white transition-colors" href="/resources">Resources</Link></li>
-          <li className="text-gray-300 dark:text-white/20">/</li>
-          <li aria-current="page"><span className="text-gray-900 dark:text-white font-semibold">Startup Ideas</span></li>
+      <nav aria-label="Breadcrumb" className="relative mb-6">
+        <ol className="inline-flex items-center gap-1.5 font-mono text-[11px] text-gray-500 dark:text-gray-500">
+          <li>
+            <Link href="/" className="hover:text-gray-900 dark:hover:text-white transition-colors">
+              Home
+            </Link>
+          </li>
+          <li className="text-gray-300 dark:text-white/20" aria-hidden>
+            /
+          </li>
+          <li>
+            <Link
+              href="/resources"
+              className="hover:text-gray-900 dark:hover:text-white transition-colors"
+            >
+              Resources
+            </Link>
+          </li>
+          <li className="text-gray-300 dark:text-white/20" aria-hidden>
+            /
+          </li>
+          <li aria-current="page">
+            <span className="text-gray-900 dark:text-white font-semibold">Ideas</span>
+          </li>
         </ol>
       </nav>
 
-      {/* SectionHero — eyebrow: VALIDATED & CURATED */}
-      <SectionHero
-        eyebrowIcon="verified"
-        eyebrowText="Validated & Curated"
-        eyebrowClass="bg-accent-yellow/15 border-accent-yellow/40 text-gray-800 dark:text-gray-300 dark:border-accent-yellow/20"
-        eyebrowAccentClass="text-accent-yellow"
-        mandalaColorClass="text-gray-900 dark:text-white/5"
-        statsMinWidth="lg:min-w-[520px]"
-        title={
-          <>
-            Validated{" "}
-            <span className="text-accent-yellow">Startup</span>{" "}
-            Ideas
-          </>
-        }
-        subtitle={
-          <>
-            <span className="font-bold text-gray-900 dark:text-white">{totalIdeas} validated problems</span>{" "}
-            worth solving — curated from top accelerators and real user pain points.{" "}
-            The market has already spoken. All that&apos;s missing is{" "}
-            <span className="italic font-bold text-accent-yellow">your solution.</span>
-          </>
-        }
-        stats={[
-          {
-            label: "Validated Ideas",
-            value: `${totalIdeas}`,
-            delta: "Proven Demand",
-            icon: "lightbulb",
-            iconColor: "text-amber-600",
-            iconBg: "bg-accent-yellow/30",
-            highlight: true,
-            accent: "255,221,0",
-            valueGradient: "from-accent-yellow to-amber-300",
-            ornamentColor: "text-accent-yellow",
-          },
-          {
-            label: "Categories",
-            value: `${categories.length}`,
-            delta: "Across Markets",
-            icon: "category",
-            iconColor: "text-sky-600",
-            iconBg: "bg-sky-100 dark:bg-sky-900/30",
-          },
-          {
-            label: "Sources",
-            value: `${sources.length}`,
-            delta: "Vetted Sources",
-            icon: "verified",
-            iconColor: "text-emerald-600",
-            iconBg: "bg-emerald-100 dark:bg-emerald-900/30",
-          },
-        ]}
-      />
+      <div className="relative max-w-3xl">
+        <FadeUp>
+          <p className="mb-3 inline-flex items-center gap-2 font-mono text-[10px] font-bold uppercase tracking-[0.18em] text-amber-700 dark:text-accent-yellow">
+            <span className="h-1.5 w-1.5 rounded-full bg-accent-yellow" aria-hidden />
+            Startup Ideas Hub
+          </p>
+        </FadeUp>
 
-      {/* Motivation dark banner */}
-      <div className="relative bg-gray-900 dark:bg-[#0c0c0c] border border-gray-800 dark:border-white/10 rounded-xl px-4 md:px-6 py-4 overflow-hidden mt-4 md:mt-5">
-        <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-accent-yellow/60 to-transparent" />
-        <div className="absolute -top-8 -right-8 w-40 h-40 rounded-full bg-accent-yellow/5 blur-3xl pointer-events-none" />
+        <FadeUp delay={0.05}>
+          <h1 className="font-mono text-[1.85rem] sm:text-4xl lg:text-[2.75rem] font-black tracking-tight text-gray-900 dark:text-white leading-[1.08] mb-4">
+            Problems the market{' '}
+            <span className="text-accent-yellow">already wants solved</span>
+          </h1>
+        </FadeUp>
 
-        <div className="relative flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6">
-          <div className="flex-1 min-w-0">
-            <p className="font-mono text-[10px] font-bold uppercase tracking-[0.16em] text-accent-yellow mb-1.5 flex items-center gap-1.5">
-              <span className="w-1 h-1 rounded-full bg-accent-yellow animate-pulse" />
-              Top Notions, Smart Builders.
-            </p>
-            <h2 className="font-mono text-sm md:text-base font-black text-white mb-1 leading-tight">
-              These aren&apos;t just ideas — they&apos;re validated problems.
-            </h2>
-            <p className="font-sans text-[12px] text-gray-400 leading-relaxed">
-              The market has already spoken. All that&apos;s missing is{" "}
-              <span className="font-bold text-accent-yellow italic">your solution.</span>
-            </p>
-          </div>
+        <FadeUp delay={0.09}>
+          <p className="text-[14px] md:text-[15px] text-gray-600 dark:text-gray-400 leading-relaxed max-w-xl mb-6">
+            {totalIdeas} curated opportunities from YC, founder itch lists, and AI briefs — real
+            demand, not brainstorm fluff. Filter a market, read the pain, ship the solution.
+          </p>
+        </FadeUp>
 
-          <div className="flex flex-col gap-1.5 sm:items-end flex-shrink-0">
-            {["Real Problems", "Validated Demand", "Ready to Build"].map((tag) => (
-              <div key={tag} className="inline-flex items-center gap-1.5 text-gray-300 text-[11px] font-mono font-semibold">
-                <span className="material-symbols-outlined text-[14px] text-emerald-400">check_circle</span>
-                {tag}
+        {/* Minimal metrics row */}
+        <FadeUp delay={0.12}>
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-2 mb-6">
+            {metrics.map((m, i) => (
+              <div key={m.label} className="flex items-baseline gap-1.5">
+                {i > 0 && (
+                  <span
+                    className="mr-4 hidden sm:inline h-3 w-px bg-black/10 dark:bg-white/10"
+                    aria-hidden
+                  />
+                )}
+                <span className="font-mono text-lg md:text-xl font-black tabular-nums text-gray-900 dark:text-white">
+                  {m.value}
+                </span>
+                <span className="font-mono text-[11px] font-medium uppercase tracking-wider text-gray-500 dark:text-gray-500">
+                  {m.label}
+                </span>
               </div>
             ))}
           </div>
-        </div>
+        </FadeUp>
+
+        {/* Source line — quiet trust marks */}
+        <FadeUp delay={0.15}>
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="font-mono text-[10px] font-semibold uppercase tracking-[0.14em] text-gray-400 dark:text-gray-500 mr-1">
+              From
+            </span>
+            {SOURCES.map((s) => (
+              <span
+                key={s.short}
+                title={s.label}
+                className="inline-flex items-center rounded-full border border-black/[0.06] dark:border-white/[0.08] bg-white/80 dark:bg-white/[0.03] px-2.5 py-1 font-mono text-[10px] font-semibold text-gray-700 dark:text-gray-300"
+              >
+                {s.short}
+              </span>
+            ))}
+          </div>
+        </FadeUp>
       </div>
-    </div>
-  );
+
+      {/* Slim principle bar — one line, not a second hero */}
+      <FadeUp delay={reduce ? 0 : 0.18} className="mt-8">
+        <div className="flex flex-wrap items-center gap-x-5 gap-y-2 border-t border-black/[0.06] dark:border-white/[0.07] pt-5">
+          {['Validated demand', 'Clear pain points', 'Ready to build'].map((item) => (
+            <span
+              key={item}
+              className="inline-flex items-center gap-1.5 font-mono text-[11px] font-medium text-gray-500 dark:text-gray-400"
+            >
+              <span className="material-symbols-outlined !text-[14px] text-accent-yellow">
+                check
+              </span>
+              {item}
+            </span>
+          ))}
+        </div>
+      </FadeUp>
+    </header>
+  )
 }

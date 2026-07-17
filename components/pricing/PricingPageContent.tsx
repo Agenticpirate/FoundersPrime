@@ -16,15 +16,15 @@ const faqs = [
     },
     {
         q: 'I AM A STUDENT — WHICH PLAN IS FOR ME?',
-        a: "Next'Founder ($59/yr) is built specifically for active students, indie hackers, and early builders. You get premium AI & SaaS credits, hackathons, internships, fellowships, early-stage grants, and the full Opportunity Hub — tailored for student builders."
+        a: "Next'Founder is $1/yr for active students, indie hackers, and early builders. You get premium AI & SaaS credits, hackathons, internships, fellowships, early-stage grants, and the full Opportunity Hub — tailored for student builders."
     },
     {
         q: 'WHAT IF I ONLY NEED ONE DEAL?',
-        a: 'Even a single deal pays for your subscription several times over. The Founder plan at $149/yr gives you full, unlimited access across every category — immediately after checkout.'
+        a: 'Even a single deal pays for your subscription several times over. The Founder plan at $48/yr gives you full, unlimited access across every category — immediately after checkout.'
     },
     {
         q: 'WHAT ARE THE ELIGIBILITY REQUIREMENTS?',
-        a: 'Eligibility for each deal, credit, or grant varies completely — it is determined by the individual provider and their criteria. Some require proof of incorporation, others are open to students or pre-revenue startups. Each listing on FoundersPrime includes clear eligibility notes so you know before you apply.'
+        a: 'Eligibility is set by each provider — not by FoundersPrime. Rules vary (students, incorporation, region, stage, etc.). We show the provider’s criteria on every listing. Your plan unlocks the catalog; it does not guarantee partner approval.'
     },
     {
         q: 'CAN I CANCEL MY SUBSCRIPTION ANYTIME?',
@@ -116,118 +116,53 @@ export default function PricingPageContent() {
     const [openFaq, setOpenFaq] = useState<number | null>(null)
 
     return (
-        <main className="relative bg-gray-50 dark:bg-[#000000] text-[#1a1a1a] dark:text-white min-h-screen pb-16 transition-colors duration-300 selection:bg-accent-yellow selection:text-black">
-            {/* Grid background removed */}
+        <main className="relative bg-[#fafafa] dark:bg-[#000000] text-[#1a1a1a] dark:text-white min-h-screen pb-16 transition-colors duration-300 selection:bg-accent-yellow selection:text-black">
+            {/* Soft ambient */}
+            <div
+                aria-hidden
+                className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 w-[min(90vw,720px)] h-64 rounded-full bg-accent-yellow/[0.06] dark:bg-accent-yellow/[0.04] blur-3xl"
+            />
 
+            {/* ── Unified hero (desktop + mobile) ── */}
+            <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-7 sm:pt-10 md:pt-14 pb-1 md:pb-4">
+                <div className="max-w-2xl">
+                    <p className="inline-flex items-center gap-2 font-mono text-[10px] font-bold uppercase tracking-[0.18em] text-amber-700 dark:text-accent-yellow mb-2.5 sm:mb-3">
+                        <span className="h-1.5 w-1.5 rounded-full bg-accent-yellow" aria-hidden />
+                        One dashboard · every deal
+                    </p>
 
-            {/* ── HERO SECTION ── */}
-            {/* Desktop Hero Section */}
-            <div className="hidden md:block relative max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 pt-10 md:pt-14 pb-4">
-                <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
-                    {/* Left: Heading block */}
-                    <div className="max-w-2xl">
-                        <span className="inline-flex items-center text-accent-yellow font-mono text-[10px] font-black uppercase tracking-[0.2em] mb-3">
-                            ⚡️ ONE DASHBOARD • EVERY DEAL YOU NEED
-                        </span>
-                        
-                        <h1 className="font-mono text-3xl sm:text-4xl lg:text-[44px] font-black uppercase tracking-tight leading-[1.05] text-gray-900 dark:text-white">
-                            BUILT TO SHIP <span className="text-accent-yellow">FASTER.</span><br />
-                            BUILT TO SPEND <span className="text-accent-yellow">LESS.</span>
-                        </h1>
-                        
-                        <p className="text-gray-600 dark:text-gray-400 text-sm sm:text-base leading-relaxed mt-4">
-                            One dashboard of vetted startup deals, credits, and programs so you stop hunting links and start saving real money on every tool.
-                        </p>
-                    </div>
+                    <h1 className="font-mono text-[1.55rem] leading-[1.12] sm:text-4xl sm:leading-[1.08] lg:text-[2.65rem] font-black tracking-tight text-gray-900 dark:text-white">
+                        Built to ship{' '}
+                        <span className="text-accent-yellow">faster</span>
+                        .
+                        <br />
+                        Built to spend{' '}
+                        <span className="text-accent-yellow">less</span>
+                        .
+                    </h1>
 
-                    {/* Right: Badges */}
-                    <div className="flex flex-wrap lg:flex-col gap-2 lg:items-end flex-shrink-0 font-mono text-[10px] font-black">
-                        <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white dark:bg-[#12141a] border border-gray-200 dark:border-[#1b2028] text-gray-800 dark:text-white uppercase tracking-wider rounded-sm">
-                            <span className="w-1.5 h-1.5 bg-accent-yellow rounded-full animate-pulse" />
-                            VERIFIED DEALS
-                        </span>
-                        <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white dark:bg-[#12141a] border border-gray-200 dark:border-[#1b2028] text-gray-800 dark:text-white uppercase tracking-wider rounded-sm">
-                            <span className="w-1.5 h-1.5 bg-accent-yellow rounded-full animate-pulse" />
-                            $50K+ AVERAGE SAVINGS
-                        </span>
-                        <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white dark:bg-[#12141a] border border-gray-200 dark:border-[#1b2028] text-gray-800 dark:text-white uppercase tracking-wider rounded-sm">
-                            <span className="w-1.5 h-1.5 bg-accent-yellow rounded-full animate-pulse" />
-                            4.9★ RATED BY TEAMS
-                        </span>
-                    </div>
-                </div>
-            </div>
+                    <p className="text-gray-600 dark:text-gray-400 text-[14px] sm:text-[15px] leading-relaxed mt-3.5 sm:mt-4 max-w-xl">
+                        Vetted startup deals, credits, and programs in one place — stop hunting links and start
+                        saving on every tool. Students start at{' '}
+                        <span className="font-semibold text-gray-900 dark:text-white">$1/year</span>.
+                    </p>
 
-            {/* Mobile Hero Section (Enhanced to match the design concept) */}
-            <div className="block md:hidden relative px-4 pt-8 pb-4 overflow-hidden">
-                <div className="flex items-start justify-between gap-4">
-                    {/* Left: Heading block */}
-                    <div className="flex-1">
-                        <span className="inline-flex items-center gap-1 px-2.5 py-1 bg-white dark:bg-black border border-gray-200 dark:border-accent-yellow/30 text-gray-900 dark:text-accent-yellow font-mono text-[9px] font-black uppercase tracking-wider rounded-full mb-3 shadow-[0_0_10px_rgba(255,213,0,0.05)]">
-                            <span className="material-symbols-outlined !text-[11px] text-accent-yellow">bolt</span>
-                            ONE DASHBOARD • EVERY DEAL
-                        </span>
-                        
-                        <h1 className="font-mono text-[25px] font-black uppercase tracking-tight leading-[1.08] text-gray-900 dark:text-white">
-                            BUILT TO SHIP <span className="text-accent-yellow">FASTER.</span><br />
-                            BUILT TO SPEND <span className="text-accent-yellow">LESS.</span>
-                        </h1>
-                    </div>
-
-                    {/* Right: Golden Animated Orbital Mandala with Crown */}
-                    <div className="relative w-24 h-24 flex-shrink-0 mt-1">
-                        {/* Glow effects */}
-                        <div className="absolute inset-1 bg-accent-yellow/10 rounded-full blur-md animate-pulse" />
-                        <div className="absolute inset-4 bg-accent-yellow/20 rounded-full blur-lg" />
-                        
-                        {/* SVG Mandala */}
-                        <svg viewBox="0 0 200 200" className="w-full h-full text-accent-yellow/80 relative z-10" fill="none" stroke="currentColor" strokeWidth="0.8">
-                            {/* Outer dotted orbit */}
-                            <circle cx="100" cy="100" r="82" strokeWidth="0.6" strokeDasharray="3 5" className="animate-spin-slow" style={{ transformOrigin: 'center' }} />
-                            
-                            {/* Orbiting dot */}
-                            <g className="animate-spin-slow" style={{ transformOrigin: 'center', animationDuration: '8s' }}>
-                                <circle cx="100" cy="18" r="3.5" fill="#FFD500" className="shadow-[0_0_8px_#FFD500]" />
-                            </g>
-                            
-                            {/* Inner orbits */}
-                            <circle cx="100" cy="100" r="62" strokeWidth="0.8" />
-                            <circle cx="100" cy="100" r="50" strokeWidth="0.5" strokeDasharray="1 3" />
-                            
-                            {/* Rotating inner glass diamond platforms */}
-                            <g className="animate-spin-slow" style={{ transformOrigin: 'center', animationDuration: '15s' }}>
-                                <rect x="68" y="68" width="64" height="64" rx="4" strokeWidth="1.2" stroke="currentColor" />
-                                <rect x="76" y="76" width="48" height="48" rx="2" strokeWidth="0.6" strokeDasharray="2 2" className="opacity-60" />
-                            </g>
-                        </svg>
-                        
-                        {/* Central Glowing Crown */}
-                        <div className="absolute inset-0 flex items-center justify-center">
-                            <span className="material-symbols-outlined !text-[20px] text-accent-yellow drop-shadow-[0_0_6px_rgba(255,213,0,0.85)]" style={{ fontVariationSettings: "'FILL' 1" }}>
-                                crown
+                    <div className="mobile-chip-scroll sm:flex sm:flex-wrap gap-2 mt-4 sm:mt-5 font-mono text-[10px] font-semibold">
+                        {[
+                            'Verified deals',
+                            '$50K+ avg savings',
+                            '4.9★ rated',
+                            'Students $1/yr',
+                        ].map((label) => (
+                            <span
+                                key={label}
+                                className="inline-flex shrink-0 items-center gap-1.5 px-2.5 py-1.5 min-h-[32px] rounded-full border border-black/[0.06] dark:border-white/10 bg-white/80 dark:bg-white/[0.03] text-gray-600 dark:text-gray-300 uppercase tracking-wider"
+                            >
+                                <span className="w-1.5 h-1.5 bg-accent-yellow rounded-full" />
+                                {label}
                             </span>
-                        </div>
+                        ))}
                     </div>
-                </div>
-
-                <p className="text-gray-600 dark:text-gray-400 text-xs leading-relaxed mt-4">
-                    One dashboard of vetted startup deals, credits, and programs so you stop hunting links and start saving real money on every tool.
-                </p>
-
-                {/* Mobile Badges */}
-                <div className="flex flex-wrap gap-1.5 mt-4 font-mono text-[8.5px] font-black">
-                    <span className="inline-flex items-center gap-1 px-2 py-1 bg-white dark:bg-[#12141a] border border-gray-200 dark:border-[#1b2028] text-gray-700 dark:text-gray-300 uppercase tracking-wider rounded-sm">
-                        <span className="w-1.5 h-1.5 bg-accent-yellow rounded-full animate-pulse" />
-                        VERIFIED DEALS
-                    </span>
-                    <span className="inline-flex items-center gap-1 px-2 py-1 bg-white dark:bg-[#12141a] border border-gray-200 dark:border-[#1b2028] text-gray-700 dark:text-gray-300 uppercase tracking-wider rounded-sm">
-                        <span className="w-1.5 h-1.5 bg-accent-yellow rounded-full animate-pulse" />
-                        $50K+ AVG SAVINGS
-                    </span>
-                    <span className="inline-flex items-center gap-1 px-2 py-1 bg-white dark:bg-[#12141a] border border-gray-200 dark:border-[#1b2028] text-gray-700 dark:text-gray-300 uppercase tracking-wider rounded-sm">
-                        <span className="w-1.5 h-1.5 bg-accent-yellow rounded-full animate-pulse" />
-                        4.9★ RATED
-                    </span>
                 </div>
             </div>
 
@@ -242,15 +177,16 @@ export default function PricingPageContent() {
             </div>
 
             {/* ── Solo Ship or Build with Team ── */}
-            <section className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-16">
-                <div className="text-center mb-10">
-                    <span className="font-mono text-[10px] font-black uppercase tracking-[0.25em] text-accent-yellow block mb-2">
-                        THE COMPARISON
+            <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
+                <div className="text-center mb-8 md:mb-10">
+                    <span className="font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-amber-700 dark:text-accent-yellow block mb-2">
+                        The comparison
                     </span>
-                    <h2 className="font-mono text-2xl md:text-3xl font-black uppercase tracking-tight text-gray-900 dark:text-white">
-                        SOLO SHIP, OR BUILD WITH <span className="text-accent-yellow">FOUNDERSPRIME</span>
+                    <h2 className="font-mono text-xl md:text-2xl lg:text-3xl font-black tracking-tight text-gray-900 dark:text-white">
+                        Solo ship, or build with{' '}
+                        <span className="text-accent-yellow">FoundersPrime</span>
                     </h2>
-                    <p className="text-gray-600 dark:text-gray-400 text-sm mt-1">Same goal. Two very different paths.</p>
+                    <p className="text-gray-500 dark:text-gray-400 text-sm mt-2">Same goal. Two very different paths.</p>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
@@ -301,60 +237,61 @@ export default function PricingPageContent() {
                             <p className="text-[11px] font-mono text-accent-yellow uppercase tracking-wider mb-3">One Unified Dashboard for everything:</p>
                             <ul className="space-y-3 text-xs text-gray-700 dark:text-gray-300">
                                 <li className="flex items-start gap-2.5">
-                                    <span className="material-symbols-outlined !text-[16px] text-emerald-400 mt-0.5">check_circle</span>
+                                    <span className="material-symbols-outlined !text-[16px] text-accent-yellow mt-0.5">check_circle</span>
                                     <span>One vetted dashboard for everything you qualify for</span>
                                 </li>
                                 <li className="flex items-start gap-2.5">
-                                    <span className="material-symbols-outlined !text-[16px] text-emerald-400 mt-0.5">check_circle</span>
+                                    <span className="material-symbols-outlined !text-[16px] text-accent-yellow mt-0.5">check_circle</span>
                                     <span>Deal, credit, and grant programs matched to your stage and stack</span>
                                 </li>
                                 <li className="flex items-start gap-2.5">
-                                    <span className="material-symbols-outlined !text-[16px] text-emerald-400 mt-0.5">check_circle</span>
+                                    <span className="material-symbols-outlined !text-[16px] text-accent-yellow mt-0.5">check_circle</span>
                                     <span>Eligibility, application info, and fine print in plain English</span>
                                 </li>
                                 <li className="flex items-start gap-2.5">
-                                    <span className="material-symbols-outlined !text-[16px] text-emerald-400 mt-0.5">check_circle</span>
+                                    <span className="material-symbols-outlined !text-[16px] text-accent-yellow mt-0.5">check_circle</span>
                                     <span>New perks and programs added every month — automatically</span>
                                 </li>
                                 <li className="flex items-start gap-2.5">
-                                    <span className="material-symbols-outlined !text-[16px] text-emerald-400 mt-0.5">check_circle</span>
+                                    <span className="material-symbols-outlined !text-[16px] text-accent-yellow mt-0.5">check_circle</span>
                                     <span>More runway, less burn, and more focus on building</span>
                                 </li>
                             </ul>
                         </div>
                         <div className="mt-6 flex items-center justify-between border-t border-gray-200 dark:border-[#1b2028] pt-4">
                             <span className="font-mono text-[10px] text-gray-500 uppercase tracking-wider">OUTCOME</span>
-                            <span className="font-mono text-[11px] font-black text-emerald-400 uppercase tracking-wider">Fast • Focused • Runway</span>
+                            <span className="font-mono text-[11px] font-black text-accent-yellow uppercase tracking-wider">Fast • Focused • Runway</span>
                         </div>
                     </div>
                 </div>
             </section>
 
             {/* ── Everything you need. One Dashboard. ── */}
-            <section className="bg-gray-100/50 dark:bg-[#07080a] border-y border-gray-200 dark:border-[#1b2028] py-8 md:py-16">
-                <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="text-center mb-10">
-                        <span className="font-mono text-[10px] font-black uppercase tracking-[0.25em] text-accent-yellow block mb-2">
-                            SNAP THE SAVINGS
+            <section className="bg-white/60 dark:bg-[#070707] border-y border-black/[0.05] dark:border-white/[0.06] py-12 md:py-16">
+                <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="text-center mb-8 md:mb-10">
+                        <span className="font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-amber-700 dark:text-accent-yellow block mb-2">
+                            What&apos;s inside
                         </span>
-                        <h2 className="font-mono text-2xl md:text-3xl font-black uppercase tracking-tight text-gray-900 dark:text-white">
-                            EIGHT CATEGORIES. <span className="text-accent-yellow">ONE DASHBOARD.</span>
+                        <h2 className="font-mono text-xl md:text-2xl lg:text-3xl font-black tracking-tight text-gray-900 dark:text-white">
+                            Eight categories.{' '}
+                            <span className="text-accent-yellow">One dashboard.</span>
                         </h2>
-                        <p className="text-gray-600 dark:text-gray-400 text-sm mt-2 max-w-xl mx-auto">
-                            Stop scrambling links across Notion docs and DMs. Every credit, deal, and program is organized by what you’re trying to save on.
+                        <p className="text-gray-500 dark:text-gray-400 text-sm mt-2 max-w-xl mx-auto">
+                            Every credit, deal, and program organized by what you&apos;re trying to save on.
                         </p>
                     </div>
 
                     <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-4xl mx-auto">
                         {[
-                            { label: 'CLOUD CREDITS', desc: 'AWS, GCP, Azure and more to cut infrastructure spend.', icon: 'cloud', color: 'text-emerald-400', badge: 'EXCLUSIVE', bg: 'hover:border-emerald-500/30' },
+                            { label: 'CLOUD CREDITS', desc: 'AWS, GCP, Azure and more to cut infrastructure spend.', icon: 'cloud', color: 'text-accent-yellow', badge: 'EXCLUSIVE', bg: 'hover:border-accent-yellow/30' },
                             { label: 'GRANTS', desc: 'Non-dilutive capital you don’t have to pay back.', icon: 'redeem', color: 'text-purple-400', badge: 'EXCLUSIVE', bg: 'hover:border-purple-500/30' },
                             { label: 'ACCELERATORS', desc: 'Programs that bring capital, mentorship, and distribution.', icon: 'rocket_launch', color: 'text-orange-400', badge: 'FEATURED', bg: 'hover:border-orange-500/30' },
                             { label: 'SAAS DEALS', desc: 'CRM, analytics, support, and dev tools at founder-only rates.', icon: 'payments', color: 'text-blue-400', badge: 'EXCLUSIVE', bg: 'hover:border-blue-500/30' },
                             { label: 'AI CREDITS', desc: 'Model, infra, and tooling credits to experiment cheaply.', icon: 'campaign', color: 'text-pink-400', badge: 'FEATURED', bg: 'hover:border-pink-500/30' },
                             { label: 'STARTUP TOOLS', desc: 'Dev, ops, and growth tools with extended trials or discounts.', icon: 'build', color: 'text-cyan-400', badge: 'EXCLUSIVE', bg: 'hover:border-cyan-500/30' },
                             { label: 'FOUNDERS RESOURCES', desc: 'Access ideas database, existing startups, templates, and more.', icon: 'folder_open', color: 'text-accent-yellow', badge: 'RESOURCES', bg: 'hover:border-accent-yellow/30' },
-                            { label: 'STUDENT PERKS', desc: 'Special perks only for student and campus founders.', icon: 'school', color: 'text-green-400', badge: 'INITIATIVES', bg: 'hover:border-green-500/30' }
+                            { label: 'STUDENT PERKS', desc: 'Special perks only for student and campus founders.', icon: 'school', color: 'text-accent-yellow', badge: 'INITIATIVES', bg: 'hover:border-accent-yellow/30' }
                         ].map((cat) => (
                             <div key={cat.label} className={`p-5 bg-white dark:bg-[#0b0c0e] border border-gray-200 dark:border-[#1b2028] rounded-xl transition-all duration-300 hover:-translate-y-1 ${cat.bg} group relative overflow-hidden`}>
                                 <span className="absolute top-2 right-2 text-[8px] font-mono font-bold px-1.5 py-0.5 bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-sm text-gray-500 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white transition-colors">
@@ -378,13 +315,13 @@ export default function PricingPageContent() {
             </section>
 
             {/* ── Accordion FAQ ── */}
-            <section className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-16">
-                <div className="text-center mb-10">
-                    <span className="font-mono text-[10px] font-black uppercase tracking-[0.2em] text-accent-yellow block mb-2">
-                        COMMON QUESTIONS
+            <section className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
+                <div className="text-center mb-8 md:mb-10">
+                    <span className="font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-amber-700 dark:text-accent-yellow block mb-2">
+                        FAQ
                     </span>
-                    <h2 className="font-mono text-2xl md:text-3xl font-black uppercase text-gray-900 dark:text-white">
-                        GOT QUESTIONS?
+                    <h2 className="font-mono text-xl md:text-2xl font-black tracking-tight text-gray-900 dark:text-white">
+                        Common questions
                     </h2>
                 </div>
                 
@@ -400,15 +337,15 @@ export default function PricingPageContent() {
                         },
                         {
                             q: 'I AM A STUDENT — WHICH PLAN IS FOR ME?',
-                            a: "Next'Founder ($59/yr) is built specifically for active students, student indie hackers, and student founders who want to build their first startup — no revenue, no funding required. You get premium AI & SaaS credits, student-exclusive hackathons, fellowships, campus programs, early-stage grants, and the full Opportunity Hub — all tailored to the student builder journey."
+                            a: "Next'Founder is $1/yr for active students, student indie hackers, and student founders building their first startup — no revenue or funding required. You get premium AI & SaaS credits, student-exclusive hackathons, fellowships, campus programs, early-stage grants, and the full Opportunity Hub."
                         },
                         {
                             q: 'WHY IS IT ONLY ONE DASHBOARD?',
                             a: 'FoundersPrime is built to replace scattered Notion pages, random discount codes, and FOMO about secret deals. Everything is in one place, and you can filter by stage, stack, and geography in seconds.'
                         },
                         {
-                            q: 'WHAT ARE THE ELIGIBILITY REQUIREMENTS?',
-                            a: 'Each perk has clear requirements listed — from “idea‑stage ok” to “must be incorporated” or “under X years old.” We highlight what you qualify for so you don’t waste time.'
+                            q: 'WHO SETS ELIGIBILITY — AND DO I AUTOMATICALLY QUALIFY?',
+                            a: 'Eligibility is set by each deal, credit, or grant provider — not by FoundersPrime. Criteria vary widely (students only, incorporated startups, region, stage, revenue caps, etc.). We surface the provider’s rules on every listing so you can check before you apply. A FoundersPrime plan unlocks access to the catalog; it does not guarantee approval from any partner. Final decisions always rest with the provider.'
                         },
                         {
                             q: 'CAN I CANCEL MY SUBSCRIPTION ANYTIME?',
@@ -438,7 +375,7 @@ export default function PricingPageContent() {
                                 
                                 <div
                                     className={`transition-all duration-300 overflow-hidden ${
-                                        isOpen ? 'max-h-[200px] border-t border-gray-200 dark:border-white/5 opacity-100 p-4' : 'max-h-0 opacity-0'
+                                        isOpen ? 'max-h-[320px] border-t border-gray-200 dark:border-white/5 opacity-100 p-4' : 'max-h-0 opacity-0'
                                     }`}
                                 >
                                     <p className="text-[12.5px] text-gray-700 dark:text-gray-300 leading-relaxed">{faq.a}</p>
@@ -448,13 +385,26 @@ export default function PricingPageContent() {
                     })}
                 </div>
 
-                {/* Eligibility note */}
-                <div className="mt-8 border border-accent-yellow/20 bg-accent-yellow/[0.03] rounded-lg p-4 flex items-start gap-3">
+                {/* Eligibility note — provider-controlled, not FP-guaranteed */}
+                <div className="mt-8 border border-accent-yellow/25 bg-accent-yellow/[0.04] rounded-xl p-4 md:p-5 flex items-start gap-3">
                     <span className="material-symbols-outlined !text-[18px] text-accent-yellow flex-shrink-0 mt-0.5">info</span>
-                    <div>
-                        <p className="font-mono text-[10px] font-black uppercase tracking-wider text-accent-yellow mb-1">About Eligibility</p>
-                        <p className="text-[12px] text-gray-600 dark:text-gray-400 leading-relaxed">
-                            Each perk has clear requirements listed — from “idea‑stage ok” to “must be incorporated” or “under X years old.” We highlight what you qualify for so you don’t waste time.
+                    <div className="min-w-0">
+                        <p className="font-mono text-[10px] font-black uppercase tracking-wider text-accent-yellow mb-1.5">
+                            Eligibility is set by providers
+                        </p>
+                        <p className="text-[12.5px] text-gray-600 dark:text-gray-400 leading-relaxed">
+                            Every deal, credit, and grant has its own rules defined by the{' '}
+                            <span className="font-semibold text-gray-800 dark:text-gray-200">
+                                offering partner
+                            </span>
+                            — company stage, student status, location, incorporation, and more.
+                            FoundersPrime organizes the catalog and shows those requirements on each
+                            listing. We do{' '}
+                            <span className="font-semibold text-gray-800 dark:text-gray-200">
+                                not
+                            </span>{' '}
+                            approve applications or guarantee that you will qualify. Always read the
+                            provider criteria on the deal page before you apply.
                         </p>
                     </div>
                 </div>
@@ -596,36 +546,40 @@ export default function PricingPageContent() {
             </section>
 
             {/* ── Bottom Banner ── */}
-            <section className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 py-4 md:py-8">
-                <div className="relative bg-gradient-to-r from-gray-100 via-gray-50 to-gray-100 dark:from-[#0c0d10] dark:via-[#101318] dark:to-[#0c0d10] border border-gray-200 dark:border-accent-yellow/20 rounded-xl overflow-hidden py-6 px-6 md:py-8 md:px-10 flex flex-col md:flex-row items-center justify-between gap-6 shadow-2xl">
-                    {/* Crown Graphic background */}
-                    <span className="absolute right-10 bottom-[-30px] material-symbols-outlined !text-[140px] text-accent-yellow/[0.02] pointer-events-none" style={{ fontVariationSettings: "'FILL' 1" }}>
-                        crown
-                    </span>
-                    
-                    <div className="text-center md:text-left">
-                        <span className="font-mono text-[9px] font-black uppercase tracking-[0.2em] text-accent-yellow block mb-2">⚡ LIMITED TIME OFFER</span>
-                        <h2 className="font-mono text-xl md:text-3xl font-black uppercase text-gray-900 dark:text-white leading-tight">
-                            EVERY DAY YOU WAIT,<br />YOU&apos;RE LEAVING MONEY ON THE TABLE.
+            <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-10">
+                <div className="relative rounded-2xl border border-black/[0.06] dark:border-accent-yellow/20 bg-white dark:bg-[#0a0a0a] overflow-hidden py-8 px-6 md:py-10 md:px-10 flex flex-col md:flex-row items-center justify-between gap-6">
+                    <div
+                        aria-hidden
+                        className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-accent-yellow/50 to-transparent"
+                    />
+
+                    <div className="text-center md:text-left relative">
+                        <span className="font-mono text-[10px] font-bold uppercase tracking-[0.16em] text-amber-700 dark:text-accent-yellow block mb-2">
+                            Launch pricing
+                        </span>
+                        <h2 className="font-mono text-lg md:text-2xl font-black text-gray-900 dark:text-white leading-snug tracking-tight">
+                            Students start at $1/yr.
+                            <br className="hidden sm:block" />
+                            Don&apos;t leave credits on the table.
                         </h2>
-                        <p className="text-gray-600 dark:text-gray-400 text-xs md:text-sm mt-1">
-                            Deals expire. Lifetime access pricing won&apos;t stay this low. The founders who move first save the most.
+                        <p className="text-gray-500 dark:text-gray-400 text-sm mt-2 max-w-md">
+                            Deals expire. Launch rates won&apos;t stay this low. Move first, save more.
                         </p>
                     </div>
 
-                    <div className="text-center md:text-right flex-shrink-0">
+                    <div className="text-center md:text-right flex-shrink-0 relative">
                         <a
-                            href="#"
-                            onClick={(e) => {
-                                e.preventDefault()
-                                window.scrollTo({ top: 0, behavior: 'smooth' })
-                            }}
-                            className="group inline-flex items-center gap-2 bg-accent-yellow text-black font-mono font-black text-xs md:text-sm uppercase px-6 py-3.5 rounded-lg border border-black shadow-[3px_3px_0px_#000] hover:bg-yellow-400 transition-all hover:-translate-y-px"
+                            href="#plans"
+                            className="group inline-flex items-center gap-2 bg-accent-yellow text-black font-mono font-black text-xs uppercase tracking-wide px-6 py-3.5 rounded-xl hover:bg-yellow-300 transition-all"
                         >
-                            <span>CLAIM YOUR SPOT NOW</span>
-                            <span className="material-symbols-outlined !text-[16px] group-hover:translate-x-0.5 transition-transform">arrow_forward</span>
+                            <span>View plans</span>
+                            <span className="material-symbols-outlined !text-[16px] group-hover:translate-x-0.5 transition-transform">
+                                arrow_forward
+                            </span>
                         </a>
-                        <p className="text-[10px] text-gray-600 dark:text-gray-500 font-mono mt-2">Join with Next’ Founder, Founder, or Legend — upgrade anytime as you grow.</p>
+                        <p className="text-[10px] text-gray-500 font-mono mt-2.5">
+                            Next&apos;Founder · Founder · Legend
+                        </p>
                     </div>
                 </div>
             </section>

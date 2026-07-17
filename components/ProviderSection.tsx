@@ -1,5 +1,8 @@
+'use client'
+
 import Link from 'next/link'
 import Mandala from '@/components/ui/Mandala'
+import { Reveal, RevealStagger, RevealItem } from '@/components/ui/premium-motion'
 
 /* ─── Left column — value props ─── */
 const leftFeatures = [
@@ -57,7 +60,10 @@ function Orbital({ className = '' }: { className?: string }) {
 
 export default function ProviderSection() {
   return (
-    <section className="relative overflow-hidden bg-gradient-to-b from-[#fcfcfc] via-[#faf9f5] to-[#fbfbf8] dark:from-[#000000] dark:via-[#090a0f] dark:to-[#000000] text-black dark:text-white py-14 md:py-20 border-y border-black/5 dark:border-white/10 transition-colors duration-300">
+    <section
+      id="advertise"
+      className="relative scroll-mt-24 overflow-hidden bg-gradient-to-b from-[#fcfcfc] via-[#faf9f5] to-[#fbfbf8] dark:from-[#000000] dark:via-[#090a0f] dark:to-[#000000] text-black dark:text-white py-16 md:py-24 border-y border-black/5 dark:border-white/10 transition-colors duration-300"
+    >
       {/* ─── Ambient ornaments ─── */}
       <Mandala
         variant="rings"
@@ -70,10 +76,10 @@ export default function ProviderSection() {
       <div className="absolute right-0 top-1/4 w-[30rem] h-[30rem] bg-accent-yellow/5 dark:bg-accent-yellow/[0.02] rounded-full blur-3xl pointer-events-none" />
 
       <div className="relative z-10 max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_1.35fr_1.15fr] gap-8 lg:gap-12 items-start">
+        <RevealStagger className="grid grid-cols-1 lg:grid-cols-[1.1fr_1.35fr_1.15fr] gap-8 lg:gap-12 items-start">
 
           {/* ══════════ LEFT — pitch ══════════ */}
-          <div className="fp-fade-up flex flex-col justify-between h-full">
+          <RevealItem className="flex flex-col justify-between h-full">
             <div>
               {/* tag with yellow underline */}
               <div className="inline-block mb-6 relative">
@@ -128,10 +134,10 @@ export default function ProviderSection() {
                 <span className="ml-2.5 h-px w-20 bg-black/10 dark:bg-white/10" />
               </div>
             </div>
-          </div>
+          </RevealItem>
 
           {/* ══════════ MIDDLE — live deals-feed preview ══════════ */}
-          <div className="fp-fade-up space-y-4" style={{ animationDelay: '0.08s' }}>
+          <RevealItem className="space-y-4">
             {/* toolbar */}
             <div className="flex items-center gap-3">
               <div className="flex-1 inline-flex items-center gap-2.5 rounded-xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-zinc-900/40 backdrop-blur-md px-3.5 py-2.5 shadow-sm min-w-0">
@@ -201,7 +207,7 @@ export default function ProviderSection() {
                       <p className="font-sans font-bold text-[10px] text-gray-700 dark:text-gray-300 leading-tight truncate">{r.name}</p>
                     </div>
                     <div className="mt-2.5 flex items-center justify-between">
-                      <span className="font-mono text-[9px] font-black text-emerald-600 dark:text-emerald-400">{r.value}</span>
+                      <span className="font-mono text-[9px] font-black text-amber-700 dark:text-accent-yellow">{r.value}</span>
                       <span className="font-mono text-[7px] font-black uppercase tracking-wide text-gray-400 dark:text-gray-500 border border-black/10 dark:border-white/10 rounded-md px-2 py-0.5">View</span>
                     </div>
                   </div>
@@ -224,10 +230,10 @@ export default function ProviderSection() {
                 ))}
               </div>
             </div>
-          </div>
+          </RevealItem>
 
           {/* ══════════ RIGHT — PREMIUM FEATURED AD SLOT CARD (ENHANCED) ══════════ */}
-          <div className="fp-fade-up lg:sticky lg:top-8" style={{ animationDelay: '0.16s' }}>
+          <RevealItem className="lg:sticky lg:top-8">
             <div className="relative rounded-3xl border-3 border-black bg-gradient-to-b from-[#12141c] via-[#090a0f] to-[#000] text-white shadow-[8px_8px_0_#ffd700] dark:shadow-[8px_8px_0_rgba(255,215,0,0.2)] overflow-hidden">
               {/* Premium Glow effect along the top */}
               <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-accent-yellow to-transparent opacity-80" />
@@ -310,9 +316,9 @@ export default function ProviderSection() {
                 </p>
               </div>
             </div>
-          </div>
+          </RevealItem>
 
-        </div>
+        </RevealStagger>
       </div>
     </section>
   )

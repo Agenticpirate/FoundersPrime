@@ -1,12 +1,15 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { getStartupProgramUrl } from '@/lib/comprehensive-startup-urls'
+import Link from 'next/link'
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
+import { resolveDealApplicationUrl } from '@/lib/comprehensive-startup-urls'
 import { useRouter } from 'next/navigation'
 import { isProUser, isNextFounderUser, checkProStatus } from '@/lib/auth/user-context'
 import ProUpgradeModal from '@/components/ProUpgradeModal'
 import { claimDeal } from '@/app/actions/deal-actions'
 import RichDescription from './RichDescription'
+import { FadeUp, Reveal, RevealStagger, RevealItem, premiumEase } from '@/components/ui/premium-motion'
 
 interface Deal {
   id: string
@@ -56,6 +59,8 @@ interface Deal {
   eligibilityDetails?: string[]
   enhancedValue?: string
   tags?: string[]
+  /** True for accelerators / incubators / grants */
+  isProgram?: boolean
 }
 
 interface SingleDealContentProps {
@@ -92,6 +97,7 @@ export default function SingleDealContent({
   const [claimError, setClaimError] = useState<string | null>(null)
 
   const router = useRouter()
+  const reduceMotion = useReducedMotion()
 
   // Verify/refresh Pro status client-side.
   // If the server already told us the user is pro, we skip the API call
@@ -203,9 +209,31 @@ export default function SingleDealContent({
   const eligibility = deal.eligibilityDetails || deal.eligibility
   const faqs = deal.faqs || deal.faq
   const displayValue = deal.enhancedValue || deal.value
+  const isProgram = !!deal.isProgram ||
+    /accelerator|incubator|grant/i.test(deal.category || '')
 
-  // Use the deal's application URL directly, fallback to provider URL mapping only if not set
-  const applicationUrl = deal.applicationUrl || deal.actualDealUrl || getStartupProgramUrl(deal.provider)
+  // Prefer real apply link; rewrite Google-search placeholders to official URLs
+  const applicationUrl = resolveDealApplicationUrl(deal)
+
+  const statCards = isProgram
+    ? [
+        { label: 'Duration', value: deal.stats.appTime, icon: 'schedule', color: 'text-sky-600 dark:text-sky-400', bg: 'bg-sky-50 dark:bg-sky-500/10' },
+        { label: 'Equity', value: deal.stats.approval, icon: 'pie_chart', color: 'text-indigo-600 dark:text-indigo-400', bg: 'bg-indigo-50 dark:bg-indigo-500/10' },
+        { label: 'Funding', value: deal.stats.difficulty, icon: 'payments', color: 'text-amber-700 dark:text-accent-yellow', bg: 'bg-amber-50 dark:bg-accent-yellow/10' },
+        { label: 'Selectivity', value: deal.stats.successRate, icon: 'military_tech', color: 'text-amber-600 dark:text-amber-400', bg: 'bg-amber-50 dark:bg-amber-500/10' },
+      ]
+    : [
+        { label: 'Timeline', value: deal.stats.appTime, icon: 'timer', color: 'text-sky-600 dark:text-sky-400', bg: 'bg-sky-50 dark:bg-sky-500/10' },
+        { label: 'Approval', value: deal.stats.approval, icon: 'task_alt', color: 'text-indigo-600 dark:text-indigo-400', bg: 'bg-indigo-50 dark:bg-indigo-500/10' },
+        { label: 'Difficulty', value: deal.stats.difficulty, icon: 'speed', color: 'text-amber-700 dark:text-accent-yellow', bg: 'bg-amber-50 dark:bg-accent-yellow/10' },
+        { label: 'Signal', value: deal.stats.successRate, icon: 'trending_up', color: 'text-amber-600 dark:text-amber-400', bg: 'bg-amber-50 dark:bg-amber-500/10' },
+      ]
+
+  const applyLabel = isClaiming
+    ? 'Claiming…'
+    : freeAccess || isPro || isNextFounder
+      ? (isProgram ? 'Apply to program' : 'Apply Now')
+      : (isProgram ? 'Unlock to apply' : 'Apply Now (Premium)')
 
   // Handle Application Click
   const handleApplyClick = async (e: React.MouseEvent) => {
@@ -284,13 +312,13 @@ export default function SingleDealContent({
   }
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-5">
+    <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 md:gap-6">
       {/* Sidebar — shown FIRST on mobile (Apply box top) */}
       <div className="lg:col-span-1 order-first lg:order-last">
-        <div className="lg:sticky lg:top-24 space-y-4">
+        <FadeUp delay={0.08} className="lg:sticky lg:top-24 space-y-4">
 
-          {/* Apply Box — neo-brutalist premium */}
-          <div className="relative rounded-sm border-2 border-black dark:border-white/10 bg-white dark:bg-[#0c0c0c] shadow-[4px_4px_0px_#111] dark:shadow-none overflow-hidden">
+          {/* Apply Box — premium minimal */}
+          <div className="relative rounded-2xl border border-black/[0.08] dark:border-white/[0.08] bg-white dark:bg-[#0c0c0c] shadow-[0_8px_30px_rgba(0,0,0,0.06)] overflow-hidden">
             {/* Decorative mandala in top-right */}
             <div className="absolute -top-10 -right-10 w-40 h-40 pointer-events-none opacity-[0.08]" aria-hidden="true">
               <svg viewBox="0 0 200 200" className="w-full h-full text-gray-900 dark:text-white deal-apply-mandala-spin" fill="none" stroke="currentColor" strokeWidth="0.7">
@@ -310,62 +338,91 @@ export default function SingleDealContent({
             </div>
 
             <div className="relative p-5">
-              {claimError && (
-                <div className={`mb-3 px-3 py-2 text-[11px] font-semibold rounded-sm border-2 ${claimError.startsWith('⚡') ? 'bg-amber-50 text-amber-800 border-amber-400 dark:bg-amber-950/30 dark:text-amber-300 dark:border-amber-900/50' : 'bg-red-50 text-red-700 border-red-400 dark:bg-red-950/30 dark:text-red-300 dark:border-red-900/50'}`}>
-                  {claimError.startsWith('⚡') ? claimError : `⚠️ ${claimError}`}
-                </div>
-              )}
+              <AnimatePresence mode="wait">
+                {claimError && (
+                  <motion.div
+                    key={claimError}
+                    initial={reduceMotion ? false : { opacity: 0, y: -6, height: 0 }}
+                    animate={{ opacity: 1, y: 0, height: 'auto' }}
+                    exit={reduceMotion ? undefined : { opacity: 0, y: -4, height: 0 }}
+                    transition={{ duration: 0.25, ease: premiumEase }}
+                    className={`mb-3 px-3 py-2 text-[11px] font-semibold rounded-sm border-2 overflow-hidden ${claimError.startsWith('⚡') ? 'bg-amber-50 text-amber-800 border-amber-400 dark:bg-amber-950/30 dark:text-amber-300 dark:border-amber-900/50' : 'bg-red-50 text-red-700 border-red-400 dark:bg-red-950/30 dark:text-red-300 dark:border-red-900/50'}`}
+                  >
+                    {claimError.startsWith('⚡') ? claimError : `⚠️ ${claimError}`}
+                  </motion.div>
+                )}
+              </AnimatePresence>
 
               {/* Value display */}
-              <div className="mb-4 pb-4 border-b-2 border-black dark:border-b-white/10 border-dashed">
-                <div className="text-[10px] font-bold uppercase text-gray-500 dark:text-gray-400 font-mono tracking-[0.12em] mb-1">Deal Value</div>
-                <div className="text-2xl md:text-3xl font-black font-mono text-black dark:text-white leading-none">
-                  {displayValue}
+              <div className="mb-4 pb-4 border-b border-black/[0.08] dark:border-white/[0.08]">
+                <div className="text-[10px] font-bold uppercase text-gray-500 dark:text-gray-400 font-mono tracking-[0.12em] mb-1">
+                  {isProgram ? 'Funding / Offer' : 'Deal Value'}
                 </div>
+                <motion.div
+                  className="text-2xl md:text-3xl font-black font-mono text-black dark:text-white leading-none"
+                  initial={reduceMotion ? false : { opacity: 0, scale: 0.96 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.4, delay: 0.12, ease: premiumEase }}
+                >
+                  {displayValue}
+                </motion.div>
               </div>
 
               {/* Stat rows */}
-              <div className="space-y-2 mb-4 pb-4 border-b-2 border-black dark:border-b-white/10 border-dashed">
-                <div className="flex justify-between items-center text-[12.5px]">
-                  <span className="text-gray-500 dark:text-gray-400 inline-flex items-center gap-1.5">
-                    <span className="material-symbols-outlined text-[14px] text-gray-500 dark:text-gray-400">timer</span>
-                    Time
-                  </span>
-                  <span className="font-bold font-mono text-black dark:text-white">{deal.stats.appTime}</span>
-                </div>
-                <div className="flex justify-between items-center text-[12.5px]">
-                  <span className="text-gray-500 dark:text-gray-400 inline-flex items-center gap-1.5">
-                    <span className="material-symbols-outlined text-[14px] text-gray-500 dark:text-gray-400">task_alt</span>
-                    Approval
-                  </span>
-                  <span className="font-bold font-mono text-black dark:text-white">{deal.stats.approval}</span>
-                </div>
-                <div className="flex justify-between items-center text-[12.5px]">
-                  <span className="text-gray-500 dark:text-gray-400 inline-flex items-center gap-1.5">
-                    <span className="material-symbols-outlined text-[14px] text-gray-500 dark:text-gray-400">event</span>
-                    Deadline
-                  </span>
-                  <span className="font-bold font-mono text-emerald-600 dark:text-emerald-400">Rolling</span>
-                </div>
+              <div className="space-y-2 mb-4 pb-4 border-b border-black/[0.08] dark:border-white/[0.08]">
+                {(isProgram
+                  ? [
+                      { icon: 'schedule', label: 'Duration', value: deal.stats.appTime },
+                      { icon: 'pie_chart', label: 'Equity', value: deal.stats.approval },
+                      { icon: 'event', label: 'Status', value: deal.status || 'Open', accent: true },
+                    ]
+                  : [
+                      { icon: 'timer', label: 'Time', value: deal.stats.appTime },
+                      { icon: 'task_alt', label: 'Approval', value: deal.stats.approval },
+                      { icon: 'event', label: 'Deadline', value: 'Rolling', accent: true },
+                    ]
+                ).map((row, i) => (
+                  <motion.div
+                    key={row.label}
+                    className="flex justify-between items-center gap-3 text-[12.5px]"
+                    initial={reduceMotion ? false : { opacity: 0, x: -6 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.14 + i * 0.05, duration: 0.35, ease: premiumEase }}
+                  >
+                    <span className="text-gray-500 dark:text-gray-400 inline-flex items-center gap-1.5 shrink-0">
+                      <span className="material-symbols-outlined text-[14px] text-gray-500 dark:text-gray-400">{row.icon}</span>
+                      {row.label}
+                    </span>
+                    <span className={`font-bold font-mono text-right truncate ${row.accent ? 'text-amber-700 dark:text-accent-yellow' : 'text-black dark:text-white'}`}>
+                      {row.value}
+                    </span>
+                  </motion.div>
+                ))}
               </div>
 
-              {/* Apply button — neo-brutalist */}
-              <button
+              {/* Apply button — soft sheen + press */}
+              <motion.button
                 onClick={handleApplyClick}
                 disabled={isClaiming}
-                className="group relative w-full bg-accent-yellow text-black font-mono font-black py-3 text-[12.5px] uppercase tracking-[0.1em] rounded-sm border-2 border-black shadow-[3px_3px_0px_#111] hover:bg-amber-300 hover:shadow-[5px_5px_0px_#111] hover:-translate-x-px hover:-translate-y-px transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 mb-2"
+                whileHover={reduceMotion ? undefined : { y: -2 }}
+                whileTap={reduceMotion ? undefined : { scale: 0.98 }}
+                transition={{ duration: 0.2, ease: premiumEase }}
+                className="group relative w-full h-12 bg-accent-yellow text-black font-mono font-black text-[12px] uppercase tracking-[0.08em] rounded-xl border border-black/10 shadow-[0_4px_16px_rgba(245,158,11,0.25)] hover:bg-amber-300 hover:shadow-[0_8px_24px_rgba(245,158,11,0.35)] transition-colors duration-300 inline-flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 mb-2 overflow-hidden leading-none"
               >
-                <span className="relative">
-                  {isClaiming
-                    ? 'Claiming…'
-                    : freeAccess
-                      ? 'Apply Now'
-                      : (isPro || isNextFounder) ? 'Apply Now' : 'Apply Now (Premium)'}
-                </span>
-                <span className="material-symbols-outlined relative !text-[18px] group-hover:translate-x-0.5 transition-transform">
+                {!reduceMotion && (
+                  <motion.span
+                    aria-hidden
+                    className="pointer-events-none absolute inset-y-0 w-1/3 -skew-x-12 bg-gradient-to-r from-transparent via-white/35 to-transparent"
+                    initial={{ x: '-120%' }}
+                    animate={{ x: '320%' }}
+                    transition={{ duration: 2.8, repeat: Infinity, repeatDelay: 3.2, ease: 'easeInOut' }}
+                  />
+                )}
+                <span className="relative leading-none translate-y-px">{applyLabel}</span>
+                <span className="material-symbols-outlined relative !text-[18px] !leading-none !w-[18px] !h-[18px] flex items-center justify-center group-hover:translate-x-0.5 transition-transform">
                   {isClaiming ? 'hourglass_empty' : (freeAccess || isPro || isNextFounder ? 'arrow_forward' : 'lock')}
                 </span>
-              </button>
+              </motion.button>
 
               {/* Save / Share */}
               <div className="grid grid-cols-2 gap-2">
@@ -388,23 +445,31 @@ export default function SingleDealContent({
                   >
                     <span className="material-symbols-outlined !text-[15px]">ios_share</span> Share
                   </button>
-                  {showShareMenu && (
-                    <div className="absolute bottom-full left-0 right-0 mb-1.5 bg-white dark:bg-[#0c0c0c] border-2 border-black dark:border-white/10 rounded-sm shadow-[3px_3px_0px_#111] dark:shadow-none z-50 overflow-hidden">
-                      <button onClick={() => handleShare('copy')} className="w-full px-3 py-2 text-left text-[11px] font-bold hover:bg-gray-100 dark:hover:bg-white/5 flex items-center gap-2 text-black dark:text-white">
-                        <span className="material-symbols-outlined !text-[14px]">content_copy</span>
-                        {showCopied ? 'Copied!' : 'Copy Link'}
-                      </button>
-                      <button onClick={() => handleShare('twitter')} className="w-full px-3 py-2 text-left text-[11px] font-bold hover:bg-gray-100 dark:hover:bg-white/5 flex items-center gap-2 text-black dark:text-white border-t border-gray-200 dark:border-t-white/10">
-                        <span className="material-symbols-outlined !text-[14px]">share</span>Share on X
-                      </button>
-                      <button onClick={() => handleShare('linkedin')} className="w-full px-3 py-2 text-left text-[11px] font-bold hover:bg-gray-100 dark:hover:bg-white/5 flex items-center gap-2 text-black dark:text-white border-t border-gray-200 dark:border-t-white/10">
-                        <span className="material-symbols-outlined !text-[14px]">work</span>LinkedIn
-                      </button>
-                      <button onClick={() => handleShare('email')} className="w-full px-3 py-2 text-left text-[11px] font-bold hover:bg-gray-100 dark:hover:bg-white/5 flex items-center gap-2 text-black dark:text-white border-t border-gray-200 dark:border-t-white/10">
-                        <span className="material-symbols-outlined !text-[14px]">mail</span>Email
-                      </button>
-                    </div>
-                  )}
+                  <AnimatePresence>
+                    {showShareMenu && (
+                      <motion.div
+                        initial={reduceMotion ? false : { opacity: 0, y: 6, scale: 0.98 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        exit={reduceMotion ? undefined : { opacity: 0, y: 4, scale: 0.98 }}
+                        transition={{ duration: 0.2, ease: premiumEase }}
+                        className="absolute bottom-full left-0 right-0 mb-1.5 bg-white dark:bg-[#0c0c0c] border-2 border-black dark:border-white/10 rounded-sm shadow-[3px_3px_0px_#111] dark:shadow-none z-50 overflow-hidden origin-bottom"
+                      >
+                        <button onClick={() => handleShare('copy')} className="w-full px-3 py-2 text-left text-[11px] font-bold hover:bg-gray-100 dark:hover:bg-white/5 flex items-center gap-2 text-black dark:text-white">
+                          <span className="material-symbols-outlined !text-[14px]">content_copy</span>
+                          {showCopied ? 'Copied!' : 'Copy Link'}
+                        </button>
+                        <button onClick={() => handleShare('twitter')} className="w-full px-3 py-2 text-left text-[11px] font-bold hover:bg-gray-100 dark:hover:bg-white/5 flex items-center gap-2 text-black dark:text-white border-t border-gray-200 dark:border-t-white/10">
+                          <span className="material-symbols-outlined !text-[14px]">share</span>Share on X
+                        </button>
+                        <button onClick={() => handleShare('linkedin')} className="w-full px-3 py-2 text-left text-[11px] font-bold hover:bg-gray-100 dark:hover:bg-white/5 flex items-center gap-2 text-black dark:text-white border-t border-gray-200 dark:border-t-white/10">
+                          <span className="material-symbols-outlined !text-[14px]">work</span>LinkedIn
+                        </button>
+                        <button onClick={() => handleShare('email')} className="w-full px-3 py-2 text-left text-[11px] font-bold hover:bg-gray-100 dark:hover:bg-white/5 flex items-center gap-2 text-black dark:text-white border-t border-gray-200 dark:border-t-white/10">
+                          <span className="material-symbols-outlined !text-[14px]">mail</span>Email
+                        </button>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </div>
               </div>
             </div>
@@ -417,7 +482,7 @@ export default function SingleDealContent({
               <li>
                 <button onClick={handleApplyClick} className="w-full flex items-center gap-2 text-[12.5px] font-bold text-black dark:text-white hover:bg-accent-yellow/15 dark:hover:bg-white/5 rounded-sm px-2 py-1.5 transition-colors">
                   <span className="material-symbols-outlined !text-[16px] text-accent-yellow">open_in_new</span>
-                  Apply for Deal
+                  {isProgram ? 'Apply to program' : 'Apply for deal'}
                 </button>
               </li>
               <li>
@@ -439,8 +504,8 @@ export default function SingleDealContent({
                         About {providerName}
                       </span>
                       {isDofollow && (
-                        <span className="inline-flex items-center gap-1 text-[9px] font-mono font-bold uppercase tracking-wider text-emerald-500 bg-emerald-500/10 border border-emerald-500/20 rounded-sm px-1.5 py-0.5">
-                          <span className="w-1 h-1 rounded-full bg-emerald-500 animate-pulse" />
+                        <span className="inline-flex items-center gap-1 text-[9px] font-mono font-bold uppercase tracking-wider text-accent-yellow bg-accent-yellow/10 border border-accent-yellow/25 rounded-sm px-1.5 py-0.5">
+                          <span className="w-1 h-1 rounded-full bg-accent-yellow animate-pulse" />
                           SEO Dofollow Verified
                         </span>
                       )}
@@ -542,43 +607,51 @@ export default function SingleDealContent({
               :global(.deal-apply-mandala-spin-reverse) { animation: none; }
             }
           `}</style>
-        </div>
+        </FadeUp>
       </div>
 
       {/* Main Content */}
       <div className="lg:col-span-2 space-y-4 order-last lg:order-first">
 
-        {/* Quick Stats Bar — neo-brutalist tiles */}
-        <div className="grid grid-cols-4 gap-2 md:gap-3">
-          {[
-            { label: 'Time', value: deal.stats.appTime, icon: 'timer', color: 'text-sky-600 dark:text-sky-400', bg: 'bg-sky-100' },
-            { label: 'Approval', value: deal.stats.approval, icon: 'task_alt', color: 'text-indigo-600 dark:text-indigo-400', bg: 'bg-indigo-100' },
-            { label: 'Difficulty', value: deal.stats.difficulty, icon: 'speed', color: 'text-emerald-600 dark:text-emerald-400', bg: 'bg-emerald-100' },
-            { label: 'Success', value: deal.stats.successRate, icon: 'trending_up', color: 'text-amber-600 dark:text-amber-400', bg: 'bg-amber-100' },
-          ].map((s) => (
-            <div key={s.label} className="rounded-sm border-2 border-black dark:border-white/10 bg-white dark:bg-[#0c0c0c] p-2.5 md:p-3 shadow-[2px_2px_0px_#111] dark:shadow-none hover:shadow-[3px_3px_0px_#111] hover:-translate-x-px hover:-translate-y-px transition-all">
-              <div className="flex items-center gap-2 mb-1.5">
-                <div className={`w-6 h-6 rounded-sm border-2 border-black dark:border-white/10 flex items-center justify-center flex-shrink-0 ${s.bg} dark:bg-white/5`}>
-                  <span className={`material-symbols-outlined !text-[13px] ${s.color}`}>{s.icon}</span>
+        {/* Quick Stats Bar */}
+        <FadeUp delay={0.04}>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 md:gap-3">
+            {statCards.map((s, i) => (
+              <motion.div
+                key={s.label}
+                initial={reduceMotion ? false : { opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                whileHover={reduceMotion ? undefined : { y: -3, transition: { duration: 0.2 } }}
+                transition={{ delay: 0.06 + i * 0.05, duration: 0.35, ease: premiumEase }}
+                className="rounded-xl border border-black/[0.06] dark:border-white/[0.08] bg-white dark:bg-[#0c0c0c] p-3 md:p-3.5 shadow-[0_1px_0_rgba(255,255,255,0.04)_inset] hover:border-accent-yellow/30 hover:shadow-[0_8px_24px_rgba(0,0,0,0.08)] transition-colors duration-300"
+              >
+                <div className="flex items-center gap-2 mb-1.5">
+                  <div className={`w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 ${s.bg}`}>
+                    <span className={`material-symbols-outlined !text-[14px] ${s.color}`}>{s.icon}</span>
+                  </div>
+                  <div className="text-[9px] md:text-[10px] font-bold uppercase text-gray-500 dark:text-gray-400 font-mono tracking-[0.1em] leading-none">{s.label}</div>
                 </div>
-                <div className="text-[9px] md:text-[10px] font-bold uppercase text-gray-600 dark:text-gray-400 font-mono tracking-[0.1em]">{s.label}</div>
-              </div>
-              <div className="text-[12px] md:text-sm font-black text-black dark:text-white font-mono leading-tight truncate">{s.value}</div>
-            </div>
-          ))}
-        </div>
+                <div className="text-[12px] md:text-sm font-black text-black dark:text-white font-mono leading-tight truncate" title={String(s.value)}>
+                  {s.value}
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </FadeUp>
 
         {/* Overview Section */}
         {description && description.length > 10 && (
-        <section className="rounded-sm border-2 border-black dark:border-white/10 bg-white dark:bg-[#0c0c0c] p-5 shadow-[3px_3px_0px_#111] dark:shadow-none">
-          <h2 className="mb-3 flex items-center gap-2 font-mono text-[13px] md:text-sm font-black uppercase tracking-[0.08em] text-black dark:text-white pb-2 border-b-2 border-black dark:border-b-white/10 border-dashed">
-            <span className="inline-flex items-center justify-center w-7 h-7 rounded-sm bg-accent-yellow border-2 border-black dark:border-white/10">
+        <Reveal>
+        <section className="rounded-2xl border border-black/[0.06] dark:border-white/[0.08] bg-white dark:bg-[#0c0c0c] p-5 md:p-6 shadow-[0_8px_30px_rgba(0,0,0,0.04)]">
+          <h2 className="mb-3 flex items-center gap-2.5 font-mono text-[13px] md:text-sm font-black uppercase tracking-[0.08em] text-black dark:text-white pb-3 border-b border-black/[0.06] dark:border-white/[0.08]">
+            <span className="inline-flex items-center justify-center w-8 h-8 rounded-xl bg-accent-yellow/90 shadow-sm">
               <span className="material-symbols-outlined text-black !text-[16px]">info</span>
             </span>
-            About This Deal
+            {isProgram ? 'About this program' : 'About this deal'}
           </h2>
           <RichDescription text={description} />
         </section>
+        </Reveal>
         )}
 
         {/* What's Included / Benefits */}
@@ -590,15 +663,18 @@ export default function SingleDealContent({
           items={benefits as any[]}
           maxVisible={6}
           renderItem={(item: any, index: number) => (
-            <div key={index} className="flex items-start gap-2 p-2.5 bg-white dark:bg-[#0c0c0c] rounded-sm border-2 border-black dark:border-white/10 shadow-[2px_2px_0px_#111] dark:shadow-none hover:shadow-[3px_3px_0px_#111] hover:-translate-x-px hover:-translate-y-px transition-all">
-              <span className="material-symbols-outlined text-emerald-600 dark:text-emerald-400 flex-shrink-0 !text-[16px] mt-0.5">check_circle</span>
+            <div
+              key={index}
+              className="flex items-start gap-2.5 p-3 rounded-xl border border-black/[0.06] dark:border-white/[0.08] bg-gray-50/80 dark:bg-white/[0.03] hover:border-accent-yellow/30 hover:bg-accent-yellow/[0.04] transition-colors duration-200"
+            >
+              <span className="material-symbols-outlined text-accent-yellow flex-shrink-0 !text-[16px] mt-0.5">check_circle</span>
               <div className="min-w-0">
                 {typeof item === 'string' ? (
                   <p className="text-[12.5px] font-medium text-gray-800 dark:text-gray-200 leading-snug">{item}</p>
                 ) : (
                   <>
                     <h3 className="font-bold font-mono text-[12px] text-black dark:text-white mb-0.5">{item.title}</h3>
-                    <p className="text-[11.5px] text-gray-700 dark:text-gray-300 leading-snug">{item.description}</p>
+                    <p className="text-[11.5px] text-gray-600 dark:text-gray-300 leading-snug">{item.description}</p>
                   </>
                 )}
               </div>
@@ -617,153 +693,274 @@ export default function SingleDealContent({
           items={eligibility as any[]}
           maxVisible={5}
           renderItem={(requirement: string, index: number) => (
-            <li key={index} className="flex items-start gap-2 px-3 py-2 bg-amber-50 dark:bg-amber-950/20 rounded-sm border-2 border-black dark:border-white/10 border-l-[6px] border-l-accent-yellow shadow-[2px_2px_0px_#111] dark:shadow-none">
-              <span className="material-symbols-outlined text-black dark:text-white flex-shrink-0 !text-[14px] mt-0.5">arrow_right</span>
+            <li
+              key={index}
+              className="flex items-start gap-2.5 px-3 py-2.5 list-none rounded-xl border border-black/[0.06] dark:border-white/[0.08] bg-gray-50/80 dark:bg-white/[0.03] hover:border-accent-yellow/30 hover:bg-accent-yellow/[0.04] transition-colors duration-200"
+            >
+              <span className="material-symbols-outlined text-accent-yellow flex-shrink-0 !text-[16px] mt-0.5">check_circle</span>
               <span className="text-[12.5px] font-medium text-gray-800 dark:text-gray-200 leading-snug">{requirement}</span>
             </li>
           )}
           listMode="ul"
-          gridClass="grid md:grid-cols-2 gap-2"
+          gridClass="grid md:grid-cols-2 gap-2.5"
         />
         )}
 
-        {/* How to Apply — neo-brutalist compact */}
+        {/* How to Apply — clean timeline (segment connectors, no odd full-height rail) */}
         {instructions && instructions.length > 0 && (
-        <section className="rounded-sm border-2 border-black dark:border-white/10 bg-white dark:bg-[#0c0c0c] p-5 shadow-[3px_3px_0px_#111] dark:shadow-none">
-          <div className="flex items-center justify-between mb-3 pb-2 border-b-2 border-black dark:border-b-white/10 border-dashed">
-            <h2 className="flex items-center gap-2 font-mono text-[13px] md:text-sm font-black uppercase tracking-[0.08em] text-black dark:text-white">
-              <span className="inline-flex items-center justify-center w-7 h-7 rounded-sm bg-accent-yellow border-2 border-black dark:border-white/10">
+        <Reveal>
+        <section className="rounded-2xl border border-black/[0.06] dark:border-white/[0.08] bg-white dark:bg-[#0c0c0c] p-5 md:p-6 shadow-[0_8px_30px_rgba(0,0,0,0.04)]">
+          <div className="flex items-center justify-between mb-5 pb-3 border-b border-black/[0.06] dark:border-white/[0.08]">
+            <h2 className="flex items-center gap-2.5 font-mono text-[13px] md:text-sm font-black uppercase tracking-[0.08em] text-black dark:text-white">
+              <span className="inline-flex items-center justify-center w-8 h-8 rounded-xl bg-accent-yellow shadow-sm">
                 <span className="material-symbols-outlined text-black !text-[16px]">directions_run</span>
               </span>
               How to Apply
             </h2>
-            <span className="font-mono text-[10px] font-bold uppercase tracking-[0.1em] text-black dark:text-white bg-gray-100 dark:bg-white/5 px-2 py-0.5 border-2 border-black dark:border-white/10 rounded-sm">
+            <span className="font-mono text-[10px] font-bold uppercase tracking-[0.1em] text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-white/[0.04] px-2.5 py-1 rounded-lg border border-black/[0.06] dark:border-white/[0.08]">
               {instructions.length} steps
             </span>
           </div>
-          <ol className="relative space-y-2">
-            {/* Vertical connecting rail */}
-            <span className="absolute left-[13px] top-3 bottom-3 w-px bg-black dark:bg-white/10 border-l-2 border-dashed dark:border-l-white/10" aria-hidden="true" />
+
+          <ol className="m-0 list-none p-0">
             {instructions.map((step, index) => {
               const isString = typeof step === 'string'
-              const text = isString ? (step as string) : (step as { description: string }).description
-              const title = isString ? null : (step as { title: string }).title
+              const rawText = isString ? (step as string) : (step as { description: string }).description
+              const rawTitle = isString ? null : (step as { title: string }).title
+              // Drop redundant "Step 1" / "Step 1." titles — number badge already shows the index
+              const title =
+                rawTitle && !/^step\s*\d+\.?$/i.test(rawTitle.trim())
+                  ? rawTitle.replace(/\.\s*$/, '')
+                  : null
+              // Also strip a leading "Step N." from the body if the data baked it in
+              const text = (rawText || '').replace(/^step\s*\d+\.?\s*/i, '')
+              const isLast = index === instructions.length - 1
+              const isFirst = index === 0
+
               return (
-                <li key={index} className="relative flex items-start gap-3 pl-0">
-                  <div className={`relative z-10 flex-shrink-0 w-[26px] h-[26px] rounded-sm flex items-center justify-center font-mono text-[11px] font-black tabular-nums border-2 border-black dark:border-white/10 ${
-                    index === 0
-                      ? 'bg-accent-yellow text-black shadow-[2px_2px_0px_#111] dark:shadow-none'
-                      : 'bg-white dark:bg-white/5 text-black dark:text-white shadow-[1px_1px_0px_#111] dark:shadow-none'
-                  }`}>
-                    {index + 1}
-                  </div>
-                  <div className="flex-1 min-w-0 pt-[3px] pb-1">
-                    {title && (
-                      <span className="font-mono text-[11px] font-black text-black dark:text-white mr-1.5">{title}.</span>
+                <motion.li
+                  key={index}
+                  className="flex gap-3.5"
+                  initial={reduceMotion ? false : { opacity: 0, y: 6 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: '-12px' }}
+                  transition={{ delay: Math.min(index, 6) * 0.04, duration: 0.3, ease: premiumEase }}
+                >
+                  {/* Number + segment connector (only between badges — no floating full rail) */}
+                  <div className="flex w-8 flex-col items-center shrink-0">
+                    <div
+                      className={`relative z-[1] flex h-8 w-8 items-center justify-center rounded-xl font-mono text-[12px] font-black tabular-nums ${
+                        isFirst
+                          ? 'bg-accent-yellow text-black shadow-[0_0_0_4px_rgba(255,213,0,0.12)]'
+                          : isLast
+                            ? 'bg-white dark:bg-white/10 text-black dark:text-white border border-black/[0.08] dark:border-white/15'
+                            : 'bg-gray-100 dark:bg-white/[0.06] text-gray-800 dark:text-gray-100 border border-black/[0.06] dark:border-white/10'
+                      }`}
+                    >
+                      {index + 1}
+                    </div>
+                    {!isLast && (
+                      <div
+                        className="my-1 w-px flex-1 min-h-[18px] bg-gradient-to-b from-black/15 via-black/10 to-black/15 dark:from-white/20 dark:via-white/10 dark:to-white/15"
+                        aria-hidden
+                      />
                     )}
-                    <span className="text-[12.5px] text-gray-800 dark:text-gray-200 leading-snug">{text}</span>
                   </div>
-                </li>
+
+                  {/* Copy */}
+                  <div className={`min-w-0 flex-1 ${isLast ? 'pb-1' : 'pb-5'}`}>
+                    <div className="rounded-xl border border-black/[0.05] dark:border-white/[0.06] bg-gray-50/80 dark:bg-white/[0.025] px-3.5 py-3">
+                      {title && (
+                        <p className="mb-1 font-mono text-[11px] font-bold uppercase tracking-[0.06em] text-amber-700 dark:text-accent-yellow">
+                          {title}
+                        </p>
+                      )}
+                      <p className="text-[13px] leading-relaxed text-gray-700 dark:text-gray-200">
+                        {text}
+                      </p>
+                    </div>
+                  </div>
+                </motion.li>
               )
             })}
           </ol>
 
           {/* Apply button */}
-          <div className="mt-4 pt-4 border-t-2 border-black dark:border-t-white/10 border-dashed">
-            <button
+          <div className="mt-5 pt-4 border-t border-black/[0.06] dark:border-white/[0.08]">
+            <motion.button
               onClick={handleApplyClick}
               disabled={isClaiming}
-              className="group inline-flex items-center gap-2 bg-accent-yellow text-black font-mono font-black px-5 py-2.5 text-[12px] uppercase tracking-[0.1em] rounded-sm border-2 border-black dark:border-white/10 shadow-[3px_3px_0px_#111] dark:shadow-none hover:bg-amber-300 hover:shadow-[5px_5px_0px_#111] hover:-translate-x-px hover:-translate-y-px transition-all cursor-pointer disabled:opacity-50"
+              whileHover={reduceMotion ? undefined : { y: -2 }}
+              whileTap={reduceMotion ? undefined : { scale: 0.98 }}
+              className="group inline-flex h-11 items-center justify-center gap-2 bg-accent-yellow text-black font-mono font-black px-6 text-[12px] uppercase tracking-[0.08em] rounded-xl border border-black/10 shadow-[0_4px_16px_rgba(245,158,11,0.25)] hover:bg-amber-300 hover:shadow-[0_8px_24px_rgba(245,158,11,0.35)] transition-colors cursor-pointer disabled:opacity-50 leading-none"
             >
-              <span>{isClaiming ? 'Claiming…' : 'Apply Now'}</span>
-              <span className="material-symbols-outlined !text-[16px] group-hover:translate-x-0.5 transition-transform">
-                {isClaiming ? 'hourglass_empty' : 'arrow_forward'}
+              <span className="leading-none">
+                {isClaiming ? 'Claiming…' : (isProgram ? 'Apply to program' : 'Apply Now')}
               </span>
-            </button>
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 14 14"
+                fill="none"
+                aria-hidden
+                className="block shrink-0 transition-transform duration-200 group-hover:translate-x-0.5"
+              >
+                <path
+                  d="M2.5 7h9M7.5 3.5 11 7l-3.5 3.5"
+                  stroke="currentColor"
+                  strokeWidth="1.75"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </motion.button>
           </div>
         </section>
+        </Reveal>
         )}
 
         {/* FAQ Section */}
         {faqs && faqs.length > 0 && (
-        <section className="rounded-sm border-2 border-black dark:border-white/10 bg-white dark:bg-[#0c0c0c] p-5 shadow-[3px_3px_0px_#111] dark:shadow-none">
-          <h2 className="mb-3 flex items-center gap-2 font-mono text-[13px] md:text-sm font-black uppercase tracking-[0.08em] text-black dark:text-white pb-2 border-b-2 border-black dark:border-b-white/10 border-dashed">
-            <span className="inline-flex items-center justify-center w-7 h-7 rounded-sm bg-accent-yellow border-2 border-black dark:border-white/10">
+        <Reveal>
+        <section className="rounded-2xl border border-black/[0.06] dark:border-white/[0.08] bg-white dark:bg-[#0c0c0c] p-5 md:p-6 shadow-[0_8px_30px_rgba(0,0,0,0.04)]">
+          <h2 className="mb-3 flex items-center gap-2.5 font-mono text-[13px] md:text-sm font-black uppercase tracking-[0.08em] text-black dark:text-white pb-3 border-b border-black/[0.06] dark:border-white/[0.08]">
+            <span className="inline-flex items-center justify-center w-8 h-8 rounded-xl bg-accent-yellow/90 shadow-sm">
               <span className="material-symbols-outlined text-black !text-[16px]">help</span>
             </span>
             FAQ
           </h2>
           <div className="space-y-2">
-            {faqs.map((faqItem, index) => (
-              <div key={index} className="rounded-sm border-2 border-black dark:border-white/10 bg-white dark:bg-[#0c0c0c] overflow-hidden shadow-[2px_2px_0px_#111] dark:shadow-none hover:shadow-[3px_3px_0px_#111] transition-shadow">
-                <button
-                  onClick={() => setOpenFaqIndex(openFaqIndex === index ? null : index)}
-                  className={`flex items-center justify-between gap-3 px-3.5 py-2.5 w-full text-left transition-colors ${
-                    openFaqIndex === index ? 'bg-accent-yellow/15 dark:bg-white/5' : 'hover:bg-gray-50 dark:hover:bg-white/5'
-                  }`}
+            {faqs.map((faqItem, index) => {
+              const open = openFaqIndex === index
+              return (
+                <div
+                  key={index}
+                  className="rounded-xl border border-black/[0.06] dark:border-white/[0.08] bg-white dark:bg-white/[0.02] overflow-hidden transition-shadow hover:shadow-[0_4px_16px_rgba(0,0,0,0.06)]"
                 >
-                  <span className="text-[12.5px] font-bold font-mono text-black dark:text-white pr-2">{faqItem.question}</span>
-                  <span className={`material-symbols-outlined !text-[18px] text-black dark:text-white transition-transform flex-shrink-0 ${openFaqIndex === index ? 'rotate-180' : ''}`}>
-                    expand_more
-                  </span>
-                </button>
-                {openFaqIndex === index && (
-                  <div className="px-3.5 pb-3 pt-2 text-[12.5px] text-gray-700 dark:text-gray-300 leading-relaxed bg-gray-50 dark:bg-white/5 border-t-2 border-black dark:border-t-white/10 border-dashed">
-                    {faqItem.answer}
-                  </div>
-                )}
-              </div>
-            ))}
+                  <button
+                    onClick={() => setOpenFaqIndex(open ? null : index)}
+                    className={`flex items-center justify-between gap-3 px-3.5 py-3 w-full text-left transition-colors ${
+                      open ? 'bg-accent-yellow/10 dark:bg-white/5' : 'hover:bg-gray-50 dark:hover:bg-white/[0.03]'
+                    }`}
+                  >
+                    <span className="text-[12.5px] font-bold font-mono text-black dark:text-white pr-2">{faqItem.question}</span>
+                    <motion.span
+                      animate={{ rotate: open ? 180 : 0 }}
+                      transition={{ duration: 0.25, ease: premiumEase }}
+                      className="material-symbols-outlined !text-[18px] text-gray-500 dark:text-gray-400 flex-shrink-0"
+                    >
+                      expand_more
+                    </motion.span>
+                  </button>
+                  <AnimatePresence initial={false}>
+                    {open && (
+                      <motion.div
+                        key="content"
+                        initial={reduceMotion ? false : { height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={reduceMotion ? undefined : { height: 0, opacity: 0 }}
+                        transition={{ duration: 0.28, ease: premiumEase }}
+                        className="overflow-hidden"
+                      >
+                        <div className="px-3.5 pb-3.5 pt-1 text-[12.5px] text-gray-600 dark:text-gray-300 leading-relaxed border-t border-black/[0.04] dark:border-white/[0.06]">
+                          {faqItem.answer}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              )
+            })}
           </div>
         </section>
+        </Reveal>
         )}
 
-        {/* Tags + decorative footer */}
+        {/* Similar programs */}
+        {Array.isArray(deal.similarDeals) && deal.similarDeals.length > 0 && (
+        <Reveal delay={0.05}>
+          <section className="rounded-2xl border border-black/[0.06] dark:border-white/[0.08] bg-white dark:bg-[#0c0c0c] p-5 md:p-6 shadow-[0_8px_30px_rgba(0,0,0,0.04)]">
+            <div className="flex items-center justify-between gap-3 mb-4 pb-3 border-b border-black/[0.06] dark:border-white/[0.08]">
+              <h2 className="flex items-center gap-2.5 font-mono text-[13px] md:text-sm font-black uppercase tracking-[0.08em] text-black dark:text-white">
+                <span className="inline-flex items-center justify-center w-8 h-8 rounded-xl bg-accent-yellow/90 shadow-sm">
+                  <span className="material-symbols-outlined text-black !text-[16px]">hub</span>
+                </span>
+                {isProgram ? 'Similar programs' : 'Similar deals'}
+              </h2>
+              <Link
+                href={isProgram ? '/programs' : '/deals'}
+                className="font-mono text-[10px] font-bold uppercase tracking-wider text-gray-500 hover:text-accent-yellow transition-colors inline-flex items-center gap-1"
+              >
+                View all
+                <span className="material-symbols-outlined !text-[14px]">arrow_forward</span>
+              </Link>
+            </div>
+            <RevealStagger className="grid sm:grid-cols-2 gap-3">
+              {deal.similarDeals.slice(0, 4).map((sim, i) => {
+                const href = sim.slug ? `${basePath}/${sim.slug}` : '/programs'
+                return (
+                  <RevealItem key={`${sim.title}-${i}`}>
+                    <Link
+                      href={href}
+                      className="group h-full rounded-xl border border-black/[0.06] dark:border-white/[0.08] bg-gray-50/80 dark:bg-white/[0.02] p-3.5 hover:border-accent-yellow/40 hover:-translate-y-0.5 hover:shadow-[0_10px_28px_rgba(0,0,0,0.08)] transition-all duration-300 flex flex-col"
+                    >
+                      <div className="flex items-start justify-between gap-2 mb-1.5">
+                        <p className="font-mono text-[13px] font-bold text-black dark:text-white group-hover:text-accent-yellow transition-colors line-clamp-1">
+                          {sim.title}
+                        </p>
+                      </div>
+                      {sim.value && (
+                        <p className="font-mono text-[11px] font-bold text-amber-700 dark:text-accent-yellow mb-1 truncate">
+                          {sim.value}
+                        </p>
+                      )}
+                      <p className="text-[11.5px] text-gray-500 dark:text-gray-400 line-clamp-2 leading-relaxed mb-3 flex-grow">
+                        {sim.description}
+                      </p>
+                      <span className="mt-auto inline-flex h-8 items-center justify-center gap-1 self-start bg-black dark:bg-white text-white dark:text-black group-hover:bg-accent-yellow group-hover:text-black font-mono text-[9px] font-bold uppercase tracking-wide px-2.5 rounded-md transition-all duration-200 leading-none">
+                        <span className="leading-none translate-y-px">{isProgram ? 'View program' : 'View deal'}</span>
+                        <span className="material-symbols-outlined !text-[12px] !leading-none !w-3 !h-3 flex items-center justify-center group-hover:translate-x-0.5 transition-transform">
+                          arrow_forward
+                        </span>
+                      </span>
+                    </Link>
+                  </RevealItem>
+                )
+              })}
+            </RevealStagger>
+          </section>
+        </Reveal>
+        )}
+
+        {/* Tags */}
         {Array.isArray(deal.tags) && deal.tags.length > 0 && (
-        <section className="relative rounded-sm border-2 border-black dark:border-white/10 bg-gray-50 dark:bg-[#0c0c0c] p-5 overflow-hidden shadow-[3px_3px_0px_#111] dark:shadow-none">
-          <div className="absolute -bottom-12 -right-12 w-44 h-44 pointer-events-none opacity-[0.08]" aria-hidden="true">
-            <svg viewBox="0 0 200 200" className="w-full h-full text-gray-900 dark:text-white deal-tags-mandala-spin" fill="none" stroke="currentColor" strokeWidth="0.6">
-              <circle cx="100" cy="100" r="40" />
-              <circle cx="100" cy="100" r="60" strokeDasharray="2 4" />
-              <circle cx="100" cy="100" r="80" strokeDasharray="1 6" />
-              <circle cx="100" cy="100" r="3" fill="currentColor" />
-              {[0, 45, 90, 135, 180, 225, 270, 315].map((deg) => (
-                <g key={deg} transform={`rotate(${deg} 100 100)`}>
-                  <line x1="100" y1="40" x2="100" y2="20" />
-                  <circle cx="100" cy="20" r="2" fill="currentColor" />
-                </g>
-              ))}
-            </svg>
-          </div>
+        <Reveal delay={0.08}>
+        <section className="relative rounded-2xl border border-black/[0.06] dark:border-white/[0.08] bg-gray-50/80 dark:bg-[#0c0c0c] p-5 md:p-6 overflow-hidden">
           <div className="relative">
-            <h2 className="mb-3 flex items-center gap-2 font-mono text-[13px] md:text-sm font-black uppercase tracking-[0.08em] text-black dark:text-white pb-2 border-b-2 border-black dark:border-b-white/10 border-dashed">
-              <span className="inline-flex items-center justify-center w-7 h-7 rounded-sm bg-accent-yellow border-2 border-black dark:border-white/10">
+            <h2 className="mb-3 flex items-center gap-2.5 font-mono text-[13px] md:text-sm font-black uppercase tracking-[0.08em] text-black dark:text-white pb-3 border-b border-black/[0.06] dark:border-white/[0.08]">
+              <span className="inline-flex items-center justify-center w-8 h-8 rounded-xl bg-accent-yellow/90 shadow-sm">
                 <span className="material-symbols-outlined text-black !text-[16px]">tag</span>
               </span>
-              Tags &amp; Categories
+              Tags &amp; categories
             </h2>
             <div className="flex flex-wrap gap-1.5">
               {deal.tags.map((tag, i) => (
-                <span
+                <motion.span
                   key={i}
-                  className="inline-flex items-center px-2.5 py-1 text-[11px] font-mono font-bold uppercase tracking-wide text-black dark:text-white bg-white dark:bg-white/5 border-2 border-black dark:border-white/10 rounded-sm shadow-[1px_1px_0px_#111] dark:shadow-none hover:shadow-[2px_2px_0px_#111] hover:-translate-x-px hover:-translate-y-px hover:bg-accent-yellow transition-all"
+                  initial={reduceMotion ? false : { opacity: 0, scale: 0.92 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.03, duration: 0.3, ease: premiumEase }}
+                  whileHover={reduceMotion ? undefined : { y: -1, scale: 1.03 }}
+                  className="inline-flex items-center px-2.5 py-1 text-[11px] font-mono font-semibold tracking-wide text-gray-700 dark:text-gray-200 bg-white dark:bg-white/5 border border-black/[0.06] dark:border-white/[0.08] rounded-full hover:border-accent-yellow/50 hover:bg-accent-yellow/15 transition-colors duration-200"
                 >
                   #{tag}
-                </span>
+                </motion.span>
               ))}
             </div>
           </div>
-          <style jsx>{`
-            @keyframes dealTagsMandalaSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-            :global(.deal-tags-mandala-spin) {
-              animation: dealTagsMandalaSpin 100s linear infinite;
-              transform-origin: center;
-            }
-            @media (prefers-reduced-motion: reduce) {
-              :global(.deal-tags-mandala-spin) { animation: none; }
-            }
-          `}</style>
         </section>
+        </Reveal>
         )}
 
       </div>
@@ -798,37 +995,51 @@ function CollapsibleList({
   gridClass: string
 }) {
   const [expanded, setExpanded] = useState(false)
+  const reduceMotion = useReducedMotion()
   const isLong = items.length > maxVisible
   const visible = expanded || !isLong ? items : items.slice(0, maxVisible)
   const Container: any = listMode === 'ul' ? 'ul' : 'div'
 
   return (
-    <section className="rounded-sm border-2 border-black dark:border-white/10 bg-white dark:bg-[#0c0c0c] p-5 shadow-[3px_3px_0px_#111] dark:shadow-none">
-      <div className="flex items-center justify-between mb-3 pb-2 border-b-2 border-black dark:border-b-white/10 border-dashed">
-        <h2 className="flex items-center gap-2 font-mono text-[13px] md:text-sm font-black uppercase tracking-[0.08em] text-black dark:text-white">
-          <span className="inline-flex items-center justify-center w-7 h-7 rounded-sm bg-accent-yellow border-2 border-black dark:border-white/10">
+    <Reveal>
+    <section className="rounded-2xl border border-black/[0.06] dark:border-white/[0.08] bg-white dark:bg-[#0c0c0c] p-5 md:p-6 shadow-[0_8px_30px_rgba(0,0,0,0.04)]">
+      <div className="flex items-center justify-between mb-3 pb-3 border-b border-black/[0.06] dark:border-white/[0.08]">
+        <h2 className="flex items-center gap-2.5 font-mono text-[13px] md:text-sm font-black uppercase tracking-[0.08em] text-black dark:text-white">
+          <span className="inline-flex items-center justify-center w-8 h-8 rounded-xl bg-accent-yellow/90 shadow-sm">
             <span className="material-symbols-outlined text-black !text-[16px]">{icon}</span>
           </span>
           {title}
         </h2>
-        <span className="font-mono text-[10px] font-bold uppercase tracking-[0.1em] text-black dark:text-white bg-gray-100 dark:bg-white/5 px-2 py-0.5 border-2 border-black dark:border-white/10 rounded-sm">
+        <span className="font-mono text-[10px] font-bold uppercase tracking-[0.1em] text-gray-600 dark:text-gray-300 bg-gray-100 dark:bg-white/5 px-2 py-0.5 rounded-md border border-black/[0.06] dark:border-white/10">
           {count} items
         </span>
       </div>
       <Container className={gridClass}>
-        {visible.map((item, i) => renderItem(item, i))}
+        {visible.map((item, i) => (
+          <motion.div
+            key={i}
+            // Keep <ul> → <li> semantics: contents makes the wrapper layout-transparent
+            className={listMode === 'ul' ? 'contents' : undefined}
+            initial={reduceMotion ? false : { opacity: 0, y: 8 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-10px' }}
+            transition={{ delay: Math.min(i, 8) * 0.04, duration: 0.32, ease: premiumEase }}
+          >
+            {renderItem(item, i)}
+          </motion.div>
+        ))}
       </Container>
       {isLong && (
-        <div className="pt-3 mt-3 border-t-2 border-black dark:border-t-white/10 border-dashed">
+        <div className="pt-3 mt-3 border-t border-black/[0.06] dark:border-white/[0.08]">
           <button
             onClick={() => setExpanded((v) => !v)}
-            className="inline-flex items-center gap-1.5 text-[11px] font-mono font-black uppercase tracking-[0.1em] text-black dark:text-white bg-white dark:bg-white/5 border-2 border-black dark:border-white/10 px-3 py-1.5 rounded-sm shadow-[2px_2px_0px_#111] dark:shadow-none hover:bg-accent-yellow dark:hover:bg-accent-yellow dark:hover:text-black hover:shadow-[3px_3px_0px_#111] dark:hover:shadow-none hover:-translate-x-px hover:-translate-y-px transition-all"
+            className="inline-flex items-center gap-1.5 text-[11px] font-mono font-bold uppercase tracking-[0.1em] text-black dark:text-white bg-gray-50 dark:bg-white/5 border border-black/[0.08] dark:border-white/10 px-3 py-1.5 rounded-lg hover:bg-accent-yellow hover:text-black hover:border-accent-yellow/50 transition-all"
           >
             <span>
               {expanded ? 'Show Less' : `Show All ${count}`}
             </span>
             <span
-              className={`material-symbols-outlined !text-[14px] text-black dark:text-white transition-transform ${
+              className={`material-symbols-outlined !text-[14px] transition-transform duration-300 ${
                 expanded ? 'rotate-180' : ''
               }`}
             >
@@ -838,5 +1049,6 @@ function CollapsibleList({
         </div>
       )}
     </section>
+    </Reveal>
   )
 }

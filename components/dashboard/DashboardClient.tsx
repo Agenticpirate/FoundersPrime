@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, type ReactNode } from 'react'
 import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
 import ProfileManager from './ProfileManager'
@@ -8,7 +8,7 @@ import SavedDealsSection from './SavedDealsSection'
 import DashboardMandala from './DashboardMandala'
 import BillingPanel from './BillingPanel'
 import { createClient } from '@/lib/supabase/client'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 
 
 type Tab = 'overview' | 'billing' | 'account'
@@ -55,7 +55,16 @@ export default function DashboardClient({
   const hour = new Date().getHours()
   const greeting = hour < 12 ? 'Good morning' : hour < 18 ? 'Good afternoon' : 'Good evening'
 
-  const planLabel = isAdmin ? 'Admin' : isPro ? 'Founder' : 'Free'
+  const planFromSub =
+    subscription?.plan === 'nextfounder'
+      ? "Next'Founder"
+      : subscription?.plan === 'legend'
+        ? 'Legend'
+        : subscription?.plan === 'founder'
+          ? 'Founder'
+          : null
+  const planLabel = isAdmin ? 'Admin' : planFromSub || (isPro ? 'Founder' : 'Free')
+  const cancelPending = subscription?.cancel_at_period_end === true
 
   // Sync tab to URL without full reload
   useEffect(() => {
@@ -110,19 +119,40 @@ export default function DashboardClient({
   return (
     <>
       {/* ── Premium dark hero ── */}
-      <section className="relative bg-gradient-to-br from-gray-900 via-black to-gray-900 text-white border-b-2 border-accent-yellow overflow-hidden">
-        {/* Grid background removed */}
-        <div className="absolute -top-24 -left-24 w-72 h-72 bg-accent-yellow/15 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute -bottom-24 -right-24 w-72 h-72 bg-sky-500/10 rounded-full blur-3xl pointer-events-none" />
+      <section className="relative bg-[#050505] text-white overflow-hidden">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-accent-yellow/60 to-transparent"
+        />
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 opacity-[0.04]"
+          style={{
+            backgroundImage:
+              'linear-gradient(rgba(255,215,0,0.35) 1px, transparent 1px), linear-gradient(90deg, rgba(255,215,0,0.35) 1px, transparent 1px)',
+            backgroundSize: '56px 56px',
+            maskImage: 'radial-gradient(ellipse at 30% 20%, black 0%, transparent 70%)',
+          }}
+        />
+        <div className="absolute -top-28 -left-20 w-80 h-80 bg-accent-yellow/[0.12] rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute -bottom-32 -right-16 w-96 h-96 bg-amber-500/[0.06] rounded-full blur-3xl pointer-events-none" />
         <DashboardMandala />
 
-        <div className="relative max-w-[1400px] mx-auto px-4 md:px-8 py-6 md:py-8">
-          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+        <div className="relative max-w-[1400px] mx-auto px-4 md:px-8 pt-7 md:pt-10 pb-6 md:pb-8">
+          <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-5 lg:gap-8">
             <div className="min-w-0 flex-1">
-              <p className="font-mono text-[10px] md:text-[11px] font-bold uppercase tracking-[0.16em] text-accent-yellow inline-flex items-center gap-1.5 mb-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-accent-yellow animate-pulse" />
-                {greeting}
-              </p>
+              <motion.p
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="font-mono text-[10px] md:text-[11px] font-bold uppercase tracking-[0.18em] text-accent-yellow inline-flex items-center gap-2 mb-3"
+              >
+                <span className="relative flex h-1.5 w-1.5">
+                  <span className="absolute inline-flex h-full w-full rounded-full bg-accent-yellow opacity-60 animate-ping" />
+                  <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-accent-yellow" />
+                </span>
+                {greeting} · Your HQ
+              </motion.p>
+
               {isEditingName ? (
                 <div className="flex items-center gap-2 max-w-full md:max-w-md mt-1">
                   <input
@@ -130,7 +160,7 @@ export default function DashboardClient({
                     value={tempName}
                     onChange={(e) => setTempName(e.target.value)}
                     maxLength={50}
-                    className="bg-black/60 text-white font-mono text-xl md:text-3xl font-black border-b-2 border-accent-yellow outline-none px-2 py-0.5 w-full uppercase"
+                    className="bg-white/5 text-white font-mono text-xl md:text-3xl font-black border border-accent-yellow/50 rounded-xl outline-none px-3 py-2 w-full"
                     autoFocus
                     onKeyDown={(e) => {
                       if (e.key === 'Enter') handleSaveName()
@@ -138,175 +168,252 @@ export default function DashboardClient({
                     }}
                   />
                   <button
+                    type="button"
                     onClick={handleSaveName}
                     disabled={savingName}
-                    className="p-1.5 bg-accent-yellow text-black border border-black hover:bg-yellow-400 font-mono text-xs font-black uppercase tracking-wider disabled:opacity-50 flex items-center justify-center h-8 w-8 rounded-sm flex-shrink-0"
+                    className="p-2 min-h-[44px] min-w-[44px] bg-accent-yellow text-black rounded-xl font-mono disabled:opacity-50 flex items-center justify-center flex-shrink-0"
                     title="Save name"
                   >
                     {savingName ? (
-                      <span className="material-symbols-outlined !text-[14px] animate-spin">progress_activity</span>
+                      <span className="material-symbols-outlined !text-[18px] animate-spin">
+                        progress_activity
+                      </span>
                     ) : (
-                      <span className="material-symbols-outlined !text-[14px]">check</span>
+                      <span className="material-symbols-outlined !text-[18px]">check</span>
                     )}
                   </button>
                   <button
+                    type="button"
                     onClick={() => setIsEditingName(false)}
                     disabled={savingName}
-                    className="p-1.5 bg-white/10 text-white border border-white/20 hover:bg-white/20 font-mono text-xs font-black uppercase tracking-wider h-8 w-8 rounded-sm flex-shrink-0 flex items-center justify-center"
+                    className="p-2 min-h-[44px] min-w-[44px] bg-white/10 text-white border border-white/15 rounded-xl flex-shrink-0 flex items-center justify-center"
                     title="Cancel"
                   >
-                    <span className="material-symbols-outlined !text-[14px]">close</span>
+                    <span className="material-symbols-outlined !text-[18px]">close</span>
                   </button>
                 </div>
               ) : (
-                <div className="flex items-center gap-2.5 flex-wrap">
-                  <h1 className="font-mono text-2xl md:text-4xl font-black uppercase tracking-tight leading-tight">
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.05 }}
+                  className="flex items-center gap-2.5 flex-wrap"
+                >
+                  <h1 className="font-mono text-[1.75rem] sm:text-3xl md:text-4xl font-black tracking-tight leading-[1.1]">
                     Hey, <span className="text-accent-yellow">{firstName}</span>
                   </h1>
                   <button
+                    type="button"
                     onClick={() => {
                       setTempName(currentName)
                       setIsEditingName(true)
                     }}
-                    className="p-1 text-gray-500 hover:text-accent-yellow transition-colors inline-flex items-center"
+                    className="p-2 rounded-lg text-zinc-500 hover:text-accent-yellow hover:bg-white/5 transition-colors inline-flex items-center"
                     title="Customize display name"
                   >
-                    <span className="material-symbols-outlined !text-[16px] md:!text-[20px]">edit</span>
+                    <span className="material-symbols-outlined !text-[18px] md:!text-[20px]">
+                      edit
+                    </span>
                   </button>
-                </div>
+                </motion.div>
               )}
-              <p className="text-gray-400 text-[12px] md:text-[13px] mt-2 font-mono truncate inline-flex items-center gap-1.5 flex-wrap">
-                <span className="material-symbols-outlined !text-[14px] text-gray-500">mail</span>
-                {userEmail}
-                <span className="text-gray-600">·</span>
-                <span className="material-symbols-outlined !text-[14px] text-gray-500">calendar_today</span>
-                Member since {memberSince}
+
+              <p className="text-zinc-400 text-[12px] md:text-[13px] mt-2.5 font-mono inline-flex items-center gap-2 flex-wrap max-w-full">
+                <span className="inline-flex items-center gap-1.5 truncate max-w-[min(100%,280px)]">
+                  <span className="material-symbols-outlined !text-[14px] text-zinc-600 shrink-0">
+                    mail
+                  </span>
+                  <span className="truncate">{userEmail}</span>
+                </span>
+                <span className="text-zinc-700 hidden sm:inline">·</span>
+                <span className="inline-flex items-center gap-1.5">
+                  <span className="material-symbols-outlined !text-[14px] text-zinc-600">
+                    calendar_today
+                  </span>
+                  Member since {memberSince}
+                </span>
               </p>
             </div>
 
-            <div className="flex flex-wrap items-center gap-2 flex-shrink-0">
+            <motion.div
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+              className="flex flex-wrap items-center gap-2 flex-shrink-0"
+            >
               {isAdmin && (
                 <Link
                   href="/admin"
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white/5 border-2 border-white/15 hover:border-accent-yellow rounded-sm font-mono text-[10px] font-black uppercase tracking-[0.12em] text-white transition-colors"
+                  className="inline-flex items-center gap-1.5 min-h-[40px] px-3.5 py-2 bg-white/[0.04] border border-white/15 hover:border-accent-yellow/50 rounded-xl font-mono text-[10px] font-black uppercase tracking-[0.12em] text-white transition-colors"
                 >
-                  <span className="material-symbols-outlined !text-[12px]">admin_panel_settings</span>
-                  Admin Panel
+                  <span className="material-symbols-outlined !text-[14px]">admin_panel_settings</span>
+                  Admin
                 </Link>
               )}
               <div
-                className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-sm font-mono text-[10px] font-black uppercase tracking-[0.12em] border-2 ${
-                  isPro
-                    ? 'bg-accent-yellow text-black border-black shadow-[2px_2px_0px_rgba(255,221,0,0.4)]'
-                    : 'bg-white/5 text-white border-white/20'
+                className={`inline-flex items-center gap-2 min-h-[40px] px-3.5 py-2 rounded-xl font-mono text-[10px] font-black uppercase tracking-[0.12em] border ${
+                  cancelPending
+                    ? 'bg-amber-500/15 text-amber-200 border-amber-500/35'
+                    : isPro
+                      ? 'bg-accent-yellow text-black border-accent-yellow shadow-[0_0_24px_rgba(255,215,0,0.25)]'
+                      : 'bg-white/[0.04] text-white border-white/15'
                 }`}
               >
-                <span className={`w-1.5 h-1.5 rounded-full ${isPro ? 'bg-black' : 'bg-emerald-500 animate-pulse'}`} />
-                {planLabel}
+                <span
+                  className={`w-1.5 h-1.5 rounded-full ${
+                    cancelPending ? 'bg-amber-400' : isPro ? 'bg-black' : 'bg-accent-yellow animate-pulse'
+                  }`}
+                />
+                {cancelPending ? 'Cancels soon' : planLabel}
               </div>
-            </div>
+            </motion.div>
           </div>
 
-          {/* Stat strip — actionable quick-glance cards */}
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-2.5 md:gap-3 mt-6">
+          {/* Stat strip */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 md:gap-3 mt-7">
             {[
               {
-                label: 'Saved for Later',
+                label: 'Saved for later',
                 value: String(savedDealSlugs.length),
                 icon: 'bookmark',
-                color: 'text-sky-400',
-                hint: savedDealSlugs.length > 0 ? 'View saved' : 'Start saving',
+                iconBg: 'bg-sky-500/15 text-sky-400 border-sky-500/25',
+                valueColor: 'text-sky-300',
+                hint: savedDealSlugs.length > 0 ? 'View saved' : 'Browse deals',
                 onClick: () => handleTabChange('overview'),
               },
               {
-                label: 'Active Plan',
+                label: 'Active plan',
                 value: planLabel,
                 icon: 'workspace_premium',
-                color: 'text-pink-400',
-                hint: 'Manage billing',
+                iconBg: 'bg-accent-yellow/15 text-accent-yellow border-accent-yellow/30',
+                valueColor: 'text-accent-yellow',
+                hint: cancelPending ? 'Renewal off' : 'Manage billing',
                 onClick: () => handleTabChange('billing'),
               },
               {
-                label: 'Member Since',
+                label: 'Member since',
                 value: memberSince,
-                icon: 'calendar_today',
-                color: 'text-accent-yellow',
-                hint: null,
-                onClick: null,
+                icon: 'calendar_month',
+                iconBg: 'bg-white/10 text-zinc-300 border-white/15',
+                valueColor: 'text-white',
+                hint: null as string | null,
+                onClick: null as (() => void) | null,
               },
-            ].map((stat) => {
+            ].map((stat, i) => {
               const interactive = !!stat.onClick
-              const Tag: any = interactive ? 'button' : 'div'
+              const Tag: 'button' | 'div' = interactive ? 'button' : 'div'
               return (
-                <Tag
+                <motion.div
                   key={stat.label}
-                  {...(interactive ? { onClick: stat.onClick, type: 'button' } : {})}
-                  className={`group/stat flex items-center gap-2.5 px-3 py-2.5 bg-white/5 backdrop-blur-sm border border-white/15 rounded-sm text-left transition-colors ${
-                    interactive ? 'hover:bg-white/10 hover:border-white/30 cursor-pointer' : ''
-                  } ${stat.label === 'Member Since' ? 'col-span-2 md:col-span-1' : ''}`}
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.08 + i * 0.05 }}
                 >
-                  <div className="w-8 h-8 bg-white/10 border border-white/20 rounded-sm flex items-center justify-center flex-shrink-0">
-                    <span className={`material-symbols-outlined !text-[16px] ${stat.color}`}>{stat.icon}</span>
-                  </div>
-                  <div className="min-w-0 flex-1">
-                    <p className="font-mono text-[8.5px] font-bold uppercase tracking-[0.12em] text-gray-400 truncate">
-                      {stat.label}
-                    </p>
-                    <p className={`font-mono text-base font-black leading-none mt-0.5 tabular-nums ${stat.color}`}>
-                      {stat.value}
-                    </p>
-                  </div>
-                  {stat.hint && (
-                    <span className="hidden md:inline-flex items-center gap-0.5 font-mono text-[8.5px] font-bold uppercase tracking-[0.1em] text-gray-500 group-hover/stat:text-white transition-colors flex-shrink-0">
-                      {stat.hint}
-                      <span className="material-symbols-outlined !text-[12px] group-hover/stat:translate-x-0.5 transition-transform">arrow_forward</span>
-                    </span>
-                  )}
-                </Tag>
+                  <Tag
+                    {...(interactive ? { onClick: stat.onClick!, type: 'button' as const } : {})}
+                    className={`group/stat w-full flex items-center gap-3 px-3.5 py-3.5 min-h-[72px] rounded-2xl text-left border border-white/[0.08] bg-white/[0.03] backdrop-blur-sm transition-all ${
+                      interactive
+                        ? 'hover:bg-white/[0.06] hover:border-accent-yellow/30 cursor-pointer active:scale-[0.99]'
+                        : ''
+                    }`}
+                  >
+                    <div
+                      className={`w-11 h-11 rounded-xl border flex items-center justify-center flex-shrink-0 ${stat.iconBg}`}
+                    >
+                      <span className="material-symbols-outlined !text-[20px]">{stat.icon}</span>
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <p className="font-mono text-[9px] font-bold uppercase tracking-[0.14em] text-zinc-500 truncate">
+                        {stat.label}
+                      </p>
+                      <p
+                        className={`font-mono text-lg md:text-xl font-black leading-none mt-1 tabular-nums truncate ${stat.valueColor}`}
+                      >
+                        {stat.value}
+                      </p>
+                    </div>
+                    {stat.hint && (
+                      <span className="hidden sm:inline-flex items-center gap-0.5 font-mono text-[9px] font-bold uppercase tracking-[0.1em] text-zinc-500 group-hover/stat:text-accent-yellow transition-colors flex-shrink-0">
+                        {stat.hint}
+                        <span className="material-symbols-outlined !text-[14px] group-hover/stat:translate-x-0.5 transition-transform">
+                          arrow_forward
+                        </span>
+                      </span>
+                    )}
+                  </Tag>
+                </motion.div>
               )
             })}
+          </div>
+        </div>
+
+        {/* Tabs integrated into hero bottom */}
+        <div className="relative border-t border-white/[0.07] bg-black/40 backdrop-blur-md">
+          <div className="max-w-[1400px] mx-auto px-4 md:px-8">
+            <div
+              className="flex gap-1 overflow-x-auto mobile-scroll-hide"
+              role="tablist"
+              aria-label="Dashboard sections"
+            >
+              {tabs.map((t) => {
+                const active = tab === t.id
+                return (
+                  <button
+                    key={t.id}
+                    role="tab"
+                    aria-selected={active}
+                    onClick={() => handleTabChange(t.id)}
+                    className={`relative flex items-center gap-2 px-4 md:px-5 py-3.5 min-h-[48px] font-mono text-[11px] md:text-[12px] font-black uppercase tracking-[0.1em] whitespace-nowrap transition-colors ${
+                      active
+                        ? 'text-white'
+                        : 'text-zinc-500 hover:text-zinc-200'
+                    }`}
+                  >
+                    <span
+                      className={`material-symbols-outlined !text-[18px] ${
+                        active ? 'text-accent-yellow' : ''
+                      }`}
+                    >
+                      {t.icon}
+                    </span>
+                    {t.label}
+                    {active && (
+                      <motion.span
+                        layoutId="dash-tab-underline"
+                        className="absolute left-2 right-2 bottom-0 h-0.5 rounded-full bg-accent-yellow"
+                        transition={{ type: 'spring', stiffness: 380, damping: 32 }}
+                      />
+                    )}
+                  </button>
+                )
+              })}
+            </div>
           </div>
         </div>
       </section>
 
-      {/* ── Tab navigation — sticky right under hero ── */}
-      <div className="sticky top-14 md:top-16 z-30 bg-[#fafafa] dark:bg-black border-b-2 border-black dark:border-white/10">
-        <div className="max-w-[1400px] mx-auto px-4 md:px-8">
-          <div className="flex gap-1 md:gap-2 overflow-x-auto mobile-scroll-hide" role="tablist">
-            {tabs.map((t) => {
-              const active = tab === t.id
-              return (
-                <button
-                  key={t.id}
-                  role="tab"
-                  aria-selected={active}
-                  onClick={() => handleTabChange(t.id)}
-                  className={`flex items-center gap-1.5 md:gap-2 px-3 md:px-4 py-3 md:py-3.5 font-mono text-[11px] md:text-[12px] font-black uppercase tracking-[0.08em] whitespace-nowrap transition-all border-b-[3px] ${
-                    active
-                      ? 'text-black dark:text-white border-accent-yellow'
-                      : 'text-gray-500 dark:text-gray-400 border-transparent hover:text-black dark:hover:text-white hover:border-gray-300 dark:hover:border-gray-600'
-                  }`}
-                >
-                  <span className={`material-symbols-outlined !text-[16px] ${active ? 'text-accent-yellow' : ''}`}>
-                    {t.icon}
-                  </span>
-                  {t.label}
-                </button>
-              )
-            })}
-          </div>
-        </div>
-      </div>
-
       {/* ── Tab content ── */}
-      <div id="dashboard-tab-content" className="max-w-[1400px] mx-auto px-4 md:px-8 py-6 md:py-10 bg-[#fafafa] dark:bg-black overflow-hidden">
+      <div
+        id="dashboard-tab-content"
+        className="relative bg-[#f7f7f5] dark:bg-[#050505] overflow-hidden"
+      >
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 opacity-[0.035] dark:opacity-[0.04]"
+          style={{
+            backgroundImage:
+              'linear-gradient(rgba(0,0,0,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.5) 1px, transparent 1px)',
+            backgroundSize: '48px 48px',
+          }}
+        />
+        <div className="relative max-w-[1400px] mx-auto px-4 md:px-8 py-7 md:py-10">
         <AnimatePresence mode="wait">
           <motion.div
             key={tab}
-            initial={{ opacity: 0, y: 15 }}
+            initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -15 }}
-            transition={{ duration: 0.2, ease: 'easeOut' }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.22, ease: 'easeOut' }}
             className="space-y-6 md:space-y-8"
           >
             {tab === 'overview' && (
@@ -338,6 +445,7 @@ export default function DashboardClient({
             )}
           </motion.div>
         </AnimatePresence>
+        </div>
       </div>
     </>
   )
@@ -348,14 +456,85 @@ const containerVariants = {
   show: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.06
-    }
-  }
+      staggerChildren: 0.05,
+      delayChildren: 0.02,
+    },
+  },
 } as const
 
 const itemVariants = {
-  hidden: { opacity: 0, y: 12 },
-  show: { opacity: 1, y: 0, transition: { type: 'spring' as const, stiffness: 110, damping: 15 } }
+  hidden: { opacity: 0, y: 10 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.35, ease: [0.22, 1, 0.36, 1] as const },
+  },
+}
+
+const EXPLORE_LINKS = [
+  {
+    href: '/deals',
+    icon: 'local_offer',
+    label: 'All Deals',
+    sub: 'Cloud, SaaS & ad credits',
+  },
+  {
+    href: '/flash-deals',
+    icon: 'bolt',
+    label: 'Flash Deals',
+    sub: 'Limited-time drops',
+  },
+  {
+    href: '/programs?type=grants',
+    icon: 'payments',
+    label: 'Grants',
+    sub: 'Non-dilutive funding',
+  },
+  {
+    href: '/programs?type=accelerators',
+    icon: 'rocket_launch',
+    label: 'Accelerators',
+    sub: 'Top global programs',
+  },
+  {
+    href: '/student-benefits',
+    icon: 'school',
+    label: 'Student Benefits',
+    sub: 'Credits, tools & funding',
+  },
+  {
+    href: '/ideas',
+    icon: 'lightbulb',
+    label: 'Startup Ideas',
+    sub: 'Validated opportunities',
+  },
+  {
+    href: '/resources',
+    icon: 'lock',
+    label: 'Founder Vault',
+    sub: 'Guides & playbooks',
+  },
+  {
+    href: '/deals?category=saas-discounts',
+    icon: 'apps',
+    label: 'SaaS Stack',
+    sub: 'Tools at founder rates',
+  },
+  {
+    href: '/submit-deal',
+    icon: 'add_circle',
+    label: 'Submit Deal',
+    sub: 'Share with founders',
+  },
+] as const
+
+function SectionLabel({ children }: { children: ReactNode }) {
+  return (
+    <h2 className="font-mono text-[11px] font-black uppercase tracking-[0.16em] text-gray-600 dark:text-zinc-400 inline-flex items-center gap-2">
+      <span className="w-1.5 h-1.5 rounded-full bg-accent-yellow shadow-[0_0_8px_rgba(255,215,0,0.55)]" />
+      {children}
+    </h2>
+  )
 }
 
 /* ─── Overview Tab ─────────────────────────────────────── */
@@ -368,6 +547,8 @@ function OverviewTab({
   savedDealSlugs: string[]
   onChangeTab: (tab: Tab) => void
 }) {
+  const reduce = useReducedMotion()
+
   return (
     <motion.div
       variants={containerVariants}
@@ -377,92 +558,196 @@ function OverviewTab({
     >
       {/* Upgrade banner — free users */}
       {!isPro && (
-        <motion.section variants={itemVariants} className="relative bg-white dark:bg-[#0d0d0d] border-2 border-black dark:border-white/10 shadow-[4px_4px_0px_#111,7px_7px_0px_#FFD500] dark:shadow-[4px_4px_0px_rgba(255,255,255,0.08),7px_7px_0px_#FFD500] overflow-hidden rounded-sm">
-          <div className="absolute -top-10 -right-10 w-40 h-40 pointer-events-none opacity-[0.10]" aria-hidden="true">
-            <svg viewBox="0 0 200 200" className="w-full h-full text-gray-900 dark:text-white dashboard-upgrade-mandala-spin" fill="none" stroke="currentColor" strokeWidth="0.7">
-              <circle cx="100" cy="100" r="40" />
-              <circle cx="100" cy="100" r="60" strokeDasharray="2 4" />
-              <circle cx="100" cy="100" r="80" strokeDasharray="1 6" />
-              {[0, 60, 120, 180, 240, 300].map((deg) => (
-                <g key={deg} transform={`rotate(${deg} 100 100)`}>
-                  <line x1="100" y1="40" x2="100" y2="20" />
-                  <circle cx="100" cy="20" r="2" fill="currentColor" />
-                </g>
-              ))}
-              <circle cx="100" cy="100" r="3" fill="currentColor" />
-            </svg>
-          </div>
-          <div className="relative flex flex-col md:flex-row items-start md:items-center justify-between gap-4 p-5 md:p-6">
+        <motion.section
+          variants={itemVariants}
+          className="relative overflow-hidden rounded-2xl border border-accent-yellow/35 bg-gradient-to-br from-[#1a1710] via-[#0c0c0c] to-black p-5 md:p-6"
+        >
+          <div
+            aria-hidden
+            className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-accent-yellow/15 blur-3xl"
+          />
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-accent-yellow/50 to-transparent"
+          />
+          <div className="relative flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
             <div className="flex items-start gap-3.5 md:gap-4 flex-1 min-w-0">
-              <div className="w-10 h-10 md:w-12 md:h-12 bg-accent-yellow border-2 border-black dark:border-accent-yellow rounded-sm flex items-center justify-center flex-shrink-0 shadow-[2px_2px_0px_#111]">
-                <span className="material-symbols-outlined !text-[20px] md:!text-[22px] text-black">bolt</span>
+              <div className="w-11 h-11 md:w-12 md:h-12 rounded-xl bg-accent-yellow text-black border border-accent-yellow/50 flex items-center justify-center flex-shrink-0 shadow-[0_0_24px_rgba(255,215,0,0.25)]">
+                <span className="material-symbols-outlined !text-[22px]">bolt</span>
               </div>
               <div className="min-w-0">
-                <p className="font-mono text-[10px] font-black uppercase tracking-[0.12em] text-gray-500 dark:text-gray-400 mb-1">
-                  You&apos;re on the Free preview
+                <p className="font-mono text-[10px] font-black uppercase tracking-[0.14em] text-accent-yellow mb-1">
+                  Free preview
                 </p>
-                <h2 className="font-mono text-base md:text-xl font-black uppercase text-black dark:text-white leading-tight mb-1">
-                  Unlock the full catalog.
+                <h2 className="font-mono text-base md:text-xl font-black text-white tracking-tight leading-tight mb-1">
+                  Unlock the full catalog
                 </h2>
-                <p className="text-[12px] md:text-[13px] text-gray-600 dark:text-gray-400 leading-relaxed">
-                  Cloud credits, SaaS deals, grants, and accelerator programs — all in one founder dashboard.
+                <p className="text-[12px] md:text-[13px] text-zinc-400 leading-relaxed max-w-xl">
+                  Cloud credits, SaaS deals, grants, and accelerator programs — all in one founder
+                  dashboard.
                 </p>
               </div>
             </div>
-            <Link
-              href="/pricing"
-              className="group/cta inline-flex items-center gap-2 bg-accent-yellow text-black font-mono font-black text-[12px] uppercase tracking-[0.1em] px-5 py-3 border-2 border-black rounded-sm shadow-[3px_3px_0px_#111] hover:bg-amber-300 hover:shadow-[5px_5px_0px_#111] hover:-translate-x-px hover:-translate-y-px transition-all flex-shrink-0 self-stretch md:self-auto"
-            >
-              Scale as a Founder
-              <span className="material-symbols-outlined !text-[16px] group-hover/cta:translate-x-1 transition-transform">arrow_forward</span>
-            </Link>
+            <div className="flex flex-wrap gap-2 shrink-0 self-stretch md:self-auto">
+              <Link
+                href="/pricing"
+                className="group/cta inline-flex items-center justify-center gap-2 min-h-[48px] bg-accent-yellow text-black font-mono font-black text-[11px] uppercase tracking-[0.1em] px-5 rounded-xl hover:bg-yellow-300 transition-colors shadow-[0_0_28px_rgba(255,215,0,0.2)]"
+              >
+                View plans
+                <span className="material-symbols-outlined !text-[16px] group-hover/cta:translate-x-0.5 transition-transform">
+                  arrow_forward
+                </span>
+              </Link>
+              <button
+                type="button"
+                onClick={() => onChangeTab('billing')}
+                className="inline-flex items-center justify-center min-h-[48px] px-4 rounded-xl border border-white/15 text-white font-mono text-[11px] font-bold uppercase hover:border-accent-yellow/40 transition-colors"
+              >
+                Billing
+              </button>
+            </div>
           </div>
         </motion.section>
       )}
 
-      {/* Student Benefits Showcase Banner */}
+      {/* Academic Perks — site theme (black / gold) */}
       <motion.section variants={itemVariants}>
-        <div className="relative bg-gradient-to-r from-indigo-900 via-indigo-950 to-purple-950 text-white border-2 border-black dark:border-white/10 shadow-[4px_4px_0px_#111,7px_7px_0px_#6366f1] overflow-hidden rounded-sm p-5 md:p-6">
-          <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none" />
-          <div className="relative flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+        <div className="relative overflow-hidden rounded-2xl border border-black/[0.08] dark:border-white/[0.1] bg-white dark:bg-[#0a0a0a]">
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-0 bg-gradient-to-br from-accent-yellow/[0.07] via-transparent to-transparent dark:from-accent-yellow/[0.09]"
+          />
+          <div
+            aria-hidden
+            className="pointer-events-none absolute -right-16 top-1/2 -translate-y-1/2 h-48 w-48 rounded-full bg-accent-yellow/10 blur-3xl"
+          />
+          <div
+            aria-hidden
+            className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-accent-yellow/60 to-transparent"
+          />
+
+          <div className="relative flex flex-col md:flex-row items-start md:items-center justify-between gap-5 p-5 md:p-6">
             <div className="flex items-start gap-3.5 md:gap-4 flex-1 min-w-0">
-              <div className="w-11 h-11 bg-indigo-500 border-2 border-white rounded-sm flex items-center justify-center flex-shrink-0 shadow-[2px_2px_0px_#111]">
-                <span className="material-symbols-outlined !text-[22px] text-white">school</span>
+              <div className="w-12 h-12 rounded-2xl bg-accent-yellow/15 border border-accent-yellow/35 text-amber-700 dark:text-accent-yellow flex items-center justify-center flex-shrink-0">
+                <span
+                  className="material-symbols-outlined !text-[24px]"
+                  style={{ fontVariationSettings: "'FILL' 1" }}
+                >
+                  school
+                </span>
               </div>
               <div className="min-w-0">
-                <span className="font-mono text-[9px] font-black uppercase tracking-[0.16em] text-indigo-300 bg-indigo-950/80 px-2 py-0.5 border border-indigo-500/30 rounded-sm">
-                  Academic Perks
+                <span className="inline-flex items-center gap-1.5 font-mono text-[9px] font-black uppercase tracking-[0.16em] text-accent-yellow bg-accent-yellow/10 border border-accent-yellow/25 px-2.5 py-1 rounded-full">
+                  <span className="w-1 h-1 rounded-full bg-accent-yellow" />
+                  Academic perks
                 </span>
-                <h3 className="font-mono text-base md:text-xl font-black uppercase mt-1">
-                  900+ Student Benefits & Funding
+                <h3 className="font-mono text-base md:text-xl font-black text-gray-900 dark:text-white tracking-tight mt-2 leading-tight">
+                  900+ student benefits &amp; funding
                 </h3>
-                <p className="text-[12.5px] text-indigo-200/90 leading-relaxed mt-1">
-                  Claim student startup packages: free professional tools, student cloud credits (Figma, GitHub, Notion, etc.), and non-dilutive funding or scholarships matched for students.
+                <p className="text-[12.5px] text-gray-600 dark:text-zinc-400 leading-relaxed mt-1.5 max-w-xl">
+                  Free pro tools, student cloud credits (Figma, GitHub, Notion…), and non-dilutive
+                  funding matched for students — claim in minutes.
                 </p>
+                <div className="mt-3 flex flex-wrap gap-1.5">
+                  {['Figma', 'GitHub', 'Notion', 'Cloud credits'].map((tag) => (
+                    <span
+                      key={tag}
+                      className="font-mono text-[9px] font-bold uppercase tracking-wide text-gray-500 dark:text-zinc-500 border border-black/[0.06] dark:border-white/10 bg-gray-50 dark:bg-white/[0.03] px-2 py-0.5 rounded-md"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
               </div>
             </div>
             <Link
               href="/student-benefits"
-              className="group/btn inline-flex items-center gap-2 bg-white text-indigo-950 font-mono font-black text-[11px] uppercase tracking-[0.1em] px-4 py-3 border-2 border-black rounded-sm shadow-[3px_3px_0px_#111] hover:bg-indigo-50 hover:shadow-[5px_5px_0px_#111] hover:-translate-x-px hover:-translate-y-px transition-all flex-shrink-0 self-stretch md:self-auto justify-center"
+              className="group/btn shrink-0 inline-flex items-center justify-center gap-2 min-h-[48px] px-5 rounded-xl bg-gray-900 dark:bg-white text-white dark:text-black font-mono font-black text-[11px] uppercase tracking-[0.1em] hover:bg-accent-yellow hover:text-black dark:hover:bg-accent-yellow transition-colors self-stretch md:self-auto"
             >
-              Access Student Perks
-              <span className="material-symbols-outlined !text-[15px] group-hover/btn:translate-x-0.5 transition-transform">arrow_forward</span>
+              Access student perks
+              <span className="material-symbols-outlined !text-[15px] group-hover/btn:translate-x-0.5 transition-transform">
+                arrow_forward
+              </span>
             </Link>
           </div>
+        </div>
+      </motion.section>
+
+      {/* Quick actions strip */}
+      <motion.section variants={itemVariants}>
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5">
+          {[
+            {
+              href: '/deals',
+              icon: 'local_offer',
+              label: 'Browse deals',
+              sub: 'Full catalog',
+            },
+            {
+              href: '/flash-deals',
+              icon: 'bolt',
+              label: 'Flash deals',
+              sub: 'Live countdowns',
+            },
+            {
+              href: '/ideas',
+              icon: 'lightbulb',
+              label: 'Ideas hub',
+              sub: 'Find problems',
+            },
+            {
+              action: () => onChangeTab('billing'),
+              icon: 'credit_card',
+              label: 'Billing',
+              sub: 'Plan & renewals',
+            },
+          ].map((item) => {
+            const className =
+              'group flex items-center gap-3 p-3.5 min-h-[72px] rounded-2xl border border-black/[0.06] dark:border-white/[0.08] bg-white dark:bg-[#0a0a0a] hover:border-accent-yellow/40 hover:bg-accent-yellow/[0.04] transition-all text-left w-full'
+            const inner = (
+              <>
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-accent-yellow/10 border border-accent-yellow/20 text-amber-700 dark:text-accent-yellow group-hover:bg-accent-yellow/20 transition-colors">
+                  <span className="material-symbols-outlined !text-[18px]">{item.icon}</span>
+                </span>
+                <span className="min-w-0">
+                  <span className="block font-mono text-[11px] font-black uppercase tracking-wide text-gray-900 dark:text-white">
+                    {item.label}
+                  </span>
+                  <span className="block text-[11px] text-gray-500 dark:text-zinc-500 mt-0.5">
+                    {item.sub}
+                  </span>
+                </span>
+              </>
+            )
+            if ('href' in item && item.href) {
+              return (
+                <Link key={item.label} href={item.href} className={className}>
+                  {inner}
+                </Link>
+              )
+            }
+            return (
+              <button
+                key={item.label}
+                type="button"
+                onClick={item.action}
+                className={className}
+              >
+                {inner}
+              </button>
+            )
+          })}
         </div>
       </motion.section>
 
       {/* Saved Deals */}
       {savedDealSlugs.length > 0 ? (
         <motion.section variants={itemVariants}>
-          <div className="flex items-center justify-between mb-3">
-            <h2 className="font-mono text-[11px] font-black uppercase tracking-[0.16em] text-gray-700 dark:text-gray-300 inline-flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-accent-yellow" />
-              Your Saved Deals
-            </h2>
+          <div className="flex items-center justify-between mb-3.5">
+            <SectionLabel>Your saved deals</SectionLabel>
             <Link
               href="/deals"
-              className="font-mono text-[10px] font-bold uppercase tracking-wide text-gray-500 hover:text-black dark:hover:text-white inline-flex items-center gap-1 transition-colors"
+              className="font-mono text-[10px] font-bold uppercase tracking-wide text-gray-500 hover:text-accent-yellow inline-flex items-center gap-1 transition-colors"
             >
               Browse all
               <span className="material-symbols-outlined !text-[12px]">arrow_forward</span>
@@ -472,30 +757,29 @@ function OverviewTab({
         </motion.section>
       ) : (
         <motion.section variants={itemVariants}>
-          <div className="flex items-center justify-between mb-3">
-            <h2 className="font-mono text-[11px] font-black uppercase tracking-[0.16em] text-gray-700 dark:text-gray-300 inline-flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-accent-yellow" />
-              Your Saved Deals
-            </h2>
+          <div className="flex items-center justify-between mb-3.5">
+            <SectionLabel>Your saved deals</SectionLabel>
           </div>
-          <div className="relative bg-white dark:bg-[#0d0d0d] border-2 border-dashed border-gray-300 dark:border-white/10 rounded-sm p-6 md:p-7 flex flex-col md:flex-row items-center gap-4 md:gap-5 text-center md:text-left">
-            <div className="w-12 h-12 bg-sky-100 dark:bg-sky-900/30 border-2 border-black dark:border-white/20 rounded-sm flex items-center justify-center flex-shrink-0 shadow-[2px_2px_0px_#111] dark:shadow-[2px_2px_0px_rgba(255,255,255,0.08)]">
-              <span className="material-symbols-outlined !text-[22px] text-black dark:text-sky-400">bookmark_add</span>
+          <div className="relative rounded-2xl border border-dashed border-black/10 dark:border-white/12 bg-white dark:bg-[#0a0a0a] p-6 md:p-7 flex flex-col md:flex-row items-center gap-4 md:gap-5 text-center md:text-left">
+            <div className="w-12 h-12 rounded-2xl bg-accent-yellow/12 border border-accent-yellow/25 flex items-center justify-center flex-shrink-0 text-amber-700 dark:text-accent-yellow">
+              <span className="material-symbols-outlined !text-[22px]">bookmark_add</span>
             </div>
             <div className="flex-1 min-w-0">
-              <h3 className="font-mono text-sm md:text-base font-black uppercase text-black dark:text-white leading-tight">
+              <h3 className="font-mono text-sm md:text-base font-black text-gray-900 dark:text-white tracking-tight">
                 No saved deals yet
               </h3>
-              <p className="text-[12px] md:text-[13px] text-gray-600 dark:text-gray-400 leading-relaxed mt-1">
+              <p className="text-[12px] md:text-[13px] text-gray-600 dark:text-zinc-400 leading-relaxed mt-1">
                 Tap the bookmark on any deal to pin it here for quick access later.
               </p>
             </div>
             <Link
               href="/deals"
-              className="group/cta inline-flex items-center gap-2 bg-black dark:bg-white dark:text-black text-white font-mono font-black text-[11px] uppercase tracking-[0.1em] px-4 py-2.5 border-2 border-black rounded-sm hover:bg-accent-yellow hover:text-black transition-colors flex-shrink-0"
+              className="group/cta inline-flex items-center gap-2 min-h-[44px] bg-gray-900 dark:bg-white text-white dark:text-black font-mono font-black text-[11px] uppercase tracking-[0.1em] px-4 rounded-xl hover:bg-accent-yellow hover:text-black transition-colors flex-shrink-0"
             >
-              Browse Deals
-              <span className="material-symbols-outlined !text-[15px] group-hover/cta:translate-x-0.5 transition-transform">arrow_forward</span>
+              Browse deals
+              <span className="material-symbols-outlined !text-[15px] group-hover/cta:translate-x-0.5 transition-transform">
+                arrow_forward
+              </span>
             </Link>
           </div>
         </motion.section>
@@ -503,47 +787,40 @@ function OverviewTab({
 
       {/* Explore Catalog */}
       <motion.section variants={itemVariants}>
-        <div className="flex items-center justify-between mb-3">
-          <h2 className="font-mono text-[11px] font-black uppercase tracking-[0.16em] text-gray-700 dark:text-gray-300 inline-flex items-center gap-1.5">
-            <span className="w-1.5 h-1.5 rounded-full bg-accent-yellow" />
-            Explore the Catalog
-          </h2>
+        <div className="flex items-center justify-between mb-3.5">
+          <SectionLabel>Explore the catalog</SectionLabel>
         </div>
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
-          {[
-            { href: '/deals', icon: 'local_offer', label: 'All Deals', sub: 'Cloud, SaaS, Ad credits', iconColor: 'text-accent-yellow', bgClass: 'bg-accent-yellow/10 dark:bg-accent-yellow/5 border-accent-yellow/20', hoverBorder: 'hover:border-accent-yellow/50' },
-            { href: '/programs?type=grants', icon: 'payments', label: 'Grants', sub: 'Non-dilutive funding', iconColor: 'text-emerald-400', bgClass: 'bg-emerald-500/10 dark:bg-emerald-500/5 border-emerald-500/20', hoverBorder: 'hover:border-emerald-500/50' },
-            { href: '/programs?type=accelerators', icon: 'rocket_launch', label: 'Accelerators', sub: 'Top global programs', iconColor: 'text-orange-400', bgClass: 'bg-orange-500/10 dark:bg-orange-500/5 border-orange-500/20', hoverBorder: 'hover:border-orange-500/50' },
-            { href: '/student-benefits', icon: 'school', label: 'Student Benefits', sub: 'Credits, funding & tools', iconColor: 'text-indigo-400', bgClass: 'bg-indigo-500/10 dark:bg-indigo-500/5 border-indigo-500/20', hoverBorder: 'hover:border-indigo-500/50' },
-            { href: '/startups', icon: 'verified', label: 'Verified Startups', sub: 'Funded companies', iconColor: 'text-sky-400', bgClass: 'bg-sky-500/10 dark:bg-sky-500/5 border-sky-500/20', hoverBorder: 'hover:border-sky-500/50' },
-            { href: '/ideas', icon: 'emoji_objects', label: 'Startup Ideas', sub: 'Validated opportunities', iconColor: 'text-yellow-400', bgClass: 'bg-yellow-500/10 dark:bg-yellow-500/5 border-yellow-500/20', hoverBorder: 'hover:border-yellow-500/50' },
-            { href: '/resources', icon: 'folder_open', label: 'Resources', sub: 'Templates & guides', iconColor: 'text-purple-400', bgClass: 'bg-purple-500/10 dark:bg-purple-500/5 border-purple-500/20', hoverBorder: 'hover:border-purple-500/50' },
-            { href: '/deals?category=saas-discounts', icon: 'apps', label: 'SaaS Stack', sub: 'Tools at founder rates', iconColor: 'text-pink-400', bgClass: 'bg-pink-500/10 dark:bg-pink-500/5 border-pink-500/20', hoverBorder: 'hover:border-pink-500/50' },
-            { href: '/submit-deal', icon: 'add_circle', label: 'Submit Deal', sub: 'Share with founders', iconColor: 'text-zinc-400 dark:text-zinc-300', bgClass: 'bg-zinc-500/10 dark:bg-zinc-500/5 border-zinc-500/20', hoverBorder: 'hover:border-zinc-500/50' }
-          ].map((a) => (
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-3.5">
+          {EXPLORE_LINKS.map((a, i) => (
             <motion.div
-              key={a.href}
-              whileHover={{ scale: 1.015, y: -2 }}
-              whileTap={{ scale: 0.985 }}
+              key={a.href + a.label}
+              initial={reduce ? false : { opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.04 + i * 0.03, duration: 0.3 }}
               className="h-full"
             >
               <Link
                 href={a.href}
-                className={`group relative bg-white dark:bg-[#0d0d0d] border-2 border-black dark:border-white/10 ${a.hoverBorder} shadow-[3px_3px_0px_#111] dark:shadow-[3px_3px_0px_rgba(255,255,255,0.06)] hover:shadow-[5px_5px_0px_#111] dark:hover:shadow-[5px_5px_0px_rgba(255,255,255,0.1)] transition-all rounded-sm p-4 md:p-5 flex flex-col items-center text-center gap-3 overflow-hidden h-full`}
+                className="group relative h-full flex flex-col rounded-2xl border border-black/[0.07] dark:border-white/[0.09] bg-white dark:bg-[#0a0a0a] p-4 md:p-5 overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:border-accent-yellow/40 hover:shadow-[0_16px_40px_rgba(0,0,0,0.08)] dark:hover:shadow-[0_16px_40px_rgba(0,0,0,0.45)]"
               >
-                <div className="flex justify-center w-full">
-                  <div className={`w-11 h-11 ${a.bgClass} border-2 border-black dark:border-white/20 rounded-sm flex items-center justify-center flex-shrink-0 shadow-[1px_1px_0px_#111] dark:shadow-[1px_1px_0px_rgba(255,255,255,0.06)] group-hover:scale-110 group-hover:rotate-[6deg] transition-all duration-300`}>
-                    <span className={`material-symbols-outlined !text-[20px] ${a.iconColor}`}>{a.icon}</span>
+                <div
+                  aria-hidden
+                  className="pointer-events-none absolute -right-6 -top-6 h-20 w-20 rounded-full bg-accent-yellow/0 group-hover:bg-accent-yellow/[0.08] blur-2xl transition-colors duration-500"
+                />
+                <div className="relative flex items-start justify-between gap-2 mb-3">
+                  <div className="w-10 h-10 rounded-xl bg-accent-yellow/10 border border-accent-yellow/20 text-amber-700 dark:text-accent-yellow flex items-center justify-center group-hover:bg-accent-yellow/18 transition-colors">
+                    <span className="material-symbols-outlined !text-[20px]">{a.icon}</span>
                   </div>
+                  <span className="material-symbols-outlined !text-[16px] text-gray-300 dark:text-zinc-600 group-hover:text-accent-yellow group-hover:translate-x-0.5 transition-all">
+                    arrow_forward
+                  </span>
                 </div>
-                <div className="min-w-0 flex-1">
-                  <p className="font-mono text-[13px] font-black uppercase text-black dark:text-white leading-tight tracking-wide group-hover:text-accent-yellow transition-colors duration-200">{a.label}</p>
-                  <p className="text-[11px] text-gray-500 dark:text-gray-400 leading-snug mt-1">{a.sub}</p>
-                </div>
-                <div className="mt-4 w-full pt-2.5 border-t border-dashed border-gray-200 dark:border-white/10 flex items-center justify-between">
-                  <span className="font-mono text-[9.5px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400 group-hover:text-black dark:group-hover:text-white transition-colors">Open</span>
-                  <span className="material-symbols-outlined !text-[15px] text-gray-400 dark:text-gray-500 group-hover:translate-x-1 group-hover:text-black dark:group-hover:text-white transition-all">arrow_forward</span>
-                </div>
+                <p className="relative font-mono text-[12px] md:text-[13px] font-black uppercase tracking-wide text-gray-900 dark:text-white group-hover:text-accent-yellow transition-colors">
+                  {a.label}
+                </p>
+                <p className="relative text-[11px] text-gray-500 dark:text-zinc-500 mt-1 leading-snug">
+                  {a.sub}
+                </p>
               </Link>
             </motion.div>
           ))}
@@ -552,27 +829,30 @@ function OverviewTab({
 
       {/* Tip */}
       <motion.section variants={itemVariants}>
-        <div className="relative bg-white dark:bg-[#0d0d0d] border-2 border-black dark:border-white/10 shadow-[3px_3px_0px_#111] dark:shadow-[3px_3px_0px_rgba(255,255,255,0.06)] rounded-sm p-5 overflow-hidden">
-          <div className="absolute -bottom-10 -left-10 w-32 h-32 pointer-events-none opacity-[0.07]" aria-hidden="true">
-            <svg viewBox="0 0 200 200" className="w-full h-full text-gray-900 dark:text-white dashboard-tip-mandala-spin" fill="none" stroke="currentColor" strokeWidth="0.6">
-              {[20, 35, 50, 65].map((r, i) => (
-                <ellipse key={i} cx="100" cy="100" rx={r} ry={r / 1.8} transform={`rotate(${i * 30} 100 100)`} />
-              ))}
-              <circle cx="100" cy="100" r="2" fill="currentColor" />
-            </svg>
-          </div>
-          <div className="relative">
-            <p className="font-mono text-[10px] font-black uppercase tracking-[0.16em] text-gray-500 dark:text-gray-400 mb-2 inline-flex items-center gap-1.5">
-              <span className="w-1 h-1 rounded-full bg-accent-yellow" />
-              Founder Tip
-            </p>
-            <h3 className="font-mono text-base font-black uppercase text-black dark:text-white leading-tight mb-2">
-              Apply with your work email.
-            </h3>
-            <p className="text-[12.5px] text-gray-700 dark:text-gray-400 leading-relaxed">
-              Most providers approve faster when the application email matches your domain. Set up{' '}
-              <span className="font-bold text-black dark:text-white">name@yourstartup.com</span> before you claim deals.
-            </p>
+        <div className="relative overflow-hidden rounded-2xl border border-black/[0.07] dark:border-white/[0.09] bg-white dark:bg-[#0a0a0a] p-5 md:p-6">
+          <div
+            aria-hidden
+            className="pointer-events-none absolute -bottom-8 -left-8 h-28 w-28 rounded-full bg-accent-yellow/[0.06] blur-2xl"
+          />
+          <div className="relative flex items-start gap-3.5">
+            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-accent-yellow/12 border border-accent-yellow/25 text-accent-yellow">
+              <span className="material-symbols-outlined !text-[18px]">tips_and_updates</span>
+            </span>
+            <div>
+              <p className="font-mono text-[10px] font-black uppercase tracking-[0.16em] text-gray-500 dark:text-zinc-500 mb-1.5">
+                Founder tip
+              </p>
+              <h3 className="font-mono text-[15px] font-black text-gray-900 dark:text-white tracking-tight leading-tight mb-1.5">
+                Apply with your work email
+              </h3>
+              <p className="text-[12.5px] text-gray-600 dark:text-zinc-400 leading-relaxed max-w-2xl">
+                Most providers approve faster when the application email matches your domain. Set up{' '}
+                <span className="font-semibold text-gray-900 dark:text-white">
+                  name@yourstartup.com
+                </span>{' '}
+                before you claim deals.
+              </p>
+            </div>
           </div>
         </div>
       </motion.section>
@@ -762,7 +1042,7 @@ function AccountTab({
               </div>
               <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full font-mono text-[9px] font-black uppercase tracking-wider ${
                 mfaEnabled 
-                  ? 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-700' 
+                  ? 'bg-amber-100 dark:bg-accent-yellow/15 text-amber-900 dark:text-accent-yellow border border-amber-300 dark:border-accent-yellow/30' 
                   : 'bg-rose-100 dark:bg-rose-900/30 text-rose-800 dark:text-rose-300 border border-rose-300 dark:border-rose-700'
               }`}>
                 <span className={`w-1.5 h-1.5 rounded-full ${mfaEnabled ? 'bg-emerald-600' : 'bg-rose-600 animate-pulse'}`} />
@@ -800,7 +1080,7 @@ function AccountTab({
                   </div>
                 )}
                 {enrollSuccess && (
-                  <div className="p-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-700 text-green-700 dark:text-green-300 text-xs font-mono font-bold flex items-center gap-2">
+                  <div className="p-3 bg-amber-50 dark:bg-accent-yellow/10 border border-amber-200 dark:border-amber-700 text-amber-800 dark:text-accent-yellow text-xs font-mono font-bold flex items-center gap-2">
                     <span className="material-symbols-outlined text-sm">check_circle</span>
                     {enrollSuccess}
                   </div>

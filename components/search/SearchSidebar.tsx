@@ -67,7 +67,7 @@ export default function SearchSidebar() {
                 <div className="flex items-center gap-2 mt-1">
                   <span className="font-sans text-xs text-gray-500">{search.searches} searches</span>
                   <span className={`material-symbols-outlined text-xs ${
-                    search.trend === 'up' ? 'text-green-600' : 
+                    search.trend === 'up' ? 'text-amber-700' : 
                     search.trend === 'down' ? 'text-red-600' : 'text-gray-400'
                   }`}>
                     {search.trend === 'up' ? 'trending_up' : 

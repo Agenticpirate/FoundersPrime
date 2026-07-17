@@ -4,7 +4,6 @@ import { incubators2026 } from '@/data/incubators-2026'
 import { grants2026 } from '@/data/grants-2026'
 import { flashDeals } from '@/data/flash-deals'
 import { studentBenefits2026 } from '@/data/student-benefits-2026'
-import startupsData from '@/data/yc_companies_2024_2026.json'
 import { getAllIdeaSlugs } from '@/lib/ideas'
 import fs from 'fs'
 import path from 'path'
@@ -59,7 +58,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
         '/programs/accelerators',
         '/programs/incubators',
         '/programs/grants',
-        '/startups',
         '/ideas',
         '/student-benefits',
         '/flash-deals',
@@ -113,15 +111,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
         priority: 0.8,
     }))
 
-    // 6. Dynamic Startup Routes
-    const startupRoutes = startupsData.map((startup: any) => ({
-        url: `${baseUrl}/startups/${startup.slug}`,
-        lastModified: lastModifiedFor(startup),
-        changeFrequency: 'monthly' as const,
-        priority: 0.7,
-    }))
-
-    // 7. Flash deals
+    // 6. Flash deals (Verified Startups routes retired — data kept in data/yc_companies_*)
     const flashRoutes = (Array.isArray(flashDeals) ? flashDeals : []).map((deal: any) => ({
         url: `${baseUrl}/flash-deals/${deal.id || deal.slug}`,
         lastModified: lastModifiedFor(deal),
@@ -129,7 +119,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
         priority: 0.75,
     }))
 
-    // 8. Student benefits (slug pages)
+    // 7. Student benefits (slug pages)
     const studentRoutes = (Array.isArray(studentBenefits2026) ? studentBenefits2026 : [])
         .filter((item: any) => item?.slug)
         .map((item: any) => ({
@@ -139,7 +129,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
             priority: 0.65,
         }))
 
-    // 9. Startup ideas
+    // 8. Startup ideas
     const ideaRoutes = getAllIdeaSlugs().map((slug) => ({
         url: `${baseUrl}/ideas/${slug}`,
         lastModified: BUILD_DATE,
@@ -153,7 +143,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
         ...acceleratorRoutes,
         ...incubatorRoutes,
         ...grantRoutes,
-        ...startupRoutes,
         ...flashRoutes,
         ...studentRoutes,
         ...ideaRoutes,

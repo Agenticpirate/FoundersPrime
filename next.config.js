@@ -241,6 +241,18 @@ const nextConfig = {
         destination: '/llms.txt',
         permanent: true,
       },
+      // Verified Startups retired from public product (data kept in-repo).
+      // See docs/ARCHIVED-STARTUPS.md
+      {
+        source: '/startups',
+        destination: '/ideas',
+        permanent: true,
+      },
+      {
+        source: '/startups/:path*',
+        destination: '/ideas',
+        permanent: true,
+      },
       // Cloud Credits no longer has a dedicated landing page — send old
       // links/bookmarks/SEO to the filtered All Deals view instead of 404.
       {

@@ -1,5 +1,117 @@
 [
   {
+    "id": "dodo-payments-startups",
+    "slug": "dodo-payments-startups",
+    "title": "Dodo Payments for Startups — Up to 12 Months Free Credits",
+    "provider": "Dodo Payments",
+    "category": "saas-discounts",
+    "subcategory": "finance-legal",
+    "value": "Up to 12 months free credits + forever startup pricing",
+    "enhancedValue": "Up to 12 months free credits + preferential rates",
+    "shortDescription": "Merchant of Record for AI & SaaS startups: up to 12 months of free credits applied upfront, forever startup pricing, and the full Dodo platform (billing, subscriptions, 40+ payment methods) to sell in 220+ countries.",
+    "short_description": "Merchant of Record for AI & SaaS startups: up to 12 months of free credits applied upfront, forever startup pricing, and the full Dodo platform (billing, subscriptions, 40+ payment methods) to sell in 220+ countries.",
+    "description": "Dodo Payments for Startups is the billing and payments platform built for AI and SaaS founders who need to sell globally from day one. As Merchant of Record, Dodo collects and remits tax, absorbs fraud and chargeback liability, and handles compliance — so a small team can monetize in 220+ countries without building payments infrastructure.\n\nWhat's Included:\n• Up to 12 months of free credits, applied upfront (or until you reach your credit cap)\n• Forever startup pricing — preferential rates that continue after free credits end\n• Full platform with no tier-gating: credit-based billing, usage metering, subscriptions, and 40+ payment methods\n• Global tax, VAT/GST handling, chargebacks, and fraud protection as Merchant of Record\n• Checkout in multiple languages; PCI DSS Level 1 certified infrastructure\n\nHow to claim:\nApply in about two minutes at dodopayments.com/startups with your founder name and work email (personal inboxes are not accepted). Dodo reviews applications and typically replies within 3 business days. After approval, complete standard business verification; credits and startup pricing activate on onboarding.\n\nNote: Credit amounts, duration, and final eligibility are set by Dodo Payments and may vary by application. Confirm current terms on the program page.",
+    "detailedDescription": "Dodo Payments is a Merchant of Record billing platform for AI-first and SaaS products. The Startups program gives approved teams free credits for up to 12 months, locked-in preferential pricing after credits, and unrestricted access to subscriptions, usage-based billing, and 40+ payment methods — without stitching together tax, fraud, and multi-country compliance yourself.\n\nWho it's for: early-stage through Series B teams building SaaS, AI, or digital products that sell (or plan to sell) internationally — including bootstrapped founders. Existing Dodo customers can apply; partner or accelerator codes can be mentioned in the application or emailed to startups@dodopayments.com.",
+    "benefits": [
+      "Up to 12 months of free credits applied upfront",
+      "Forever startup pricing after credits end",
+      "Full platform: subscriptions, usage metering, credit-based billing",
+      "40+ payment methods across 220+ countries",
+      "Merchant of Record: tax, compliance, chargebacks & fraud handled",
+      "PCI DSS Level 1 certified"
+    ],
+    "eligibility": [
+      "Early-stage startups through Series B (bootstrapped teams welcome)",
+      "Building SaaS, AI, or digital products",
+      "Selling or planning to sell internationally",
+      "Company / work email required (personal inboxes not accepted)",
+      "Final eligibility determined by Dodo Payments"
+    ],
+    "requirements": [
+      "Founder name and work email on the application",
+      "Standard business verification during onboarding",
+      "Apply via the official Dodo for Startups form"
+    ],
+    "applicationProcess": [
+      "Open https://dodopayments.com/startups and start the application",
+      "Submit founder name and work email (company email only)",
+      "Optionally add LinkedIn and any partner/accelerator code",
+      "Wait for review — Dodo typically replies within 3 business days",
+      "Complete business verification onboarding",
+      "Credits and forever startup pricing activate once approved"
+    ],
+    "application_process": [
+      "Open https://dodopayments.com/startups and start the application",
+      "Submit founder name and work email (company email only)",
+      "Optionally add LinkedIn and any partner/accelerator code",
+      "Wait for review — Dodo typically replies within 3 business days",
+      "Complete business verification onboarding",
+      "Credits and forever startup pricing activate once approved"
+    ],
+    "proTips": [
+      "Use a company domain email — personal Gmail/Yahoo addresses are rejected.",
+      "If you have a partner or accelerator code, include it in the form or email startups@dodopayments.com.",
+      "Already on Dodo? You can still apply; they review existing customers case by case."
+    ],
+    "faqs": [
+      {
+        "question": "Who is eligible for Dodo Payments for Startups?",
+        "answer": "Early-stage startups building SaaS, AI, or digital products that sell (or plan to sell) internationally. Eligible companies range from bootstrapped builders through Series B, including teams scaling through early revenue. Final approval is decided by Dodo."
+      },
+      {
+        "question": "What do I get with the program?",
+        "answer": "Approved startups get up to 12 months of free credits applied upfront, forever startup pricing, and the full Dodo platform with no tier-gating — subscriptions, usage-based billing, and 40+ payment methods."
+      },
+      {
+        "question": "What happens when free credits run out?",
+        "answer": "Credits last up to 12 months or until you hit the credit cap, whichever comes first. After that, startup pricing continues on preferential rates without disruption."
+      },
+      {
+        "question": "How long does review take?",
+        "answer": "Dodo reviews every application and typically replies within 3 business days. Approved startups then complete standard business verification before credits activate."
+      },
+      {
+        "question": "Do you accept partner or accelerator codes?",
+        "answer": "Yes. Mention the code in your application or email startups@dodopayments.com. Codes are verified manually during review."
+      }
+    ],
+    "tags": [
+      "payments",
+      "billing",
+      "merchant-of-record",
+      "subscriptions",
+      "saas",
+      "ai",
+      "fintech",
+      "startups",
+      "dodo",
+      "global"
+    ],
+    "status": "active",
+    "applicationUrl": "https://dodopayments.com/startups",
+    "application_url": "https://dodopayments.com/startups",
+    "providerWebsite": "https://dodopayments.com",
+    "provider_website": "https://dodopayments.com",
+    "logoUrl": "/logos/dodo-icon.png",
+    "logo_url": "/logos/dodo-icon.png",
+    "brandIcon": "/logos/dodo-icon.png",
+    "featured": true,
+    "verified": true,
+    "recommended": true,
+    "savings": "Up to 12 months free + preferential rates",
+    "savingsAmount": 0,
+    "difficulty": "easy",
+    "timeToApply": "2–5 minutes",
+    "successRate": "Application review within ~3 business days",
+    "lastUpdated": "2026-07-17",
+    "createdAt": "2026-07-17",
+    "updatedAt": "2026-07-17",
+    "sourceVerified": true,
+    "dataSource": "manual-update",
+    "icon": "💳",
+    "sortOrder": 5
+  },
+  {
     "slug": "yandex-cloud-trial-credits",
     "title": "Yandex Cloud — Up to $20,000 Free Credits",
     "provider": "Yandex Cloud",
@@ -6962,7 +7074,7 @@
       "Amazon Music"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=Amazon%20Music%20startup%20program",
+    "applicationUrl": "https://music.amazon.com/",
     "logoUrl": "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://music.amazon.com&size=128",
     "featured": false,
     "verified": true,
@@ -7020,7 +7132,7 @@
       "ApparelMagic"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=ApparelMagic%20startup%20program",
+    "applicationUrl": "https://apparelmagic.com/",
     "logoUrl": "https://apparelmagic.com/favicon.ico",
     "featured": false,
     "verified": true,
@@ -7078,7 +7190,7 @@
       "AVG Technologies"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=AVG%20Technologies%20startup%20program",
+    "applicationUrl": "https://www.avg.com/",
     "logoUrl": "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://www.avg.com&size=128",
     "featured": false,
     "verified": true,
@@ -7230,7 +7342,7 @@
       "BetterWay Devs"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=BetterWay%20Devs%20startup%20program",
+    "applicationUrl": "https://www.betterway.dev/",
     "logoUrl": "",
     "featured": false,
     "verified": true,
@@ -7286,7 +7398,7 @@
       "BLACKBOX AI"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=BLACKBOX%20AI%20startup%20program",
+    "applicationUrl": "https://www.blackbox.ai/",
     "logoUrl": "https://www.box.com/favicon.ico",
     "featured": false,
     "verified": true,
@@ -7344,7 +7456,7 @@
       "BlockSurvey"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=BlockSurvey%20startup%20program",
+    "applicationUrl": "https://blocksurvey.io/pricing",
     "logoUrl": "https://blocksurvey.io/favicon.ico",
     "featured": false,
     "verified": true,
@@ -7402,7 +7514,7 @@
       "Bright Data"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=Bright%20Data%20startup%20program",
+    "applicationUrl": "https://brightdata.com/pricing",
     "logoUrl": "https://brightdata.com/favicon.ico",
     "featured": false,
     "verified": true,
@@ -7458,7 +7570,7 @@
       "Builderall"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=Builderall%20startup%20program",
+    "applicationUrl": "https://www.builderall.com/",
     "logoUrl": "https://builderall.com/favicon.ico",
     "featured": false,
     "verified": true,
@@ -7516,7 +7628,7 @@
       "Campaigner"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=Campaigner%20startup%20program",
+    "applicationUrl": "https://www.campaigner.com/",
     "logoUrl": "https://www.campaigner.com/favicon.ico",
     "featured": false,
     "verified": true,
@@ -7574,7 +7686,7 @@
       "Captain Contrat"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=Captain%20Contrat%20startup%20program",
+    "applicationUrl": "https://www.captaincontrat.com/",
     "logoUrl": "https://www.captaincontrat.com/favicon.ico",
     "featured": false,
     "verified": true,
@@ -7632,7 +7744,7 @@
       "Carepatron"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=Carepatron%20startup%20program",
+    "applicationUrl": "https://www.carepatron.com/pricing",
     "logoUrl": "",
     "featured": false,
     "verified": true,
@@ -7690,7 +7802,7 @@
       "CatchApp Bookings"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=CatchApp%20Bookings%20startup%20program",
+    "applicationUrl": "https://www.catchapp.com/",
     "logoUrl": "",
     "featured": false,
     "verified": true,
@@ -7748,7 +7860,7 @@
       "Chatsimple.ai"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=Chatsimple.ai%20startup%20program",
+    "applicationUrl": "https://www.chatsimple.ai/",
     "logoUrl": "https://www.chatsimple.ai/favicon.ico",
     "featured": false,
     "verified": true,
@@ -7806,7 +7918,7 @@
       "ChemiCloud"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=ChemiCloud%20startup%20program",
+    "applicationUrl": "https://chemicloud.com/",
     "logoUrl": "https://www.chemicloud.com/favicon.ico",
     "featured": false,
     "verified": true,
@@ -7864,7 +7976,7 @@
       "Cherry Servers"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=Cherry%20Servers%20startup%20program",
+    "applicationUrl": "https://www.cherryservers.com/",
     "logoUrl": "",
     "featured": false,
     "verified": true,
@@ -7922,7 +8034,7 @@
       "ClickFunnels"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=ClickFunnels%20startup%20program",
+    "applicationUrl": "https://www.clickfunnels.com/",
     "logoUrl": "https://www.clickfunnels.com/favicon.ico",
     "featured": false,
     "verified": true,
@@ -7980,7 +8092,7 @@
       "Cloudimage"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=Cloudimage%20startup%20program",
+    "applicationUrl": "https://www.cloudimage.io/en/home",
     "logoUrl": "",
     "featured": false,
     "verified": true,
@@ -8038,7 +8150,7 @@
       "Contract-factory"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=Contract-factory%20startup%20program",
+    "applicationUrl": "https://contract-factory.com/",
     "logoUrl": "https://contract-factory.com/favicon.ico",
     "featured": false,
     "verified": true,
@@ -8096,7 +8208,7 @@
       "Crunchbase"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=Crunchbase%20startup%20program",
+    "applicationUrl": "https://www.crunchbase.com/",
     "logoUrl": "https://www.crunchbase.com/favicon.ico",
     "featured": false,
     "verified": true,
@@ -8140,7 +8252,7 @@
       "Deals"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=Deals%20startup%20program",
+    "applicationUrl": "https://www.deals.com/",
     "featured": false,
     "verified": true,
     "difficulty": "medium",
@@ -8194,7 +8306,7 @@
       "DepositPhotos"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=DepositPhotos%20startup%20program",
+    "applicationUrl": "https://depositphotos.com/pricing.html",
     "logoUrl": "https://depositphotos.com/favicon.ico",
     "featured": false,
     "verified": true,
@@ -8252,7 +8364,7 @@
       "Distrobird"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=Distrobird%20startup%20program",
+    "applicationUrl": "https://distrobird.com/",
     "logoUrl": "",
     "featured": false,
     "verified": true,
@@ -8310,7 +8422,7 @@
       "Dotcom-Monitor"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=Dotcom-Monitor%20startup%20program",
+    "applicationUrl": "https://www.dotcom-monitor.com/pricing/",
     "logoUrl": "",
     "featured": false,
     "verified": true,
@@ -8366,7 +8478,7 @@
       "Elementor: Hosting"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=Elementor%3A%20Hosting%20startup%20program",
+    "applicationUrl": "https://elementor.com/hosting/",
     "logoUrl": "",
     "featured": false,
     "verified": true,
@@ -8422,7 +8534,7 @@
       "Elementor: Website Builder"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=Elementor%3A%20Website%20Builder%20startup%20program",
+    "applicationUrl": "https://elementor.com/pricing-plugin/",
     "logoUrl": "https://elementorwebsitebuilder.com/favicon.ico",
     "featured": false,
     "verified": true,
@@ -8480,7 +8592,7 @@
       "Epidemic Sound"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=Epidemic%20Sound%20startup%20program",
+    "applicationUrl": "https://www.epidemicsound.com/pricing/",
     "logoUrl": "https://epidemicsound.com/favicon.ico",
     "featured": false,
     "verified": true,
@@ -8538,7 +8650,7 @@
       "ESET PROTECT Advanced"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=ESET%20PROTECT%20Advanced%20startup%20program",
+    "applicationUrl": "https://www.eset.com/us/business/",
     "logoUrl": "",
     "featured": false,
     "verified": true,
@@ -8594,7 +8706,7 @@
       "ExpressVPN"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=ExpressVPN%20startup%20program",
+    "applicationUrl": "https://www.expressvpn.com/",
     "logoUrl": "",
     "featured": false,
     "verified": true,
@@ -8652,7 +8764,7 @@
       "Faaaster (ex. Themecloud)"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=Faaaster%20(ex.%20Themecloud)%20startup%20program",
+    "applicationUrl": "https://faaaster.com/",
     "logoUrl": "",
     "featured": false,
     "verified": true,
@@ -8708,7 +8820,7 @@
       "Fellow.app"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=Fellow.app%20startup%20program",
+    "applicationUrl": "https://fellow.app/pricing/",
     "logoUrl": "https://fellow.app.com/favicon.ico",
     "featured": false,
     "verified": true,
@@ -8766,7 +8878,7 @@
       "Findcustomer"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=Findcustomer%20startup%20program",
+    "applicationUrl": "https://www.findcustomer.com/",
     "logoUrl": "",
     "featured": false,
     "verified": true,
@@ -8824,7 +8936,7 @@
       "FlexOffers"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=FlexOffers%20startup%20program",
+    "applicationUrl": "https://www.flexoffers.com/",
     "logoUrl": "https://flexoffers.com/favicon.ico",
     "featured": false,
     "verified": true,
@@ -8882,7 +8994,7 @@
       "Fraud Blocker"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=Fraud%20Blocker%20startup%20program",
+    "applicationUrl": "https://fraudblocker.com/",
     "logoUrl": "https://fraudblocker.com/favicon.ico",
     "featured": false,
     "verified": true,
@@ -8938,7 +9050,7 @@
       "FreshBooks"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=FreshBooks%20startup%20program",
+    "applicationUrl": "https://www.freshbooks.com/pricing",
     "logoUrl": "https://www.freshbooks.com/favicon.ico",
     "featured": false,
     "verified": true,
@@ -8996,7 +9108,7 @@
       "Freshservice"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=Freshservice%20startup%20program",
+    "applicationUrl": "https://www.freshworks.com/freshservice/pricing/",
     "logoUrl": "https://freshservice.com/favicon.ico",
     "featured": false,
     "verified": true,
@@ -9054,7 +9166,7 @@
       "Freshworks"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=Freshworks%20startup%20program",
+    "applicationUrl": "https://www.freshworks.com/crm/sales/",
     "logoUrl": "",
     "featured": false,
     "verified": true,
@@ -9110,7 +9222,7 @@
       "FutureLearn"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=FutureLearn%20startup%20program",
+    "applicationUrl": "https://www.futurelearn.com/",
     "logoUrl": "https://futurelearn.com/favicon.ico",
     "featured": false,
     "verified": true,
@@ -9168,7 +9280,7 @@
       "GetResponse"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=GetResponse%20startup%20program",
+    "applicationUrl": "https://www.getresponse.com/pricing",
     "logoUrl": "https://www.getresponse.com/favicon.ico",
     "featured": false,
     "verified": true,
@@ -9324,7 +9436,7 @@
       "Guideline Retirement"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=Guideline%20Retirement%20startup%20program",
+    "applicationUrl": "https://www.guideline.com/",
     "logoUrl": "https://guidelineretirement.com/favicon.ico",
     "featured": false,
     "verified": true,
@@ -9380,7 +9492,7 @@
       "hide.me VPN"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=hide.me%20VPN%20startup%20program",
+    "applicationUrl": "https://hide.me/",
     "logoUrl": "",
     "featured": false,
     "verified": true,
@@ -9436,7 +9548,7 @@
       "Hiver Gmail Extension"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=Hiver%20Gmail%20Extension%20startup%20program",
+    "applicationUrl": "https://hiverhq.com/pricing",
     "logoUrl": "",
     "featured": false,
     "verified": true,
@@ -9494,7 +9606,7 @@
       "Hostinger Horizons"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=Hostinger%20Horizons%20startup%20program",
+    "applicationUrl": "https://www.hostinger.com/horizons",
     "logoUrl": "",
     "featured": false,
     "verified": true,
@@ -9552,7 +9664,7 @@
       "Hygraph (ex. GraphCMS)"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=Hygraph%20(ex.%20GraphCMS)%20startup%20program",
+    "applicationUrl": "https://hygraph.com/pricing",
     "logoUrl": "https://hygraph.com/favicon.ico",
     "featured": false,
     "verified": true,
@@ -9608,7 +9720,7 @@
       "Hypervault"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=Hypervault%20startup%20program",
+    "applicationUrl": "https://hypervault.com/",
     "logoUrl": "https://hypervault.com/favicon.ico",
     "featured": false,
     "verified": true,
@@ -9664,7 +9776,7 @@
       "Iconosquare"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=Iconosquare%20startup%20program",
+    "applicationUrl": "https://www.iconosquare.com/pricing",
     "logoUrl": "https://squareup.com/favicon.ico",
     "featured": false,
     "verified": true,
@@ -9722,7 +9834,7 @@
       "Illustrator"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=Illustrator%20startup%20program",
+    "applicationUrl": "https://www.adobe.com/products/illustrator.html",
     "logoUrl": "",
     "featured": false,
     "verified": true,
@@ -9780,7 +9892,7 @@
       "impact.com"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=impact.com%20startup%20program",
+    "applicationUrl": "https://impact.com/",
     "logoUrl": "",
     "featured": false,
     "verified": true,
@@ -9838,7 +9950,7 @@
       "InfluenceKit"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=InfluenceKit%20startup%20program",
+    "applicationUrl": "https://influencekit.com/",
     "logoUrl": "https://influencekit.com/favicon.ico",
     "featured": false,
     "verified": true,
@@ -9896,7 +10008,7 @@
       "Instantly.ai"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=Instantly.ai%20startup%20program",
+    "applicationUrl": "https://instantly.ai/pricing",
     "logoUrl": "",
     "featured": false,
     "verified": true,
@@ -9954,7 +10066,7 @@
       "InvoiceBerry"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=InvoiceBerry%20startup%20program",
+    "applicationUrl": "https://www.invoiceberry.com/pricing",
     "logoUrl": "https://invoiceberry.com/favicon.ico",
     "featured": false,
     "verified": true,
@@ -10010,7 +10122,7 @@
       "June Analytics"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=June%20Analytics%20startup%20program",
+    "applicationUrl": "https://www.june.so/",
     "logoUrl": "",
     "featured": false,
     "verified": true,
@@ -10068,7 +10180,7 @@
       "Keeper Security"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=Keeper%20Security%20startup%20program",
+    "applicationUrl": "https://www.keepersecurity.com/pricing.html",
     "logoUrl": "https://www.keepersecurity.com/favicon.ico",
     "featured": false,
     "verified": true,
@@ -10124,7 +10236,7 @@
       "LambdaTest"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=LambdaTest%20startup%20program",
+    "applicationUrl": "https://www.lambdatest.com/pricing",
     "logoUrl": "https://lambdatest.com/favicon.ico",
     "featured": false,
     "verified": true,
@@ -10236,7 +10348,7 @@
       "LearnWorlds"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=LearnWorlds%20startup%20program",
+    "applicationUrl": "https://www.learnworlds.com/pricing/",
     "logoUrl": "https://learnworlds.com/favicon.ico",
     "featured": false,
     "verified": true,
@@ -10294,7 +10406,7 @@
       "LegalPlace"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=LegalPlace%20startup%20program",
+    "applicationUrl": "https://www.legalplace.fr/",
     "logoUrl": "",
     "featured": false,
     "verified": true,
@@ -10352,7 +10464,7 @@
       "Legalstart"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=Legalstart%20startup%20program",
+    "applicationUrl": "https://www.legalstart.fr/",
     "logoUrl": "https://legalstart.com/favicon.ico",
     "featured": false,
     "verified": true,
@@ -10410,7 +10522,7 @@
       "LetsEnhance"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=LetsEnhance%20startup%20program",
+    "applicationUrl": "https://letsenhance.io/pricing",
     "logoUrl": "",
     "featured": false,
     "verified": true,
@@ -10468,7 +10580,7 @@
       "LetterBucket"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=LetterBucket%20startup%20program",
+    "applicationUrl": "https://letterbucket.com/",
     "logoUrl": "",
     "featured": false,
     "verified": true,
@@ -10524,7 +10636,7 @@
       "LiveChatAI"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=LiveChatAI%20startup%20program",
+    "applicationUrl": "https://livechatai.com/",
     "logoUrl": "https://www.livechat.com/favicon.ico",
     "featured": false,
     "verified": true,
@@ -10582,7 +10694,7 @@
       "LiveSession"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=LiveSession%20startup%20program",
+    "applicationUrl": "https://livesession.io/pricing/",
     "logoUrl": "",
     "featured": false,
     "verified": true,
@@ -10640,7 +10752,7 @@
       "LogicBalls"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=LogicBalls%20startup%20program",
+    "applicationUrl": "https://logicballs.com/",
     "logoUrl": "",
     "featured": false,
     "verified": true,
@@ -10698,7 +10810,7 @@
       "MailerSend"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=MailerSend%20startup%20program",
+    "applicationUrl": "https://www.mailersend.com/pricing",
     "logoUrl": "",
     "featured": false,
     "verified": true,
@@ -10756,7 +10868,7 @@
       "Mashup Web Social"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=Mashup%20Web%20Social%20startup%20program",
+    "applicationUrl": "https://www.mashup-web.com/",
     "logoUrl": "",
     "featured": false,
     "verified": true,
@@ -10812,7 +10924,7 @@
       "MasterClass"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=MasterClass%20startup%20program",
+    "applicationUrl": "https://www.masterclass.com/",
     "logoUrl": "",
     "featured": false,
     "verified": true,
@@ -10870,7 +10982,7 @@
       "Memberstack"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=Memberstack%20startup%20program",
+    "applicationUrl": "https://www.memberstack.com/pricing",
     "logoUrl": "https://memberstack.com/favicon.ico",
     "featured": false,
     "verified": true,
@@ -10928,7 +11040,7 @@
       "Mobiroller"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=Mobiroller%20startup%20program",
+    "applicationUrl": "https://www.mobiroller.com/",
     "logoUrl": "https://mobiroller.com/favicon.ico",
     "featured": false,
     "verified": true,
@@ -10984,7 +11096,7 @@
       "Monday CRM"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=Monday%20CRM%20startup%20program",
+    "applicationUrl": "https://monday.com/pricing",
     "logoUrl": "",
     "featured": false,
     "verified": true,
@@ -11042,7 +11154,7 @@
       "Monday Dev"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=Monday%20Dev%20startup%20program",
+    "applicationUrl": "https://monday.com/pricing",
     "logoUrl": "",
     "featured": false,
     "verified": true,
@@ -11100,7 +11212,7 @@
       "MonsterONE"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=MonsterONE%20startup%20program",
+    "applicationUrl": "https://monsterone.com/",
     "logoUrl": "https://monsterone.com/favicon.ico",
     "featured": false,
     "verified": true,
@@ -11145,7 +11257,7 @@
       "More"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=More%20startup%20program",
+    "applicationUrl": "https://www.more.com/",
     "logoUrl": "https://www.tidio.com/favicon.ico",
     "featured": false,
     "verified": true,
@@ -11200,7 +11312,7 @@
       "Multiplier"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=Multiplier%20startup%20program",
+    "applicationUrl": "https://www.usemultiplier.com/",
     "logoUrl": "",
     "featured": false,
     "verified": true,
@@ -11256,7 +11368,7 @@
       "MyOperator"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=MyOperator%20startup%20program",
+    "applicationUrl": "https://myoperator.com/",
     "logoUrl": "",
     "featured": false,
     "verified": true,
@@ -11312,7 +11424,7 @@
       "myPresences"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=myPresences%20startup%20program",
+    "applicationUrl": "https://mypresences.com/",
     "logoUrl": "https://mypresences.com/favicon.ico",
     "featured": false,
     "verified": true,
@@ -11370,7 +11482,7 @@
       "Norton AntiVirus"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=Norton%20AntiVirus%20startup%20program",
+    "applicationUrl": "https://us.norton.com/",
     "logoUrl": "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://us.norton.com&size=128",
     "featured": false,
     "verified": true,
@@ -11428,7 +11540,7 @@
       "Outreachly"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=Outreachly%20startup%20program",
+    "applicationUrl": "https://outreachly.io/",
     "logoUrl": "https://www.outreach.io/favicon.ico",
     "featured": false,
     "verified": true,
@@ -11486,7 +11598,7 @@
       "PartnerStack"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=PartnerStack%20startup%20program",
+    "applicationUrl": "https://www.partnerstack.com/",
     "logoUrl": "",
     "featured": false,
     "verified": true,
@@ -11542,7 +11654,7 @@
       "PhantomBuster"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=PhantomBuster%20startup%20program",
+    "applicationUrl": "https://phantombuster.com/pricing",
     "logoUrl": "https://phantombuster.com/favicon.ico",
     "featured": false,
     "verified": true,
@@ -11600,7 +11712,7 @@
       "Piktochart"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=Piktochart%20startup%20program",
+    "applicationUrl": "https://piktochart.com/pricing/",
     "logoUrl": "",
     "featured": false,
     "verified": true,
@@ -11658,7 +11770,7 @@
       "Post Affiliate Pro"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=Post%20Affiliate%20Pro%20startup%20program",
+    "applicationUrl": "https://www.postaffiliatepro.com/pricing/",
     "logoUrl": "",
     "featured": false,
     "verified": true,
@@ -11714,7 +11826,7 @@
       "Process Street"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=Process%20Street%20startup%20program",
+    "applicationUrl": "https://www.process.st/pricing/",
     "logoUrl": "",
     "featured": false,
     "verified": true,
@@ -11770,7 +11882,7 @@
       "Proton Drive"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=Proton%20Drive%20startup%20program",
+    "applicationUrl": "https://proton.me/drive",
     "logoUrl": "",
     "featured": false,
     "verified": true,
@@ -11828,7 +11940,7 @@
       "Proton Mail"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=Proton%20Mail%20startup%20program",
+    "applicationUrl": "https://proton.me/mail",
     "logoUrl": "",
     "featured": false,
     "verified": true,
@@ -11886,7 +11998,7 @@
       "Proton VPN"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=Proton%20VPN%20startup%20program",
+    "applicationUrl": "https://protonvpn.com/",
     "logoUrl": "",
     "featured": false,
     "verified": true,
@@ -11944,7 +12056,7 @@
       "QuickBooks"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=QuickBooks%20startup%20program",
+    "applicationUrl": "https://quickbooks.intuit.com/pricing/",
     "logoUrl": "",
     "featured": false,
     "verified": true,
@@ -12002,7 +12114,7 @@
       "Quickbooks Online"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=Quickbooks%20Online%20startup%20program",
+    "applicationUrl": "https://quickbooks.intuit.com/pricing/",
     "logoUrl": "",
     "featured": false,
     "verified": true,
@@ -12058,7 +12170,7 @@
       "Quo (ex. OpenPhone)"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=Quo%20(ex.%20OpenPhone)%20startup%20program",
+    "applicationUrl": "https://www.openphone.com/",
     "logoUrl": "https://quo.com/favicon.ico",
     "featured": false,
     "verified": true,
@@ -12116,7 +12228,7 @@
       "RemotePass"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=RemotePass%20startup%20program",
+    "applicationUrl": "https://www.remotepass.com/",
     "logoUrl": "",
     "featured": false,
     "verified": true,
@@ -12174,7 +12286,7 @@
       "Riverside.fm"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=Riverside.fm%20startup%20program",
+    "applicationUrl": "https://riverside.fm/pricing",
     "logoUrl": "",
     "featured": false,
     "verified": true,
@@ -12230,7 +12342,7 @@
       "Rocket.new"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=Rocket.new%20startup%20program",
+    "applicationUrl": "https://www.rocket.new/",
     "logoUrl": "",
     "featured": false,
     "verified": true,
@@ -12288,7 +12400,7 @@
       "Sage Accounting"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=Sage%20Accounting%20startup%20program",
+    "applicationUrl": "https://www.sage.com/en-us/products/sage-accounting/",
     "logoUrl": "",
     "featured": false,
     "verified": true,
@@ -12346,7 +12458,7 @@
       "Salesforce"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=Salesforce%20startup%20program",
+    "applicationUrl": "https://www.salesforce.com/form/signup/freetrial-sales/",
     "logoUrl": "",
     "featured": false,
     "verified": true,
@@ -12402,7 +12514,7 @@
       "Seamless.AI"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=Seamless.AI%20startup%20program",
+    "applicationUrl": "https://seamless.ai/pricing",
     "logoUrl": "",
     "featured": false,
     "verified": true,
@@ -12516,7 +12628,7 @@
       "Sender.net"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=Sender.net%20startup%20program",
+    "applicationUrl": "https://www.sender.net/pricing/",
     "logoUrl": "",
     "featured": false,
     "verified": true,
@@ -12574,7 +12686,7 @@
       "Shutterstock"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=Shutterstock%20startup%20program",
+    "applicationUrl": "https://www.shutterstock.com/pricing",
     "logoUrl": "",
     "featured": false,
     "verified": true,
@@ -12630,7 +12742,7 @@
       "Signaturit"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=Signaturit%20startup%20program",
+    "applicationUrl": "https://www.signaturit.com/",
     "logoUrl": "",
     "featured": false,
     "verified": true,
@@ -12688,7 +12800,7 @@
       "SimilarContent"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=SimilarContent%20startup%20program",
+    "applicationUrl": "https://similarcontent.com/",
     "logoUrl": "",
     "featured": false,
     "verified": true,
@@ -12746,7 +12858,7 @@
       "Similarweb"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=Similarweb%20startup%20program",
+    "applicationUrl": "https://www.similarweb.com/corp/pricing/",
     "logoUrl": "",
     "featured": false,
     "verified": true,
@@ -12802,7 +12914,7 @@
       "Simplified"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=Simplified%20startup%20program",
+    "applicationUrl": "https://simplified.com/pricing",
     "logoUrl": "",
     "featured": false,
     "verified": true,
@@ -12860,7 +12972,7 @@
       "Skillshare"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=Skillshare%20startup%20program",
+    "applicationUrl": "https://www.skillshare.com/en/pricing",
     "logoUrl": "",
     "featured": false,
     "verified": true,
@@ -12918,7 +13030,7 @@
       "SnowcatCloud"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=SnowcatCloud%20startup%20program",
+    "applicationUrl": "https://www.snowcatcloud.com/",
     "logoUrl": "",
     "featured": false,
     "verified": true,
@@ -12976,7 +13088,7 @@
       "Social Champ"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=Social%20Champ%20startup%20program",
+    "applicationUrl": "https://www.socialchamp.com/pricing/",
     "logoUrl": "",
     "featured": false,
     "verified": true,
@@ -13034,7 +13146,7 @@
       "Somewhere (ex. Support Shepherd)"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=Somewhere%20(ex.%20Support%20Shepherd)%20startup%20program",
+    "applicationUrl": "https://www.somewhere.com/",
     "logoUrl": "",
     "featured": false,
     "verified": true,
@@ -13092,7 +13204,7 @@
       "Squarespace"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=Squarespace%20startup%20program",
+    "applicationUrl": "https://www.squarespace.com/pricing",
     "logoUrl": "",
     "featured": false,
     "verified": true,
@@ -13206,7 +13318,7 @@
       "SurveySparrow"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=SurveySparrow%20startup%20program",
+    "applicationUrl": "https://surveysparrow.com/pricing/",
     "logoUrl": "",
     "featured": false,
     "verified": true,
@@ -13264,7 +13376,7 @@
       "Swipe Pages"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=Swipe%20Pages%20startup%20program",
+    "applicationUrl": "https://swipepages.com/",
     "logoUrl": "",
     "featured": false,
     "verified": true,
@@ -13322,7 +13434,7 @@
       "Tailor Brands"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=Tailor%20Brands%20startup%20program",
+    "applicationUrl": "https://www.tailorbrands.com/",
     "logoUrl": "",
     "featured": false,
     "verified": true,
@@ -13380,7 +13492,7 @@
       "Talent Sam"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=Talent%20Sam%20startup%20program",
+    "applicationUrl": "https://www.talentsam.com/",
     "logoUrl": "",
     "featured": false,
     "verified": true,
@@ -13438,7 +13550,7 @@
       "Tella (ex. Tella.tv)"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=Tella%20(ex.%20Tella.tv)%20startup%20program",
+    "applicationUrl": "https://www.tella.tv/",
     "logoUrl": "",
     "featured": false,
     "verified": true,
@@ -13496,7 +13608,7 @@
       "The SaaSy People"
     ],
     "status": "active",
-    "applicationUrl": "https://google.com/search?q=The%20SaaSy%20People%20startup%20program",
+    "applicationUrl": "https://www.thesaasypeople.com/",
     "logoUrl": "",
     "featured": false,
     "verified": true,

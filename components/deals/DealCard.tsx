@@ -1,12 +1,17 @@
 'use client'
 
 import Link from 'next/link'
-import { useState, useEffect } from 'react'
 import { GlowingEffect } from '@/components/ui/GlowingEffect'
+import { CardHoverGlow, cardHoverClass, cardLogoHoverClass, cardTitleHoverClass } from '@/components/ui/card-hover'
+import BrandLogo from '@/components/ui/BrandLogo'
+import { resolveBrandDomain } from '@/lib/brand-domain'
+import { isUsableLogoUrl } from '@/lib/logo-utils'
 
 interface Deal {
   id: string
   logo: string
+  /** Preferred brand domain (from claim URL) — wins over name-guessing */
+  domain?: string
   category: string
   badge?: string
   badgeColor?: string
@@ -28,156 +33,157 @@ interface DealCardProps {
   overrideHref?: string
 }
 
-// Generate domain from provider name
-const providerToDomain = (provider: string): string => {
-  const cleaned = (provider || '').replace(/^By\s+/i, '').toLowerCase().replace(/[^a-z0-9]/g, '')
-  const domainMap: Record<string, string> = {
-    'aws': 'aws.amazon.com', 'amazon': 'amazon.com', 'amazonwebservices': 'aws.amazon.com',
-    'googlecloud': 'cloud.google.com', 'googleforstartups': 'startup.google.com', 'google': 'google.com',
-    'microsoftazure': 'azure.microsoft.com', 'microsoftforstartups': 'microsoft.com', 'microsoft': 'microsoft.com',
-    'azure': 'azure.microsoft.com', 'digitalocean': 'digitalocean.com', 'github': 'github.com',
-    'gitlab': 'gitlab.com', 'notion': 'notion.so', 'linear': 'linear.app',
-    'vercel': 'vercel.com', 'netlify': 'netlify.com', 'stripe': 'stripe.com',
-    'hubspot': 'hubspot.com', 'intercom': 'intercom.com', 'zendesk': 'zendesk.com',
-    'slack': 'slack.com', 'discord': 'discord.com', 'figma': 'figma.com',
-    'canva': 'canva.com', 'airtable': 'airtable.com', 'monday': 'monday.com',
-    'asana': 'asana.com', 'trello': 'trello.com', 'atlassian': 'atlassian.com',
-    'twilio': 'twilio.com', 'sendgrid': 'sendgrid.com', 'mailchimp': 'mailchimp.com',
-    'segment': 'segment.com', 'mixpanel': 'mixpanel.com', 'amplitude': 'amplitude.com',
-    'datadog': 'datadoghq.com', 'newrelic': 'newrelic.com', 'sentry': 'sentry.io',
-    'mongodb': 'mongodb.com', 'redis': 'redis.com', 'supabase': 'supabase.com',
-    'firebase': 'firebase.google.com', 'cloudflare': 'cloudflare.com', 'openai': 'openai.com',
-    'anthropic': 'anthropic.com', 'brex': 'brex.com', 'ramp': 'ramp.com',
-    'deel': 'deel.com', 'gusto': 'gusto.com', 'rippling': 'rippling.com',
-    'webflow': 'webflow.com', 'framer': 'framer.com', 'retool': 'retool.com',
-    'postman': 'postman.com', 'algolia': 'algolia.com', 'auth0': 'auth0.com',
-    'miro': 'miro.com', 'clickup': 'clickup.com', 'typeform': 'typeform.com',
-    'freshworks': 'freshworks.com', 'zoho': 'zoho.com', 'salesforce': 'salesforce.com',
-    'loom': 'loom.com', 'zoom': 'zoom.us', 'adobe': 'adobe.com',
-    'spotify': 'spotify.com', 'plaid': 'plaid.com', 'okta': 'okta.com',
-  }
-  return domainMap[cleaned] || `${cleaned}.com`
-}
-
-// Truncate value text to keep cards compact
-const truncateValue = (val: string, max: number = 30): string => {
+const truncateValue = (val: string, max: number = 36): string => {
+  if (!val) return ''
   if (val.length <= max) return val
   return val.substring(0, max).trim() + '…'
 }
 
+function usableLogo(logo?: string): string | undefined {
+  if (!logo || typeof logo !== 'string') return undefined
+  const u = logo.trim()
+  if (!u) return undefined
+  if (!isUsableLogoUrl(u)) return undefined
+  if (
+    u.includes('rocket') ||
+    u.includes('placeholder') ||
+    u.includes('upload.wikimedia.org') ||
+    u.includes('redditstatic.com')
+  ) {
+    return undefined
+  }
+  return u
+}
+
 export default function DealCard({ deal, basePath = '/deals', overrideHref }: DealCardProps) {
   const { id, logo, badge, badgeColor, title, provider, value, description } = deal
-  const [fallbackIndex, setFallbackIndex] = useState(0)
-  const [loaded, setLoaded] = useState(false)
-  const [failed, setFailed] = useState(false)
 
   const href = overrideHref ?? `${basePath}/${id}`
   const isExternal = href.startsWith('http')
   const LinkComponent = isExternal ? 'a' : Link
   const linkProps = isExternal
-    ? { href, target: "_blank", rel: "noopener noreferrer" }
+    ? { href, target: '_blank', rel: 'noopener noreferrer' }
     : { href }
 
-  const cleanProvider = provider.replace(/^By\s+/i, '').trim()
-  const domain = providerToDomain(cleanProvider)
-  const displayTitle = title.length > 40 ? title.substring(0, 40) + '…' : title
+  const cleanProvider = (provider || '').replace(/^By\s+/i, '').trim()
+  const domain =
+    deal.domain ||
+    resolveBrandDomain({
+      name: cleanProvider || title,
+      website: deal.applicationUrl,
+      logo,
+    })
+  const logoSrc = usableLogo(logo)
 
-  // Prefer the deal's own logoUrl when it points at a real image. Skip
-  // generic placeholders (rocket emoji, ui-avatars) so we still hit the
-  // brand favicon fallback for those.
-  const hasOwnLogo =
-    typeof logo === 'string' &&
-    logo.trim().length > 0 &&
-    /^https?:\/\//i.test(logo) &&
-    !logo.includes('ui-avatars') &&
-    !logo.includes('rocket')
+  const ctaLabel =
+    basePath.includes('student')
+      ? 'Get Access'
+      : overrideHref === '/pricing'
+        ? 'Unlock'
+        : 'View Deal'
+  const ctaShort =
+    basePath.includes('student')
+      ? 'Access'
+      : overrideHref === '/pricing'
+        ? 'Unlock'
+        : 'View'
+  const isLocked = overrideHref === '/pricing'
 
-  const fallbackChain = [
-    ...(hasOwnLogo ? [logo] : []),
-    `https://www.google.com/s2/favicons?domain=${domain}&sz=128`,
-    `https://logo.clearbit.com/${domain}`,
-    `https://ui-avatars.com/api/?name=${encodeURIComponent(cleanProvider)}&background=f3f4f6&color=374151&bold=true&size=128`
-  ]
-  const currentSrc = fallbackChain[fallbackIndex] || fallbackChain[0]
-
-  useEffect(() => {
-    setFallbackIndex(0)
-    setLoaded(false)
-    setFailed(false)
-  }, [logo, provider])
-
-  const handleError = () => {
-    const nextIndex = fallbackIndex + 1
-    if (nextIndex < fallbackChain.length) {
-      setFallbackIndex(nextIndex)
-      setLoaded(false)
-    } else {
-      setFailed(true)
-    }
-  }
-
+  /*
+    Mobile: compact density (shorter title band, 1-line desc, smaller logo/CTA).
+    Desktop (md+): unchanged premium geometry.
+  */
   return (
-    <div className="relative h-[200px] flex flex-col rounded-sm">
-      <GlowingEffect spread={40} glow={false} disabled={false} proximity={64} inactiveZone={0.01} borderWidth={2} />
+    <div className="relative h-[168px] md:h-[200px] flex flex-col rounded-xl md:rounded-2xl min-w-0">
+      <GlowingEffect
+        spread={40}
+        glow={false}
+        disabled={false}
+        proximity={64}
+        inactiveZone={0.01}
+        borderWidth={2}
+      />
       <LinkComponent
         {...linkProps}
-        className="relative flex flex-col bg-white dark:bg-[#0c0c0c] border border-gray-200 dark:border-white/10 shadow-sm hover:shadow-[0_8px_30px_rgb(0,0,0,0.12)] dark:hover:shadow-[0_8px_30px_rgba(255,255,255,0.05)] hover:-translate-y-1 transition-all duration-300 overflow-hidden group flex-1 rounded-xl text-left"
+        className={`relative flex flex-col h-full p-2.5 md:p-3.5 bg-white dark:bg-gradient-to-b dark:from-[#111] dark:to-[#0a0a0a] border border-black/[0.06] dark:border-white/[0.08] shadow-sm flex-1 rounded-xl md:rounded-2xl text-left overflow-hidden min-w-0 ${cardHoverClass}`}
         aria-label={`View details for ${title}`}
       >
-        {/* Badge */}
-        {badge && (
-          <div className="px-3 pt-2.5">
-            <span className={`inline-block px-1.5 py-0.5 ${badgeColor || 'bg-orange-500'} text-white text-[8px] font-bold uppercase tracking-wider rounded-sm`}>
-              {badge}
-            </span>
-          </div>
-        )}
+        <CardHoverGlow />
 
-        {/* Logo + Title — fixed height */}
-        <div className={`flex items-center gap-3 px-4 ${badge ? 'pt-2' : 'pt-4'} pb-2`}>
-          <div className="w-10 h-10 bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 flex items-center justify-center p-1.5 flex-shrink-0 rounded-lg overflow-hidden relative group-hover:bg-gray-100 dark:group-hover:bg-white/10 transition-colors">
-            {!failed && (
-              <img
-                alt={`${cleanProvider} logo`}
-                className="w-full h-full object-contain"
-                src={currentSrc}
-                width={40}
-                height={40}
-                loading="lazy"
-                decoding="async"
-                onLoad={() => setLoaded(true)}
-                onError={handleError}
+        {badge ? (
+          <span
+            className={`absolute top-1.5 right-1.5 md:top-2.5 md:right-2.5 z-10 inline-flex items-center h-4 md:h-5 px-1.5 md:px-2 ${badgeColor || 'bg-orange-500'} text-white text-[7px] md:text-[8px] font-bold uppercase tracking-wider rounded-full leading-none shadow-sm max-w-[42%] truncate`}
+          >
+            {badge}
+          </span>
+        ) : null}
+
+        {/* Header: logo + title */}
+        <div className="flex items-start gap-2 md:gap-3 shrink-0 pr-10 md:pr-14 min-w-0">
+          <div
+            className={`relative w-9 h-9 md:w-11 md:h-11 shrink-0 rounded-lg md:rounded-[10px] bg-white border border-black/[0.08] dark:border-white/10 overflow-hidden shadow-sm ${cardLogoHoverClass}`}
+          >
+            <div className="absolute inset-0 flex items-center justify-center p-1 md:p-[7px]">
+              <BrandLogo
+                name={cleanProvider || title}
+                domain={domain}
+                logo={logoSrc}
+                size="md"
+                eager
+                className="!w-full !h-full !max-w-full !max-h-full !rounded-none !border-0 !p-0 !bg-transparent !shadow-none !inline-flex !overflow-hidden"
               />
-            )}
-            {failed && (
-              <span className="text-[10px] font-black font-mono text-gray-400">
-                {cleanProvider.substring(0, 2).toUpperCase()}
-              </span>
-            )}
-          </div>
-          <h3 className="text-xs sm:text-sm font-bold text-gray-900 dark:text-white leading-tight group-hover:text-black dark:group-hover:text-accent-yellow transition-colors line-clamp-2 min-w-0">
-            {displayTitle}
-          </h3>
-        </div>
-
-        {/* Description — fixed 2 lines */}
-        <div className="px-4 pb-4 flex-grow">
-          <p className="text-xs text-gray-500 dark:text-gray-400 leading-snug line-clamp-2">{description}</p>
-        </div>
-
-        {/* Value + CTA — pinned bottom, compact */}
-        <div className="px-4 pb-4 mt-auto border-t border-gray-100 dark:border-white/10 pt-4">
-          <div className="flex items-center justify-between gap-1.5">
-            <p className="text-xs sm:text-sm font-bold text-green-600 dark:text-emerald-400 font-mono line-clamp-1 flex-1 min-w-0">
-              {truncateValue(value)}
-            </p>
-            <div className="relative rounded-lg flex-shrink-0">
-              <GlowingEffect spread={30} glow={false} disabled={false} proximity={48} inactiveZone={0.01} borderWidth={1} />
-              <span className="relative inline-flex items-center gap-1 bg-gray-900 dark:bg-white text-white dark:text-gray-900 text-[10px] font-bold uppercase px-3 py-1.5 rounded-lg group-hover:bg-accent-yellow dark:group-hover:bg-accent-yellow group-hover:text-black dark:group-hover:text-black transition-all duration-200 shadow-sm">
-                View
-                <span className="material-symbols-outlined text-[12px] group-hover:translate-x-0.5 transition-transform">arrow_forward</span>
-              </span>
             </div>
+          </div>
+          <div className="min-w-0 flex-1 overflow-hidden">
+            <h3
+              className={`text-[11px] md:text-[13px] font-bold text-gray-900 dark:text-white leading-[1.25] line-clamp-2 h-[2.2rem] md:h-[2.6rem] md:leading-[1.3] ${cardTitleHoverClass}`}
+              title={title}
+            >
+              {title}
+            </h3>
+            <p
+              className="mt-0.5 text-[9px] md:text-[10px] leading-3 md:leading-4 h-3 md:h-4 text-gray-500 dark:text-gray-400 font-mono truncate"
+              title={cleanProvider}
+            >
+              {cleanProvider}
+            </p>
+          </div>
+        </div>
+
+        {/* Description — 1 line mobile, 2 lines desktop */}
+        <p
+          className="mt-2 md:mt-3 shrink-0 text-[10px] md:text-[11px] leading-[1.35] md:leading-[1.4] h-[1.35rem] md:h-[2.8rem] text-gray-500 dark:text-gray-400 line-clamp-1 md:line-clamp-2 overflow-hidden"
+          title={description}
+        >
+          {description}
+        </p>
+
+        {/* Value + CTA */}
+        <div className="mt-auto shrink-0 w-full min-w-0 pt-1.5 md:pt-0">
+          <div className="w-full flex items-center justify-between gap-1.5 md:gap-2 h-8 md:h-9 rounded-lg border border-black/[0.06] dark:border-white/10 bg-gray-50 dark:bg-white/[0.04] pl-2 md:pl-3 pr-0.5 md:pr-1 min-w-0">
+            <p
+              className="min-w-0 flex-1 text-left text-[10px] md:text-[12px] font-bold text-amber-700 dark:text-accent-yellow font-mono truncate leading-none"
+              title={value}
+            >
+              <span className="md:hidden">{truncateValue(value, 12)}</span>
+              <span className="hidden md:inline">{truncateValue(value, 28)}</span>
+            </p>
+            <span
+              className="shrink-0 inline-flex h-6 md:h-7 items-center justify-center gap-0.5 md:gap-1 bg-black dark:bg-white text-white dark:text-black text-[8px] md:text-[9px] font-bold uppercase tracking-wide px-1.5 md:px-2.5 rounded-md shadow-sm group-hover:bg-accent-yellow group-hover:text-black transition-all duration-200 leading-none"
+              aria-hidden="true"
+            >
+              <span className="leading-none md:hidden">{ctaShort}</span>
+              <span className="leading-none hidden md:inline">{ctaLabel}</span>
+              {isLocked ? (
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" className="block shrink-0" aria-hidden>
+                  <path d="M17 11V8a5 5 0 0 0-10 0v3M6 11h12v9H6v-9Z" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              ) : (
+                <svg width="10" height="10" viewBox="0 0 14 14" fill="none" className="block shrink-0 transition-transform group-hover:translate-x-0.5" aria-hidden>
+                  <path d="M2.5 7h9M7.5 3.5 11 7l-3.5 3.5" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              )}
+            </span>
           </div>
         </div>
       </LinkComponent>

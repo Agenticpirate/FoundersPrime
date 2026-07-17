@@ -4,43 +4,9 @@ import Link from 'next/link'
 import { useState, Fragment, useRef, UIEvent, useEffect } from 'react'
 import { popularDeals, PopularDeal } from '@/data/popular-deals'
 import { GlowingEffect } from '@/components/ui/GlowingEffect'
-
-/** Logo with a resilient fallback chain: explicit logo → favicon → initials. */
-function DealLogo({ deal }: { deal: PopularDeal }) {
-  const chain = [
-    ...(deal.logo ? [deal.logo] : []),
-    ...(deal.domain
-      ? [
-          `https://www.google.com/s2/favicons?domain=${deal.domain}&sz=128`,
-          `https://icons.duckduckgo.com/ip3/${deal.domain}.ico`,
-        ]
-      : []),
-  ]
-
-  const [index, setIndex] = useState(0)
-  const [failed, setFailed] = useState(chain.length === 0)
-
-  if (failed) {
-    return (
-      <span className="w-10 h-10 flex items-center justify-center bg-gray-100 dark:bg-white/5 border border-gray-300 dark:border-white/10 font-mono font-black text-xs text-gray-700 dark:text-gray-300 rounded-md">
-        {deal.name.slice(0, 2).toUpperCase()}
-      </span>
-    )
-  }
-
-  return (
-    <img
-      src={chain[index]}
-      alt={`${deal.name} logo`}
-      width={40}
-      height={40}
-      loading="lazy"
-      decoding="async"
-      className="w-10 h-10 object-contain flex-shrink-0"
-      onError={() => (index + 1 < chain.length ? setIndex(index + 1) : setFailed(true))}
-    />
-  )
-}
+import { CardHoverGlow, cardHoverClass, cardTitleHoverClass } from '@/components/ui/card-hover'
+import BrandLogo from '@/components/ui/BrandLogo'
+import { Reveal, RevealStagger, RevealItem } from '@/components/ui/premium-motion'
 
 /* Highlights the monetary / numeric token inside a deal value (green, bold),
    matching the screenshot where the savings figure pops in green. */
@@ -51,7 +17,7 @@ function highlightValue(value: string) {
   const parts = value.split(VALUE_TOKEN_SPLIT)
   return parts.map((part, i) =>
     VALUE_TOKEN_TEST.test(part) ? (
-      <span key={i} className="text-green-600 dark:text-green-400 font-bold">
+      <span key={i} className="text-amber-700 dark:text-accent-yellow font-bold">
         {part}
       </span>
     ) : (
@@ -87,23 +53,26 @@ function BurstMark({ flip = false }: { flip?: boolean }) {
 
 function DealCard({ deal }: { deal: PopularDeal }) {
   return (
-    <div className="relative h-full rounded-sm">
+    <div className="relative h-full rounded-2xl group/card">
       <GlowingEffect spread={40} glow={false} disabled={false} proximity={64} inactiveZone={0.01} borderWidth={2} />
-      <div className="group relative flex flex-col bg-white dark:bg-[#0c0c0c] border-2 border-black dark:border-white/10 p-4 pt-5 shadow-[4px_4px_0px_#000] dark:shadow-[4px_4px_0px_rgba(255,255,255,0.05)] hover:shadow-[6px_6px_0px_#000] dark:hover:shadow-[6px_6px_0px_rgba(255,255,255,0.15)] hover:-translate-x-0.5 hover:-translate-y-0.5 transition-all duration-200 h-full rounded-sm overflow-hidden">
+      <div className={`flex flex-col bg-white dark:bg-[#0c0c0c] border border-black/10 dark:border-white/10 p-4 pt-5 shadow-sm h-full rounded-2xl transition-all duration-300 group-hover/card:-translate-y-1 group-hover/card:border-accent-yellow/40 group-hover/card:shadow-[0_12px_32px_rgba(0,0,0,0.12)] ${cardHoverClass}`}>
+        <CardHoverGlow />
         {/* Folded yellow corner with external-link icon */}
         <span
           aria-hidden="true"
-          className="absolute top-0 right-0 w-9 h-9 bg-accent-yellow"
+          className="absolute top-0 right-0 w-9 h-9 bg-accent-yellow z-[1] transition-transform duration-300 group-hover/card:scale-110"
           style={{ clipPath: 'polygon(100% 0, 0 0, 100% 100%)' }}
         />
         <span className="material-symbols-outlined absolute top-1 right-1 !text-[14px] text-black z-10">
           open_in_new
         </span>
 
-        {/* Logo + brand name (wordmark approximation) */}
-        <div className="h-11 flex items-center justify-center gap-2.5 mb-4 mt-1">
-          <DealLogo deal={deal} />
-          <span className="font-sans font-bold text-[15px] text-black dark:text-white leading-none truncate max-w-[70%]">
+        {/* Logo + brand name — fixed height row, icons always centered on same baseline */}
+        <div className="relative h-12 flex items-center justify-center gap-2.5 mb-4 mt-1">
+          <div className="w-10 h-10 flex-shrink-0 flex items-center justify-center">
+            <BrandLogo name={deal.name} domain={deal.domain} logo={deal.logo} size="md" plate eager className="!w-10 !h-10" />
+          </div>
+          <span className={`font-sans font-bold text-[15px] text-black dark:text-white leading-none truncate max-w-[70%] ${cardTitleHoverClass}`}>
             {deal.name}
           </span>
         </div>
@@ -170,25 +139,30 @@ export default function PopularDealsGrid() {
   }, [activeIndex, totalPages])
 
   return (
-    <section className="relative py-12 md:py-16 bg-[#f6f8f8] dark:bg-[#000000] text-[#1a1a1a] dark:text-white border-b-2 border-black dark:border-white/10 overflow-hidden grid-bg transition-colors duration-300">
+    <section className="relative py-14 md:py-20 bg-[#f6f8f8] dark:bg-[#000000] text-[#1a1a1a] dark:text-white border-b border-black/10 dark:border-white/10 overflow-hidden grid-bg transition-colors duration-300">
+      {/* Ambient brand glow */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 w-[min(90vw,48rem)] h-40 bg-accent-yellow/[0.07] dark:bg-accent-yellow/[0.04] blur-3xl"
+      />
       <style dangerouslySetInnerHTML={{ __html: `
         .hide-scrollbar::-webkit-scrollbar { display: none; }
       `}} />
       <div className="relative max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
         {/* ─── Mobile Header ─── */}
-        <div className="flex lg:hidden flex-col items-start gap-4 mb-6">
-          <div className="inline-flex items-center gap-2 border border-[#FFD500]/30 bg-[#FFD500]/[0.03] rounded-full px-3 py-1.5">
-            <span className="material-symbols-outlined !text-[14px] text-[#FFD500]" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
-            <span className="font-mono text-[9px] font-bold text-[#FFD500] uppercase tracking-wider">
+        <Reveal className="flex lg:hidden flex-col items-start gap-4 mb-6">
+          <div className="inline-flex items-center gap-2 border border-accent-yellow/30 bg-accent-yellow/[0.06] rounded-full px-3 py-1.5">
+            <span className="material-symbols-outlined !text-[14px] text-accent-yellow" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
+            <span className="font-mono text-[9px] font-bold text-accent-yellow uppercase tracking-wider">
               Handpicked. Verified. Updated weekly.
             </span>
           </div>
 
-          <h2 className="font-heading font-black text-white uppercase tracking-[-0.02em] leading-[0.95] text-[42px] sm:text-5xl mt-1">
+          <h2 className="font-heading font-black text-black dark:text-white uppercase tracking-[-0.02em] leading-[0.95] text-[42px] sm:text-5xl mt-1">
             <span className="block">Claim the deals</span>
             <span className="block mt-1">Founders</span>
             <span className="block mt-1">
-              <span className="bg-[#FFD500] text-black px-2 py-0.5 inline-block box-decoration-clone">
+              <span className="bg-accent-yellow text-black px-2 py-0.5 inline-block box-decoration-clone">
                 Love most.
               </span>
             </span>
@@ -196,17 +170,17 @@ export default function PopularDealsGrid() {
 
           <div className="flex items-center justify-between w-full mt-2">
             <div className="flex items-center gap-1.5">
-              <span className="material-symbols-outlined !text-[16px] text-green-500" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
-              <span className="font-sans text-[11px] text-gray-400">Handpicked. Verified. Updated weekly.</span>
+              <span className="material-symbols-outlined !text-[16px] text-accent-yellow" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
+              <span className="font-sans text-[11px] text-gray-500 dark:text-gray-400">Handpicked. Verified. Updated weekly.</span>
             </div>
-            <Link href="/deals" className="flex-shrink-0 font-mono text-[10px] font-bold text-[#FFD500] uppercase tracking-wider flex items-center gap-1">
+            <Link href="/deals" className="flex-shrink-0 font-mono text-[10px] font-bold text-accent-yellow uppercase tracking-wider flex items-center gap-1">
               View all deals <span className="material-symbols-outlined !text-[14px]">arrow_forward</span>
             </Link>
           </div>
-        </div>
+        </Reveal>
 
         {/* ─── Desktop Header ─── */}
-        <div className="hidden lg:flex flex-col lg:flex-row lg:items-start justify-between gap-6 mb-8 md:mb-10">
+        <Reveal className="hidden lg:flex flex-col lg:flex-row lg:items-start justify-between gap-6 mb-8 md:mb-10">
           {/* Left: badge + headline */}
           <div>
             <span className="inline-flex items-center gap-1.5 bg-accent-yellow text-black font-mono text-[10px] md:text-[11px] font-black uppercase tracking-[0.08em] px-2.5 py-1 border-2 border-black shadow-[2px_2px_0px_#000]">
@@ -234,7 +208,7 @@ export default function PopularDealsGrid() {
           <div className="flex items-center gap-3 lg:pt-3 w-full lg:w-auto lg:max-w-[520px]">
             <span className="inline-flex items-center gap-2 whitespace-nowrap">
               <span
-                className="material-symbols-outlined !text-[18px] text-green-500"
+                className="material-symbols-outlined !text-[18px] text-accent-yellow"
                 style={{ fontVariationSettings: "'FILL' 1" }}
               >
                 check_circle
@@ -252,14 +226,16 @@ export default function PopularDealsGrid() {
               <span className="material-symbols-outlined !text-[16px]">arrow_forward</span>
             </Link>
           </div>
-        </div>
+        </Reveal>
 
         {/* ─── Deal Grid (Desktop) ─── */}
-        <div className="hidden lg:grid grid-cols-6 gap-4">
+        <RevealStagger className="hidden lg:grid grid-cols-6 gap-4">
           {popularDeals.map((deal, i) => (
-            <DealCard key={`${deal.name}-${i}`} deal={deal} />
+            <RevealItem key={`${deal.name}-${i}`}>
+              <DealCard deal={deal} />
+            </RevealItem>
           ))}
-        </div>
+        </RevealStagger>
 
         {/* ─── Deal Carousel (Mobile/Tablet) ─── */}
         <div className="block lg:hidden">
@@ -320,7 +296,7 @@ export default function PopularDealsGrid() {
               <span className="text-[8px] text-gray-400 mt-1 leading-tight">Every deal is tested and founder-approved.</span>
             </div>
             <div className="flex flex-col items-center flex-1 text-center border-r border-white/10 px-2">
-              <span className="material-symbols-outlined text-green-500 !text-[22px] mb-1.5" style={{ fontVariationSettings: "'FILL' 1" }}>bolt</span>
+              <span className="material-symbols-outlined text-accent-yellow !text-[22px] mb-1.5" style={{ fontVariationSettings: "'FILL' 1" }}>bolt</span>
               <span className="font-mono text-[9px] font-bold text-white uppercase leading-tight">Instant Access</span>
               <span className="text-[8px] text-gray-400 mt-1 leading-tight">Claim in under 3 minutes. Get back to building.</span>
             </div>

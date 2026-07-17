@@ -1,8 +1,10 @@
 import type { Metadata } from 'next'
 import Script from 'next/script'
+import { Suspense } from 'react'
 import './globals.css'
 import CookieConsentProvider from '@/components/cookie/CookieConsentProvider'
 import CursorCompanion from '@/components/ui/CursorCompanion'
+import NavigationProgress from '@/components/ui/NavigationProgress'
 import WebMcpProvider from '@/components/agent/WebMcpProvider'
 import { Archivo, IBM_Plex_Mono, IBM_Plex_Sans, Space_Grotesk } from 'next/font/google'
 
@@ -48,23 +50,25 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'en_US',
     url: 'https://www.foundersprime.com',
-    title: 'FoundersPrime | Free Credits. Real Grants. Zero Dilution.',
-    description: 'Access verified deals, non-dilutive grants, and startup credits worth $500K+. Built for modern founders.',
+    title: 'FoundersPrime | Build More. Burn Less.',
+    description:
+      'Unlock up to $500K in startup credits, grants & founder perks — zero dilution. The intelligence terminal for modern founders.',
     siteName: 'FoundersPrime',
     images: [
       {
         url: '/og-image.png',
         width: 1200,
         height: 630,
-        alt: 'FoundersPrime — Free Credits. Real Grants. Zero Dilution.',
+        alt: 'FoundersPrime — Build More. Burn Less. Unlock up to $500K in startup credits.',
         type: 'image/png',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'FoundersPrime | Free Credits. Real Grants. Zero Dilution.',
-    description: 'Access verified deals, non-dilutive grants, and startup credits worth $500K+.',
+    title: 'FoundersPrime | Build More. Burn Less.',
+    description:
+      'Unlock up to $500K in startup credits, grants & founder perks — zero dilution.',
     creator: '@foundersprime',
     images: ['/og-image.png'],
   },
@@ -250,7 +254,9 @@ export default function RootLayout({
 
         {/* Warm up connections to third-party CDNs for deal logos and avatars */}
         <link rel="preconnect" href="https://www.google.com" />
-        <link rel="dns-prefetch" href="https://logo.clearbit.com" />
+        <link rel="preconnect" href="https://img.logo.dev" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://icons.duckduckgo.com" />
+        <link rel="dns-prefetch" href="https://ui-avatars.com" />
         <link rel="dns-prefetch" href="https://images.unsplash.com" />
         <link rel="dns-prefetch" href="https://lh3.googleusercontent.com" />
         {/* Material Symbols — display=block so icons don't block render with raw text */}
@@ -293,6 +299,9 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
         <CookieConsentProvider>
+          <Suspense fallback={null}>
+            <NavigationProgress />
+          </Suspense>
           {children}
           <CursorCompanion />
           <WebMcpProvider />

@@ -18,7 +18,6 @@ FoundersPrime is a curated, verified database of startup deals, cloud credits, S
 - **Startup Grants**: Non-dilutive funding from government agencies, foundations, and competitions
 - **Accelerator Programs**: Y Combinator, Techstars, 500 Global, Antler, Entrepreneur First, and more
 - **Incubator Programs**: University programs, corporate innovation labs, venture studios
-- **Verified Startups Database**: Funded companies from Y Combinator and top accelerators with real metrics
 - **Startup Ideas**: Validated business opportunities with market analysis
 
 ## Key Pages
@@ -31,7 +30,6 @@ FoundersPrime is a curated, verified database of startup deals, cloud credits, S
 - Incubators: [https://www.foundersprime.com/programs/incubators](https://www.foundersprime.com/programs/incubators)
 - Grants: [https://www.foundersprime.com/programs/grants](https://www.foundersprime.com/programs/grants)
 - Flash Deals: [https://www.foundersprime.com/flash-deals](https://www.foundersprime.com/flash-deals)
-- Verified Startups: [https://www.foundersprime.com/startups](https://www.foundersprime.com/startups)
 - Startup Ideas: [https://www.foundersprime.com/ideas](https://www.foundersprime.com/ideas)
 - Student Benefits: [https://www.foundersprime.com/student-benefits](https://www.foundersprime.com/student-benefits)
 - Pricing: [https://www.foundersprime.com/pricing](https://www.foundersprime.com/pricing)

@@ -6,7 +6,7 @@ export interface UserProfile {
   email: string
   name?: string
   isPro: boolean        // True for Founder, Legend, Admin (Full Access)
-  isNextFounder: boolean // True for NextFounder / Student plan ($59/yr)
+  isNextFounder: boolean // True for NextFounder / Student plan ($1/yr)
   isAdmin: boolean
   plan: 'free' | 'nextfounder' | 'founder' | 'legend'
   subscription?: {

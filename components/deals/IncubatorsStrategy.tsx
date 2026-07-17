@@ -24,7 +24,7 @@ export default function IncubatorsStrategy() {
         <div className="relative bg-white border-2 border-black shadow-[4px_4px_0px_#111] rounded-sm p-5 md:p-6 overflow-hidden">
           {/* Decorative mandala */}
           <div className="absolute -bottom-12 -right-12 w-44 h-44 pointer-events-none opacity-[0.06]" aria-hidden="true">
-            <svg viewBox="0 0 200 200" className="w-full h-full text-teal-700 incub-strategy-mandala-spin" fill="none" stroke="currentColor" strokeWidth="0.6">
+            <svg viewBox="0 0 200 200" className="w-full h-full text-violet-700 incub-strategy-mandala-spin" fill="none" stroke="currentColor" strokeWidth="0.6">
               {[20, 35, 50, 65].map((r, i) => (
                 <ellipse
                   key={i}
@@ -54,17 +54,17 @@ export default function IncubatorsStrategy() {
 
             <div className="grid grid-cols-2 gap-3 md:gap-4">
               {/* Incubator column */}
-              <div className="bg-teal-50 border-2 border-black border-dashed rounded-sm p-3 md:p-4">
+              <div className="bg-violet-50 border-2 border-black border-dashed rounded-sm p-3 md:p-4">
                 <div className="flex items-center gap-2 mb-2.5">
-                  <span className="material-symbols-outlined !text-[14px] text-teal-700">lightbulb</span>
-                  <p className="font-mono text-[10px] md:text-[11px] font-black uppercase tracking-[0.14em] text-teal-900">
+                  <span className="material-symbols-outlined !text-[14px] text-violet-700">lightbulb</span>
+                  <p className="font-mono text-[10px] md:text-[11px] font-black uppercase tracking-[0.14em] text-violet-900">
                     Incubators
                   </p>
                 </div>
                 <ul className="space-y-1.5">
                   {incubatorTraits.map((t, i) => (
                     <li key={i} className="flex items-start gap-2 text-[11px] md:text-[12px] text-gray-800">
-                      <span className="material-symbols-outlined !text-[12px] text-teal-600 flex-shrink-0 mt-0.5" style={{ fontVariationSettings: "'FILL' 1" }}>
+                      <span className="material-symbols-outlined !text-[12px] text-violet-600 flex-shrink-0 mt-0.5" style={{ fontVariationSettings: "'FILL' 1" }}>
                         check_circle
                       </span>
                       <span dangerouslySetInnerHTML={{ __html: t }} />

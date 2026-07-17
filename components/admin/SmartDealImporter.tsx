@@ -320,9 +320,9 @@ export default function SmartDealImporter({ onClose, onImport }: SmartDealImport
 
   return (
     <div className="fixed inset-0 bg-black/70 flex items-center justify-center p-4 z-[9999]">
-      <div className="bg-white border-4 border-black shadow-[8px_8px_0_0_#000] w-full max-w-[1600px] max-h-[90vh] overflow-hidden flex flex-col">
+      <div className="bg-[#0d0e12] border border-white/10 rounded-2xl text-white w-full max-w-[1600px] max-h-[90vh] overflow-hidden flex flex-col">
         {/* Header */}
-        <div className="bg-gradient-to-r from-cyan-500 to-purple-500 p-4 border-b-4 border-black flex justify-between items-center">
+        <div className="bg-[#121318] p-4 border-b border-white/10 rounded-t-2xl flex justify-between items-center">
           <div>
             <h2 className="text-2xl font-black text-white">🚀 Smart Deal Importer</h2>
             <p className="text-white/80 text-sm">Paste any format - we&apos;ll figure it out</p>
@@ -333,15 +333,15 @@ export default function SmartDealImporter({ onClose, onImport }: SmartDealImport
         </div>
 
         {/* Progress Steps */}
-        <div className="bg-gray-100 border-b-2 border-black px-6 py-3">
+        <div className="bg-[#121318] border-b border-white/10 px-6 py-3">
           <div className="flex items-center gap-4">
             {['upload', 'mapping', 'preview', 'importing'].map((s, i) => (
               <div key={s} className="flex items-center gap-2">
-                <div className={`w-8 h-8 rounded-full border-2 border-black flex items-center justify-center font-bold ${
-                  step === s ? 'bg-cyan-500 text-white' : 
-                  ['upload', 'mapping', 'preview', 'importing'].indexOf(step) > i ? 'bg-green-500 text-white' : 'bg-white'
+                <div className={`w-8 h-8 rounded-full border border-white/15 flex items-center justify-center font-bold ${
+                  step === s ? 'bg-cyan-600 text-white' : 
+                  ['upload', 'mapping', 'preview', 'importing'].indexOf(step) > i ? 'bg-emerald-600 text-white' : 'bg-white/10 text-zinc-400'
                 }`}>{i + 1}</div>
-                <span className={`font-bold capitalize ${step === s ? 'text-cyan-600' : 'text-gray-500'}`}>{s}</span>
+                <span className={`font-bold capitalize ${step === s ? 'text-cyan-400' : 'text-zinc-500'}`}>{s}</span>
                 {i < 3 && <div className="w-8 h-0.5 bg-gray-300" />}
               </div>
             ))}
@@ -372,16 +372,16 @@ export default function SmartDealImporter({ onClose, onImport }: SmartDealImport
                 />
                 <div className="text-6xl mb-4">📁</div>
                 <p className="text-xl font-bold mb-2">Drop your file here</p>
-                <p className="text-gray-500 mb-4">Supports JSON, CSV, TXT files</p>
+                <p className="text-zinc-500 mb-4">Supports JSON, CSV, TXT files</p>
                 <button
                   onClick={() => fileInputRef.current?.click()}
-                  className="bg-cyan-500 text-white px-6 py-2 border-2 border-black font-bold hover:bg-cyan-600"
+                  className="bg-cyan-600 text-white px-6 py-2 border border-white/15 font-bold hover:bg-cyan-600"
                 >
                   Choose File
                 </button>
               </div>
 
-              <div className="text-center text-gray-500 font-bold">— OR —</div>
+              <div className="text-center text-zinc-500 font-bold">— OR —</div>
 
               {/* Text Input */}
               <div>
@@ -390,7 +390,7 @@ export default function SmartDealImporter({ onClose, onImport }: SmartDealImport
                   rows={10}
                   value={inputText}
                   onChange={e => setInputText(e.target.value)}
-                  className="w-full p-4 border-2 border-black font-mono text-sm"
+                  className="w-full p-4 border border-white/15 bg-[#121318] text-white font-mono text-sm rounded-lg"
                   placeholder={`Paste any format:
 
 JSON: [{"title": "AWS Credits", "provider": "Amazon", "value": "$100K"}]
@@ -408,7 +408,7 @@ URL: https://aws.amazon.com`}
                 <button
                   onClick={() => inputText.trim() && processInput(inputText)}
                   disabled={!inputText.trim()}
-                  className="mt-4 bg-purple-500 text-white px-6 py-3 border-2 border-black font-bold hover:bg-purple-600 disabled:opacity-50"
+                  className="mt-4 bg-purple-600 text-white px-6 py-3 border border-white/15 font-bold hover:bg-purple-600 disabled:opacity-50"
                 >
                   🔍 Analyze Data
                 </button>
@@ -425,7 +425,7 @@ URL: https://aws.amazon.com`}
 
               <div className="space-y-3">
                 {fieldMappings.map((mapping, idx) => (
-                  <div key={idx} className="flex items-center gap-4 p-3 bg-gray-50 border-2 border-gray-200">
+                  <div key={idx} className="flex items-center gap-4 p-3 bg-white/5 border border-white/10">
                     <div className="w-1/4">
                       <span className="font-mono text-sm bg-gray-200 px-2 py-1">{mapping.sourceField}</span>
                     </div>
@@ -438,7 +438,7 @@ URL: https://aws.amazon.com`}
                           updated[idx].targetField = e.target.value
                           setFieldMappings(updated)
                         }}
-                        className="w-full p-2 border-2 border-black bg-white"
+                        className="w-full p-2 border border-white/15 bg-[#121318] text-white"
                       >
                         <option value="">-- Skip --</option>
                         {TARGET_FIELDS.map(f => (
@@ -446,7 +446,7 @@ URL: https://aws.amazon.com`}
                         ))}
                       </select>
                     </div>
-                    <div className="flex-1 text-sm text-gray-500 truncate" title={mapping.sampleValue}>
+                    <div className="flex-1 text-sm text-zinc-500 truncate" title={mapping.sampleValue}>
                       Sample: {mapping.sampleValue || '(empty)'}
                     </div>
                   </div>
@@ -454,10 +454,10 @@ URL: https://aws.amazon.com`}
               </div>
 
               <div className="flex gap-4">
-                <button onClick={() => setStep('upload')} className="px-6 py-2 border-2 border-black font-bold hover:bg-gray-100">
+                <button onClick={() => setStep('upload')} className="px-6 py-2 border border-white/15 font-bold hover:bg-white/5">
                   ← Back
                 </button>
-                <button onClick={applyMappings} className="px-6 py-2 bg-cyan-500 text-white border-2 border-black font-bold hover:bg-cyan-600">
+                <button onClick={applyMappings} className="px-6 py-2 bg-cyan-600 text-white border border-white/15 font-bold hover:bg-cyan-600">
                   Apply Mappings →
                 </button>
               </div>
@@ -471,7 +471,7 @@ URL: https://aws.amazon.com`}
                 <p className="font-bold">✅ {parsedDeals.length} deals ready to import</p>
                 <button
                   onClick={() => setParsedDeals(parsedDeals.filter(d => d.title && d.provider && d.applicationUrl))}
-                  className="text-sm bg-white px-3 py-1 border border-green-500 font-bold"
+                  className="text-sm bg-[#121318] text-white px-3 py-1 border border-green-500 font-bold"
                 >
                   Remove Invalid
                 </button>
@@ -479,14 +479,14 @@ URL: https://aws.amazon.com`}
 
               <div className="space-y-4 max-h-[400px] overflow-auto">
                 {parsedDeals.slice(0, 50).map((deal, idx) => (
-                  <div key={idx} className="border-2 border-gray-300 p-4 bg-white">
+                  <div key={idx} className="border-2 border-gray-300 p-4 bg-[#121318] text-white">
                     <div className="flex justify-between items-start mb-3">
                       <span className="bg-gray-800 text-white px-2 py-1 text-xs font-bold">#{idx + 1}</span>
                       <button onClick={() => removeDeal(idx)} className="text-red-500 hover:text-red-700 text-sm font-bold">✕ Remove</button>
                     </div>
                     <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                       <div>
-                        <label className="text-xs font-bold text-gray-500">Title *</label>
+                        <label className="text-xs font-bold text-zinc-500">Title *</label>
                         <input
                           value={deal.title}
                           onChange={e => updateDeal(idx, 'title', e.target.value)}
@@ -494,7 +494,7 @@ URL: https://aws.amazon.com`}
                         />
                       </div>
                       <div>
-                        <label className="text-xs font-bold text-gray-500">Provider *</label>
+                        <label className="text-xs font-bold text-zinc-500">Provider *</label>
                         <input
                           value={deal.provider}
                           onChange={e => updateDeal(idx, 'provider', e.target.value)}
@@ -502,7 +502,7 @@ URL: https://aws.amazon.com`}
                         />
                       </div>
                       <div>
-                        <label className="text-xs font-bold text-gray-500">Value *</label>
+                        <label className="text-xs font-bold text-zinc-500">Value *</label>
                         <input
                           value={deal.value}
                           onChange={e => updateDeal(idx, 'value', e.target.value)}
@@ -510,17 +510,17 @@ URL: https://aws.amazon.com`}
                         />
                       </div>
                       <div>
-                        <label className="text-xs font-bold text-gray-500">Category</label>
+                        <label className="text-xs font-bold text-zinc-500">Category</label>
                         <select
                           value={deal.category}
                           onChange={e => updateDeal(idx, 'category', e.target.value)}
-                          className="w-full p-2 border border-gray-300 text-sm bg-white"
+                          className="w-full p-2 border border-gray-300 text-sm bg-[#121318] text-white"
                         >
                           {dealCategories.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
                         </select>
                       </div>
                       <div className="col-span-2">
-                        <label className="text-xs font-bold text-gray-500">URL *</label>
+                        <label className="text-xs font-bold text-zinc-500">URL *</label>
                         <input
                           value={deal.applicationUrl}
                           onChange={e => updateDeal(idx, 'applicationUrl', e.target.value)}
@@ -531,18 +531,18 @@ URL: https://aws.amazon.com`}
                   </div>
                 ))}
                 {parsedDeals.length > 50 && (
-                  <p className="text-center text-gray-500">...and {parsedDeals.length - 50} more deals</p>
+                  <p className="text-center text-zinc-500">...and {parsedDeals.length - 50} more deals</p>
                 )}
               </div>
 
               <div className="flex gap-4">
-                <button onClick={() => setStep('mapping')} className="px-6 py-2 border-2 border-black font-bold hover:bg-gray-100">
+                <button onClick={() => setStep('mapping')} className="px-6 py-2 border border-white/15 font-bold hover:bg-white/5">
                   ← Back
                 </button>
                 <button
                   onClick={handleImport}
                   disabled={parsedDeals.length === 0}
-                  className="px-6 py-3 bg-green-500 text-white border-2 border-black font-bold hover:bg-green-600 disabled:opacity-50"
+                  className="px-6 py-3 bg-emerald-600 text-white border border-white/15 font-bold hover:bg-green-600 disabled:opacity-50"
                 >
                   🚀 Import {parsedDeals.length} Deals
                 </button>
@@ -557,10 +557,10 @@ URL: https://aws.amazon.com`}
                 <>
                   <div className="text-6xl mb-6 animate-bounce">⚡</div>
                   <h3 className="text-2xl font-bold mb-4">Importing Deals...</h3>
-                  <div className="w-full max-w-md mx-auto bg-gray-200 h-4 border-2 border-black mb-4">
+                  <div className="w-full max-w-md mx-auto bg-white/10 h-4 rounded border border-white/15 mb-4">
                     <div className="bg-cyan-500 h-full transition-all" style={{ width: `${progress}%` }} />
                   </div>
-                  <p className="text-gray-600">{progress}% complete</p>
+                  <p className="text-zinc-500">{progress}% complete</p>
                 </>
               ) : result && (
                 <>
@@ -570,7 +570,7 @@ URL: https://aws.amazon.com`}
                     <p className="text-green-600 font-bold">✅ {result.success} deals imported successfully</p>
                     {result.failed > 0 && <p className="text-red-600 font-bold">❌ {result.failed} deals failed</p>}
                   </div>
-                  <button onClick={onClose} className="px-6 py-3 bg-cyan-500 text-white border-2 border-black font-bold hover:bg-cyan-600">
+                  <button onClick={onClose} className="px-6 py-3 bg-cyan-600 text-white border border-white/15 font-bold hover:bg-cyan-600">
                     Done
                   </button>
                 </>

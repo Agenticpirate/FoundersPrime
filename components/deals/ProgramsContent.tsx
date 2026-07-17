@@ -2,17 +2,81 @@
 
 import { useState, useCallback, useEffect, useRef } from 'react'
 import dynamic from 'next/dynamic'
+import Link from 'next/link'
 import { useRouter, useSearchParams, usePathname } from 'next/navigation'
+import { motion, useReducedMotion } from 'framer-motion'
 import type { ProgramType } from './ProgramsSidebar'
 import ProgramsFilterBar, { ProgramFilterState } from './ProgramsFilterBar'
-import FeaturedSlot from './featured/FeaturedSlot'
-import { accelerators2026 } from '@/data/accelerators-2026'
-import { incubators2026 } from '@/data/incubators-2026'
-import { grants2026 } from '@/data/grants-2026'
+import { FadeUp } from '@/components/ui/premium-motion'
+import { getStaticProgramCounts } from '@/lib/programs-catalog'
 
-// Heavy grid (full program catalogs) loads after the shell paints.
+/** Single promote CTA — premium, minimal. Links to homepage advertise section. */
+function ProgramsPromoteBanner() {
+  const reduce = useReducedMotion()
+  return (
+    <Link
+      href="/#advertise"
+      className="group relative mb-1 flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-5 rounded-2xl border border-black/[0.06] dark:border-white/[0.08] bg-gradient-to-br from-white via-white to-amber-50/50 dark:from-[#0c0c0c] dark:via-[#0a0a0a] dark:to-[#14110a] px-4 py-4 md:px-5 md:py-4.5 shadow-[0_1px_0_rgba(255,255,255,0.5)_inset,0_10px_28px_rgba(0,0,0,0.06)] hover:border-accent-yellow/40 dark:hover:border-accent-yellow/30 hover:shadow-[0_16px_40px_rgba(0,0,0,0.1)] hover:-translate-y-0.5 transition-all duration-300 overflow-hidden"
+    >
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -right-8 -top-10 h-36 w-36 rounded-full bg-accent-yellow/15 dark:bg-accent-yellow/[0.08] blur-2xl group-hover:bg-accent-yellow/25 transition-colors"
+      />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-accent-yellow/40 to-transparent"
+      />
+      {!reduce && (
+        <motion.div
+          aria-hidden
+          className="pointer-events-none absolute -left-1/3 top-0 h-full w-1/3 bg-gradient-to-r from-transparent via-white/40 dark:via-white/5 to-transparent skew-x-12"
+          animate={{ x: ['0%', '350%'] }}
+          transition={{ duration: 3.8, repeat: Infinity, repeatDelay: 4, ease: 'easeInOut' }}
+        />
+      )}
+
+      <div className="relative z-10 flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-2xl border border-black/[0.06] dark:border-white/10 bg-accent-yellow/20 dark:bg-accent-yellow/10 shadow-sm">
+        <motion.span
+          className="material-symbols-outlined text-amber-700 dark:text-accent-yellow !text-[22px]"
+          style={{ fontVariationSettings: "'FILL' 1" }}
+          animate={reduce ? undefined : { scale: [1, 1.08, 1] }}
+          transition={{ duration: 2.4, repeat: Infinity, ease: 'easeInOut' }}
+        >
+          campaign
+        </motion.span>
+      </div>
+
+      <div className="relative z-10 min-w-0 flex-1">
+        <div className="flex flex-wrap items-center gap-2 mb-1">
+          <span className="inline-flex items-center gap-1.5 font-mono text-[9px] font-bold uppercase tracking-[0.14em] text-amber-700/90 dark:text-accent-yellow/90">
+            <span className="relative flex h-1.5 w-1.5">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent-yellow opacity-60" />
+              <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-accent-yellow" />
+            </span>
+            Ad spot open · 1 placement
+          </span>
+        </div>
+        <p className="font-mono text-[13px] md:text-[15px] font-bold tracking-tight text-gray-900 dark:text-white leading-snug">
+          Promote your program to active founders
+        </p>
+        <p className="mt-0.5 text-[11.5px] text-gray-500 dark:text-gray-400 line-clamp-2 sm:line-clamp-1">
+          Single featured banner on this directory — no empty multi-slot clutter. Claim via homepage submission.
+        </p>
+      </div>
+
+      <span className="relative z-10 inline-flex items-center justify-center gap-1.5 self-start sm:self-center rounded-xl bg-gray-900 dark:bg-accent-yellow text-white dark:text-black font-mono text-[10px] md:text-[11px] font-bold uppercase tracking-[0.08em] px-4 py-2.5 border border-black/10 dark:border-transparent group-hover:bg-black dark:group-hover:bg-amber-300 transition-colors whitespace-nowrap shadow-sm">
+        Get featured
+        <span className="material-symbols-outlined !text-[14px] group-hover:translate-x-0.5 transition-transform">
+          arrow_forward
+        </span>
+      </span>
+    </Link>
+  )
+}
+
+// Load grid with SSR so first paint already has the catalog (no skeleton → shuffle).
 const ProgramsGrid = dynamic(() => import('./ProgramsGrid'), {
-  ssr: false,
+  ssr: true,
   loading: () => (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
       {Array.from({ length: 8 }).map((_, i) => (
@@ -30,6 +94,7 @@ const DEFAULT_FILTERS: ProgramFilterState = {
   region: 'All',
   subtype: 'All',
   sort: 'name',
+  stage: 'All',
 }
 
 function readFromUrl(params: URLSearchParams): { type: ProgramType; filters: ProgramFilterState } {
@@ -44,6 +109,7 @@ function readFromUrl(params: URLSearchParams): { type: ProgramType; filters: Pro
       region: params.get('region') || 'All',
       subtype: params.get('subtype') || 'All',
       sort: params.get('sort') || 'name',
+      stage: params.get('stage') || 'All',
     },
   }
 }
@@ -52,6 +118,7 @@ export default function ProgramsContent({ initialIsPro, initialType, initialFilt
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
+  const reduceMotion = useReducedMotion()
 
   const initial = readFromUrl(new URLSearchParams(searchParams.toString()))
   const [activeType, setActiveType] = useState<ProgramType>(initialType || initial.type)
@@ -75,13 +142,14 @@ export default function ProgramsContent({ initialIsPro, initialType, initialFilt
     writeOrDelete('region', filters.region, 'All')
     writeOrDelete('subtype', filters.subtype, 'All')
     writeOrDelete('sort', filters.sort, 'name')
+    writeOrDelete('stage', filters.stage, 'All')
 
     const next = params.toString()
     lastWrittenUrlRef.current = next
     const url = next ? `${pathname}?${next}` : pathname
     router.replace(url, { scroll: false })
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeType, filters.search, filters.region, filters.subtype, filters.sort])
+  }, [activeType, filters.search, filters.region, filters.subtype, filters.sort, filters.stage])
 
   // Sync URL → state (browser back/forward)
   useEffect(() => {
@@ -95,7 +163,8 @@ export default function ProgramsContent({ initialIsPro, initialType, initialFilt
         prev.search === fromUrl.search &&
         prev.region === fromUrl.region &&
         prev.subtype === fromUrl.subtype &&
-        prev.sort === fromUrl.sort
+        prev.sort === fromUrl.sort &&
+        prev.stage === fromUrl.stage
       ) return prev
       return fromUrl
     })
@@ -119,74 +188,120 @@ export default function ProgramsContent({ initialIsPro, initialType, initialFilt
     grants: 'Grants',
   }
 
-  const accsCount = accelerators2026.length
-  const incsCount = incubators2026.length
-  const grtsCount = grants2026.length
+  // Static baseline counts; grid merges Supabase programs on the client
+  const staticCounts = getStaticProgramCounts()
+  const [accsCount, setAccsCount] = useState(staticCounts.accelerators)
+  const [incsCount, setIncsCount] = useState(staticCounts.incubators)
+  const [grtsCount, setGrtsCount] = useState(staticCounts.grants)
   const totalCount = accsCount + incsCount + grtsCount
+
+  useEffect(() => {
+    let cancelled = false
+    ;(async () => {
+      try {
+        const res = await fetch('/api/deals?scope=programs')
+        const data = await res.json()
+        if (!data?.success || !Array.isArray(data.deals) || cancelled) return
+        const { fromSupabaseProgram, mergePrograms, getStaticPrograms } = await import(
+          '@/lib/programs-catalog'
+        )
+        const remote = data.deals
+          .map((d: any) => fromSupabaseProgram(d))
+          .filter(Boolean)
+        const merged = mergePrograms(getStaticPrograms(), remote as any)
+        if (cancelled) return
+        setAccsCount(merged.filter((p) => p.type === 'accelerator').length)
+        setIncsCount(merged.filter((p) => p.type === 'incubator').length)
+        setGrtsCount(merged.filter((p) => p.type === 'grant').length)
+      } catch {
+        /* keep static */
+      }
+    })()
+    return () => {
+      cancelled = true
+    }
+  }, [])
 
   return (
     <div className="max-w-[1600px] mx-auto flex flex-col gap-6">
-      {/* Header Featured Banner — rotating, full width, shown on all sizes */}
-      <FeaturedSlot variant="banner" count={1} intervalMs={5000} offset={0} className="mb-2" />
+      <FadeUp delay={0.02}>
+        <ProgramsPromoteBanner />
+      </FadeUp>
 
-      {/* Horizontal Tabs Switcher - scrollable on mobile with fade indicator */}
-      <div className="relative">
-        <div 
-          className="absolute inset-y-0 right-0 w-12 bg-gradient-to-l from-gray-50 dark:from-[#000000] to-transparent pointer-events-none z-10 lg:hidden"
-          aria-hidden="true"
-        />
-        <div className="flex items-center border-b border-white/10 font-mono text-[11px] font-bold uppercase tracking-[0.12em] overflow-x-auto whitespace-nowrap mobile-scroll-hide pr-12 lg:pr-0">
-          {[
-            { id: 'all', label: 'All Programs', count: totalCount },
-            { id: 'accelerators', label: 'Accelerators', count: accsCount },
-            { id: 'incubators', label: 'Incubators', count: incsCount },
-            { id: 'grants', label: 'Grants', count: grtsCount }
-          ].map((tab) => {
-            const isActive = activeType === tab.id
-            return (
-              <button
-                key={tab.id}
-                onClick={() => handleTypeSelect(tab.id as any)}
-                className={`flex-shrink-0 px-5 py-3 border-b-2 transition-all relative inline-flex items-center gap-2 ${
-                  isActive
-                    ? 'border-accent-yellow text-accent-yellow font-black'
-                    : 'border-transparent text-gray-400 hover:text-white hover:border-white/20'
-                }`}
-              >
-                <span>{tab.label}</span>
-                <span className={`text-[10px] px-1.5 py-0.5 rounded font-mono font-bold leading-none ${
-                  isActive
-                    ? 'bg-accent-yellow/20 text-accent-yellow'
-                    : 'bg-white/5 text-gray-500'
-                }`}>
-                  {tab.count}
-                </span>
-              </button>
-            )
-          })}
+      {/* Tabs — animated active underline */}
+      <FadeUp delay={0.06}>
+        <div className="relative">
+          <div
+            className="absolute inset-y-0 right-0 w-12 bg-gradient-to-l from-gray-50 dark:from-[#000000] to-transparent pointer-events-none z-10 lg:hidden"
+            aria-hidden="true"
+          />
+          <div
+            role="tablist"
+            className="flex items-center border-b border-black/[0.06] dark:border-white/10 font-mono text-[11px] font-bold uppercase tracking-[0.12em] overflow-x-auto whitespace-nowrap mobile-scroll-hide pr-12 lg:pr-0"
+          >
+            {[
+              { id: 'all', label: 'All Programs', count: totalCount },
+              { id: 'accelerators', label: 'Accelerators', count: accsCount },
+              { id: 'incubators', label: 'Incubators', count: incsCount },
+              { id: 'grants', label: 'Grants', count: grtsCount },
+            ].map((tab) => {
+              const isActive = activeType === tab.id
+              return (
+                <button
+                  key={tab.id}
+                  role="tab"
+                  aria-selected={isActive}
+                  onClick={() => handleTypeSelect(tab.id as ProgramType)}
+                  className={`relative flex-shrink-0 px-5 py-3 transition-colors duration-300 inline-flex items-center gap-2 ${
+                    isActive
+                      ? 'text-accent-yellow font-black'
+                      : 'text-gray-400 hover:text-gray-900 dark:hover:text-white'
+                  }`}
+                >
+                  <span>{tab.label}</span>
+                  <span
+                    className={`text-[10px] px-1.5 py-0.5 rounded font-mono font-bold leading-none transition-colors ${
+                      isActive
+                        ? 'bg-accent-yellow/20 text-accent-yellow'
+                        : 'bg-black/[0.04] dark:bg-white/5 text-gray-500'
+                    }`}
+                  >
+                    {tab.count}
+                  </span>
+                  {isActive && !reduceMotion && (
+                    <motion.span
+                      layoutId="programs-tab-underline"
+                      className="absolute bottom-0 left-2 right-2 h-0.5 bg-accent-yellow rounded-full"
+                      transition={{ type: 'spring', stiffness: 380, damping: 32 }}
+                    />
+                  )}
+                  {isActive && reduceMotion && (
+                    <span className="absolute bottom-0 left-2 right-2 h-0.5 bg-accent-yellow rounded-full" />
+                  )}
+                </button>
+              )
+            })}
+          </div>
         </div>
-      </div>
+      </FadeUp>
 
-      {/* Main layout with Right Rail */}
-      <div className="flex gap-5 lg:gap-6 items-start">
-        {/* Left/Main Column: Filters & Grid */}
-        <div className="flex-1 min-w-0 flex flex-col gap-4">
+      {/* Filters + grid with soft panel cross-fade on type change */}
+      <div className="flex flex-col gap-4 min-w-0">
+        <FadeUp delay={0.1}>
           <ProgramsFilterBar
             activeType={activeType}
             onFilterChange={handleFilterChange}
             currentFilters={filters}
           />
-          <ProgramsGrid activeType={activeType} filters={filters} initialIsPro={initialIsPro} />
-        </div>
+        </FadeUp>
 
-        {/* Right Rail: stack of Featured slots filling the column — wide screens only */}
-        <div className="w-60 flex-shrink-0 hidden xl:block">
-          <div className="sticky top-20 space-y-3">
-            <FeaturedSlot variant="rail" count={1} intervalMs={6500} offset={3} dense />
-            <FeaturedSlot variant="rail" count={1} intervalMs={7500} offset={4} showHeader={false} dense />
-            <FeaturedSlot variant="rail" count={1} intervalMs={7000} offset={5} showHeader={false} dense />
-            <FeaturedSlot variant="rail" count={1} intervalMs={8000} offset={6} showHeader={false} dense />
-          </div>
+        {/* Soft fade on tab change only — no exit/enter scale that reshuffles cards */}
+        <div key={activeType} className="min-w-0">
+          <ProgramsGrid
+            activeType={activeType}
+            filters={filters}
+            initialIsPro={initialIsPro}
+          />
         </div>
       </div>
     </div>

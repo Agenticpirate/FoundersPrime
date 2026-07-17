@@ -1,5 +1,8 @@
 import 'server-only'
 import type { Deal } from '@/lib/deals-database'
+import { applyCatalogScope } from '@/lib/catalog-segregation'
+import { applyPopularityFlags } from '@/lib/deal-popularity'
+import { resolveDealApplicationUrl } from '@/lib/comprehensive-startup-urls'
 
 // Server-side deal fetching from Supabase for statically-generated / ISR
 // pages (e.g. /deals/[slug]). Uses the public anon key over REST with NO
@@ -59,7 +62,12 @@ function mapDealRow(d: any): Deal {
     tags: d.tags || [],
     status: d.status,
     expiryDate: d.expiryDate || d.expiry_date || '',
-    applicationUrl: d.applicationUrl || d.application_url || '',
+    applicationUrl: resolveDealApplicationUrl({
+      applicationUrl: d.applicationUrl || d.application_url,
+      providerWebsite: d.providerWebsite || d.provider_website,
+      provider: d.provider,
+      title: d.title,
+    }),
     providerWebsite: d.providerWebsite || d.provider_website || '',
     logoUrl: d.logoUrl || d.logo_url || '',
     featured: d.featured,
@@ -140,30 +148,74 @@ function loadLocalDealsSync(): Deal[] {
  * Server-side deal list for SSR HTML (crawler link equity) and optional
  * client hydration. Prefers Supabase when configured; falls back to JSON.
  */
-export async function fetchDealsListForSSR(limit = 500): Promise<Deal[]> {
+export async function fetchDealsListForSSR(limit = 5000): Promise<Deal[]> {
   const cfg = getSupabaseRestConfig()
+  const cap = Math.min(Math.max(limit, 1), 5000)
+  let rows: Deal[] = []
   if (cfg) {
     try {
-      const endpoint = `${cfg.url}/rest/v1/deals?select=*&limit=${Math.min(limit, 5000)}&order=updated_at.desc.nullslast`
+      // Match /api/deals list behavior: full commercial catalog, stable order
+      const endpoint = `${cfg.url}/rest/v1/deals?select=*&limit=${cap}&order=updated_at.desc.nullslast`
       const res = await fetch(endpoint, {
         headers: { apikey: cfg.key, Authorization: `Bearer ${cfg.key}` },
-        next: { revalidate: 300 },
+        // Shorter revalidate so SSR count stays close to live API catalog size
+        next: { revalidate: 60 },
       })
       if (res.ok) {
-        const rows = await res.json()
-        if (Array.isArray(rows) && rows.length > 0) {
-          return rows.map((d: any) => mapDealRow(d))
+        const data = await res.json()
+        if (Array.isArray(data) && data.length > 0) {
+          rows = data.map((d: any) => mapDealRow(d))
         }
       }
     } catch {
       // fall through to JSON
     }
   }
-  return loadLocalDealsSync().slice(0, limit)
+  if (rows.length === 0) {
+    rows = loadLocalDealsSync().slice(0, cap)
+  }
+  // Dedupe by slug then scope to commercial deals only
+  const bySlug = new Map<string, Deal>()
+  for (const d of rows) {
+    const key = (d.slug || d.id || '').toLowerCase()
+    if (!key) continue
+    if (!bySlug.has(key)) bySlug.set(key, d)
+  }
+  return applyCatalogScope(Array.from(bySlug.values()), 'deals').map(
+    (d) => applyPopularityFlags(d, { stripUnpaidFeatured: true }) as Deal
+  )
+}
+
+/** Program rows from Supabase (for /programs merge). Empty when DB not configured. */
+export async function fetchProgramsListForSSR(limit = 2000): Promise<Deal[]> {
+  const cfg = getSupabaseRestConfig()
+  if (!cfg) return []
+  try {
+    const endpoint = `${cfg.url}/rest/v1/deals?select=*&limit=${Math.min(limit, 5000)}`
+    const res = await fetch(endpoint, {
+      headers: { apikey: cfg.key, Authorization: `Bearer ${cfg.key}` },
+      next: { revalidate: 300 },
+    })
+    if (!res.ok) return []
+    const data = await res.json()
+    if (!Array.isArray(data)) return []
+    return applyCatalogScope(data.map((d: any) => mapDealRow(d)), 'programs')
+  } catch {
+    return []
+  }
 }
 
 export function filterDealsForCategory(deals: Deal[], category?: string): Deal[] {
   if (!category) return deals
+  // Program categories are not part of deals catalog
+  if (
+    category === 'startup-programs' ||
+    category === 'accelerators' ||
+    category === 'incubators' ||
+    category === 'grants'
+  ) {
+    return []
+  }
   const c = category.toLowerCase()
   return deals.filter((d) => {
     const cat = (d.category || '').toLowerCase()

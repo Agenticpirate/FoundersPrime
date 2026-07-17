@@ -3,6 +3,7 @@
 import { useSearchParams, useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { useAuth } from '@/lib/auth/hooks'
+import DodoPaymentsBadge from '@/components/ui/DodoPaymentsBadge'
 
 // Map old-style plan param names to the API's expected keys
 const PLAN_KEY_MAP: Record<string, string> = {
@@ -141,7 +142,9 @@ export default function CheckoutContent() {
           </div>
         )}
 
-        <p className="mt-6 text-xs text-gray-600 font-mono">Secured by Dodo Payments</p>
+        <div className="mt-6 flex justify-center">
+          <DodoPaymentsBadge forceDarkWordmark className="!bg-white/[0.04] !border-white/10" />
+        </div>
       </div>
     )
   }
@@ -197,7 +200,9 @@ export default function CheckoutContent() {
         </div>
       )}
 
-      <p className="mt-6 text-xs text-gray-600 font-mono">Secured by Dodo Payments</p>
+      <div className="mt-6 flex justify-center">
+        <DodoPaymentsBadge forceDarkWordmark className="!bg-white/[0.04] !border-white/10" />
+      </div>
     </div>
   )
 }

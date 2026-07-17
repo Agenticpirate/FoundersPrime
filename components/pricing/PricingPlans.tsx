@@ -4,24 +4,27 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { Currency } from '@/utils/currency'
 import { useAuth } from '@/lib/auth/hooks'
+import DodoPaymentsBadge from '@/components/ui/DodoPaymentsBadge'
 
 interface PricingPlansProps {
   currency: Currency
 }
+
+type PlanId = 'nextfounder' | 'founder' | 'legend'
 
 export default function PricingPlans({ currency }: PricingPlansProps) {
   const router = useRouter()
   const { user, loading: authLoading } = useAuth()
   const [loadingPlan, setLoadingPlan] = useState<string | null>(null)
 
-  const handleCheckout = async (plan: string) => {
+  const handleCheckout = async (plan: PlanId) => {
     if (authLoading) return
 
-    // Re-verify the session directly from the Supabase client to get the freshest client state
-    // before executing redirect logic.
     const { createClient } = await import('@/lib/supabase/client')
     const supabase = createClient()
-    const { data: { session } } = await supabase.auth.getSession()
+    const {
+      data: { session },
+    } = await supabase.auth.getSession()
     const currentUser = session?.user || user
 
     if (!currentUser) {
@@ -32,11 +35,9 @@ export default function PricingPlans({ currency }: PricingPlansProps) {
     setLoadingPlan(plan)
     try {
       const headers: Record<string, string> = {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       }
-      
-      // Explicitly pass the session access token (JWT) to secure the API call 
-      // without relying purely on automatic cookies which get dropped on cross-site flows
+
       if (session?.access_token) {
         headers['Authorization'] = `Bearer ${session.access_token}`
       }
@@ -63,254 +64,302 @@ export default function PricingPlans({ currency }: PricingPlansProps) {
       }
     } catch (err) {
       console.error('Payment fetch error:', err)
-      alert('Unable to reach payment server. This may be a network issue. Please try again or contact support@foundersprime.com')
+      alert(
+        'Unable to reach payment server. This may be a network issue. Please try again or contact support@foundersprime.com'
+      )
     } finally {
       setLoadingPlan(null)
     }
   }
 
+  void currency
 
   return (
-    <section className="relative py-8 px-4 max-w-7xl mx-auto">
-      {/* Three plans layout container */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 items-stretch pt-8">
-        
-        {/* ── Next Founder Card ── */}
-        <div className="group relative flex flex-col justify-between bg-white dark:bg-[#0b0c0e]/80 backdrop-blur-md border border-gray-200 dark:border-[#1b2028] hover:border-emerald-500/50 p-6 md:p-8 rounded-xl shadow-xl transition-all duration-300 hover:-translate-y-1">
-          <div>
-            {/* Header row */}
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 bg-emerald-500/10 border border-emerald-500/20 rounded-lg flex items-center justify-center text-emerald-400 group-hover:scale-110 transition-transform flex-shrink-0">
-                <span className="material-symbols-outlined !text-[22px]">school</span>
-              </div>
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center justify-between gap-2">
-                  <h3 className="font-mono text-xs font-black uppercase tracking-[0.1em] text-gray-900 dark:text-white">
-                    NEXT&apos; FOUNDER
-                  </h3>
-                  <span className="flex-shrink-0 border border-red-500 text-red-400 font-mono text-[9px] font-bold px-2 py-0.5 rounded-sm uppercase tracking-wider whitespace-nowrap">
-                    STUDENTS
-                  </span>
-                </div>
-              </div>
-            </div>
+    <section className="relative py-5 md:py-10 px-3.5 sm:px-6 max-w-6xl mx-auto overflow-visible" id="plans">
+      {/* Extra top padding so the Founder “Most popular” badge isn’t clipped */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-5 lg:gap-6 items-stretch pt-8 md:pt-10 overflow-visible">
+        {/* ── Next Founder ── (order-2 on mobile so Founder lands first) */}
+        <article className="group relative flex flex-col order-2 md:order-1 bg-white dark:bg-[#0a0a0a] border border-black/[0.06] dark:border-white/[0.08] hover:border-accent-yellow/40 rounded-2xl p-5 sm:p-6 md:p-7 transition-all duration-300 md:hover:-translate-y-1 shadow-[0_8px_30px_rgba(0,0,0,0.04)] dark:shadow-none overflow-hidden">
+          <div
+            aria-hidden
+            className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-accent-yellow/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"
+          />
 
-            {/* Headline and Subline */}
-            <h4 className="font-mono text-[16px] md:text-[17px] font-black text-gray-900 dark:text-white leading-[1.25] mb-1">
-              Built for students building their first startup.
-            </h4>
-            <p className="text-[12.5px] text-gray-600 dark:text-gray-400 leading-relaxed mb-4">
-              For active students, student indie hackers, and student founders who are just getting started — no revenue, no funding required.
-            </p>
-
-            {/* Price section */}
-            <div className="my-5">
-              <div className="flex items-baseline gap-1.5 flex-wrap">
-                <span className="font-mono text-[42px] font-black text-gray-900 dark:text-white leading-none">$12</span>
-                <span className="font-mono text-base text-gray-400 dark:text-gray-500 line-through font-bold">$59</span>
-                <span className="font-mono text-[10.5px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">/YR</span>
-                <span className="ml-1 px-1.5 py-0.5 bg-emerald-500/10 border border-emerald-500/25 rounded-sm font-mono text-[9px] font-bold text-emerald-500 uppercase tracking-wide">80% OFF</span>
+          <div className="flex items-start justify-between gap-3 mb-5">
+            <div className="flex items-center gap-3 min-w-0">
+              <div className="w-10 h-10 rounded-xl bg-accent-yellow/12 border border-accent-yellow/25 flex items-center justify-center text-amber-700 dark:text-accent-yellow shrink-0">
+                <span className="material-symbols-outlined !text-[20px]">school</span>
+              </div>
+              <div className="min-w-0">
+                <h3 className="font-mono text-[11px] font-black uppercase tracking-[0.14em] text-gray-900 dark:text-white">
+                  Next&apos;Founder
+                </h3>
+                <p className="text-[11px] text-gray-500 dark:text-gray-400 mt-0.5">Students &amp; first builders</p>
               </div>
             </div>
-
-            <div className="h-px border-t border-gray-200 dark:border-white/10 my-4" />
-
-            {/* Features list */}
-            <ul className="space-y-3 my-5 overflow-visible pl-0.5">
-              {[
-                "The world's largest student deals dashboard: 900+ verified discounts in one place",
-                'Premium AI, cloud & SaaS credits curated specifically for student builders',
-                'Student-exclusive hackathons, fellowships & early-stage grants',
-                'Dev tools & free tiers matched perfectly to pre-revenue projects',
-                'Opportunity Hub: Internships, co-founder matching, and student networks',
-              ].map((feat) => (
-                <li key={feat} className="flex items-start gap-2.5 text-[13px] text-gray-700 dark:text-gray-300">
-                  <span className="material-symbols-outlined !text-[16px] flex-shrink-0 text-gray-500 dark:text-gray-400 mt-0.5" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
-                  <span>{feat}</span>
-                </li>
-              ))}
-              <li className="flex items-start gap-2.5 text-[13px] text-accent-yellow font-bold">
-                <span className="material-symbols-outlined !text-[16px] flex-shrink-0 text-accent-yellow mt-0.5" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
-                <span>Made for students, indie hackers & first-time founders still figuring it out</span>
-              </li>
-            </ul>
-          </div>
-
-          <div>
-            {/* CTA */}
-            <button
-              onClick={() => handleCheckout('nextfounder')}
-              disabled={loadingPlan === 'nextfounder'}
-              className="w-full inline-flex items-center justify-center gap-2 py-3.5 px-4 font-mono font-black text-[12px] uppercase tracking-[0.1em] text-black dark:text-white border border-black dark:border-white hover:bg-black/5 dark:hover:bg-white/15 rounded-lg transition-all"
-            >
-              <span>{loadingPlan === 'nextfounder' ? 'REDIRECTING...' : 'START BUILDING'}</span>
-              <span className="material-symbols-outlined !text-[16px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
-            </button>
-            <p className="mt-3 text-center text-[10.5px] text-gray-500 dark:text-gray-400 font-mono">
-              ★ Active students only · Upgrade to Founder anytime as you grow
-            </p>
-          </div>
-        </div>
-
-        {/* ── Founder Card (Growth) — Highlighted ── */}
-        <div className="group relative flex flex-col justify-between bg-white dark:bg-[#0e0d0a]/95 backdrop-blur-md border-2 border-accent-yellow/45 p-6 md:p-8 rounded-xl shadow-[0_0_30px_rgba(255,213,0,0.05)] md:scale-[1.03] my-4 md:my-0 z-10 hover:border-accent-yellow transition-all duration-300">
-          {/* Most popular badge — fixed, nowrap, full width pill */}
-          <div className="absolute -top-4 left-0 right-0 flex justify-center z-20">
-            <span className="inline-flex items-center gap-1.5 bg-accent-yellow text-black font-mono text-[9px] font-black uppercase tracking-[0.12em] px-4 py-1.5 rounded-full border border-black shadow-[2px_2px_0px_#000] whitespace-nowrap">
-              ⭐ 8 in 10 founders choose this
+            <span className="shrink-0 rounded-full border border-red-500/30 bg-red-500/10 text-red-500 dark:text-red-400 font-mono text-[9px] font-bold px-2 py-0.5 uppercase tracking-wider">
+              Students
             </span>
           </div>
 
-          <div>
-            {/* Header row */}
-            <div className="flex items-center gap-3 mb-4 mt-3">
-              <div className="w-10 h-10 bg-accent-yellow/10 border border-accent-yellow/20 rounded-lg flex items-center justify-center text-accent-yellow group-hover:scale-110 transition-transform flex-shrink-0">
-                <span className="material-symbols-outlined !text-[22px]">rocket_launch</span>
-              </div>
-              <div className="flex-1">
-                <h3 className="font-mono text-xs font-black uppercase tracking-[0.1em] text-gray-900 dark:text-white">
-                  FOUNDER
-                </h3>
-              </div>
+          <h4 className="font-mono text-[15px] md:text-base font-bold text-gray-900 dark:text-white leading-snug mb-1.5">
+            Built for students shipping their first startup.
+          </h4>
+          <p className="text-[13px] text-gray-500 dark:text-gray-400 leading-relaxed mb-5">
+            Active students and indie builders — no revenue or funding required.
+          </p>
+
+          <div className="mb-5">
+            <div className="flex items-baseline gap-2 flex-wrap">
+              <span className="font-mono text-[40px] sm:text-[44px] font-black text-gray-900 dark:text-white leading-none tracking-tight">
+                $1
+              </span>
+              <span className="font-mono text-base text-gray-400 dark:text-gray-500 line-through font-bold">
+                $59
+              </span>
+              <span className="font-mono text-[11px] font-bold uppercase tracking-wider text-gray-500">
+                /yr
+              </span>
             </div>
-
-            {/* Headline and Subline */}
-            <h4 className="font-mono text-[16px] md:text-[17px] font-black text-gray-900 dark:text-white leading-[1.25] mb-1">
-              Everything you need to scale.
-            </h4>
-            <p className="text-[12.5px] text-gray-600 dark:text-gray-400 leading-relaxed mb-4">
-              Full catalog access while you ship and grow your startup.
-            </p>
-
-            {/* Price section */}
-            <div className="my-5 flex flex-col gap-2.5 items-start">
-              <div className="flex items-baseline gap-1.5 flex-wrap">
-                <span className="font-mono text-[42px] font-black text-gray-900 dark:text-white leading-none">$48</span>
-                <span className="font-mono text-base text-gray-400 dark:text-gray-500 line-through font-bold">$149</span>
-                <span className="font-mono text-[10.5px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">/YR</span>
-                <span className="ml-1 px-1.5 py-0.5 bg-accent-yellow/15 border border-accent-yellow/25 rounded-sm font-mono text-[9px] font-bold text-accent-yellow uppercase tracking-wide">68% OFF</span>
-              </div>
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-accent-yellow text-black font-mono text-[9.5px] font-black border border-black rounded-sm tracking-wide">
-                <span className="material-symbols-outlined !text-[12px] text-black">bolt</span>
-                Typical member saves $3,000+ in year 1
-              </div>
+            <div className="mt-2 inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-accent-yellow/15 border border-accent-yellow/30 font-mono text-[10px] font-black text-amber-800 dark:text-accent-yellow uppercase tracking-wide">
+              98% off · launch price
             </div>
-
-            <div className="h-px border-t border-gray-200 dark:border-white/10 my-4" />
-
-            {/* Features list */}
-            <ul className="space-y-3 my-5 overflow-visible pl-0.5">
-              <li className="flex items-start gap-2.5 text-[11px] font-bold font-mono uppercase tracking-wide text-gray-900 dark:text-white">
-                <span className="material-symbols-outlined !text-[16px] flex-shrink-0 text-gray-900 dark:text-white" style={{ fontVariationSettings: "'FILL' 1" }}>add_circle</span>
-                <span>EVERYTHING IN NEXT&apos;FOUNDER, PLUS:</span>
-              </li>
-              {[
-                'Cloud credit deals (AWS, GCP, Azure) to cut your infra burn',
-                'SaaS discount catalog (HubSpot, Stripe, Intercom & 100+ tools) to slash software costs',
-                'Unlimited deal claims across every category — no hidden limits',
-                'Funding & grant programs filtered to your stage and geography',
-                'Accelerators, fellowships, and operator programs in one place',
-                'Access to Founders Resources (including ideas database, existing startups, and more)',
-              ].map((feat) => (
-                <li key={feat} className="flex items-start gap-2.5 text-[13px] text-gray-700 dark:text-gray-300">
-                  <span className="material-symbols-outlined !text-[16px] flex-shrink-0 text-accent-yellow mt-0.5" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
-                  <span>{feat}</span>
-                </li>
-              ))}
-            </ul>
           </div>
 
-          <div>
-            {/* CTA */}
+          <ul className="space-y-2.5 mb-6 flex-1">
+            {[
+              '1,000+ student discounts in one dashboard',
+              'AI, cloud & SaaS credits for student builders',
+              'Hackathons, fellowships & early-stage grants',
+              'Dev tools matched to pre-revenue projects',
+              'Opportunity Hub: internships & networks',
+            ].map((feat) => (
+              <li
+                key={feat}
+                className="flex items-start gap-2.5 text-[12.5px] text-gray-600 dark:text-gray-300"
+              >
+                <span
+                  className="material-symbols-outlined !text-[15px] text-accent-yellow mt-0.5 shrink-0"
+                  style={{ fontVariationSettings: "'FILL' 1" }}
+                >
+                  check_circle
+                </span>
+                <span>{feat}</span>
+              </li>
+            ))}
+          </ul>
+
+          <div className="mt-auto">
             <button
+              type="button"
+              onClick={() => handleCheckout('nextfounder')}
+              disabled={loadingPlan === 'nextfounder'}
+              className="w-full inline-flex items-center justify-center gap-2 h-12 min-h-[48px] px-4 font-mono font-black text-[11px] uppercase tracking-[0.12em] text-gray-900 dark:text-white border border-gray-900 dark:border-white/80 active:bg-gray-900 active:text-white dark:active:bg-white dark:active:text-black md:hover:bg-gray-900 md:hover:text-white dark:md:hover:bg-white dark:md:hover:text-black rounded-xl transition-all disabled:opacity-60"
+            >
+              <span>{loadingPlan === 'nextfounder' ? 'Redirecting…' : 'Start at $1'}</span>
+              <span className="material-symbols-outlined !text-[16px]">arrow_forward</span>
+            </button>
+            <p className="mt-2.5 text-center text-[10px] text-gray-500 font-mono">
+              Students only · Upgrade to Founder anytime
+            </p>
+          </div>
+        </article>
+
+        {/* ── Founder (highlighted) — first on mobile ── */}
+        <article className="group relative flex flex-col order-1 md:order-2 bg-white dark:bg-[#0c0b08] border-2 border-accent-yellow/50 rounded-2xl p-5 sm:p-6 md:p-7 pt-8 transition-all duration-300 md:scale-[1.02] z-10 shadow-[0_12px_40px_rgba(255,213,0,0.08)] overflow-visible">
+          {/* Badge sits above the card edge — parent uses overflow-visible + top padding */}
+          <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 z-30 pointer-events-none">
+            <span className="inline-flex items-center gap-1.5 whitespace-nowrap bg-accent-yellow text-black font-mono text-[9px] font-black uppercase tracking-[0.12em] px-3.5 py-1.5 rounded-full shadow-[2px_2px_0_#000] border border-black/10">
+              Most popular
+            </span>
+          </div>
+
+          <div className="flex items-center gap-3 mb-5">
+            <div className="w-10 h-10 rounded-xl bg-accent-yellow/15 border border-accent-yellow/30 flex items-center justify-center text-amber-800 dark:text-accent-yellow shrink-0">
+              <span className="material-symbols-outlined !text-[20px]">rocket_launch</span>
+            </div>
+            <div>
+              <h3 className="font-mono text-[11px] font-black uppercase tracking-[0.14em] text-gray-900 dark:text-white">
+                Founder
+              </h3>
+              <p className="text-[11px] text-gray-500 dark:text-gray-400 mt-0.5">Full catalog access</p>
+            </div>
+          </div>
+
+          <h4 className="font-mono text-[15px] md:text-base font-bold text-gray-900 dark:text-white leading-snug mb-1.5">
+            Everything you need to scale.
+          </h4>
+          <p className="text-[13px] text-gray-500 dark:text-gray-400 leading-relaxed mb-5">
+            Full catalog while you ship and grow — cloud, SaaS, grants, and more.
+          </p>
+
+          <div className="mb-5">
+            <div className="flex items-baseline gap-2 flex-wrap">
+              <span className="font-mono text-[40px] sm:text-[44px] font-black text-gray-900 dark:text-white leading-none tracking-tight">
+                $48
+              </span>
+              <span className="font-mono text-base text-gray-400 dark:text-gray-500 line-through font-bold">
+                $149
+              </span>
+              <span className="font-mono text-[11px] font-bold uppercase tracking-wider text-gray-500">
+                /yr
+              </span>
+            </div>
+            <div className="mt-2 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-accent-yellow text-black font-mono text-[10px] font-black tracking-wide">
+              <span className="material-symbols-outlined !text-[12px]">bolt</span>
+              Typical save $3,000+ in year 1
+            </div>
+          </div>
+
+          <ul className="space-y-2.5 mb-6 flex-1">
+            <li className="flex items-start gap-2 text-[11px] font-mono font-bold uppercase tracking-wide text-gray-900 dark:text-white">
+              <span className="material-symbols-outlined !text-[15px] shrink-0">add_circle</span>
+              Everything in Next&apos;Founder, plus
+            </li>
+            {[
+              'Cloud credits (AWS, GCP, Azure)',
+              'SaaS catalog: HubSpot, Stripe, Intercom & 100+',
+              'Unlimited claims across every category',
+              'Funding & grants by stage and geography',
+              'Accelerators, fellowships & programs',
+              'Founder Vault resources & ideas hub',
+            ].map((feat) => (
+              <li
+                key={feat}
+                className="flex items-start gap-2.5 text-[12.5px] text-gray-600 dark:text-gray-300"
+              >
+                <span
+                  className="material-symbols-outlined !text-[15px] text-accent-yellow mt-0.5 shrink-0"
+                  style={{ fontVariationSettings: "'FILL' 1" }}
+                >
+                  check_circle
+                </span>
+                <span>{feat}</span>
+              </li>
+            ))}
+          </ul>
+
+          <div className="mt-auto">
+            <button
+              type="button"
               onClick={() => handleCheckout('founder')}
               disabled={loadingPlan === 'founder'}
-              className="w-full inline-flex items-center justify-center gap-2 py-3.5 px-4 bg-accent-yellow hover:bg-yellow-400 text-black font-mono font-black text-[12px] uppercase tracking-[0.1em] rounded-lg transition-all shadow-[0_4px_12px_rgba(255,213,0,0.15)]"
+              className="w-full inline-flex items-center justify-center gap-2 h-12 min-h-[48px] px-4 bg-accent-yellow active:bg-yellow-300 md:hover:bg-yellow-300 text-black font-mono font-black text-[11px] uppercase tracking-[0.12em] rounded-xl transition-all shadow-[0_4px_16px_rgba(255,213,0,0.2)] disabled:opacity-60"
             >
-              <span>{loadingPlan === 'founder' ? 'REDIRECTING...' : 'BUILD AS A FOUNDER'}</span>
-              <span className="material-symbols-outlined !text-[16px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
+              <span>{loadingPlan === 'founder' ? 'Redirecting…' : 'Build as a Founder'}</span>
+              <span className="material-symbols-outlined !text-[16px]">arrow_forward</span>
             </button>
-            <p className="mt-3 text-center text-[10.5px] text-gray-500 dark:text-gray-400 font-mono">
-              ★ Instant access • Secure checkout • Cancel anytime on annual plans
+            <p className="mt-2.5 text-center text-[10px] text-gray-500 font-mono">
+              Instant access · Cancel anytime
             </p>
           </div>
-        </div>
+        </article>
 
-        {/* ── Legend Card (Lifetime) ── */}
-        <div className="group relative flex flex-col justify-between bg-white dark:bg-[#0c0a0f]/80 backdrop-blur-md border border-gray-200 dark:border-purple-500/20 hover:border-purple-500/50 p-6 md:p-8 rounded-xl shadow-xl transition-all duration-300 hover:-translate-y-1">
-          <div>
-            {/* Header row */}
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 bg-purple-500/10 border border-purple-500/20 rounded-lg flex items-center justify-center text-purple-400 group-hover:scale-110 transition-transform flex-shrink-0">
-                <span className="material-symbols-outlined !text-[22px]">workspace_premium</span>
+        {/* ── Legend ── */}
+        <article className="group relative flex flex-col order-3 bg-white dark:bg-[#0a0a0a] border border-black/[0.06] dark:border-white/[0.08] hover:border-purple-400/40 rounded-2xl p-5 sm:p-6 md:p-7 transition-all duration-300 md:hover:-translate-y-1 shadow-[0_8px_30px_rgba(0,0,0,0.04)] dark:shadow-none overflow-hidden">
+          <div
+            aria-hidden
+            className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-purple-400/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"
+          />
+
+          <div className="flex items-start justify-between gap-3 mb-5">
+            <div className="flex items-center gap-3 min-w-0">
+              <div className="w-10 h-10 rounded-xl bg-purple-500/12 border border-purple-500/25 flex items-center justify-center text-purple-600 dark:text-purple-400 shrink-0">
+                <span className="material-symbols-outlined !text-[20px]">workspace_premium</span>
               </div>
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center justify-between gap-2">
-                  <h3 className="font-mono text-xs font-black uppercase tracking-[0.1em] text-gray-900 dark:text-white">
-                    LEGEND
-                  </h3>
-                  <span className="flex-shrink-0 bg-[#ffd500]/15 border border-[#ffd500]/30 text-accent-yellow font-mono text-[9px] font-bold px-2 py-0.5 rounded-sm uppercase tracking-wider whitespace-nowrap">
-                    LIFETIME
-                  </span>
-                </div>
-              </div>
-            </div>
-
-            {/* Headline and Subline */}
-            <h4 className="font-mono text-[16px] md:text-[17px] font-black text-gray-900 dark:text-white leading-[1.25] mb-1">
-              Pay once. Keep access for life.
-            </h4>
-            <p className="text-[12.5px] text-gray-600 dark:text-gray-400 leading-relaxed mb-4">
-              For founders building over the long haul.
-            </p>
-
-            {/* Price section */}
-            <div className="my-5 flex flex-col gap-2.5 items-start">
-              <div className="flex items-baseline gap-1.5 flex-wrap">
-                <span className="font-mono text-[42px] font-black text-gray-900 dark:text-white leading-none">$99</span>
-                <span className="font-mono text-base text-gray-400 dark:text-gray-500 line-through font-bold">$299</span>
-                <span className="font-mono text-[10.5px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">/ONCE</span>
-                <span className="ml-1 px-1.5 py-0.5 bg-purple-500/20 border border-purple-500/25 rounded-sm font-mono text-[9px] font-bold text-purple-400 uppercase tracking-wide">67% OFF</span>
+              <div className="min-w-0">
+                <h3 className="font-mono text-[11px] font-black uppercase tracking-[0.14em] text-gray-900 dark:text-white">
+                  Legend
+                </h3>
+                <p className="text-[11px] text-gray-500 dark:text-gray-400 mt-0.5">Lifetime access</p>
               </div>
             </div>
+            <span className="shrink-0 rounded-full border border-accent-yellow/30 bg-accent-yellow/10 text-amber-800 dark:text-accent-yellow font-mono text-[9px] font-bold px-2 py-0.5 uppercase tracking-wider">
+              Lifetime
+            </span>
+          </div>
 
-            <div className="h-px border-t border-gray-200 dark:border-white/10 my-4" />
+          <h4 className="font-mono text-[15px] md:text-base font-bold text-gray-900 dark:text-white leading-snug mb-1.5">
+            Pay once. Keep access for life.
+          </h4>
+          <p className="text-[13px] text-gray-500 dark:text-gray-400 leading-relaxed mb-5">
+            For founders building over the long haul — no renewals ever.
+          </p>
 
-            {/* Features list */}
-            <ul className="space-y-3 my-5 overflow-visible pl-0.5">
-              <li className="flex items-start gap-2.5 text-[11px] font-bold font-mono uppercase tracking-wide text-gray-900 dark:text-white">
-                <span className="material-symbols-outlined !text-[16px] flex-shrink-0 text-gray-900 dark:text-white" style={{ fontVariationSettings: "'FILL' 1" }}>add_circle</span>
-                <span>EVERYTHING IN FOUNDER – FOR LIFE</span>
+          <div className="mb-5">
+            <div className="flex items-baseline gap-2 flex-wrap">
+              <span className="font-mono text-[40px] sm:text-[44px] font-black text-gray-900 dark:text-white leading-none tracking-tight">
+                $99
+              </span>
+              <span className="font-mono text-base text-gray-400 dark:text-gray-500 line-through font-bold">
+                $299
+              </span>
+              <span className="font-mono text-[11px] font-bold uppercase tracking-wider text-gray-500">
+                once
+              </span>
+            </div>
+            <div className="mt-2 inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-purple-500/12 border border-purple-500/25 font-mono text-[10px] font-black text-purple-600 dark:text-purple-400 uppercase tracking-wide">
+              67% off
+            </div>
+          </div>
+
+          <ul className="space-y-2.5 mb-6 flex-1">
+            <li className="flex items-start gap-2 text-[11px] font-mono font-bold uppercase tracking-wide text-gray-900 dark:text-white">
+              <span className="material-symbols-outlined !text-[15px] shrink-0">add_circle</span>
+              Everything in Founder — for life
+            </li>
+            {[
+              'Locked-in lifetime access, no renewals',
+              'Every future deal & catalog update included',
+              'Lifetime Founder Vault, grants & programs',
+              'Launch pricing — may rise or close later',
+            ].map((feat) => (
+              <li
+                key={feat}
+                className="flex items-start gap-2.5 text-[12.5px] text-gray-600 dark:text-gray-300"
+              >
+                <span
+                  className="material-symbols-outlined !text-[15px] text-purple-500 dark:text-purple-400 mt-0.5 shrink-0"
+                  style={{ fontVariationSettings: "'FILL' 1" }}
+                >
+                  check_circle
+                </span>
+                <span>{feat}</span>
               </li>
-              {[
-                'Everything in Founder — locked in for life, no renewals ever',
-                'Every future deal, credit, and catalog update included',
-                'Lifetime access to Founders Resources, Accelerators, Grants, and Programs',
-                'Launch-locked pricing: rate increases or closes later',
-              ].map((feat) => (
-                <li key={feat} className="flex items-start gap-2.5 text-[13px] text-gray-700 dark:text-gray-300">
-                  <span className="material-symbols-outlined !text-[16px] flex-shrink-0 text-amber-500 mt-0.5" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
-                  <span>{feat}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
+            ))}
+          </ul>
 
-          <div>
-            {/* CTA */}
+          <div className="mt-auto">
             <button
+              type="button"
               onClick={() => handleCheckout('legend')}
               disabled={loadingPlan === 'legend'}
-              className="w-full inline-flex items-center justify-center gap-2 py-3.5 px-4 bg-black dark:bg-black border border-black dark:border-white hover:bg-zinc-900 dark:hover:bg-white/10 text-white font-mono font-black text-[12px] uppercase tracking-[0.1em] rounded-lg transition-all"
+              className="w-full inline-flex items-center justify-center gap-2 h-12 min-h-[48px] px-4 bg-gray-900 dark:bg-white text-white dark:text-black active:opacity-90 md:hover:bg-black dark:md:hover:bg-gray-100 font-mono font-black text-[11px] uppercase tracking-[0.12em] rounded-xl transition-all disabled:opacity-60"
             >
-              <span>{loadingPlan === 'legend' ? 'REDIRECTING...' : 'LOCK IN LEGEND ACCESS'}</span>
-              <span className="material-symbols-outlined !text-[16px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
+              <span>{loadingPlan === 'legend' ? 'Redirecting…' : 'Lock in Legend'}</span>
+              <span className="material-symbols-outlined !text-[16px]">arrow_forward</span>
             </button>
-            <p className="mt-3 text-center text-[10.5px] text-gray-500 dark:text-gray-400 font-mono">
-              ★ One-time payment • Lifetime updates
+            <p className="mt-2.5 text-center text-[10px] text-gray-500 font-mono">
+              One-time payment · Lifetime updates
             </p>
           </div>
+        </article>
+      </div>
+
+      {/* Trust + payments processor */}
+      <div className="mt-8 md:mt-10 flex flex-col items-center gap-4">
+        <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-[11px] font-mono text-gray-500 dark:text-gray-500">
+          {['Secure checkout', 'Instant access', 'Cancel annual anytime'].map((t) => (
+            <span key={t} className="inline-flex items-center gap-1.5">
+              <span className="material-symbols-outlined !text-[14px] text-accent-yellow">
+                verified
+              </span>
+              {t}
+            </span>
+          ))}
         </div>
+
+        <DodoPaymentsBadge />
       </div>
     </section>
   )

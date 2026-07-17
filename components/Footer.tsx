@@ -2,77 +2,366 @@
 
 import Link from 'next/link'
 import Image from 'next/image'
+import { usePathname } from 'next/navigation'
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  type CSSProperties,
+  type MouseEvent,
+} from 'react'
+import {
+  motion,
+  useMotionTemplate,
+  useMotionValue,
+  useReducedMotion,
+  useSpring,
+} from 'framer-motion'
 import GoogleTranslate from './GoogleTranslate'
+import { premiumEase } from '@/components/ui/premium-motion'
+
+function footerLinkActive(pathname: string, search: string, href: string): boolean {
+  if (!href || href === '#') return false
+  try {
+    const url = new URL(href, 'http://local')
+    if (url.pathname !== pathname) return false
+    if (!url.search) return !search || search === '?'
+    const have = new URLSearchParams(search.startsWith('?') ? search.slice(1) : search)
+    for (const [k, v] of url.searchParams.entries()) {
+      if (have.get(k) !== v) return false
+    }
+    return true
+  } catch {
+    return pathname === href
+  }
+}
+
+const BRAND = 'FoundersPrime'
+
+/**
+ * Bright $ pour through the wordmark — full-stage fall via `top` (not transform %).
+ * Deterministic so SSR/client match.
+ */
+const DOLLAR_DROPS = Array.from({ length: 70 }, (_, i) => {
+  const left = 2 + ((i * 37.1) % 96)
+  const depth = i % 5
+  const sizeRem =
+    depth === 0
+      ? 1.1 + (i % 4) * 0.2
+      : depth === 1
+        ? 0.9 + (i % 3) * 0.15
+        : depth === 2
+          ? 0.72 + (i % 3) * 0.12
+          : 0.55 + (i % 4) * 0.1
+  const duration = 4.2 + (i % 8) * 0.65 + depth * 0.25
+  const delay = (i * 0.31) % 6.8
+  const opacity =
+    depth === 0
+      ? 0.78 + (i % 3) * 0.05
+      : depth === 1
+        ? 0.6 + (i % 3) * 0.05
+        : depth === 2
+          ? 0.42 + (i % 2) * 0.06
+          : 0.28 + (i % 3) * 0.04
+  const drift = ((i * 17) % 56) - 28
+  const rotStart = ((i * 23) % 36) - 18
+  const rotEnd = rotStart + (((i * 9) % 28) - 10)
+  const blur = depth >= 3 ? 0.8 + (i % 2) * 0.3 : 0
+  // Stagger spawn above stage; end below tagline so path crosses brand
+  const from = -14 - (i % 6) * 5
+  const to = 102 + (i % 5) * 4
+  const staticY = 28 + ((i * 19) % 45)
+  // More front drops so $ visibly land on the letters
+  const front = depth <= 1 && i % 2 === 0
+  return {
+    id: i,
+    left: `${left.toFixed(2)}%`,
+    sizeRem,
+    duration,
+    delay,
+    opacity: Math.min(0.9, opacity),
+    drift,
+    rotStart,
+    rotEnd,
+    blur,
+    from,
+    to,
+    staticY,
+    far: depth >= 3,
+    front,
+  }
+})
+
+function DollarRain({ layer }: { layer: 'back' | 'front' }) {
+  const drops = DOLLAR_DROPS.filter((d) => (layer === 'front' ? d.front : !d.front))
+  return (
+    <div className={`footer-dollar-rain footer-dollar-rain--${layer}`} aria-hidden>
+      {drops.map((d) => (
+        <span
+          key={d.id}
+          className={`footer-dollar${d.far ? ' footer-dollar--far' : ''}${d.front ? ' footer-dollar--front' : ''}`}
+          style={
+            {
+              left: d.left,
+              fontSize: `clamp(0.6rem, ${d.sizeRem * 0.5}rem + 0.65vw, ${d.sizeRem}rem)`,
+              animationDuration: `${d.duration}s`,
+              animationDelay: `${d.delay}s`,
+              filter: d.blur ? `blur(${d.blur}px)` : undefined,
+              '--dollar-opacity': String(d.opacity),
+              '--dollar-drift': `${d.drift}px`,
+              '--dollar-rot-start': `${d.rotStart}deg`,
+              '--dollar-rot-end': `${d.rotEnd}deg`,
+              '--dollar-static-y': `${d.staticY}%`,
+              '--dollar-from': `${d.from}%`,
+              '--dollar-to': `${d.to}%`,
+            } as CSSProperties
+          }
+        >
+          $
+        </span>
+      ))}
+    </div>
+  )
+}
+
+function BrandWordmark() {
+  const reduce = useReducedMotion()
+  const containerRef = useRef<HTMLDivElement>(null)
+  const [hovered, setHovered] = useState<number | null>(null)
+
+  const mouseX = useMotionValue(50)
+  const mouseY = useMotionValue(50)
+  const springX = useSpring(mouseX, { stiffness: 70, damping: 22 })
+  const springY = useSpring(mouseY, { stiffness: 70, damping: 22 })
+  const glow = useMotionTemplate`radial-gradient(640px circle at ${springX}% ${springY}%, rgba(255,215,0,0.12), transparent 60%)`
+
+  const onMove = useCallback(
+    (e: MouseEvent<HTMLDivElement>) => {
+      if (reduce || !containerRef.current) return
+      const rect = containerRef.current.getBoundingClientRect()
+      mouseX.set(((e.clientX - rect.left) / rect.width) * 100)
+      mouseY.set(((e.clientY - rect.top) / rect.height) * 100)
+    },
+    [mouseX, mouseY, reduce]
+  )
+
+  return (
+    <div
+      ref={containerRef}
+      onMouseMove={onMove}
+      onMouseLeave={() => {
+        setHovered(null)
+        mouseX.set(50)
+        mouseY.set(50)
+      }}
+      className="relative select-none w-full py-10 sm:py-14 md:py-20 lg:py-24"
+      aria-label="FoundersPrime"
+    >
+      {/* Open transparent stage — soft glow only, no boxed panel */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>
+        <div className="absolute left-1/2 top-1/2 h-[min(70vw,420px)] w-[min(140vw,1100px)] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(255,215,0,0.11)_0%,rgba(255,215,0,0.04)_40%,transparent_72%)]" />
+        {!reduce && (
+          <motion.div className="absolute inset-0" style={{ background: glow }} />
+        )}
+        {!reduce && <DollarRain layer="back" />}
+      </div>
+
+      {/* Front $ fall ON TOP of the brand letters */}
+      {!reduce && (
+        <div className="pointer-events-none absolute inset-0 z-[3]" aria-hidden>
+          <DollarRain layer="front" />
+        </div>
+      )}
+
+      <div className="relative z-[1] flex flex-col items-center gap-5 md:gap-6 px-4">
+        <p className="font-mono text-[10px] md:text-[11px] font-bold tracking-[0.38em] uppercase text-zinc-500">
+          Built for the underdogs
+        </p>
+
+        <Link
+          href="/"
+          className="group relative z-[1] no-underline outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-8 focus-visible:outline-accent-yellow/40"
+          aria-label="FoundersPrime home"
+        >
+          <h2
+            className="relative flex flex-wrap justify-center items-baseline font-mono font-black leading-none tracking-[-0.04em] md:tracking-[-0.05em]"
+            style={{ fontSize: 'clamp(2.75rem, 12vw, 8.75rem)' }}
+          >
+            {BRAND.split('').map((char, i) => {
+              const isPrime = i >= 8
+              const isHover = hovered === i
+              const near = hovered !== null && Math.abs(hovered - i) === 1
+              const lift = reduce ? 0 : isHover ? -10 : near ? -4 : 0
+              const scale = reduce ? 1 : isHover ? 1.06 : 1
+
+              return (
+                <motion.span
+                  key={`${char}-${i}`}
+                  className="relative inline-block will-change-transform"
+                  onMouseEnter={() => setHovered(i)}
+                  onMouseLeave={() => setHovered(null)}
+                  initial={reduce ? false : { opacity: 0, y: 28 }}
+                  whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.4 }}
+                  transition={{
+                    duration: 0.55,
+                    delay: reduce ? 0 : i * 0.028,
+                    ease: premiumEase,
+                  }}
+                >
+                  <span
+                    className={`inline-block transition-[transform,color,text-shadow] duration-200 ease-out ${
+                      isPrime
+                        ? isHover
+                          ? 'text-yellow-200'
+                          : 'text-accent-yellow'
+                        : isHover
+                          ? 'text-white'
+                          : 'text-white'
+                    }`}
+                    style={{
+                      transform: `translateY(${lift}px) scale(${scale})`,
+                      textShadow: isHover
+                        ? isPrime
+                          ? '0 0 36px rgba(255,215,0,0.55), 0 0 72px rgba(255,215,0,0.2)'
+                          : '0 0 28px rgba(255,255,255,0.28)'
+                        : isPrime
+                          ? '0 0 40px rgba(255,215,0,0.22), 0 0 80px rgba(255,215,0,0.08)'
+                          : '0 2px 24px rgba(0,0,0,0.35)',
+                    }}
+                  >
+                    {char}
+                  </span>
+                </motion.span>
+              )
+            })}
+          </h2>
+
+          {!reduce && (
+            <span className="footer-brand-sheen" aria-hidden>
+              {BRAND}
+            </span>
+          )}
+        </Link>
+
+        <p className="font-sans text-xs md:text-sm text-zinc-500 tracking-wide text-center max-w-md">
+          The intelligence terminal for bootstrapped founders.
+        </p>
+      </div>
+    </div>
+  )
+}
 
 export default function Footer() {
+  const pathname = usePathname() || '/'
+  const [search, setSearch] = useState('')
+  const [pressedHref, setPressedHref] = useState<string | null>(null)
+
+  useEffect(() => {
+    const sync = () => setSearch(typeof window !== 'undefined' ? window.location.search : '')
+    sync()
+    window.addEventListener('popstate', sync)
+    return () => window.removeEventListener('popstate', sync)
+  }, [pathname])
+
+  const markPress = (href: string) => {
+    setPressedHref(href)
+    window.setTimeout(() => setPressedHref((h) => (h === href ? null : h)), 320)
+  }
+
+  const footerLinkClass = (href: string, highlight?: boolean) => {
+    const active = footerLinkActive(pathname, search, href)
+    const pressed = pressedHref === href
+    if (highlight) {
+      return [
+        'font-sans text-[13px] no-underline inline-flex items-center gap-1 transition-all duration-150',
+        'text-accent-yellow font-bold hover:text-yellow-300',
+        'active:scale-[0.97] active:text-yellow-200',
+        pressed ? 'text-yellow-200 underline decoration-accent-yellow/60 underline-offset-4' : '',
+        active ? 'underline decoration-accent-yellow underline-offset-4' : '',
+      ]
+        .filter(Boolean)
+        .join(' ')
+    }
+    return [
+      'font-sans text-[13px] no-underline inline-flex items-center gap-1 transition-all duration-150',
+      'text-zinc-400 hover:text-white',
+      'active:scale-[0.97] active:text-accent-yellow',
+      pressed ? 'text-accent-yellow' : '',
+      active ? 'text-white font-semibold' : '',
+    ]
+      .filter(Boolean)
+      .join(' ')
+  }
+
   const footerSections = [
     {
-      title: "Deals",
-      summary: "Startup credits, SaaS deals & more",
-      icon: "local_offer",
+      title: 'Deals',
+      summary: 'Startup credits, SaaS deals & more',
+      icon: 'local_offer',
       links: [
-        { text: "All Deals", href: "/deals" },
-        { text: "Flash Deals", href: "/flash-deals", highlight: true },
-        { text: "Cloud Credits", href: "/deals?category=cloud-credits" },
-        { text: "SaaS Discounts", href: "/deals?category=saas-discounts" },
-        { text: "Grants", href: "/programs?type=grants" },
-        { text: "Ad Credits", href: "/deals?category=ad-credits" },
-      ]
+        { text: 'All deals', href: '/deals' },
+        { text: 'Flash Deals', href: '/flash-deals', highlight: true },
+        { text: 'Cloud Credits', href: '/deals?category=cloud-credits' },
+        { text: 'SaaS & Tools', href: '/deals?category=saas-discounts' },
+        { text: 'Grants', href: '/programs?type=grants' },
+        { text: 'Ad Credits', href: '/deals?category=ad-credits' },
+      ],
     },
     {
-      title: "Programs",
-      summary: "Grants, incentives & founder perks",
-      icon: "redeem",
+      title: 'Programs',
+      summary: 'Grants, incentives & founder perks',
+      icon: 'redeem',
       links: [
-        { text: "All Programs", href: "/programs" },
-        { text: "Accelerators", href: "/programs?type=accelerators" },
-        { text: "Incubators", href: "/programs?type=incubators" },
-        { text: "Grants", href: "/programs?type=grants" },
-      ]
+        { text: 'All Programs', href: '/programs' },
+        { text: 'Accelerators', href: '/programs?type=accelerators' },
+        { text: 'Incubators', href: '/programs?type=incubators' },
+        { text: 'Grants', href: '/programs?type=grants' },
+      ],
     },
     {
-      title: "Student Benefits",
-      summary: "Exclusive benefits for students",
-      icon: "school",
+      title: 'Student Benefits',
+      summary: 'Exclusive benefits for students',
+      icon: 'school',
       links: [
-        { text: "Credits & Savings", href: "/student-benefits?type=credits-savings" },
-        { text: "Campus Edge", href: "/student-benefits?type=free-access" },
-        { text: "Funding & Opps", href: "/student-benefits?type=funding" },
-      ]
+        { text: 'Credits & Savings', href: '/student-benefits?type=credits-savings' },
+        { text: 'Campus Edge', href: '/student-benefits?type=free-access' },
+        { text: 'Funding & Opps', href: '/student-benefits?type=funding' },
+      ],
     },
     {
-      title: "Discover",
-      summary: "Explore resources & opportunities",
-      icon: "explore",
+      title: 'Discover',
+      summary: 'Explore resources & opportunities',
+      icon: 'explore',
       links: [
-        { text: "Funded Startups", href: "/startups" },
-        { text: "Startup Ideas", href: "/ideas" },
-        { text: "Resources & Guides", href: "/resources" },
-        { text: "Search", href: "/search" },
-      ]
+        { text: 'Startup Ideas', href: '/ideas' },
+        { text: 'Founder Vault', href: '/resources' },
+        { text: 'Search', href: '/search' },
+      ],
     },
     {
-      title: "Company",
-      summary: "About us, careers & press",
-      icon: "domain",
+      title: 'Company',
+      summary: 'About us, careers & press',
+      icon: 'domain',
       links: [
-        { text: "About", href: "/about" },
-        { text: "Pricing", href: "/pricing" },
-        { text: "Contact", href: "/contact" },
-        { text: "Submit a Deal", href: "/submit-deal" },
-      ]
+        { text: 'About', href: '/about' },
+        { text: 'Pricing', href: '/pricing' },
+        { text: 'Contact', href: '/contact' },
+        { text: 'Submit a Deal', href: '/submit-deal' },
+      ],
     },
     {
-      title: "Legal",
-      summary: "Terms, privacy & policies",
-      icon: "gavel",
+      title: 'Legal',
+      summary: 'Terms, privacy & policies',
+      icon: 'gavel',
       links: [
-        { text: "Privacy Policy", href: "/privacy" },
-        { text: "Terms of Service", href: "/terms" },
-        { text: "Cookie Policy", href: "/cookie-policy" },
-        { text: "Refund Policy", href: "/refund-policy" },
-      ]
-    }
+        { text: 'Privacy Policy', href: '/privacy' },
+        { text: 'Terms of Service', href: '/terms' },
+        { text: 'Cookie Policy', href: '/cookie-policy' },
+        { text: 'Refund Policy', href: '/refund-policy' },
+      ],
+    },
   ]
 
   const socials = [
@@ -123,15 +412,15 @@ export default function Footer() {
   ]
 
   return (
-    <footer className="relative bg-black text-white border-t-2 border-zinc-800 overflow-hidden grid-bg-dark transition-colors duration-300">
-      {/* Premium Glow blobs */}
+    <footer className="relative bg-black text-white border-t border-white/[0.08] overflow-hidden grid-bg-dark transition-colors duration-300">
+      {/* Ambient glow */}
       <div className="absolute -top-32 -left-32 w-[30rem] h-[30rem] bg-accent-yellow/[0.04] rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute -bottom-40 -right-32 w-[35rem] h-[35rem] bg-blue-500/[0.03] rounded-full blur-[140px] pointer-events-none" />
+      <div className="absolute top-1/2 -right-32 w-[28rem] h-[28rem] bg-accent-yellow/[0.03] rounded-full blur-[130px] pointer-events-none" />
+      <div className="absolute -bottom-40 left-1/3 w-[35rem] h-[35rem] bg-white/[0.02] rounded-full blur-[140px] pointer-events-none" />
 
       {/* ── Main grid ── */}
-      <div className="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 pt-12 md:pt-16 pb-10">
+      <div className="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 pt-12 md:pt-16 pb-6 md:pb-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14">
-          
           {/* Brand Column */}
           <div className="lg:col-span-4 flex flex-col gap-5 relative">
             <Link href="/" className="inline-flex items-center gap-2.5 no-underline w-fit group">
@@ -146,30 +435,43 @@ export default function Footer() {
                 FOUNDERS<span className="text-accent-yellow">[</span>PRIME<span className="text-accent-yellow">]</span>
               </span>
             </Link>
-            
+
             <p className="font-sans text-sm text-zinc-400 leading-relaxed pr-4">
               The intelligence terminal for bootstrapped founders. Save runway, skip the dilution, and scale your startup faster.
             </p>
 
             {/* Trust cards */}
             <div className="grid grid-cols-2 lg:grid-cols-1 gap-3 mt-1.5">
-              <div className="flex items-center gap-3.5 bg-zinc-900/30 border border-white/[0.06] rounded-xl p-3.5 hover:bg-zinc-900/50 transition-colors">
+              <div className="flex items-center gap-3.5 bg-zinc-900/30 border border-white/[0.06] rounded-xl p-3.5 hover:bg-zinc-900/50 hover:border-accent-yellow/20 transition-colors">
                 <span className="material-symbols-outlined text-accent-yellow !text-[20px]" style={{ fontVariationSettings: "'FILL' 1" }}>verified</span>
                 <div className="flex flex-col text-left">
                   <span className="font-mono text-[10px] font-black uppercase text-white tracking-wider leading-none">Verified Deals</span>
                   <span className="font-sans text-[9px] text-zinc-400 mt-1.5 leading-tight">Handpicked &amp; founder-verified</span>
                 </div>
               </div>
-              <div className="flex items-center gap-3.5 bg-zinc-900/30 border border-white/[0.06] rounded-xl p-3.5 hover:bg-zinc-900/50 transition-colors">
-                <span className="material-symbols-outlined text-green-400 !text-[20px]" style={{ fontVariationSettings: "'FILL' 1" }}>lock</span>
-                <div className="flex flex-col text-left">
-                  <span className="font-mono text-[10px] font-black uppercase text-white tracking-wider leading-none">Secure Checkout</span>
-                  <span className="font-sans text-[9px] text-zinc-400 mt-1.5 leading-tight">Your data is always protected</span>
+              <div className="flex items-center gap-3.5 bg-zinc-900/30 border border-white/[0.06] rounded-xl p-3.5 hover:bg-zinc-900/50 hover:border-accent-yellow/20 transition-colors">
+                <span className="relative flex h-8 w-8 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-[#C6FE1E]">
+                  <Image
+                    src="/logos/dodo-favicon.svg"
+                    alt=""
+                    width={28}
+                    height={28}
+                    className="h-7 w-7 object-contain"
+                    unoptimized
+                  />
+                </span>
+                <div className="flex flex-col text-left min-w-0">
+                  <span className="font-mono text-[10px] font-black uppercase text-white tracking-wider leading-none">
+                    Secure Checkout
+                  </span>
+                  <span className="font-sans text-[9px] text-zinc-400 mt-1.5 leading-tight">
+                    Powered by Dodo Payments
+                  </span>
                 </div>
               </div>
             </div>
 
-            {/* Socials Row */}
+            {/* Socials */}
             <div className="flex items-center gap-3 mt-2 w-full">
               {socials.map((s) => (
                 <a
@@ -186,7 +488,7 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Link Grid */}
+          {/* Link Grid — desktop */}
           <div className="lg:col-span-8 hidden md:grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-x-6 gap-y-10">
             {footerSections.map((section, index) => (
               <div key={index} className="flex flex-col gap-4">
@@ -198,13 +500,16 @@ export default function Footer() {
                     <li key={linkIndex}>
                       <Link
                         href={link.href}
-                        className={`font-sans text-[13px] no-underline transition-colors inline-block ${
-                          (link as { highlight?: boolean }).highlight
-                            ? 'text-accent-yellow font-bold hover:text-yellow-300'
-                            : 'text-zinc-400 hover:text-white'
-                        }`}
+                        onClick={() => markPress(link.href)}
+                        aria-current={footerLinkActive(pathname, search, link.href) ? 'page' : undefined}
+                        className={footerLinkClass(link.href, (link as { highlight?: boolean }).highlight)}
                       >
                         {link.text}
+                        {pressedHref === link.href && (
+                          <span className="material-symbols-outlined !text-[12px] text-accent-yellow animate-pulse" aria-hidden>
+                            arrow_forward
+                          </span>
+                        )}
                       </Link>
                     </li>
                   ))}
@@ -213,7 +518,7 @@ export default function Footer() {
             ))}
           </div>
 
-          {/* Mobile Accordion Links */}
+          {/* Mobile accordion */}
           <div className="md:hidden flex flex-col w-full border border-white/[0.08] rounded-2xl bg-zinc-900/10 overflow-hidden mt-4">
             {footerSections.map((section) => (
               <details key={section.title} className="group border-b border-white/[0.06] last:border-b-0">
@@ -236,26 +541,40 @@ export default function Footer() {
                   </span>
                 </summary>
                 <ul className="flex flex-col gap-1 px-4 pb-3.5 pt-1.5 list-none m-0 bg-zinc-950/40 border-t border-white/[0.03]">
-                  {section.links.map((link, linkIndex) => (
+                  {section.links.map((link, linkIndex) => {
+                    const active = footerLinkActive(pathname, search, link.href)
+                    const highlight = (link as { highlight?: boolean }).highlight
+                    return (
                     <li key={linkIndex}>
                       <Link
                         href={link.href}
-                        className={`block font-sans text-xs no-underline py-2 px-1 rounded-md active:bg-white/5 transition-colors ${
-                          (link as { highlight?: boolean }).highlight
-                            ? 'text-accent-yellow font-bold active:text-yellow-300'
-                            : 'text-zinc-400 active:text-white'
+                        onClick={() => markPress(link.href)}
+                        aria-current={active ? 'page' : undefined}
+                        className={`block font-sans text-xs no-underline py-2 px-2 rounded-md transition-all active:scale-[0.98] ${
+                          highlight
+                            ? `text-accent-yellow font-bold active:bg-accent-yellow/10 ${active || pressedHref === link.href ? 'bg-accent-yellow/10' : ''}`
+                            : `active:bg-white/10 ${
+                                active || pressedHref === link.href
+                                  ? 'text-white bg-white/5'
+                                  : 'text-zinc-400 active:text-white'
+                              }`
                         }`}
                       >
                         {link.text}
                       </Link>
                     </li>
-                  ))}
+                    )
+                  })}
                 </ul>
               </details>
             ))}
           </div>
-
         </div>
+      </div>
+
+      {/* ── Giant brand wordmark — full-bleed, no boxed container ── */}
+      <div className="relative w-full">
+        <BrandWordmark />
       </div>
 
       {/* ── Bottom bar ── */}
@@ -280,12 +599,13 @@ export default function Footer() {
               Status
             </a>
             <div className="inline-flex items-center gap-2 font-mono text-[10px] font-bold tracking-widest uppercase text-zinc-300 px-3 py-1.5 bg-zinc-900/40 border border-white/[0.08] rounded-lg">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              <span className="w-1.5 h-1.5 rounded-full bg-accent-yellow animate-pulse" />
               Operational
             </div>
           </div>
         </div>
       </div>
+
     </footer>
   )
 }

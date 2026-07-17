@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import { Reveal } from '@/components/ui/premium-motion'
 
 // Request a small, server-cropped thumbnail directly from the source CDN so we
 // never download multi-hundred-KB originals for a ~40px avatar.
@@ -196,10 +197,10 @@ function TestimonialCard({ t }: { t: Testimonial }) {
 
 export default function FounderLogs() {
   return (
-    <section className="py-7 md:py-10 bg-background-light dark:bg-[#000000] border-y-2 border-black dark:border-white/10 overflow-hidden transition-colors duration-300">
+    <section className="py-14 md:py-18 bg-background-light dark:bg-[#000000] border-y border-black/10 dark:border-white/10 overflow-hidden transition-colors duration-300">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Top: headline */}
-        <div className="mb-6 md:mb-8">
+        <Reveal className="mb-8 md:mb-10">
           <div>
             <span className="inline-flex items-center gap-1.5 bg-accent-yellow/20 text-black dark:text-accent-yellow font-mono text-[10px] font-black uppercase tracking-widest px-2.5 py-1 rounded-md mb-3 transition-colors duration-300">
               <span className="material-symbols-outlined text-[13px]">forum</span>
@@ -217,7 +218,7 @@ export default function FounderLogs() {
               that help them build faster and smarter.
             </p>
           </div>
-        </div>
+        </Reveal>
 
         {/* Testimonial scroller */}
         <div className="relative w-full overflow-hidden pb-4 -mx-4 px-4 sm:mx-0 sm:px-0">

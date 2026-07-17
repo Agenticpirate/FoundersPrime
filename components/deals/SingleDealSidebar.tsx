@@ -62,7 +62,7 @@ export default function SingleDealSidebar({ deal }: SingleDealSidebarProps) {
           <div className="h-px bg-gray-200"></div>
           <div className="flex justify-between text-sm">
             <span className="text-gray-600">Deadline</span>
-            <span className="font-bold text-green-600">Rolling Basis</span>
+            <span className="font-bold text-amber-700">Rolling Basis</span>
           </div>
         </div>
         <button className="w-full rounded-sm border-3 border-black bg-primary py-3 font-mono text-base font-bold uppercase tracking-wide text-black shadow-[6px_6px_0px_#111111] hover:bg-primary-dark hover:shadow-[4px_4px_0px_#111111] hover:translate-x-[2px] hover:translate-y-[2px] transition-all mb-3 flex items-center justify-center gap-2">

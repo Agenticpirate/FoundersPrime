@@ -8,7 +8,8 @@ import Footer from '@/components/Footer'
 
 export const metadata: Metadata = {
   title: 'Contact Us',
-  description: 'Get in touch with the FoundersPrime team. Questions about deals, partnerships, or your account — we respond within 24 hours.',
+  description:
+    'Contact the FoundersPrime team — deals, billing, partnerships, and support. Replies within 24–48 hours.',
   alternates: {
     canonical: 'https://www.foundersprime.com/contact',
   },
@@ -18,14 +19,14 @@ export default function ContactPage() {
   return (
     <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden bg-gray-50 dark:bg-[#000000] text-[#1a1a1a] dark:text-white transition-colors duration-300">
       <Header />
-      <main className="flex-1 pattern-grid-lg pt-24 md:pt-28 pb-12">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+      <main className="flex-1">
+        <div className="max-w-[1600px] mx-auto px-4 lg:px-6 py-5 lg:py-7">
           <ContactHero />
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-            <div className="lg:col-span-2">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-6 mb-8">
+            <div className="lg:col-span-8 min-w-0">
               <ContactForm />
             </div>
-            <div className="lg:col-span-1">
+            <div className="lg:col-span-4 min-w-0">
               <ContactInfo />
             </div>
           </div>

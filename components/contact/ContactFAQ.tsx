@@ -1,133 +1,192 @@
 'use client'
 
 import { useState } from 'react'
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
+import { premiumEase } from '@/components/ui/premium-motion'
+
+const FAQS = [
+  {
+    q: "Who's eligible for these deals?",
+    a: "Eligibility is set by each provider, not by us. Most cloud, SaaS, and credit programs target early-stage startups (roughly pre-seed to Series A) that haven't used the provider before — some also ask for a company email, a live website, or incorporation. Open any deal to see its exact requirements before you apply.",
+  },
+  {
+    q: 'Are the deals free, or do I need a membership?',
+    a: (
+      <>
+        Browsing is free and the first page of every category is open to everyone. Unlocking the full
+        catalog needs a{' '}
+        <a
+          href="/pricing"
+          className="font-bold text-accent-yellow underline decoration-accent-yellow/40 underline-offset-2 hover:decoration-accent-yellow"
+        >
+          membership
+        </a>
+        . The deals themselves are always free to claim — we never take a cut.
+      </>
+    ),
+  },
+  {
+    q: 'What do “Limited” and “Coming soon” mean?',
+    a: 'A Limited deal has capped seats or a provider deadline and can close without notice — apply early. A Coming soon deal is confirmed and being finalized; it will go live shortly.',
+  },
+  {
+    q: "What's your refund & cancellation policy?",
+    a: (
+      <>
+        Memberships are sold under a strict no-refund policy — all sales are final. You can cancel
+        anytime to stop the next renewal and keep access until the period ends. Full details on our{' '}
+        <a
+          href="/refund-policy"
+          className="font-bold text-accent-yellow underline decoration-accent-yellow/40 underline-offset-2 hover:decoration-accent-yellow"
+        >
+          Refund Policy
+        </a>
+        .
+      </>
+    ),
+  },
+  {
+    q: 'How do you verify the deals?',
+    a: 'Every deal is reviewed by our team before listing, re-checked regularly, and removed once it expires or changes. Spot a broken link? Tell us via the form above and we will fix it fast.',
+  },
+  {
+    q: 'How fast will I hear back?',
+    a: 'We reply to every message within 24–48 hours (Mon–Fri, 9AM–6PM PST). Include your account email and any screenshots so we can resolve it on the first reply.',
+  },
+]
 
 export default function ContactFAQ() {
-  const [openFAQ, setOpenFAQ] = useState<number | null>(null)
+  const [openFAQ, setOpenFAQ] = useState<number | null>(0)
+  const [hoverFAQ, setHoverFAQ] = useState<number | null>(null)
+  const reduce = useReducedMotion()
 
-  const faqs = [
-    {
-      q: "Who's eligible for these deals?",
-      a: "Eligibility is set by each provider, not by us. Most cloud, SaaS, and credit programs target early-stage startups (roughly pre-seed to Series A) that haven't used the provider before — some also ask for a company email, a live website, or incorporation. Open any deal to see its exact requirements before you apply.",
-    },
-    {
-      q: 'Are the deals free, or do I need a membership?',
-      a: (
-        <>
-          Browsing is free and the first page of every category is open to everyone. Unlocking the full catalog — every cloud credit, SaaS discount and grant — needs a{' '}
-          <a href="/pricing" className="font-bold underline decoration-2 underline-offset-2 text-yellow-400 hover:text-yellow-300">membership</a>. The deals themselves are always free to claim; we never take a cut.
-        </>
-      ),
-    },
-    {
-      q: 'What do "Limited" and "Coming soon" tags mean?',
-      a: 'A Limited deal has capped seats or a provider deadline and can close without notice, so apply early. A Coming soon deal is confirmed and being finalized — it will go live shortly.',
-    },
-    {
-      q: "What's your refund & cancellation policy?",
-      a: (
-        <>
-          Memberships are sold under a strict no-refund policy — all sales are final. You can cancel anytime to stop the next renewal and keep access until the period ends (no pro-rated refunds). Exceptions: a proven double-charge, or if we discontinue the service. Full details on our{' '}
-          <a href="/refund-policy" className="font-bold underline decoration-2 underline-offset-2 text-yellow-400 hover:text-yellow-300">Refund Policy</a>.
-        </>
-      ),
-    },
-    {
-      q: 'How do you verify the deals?',
-      a: 'Every deal is reviewed by our team before listing, re-checked regularly, and removed once it expires or changes. Spot a broken link or an offer that no longer matches? Tell us via the form above and we will fix it fast.',
-    },
-    {
-      q: 'How fast will I hear back?',
-      a: 'We reply to every message — usually within 24 hours, and often much sooner during business hours (Mon–Fri, 9AM–6PM PST). Include your account email and any screenshots so we can resolve it on the first reply.',
-    },
-  ]
+  // Hover expands on desktop; click still works (and on mobile)
+  const isOpen = (index: number) => openFAQ === index || hoverFAQ === index
 
   return (
-    <div className="relative bg-white dark:bg-[#08080a] border border-gray-200 dark:border-zinc-800/80 rounded-2xl p-6 md:p-8 overflow-hidden transition-all duration-300 shadow-xl fp-fade-up">
-      <div className="relative mb-8 flex items-center gap-4">
-        <div className="size-12 bg-yellow-400/10 border border-yellow-400/20 flex items-center justify-center rounded-xl text-yellow-400">
-          <span className="material-symbols-outlined !text-[24px]">question_answer</span>
-        </div>
-        <div>
-          <h2 className="font-heading text-lg font-black text-gray-900 dark:text-white uppercase tracking-wider">
-            Frequently Asked Questions
-          </h2>
-          <p className="font-mono text-[10px] text-gray-400 dark:text-zinc-500 uppercase tracking-widest mt-0.5">
-            Quick responses to popular inquiries
-          </p>
+    <div className="relative overflow-hidden rounded-2xl border border-black/[0.06] dark:border-white/[0.08] bg-white dark:bg-[#0c0c0c] p-5 md:p-7 shadow-[0_8px_30px_rgba(0,0,0,0.06)]">
+      <div
+        aria-hidden
+        className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-accent-yellow/40 to-transparent"
+      />
+
+      <div className="relative mb-6 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3">
+        <div className="flex items-center gap-3.5">
+          <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-accent-yellow/15 border border-accent-yellow/25 text-accent-yellow">
+            <span className="material-symbols-outlined !text-[22px]">question_answer</span>
+          </div>
+          <div>
+            <h2 className="font-mono text-[14px] font-black uppercase tracking-[0.1em] text-gray-900 dark:text-white">
+              FAQ
+            </h2>
+            <p className="font-mono text-[10px] text-gray-500 dark:text-gray-400 uppercase tracking-wider mt-0.5">
+              Hover or click a question to expand
+            </p>
+          </div>
         </div>
       </div>
 
-      <div className="relative grid grid-cols-1 md:grid-cols-2 gap-4 items-start">
-        {faqs.map((faq, index) => {
-          const open = openFAQ === index
+      <div className="relative grid grid-cols-1 md:grid-cols-2 gap-3 items-start">
+        {FAQS.map((faq, index) => {
+          const open = isOpen(index)
           return (
-            <div
+            <motion.div
               key={index}
-              className={`border rounded-xl overflow-hidden transition-all duration-300 ${
+              layout
+              onMouseEnter={() => {
+                if (!reduce) setHoverFAQ(index)
+              }}
+              onMouseLeave={() => setHoverFAQ(null)}
+              className={`rounded-xl border overflow-hidden transition-colors duration-200 ${
                 open
-                  ? 'border-yellow-400/40 bg-yellow-400/[0.02] dark:border-yellow-400/20 dark:bg-yellow-400/[0.01] ring-1 ring-yellow-400/20'
-                  : 'border-gray-200 dark:border-zinc-800/75 bg-gray-50/50 dark:bg-zinc-900/10 hover:border-gray-300 dark:hover:border-zinc-700/50'
+                  ? 'border-accent-yellow/40 bg-accent-yellow/[0.05] dark:bg-accent-yellow/[0.06] shadow-[0_0_0_1px_rgba(255,221,0,0.08)]'
+                  : 'border-black/[0.06] dark:border-white/[0.08] bg-gray-50/80 dark:bg-white/[0.02] hover:border-accent-yellow/25'
               }`}
             >
               <button
-                onClick={() => setOpenFAQ(open ? null : index)}
+                type="button"
+                onClick={() => setOpenFAQ(openFAQ === index ? null : index)}
                 aria-expanded={open}
-                className="w-full p-4.5 text-left flex items-center justify-between gap-4 transition-colors"
+                className="w-full p-4 text-left flex items-start justify-between gap-3"
               >
-                <h3 className="font-sans text-xs font-bold text-gray-900 dark:text-white pr-2 leading-relaxed">
+                <h3 className="font-mono text-[12.5px] font-bold text-gray-900 dark:text-white pr-1 leading-snug">
                   {faq.q}
                 </h3>
-                <span
-                  className={`material-symbols-outlined !text-[16px] size-6 flex-shrink-0 border flex items-center justify-center rounded-full bg-white dark:bg-black transition-all duration-300 ${
+                <motion.span
+                  animate={{ rotate: open ? 45 : 0 }}
+                  transition={{ duration: 0.25, ease: premiumEase }}
+                  className={`mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border ${
                     open
-                      ? 'rotate-45 text-yellow-400 border-yellow-400/30 shadow-[0_0_10px_rgba(255,215,0,0.2)]'
-                      : 'border-gray-200 dark:border-zinc-800 text-gray-400 dark:text-zinc-500'
+                      ? 'bg-accent-yellow border-accent-yellow text-black'
+                      : 'border-black/10 dark:border-white/15 text-gray-400 bg-white dark:bg-white/5'
                   }`}
                 >
-                  add
-                </span>
+                  <span className="material-symbols-outlined !text-[14px]">add</span>
+                </motion.span>
               </button>
 
-              <div
-                className={`grid transition-all duration-300 ease-in-out ${
-                  open ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'
-                }`}
-              >
-                <div className="overflow-hidden">
-                  <p className="p-4.5 bg-white/70 dark:bg-black/30 border-t border-gray-150 dark:border-zinc-800/60 font-sans text-[11.5px] text-gray-600 dark:text-zinc-400 leading-relaxed">
-                    {faq.a}
-                  </p>
-                </div>
-              </div>
-            </div>
+              <AnimatePresence initial={false}>
+                {open && (
+                  <motion.div
+                    key="panel"
+                    initial={reduce ? false : { height: 0, opacity: 0 }}
+                    animate={{ height: 'auto', opacity: 1 }}
+                    exit={reduce ? undefined : { height: 0, opacity: 0 }}
+                    transition={{ duration: 0.32, ease: premiumEase }}
+                    className="overflow-hidden"
+                  >
+                    <motion.div
+                      initial={reduce ? false : { y: -6, opacity: 0 }}
+                      animate={{ y: 0, opacity: 1 }}
+                      exit={reduce ? undefined : { y: -4, opacity: 0 }}
+                      transition={{ duration: 0.28, ease: premiumEase, delay: 0.04 }}
+                      className="px-4 pb-4 border-t border-black/[0.05] dark:border-white/[0.06]"
+                    >
+                      <p className="pt-3 text-[12.5px] text-gray-600 dark:text-gray-400 leading-relaxed">
+                        {faq.a}
+                      </p>
+                    </motion.div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </motion.div>
           )
         })}
       </div>
 
-      {/* Still have questions */}
-      <div className="relative mt-8 border border-gray-200 dark:border-zinc-800/80 bg-gray-50/80 dark:bg-zinc-900/20 p-6 rounded-2xl flex flex-col sm:flex-row items-center justify-between gap-6 overflow-hidden">
-        <div className="absolute -right-24 -bottom-24 w-48 h-48 bg-yellow-400/10 dark:bg-yellow-400/5 rounded-full blur-3xl pointer-events-none" />
-        
-        <div className="relative text-center sm:text-left flex flex-col sm:flex-row items-center gap-4">
-          <div className="size-11 bg-yellow-400/10 border border-yellow-400/20 text-yellow-400 flex items-center justify-center rounded-full">
+      {/* Still stuck */}
+      <div className="relative mt-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4 rounded-2xl border border-black/[0.06] dark:border-white/[0.08] bg-gray-50 dark:bg-white/[0.03] p-4 md:p-5 overflow-hidden">
+        <div
+          aria-hidden
+          className="absolute -right-16 -bottom-16 w-40 h-40 bg-accent-yellow/10 rounded-full blur-3xl pointer-events-none"
+        />
+        <div className="relative flex items-start sm:items-center gap-3 min-w-0">
+          <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-accent-yellow/15 text-accent-yellow border border-accent-yellow/25">
             <span className="material-symbols-outlined !text-[20px]">help_center</span>
-          </div>
-          <div>
-            <p className="font-heading text-sm font-bold text-gray-900 dark:text-white uppercase tracking-wider">
-              Still seeking answers?
+          </span>
+          <div className="min-w-0">
+            <p className="font-mono text-[12px] font-black uppercase tracking-wide text-gray-900 dark:text-white">
+              Still stuck?
             </p>
-            <p className="font-sans text-xs text-gray-500 dark:text-zinc-400 mt-1">
-              Contact our direct support desk — we will resolve your inquiry fast.
+            <p className="text-[12px] text-gray-500 dark:text-gray-400 leading-snug">
+              Email the desk directly — include your account email for faster routing.
             </p>
           </div>
         </div>
         <a
           href="mailto:support@foundersprime.com"
-          className="relative shrink-0 inline-flex items-center gap-2 bg-yellow-400 hover:bg-yellow-500 text-black font-mono font-bold text-xs uppercase px-5 py-3 rounded-xl transition-all shadow-lg hover:shadow-yellow-400/10 btn-shiny"
+          className="relative shrink-0 inline-flex h-11 items-center justify-center gap-2 rounded-xl bg-accent-yellow text-black font-mono text-[11px] font-black uppercase tracking-[0.08em] px-5 hover:bg-amber-300 transition-colors leading-none"
         >
-          <span className="material-symbols-outlined !text-[16px]">mail</span>
-          Email Support
+          <span className="leading-none">Email support</span>
+          <svg width="13" height="13" viewBox="0 0 14 14" fill="none" className="block shrink-0" aria-hidden>
+            <path
+              d="M2.5 7h9M7.5 3.5 11 7l-3.5 3.5"
+              stroke="currentColor"
+              strokeWidth="1.75"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
         </a>
       </div>
     </div>

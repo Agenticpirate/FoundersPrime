@@ -7,6 +7,7 @@ import { incubators2026, Incubator } from '@/data/incubators-2026'
 import { useAuth } from '@/lib/auth/hooks'
 import { checkProStatus } from '@/lib/auth/user-context'
 import ProGateOverlay from '@/components/ProGateOverlay'
+import { StaggerGrid, StaggerGridItem } from '@/components/ui/premium-motion'
 
 export default function IncubatorsGrid() {
   const { user } = useAuth()
@@ -64,7 +65,7 @@ export default function IncubatorsGrid() {
       logo: inc.logo || '',
       category: 'Incubator',
       badge: inc.applicationStatus === 'Active' ? 'Applications Open' : inc.applicationStatus,
-      badgeColor: inc.applicationStatus === 'Active' ? 'bg-green-600' : 'bg-gray-500',
+      badgeColor: inc.applicationStatus === 'Active' ? 'bg-amber-600' : 'bg-gray-500',
       title: inc.name,
       provider: inc.name,
       value: inc.support,
@@ -84,7 +85,7 @@ export default function IncubatorsGrid() {
       <div className="relative bg-white border-2 border-black shadow-[3px_3px_0px_#111] rounded-sm overflow-hidden mb-4">
         {/* Decorative mandala */}
         <div className="absolute -top-12 -right-12 w-44 h-44 pointer-events-none opacity-[0.05]" aria-hidden="true">
-          <svg viewBox="0 0 200 200" className="w-full h-full text-teal-700 incub-toolbar-mandala-spin" fill="none" stroke="currentColor" strokeWidth="0.7">
+          <svg viewBox="0 0 200 200" className="w-full h-full text-violet-700 incub-toolbar-mandala-spin" fill="none" stroke="currentColor" strokeWidth="0.7">
             <circle cx="100" cy="100" r="40" />
             <circle cx="100" cy="100" r="60" strokeDasharray="2 4" />
             <circle cx="100" cy="100" r="80" strokeDasharray="1 6" />
@@ -102,8 +103,8 @@ export default function IncubatorsGrid() {
           {/* Header row — title + count */}
           <div className="flex items-center justify-between gap-3 mb-3 pb-3 border-b-2 border-black border-dashed">
             <div className="flex items-center gap-2.5 min-w-0">
-              <span className="inline-flex items-center justify-center w-7 h-7 bg-teal-100 border-2 border-black rounded-sm shadow-[1px_1px_0px_#111] flex-shrink-0">
-                <span className="material-symbols-outlined !text-[14px] text-teal-700">lightbulb</span>
+              <span className="inline-flex items-center justify-center w-7 h-7 bg-violet-100 border-2 border-black rounded-sm shadow-[1px_1px_0px_#111] flex-shrink-0">
+                <span className="material-symbols-outlined !text-[14px] text-violet-700">lightbulb</span>
               </span>
               <div className="min-w-0">
                 <h2 className="font-mono text-[13px] md:text-sm font-black uppercase tracking-[0.06em] text-black leading-none truncate">
@@ -217,15 +218,19 @@ export default function IncubatorsGrid() {
       {/* Grid */}
       {filteredDeals.length > 0 ? (
         <div>
-          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
+          <StaggerGrid
+            animKey={`incub-${isPro}-${filteredDeals.length}`}
+            className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-4"
+          >
             {(isPro ? filteredDeals : filteredDeals.slice(0, 3)).map((inc) => (
-              <DealCard
-                key={inc.id}
-                deal={convertToCard(inc)}
-                overrideHref={isPro ? undefined : '/pricing'}
-              />
+              <StaggerGridItem key={inc.id}>
+                <DealCard
+                  deal={convertToCard(inc)}
+                  overrideHref={isPro ? undefined : '/pricing'}
+                />
+              </StaggerGridItem>
             ))}
-          </div>
+          </StaggerGrid>
 
           {!isPro && filteredDeals.length > 3 && (
             <ProGateOverlay
@@ -233,7 +238,7 @@ export default function IncubatorsGrid() {
               visibleCount={3}
               label="Incubators"
             >
-              <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
+              <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-4">
                 {filteredDeals.slice(3, 9).map((inc) => (
                   <DealCard key={inc.id} deal={convertToCard(inc)} />
                 ))}

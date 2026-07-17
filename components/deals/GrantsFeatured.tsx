@@ -9,7 +9,7 @@ export default function GrantsFeatured() {
       icon: 'flag',
       tags: [
         { label: 'GOVERNMENT', color: 'bg-blue-100 text-blue-800 border-blue-900' },
-        { label: 'POPULAR', color: 'bg-green-100 text-green-800 border-green-900' }
+        { label: 'POPULAR', color: 'bg-amber-100 text-amber-900 border-amber-800' }
       ],
       value: 'Up to $275,000',
       validity: 'R&D focused',
@@ -30,7 +30,7 @@ export default function GrantsFeatured() {
     {
       id: 'nsf-i-corps',
       title: 'NSF I-Corps',
-      gradient: 'from-green-600 to-teal-700',
+      gradient: 'from-amber-500 to-orange-600',
       icon: 'school',
       tags: [
         { label: 'RESEARCH', color: 'bg-gray-100' }
@@ -42,7 +42,7 @@ export default function GrantsFeatured() {
     {
       id: 'epa-sbir',
       title: 'EPA SBIR',
-      gradient: 'from-emerald-600 to-green-700',
+      gradient: 'from-amber-600 to-orange-700',
       icon: 'eco',
       tags: [
         { label: 'CLEANTECH', color: 'bg-gray-100' }

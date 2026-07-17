@@ -128,7 +128,7 @@ export default function SavedDealsSection({ savedDealSlugs }: SavedDealsSectionP
             <p className="text-xs text-gray-600 dark:text-gray-400 mb-3 line-clamp-2">{deal.shortDescription}</p>
 
             <div className="flex items-center justify-between">
-              <span className="text-sm font-bold text-green-600 dark:text-green-400">{deal.value}</span>
+              <span className="text-sm font-bold text-amber-700 dark:text-accent-yellow">{deal.value}</span>
               <Link
                 href={`/deals/${deal.slug || deal.id}`}
                 className="text-xs font-bold text-primary hover:underline flex items-center gap-1"

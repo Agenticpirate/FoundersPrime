@@ -2,12 +2,13 @@ import startupsData from '@/data/yc_companies_2024_2026.json'
 import { YCCompany } from '@/types/startup'
 
 /**
- * Lightweight projection of a YC company containing ONLY the fields the
- * startups grid + card actually render. The raw dataset is ~14MB because each
- * record carries long descriptions, Q&A blobs, highlight results, photos, etc.
- * — none of which the listing needs. Trimming here keeps the payload that
- * crosses the server→client boundary at ~0.6MB (a ~95% reduction), which is
- * the single biggest load-time win for the /startups route.
+ * Lightweight projection of a YC company for the Verified Startups UI.
+ *
+ * PUBLIC SURFACE: retired on foundersprime.com (/startups redirects to /ideas).
+ * DATA KEPT: this module + data/yc_companies_2024_2026.json + components/startups/*
+ * remain for reuse on another site. See docs/ARCHIVED-STARTUPS.md.
+ *
+ * The raw dataset is large (~14MB). Trimming here keeps listing payloads ~0.6MB.
  */
 export interface StartupCardData {
   id: number

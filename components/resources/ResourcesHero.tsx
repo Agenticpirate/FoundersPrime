@@ -117,7 +117,7 @@ export default function ResourcesHero({ searchQuery, onSearchChange, totalCount 
                 Ready to use
               </p>
             </div>
-            <span className="material-symbols-outlined text-[20px] text-emerald-400">verified</span>
+            <span className="material-symbols-outlined text-[20px] text-accent-yellow">verified</span>
           </div>
         </div>
       </div>

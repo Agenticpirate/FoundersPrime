@@ -38,13 +38,17 @@ export async function checkAdminStatus(): Promise<{
       }
     }
 
-    // Check if user is in admin_users table
-    const { data: adminData, error: adminError } = await supabase
+    // Check admin_users (case-insensitive email)
+    const { data: adminRows, error: adminError } = await supabase
       .from('admin_users')
       .select('*')
-      .eq('email', user.email)
       .eq('is_active', true)
-      .single()
+
+    const adminData = (adminRows || []).find(
+      (r: { email?: string }) =>
+        String(r.email || '').toLowerCase().trim() ===
+        String(user.email || '').toLowerCase().trim()
+    )
 
     if (adminError || !adminData) {
       return {

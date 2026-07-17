@@ -83,7 +83,7 @@ export default function SingleIdeaContent({ idea }: SingleIdeaContentProps) {
                 <div key={index} className="bg-gray-50 border-2 border-gray-300 rounded-sm p-4">
                   <div className="flex justify-between items-start mb-2">
                     <span className="font-mono text-sm font-bold">{trend.term}</span>
-                    <span className="font-mono text-xs text-green-600">{trend.trend}</span>
+                    <span className="font-mono text-xs text-amber-700">{trend.trend}</span>
                   </div>
                   <span className="font-mono text-sm text-gray-600">{trend.volume}</span>
                 </div>
@@ -100,8 +100,8 @@ export default function SingleIdeaContent({ idea }: SingleIdeaContentProps) {
                   <div className="flex justify-between items-start mb-2">
                     <span className="font-mono text-sm font-bold">{activity.platform}</span>
                     <span className={`font-mono text-xs px-2 py-1 rounded-sm ${
-                      activity.sentiment === 'Very Positive' ? 'bg-green-100 text-green-800' :
-                      activity.sentiment === 'Positive' ? 'bg-green-50 text-green-700' :
+                      activity.sentiment === 'Very Positive' ? 'bg-amber-100 text-amber-900' :
+                      activity.sentiment === 'Positive' ? 'bg-amber-50 text-amber-800' :
                       'bg-gray-100 text-gray-700'
                     }`}>
                       {activity.sentiment}
@@ -162,7 +162,7 @@ export default function SingleIdeaContent({ idea }: SingleIdeaContentProps) {
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <h4 className="font-mono text-sm font-bold text-green-700 mb-2">Pros</h4>
+                  <h4 className="font-mono text-sm font-bold text-amber-800 mb-2">Pros</h4>
                   <p className="font-sans text-sm text-gray-700">{model.pros}</p>
                 </div>
                 <div>

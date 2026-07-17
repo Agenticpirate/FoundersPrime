@@ -64,6 +64,14 @@ export async function POST(request: Request) {
       // which is a server-rendered page that immediately redirects to /login when no session.
       return_url: `${appUrl}/checkout?status={status}`,
       customer: { email: user.email },
+      // Metadata is returned on Dodo webhooks so we can activate the plan even if
+      // email lookup fails (e.g. alias/casing) — admin dashboard reads user_subscriptions.
+      metadata: {
+        user_id: user.id,
+        plan,
+        email: user.email || '',
+        source: 'foundersprime_checkout',
+      },
     };
 
     const session = await client.checkoutSessions.create(sessionPayload);

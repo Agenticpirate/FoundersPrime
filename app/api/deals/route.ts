@@ -2,6 +2,12 @@ import { NextRequest, NextResponse } from 'next/server'
 import { revalidatePath } from 'next/cache'
 import { createClient } from '@/lib/supabase/server'
 import { Deal } from '@/lib/deals-database'
+import {
+  applyCatalogScope,
+  type CatalogScope,
+} from '@/lib/catalog-segregation'
+import { applyPopularityFlags } from '@/lib/deal-popularity'
+import { resolveDealApplicationUrl } from '@/lib/comprehensive-startup-urls'
 import fs from 'fs'
 import path from 'path'
 
@@ -11,16 +17,6 @@ import path from 'path'
 // but this cap guarantees the route degrades gracefully (bounded memory +
 // payload) instead of crashing if the table ever grows unexpectedly large.
 const LIST_HARD_CAP = 5000
-
-// Priority brands marked as "recommended". Hoisted to module scope so it is
-// allocated once per process instead of rebuilt on every request.
-const RECOMMENDED_KEYWORDS = [
-  'github', 'airtable', 'aws', 'google for startups', 'microsoft for startups',
-  'microsoft founders hub', 'linear', 'stripe', 'notion', 'webflow',
-  'alibaba', 'algolia', 'auth0', 'cloudflare', 'customer.io', 'datadog',
-  'databricks', 'devrev', 'digitalocean', 'document360', 'elevenlabs', 'eleven labs',
-  'flippa', 'framer', 'gitlab', 'heroku', 'instatus', 'intercom', 'linkedin ads'
-] as const
 
 // Check if Supabase is properly configured (not placeholder values)
 function isSupabaseConfigured(): boolean {
@@ -109,6 +105,13 @@ export async function GET(request: NextRequest) {
     const featured = searchParams.get('featured');
     const recommended = searchParams.get('recommended');
     const limit = searchParams.get('limit');
+    // scope=deals (default) | programs | all
+    // Single slug/id lookups always return the row (detail pages / admin).
+    const scopeParam = (searchParams.get('scope') || 'deals').toLowerCase()
+    const scope: CatalogScope =
+      scopeParam === 'programs' || scopeParam === 'all' || scopeParam === 'deals'
+        ? (scopeParam as CatalogScope)
+        : 'deals'
 
     let deals: Deal[];
 
@@ -195,15 +198,15 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    // Override: no deals are featured, mark priority deals as recommended
-    deals = deals.map(d => {
-      const titleLower = (d.title || '').toLowerCase();
-      const providerLower = (d.provider || '').toLowerCase();
-      const isRecommended = RECOMMENDED_KEYWORDS.some(kw => titleLower.includes(kw) || providerLower.includes(kw));
-      return { ...d, featured: false, recommended: isRecommended } as Deal;
-    });
+    // Value-aware popularity: free-year plans, mega credits, flagship brands
+    // become recommended/Popular. Featured is reserved for paid ad slots only
+    // (featured + active featuredUntil); catalog-only featured flags are stripped.
+    deals = deals.map((d) => {
+      const flagged = applyPopularityFlags(d, { stripUnpaidFeatured: true })
+      return flagged as Deal
+    })
 
-    // Single deal lookup return
+    // Single deal lookup return (any catalog — detail pages must still resolve)
     if (slug || id) {
       if (deals.length > 0) {
         return NextResponse.json(
@@ -214,6 +217,27 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ success: false, error: 'Deal not found' }, { status: 404 });
     }
 
+    // Segregate list responses: default commercial deals only (programs → /programs)
+    if (!(category === 'startup-programs' || category === 'accelerators' || category === 'incubators' || category === 'grants')) {
+      deals = applyCatalogScope(deals, scope)
+    } else if (scope === 'deals') {
+      // Explicit program category under deals scope → empty (use /programs)
+      deals = []
+    } else {
+      deals = applyCatalogScope(deals, 'programs')
+    }
+
+    // Dedupe by slug so page counts stay stable (duplicate rows inflate pagination)
+    {
+      const bySlug = new Map<string, Deal>()
+      for (const d of deals) {
+        const key = (d.slug || d.id || '').toLowerCase()
+        if (!key) continue
+        if (!bySlug.has(key)) bySlug.set(key, d)
+      }
+      deals = Array.from(bySlug.values())
+    }
+
     // Stats
     const stats = {
       total: deals.length,
@@ -221,6 +245,7 @@ export async function GET(request: NextRequest) {
       expired: deals.filter(d => d.status === 'expired').length,
       featured: deals.filter(d => d.featured).length,
       recommended: deals.filter((d: any) => d.recommended).length,
+      scope,
       byCategory: deals.reduce((acc: Record<string, number>, d) => {
         acc[d.category] = (acc[d.category] || 0) + 1;
         return acc;
@@ -231,8 +256,9 @@ export async function GET(request: NextRequest) {
       { success: true, deals, count: deals.length, stats },
       {
         headers: {
-          'Cache-Control': 'public, s-maxage=300, stale-while-revalidate=3600',
-          'CDN-Cache-Control': 'public, s-maxage=300, stale-while-revalidate=3600',
+          // Scope-aware short cache so sidebar/grid counts stay in sync after segregation
+          'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=120',
+          'CDN-Cache-Control': 'public, s-maxage=60, stale-while-revalidate=120',
           'Vary': 'Accept-Encoding',
         }
       }
@@ -423,7 +449,12 @@ function formatDealFromDB(d: any): Deal {
     tags: d.tags || [],
     status: d.status,
     expiryDate: d.expiryDate || d.expiry_date || '',
-    applicationUrl: d.applicationUrl || d.application_url || '',
+    applicationUrl: resolveDealApplicationUrl({
+      applicationUrl: d.applicationUrl || d.application_url,
+      providerWebsite: d.providerWebsite || d.provider_website,
+      provider: d.provider,
+      title: d.title,
+    }),
     providerWebsite: d.providerWebsite || d.provider_website || '',
     logoUrl: d.logoUrl || d.logo_url || '',
     featured: d.featured,

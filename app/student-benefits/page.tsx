@@ -76,12 +76,21 @@ async function getFeaturedDealsServer(): Promise<Deal[]> {
   }
 }
 
+const TYPE_SECTION_LABELS: Record<string, string> = {
+  all: 'All Benefits',
+  'free-access': 'Campus Edge',
+  'credits-savings': 'Credits & Savings',
+  funding: 'Funding & Opps',
+  programs: 'Programs',
+}
+
 export default async function StudentBenefitsPage({ searchParams }: { searchParams: { [key: string]: string | string[] | undefined } }) {
   const { isPro, user } = await checkProStatusServer()
   const isNextFounder = !!user?.isNextFounder
   const featuredDeals = await getFeaturedDealsServer()
 
   const typeParam = typeof searchParams.type === 'string' ? searchParams.type : 'all'
+  const sectionLabel = TYPE_SECTION_LABELS[typeParam] || 'All Benefits'
   const initialFilters = {
     search: typeof searchParams.q === 'string' ? searchParams.q : '',
     category: typeof searchParams.category === 'string' ? searchParams.category : 'All',
@@ -98,12 +107,12 @@ export default async function StudentBenefitsPage({ searchParams }: { searchPara
           <div className="max-w-[1600px] mx-auto px-4 lg:px-6 pt-6 md:pt-8 pb-4 lg:pb-5">
             <DealsHeader
               parentSection={{ name: 'Student Benefits', href: '/student-benefits' }}
-              currentSection="All Benefits"
+              currentSection={sectionLabel}
             />
             <StudentBenefitsHero />
             <Suspense fallback={
               <div className="flex items-center justify-center py-16">
-                <div className="animate-spin rounded-full h-10 w-10 border-4 border-cyan-400 border-t-transparent" />
+                <div className="animate-spin rounded-full h-10 w-10 border-4 border-accent-yellow border-t-transparent" />
               </div>
             }>
               <StudentBenefitsUnifiedContent initialType={typeParam as any} initialFilters={initialFilters} />

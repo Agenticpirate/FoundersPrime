@@ -1,6 +1,6 @@
 /**
  * Supabase Server Client
- * 
+ *
  * Use this client for server-side operations (Server Components, Route Handlers, Server Actions).
  * This client properly handles cookies for session management.
  *
@@ -65,31 +65,25 @@ export function createClient(): SupabaseClient {
     return createServerStub()
   }
 
-  // Next.js page components/route handlers might run in edge/serverless environments
-  // where cookies are dropped on cross-site/SameSite boundaries.
-  // Fall back to reading the raw Authorization Bearer token header if present.
   const cookieStore = cookies()
-  
-  // Safe dynamic read of headers on the server side
+
+  // Optional Bearer override. NEVER set Authorization to "" — empty header
+  // overrides cookie session and breaks getUser() in admin route handlers.
   let authHeader = ''
   if (typeof window === 'undefined') {
     try {
-      // ONLY read headers inside a dynamic request execution context.
-      // Next.js static page compilation calls createClient() during build time where next/headers is not allowed.
       const { headers: getHeaders } = require('next/headers')
       const headersList = getHeaders()
-      authHeader = headersList.get('Authorization') || ''
-    } catch (e) {
-      // Ignore if headers API is not readable during static build or serverless init
+      const raw = headersList.get('Authorization') || headersList.get('authorization') || ''
+      if (/^Bearer\s+\S+/i.test(String(raw).trim())) {
+        authHeader = String(raw).trim()
+      }
+    } catch {
+      // headers unavailable during static build
     }
   }
 
-  return createServerClient(url, anonKey, {
-    global: {
-      headers: {
-        Authorization: authHeader
-      }
-    },
+  const options: any = {
     cookies: {
       get(name: string) {
         return cookieStore.get(name)?.value
@@ -97,19 +91,27 @@ export function createClient(): SupabaseClient {
       set(name: string, value: string, options: CookieOptions) {
         try {
           cookieStore.set({ name, value, ...options })
-        } catch (error) {
-          // The `set` method was called from a Server Component.
-          // This can be ignored if you have middleware refreshing sessions.
+        } catch {
+          // Server Component — ignore
         }
       },
       remove(name: string, options: CookieOptions) {
         try {
           cookieStore.set({ name, value: '', ...options })
-        } catch (error) {
-          // The `delete` method was called from a Server Component.
-          // This can be ignored if you have middleware refreshing sessions.
+        } catch {
+          // Server Component — ignore
         }
       },
     },
-  })
+  }
+
+  if (authHeader) {
+    options.global = {
+      headers: {
+        Authorization: authHeader,
+      },
+    }
+  }
+
+  return createServerClient(url, anonKey, options) as SupabaseClient
 }

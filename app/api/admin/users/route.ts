@@ -32,75 +32,270 @@ export async function GET() {
       )
     }
 
-    // 1. Pull every auth user (paginated through the admin API).
+    // 1. Pull every auth user via Admin API (paginated).
+    // Handle both JS client shapes: data.users and nested variants.
     const authUsers: any[] = []
     let page = 1
-    const perPage = 1000
-    while (true) {
+    const perPage = 200
+    let listError: string | null = null
+
+    while (page <= 50) {
       const { data, error } = await svc.auth.admin.listUsers({ page, perPage })
       if (error) {
         console.error('❌ Admin listUsers error:', error)
-        return NextResponse.json({ error: error.message }, { status: 500 })
+        listError = error.message
+        break
       }
-      const batch = data?.users || []
+      const batch: any[] = Array.isArray((data as any)?.users)
+        ? (data as any).users
+        : Array.isArray(data)
+          ? (data as any)
+          : []
       authUsers.push(...batch)
       if (batch.length < perPage) break
       page += 1
     }
 
-    // 2. Active subscriptions, to determine each user's plan.
-    const { data: subs } = await svc
-      .from('user_subscriptions')
-      .select('user_id, plan, status, created_at')
-      .eq('status', 'active')
-
-    const planByUser = new Map<string, string>()
-    for (const row of subs || []) {
-      // Keep the most relevant plan if a user somehow has multiple rows.
-      if (!planByUser.has(row.user_id)) {
-        planByUser.set(row.user_id, normalizePlan(String(row.plan)))
+    // Fallback: GoTrue REST if SDK list is empty but service key is valid
+    if (authUsers.length === 0 && !listError) {
+      try {
+        const base = process.env.NEXT_PUBLIC_SUPABASE_URL?.replace(/\/$/, '')
+        const key = process.env.SUPABASE_SERVICE_ROLE_KEY
+        if (base && key) {
+          let p = 1
+          while (p <= 50) {
+            const res = await fetch(
+              `${base}/auth/v1/admin/users?page=${p}&per_page=${perPage}`,
+              {
+                headers: {
+                  apikey: key,
+                  Authorization: `Bearer ${key}`,
+                },
+                cache: 'no-store',
+              }
+            )
+            if (!res.ok) {
+              listError = `Auth admin HTTP ${res.status}`
+              break
+            }
+            const body = await res.json()
+            const batch: any[] = Array.isArray(body?.users) ? body.users : []
+            authUsers.push(...batch)
+            if (batch.length < perPage) break
+            p += 1
+          }
+        }
+      } catch (e: any) {
+        console.error('Auth REST fallback failed:', e)
+        listError = e?.message || 'Auth REST fallback failed'
       }
     }
 
-    // 3. Admin users get the "admin" role badge.
+    if (authUsers.length === 0 && listError) {
+      return NextResponse.json(
+        { error: `Could not list users from Supabase: ${listError}`, users: [] },
+        { status: 500 }
+      )
+    }
+
+    // 2. Active subscriptions → plan + period
+    const { data: subs, error: subsErr } = await svc
+      .from('user_subscriptions')
+      .select('user_id, plan, status, created_at, period_end, period_start, stripe_subscription_id')
+      .eq('status', 'active')
+
+    if (subsErr) console.error('user_subscriptions error:', subsErr)
+
+    const planByUser = new Map<string, string>()
+    const subMetaByUser = new Map<
+      string,
+      { periodEnd: string | null; periodStart: string | null; subId: string | null; createdAt: string | null }
+    >()
+    for (const row of subs || []) {
+      const uid = String(row.user_id || '')
+      if (!uid) continue
+      if (!planByUser.has(uid)) {
+        planByUser.set(uid, normalizePlan(String(row.plan)))
+        subMetaByUser.set(uid, {
+          periodEnd: row.period_end ?? null,
+          periodStart: row.period_start ?? null,
+          subId: row.stripe_subscription_id ?? null,
+          createdAt: row.created_at ?? null,
+        })
+      }
+    }
+
+    // 3. Admin emails (case-insensitive)
     const { data: admins } = await svc.from('admin_users').select('email')
-    const adminEmails = new Set((admins || []).map((a: any) => (a.email || '').toLowerCase()))
+    const adminEmails = new Set(
+      (admins || []).map((a: any) => String(a.email || '').toLowerCase().trim())
+    )
 
     const THIRTY_DAYS = 30 * 24 * 60 * 60 * 1000
     const now = Date.now()
 
     const users = authUsers
       .map((u) => {
-        const email = u.email || ''
-        const isAdmin = adminEmails.has(email.toLowerCase())
-        const role = isAdmin ? 'admin' : (planByUser.get(u.id) || 'free')
+        const email = String(u.email || '')
+        const isAdminUser = adminEmails.has(email.toLowerCase().trim())
+        const role = isAdminUser ? 'admin' : planByUser.get(String(u.id)) || 'free'
         const lastSignIn = u.last_sign_in_at || u.last_sign_in || null
         const lastActiveMs = lastSignIn ? new Date(lastSignIn).getTime() : 0
-        const savedDeals = Array.isArray(u.user_metadata?.saved_deals)
-          ? u.user_metadata.saved_deals.length
-          : 0
+        const meta = u.user_metadata || {}
+        const savedDeals = Array.isArray(meta.saved_deals)
+          ? meta.saved_deals.length
+          : Array.isArray(meta.saved_ideas)
+            ? meta.saved_ideas.length
+            : 0
+        const banned = !!meta.banned
+        const name =
+          meta.name ||
+          meta.full_name ||
+          meta.fullName ||
+          (email ? email.split('@')[0] : '') ||
+          'Unknown'
 
+        const uid = String(u.id)
+        const subMeta = subMetaByUser.get(uid)
+        const paidPlan = isAdminUser ? 'admin' : planByUser.get(uid) || 'free'
         return {
-          id: u.id,
-          name: u.user_metadata?.name || u.user_metadata?.full_name || email.split('@')[0] || 'Unknown',
+          id: uid,
+          name: String(name),
           email,
           role,
-          status: lastActiveMs && now - lastActiveMs < THIRTY_DAYS ? 'active' : 'inactive',
+          status: banned
+            ? 'inactive'
+            : lastActiveMs && now - lastActiveMs < THIRTY_DAYS
+              ? 'active'
+              : 'inactive',
           lastActive: lastSignIn,
           createdAt: u.created_at || null,
           dealsApplied: savedDeals,
           emailConfirmed: !!(u.email_confirmed_at || u.confirmed_at),
+          banned,
+          plan: paidPlan,
+          periodEnd: subMeta?.periodEnd ?? null,
+          periodStart: subMeta?.periodStart ?? null,
+          subscriptionId: subMeta?.subId ?? null,
+          isPaid: ['nextfounder', 'founder', 'legend'].includes(paidPlan),
         }
       })
       .sort((a, b) => {
+        // Paid first, then admin, then newest join
+        const rank = (r: string) =>
+          r === 'legend' ? 0 : r === 'founder' ? 1 : r === 'nextfounder' ? 2 : r === 'admin' ? 3 : 4
+        const rd = rank(a.role) - rank(b.role)
+        if (rd !== 0) return rd
         const at = a.createdAt ? new Date(a.createdAt).getTime() : 0
         const bt = b.createdAt ? new Date(b.createdAt).getTime() : 0
         return bt - at
       })
 
-    return NextResponse.json({ users })
+    return NextResponse.json({
+      users,
+      count: users.length,
+      paidCount: users.filter((u) => u.isPaid).length,
+      source: 'supabase-auth',
+    })
   } catch (error: any) {
     console.error('❌ Admin GET users error:', error)
+    return NextResponse.json(
+      { error: error?.message || 'Internal Server Error', users: [] },
+      { status: 500 }
+    )
+  }
+}
+
+// ─── PATCH: set plan or ban/unban (admin only) ────────────────────────────────
+export async function PATCH(request: Request) {
+  try {
+    const auth = await verifyAdmin()
+    if (!auth.ok) return NextResponse.json({ error: auth.error }, { status: auth.status })
+
+    const svc = getServiceRoleClient()
+    if (!svc) {
+      return NextResponse.json({ error: 'Service role not configured' }, { status: 503 })
+    }
+
+    const body = await request.json()
+    const userId = String(body.userId || '')
+    const action = String(body.action || '') as 'set_plan' | 'ban' | 'unban'
+
+    if (!userId || !['set_plan', 'ban', 'unban'].includes(action)) {
+      return NextResponse.json(
+        { error: 'userId and action (set_plan|ban|unban) required' },
+        { status: 400 }
+      )
+    }
+
+    const { data: userData, error: getErr } = await svc.auth.admin.getUserById(userId)
+    if (getErr || !userData?.user) {
+      return NextResponse.json({ error: 'User not found' }, { status: 404 })
+    }
+    const user = userData.user
+    const meta = { ...(user.user_metadata || {}) }
+
+    if (action === 'ban' || action === 'unban') {
+      meta.banned = action === 'ban'
+      meta.banned_at = action === 'ban' ? new Date().toISOString() : null
+      meta.banned_by = action === 'ban' ? auth.email || 'admin' : null
+      const { error } = await svc.auth.admin.updateUserById(userId, {
+        user_metadata: meta,
+      })
+      if (error) {
+        return NextResponse.json({ error: error.message }, { status: 500 })
+      }
+      return NextResponse.json({
+        success: true,
+        action,
+        banned: action === 'ban',
+      })
+    }
+
+    // set_plan
+    const planRaw = String(body.plan || 'free')
+    const plan = normalizePlan(planRaw)
+    if (!['free', 'nextfounder', 'founder', 'legend'].includes(plan)) {
+      return NextResponse.json({ error: 'Invalid plan' }, { status: 400 })
+    }
+
+    // Soft-cancel existing active rows for this user
+    await svc
+      .from('user_subscriptions')
+      .update({ status: 'cancelled', updated_at: new Date().toISOString() })
+      .eq('user_id', userId)
+      .eq('status', 'active')
+
+    if (plan !== 'free') {
+      const { error: insErr } = await svc.from('user_subscriptions').insert({
+        user_id: userId,
+        plan,
+        status: 'active',
+        // Prefer flexible columns; ignore unknown columns via try/fallback below
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+      })
+      if (insErr) {
+        // Retry with minimal columns if schema is strict
+        const { error: ins2 } = await svc.from('user_subscriptions').insert({
+          user_id: userId,
+          plan,
+          status: 'active',
+        })
+        if (ins2) {
+          console.error('Admin set_plan insert error:', ins2)
+          return NextResponse.json({ error: ins2.message }, { status: 500 })
+        }
+      }
+    }
+
+    meta.admin_plan_override = plan
+    meta.admin_plan_at = new Date().toISOString()
+    await svc.auth.admin.updateUserById(userId, { user_metadata: meta })
+
+    return NextResponse.json({ success: true, action: 'set_plan', plan })
+  } catch (error: any) {
+    console.error('❌ Admin PATCH users error:', error)
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 })
   }
 }

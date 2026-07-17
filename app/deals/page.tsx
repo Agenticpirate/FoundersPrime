@@ -104,7 +104,8 @@ export default async function DealsPage({
   const [{ isPro }, featuredDeals, allDeals] = await Promise.all([
     checkProStatusServer(),
     getFeaturedDealsServer(),
-    fetchDealsListForSSR(500),
+    // Full commercial catalog (same cap as /api/deals) so page count matches client
+    fetchDealsListForSSR(5000),
   ])
 
   const crawlDeals = filterDealsForCategory(allDeals, category).slice(0, 200)
@@ -121,9 +122,13 @@ export default async function DealsPage({
   return (
     <FeaturedDealsProvider initialFeaturedDeals={featuredDeals} initialIsPro={isPro}>
       <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden bg-gray-50 dark:bg-[#000000] text-[#1a1a1a] dark:text-white transition-colors duration-300">
+        <div aria-hidden className="pointer-events-none fixed inset-0 -z-0 overflow-hidden">
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[420px] bg-accent-yellow/[0.04] dark:bg-accent-yellow/[0.03] blur-3xl rounded-full" />
+          <div className="absolute bottom-1/4 right-0 w-[400px] h-[400px] bg-sky-500/[0.03] dark:bg-sky-500/[0.02] blur-3xl rounded-full" />
+        </div>
         <Header />
-        <main className="flex-1">
-          <div className="max-w-[1600px] mx-auto px-4 lg:px-6 pt-6 md:pt-8 pb-4 lg:pb-5">
+        <main className="relative flex-1">
+          <div className="max-w-[1600px] mx-auto px-4 lg:px-6 pt-6 md:pt-8 pb-10 lg:pb-14">
             <DealsHeader />
             <DealsHero />
             {catLabel && (
@@ -136,7 +141,7 @@ export default async function DealsPage({
             <Suspense
               fallback={
                 <div className="flex items-center justify-center py-16">
-                  <div className="animate-spin rounded-full h-10 w-10 border-4 border-amber-400 border-t-transparent" />
+                  <div className="h-10 w-10 rounded-full border-2 border-accent-yellow/30 border-t-accent-yellow animate-spin" />
                 </div>
               }
             >

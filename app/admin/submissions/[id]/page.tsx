@@ -92,8 +92,8 @@ export default function AdminSubmissionDetail() {
         }
     }
 
-    if (loading) return <div className="p-8 font-mono">Loading details...</div>
-    if (!submission) return <div className="p-8 font-mono">Submission not found.</div>
+    if (loading) return <div className="p-8 font-mono text-zinc-400 bg-[#090a0f] min-h-screen">Loading details…</div>
+    if (!submission) return <div className="p-8 font-mono text-zinc-400 bg-[#090a0f] min-h-screen">Submission not found.</div>
 
     // Featured plan display values (defaults to monthly for legacy rows)
     const isWeekly = submission.featured_plan === 'weekly'
@@ -102,33 +102,33 @@ export default function AdminSubmissionDetail() {
     const featuredPlanLabel = isWeekly ? '1 Week' : '30 Days'
 
     return (
-        <div className="min-h-screen bg-background-light p-8 font-mono text-[#111]">
+        <div className="min-h-screen bg-[#090a0f] p-4 md:p-8 font-mono text-white">
             <div className="max-w-4xl mx-auto">
-                <Link href="/admin/submissions" className="inline-flex items-center gap-2 text-sm font-bold uppercase mb-6 hover:underline text-gray-600">
+                <Link href="/admin/submissions" className="inline-flex items-center gap-2 text-sm font-bold uppercase mb-6 hover:text-accent-yellow text-zinc-400">
                     <span className="material-symbols-outlined text-sm">arrow_back</span> Back to List
                 </Link>
 
                 <div className="flex justify-between items-start mb-4 md:mb-6">
                     <div>
-                        <h1 className="text-3xl font-black uppercase tracking-tight mb-2">{submission.company_name}</h1>
+                        <h1 className="text-2xl md:text-3xl font-black uppercase tracking-tight mb-2 text-white">{submission.company_name}</h1>
                         <div className="flex flex-wrap gap-2">
-                            <span className={`inline-block px-2 py-1 text-[10px] font-black uppercase border border-black ${submission.status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
-                                submission.status === 'approved' ? 'bg-green-100 text-green-800' :
-                                    submission.status === 'rejected' ? 'bg-red-100 text-red-800' :
-                                        'bg-blue-100 text-blue-800'
+                            <span className={`inline-block px-2 py-1 text-[10px] font-black uppercase border rounded ${submission.status === 'pending' ? 'bg-amber-500/15 text-accent-yellow border-amber-500/30' :
+                                submission.status === 'approved' ? 'bg-emerald-500/15 text-emerald-400 border-emerald-500/30' :
+                                    submission.status === 'rejected' ? 'bg-red-500/15 text-red-300 border-red-500/30' :
+                                        'bg-sky-500/15 text-sky-300 border-sky-500/30'
                                 }`}>
                                 {submission.status.replace('_', ' ')}
                             </span>
                             {submission.is_exclusive && (
-                                <span className="inline-block px-2 py-1 text-[10px] font-black uppercase border border-black bg-purple-100 text-purple-800">
+                                <span className="inline-block px-2 py-1 text-[10px] font-black uppercase border border-white/15 bg-purple-100 text-purple-800">
                                     Exclusive
                                 </span>
                             )}
                             {submission.featured_requested && (
-                                <span className="inline-flex items-center gap-1 px-2 py-1 text-[10px] font-black uppercase border border-black bg-accent-yellow text-black">
+                                <span className="inline-flex items-center gap-1 px-2 py-1 text-[10px] font-black uppercase border border-white/15 bg-accent-yellow text-black">
                                     ⭐ Featured Requested
                                     {submission.featured_paid ? (
-                                        <span className="ml-1 bg-green-500 text-white px-1 text-[9px]">PAID</span>
+                                        <span className="ml-1 bg-emerald-600 text-white px-1 text-[9px]">PAID</span>
                                     ) : (
                                         <span className="ml-1 bg-orange-500 text-white px-1 text-[9px]">UNPAID</span>
                                     )}
@@ -137,7 +137,7 @@ export default function AdminSubmissionDetail() {
                         </div>
                     </div>
                     <div className="text-right">
-                        <p className="text-xs font-bold text-gray-500 uppercase">Submitted On</p>
+                        <p className="text-xs font-bold text-zinc-500 uppercase">Submitted On</p>
                         <p className="font-bold">{new Date(submission.created_at).toLocaleString()}</p>
                     </div>
                 </div>
@@ -145,117 +145,126 @@ export default function AdminSubmissionDetail() {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                     {/* Main Content */}
                     <div className="md:col-span-2 space-y-6">
-                        <div className="bg-white border-3 border-[#111] p-6 shadow-[4px_4px_0_0_#000]">
-                            <h2 className="text-lg font-black uppercase border-b-2 border-gray-100 pb-2 mb-4">Deal Details</h2>
+                        <div className="bg-[#0d0e12] border border-white/10 rounded-xl p-5 md:p-6">
+                            <h2 className="text-sm font-black uppercase border-b border-white/10 pb-2 mb-4 tracking-wider">Deal details</h2>
 
                             <div className="space-y-4">
                                 <div>
-                                    <label className="block text-xs font-bold uppercase text-gray-500 mb-1">Benefit</label>
-                                    <p className="font-bold text-lg">{submission.benefit_description}</p>
+                                    <label className="block text-[10px] font-bold uppercase text-zinc-500 mb-1">Benefit</label>
+                                    <p className="font-medium text-[14px] text-zinc-100 leading-relaxed">{submission.benefit_description}</p>
                                 </div>
                                 <div>
-                                    <label className="block text-xs font-bold uppercase text-gray-500 mb-1">Category / Value</label>
-                                    <p className="font-medium">{submission.category} • ${submission.deal_value}</p>
+                                    <label className="block text-[10px] font-bold uppercase text-zinc-500 mb-1">Category / value</label>
+                                    <p className="font-medium text-zinc-200">{submission.category} · ${submission.deal_value}</p>
                                 </div>
                                 <div>
-                                    <label className="block text-xs font-bold uppercase text-gray-500 mb-1">Company Website</label>
-                                    <a href={submission.website_url} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline break-all">
+                                    <label className="block text-[10px] font-bold uppercase text-zinc-500 mb-1">Company website</label>
+                                    <a href={submission.website_url} target="_blank" rel="noopener noreferrer" className="text-sky-400 hover:underline break-all text-sm">
                                         {submission.website_url}
                                     </a>
                                 </div>
                                 <div>
-                                    <label className="block text-xs font-bold uppercase text-gray-500 mb-1">Redemption</label>
-                                    <p className="font-medium">
-                                        <span className="bg-gray-200 px-1 rounded uppercase text-xs">{submission.redemption_method}</span>
-                                        <span className="ml-2 font-mono bg-gray-100 p-1">{submission.redemption_link}</span>
+                                    <label className="block text-[10px] font-bold uppercase text-zinc-500 mb-1">Redemption</label>
+                                    <p className="font-medium flex flex-wrap items-center gap-2">
+                                        <span className="bg-white/10 text-zinc-300 px-2 py-0.5 rounded uppercase text-[10px] font-bold border border-white/10">{submission.redemption_method || 'link'}</span>
+                                        <span className="font-mono text-[12px] bg-white/5 border border-white/10 px-2 py-1 rounded text-accent-yellow">{submission.redemption_link}</span>
                                     </p>
                                 </div>
                             </div>
                         </div>
 
                         {/* Admin Actions */}
-                        <div className="bg-white border-3 border-[#111] p-6 shadow-[4px_4px_0_0_#000]">
-                            <h2 className="text-lg font-black uppercase border-b-2 border-gray-100 pb-2 mb-4">Admin Actions</h2>
+                        <div className="bg-[#0d0e12] border border-white/10 rounded-xl p-5 md:p-6">
+                            <h2 className="text-sm font-black uppercase border-b border-white/10 pb-2 mb-4 tracking-wider">Review actions</h2>
 
                             <div className="mb-4">
-                                <label className="block text-xs font-bold uppercase text-gray-500 mb-1">Admin Notes / Reason</label>
+                                <label className="block text-[10px] font-bold uppercase text-zinc-500 mb-1.5">Admin notes / reason</label>
                                 <textarea
-                                    className="w-full p-2 border-2 border-gray-300 focus:border-black outline-none font-medium h-24"
-                                    placeholder="Enter notes for rejection or requested changes..."
+                                    className="w-full p-3 rounded-lg border border-white/15 bg-[#121318] text-white focus:border-accent-yellow/40 outline-none font-mono text-sm h-24 resize-none"
+                                    placeholder="Notes for rejection or requested changes…"
                                     value={adminNote}
                                     onChange={(e) => setAdminNote(e.target.value)}
                                 />
                             </div>
 
-                            <div className="flex flex-wrap gap-4">
+                            <div className="flex flex-wrap gap-2">
                                 <button
                                     onClick={() => handleAction('approve')}
                                     disabled={processing || submission.status === 'approved'}
-                                    className="px-6 py-2 bg-green-500 text-white font-black uppercase border-2 border-black shadow-[2px_2px_0_0_#000] hover:translate-y-px hover:shadow-none hover:border-green-600 disabled:opacity-50 disabled:cursor-not-allowed"
+                                    className="min-h-[44px] px-4 rounded-lg bg-emerald-600 text-white font-black uppercase text-[11px] border border-emerald-500/30 hover:bg-emerald-500 disabled:opacity-50 disabled:cursor-not-allowed"
                                 >
-                                    Approve & Publish
+                                    {processing ? 'Working…' : 'Approve & publish'}
                                 </button>
                                 <button
                                     onClick={() => handleAction('request_changes')}
                                     disabled={processing}
-                                    className="px-6 py-2 bg-blue-500 text-white font-black uppercase border-2 border-black shadow-[2px_2px_0_0_#000] hover:translate-y-px hover:shadow-none hover:border-blue-600 disabled:opacity-50 disabled:cursor-not-allowed"
+                                    className="min-h-[44px] px-4 rounded-lg bg-sky-600 text-white font-black uppercase text-[11px] border border-sky-500/30 hover:bg-sky-500 disabled:opacity-50"
                                 >
-                                    Request Changes
+                                    Request changes
                                 </button>
                                 <button
                                     onClick={() => handleAction('reject')}
                                     disabled={processing || submission.status === 'rejected'}
-                                    className="px-6 py-2 bg-red-500 text-white font-black uppercase border-2 border-black shadow-[2px_2px_0_0_#000] hover:translate-y-px hover:shadow-none hover:border-red-600 disabled:opacity-50 disabled:cursor-not-allowed"
+                                    className="min-h-[44px] px-4 rounded-lg bg-red-600 text-white font-black uppercase text-[11px] border border-red-500/30 hover:bg-red-500 disabled:opacity-50"
                                 >
                                     Reject
                                 </button>
                             </div>
+                            {submission.status === 'approved' && (
+                                <p className="mt-3 font-mono text-[10px] text-emerald-400">
+                                    Already approved — deal was published to the catalog on approve.
+                                </p>
+                            )}
                         </div>
                     </div>
 
                     {/* Sidebar */}
-                    <div className="space-y-6">
-                        <div className="bg-white border-3 border-[#111] p-6 shadow-[4px_4px_0_0_#000]">
-                            <h2 className="text-sm font-black uppercase mb-4 text-center">Logo Preview</h2>
-                            <div className="w-full aspect-square border-2 border-gray-100 flex items-center justify-center p-4">
+                    <div className="space-y-4">
+                        <div className="bg-[#0d0e12] border border-white/10 rounded-xl p-5">
+                            <h2 className="text-[11px] font-black uppercase mb-3 text-zinc-400 tracking-wider">Logo preview</h2>
+                            <div className="w-full aspect-square rounded-lg border border-white/10 bg-white/5 flex items-center justify-center p-4">
                                 {submission.logo_url ? (
                                     <img src={submission.logo_url} alt="Logo" className="max-w-full max-h-full object-contain" />
                                 ) : (
-                                    <span className="text-gray-400 text-xs">No Logo</span>
+                                    <span className="text-zinc-600 text-xs font-mono">No logo</span>
                                 )}
                             </div>
                         </div>
-                        <div className="bg-white border-3 border-[#111] p-6 shadow-[4px_4px_0_0_#000]">
-                            <h2 className="text-sm font-black uppercase mb-4">Contact Info</h2>
+                        <div className="bg-[#0d0e12] border border-white/10 rounded-xl p-5">
+                            <h2 className="text-[11px] font-black uppercase mb-3 text-zinc-400 tracking-wider">Contact</h2>
                             <div>
-                                <label className="block text-xs font-bold uppercase text-gray-500 mb-1">Submitter Email</label>
-                                <a href={`mailto:${submission.submitter_email}`} className="text-blue-600 hover:underline font-bold text-sm truncate block">
-                                    {submission.submitter_email}
-                                </a>
+                                <label className="block text-[10px] font-bold uppercase text-zinc-500 mb-1">Submitter email</label>
+                                {submission.submitter_email ? (
+                                    <a href={`mailto:${submission.submitter_email}`} className="text-sky-400 hover:underline font-bold text-sm break-all">
+                                        {submission.submitter_email}
+                                    </a>
+                                ) : (
+                                    <p className="text-zinc-600 text-sm font-mono">Not provided</p>
+                                )}
                             </div>
                         </div>
 
                         {/* Featured Listing — only shown if requested */}
                         {submission.featured_requested && (
-                            <div className="bg-white border-3 border-[#111] p-6 shadow-[4px_4px_0_0_#000]">
+                            <div className="bg-[#0d0e12] border border-white/10 p-6 ">
                                 <div className="flex items-center justify-between mb-3">
                                     <h2 className="text-sm font-black uppercase flex items-center gap-1">
                                         <span className="text-amber-500">⭐</span> Featured Listing
                                     </h2>
                                     {submission.featured_paid ? (
-                                        <span className="bg-green-500 text-white border border-black px-2 py-0.5 text-[9px] font-black uppercase">PAID</span>
+                                        <span className="bg-emerald-600 text-white border border-white/15 px-2 py-0.5 text-[9px] font-black uppercase">PAID</span>
                                     ) : (
-                                        <span className="bg-orange-500 text-white border border-black px-2 py-0.5 text-[9px] font-black uppercase">UNPAID</span>
+                                        <span className="bg-orange-500 text-white border border-white/15 px-2 py-0.5 text-[9px] font-black uppercase">UNPAID</span>
                                     )}
                                 </div>
 
                                 <div className="mb-3 flex items-center gap-2">
-                                    <span className="bg-black text-accent-yellow border border-black px-2 py-0.5 text-[10px] font-black uppercase tracking-wide">
+                                    <span className="bg-black text-accent-yellow border border-white/15 px-2 py-0.5 text-[10px] font-black uppercase tracking-wide">
                                         {featuredPlanLabel} · {featuredPlanPrice}
                                     </span>
                                 </div>
 
-                                <p className="text-xs text-gray-600 mb-3 leading-snug">
+                                <p className="text-xs text-zinc-400 mb-3 leading-snug">
                                     Submitter requested a Featured listing ({featuredPlanPrice} / {featuredPlanDuration}).
                                     {submission.status === 'pending' && ' Approve the submission first, then generate the payment link.'}
                                 </p>
@@ -273,25 +282,25 @@ export default function AdminSubmissionDetail() {
                                             <button
                                                 onClick={handleGeneratePaymentLink}
                                                 disabled={generatingLink}
-                                                className="w-full px-3 py-2 bg-amber-400 text-black font-black uppercase text-xs border-2 border-black shadow-[2px_2px_0_0_#000] hover:translate-y-px hover:shadow-none disabled:opacity-50 disabled:cursor-not-allowed"
+                                                className="w-full px-3 py-2 bg-accent-yellow text-black font-black uppercase text-xs border border-accent-yellow  hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed"
                                             >
                                                 {generatingLink ? 'Generating…' : 'Generate Payment Link'}
                                             </button>
                                         ) : (
                                             <div className="space-y-2">
-                                                <div className="bg-gray-100 border border-gray-300 p-2 text-[10px] font-mono break-all">
+                                                <div className="bg-white/5 border border-white/15 p-2 text-[10px] font-mono break-all text-zinc-300">
                                                     {paymentLink}
                                                 </div>
                                                 <div className="grid grid-cols-2 gap-2">
                                                     <button
                                                         onClick={copyPaymentLink}
-                                                        className="px-2 py-1.5 bg-black text-white font-bold uppercase text-[10px] border-2 border-black hover:bg-gray-800"
+                                                        className="px-2 py-1.5 bg-black text-white font-bold uppercase text-[10px] border border-white/15 hover:bg-gray-800"
                                                     >
                                                         Copy
                                                     </button>
                                                     <a
                                                         href={`mailto:${submission.submitter_email || ''}?subject=${encodeURIComponent('Your Featured Listing payment link')}&body=${encodeURIComponent(`Hi,\n\nThanks for choosing Featured listing for ${submission.company_name} on FoundersPrime.\n\nPay ${featuredPlanPrice} here to activate your ${featuredPlanDuration} pinned placement:\n\n${paymentLink}\n\n— FoundersPrime`)}`}
-                                                        className="px-2 py-1.5 bg-blue-500 text-white font-bold uppercase text-[10px] border-2 border-black hover:bg-blue-600 text-center"
+                                                        className="px-2 py-1.5 bg-blue-500 text-white font-bold uppercase text-[10px] border border-white/15 hover:bg-blue-600 text-center"
                                                     >
                                                         Email it
                                                     </a>
@@ -308,7 +317,7 @@ export default function AdminSubmissionDetail() {
                                 )}
 
                                 {(submission.status === 'rejected' || submission.status === 'changes_requested') && !submission.featured_paid && (
-                                    <p className="text-[11px] text-gray-500">
+                                    <p className="text-[11px] text-zinc-500">
                                         No payment due — submission was {submission.status.replace('_', ' ')}.
                                     </p>
                                 )}
@@ -318,7 +327,7 @@ export default function AdminSubmissionDetail() {
                                         href="https://app.dodopayments.com"
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="block w-full text-center px-3 py-2 bg-white text-black font-bold uppercase text-[11px] border-2 border-red-500 text-red-600 hover:bg-red-50"
+                                        className="block w-full text-center px-3 py-2 rounded-lg bg-transparent font-bold uppercase text-[11px] border border-red-500/50 text-red-400 hover:bg-red-500/10"
                                     >
                                         Refund in Dodo →
                                     </a>

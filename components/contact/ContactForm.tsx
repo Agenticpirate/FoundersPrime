@@ -1,96 +1,128 @@
 'use client'
 
 import { useState } from 'react'
+import { motion, useReducedMotion } from 'framer-motion'
+import { premiumEase } from '@/components/ui/premium-motion'
+
+const CATEGORIES = [
+  { value: 'general', label: 'General', icon: 'chat_bubble' },
+  { value: 'support', label: 'Support', icon: 'support_agent' },
+  { value: 'billing', label: 'Billing', icon: 'credit_card' },
+  { value: 'partnership', label: 'Partnership', icon: 'handshake' },
+  { value: 'bug', label: 'Bug report', icon: 'bug_report' },
+  { value: 'feature', label: 'Feature', icon: 'lightbulb' },
+]
+
+const inputClass =
+  'w-full h-11 pl-10 pr-4 text-[13px] bg-gray-50 dark:bg-white/[0.04] border border-black/[0.08] dark:border-white/10 rounded-xl text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-accent-yellow/35 focus:border-accent-yellow hover:border-accent-yellow/25 transition-colors'
 
 export default function ContactForm() {
+  const reduce = useReducedMotion()
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     subject: '',
     category: 'general',
-    message: ''
+    message: '',
   })
-
   const [submitted, setSubmitted] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
-    // Simulate API call with delay for professional UX feedback
-    await new Promise((resolve) => setTimeout(resolve, 1200))
+    await new Promise((resolve) => setTimeout(resolve, 1100))
     setIsSubmitting(false)
     setSubmitted(true)
   }
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    })
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value })
   }
-
-  const categories = [
-    { value: 'general', label: 'General', icon: 'chat_bubble' },
-    { value: 'support', label: 'Support', icon: 'support_agent' },
-    { value: 'billing', label: 'Billing', icon: 'credit_card' },
-    { value: 'partnership', label: 'Partnership', icon: 'handshake' },
-    { value: 'bug', label: 'Bug Report', icon: 'bug_report' },
-    { value: 'feature', label: 'Feature Request', icon: 'lightbulb' }
-  ]
 
   if (submitted) {
     return (
-      <div className="relative bg-white dark:bg-[#08080a] border border-gray-200 dark:border-zinc-800/80 rounded-2xl p-8 md:p-12 text-center transition-all duration-300 shadow-xl overflow-hidden fp-fade-up">
-        {/* Glow behind success */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-emerald-500/10 dark:bg-emerald-500/5 rounded-full blur-3xl pointer-events-none" />
-        
-        <div className="inline-flex size-20 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 items-center justify-center rounded-full mb-6 animate-bounce">
-          <span className="material-symbols-outlined text-4xl">check_circle</span>
+      <motion.div
+        initial={reduce ? false : { opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, ease: premiumEase }}
+        className="relative overflow-hidden rounded-2xl border border-black/[0.06] dark:border-white/[0.08] bg-white dark:bg-[#0c0c0c] p-8 md:p-12 text-center shadow-[0_8px_30px_rgba(0,0,0,0.06)]"
+      >
+        <div
+          aria-hidden
+          className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-accent-yellow/50 to-transparent"
+        />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-40 h-40 bg-accent-yellow/10 rounded-full blur-3xl pointer-events-none" />
+
+        <div className="relative inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-accent-yellow/15 border border-accent-yellow/30 text-accent-yellow mb-5">
+          <span className="material-symbols-outlined !text-[32px]">check_circle</span>
         </div>
-        <h3 className="font-heading text-2xl font-black text-gray-900 dark:text-white mb-3 tracking-tight">
-          Transmission Received
+        <h3 className="relative font-mono text-xl font-black text-gray-900 dark:text-white mb-2 tracking-tight">
+          Message received
         </h3>
-        <p className="font-sans text-xs md:text-sm text-gray-500 dark:text-zinc-400 mb-8 max-w-sm mx-auto leading-relaxed">
-          Thanks for reaching out. A partner from our operations team will follow up within 24 hours.
+        <p className="relative text-[13px] text-gray-500 dark:text-gray-400 mb-7 max-w-sm mx-auto leading-relaxed">
+          Thanks for writing in. The FoundersPrime team will reply within 24–48 hours.
         </p>
         <button
-          onClick={() => setSubmitted(false)}
-          className="px-6 py-3 bg-yellow-400 hover:bg-yellow-500 text-black font-mono text-xs font-bold uppercase tracking-wider rounded-lg transition-all shadow-lg hover:shadow-yellow-400/20"
+          type="button"
+          onClick={() => {
+            setSubmitted(false)
+            setFormData({
+              name: '',
+              email: '',
+              subject: '',
+              category: 'general',
+              message: '',
+            })
+          }}
+          className="relative inline-flex h-11 items-center justify-center gap-2 px-6 rounded-xl bg-accent-yellow text-black font-mono text-[11px] font-black uppercase tracking-[0.08em] hover:bg-amber-300 transition-colors leading-none"
         >
-          Send Another Message
+          <span className="leading-none">Send another</span>
+          <svg width="13" height="13" viewBox="0 0 14 14" fill="none" className="block shrink-0" aria-hidden>
+            <path
+              d="M2.5 7h9M7.5 3.5 11 7l-3.5 3.5"
+              stroke="currentColor"
+              strokeWidth="1.75"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
         </button>
-      </div>
+      </motion.div>
     )
   }
 
   return (
-    <div className="relative bg-white dark:bg-[#08080a] border border-gray-200 dark:border-zinc-800/80 rounded-2xl p-6 md:p-8 transition-all duration-300 shadow-xl fp-fade-up">
-      {/* Decorative top bar */}
-      <div className="absolute top-0 left-6 right-6 h-[2px] bg-gradient-to-r from-transparent via-yellow-400/40 to-transparent" />
+    <div className="relative overflow-hidden rounded-2xl border border-black/[0.06] dark:border-white/[0.08] bg-white dark:bg-[#0c0c0c] p-5 md:p-7 shadow-[0_8px_30px_rgba(0,0,0,0.06)]">
+      <div
+        aria-hidden
+        className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-accent-yellow/40 to-transparent"
+      />
 
-      <div className="relative mb-8 flex items-center gap-4">
-        <div className="size-12 bg-yellow-400/10 border border-yellow-400/20 flex items-center justify-center rounded-xl text-yellow-400">
-          <span className="material-symbols-outlined !text-[24px]">contact_support</span>
+      <div className="relative mb-6 flex items-center gap-3.5">
+        <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-accent-yellow/15 border border-accent-yellow/25 text-accent-yellow">
+          <span className="material-symbols-outlined !text-[22px]">contact_support</span>
         </div>
         <div>
-          <h2 className="font-heading text-lg font-black text-gray-900 dark:text-white uppercase tracking-wider">
-            Send Message
+          <h2 className="font-mono text-[14px] font-black uppercase tracking-[0.1em] text-gray-900 dark:text-white">
+            Send a message
           </h2>
-          <p className="font-mono text-[10px] text-gray-400 dark:text-zinc-500 uppercase tracking-widest mt-0.5">
-            Encrypted secure transmission
+          <p className="font-mono text-[10px] text-gray-500 dark:text-gray-400 uppercase tracking-wider mt-0.5">
+            We reply within 24–48 hours
           </p>
         </div>
       </div>
 
-      <form onSubmit={handleSubmit} className="relative space-y-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+      <form onSubmit={handleSubmit} className="relative space-y-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label className="block font-mono text-[10px] font-bold text-gray-500 dark:text-zinc-400 mb-2 uppercase tracking-widest">
-              Full Name
+            <label className="block font-mono text-[10px] font-bold text-gray-500 dark:text-gray-400 mb-1.5 uppercase tracking-[0.12em]">
+              Full name
             </label>
             <div className="relative group">
-              <span className="material-symbols-outlined !text-[16px] text-gray-400 dark:text-zinc-500 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none group-focus-within:text-yellow-400 transition-colors">
+              <span className="material-symbols-outlined !text-[16px] text-gray-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none group-focus-within:text-accent-yellow transition-colors">
                 person
               </span>
               <input
@@ -99,17 +131,18 @@ export default function ContactForm() {
                 value={formData.name}
                 onChange={handleChange}
                 required
-                className="w-full pl-10 pr-4 py-3 text-xs bg-gray-50 dark:bg-zinc-900/30 hover:bg-gray-100 dark:hover:bg-zinc-900/50 border border-gray-200 dark:border-zinc-800 focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 dark:focus:border-yellow-400/70 dark:focus:ring-yellow-400/40 text-gray-950 dark:text-white font-sans rounded-xl transition-all placeholder:text-gray-400 dark:placeholder:text-zinc-650"
-                placeholder="John Doe"
+                autoComplete="name"
+                className={inputClass}
+                placeholder="Jane Founder"
               />
             </div>
           </div>
           <div>
-            <label className="block font-mono text-[10px] font-bold text-gray-500 dark:text-zinc-400 mb-2 uppercase tracking-widest">
-              Email Address
+            <label className="block font-mono text-[10px] font-bold text-gray-500 dark:text-gray-400 mb-1.5 uppercase tracking-[0.12em]">
+              Email
             </label>
             <div className="relative group">
-              <span className="material-symbols-outlined !text-[16px] text-gray-400 dark:text-zinc-500 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none group-focus-within:text-yellow-400 transition-colors">
+              <span className="material-symbols-outlined !text-[16px] text-gray-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none group-focus-within:text-accent-yellow transition-colors">
                 alternate_email
               </span>
               <input
@@ -118,20 +151,21 @@ export default function ContactForm() {
                 value={formData.email}
                 onChange={handleChange}
                 required
-                className="w-full pl-10 pr-4 py-3 text-xs bg-gray-50 dark:bg-zinc-900/30 hover:bg-gray-100 dark:hover:bg-zinc-900/50 border border-gray-200 dark:border-zinc-800 focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 dark:focus:border-yellow-400/70 dark:focus:ring-yellow-400/40 text-gray-950 dark:text-white font-sans rounded-xl transition-all placeholder:text-gray-400 dark:placeholder:text-zinc-650"
-                placeholder="you@email.com"
+                autoComplete="email"
+                className={inputClass}
+                placeholder="you@company.com"
               />
             </div>
           </div>
         </div>
 
-        {/* Category Selector */}
+        {/* Category chips */}
         <div>
-          <label className="block font-mono text-[10px] font-bold text-gray-500 dark:text-zinc-400 mb-3 uppercase tracking-widest">
-            Inquiry Category
+          <label className="block font-mono text-[10px] font-bold text-gray-500 dark:text-gray-400 mb-2.5 uppercase tracking-[0.12em]">
+            Topic
           </label>
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-            {categories.map((category) => {
+            {CATEGORIES.map((category) => {
               const active = formData.category === category.value
               return (
                 <button
@@ -139,14 +173,16 @@ export default function ContactForm() {
                   type="button"
                   onClick={() => setFormData({ ...formData, category: category.value })}
                   aria-pressed={active}
-                  className={`inline-flex items-center justify-center gap-2 px-3 py-2.5 border font-sans text-xs rounded-xl transition-all ${
+                  className={`inline-flex h-10 items-center justify-center gap-1.5 px-2.5 border rounded-xl font-mono text-[11px] font-bold transition-all leading-none ${
                     active
-                      ? 'bg-yellow-400 border-yellow-450 text-black font-bold shadow-md scale-[1.02]'
-                      : 'bg-gray-50 dark:bg-zinc-900/20 border-gray-200 dark:border-zinc-800 text-gray-650 dark:text-zinc-400 hover:text-gray-900 dark:hover:text-white hover:border-gray-300 dark:hover:border-zinc-700'
+                      ? 'bg-accent-yellow border-accent-yellow text-black shadow-sm'
+                      : 'bg-gray-50 dark:bg-white/[0.03] border-black/[0.08] dark:border-white/10 text-gray-600 dark:text-gray-400 hover:border-accent-yellow/30 hover:text-gray-900 dark:hover:text-white'
                   }`}
                 >
-                  <span className="material-symbols-outlined !text-[15px]">{category.icon}</span>
-                  <span>{category.label}</span>
+                  <span className="material-symbols-outlined !text-[15px] !leading-none">
+                    {category.icon}
+                  </span>
+                  <span className="leading-none">{category.label}</span>
                 </button>
               )
             })}
@@ -154,11 +190,11 @@ export default function ContactForm() {
         </div>
 
         <div>
-          <label className="block font-mono text-[10px] font-bold text-gray-500 dark:text-zinc-400 mb-2 uppercase tracking-widest">
+          <label className="block font-mono text-[10px] font-bold text-gray-500 dark:text-gray-400 mb-1.5 uppercase tracking-[0.12em]">
             Subject
           </label>
           <div className="relative group">
-            <span className="material-symbols-outlined !text-[16px] text-gray-400 dark:text-zinc-500 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none group-focus-within:text-yellow-400 transition-colors">
+            <span className="material-symbols-outlined !text-[16px] text-gray-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none group-focus-within:text-accent-yellow transition-colors">
               topic
             </span>
             <input
@@ -167,15 +203,15 @@ export default function ContactForm() {
               value={formData.subject}
               onChange={handleChange}
               required
-              className="w-full pl-10 pr-4 py-3 text-xs bg-gray-50 dark:bg-zinc-900/30 hover:bg-gray-100 dark:hover:bg-zinc-900/50 border border-gray-200 dark:border-zinc-800 focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 dark:focus:border-yellow-400/70 dark:focus:ring-yellow-400/40 text-gray-950 dark:text-white font-sans rounded-xl transition-all placeholder:text-gray-400 dark:placeholder:text-zinc-650"
-              placeholder="Briefly describe your inquiry"
+              className={inputClass}
+              placeholder="Brief summary of your inquiry"
             />
           </div>
         </div>
 
         <div>
-          <label className="block font-mono text-[10px] font-bold text-gray-500 dark:text-zinc-400 mb-2 uppercase tracking-widest">
-            Detailed Message
+          <label className="block font-mono text-[10px] font-bold text-gray-500 dark:text-gray-400 mb-1.5 uppercase tracking-[0.12em]">
+            Message
           </label>
           <textarea
             name="message"
@@ -183,21 +219,55 @@ export default function ContactForm() {
             onChange={handleChange}
             required
             rows={5}
-            className="w-full px-4 py-3 text-xs bg-gray-50 dark:bg-zinc-900/30 hover:bg-gray-100 dark:hover:bg-zinc-900/50 border border-gray-200 dark:border-zinc-800 focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 dark:focus:border-yellow-400/70 dark:focus:ring-yellow-400/40 text-gray-950 dark:text-white font-sans resize-none rounded-xl transition-all placeholder:text-gray-400 dark:placeholder:text-zinc-650"
-            placeholder="Please enter all relevant details so we can address your inquiry immediately..."
+            className="w-full px-4 py-3 text-[13px] bg-gray-50 dark:bg-white/[0.04] border border-black/[0.08] dark:border-white/10 rounded-xl text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-accent-yellow/35 focus:border-accent-yellow hover:border-accent-yellow/25 transition-colors resize-none leading-relaxed"
+            placeholder="Share context, account email, and any screenshots details so we can resolve it on the first reply…"
           />
         </div>
 
-        <button
+        <motion.button
           type="submit"
           disabled={isSubmitting}
-          className="w-full px-6 py-3.5 bg-yellow-400 hover:bg-yellow-500 disabled:bg-yellow-400/70 text-black font-mono text-xs font-bold uppercase tracking-wider rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg hover:shadow-yellow-400/10 btn-shiny"
+          whileHover={reduce || isSubmitting ? undefined : { y: -1 }}
+          whileTap={reduce || isSubmitting ? undefined : { scale: 0.99 }}
+          className="group w-full inline-flex h-12 items-center justify-center gap-2 rounded-xl bg-accent-yellow text-black font-mono text-[12px] font-black uppercase tracking-[0.08em] border border-black/10 shadow-[0_4px_16px_rgba(245,158,11,0.25)] hover:bg-amber-300 disabled:opacity-60 disabled:cursor-not-allowed transition-colors leading-none"
         >
-          <span>{isSubmitting ? 'Transmitting...' : 'Send Secure Message'}</span>
-          {!isSubmitting && (
-            <span className="material-symbols-outlined !text-[16px] text-black">send</span>
+          {isSubmitting ? (
+            <>
+              <span className="material-symbols-outlined !text-[18px] animate-spin">progress_activity</span>
+              <span className="leading-none">Sending…</span>
+            </>
+          ) : (
+            <>
+              <span className="leading-none">Send message</span>
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 14 14"
+                fill="none"
+                className="block shrink-0 transition-transform group-hover:translate-x-0.5"
+                aria-hidden
+              >
+                <path
+                  d="M2.5 7h9M7.5 3.5 11 7l-3.5 3.5"
+                  stroke="currentColor"
+                  strokeWidth="1.75"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </>
           )}
-        </button>
+        </motion.button>
+
+        <p className="text-center font-mono text-[10px] text-gray-400 dark:text-gray-500">
+          Prefer email?{' '}
+          <a
+            href="mailto:support@foundersprime.com"
+            className="text-accent-yellow font-semibold hover:underline"
+          >
+            support@foundersprime.com
+          </a>
+        </p>
       </form>
     </div>
   )

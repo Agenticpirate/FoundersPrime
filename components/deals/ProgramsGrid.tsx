@@ -4,41 +4,39 @@
 import { useState, useEffect, useMemo } from 'react'
 import Link from 'next/link'
 import { useRouter, useSearchParams, usePathname } from 'next/navigation'
+import { motion } from 'framer-motion'
 import { useAuth } from '@/lib/auth/hooks'
 import Mandala from '@/components/ui/Mandala'
 import { checkProStatus } from '@/lib/auth/user-context'
-import { accelerators2026, Accelerator } from '@/data/accelerators-2026'
-import { incubators2026, Incubator } from '@/data/incubators-2026'
-import { grants2026, Grant } from '@/data/grants-2026'
 import type { ProgramType } from './ProgramsSidebar'
 import type { ProgramFilterState } from './ProgramsFilterBar'
+import { StaggerGrid, StaggerGridItem } from '@/components/ui/premium-motion'
+import { CardHoverGlow, cardHoverClass, cardLogoHoverClass, cardTitleHoverClass } from '@/components/ui/card-hover'
+import Pagination from '@/components/Pagination'
+import BrandLogo from '@/components/ui/BrandLogo'
+import { cleanDomain } from '@/lib/logo-utils'
+import {
+  getStaticPrograms,
+  fromSupabaseProgram,
+  type UnifiedProgram as CatalogProgram,
+} from '@/lib/programs-catalog'
 
-// Helper to determine the favicon/logo chain
-function getLogoUrl(logo: string | undefined, name: string, website: string | undefined) {
-  let domain = ''
-  if (website) {
-    try {
-      domain = new URL(website).hostname.replace('www.', '')
-    } catch { }
+function websiteDomain(website?: string): string | undefined {
+  if (!website) return undefined
+  try {
+    return cleanDomain(new URL(website).hostname) || undefined
+  } catch {
+    return cleanDomain(website) || undefined
   }
-  const chain = [
-    logo,
-    domain ? `https://www.google.com/s2/favicons?domain=${domain}&sz=128` : null,
-    domain ? `https://logo.clearbit.com/${domain}` : null,
-  ].filter(Boolean) as string[]
-
-  if (chain.length === 0) {
-    return `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=f3f4f6&color=374151&bold=true&size=128`
-  }
-  return chain[0]
 }
 
 // ──────────────────────────────────────────────────────────
 // Redesigned Unified Program Card (matches YC/Techstars reference design)
 // ──────────────────────────────────────────────────────────
 interface ProgramCardProps {
-  logo: string
   name: string
+  website?: string
+  logo?: string
   slug: string
   badge?: string
   description: string
@@ -50,8 +48,9 @@ interface ProgramCardProps {
 }
 
 function ProgramCard({
-  logo,
   name,
+  website,
+  logo,
   slug,
   badge,
   description,
@@ -61,99 +60,137 @@ function ProgramCard({
   isPro,
   type,
 }: ProgramCardProps) {
-  const [imgSrc, setImgSrc] = useState(logo)
-  const [failed, setFailed] = useState(false)
+  const domain = websiteDomain(website)
 
   const getBadgeStyle = (b?: string) => {
     if (!b) return ''
     const bLc = b.toLowerCase()
     if (bLc.includes('open') || bLc.includes('active')) {
-      return 'bg-emerald-950/40 text-emerald-400 border border-emerald-500/20'
+      return 'bg-accent-yellow/15 text-accent-yellow border border-accent-yellow/30'
     }
     if (bLc.includes('invite')) {
-      return 'bg-purple-950/40 text-purple-400 border border-purple-500/20'
+      return 'bg-violet-500/10 text-violet-400 border-violet-500/25'
     }
-    if (bLc.includes('featured') || bLc.includes('recommended')) {
-      return 'bg-amber-950/40 text-accent-yellow border border-accent-yellow/20'
+    if (bLc.includes('featured') || bLc.includes('recommended') || bLc.includes('popular')) {
+      return 'bg-orange-500/15 text-orange-400 border-orange-500/30'
     }
-    return 'bg-gray-800/40 text-gray-400 border border-white/10'
+    return 'bg-white/5 text-gray-400 border border-white/10'
   }
+
+  const ctaLabel = isPro ? 'View details' : 'Unlock'
 
   return (
     <Link
       href={isPro ? `/deals/${slug}` : '/pricing'}
-      className="flex flex-col bg-[#0b0b0b] border border-white/10 hover:border-accent-yellow/30 rounded-lg p-4 transition-all duration-200 group h-full relative overflow-hidden text-left"
+      className={`flex flex-col bg-gradient-to-b from-[#111] to-[#0a0a0a] border border-white/[0.07] rounded-xl md:rounded-2xl p-3 md:p-4 h-full text-left min-w-0 ${cardHoverClass}`}
     >
-      {/* Top badges */}
-      <div className="flex flex-wrap gap-1.5 mb-3">
+      <CardHoverGlow />
+
+      {/* Fixed badge strip — same height on every card */}
+      <div className="relative flex flex-wrap items-center gap-1 md:gap-1.5 mb-2 md:mb-3 min-h-[20px] md:min-h-[22px]">
         {type && (
-          <span className={`px-2 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider font-mono ${type === 'accelerator' ? 'bg-orange-950/40 text-orange-400 border border-orange-500/20' :
-              type === 'incubator' ? 'bg-teal-950/40 text-teal-400 border border-teal-500/20' :
-                'bg-emerald-950/40 text-emerald-400 border border-emerald-500/20'
-            }`}>
+          <span
+            className={`px-1.5 md:px-2 py-0.5 rounded-full text-[8px] md:text-[9px] font-bold uppercase tracking-wider font-mono border ${
+              type === 'accelerator'
+                ? 'bg-orange-500/10 text-orange-400 border-orange-500/25'
+                : type === 'incubator'
+                  ? 'bg-violet-500/10 text-violet-400 border-violet-500/25'
+                  : 'bg-sky-500/10 text-sky-400 border-sky-500/25'
+            }`}
+          >
             {type}
           </span>
         )}
         {badge && (
-          <span className={`px-2 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider font-mono ${getBadgeStyle(badge)}`}>
+          <span className={`px-1.5 md:px-2 py-0.5 rounded-full text-[8px] md:text-[9px] font-bold uppercase tracking-wider font-mono ${getBadgeStyle(badge)}`}>
             {badge}
           </span>
         )}
       </div>
 
-      {/* Header: logo + name */}
-      <div className="flex items-center gap-3 mb-3">
-        <div className="w-10 h-10 bg-white/5 border border-white/10 rounded-lg flex items-center justify-center p-1.5 overflow-hidden flex-shrink-0 relative">
-          {!failed ? (
-            <img
-              src={imgSrc}
-              alt=""
-              className="w-full h-full object-contain"
-              onError={() => {
-                // simple fallback strategy
-                if (imgSrc !== logo) {
-                  setFailed(true)
-                } else {
-                  setImgSrc(`https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=f3f4f6&color=374151&bold=true&size=128`)
-                }
-              }}
-            />
-          ) : (
-            <span className="text-[10px] font-mono font-black text-gray-500">
-              {name.substring(0, 2).toUpperCase()}
-            </span>
-          )}
+      {/* Logo row: top-aligned fixed plate so icons line up across the grid */}
+      <div className="relative flex items-start gap-2 md:gap-3 mb-2 md:mb-3 min-h-0 md:min-h-[3rem] min-w-0">
+        <div className={`w-10 h-10 md:w-12 md:h-12 rounded-xl md:rounded-2xl overflow-hidden flex-shrink-0 bg-white ${cardLogoHoverClass}`}>
+          <BrandLogo
+            name={name}
+            domain={domain}
+            logo={logo}
+            size="md"
+            plate
+            eager
+            className="!w-10 !h-10 md:!w-12 md:!h-12 !rounded-xl md:!rounded-2xl"
+          />
         </div>
-        <h3 className="text-[14px] font-bold text-white leading-tight group-hover:text-accent-yellow transition-colors line-clamp-2 flex-1">
+        <h3 className={`text-[12px] md:text-[14px] font-bold text-white leading-snug line-clamp-2 min-h-[2.25rem] md:min-h-[2.5rem] flex-1 pt-0.5 min-w-0 ${cardTitleHoverClass}`}>
           {name}
         </h3>
       </div>
 
-      {/* Description */}
-      <p className="text-[11.5px] text-gray-450 leading-relaxed mb-4 line-clamp-3 flex-grow">
+      <p className="relative text-[10px] md:text-[11.5px] text-gray-400 leading-relaxed mb-2.5 md:mb-4 line-clamp-2 md:line-clamp-3 flex-grow">
         {description}
       </p>
 
-      {/* 3-column key metrics table */}
-      <div className="grid grid-cols-3 gap-2 py-3 border-t border-b border-white/5 mb-4 font-mono">
-        <div className="min-w-0">
-          <span className="block text-[11px] font-black text-emerald-400 truncate">{funding || 'N/A'}</span>
-          <span className="block text-[8.5px] text-gray-500 uppercase tracking-wider mt-0.5">Funding</span>
+      {/* Metrics fields — fixed rows for alignment across cards */}
+      <div className="relative grid grid-cols-3 gap-0.5 md:gap-1 py-2 md:py-2.5 px-0.5 md:px-1 rounded-xl bg-white/[0.03] border border-white/[0.05] mb-2.5 md:mb-3.5 font-mono">
+        <div className="min-w-0 px-1 md:px-1.5 flex flex-col items-center justify-center text-center">
+          <span className="block w-full text-[9px] sm:text-[11px] font-black text-accent-yellow truncate leading-tight">{funding || 'N/A'}</span>
+          <span className="block text-[7px] md:text-[8px] text-gray-500 uppercase tracking-wider mt-0.5 leading-none">Funding</span>
         </div>
-        <div className="min-w-0">
-          <span className="block text-[11px] font-black text-white truncate">{equity || '0%'}</span>
-          <span className="block text-[8.5px] text-gray-500 uppercase tracking-wider mt-0.5">Equity</span>
+        <div className="min-w-0 px-1 md:px-1.5 flex flex-col items-center justify-center text-center border-x border-white/[0.05]">
+          <span className="block w-full text-[9px] sm:text-[11px] font-black text-white truncate leading-tight">{equity || '0%'}</span>
+          <span className="block text-[7px] md:text-[8px] text-gray-500 uppercase tracking-wider mt-0.5 leading-none">Equity</span>
         </div>
-        <div className="min-w-0">
-          <span className="block text-[11px] font-black text-white truncate">{duration || 'N/A'}</span>
-          <span className="block text-[8.5px] text-gray-500 uppercase tracking-wider mt-0.5">Duration</span>
+        <div className="min-w-0 px-1 md:px-1.5 flex flex-col items-center justify-center text-center">
+          <span className="block w-full text-[9px] sm:text-[11px] font-black text-white truncate leading-tight">{duration || 'N/A'}</span>
+          <span className="block text-[7px] md:text-[8px] text-gray-500 uppercase tracking-wider mt-0.5 leading-none">Duration</span>
         </div>
       </div>
 
-      {/* View action */}
-      <div className="flex items-center gap-1 text-[10px] font-mono font-bold uppercase tracking-wider text-accent-yellow mt-auto">
-        <span>VIEW DETAILS</span>
-        <span className="material-symbols-outlined !text-[12px] group-hover:translate-x-0.5 transition-transform">arrow_forward</span>
+      {/* CTA — full-width bar; CSS grid + SVG icon so text/icon never baseline-drift */}
+      <div className="relative mt-auto w-full pt-0.5 md:pt-1">
+        <span
+          className="grid h-9 md:h-10 w-full grid-flow-col auto-cols-max place-content-center place-items-center gap-1.5 md:gap-2 rounded-xl border border-black/5 bg-white text-black transition-colors duration-200 group-hover:bg-accent-yellow"
+          aria-hidden="true"
+        >
+          <span className="font-mono text-[10px] md:text-[11px] font-black uppercase tracking-[0.1em] leading-none">
+            {ctaLabel}
+          </span>
+          {isPro ? (
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 14 14"
+              fill="none"
+              aria-hidden
+              className="block shrink-0 transition-transform duration-200 group-hover:translate-x-0.5"
+            >
+              <path
+                d="M2.5 7h9M7.5 3.5 11 7l-3.5 3.5"
+                stroke="currentColor"
+                strokeWidth="1.75"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          ) : (
+            <svg
+              width="13"
+              height="13"
+              viewBox="0 0 24 24"
+              fill="none"
+              aria-hidden
+              className="block shrink-0"
+            >
+              <path
+                d="M17 11V8a5 5 0 0 0-10 0v3M6 11h12v9H6v-9Z"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          )}
+        </span>
       </div>
     </Link>
   )
@@ -196,126 +233,65 @@ function PremiumCTA() {
     'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80',
     'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80',
     'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80',
-    'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80'
+    'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80',
   ]
 
   return (
-    <div className="relative overflow-hidden bg-gradient-to-r from-amber-950/20 to-yellow-950/10 border border-accent-yellow/20 rounded-xl p-6 md:p-8 mt-12 flex flex-col xl:flex-row xl:items-center xl:justify-between gap-6">
-      {/* Decorative background grid/light */}
-      <div className="absolute inset-0 pointer-events-none opacity-30" style={{
-        backgroundImage: 'radial-gradient(circle at 80% 50%, rgba(245, 158, 11, 0.15), transparent 50%)'
-      }} />
-
-      {/* Info Block */}
+    <motion.div
+      initial={{ opacity: 0, y: 16 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-40px' }}
+      transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+      className="relative overflow-hidden bg-gradient-to-br from-amber-950/25 via-[#0c0c0c] to-yellow-950/15 border border-accent-yellow/25 rounded-2xl p-6 md:p-8 mt-10 flex flex-col xl:flex-row xl:items-center xl:justify-between gap-6 shadow-[0_0_0_1px_rgba(245,158,11,0.05),0_20px_50px_rgba(0,0,0,0.25)]"
+    >
+      <div
+        className="absolute inset-0 pointer-events-none opacity-40"
+        style={{
+          backgroundImage:
+            'radial-gradient(circle at 80% 50%, rgba(245, 158, 11, 0.18), transparent 50%)',
+        }}
+      />
       <div className="flex items-start gap-4 z-10">
-        <div className="w-12 h-12 rounded-xl bg-accent-yellow/10 border border-accent-yellow/30 flex items-center justify-center flex-shrink-0 text-accent-yellow">
-          <span className="material-symbols-outlined !text-[24px]">workspace_premium</span>
+        <div className="w-12 h-12 rounded-2xl bg-accent-yellow/15 border border-accent-yellow/30 flex items-center justify-center flex-shrink-0 text-accent-yellow">
+          <span className="material-symbols-outlined !text-[24px]" style={{ fontVariationSettings: "'FILL' 1" }}>
+            workspace_premium
+          </span>
         </div>
         <div className="min-w-0">
           <h4 className="font-mono text-base md:text-lg font-bold text-white uppercase tracking-wider mb-1">
-            Unlock premium programs &amp; insider opportunities.
+            Unlock the full program directory
           </h4>
-          <p className="text-xs md:text-sm text-gray-400 max-w-xl">
-            Get early access, application templates, expert review &amp; more with FoundersPrime Membership.
+          <p className="text-xs md:text-sm text-gray-400 max-w-xl leading-relaxed">
+            Direct apply links, equity terms, deadlines, and templates — built for founders who ship.
           </p>
         </div>
       </div>
-
-      {/* Action Block */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 z-10 flex-shrink-0">
-        {/* Avatars pile */}
         <div className="flex items-center gap-2">
           <div className="flex -space-x-2">
             {verifiedAvatars.map((url, i) => (
+              // eslint-disable-next-line @next/next/no-img-element
               <img
                 key={i}
                 src={url}
                 alt=""
-                className="w-6 h-6 rounded-full border border-black object-cover"
+                className="w-7 h-7 rounded-full border-2 border-[#0c0c0c] object-cover"
               />
             ))}
           </div>
-          <span className="font-mono text-[9px] text-gray-500 uppercase tracking-wider">Join 10,000+ founders</span>
+          <span className="font-mono text-[9px] text-gray-500 uppercase tracking-wider">
+            10,000+ founders
+          </span>
         </div>
-
-        {/* Button */}
         <Link
           href="/pricing"
-          className="inline-flex items-center gap-1.5 bg-accent-yellow text-black font-mono font-bold text-[11px] uppercase tracking-wider px-5 py-3 rounded-lg hover:bg-amber-300 transition-colors shadow-lg"
+          className="inline-flex items-center gap-1.5 bg-accent-yellow text-black font-mono font-bold text-[11px] uppercase tracking-wider px-5 py-3 rounded-xl hover:bg-amber-300 transition-all hover:-translate-y-0.5 shadow-[0_8px_24px_rgba(245,158,11,0.3)]"
         >
-          <span>VIEW MEMBERSHIP PLANS</span>
+          View plans
           <span className="material-symbols-outlined !text-[13px]">arrow_forward</span>
         </Link>
       </div>
-    </div>
-  )
-}
-
-// ──────────────────────────────────────────────────────────
-// Pagination component matching reference design
-// ──────────────────────────────────────────────────────────
-interface PaginationControlsProps {
-  currentPage: number
-  totalPages: number
-  onPageChange: (page: number) => void
-}
-
-function PaginationControls({ currentPage, totalPages, onPageChange }: PaginationControlsProps) {
-  if (totalPages <= 1) return null
-
-  const getPageNumbers = (): (number | string)[] => {
-    if (totalPages <= 7) {
-      return Array.from({ length: totalPages }, (_, i) => i + 1)
-    }
-    if (currentPage <= 4) {
-      return [1, 2, 3, 4, 5, '...', totalPages]
-    }
-    if (currentPage >= totalPages - 3) {
-      return [1, '...', totalPages - 4, totalPages - 3, totalPages - 2, totalPages - 1, totalPages]
-    }
-    return [1, '...', currentPage - 1, currentPage, currentPage + 1, '...', totalPages]
-  }
-
-  return (
-    <div className="mt-8 flex flex-col items-center gap-3">
-      <div className="flex flex-wrap items-center justify-center gap-1.5 font-mono text-[10px] font-bold">
-        <button
-          onClick={() => onPageChange(currentPage - 1)}
-          disabled={currentPage === 1}
-          className="px-3 py-2 bg-white/5 hover:bg-white/10 disabled:opacity-30 disabled:pointer-events-none text-gray-400 hover:text-white rounded transition-colors uppercase tracking-wider border border-white/5"
-        >
-          &larr; PREVIOUS
-        </button>
-        {getPageNumbers().map((pageNum, idx) =>
-          typeof pageNum === 'number' ? (
-            <button
-              key={idx}
-              onClick={() => onPageChange(pageNum)}
-              className={`w-8 h-8 flex items-center justify-center rounded border transition-colors ${currentPage === pageNum
-                  ? 'bg-accent-yellow text-black font-black border-accent-yellow'
-                  : 'bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white border-white/5'
-                }`}
-            >
-              {pageNum}
-            </button>
-          ) : (
-            <span key={idx} className="px-1 text-gray-600">
-              ...
-            </span>
-          )
-        )}
-        <button
-          onClick={() => onPageChange(currentPage + 1)}
-          disabled={currentPage === totalPages}
-          className="px-3 py-2 bg-white/5 hover:bg-white/10 disabled:opacity-30 disabled:pointer-events-none text-gray-400 hover:text-white rounded transition-colors uppercase tracking-wider border border-white/5"
-        >
-          NEXT &rarr;
-        </button>
-      </div>
-      <span className="text-[10px] font-mono text-gray-500 uppercase tracking-widest">
-        Page {currentPage} of {totalPages}
-      </span>
-    </div>
+    </motion.div>
   )
 }
 
@@ -436,30 +412,48 @@ interface ProgramsGridProps {
   initialIsPro?: boolean
 }
 
-interface UnifiedProgram {
-  id: string
-  type: 'accelerator' | 'incubator' | 'grant'
-  name: string
-  slug: string
-  logo?: string
-  website?: string
-  applicationStatus: string
-  description: string
-  funding: string
-  equity: string
-  duration: string
-}
+type UnifiedProgram = CatalogProgram
 
 export default function ProgramsGrid({ activeType, filters, initialIsPro }: ProgramsGridProps) {
   const { user, loading: authLoading } = useAuth()
   const [isPro, setIsPro] = useState(initialIsPro ?? false)
   const [checkingAccess, setCheckingAccess] = useState(initialIsPro === undefined)
-
   const router = useRouter()
   const searchParams = useSearchParams()
   const pathname = usePathname()
 
   const [localPage, setLocalPage] = useState(1)
+  // Static baseline + remote Supabase programs merged for full inventory
+  const [catalog, setCatalog] = useState<UnifiedProgram[]>(() => getStaticPrograms())
+
+  // Remote programs merge quietly: only append net-new rows so the first paint
+  // order never reshuffles when Supabase responds.
+  useEffect(() => {
+    let cancelled = false
+    ;(async () => {
+      try {
+        const res = await fetch('/api/deals?scope=programs')
+        const data = await res.json()
+        if (!data?.success || !Array.isArray(data.deals) || cancelled) return
+        const remote = data.deals
+          .map((d: any) => fromSupabaseProgram(d))
+          .filter(Boolean) as UnifiedProgram[]
+        if (cancelled || remote.length === 0) return
+        setCatalog((prev) => {
+          const seen = new Set(prev.map((p) => p.slug.toLowerCase()))
+          const extras = remote.filter((p) => !seen.has(p.slug.toLowerCase()))
+          if (extras.length === 0) return prev // no visual change
+          // Append only — preserve existing order (no re-sort / no shuffle)
+          return [...prev, ...extras]
+        })
+      } catch {
+        // keep static catalog
+      }
+    })()
+    return () => {
+      cancelled = true
+    }
+  }, [])
 
   useEffect(() => {
     // Server already resolved pro status — never block the grid on client auth.
@@ -502,157 +496,67 @@ export default function ProgramsGrid({ activeType, filters, initialIsPro }: Prog
 
   const searchLc = filters.search.toLowerCase().trim()
 
-  const filteredAccelerators = useMemo(() => {
-    let results = accelerators2026
-    if (filters.region && filters.region !== 'All') {
-      results = results.filter(a => a.region === filters.region || a.region === 'Global')
-    }
-    if (searchLc) {
-      results = results.filter(a =>
-        a.name.toLowerCase().includes(searchLc) ||
-        a.location?.toLowerCase().includes(searchLc) ||
-        a.focusArea?.toLowerCase().includes(searchLc) ||
-        a.description?.toLowerCase().includes(searchLc)
-      )
-    }
-    return [...results].sort((a, b) => {
-      if (filters.sort === 'investment-high') {
-        const av = parseInt(a.investment?.replace(/[^0-9]/g, '') || '0')
-        const bv = parseInt(b.investment?.replace(/[^0-9]/g, '') || '0')
-        return bv - av
-      }
-      if (filters.sort === 'equity-low') {
-        const ae = parseFloat(a.equity?.replace('%', '') || '0')
-        const be = parseFloat(b.equity?.replace('%', '') || '0')
-        return ae - be
-      }
-      if (filters.sort === 'status') {
-        if (a.applicationStatus === 'Active' && b.applicationStatus !== 'Active') return -1
-        if (a.applicationStatus !== 'Active' && b.applicationStatus === 'Active') return 1
-        return 0
-      }
-      return a.name.localeCompare(b.name)
-    })
-  }, [filters.region, searchLc, filters.sort])
-
-  const filteredIncubators = useMemo(() => {
-    let results = incubators2026
-    if (filters.region && filters.region !== 'All') {
-      results = results.filter(i => i.region === filters.region || i.region === 'Global')
-    }
-    if (searchLc) {
-      results = results.filter(i =>
-        i.name.toLowerCase().includes(searchLc) ||
-        i.location?.toLowerCase().includes(searchLc) ||
-        i.focusArea?.toLowerCase().includes(searchLc) ||
-        i.description?.toLowerCase().includes(searchLc)
-      )
-    }
-    return [...results].sort((a, b) => {
-      if (filters.sort === 'status') {
-        if (a.applicationStatus === 'Active' && b.applicationStatus !== 'Active') return -1
-        if (a.applicationStatus !== 'Active' && b.applicationStatus === 'Active') return 1
-        return 0
-      }
-      return a.name.localeCompare(b.name)
-    })
-  }, [filters.region, searchLc, filters.sort])
-
-  const filteredGrants = useMemo(() => {
-    let results = grants2026
-    if (filters.region && filters.region !== 'All') {
-      results = results.filter(g => g.region === filters.region)
-    }
-    if (filters.subtype && filters.subtype !== 'All') {
-      results = results.filter(g => g.type === filters.subtype)
-    }
-    if (searchLc) {
-      results = results.filter(g =>
-        g.name.toLowerCase().includes(searchLc) ||
-        g.organization?.toLowerCase().includes(searchLc) ||
-        g.category?.toLowerCase().includes(searchLc) ||
-        g.description?.toLowerCase().includes(searchLc)
-      )
-    }
-    return [...results].sort((a, b) => {
-      if (filters.sort === 'funding-high') {
-        const av = parseInt(a.fundingAmount?.replace(/[^0-9]/g, '') || '0')
-        const bv = parseInt(b.fundingAmount?.replace(/[^0-9]/g, '') || '0')
-        return bv - av
-      }
-      if (filters.sort === 'status') {
-        const order: Record<string, number> = { Active: 0, Rolling: 1, 'Opening Soon': 2, Closed: 3, 'Invite Only': 4 }
-        return (order[a.applicationStatus] ?? 9) - (order[b.applicationStatus] ?? 9)
-      }
-      return a.name.localeCompare(b.name)
-    })
-  }, [filters.region, filters.subtype, searchLc, filters.sort])
+  const matchesStage = (founderStage?: string) => {
+    if (!filters.stage || filters.stage === 'All') return true
+    const s = (founderStage || '').toLowerCase()
+    if (filters.stage === 'Idea') return s.includes('idea') || s.includes('pre-seed') || s.includes('early')
+    if (filters.stage === 'MVP') return s.includes('mvp') || s.includes('seed') || s.includes('early')
+    if (filters.stage === 'Growth') return s.includes('growth') || s.includes('series') || s.includes('scale')
+    return true
+  }
 
   const combinedPrograms = useMemo(() => {
-    const list: UnifiedProgram[] = []
+    let list = catalog.filter((p) => {
+      if (activeType === 'accelerators') return p.type === 'accelerator'
+      if (activeType === 'incubators') return p.type === 'incubator'
+      if (activeType === 'grants') return p.type === 'grant'
+      return true // all
+    })
 
-    if (activeType === 'all' || activeType === 'accelerators') {
-      filteredAccelerators.forEach(acc => {
-        list.push({
-          id: acc.id,
-          type: 'accelerator',
-          name: acc.name,
-          slug: acc.slug,
-          logo: acc.logo,
-          website: acc.website,
-          applicationStatus: acc.applicationStatus,
-          description: acc.description,
-          funding: acc.investment,
-          equity: acc.equity,
-          duration: acc.programDuration,
-        })
-      })
+    if (filters.region && filters.region !== 'All') {
+      list = list.filter(
+        (p) => p.region === filters.region || p.region === 'Global' || (p.location || '').includes(filters.region)
+      )
+    }
+    if (filters.stage && filters.stage !== 'All') {
+      list = list.filter((p) => matchesStage(p.founderStage))
+    }
+    if (searchLc) {
+      list = list.filter(
+        (p) =>
+          p.name.toLowerCase().includes(searchLc) ||
+          (p.location || '').toLowerCase().includes(searchLc) ||
+          (p.focusArea || '').toLowerCase().includes(searchLc) ||
+          p.description.toLowerCase().includes(searchLc)
+      )
     }
 
-    if (activeType === 'all' || activeType === 'incubators') {
-      filteredIncubators.forEach(inc => {
-        list.push({
-          id: inc.id,
-          type: 'incubator',
-          name: inc.name,
-          slug: inc.slug,
-          logo: inc.logo,
-          website: inc.website,
-          applicationStatus: inc.applicationStatus,
-          description: inc.description,
-          funding: inc.support,
-          equity: inc.equity,
-          duration: inc.programDuration,
-        })
-      })
-    }
-
-    if (activeType === 'all' || activeType === 'grants') {
-      filteredGrants.forEach(grant => {
-        list.push({
-          id: grant.id,
-          type: 'grant',
-          name: grant.name,
-          slug: grant.slug,
-          logo: grant.logo,
-          website: grant.website,
-          applicationStatus: grant.applicationStatus,
-          description: grant.description,
-          funding: grant.fundingAmount,
-          equity: grant.equity,
-          duration: grant.deadline || 'N/A',
-        })
-      })
-    }
-
-    return list.sort((a, b) => {
-      const aActive = a.applicationStatus === 'Active'
-      const bActive = b.applicationStatus === 'Active'
-      if (aActive && !bActive) return -1
-      if (!aActive && bActive) return 1
+    // Stable sorts only — never inject "Active first" on name sort (that caused
+    // a mid-load reshuffle when remote rows arrived with different statuses).
+    return [...list].sort((a, b) => {
+      if (filters.sort === 'investment-high' || filters.sort === 'funding-high') {
+        const av = parseInt((a.funding || '').replace(/[^0-9]/g, '') || '0')
+        const bv = parseInt((b.funding || '').replace(/[^0-9]/g, '') || '0')
+        if (bv !== av) return bv - av
+        return a.name.localeCompare(b.name)
+      }
+      if (filters.sort === 'equity-low') {
+        const ae = parseFloat((a.equity || '').replace('%', '') || '0')
+        const be = parseFloat((b.equity || '').replace('%', '') || '0')
+        if (ae !== be) return ae - be
+        return a.name.localeCompare(b.name)
+      }
+      if (filters.sort === 'status') {
+        const aActive = a.applicationStatus === 'Active' ? 0 : 1
+        const bActive = b.applicationStatus === 'Active' ? 0 : 1
+        if (aActive !== bActive) return aActive - bActive
+        return a.name.localeCompare(b.name)
+      }
+      // Default / name — pure alphabetical, stable
       return a.name.localeCompare(b.name)
     })
-  }, [activeType, filteredAccelerators, filteredIncubators, filteredGrants])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [catalog, activeType, filters.region, filters.stage, filters.sort, filters.subtype, searchLc])
 
   // Only block on auth when we did NOT get server-side isPro.
   if (initialIsPro === undefined && (authLoading || checkingAccess)) {
@@ -682,33 +586,71 @@ export default function ProgramsGrid({ activeType, filters, initialIsPro }: Prog
 
   if (totalVisible === 0) {
     return (
-      <div className="text-center py-12 bg-[#0b0b0b] border border-white/10 rounded-xl">
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="text-center py-16 rounded-2xl border border-white/[0.07] bg-gradient-to-b from-[#111] to-[#0a0a0a]"
+      >
         <span className="material-symbols-outlined text-5xl text-gray-600 mb-3 block">search_off</span>
         <h3 className="text-lg font-bold text-white mb-1.5">No programs found</h3>
-        <p className="text-gray-500 text-sm">Try adjusting your filters or search terms</p>
-      </div>
+        <p className="text-gray-500 text-sm max-w-sm mx-auto">
+          Try clearing chips, switching tabs, or broadening region / stage filters.
+        </p>
+      </motion.div>
     )
   }
 
   return (
-    <div className="space-y-6">
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
-        {paginatedPrograms.map(prog => (
-          <ProgramCard
-            key={`${prog.type}-${prog.id}`}
-            logo={getLogoUrl(prog.logo, prog.name, prog.website)}
-            name={prog.name}
-            slug={prog.slug}
-            badge={prog.applicationStatus === 'Active' ? 'Applications Open' : prog.applicationStatus}
-            description={prog.description}
-            funding={prog.funding}
-            equity={prog.equity}
-            duration={prog.duration}
-            isPro={isPro}
-            type={prog.type}
-          />
-        ))}
+    <div className="space-y-5">
+      {/* Results meta bar */}
+      <div className="flex flex-wrap items-center justify-between gap-2 px-0.5">
+        <p className="font-mono text-[11px] text-gray-500 dark:text-gray-400">
+          <span className="font-bold text-gray-800 dark:text-gray-200">{totalVisible.toLocaleString()}</span>
+          {' '}
+          {activeType === 'all' ? 'programs' : activeType}
+          {searchLc ? (
+            <>
+              {' '}matching <span className="text-accent-yellow font-semibold">&ldquo;{filters.search}&rdquo;</span>
+            </>
+          ) : null}
+          {!isPro && totalVisible > FREE_LIMIT ? (
+            <span className="text-gray-500"> · showing {FREE_LIMIT} free</span>
+          ) : null}
+        </p>
+        {isPro && totalPages > 1 && (
+          <p className="font-mono text-[10px] uppercase tracking-wider text-gray-500">
+            Page {currentPage}/{totalPages}
+          </p>
+        )}
       </div>
+
+      <StaggerGrid
+        // Only re-stagger on intentional user changes — not on silent catalog appends
+        animKey={`${activeType}-${currentPage}-${searchLc}-${filters.region}-${filters.stage}-${filters.sort}`}
+        className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-2.5 md:gap-4"
+      >
+        {paginatedPrograms.map((prog) => (
+          <StaggerGridItem key={`${prog.type}-${prog.slug}`} layout={false}>
+            <ProgramCard
+              name={prog.name}
+              website={prog.website}
+              logo={prog.logo}
+              slug={prog.slug}
+              badge={prog.applicationStatus === 'Active' ? 'Applications Open' : prog.applicationStatus}
+              description={prog.description}
+              funding={prog.funding}
+              equity={prog.equity}
+              duration={prog.duration}
+              isPro={isPro}
+              type={
+                prog.type === 'program'
+                  ? 'accelerator'
+                  : (prog.type as 'accelerator' | 'incubator' | 'grant')
+              }
+            />
+          </StaggerGridItem>
+        ))}
+      </StaggerGrid>
 
       {/* Bottom premium gate overlay (renders below grid if user is not pro) */}
       {!isPro && totalVisible > FREE_LIMIT && (
@@ -729,7 +671,7 @@ export default function ProgramsGrid({ activeType, filters, initialIsPro }: Prog
 
       {/* Pagination controls */}
       {isPro && (
-        <PaginationControls
+        <Pagination
           currentPage={currentPage}
           totalPages={totalPages}
           onPageChange={handlePageChange}

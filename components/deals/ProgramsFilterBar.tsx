@@ -8,6 +8,7 @@ interface ProgramFilterState {
   region: string
   subtype: string
   sort: string
+  stage: string
 }
 
 interface ProgramsFilterBarProps {
@@ -38,6 +39,13 @@ const GRANT_TYPE_OPTIONS = [
   'State/Regional',
 ]
 
+const STAGE_OPTIONS = [
+  { value: 'All', label: 'All Stages' },
+  { value: 'Idea', label: 'Idea Stage' },
+  { value: 'MVP', label: 'MVP / Seed' },
+  { value: 'Growth', label: 'Growth' },
+]
+
 const SORT_OPTIONS: Record<ProgramType, { value: string; label: string }[]> = {
   all: [
     { value: 'name', label: 'Name (A–Z)' },
@@ -63,43 +71,66 @@ const SORT_OPTIONS: Record<ProgramType, { value: string; label: string }[]> = {
 
 export type { ProgramFilterState }
 
-export default function ProgramsFilterBar({ activeType, onFilterChange, currentFilters }: ProgramsFilterBarProps) {
-  const [filters, setFilters] = useState<ProgramFilterState>(
-    currentFilters || { search: '', region: 'All', subtype: 'All', sort: 'name' }
-  )
+const DEFAULT: ProgramFilterState = {
+  search: '',
+  region: 'All',
+  subtype: 'All',
+  sort: 'name',
+  stage: 'All',
+}
+
+export default function ProgramsFilterBar({
+  activeType,
+  onFilterChange,
+  currentFilters,
+}: ProgramsFilterBarProps) {
+  const [filters, setFilters] = useState<ProgramFilterState>({
+    ...DEFAULT,
+    ...currentFilters,
+  })
   const isInitialMount = useRef(true)
 
   useEffect(() => {
-    if (currentFilters && !isInitialMount.current) setFilters(currentFilters)
+    if (currentFilters && !isInitialMount.current) {
+      setFilters((prev) => ({ ...DEFAULT, ...prev, ...currentFilters }))
+    }
   }, [currentFilters])
 
   useEffect(() => {
-    if (isInitialMount.current) { isInitialMount.current = false; return }
+    if (isInitialMount.current) {
+      isInitialMount.current = false
+      return
+    }
     const t = setTimeout(() => onFilterChange?.(filters), 100)
     return () => clearTimeout(t)
-  }, [filters.search, filters.region, filters.subtype, filters.sort])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [filters.search, filters.region, filters.subtype, filters.sort, filters.stage])
 
-  // Reset subtype/sort when type changes
   useEffect(() => {
-    setFilters(prev => ({ ...prev, region: 'All', subtype: 'All', sort: 'name' }))
+    setFilters((prev) => ({
+      ...prev,
+      region: 'All',
+      subtype: 'All',
+      sort: 'name',
+      stage: 'All',
+    }))
   }, [activeType])
 
   const handleChange = (key: keyof ProgramFilterState, value: string) => {
-    setFilters(prev => ({ ...prev, [key]: value }))
+    setFilters((prev) => ({ ...prev, [key]: value }))
   }
 
-  const resetFilters = () => {
-    setFilters({ search: '', region: 'All', subtype: 'All', sort: 'name' })
-  }
+  const resetFilters = () => setFilters({ ...DEFAULT })
 
   const activeCount = [
     filters.search,
     filters.region !== 'All' ? filters.region : '',
     filters.subtype !== 'All' ? filters.subtype : '',
     filters.sort !== 'name' ? filters.sort : '',
+    filters.stage !== 'All' ? filters.stage : '',
   ].filter(Boolean).length
 
-  const sortOptions = SORT_OPTIONS[activeType] || SORT_OPTIONS['all']
+  const sortOptions = SORT_OPTIONS[activeType] || SORT_OPTIONS.all
 
   const quickChips = [
     { label: 'AI & ML', value: 'AI' },
@@ -109,11 +140,11 @@ export default function ProgramsFilterBar({ activeType, onFilterChange, currentF
     { label: 'Web3', value: 'Web3' },
     { label: 'SaaS', value: 'SaaS' },
     { label: 'Consumer', value: 'Consumer' },
-    { label: 'Deep Tech', value: 'Deep Tech' }
+    { label: 'Deep Tech', value: 'Deep Tech' },
   ]
 
   const selectClass =
-    'h-9 w-full appearance-none border border-gray-200 dark:border-white/10 bg-white dark:bg-[#0c0c0c] pl-2.5 pr-7 text-[12px] text-gray-750 dark:text-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-yellow/40 focus:border-accent-yellow cursor-pointer hover:border-gray-300 dark:hover:border-white/20 transition-colors font-medium'
+    'h-10 w-full appearance-none rounded-lg border border-black/[0.06] dark:border-white/[0.08] bg-white dark:bg-white/[0.03] pl-3 pr-9 text-[12px] font-medium text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-1 focus:ring-accent-yellow/50 focus:border-accent-yellow/40 cursor-pointer hover:border-black/10 dark:hover:border-white/15 transition-colors'
 
   const searchPlaceholders: Record<ProgramType, string> = {
     all: 'Search programs by name, keyword, or focus area…',
@@ -123,41 +154,32 @@ export default function ProgramsFilterBar({ activeType, onFilterChange, currentF
   }
 
   return (
-    <div className="relative bg-white dark:bg-[#0c0c0c] border border-gray-200 dark:border-white/10 rounded-xl p-2.5 md:p-3.5 sticky top-14 md:top-20 z-30 shadow-sm overflow-hidden transition-colors duration-300">
-      {/* Decorative mandala */}
-      <div className="absolute -top-10 -right-10 w-32 h-32 pointer-events-none opacity-[0.03]" aria-hidden="true">
-        <svg viewBox="0 0 200 200" className="w-full h-full text-accent-yellow filterbar-mandala-spin" fill="none" stroke="currentColor" strokeWidth="0.6">
-          <circle cx="100" cy="100" r="40" />
-          <circle cx="100" cy="100" r="60" strokeDasharray="2 4" />
-          {[...Array(8)].map((_, i) => (
-            <line
-              key={i}
-              x1="100"
-              y1="100"
-              x2={100 + Math.cos((i * Math.PI) / 4) * 80}
-              y2={100 + Math.sin((i * Math.PI) / 4) * 80}
-            />
-          ))}
-          <circle cx="100" cy="100" r="2" fill="currentColor" />
-        </svg>
-      </div>
+    <div className="relative sticky top-14 md:top-20 z-30 rounded-2xl border border-black/[0.06] dark:border-white/[0.08] bg-white/90 dark:bg-[#0a0a0a]/90 backdrop-blur-xl shadow-[0_1px_0_rgba(255,255,255,0.04)_inset,0_8px_30px_rgba(0,0,0,0.12)] overflow-hidden transition-colors duration-300">
+      {/* subtle top highlight */}
+      <div
+        className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/40 dark:via-white/10 to-transparent"
+        aria-hidden
+      />
 
-      <div className="relative">
+      <div className="relative p-3 md:p-4 space-y-3">
         {/* Search */}
-        <div className="relative mb-2">
-          <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-[18px] pointer-events-none">search</span>
+        <div className="relative group">
+          <span className="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-accent-yellow text-[18px] pointer-events-none transition-colors">
+            search
+          </span>
           <input
-            className="w-full h-9 pl-10 pr-9 border border-gray-200 dark:border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-yellow/40 focus:border-accent-yellow text-[12.5px] bg-gray-50 dark:bg-white/5 hover:bg-white focus:bg-white dark:focus:bg-[#0c0c0c] transition-colors placeholder:text-gray-455 dark:placeholder:text-gray-500 dark:text-white"
+            className="w-full h-11 pl-11 pr-10 rounded-xl border border-black/[0.06] dark:border-white/[0.08] bg-gray-50/80 dark:bg-white/[0.03] text-[13px] text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-500 focus:outline-none focus:ring-1 focus:ring-accent-yellow/50 focus:border-accent-yellow/40 focus:bg-white dark:focus:bg-white/[0.05] transition-all"
             placeholder={searchPlaceholders[activeType]}
-            type="text"
+            type="search"
             value={filters.search}
             onChange={(e) => handleChange('search', e.target.value)}
             aria-label="Search programs"
           />
           {filters.search && (
             <button
+              type="button"
               onClick={() => handleChange('search', '')}
-              className="absolute right-2 top-1/2 -translate-y-1/2 w-6 h-6 flex items-center justify-center rounded-full hover:bg-gray-100 dark:hover:bg-white/10 text-gray-400 hover:text-gray-700 dark:hover:text-white transition-colors"
+              className="absolute right-2.5 top-1/2 -translate-y-1/2 w-7 h-7 flex items-center justify-center rounded-lg hover:bg-black/5 dark:hover:bg-white/10 text-gray-400 hover:text-gray-700 dark:hover:text-white transition-colors"
               aria-label="Clear search"
             >
               <span className="material-symbols-outlined text-[16px]">close</span>
@@ -165,9 +187,8 @@ export default function ProgramsFilterBar({ activeType, onFilterChange, currentF
           )}
         </div>
 
-        {/* Dropdowns row - 2 cols on mobile, 4 cols on desktop */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-2">
-          {/* Region */}
+        {/* Dropdowns */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2">
           <div className="relative">
             <select
               className={selectClass}
@@ -175,27 +196,46 @@ export default function ProgramsFilterBar({ activeType, onFilterChange, currentF
               onChange={(e) => handleChange('region', e.target.value)}
               aria-label="Filter by region"
             >
-              {REGION_OPTIONS.map(r => <option key={r} value={r}>{r === 'All' ? 'All Regions' : r}</option>)}
+              {REGION_OPTIONS.map((r) => (
+                <option key={r} value={r}>
+                  {r === 'All' ? 'All Regions' : r}
+                </option>
+              ))}
             </select>
-            <span className="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 text-[16px] pointer-events-none">expand_more</span>
+            <span className="material-symbols-outlined absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-400 text-[16px] pointer-events-none">
+              expand_more
+            </span>
           </div>
 
-          {/* Subtype Focus / Grant Type */}
           <div className="relative">
             <select
               className={selectClass}
               value={filters.subtype}
               onChange={(e) => handleChange('subtype', e.target.value)}
-              aria-label={activeType === 'grants' || activeType === 'all' ? 'Filter by grant type' : 'Filter by focus area'}
+              aria-label={
+                activeType === 'grants' || activeType === 'all'
+                  ? 'Filter by grant type'
+                  : 'Filter by focus area'
+              }
             >
-              {(activeType === 'grants' || activeType === 'all' ? GRANT_TYPE_OPTIONS : ['All', 'B2B', 'B2C', 'Deep Tech', 'Climate', 'Fintech', 'AI']).map(t => (
-                <option key={t} value={t}>{t === 'All' ? (activeType === 'grants' || activeType === 'all' ? 'All Categories' : 'All Focus') : t}</option>
+              {(activeType === 'grants' || activeType === 'all'
+                ? GRANT_TYPE_OPTIONS
+                : ['All', 'B2B', 'B2C', 'Deep Tech', 'Climate', 'Fintech', 'AI']
+              ).map((t) => (
+                <option key={t} value={t}>
+                  {t === 'All'
+                    ? activeType === 'grants' || activeType === 'all'
+                      ? 'All Categories'
+                      : 'All Focus'
+                    : t}
+                </option>
               ))}
             </select>
-            <span className="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 text-[16px] pointer-events-none">expand_more</span>
+            <span className="material-symbols-outlined absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-400 text-[16px] pointer-events-none">
+              expand_more
+            </span>
           </div>
 
-          {/* Sort */}
           <div className="relative">
             <select
               className={selectClass}
@@ -203,72 +243,72 @@ export default function ProgramsFilterBar({ activeType, onFilterChange, currentF
               onChange={(e) => handleChange('sort', e.target.value)}
               aria-label="Sort programs"
             >
-              {sortOptions.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
+              {sortOptions.map((o) => (
+                <option key={o.value} value={o.value}>
+                  {o.label}
+                </option>
+              ))}
             </select>
-            <span className="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 text-[16px] pointer-events-none">expand_more</span>
+            <span className="material-symbols-outlined absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-400 text-[16px] pointer-events-none">
+              expand_more
+            </span>
           </div>
 
-          {/* Dummy Stage filter to align with reference design "All Stages" */}
           <div className="relative">
             <select
               className={selectClass}
-              defaultValue="All"
+              value={filters.stage}
+              onChange={(e) => handleChange('stage', e.target.value)}
               aria-label="Filter by stage"
             >
-              <option value="All">All Stages</option>
-              <option value="Idea">Idea Stage</option>
-              <option value="MVP">MVP / Seed</option>
-              <option value="Growth">Growth</option>
+              {STAGE_OPTIONS.map((o) => (
+                <option key={o.value} value={o.value}>
+                  {o.label}
+                </option>
+              ))}
             </select>
-            <span className="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 text-[16px] pointer-events-none">expand_more</span>
+            <span className="material-symbols-outlined absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-400 text-[16px] pointer-events-none">
+              expand_more
+            </span>
           </div>
         </div>
 
-        {/* Quick chips & controls */}
-        <div className="flex items-center gap-1.5 overflow-x-auto mobile-scroll-hide">
-          <span className="hidden md:inline-flex font-mono text-[9px] font-bold uppercase tracking-[0.1em] text-gray-500 mr-1 flex-shrink-0">Popular:</span>
-          {quickChips.map(chip => {
-            const isActive = filters.search.toLowerCase() === chip.value.toLowerCase()
-            return (
-              <button
-                key={chip.label}
-                onClick={() => handleChange('search', isActive ? '' : chip.value)}
-                className={`px-2.5 py-1 text-[11px] font-semibold rounded-full transition-all whitespace-nowrap flex-shrink-0 ${
-                  isActive
-                    ? 'bg-accent-yellow text-black shadow-sm font-bold'
-                    : 'bg-gray-50 dark:bg-white/5 text-gray-400 border border-gray-200 dark:border-white/10 hover:bg-white dark:hover:bg-white/10 hover:border-gray-350 dark:hover:border-white/20 hover:text-white'
-                }`}
-              >
-                {chip.label}
-              </button>
-            )
-          })}
+        {/* Popular chips */}
+        <div className="flex items-center gap-2 pt-0.5 border-t border-black/[0.04] dark:border-white/[0.05]">
+          <span className="hidden sm:inline-flex font-mono text-[9px] font-bold uppercase tracking-[0.14em] text-gray-400 dark:text-gray-500 flex-shrink-0">
+            Popular
+          </span>
+          <div className="flex items-center gap-1.5 overflow-x-auto mobile-scroll-hide flex-1 min-w-0 py-0.5">
+            {quickChips.map((chip) => {
+              const isActive = filters.search.toLowerCase() === chip.value.toLowerCase()
+              return (
+                <button
+                  key={chip.label}
+                  type="button"
+                  onClick={() => handleChange('search', isActive ? '' : chip.value)}
+                  className={`px-3 py-1.5 text-[11px] font-medium rounded-full transition-all whitespace-nowrap flex-shrink-0 border ${
+                    isActive
+                      ? 'bg-accent-yellow text-black border-accent-yellow shadow-[0_0_0_1px_rgba(0,0,0,0.04)] font-semibold'
+                      : 'bg-transparent text-gray-500 dark:text-gray-400 border-black/[0.06] dark:border-white/[0.08] hover:border-black/15 dark:hover:border-white/20 hover:text-gray-900 dark:hover:text-white'
+                  }`}
+                >
+                  {chip.label}
+                </button>
+              )
+            })}
+          </div>
           {activeCount > 0 && (
             <button
+              type="button"
               onClick={resetFilters}
-              className="ml-auto px-2.5 py-1 text-[11px] font-semibold rounded-full text-red-500 hover:bg-red-950/20 transition-colors whitespace-nowrap flex-shrink-0 flex items-center gap-1"
+              className="flex-shrink-0 inline-flex items-center gap-1 px-2.5 py-1.5 text-[11px] font-semibold rounded-full text-red-500/90 hover:bg-red-500/10 transition-colors whitespace-nowrap"
             >
               <span className="material-symbols-outlined text-[14px]">close</span>
-              Clear all
+              Clear
             </button>
           )}
         </div>
       </div>
-
-      <style jsx>{`
-        @keyframes filterBarMandalaSpin {
-          from { transform: rotate(0deg); }
-          to { transform: rotate(360deg); }
-        }
-        :global(.filterbar-mandala-spin) {
-          animation: filterBarMandalaSpin 70s linear infinite;
-          transform-origin: center;
-        }
-        @media (prefers-reduced-motion: reduce) {
-          :global(.filterbar-mandala-spin) { animation: none; }
-        }
-      `}</style>
     </div>
   )
 }
-

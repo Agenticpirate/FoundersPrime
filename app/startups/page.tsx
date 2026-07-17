@@ -1,29 +1,20 @@
-import { Metadata } from 'next'
-import Header from '@/components/Header'
-import Footer from '@/components/Footer'
-import StartupsContent from '@/components/startups/StartupsContent'
-import { getStartupCards, getStartupCount } from '@/lib/startups-data'
+import { redirect } from 'next/navigation'
+import type { Metadata } from 'next'
 
+/**
+ * Verified Startups is retired from the public FoundersPrime product surface.
+ * Data + components remain in-repo for reuse on another site:
+ *   - data/yc_companies_2024_2026.json
+ *   - lib/startups-data.ts
+ *   - components/startups/**
+ *   - app/api/startups/**
+ * See docs/ARCHIVED-STARTUPS.md
+ */
 export const metadata: Metadata = {
-  title: 'Verified Startups Database',
-  description: 'Browse verified startups for acquisition. Real revenue, real metrics, real opportunities from TrustMRR and Acquire.com.',
-  alternates: {
-    canonical: 'https://www.foundersprime.com/startups',
-  },
+  title: 'Verified Startups',
+  robots: { index: false, follow: false },
 }
 
 export default function StartupsPage() {
-  const startups = getStartupCards()
-  const count = getStartupCount()
-
-  return (
-    <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden bg-gray-50 dark:bg-[#000000] text-[#1a1a1a] dark:text-white transition-colors duration-300">
-      <Header />
-
-      <main className="flex-1">
-        <StartupsContent startups={startups} count={count} />
-      </main>
-      <Footer />
-    </div>
-  )
+  redirect('/ideas')
 }

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { Bookmark, Download, Eye } from "lucide-react";
+import { CardHoverGlow, cardHoverClass, cardTitleHoverClass } from "@/components/ui/card-hover";
 
 interface ResourceCardProps {
   resource: {
@@ -54,9 +55,10 @@ export default function ResourceCard({ resource }: ResourceCardProps) {
   };
 
   return (
-    <div className="relative flex flex-col bg-[#0c0c0c] border border-white/10 rounded-xl p-4 hover:shadow-[0_4px_24px_rgba(255,215,0,0.04)] transition-all duration-200 overflow-hidden h-full">
+    <div className={`flex flex-col bg-[#0c0c0c] border border-white/10 rounded-xl p-4 h-full ${cardHoverClass}`}>
+      <CardHoverGlow />
       {/* Top Header: icon badge + rating badge */}
-      <div className="flex items-start justify-between gap-2 mb-3">
+      <div className="relative flex items-start justify-between gap-2 mb-3">
         {/* Format Initial Icon Badge */}
         <div className={`w-10 h-10 rounded-lg border flex items-center justify-center font-mono font-black text-sm flex-shrink-0 ${getFormatBg(resource.thumbnail)}`}>
           {resource.thumbnail}
@@ -71,7 +73,7 @@ export default function ResourceCard({ resource }: ResourceCardProps) {
 
       {/* Main Title & Badges */}
       <div className="mb-2">
-        <h3 className="font-mono text-[13.5px] font-bold text-white leading-tight hover:text-accent-yellow transition-colors truncate" title={resource.title}>
+        <h3 className={`relative font-mono text-[13.5px] font-bold text-white leading-tight truncate ${cardTitleHoverClass}`} title={resource.title}>
           <Link href={`/resources/${resource.id}`}>{resource.title}</Link>
         </h3>
         

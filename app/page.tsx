@@ -7,6 +7,7 @@ import PopularDealsGrid from '@/components/PopularDealsGrid'
 import ProblemSection from '@/components/ProblemSection'
 import SystemModules from '@/components/SystemModules'
 import Footer from '@/components/Footer'
+import HashScroll from '@/components/HashScroll'
 
 /* ─── Below-fold: lazy-loaded to reduce initial JS parse cost ─── */
 const FounderLogs = dynamic(() => import('@/components/FounderLogs'))
@@ -76,13 +77,24 @@ export default function Home() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
+      <HashScroll />
       <AnnouncementBar />
       <Header />
-      <main className="flex-grow">
+      <main className="flex-grow bg-[#f6f8f8] dark:bg-[#000000]">
+        {/* Hero */}
         <HeroSection />
+        {/* Subtle brand hairline between sections */}
+        <div
+          aria-hidden
+          className="h-px w-full bg-gradient-to-r from-transparent via-accent-yellow/40 to-transparent"
+        />
         <PopularDealsGrid />
         <ProblemSection />
         <SystemModules />
+        <div
+          aria-hidden
+          className="h-px w-full bg-gradient-to-r from-transparent via-accent-yellow/30 to-transparent"
+        />
         <ProviderSection />
         <FounderLogs />
       </main>

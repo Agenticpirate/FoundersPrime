@@ -21,7 +21,7 @@ export default function SearchResults() {
       value: '$100,000',
       provider: 'Amazon Web Services',
       status: 'Active',
-      featured: true,
+      featured: false,
       url: '/deals/aws-activate',
       metadata: {
         expires: '2024-12-31',
@@ -37,7 +37,7 @@ export default function SearchResults() {
       funding: '$2.2B',
       valuation: '$95B',
       stage: 'Public',
-      url: '/startups/stripe',
+      url: '/ideas',
       metadata: {
         founded: '2010',
         employees: '4,000+',
@@ -110,7 +110,7 @@ export default function SearchResults() {
       funding: '$343M',
       valuation: '$10B',
       stage: 'Series C',
-      url: '/startups/notion',
+      url: '/ideas',
       metadata: {
         founded: '2016',
         employees: '500+',

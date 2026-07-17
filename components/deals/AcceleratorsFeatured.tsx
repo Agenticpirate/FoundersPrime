@@ -9,7 +9,7 @@ export default function AcceleratorsFeatured() {
       icon: 'rocket_launch',
       tags: [
         { label: 'TIER 1', color: 'bg-orange-100 text-orange-800 border-orange-900' },
-        { label: 'POPULAR', color: 'bg-green-100 text-green-800 border-green-900' }
+        { label: 'POPULAR', color: 'bg-amber-100 text-amber-900 border-amber-800' }
       ],
       value: '$500K investment',
       validity: '3-month program',
@@ -42,7 +42,7 @@ export default function AcceleratorsFeatured() {
     {
       id: 'antler',
       title: 'Antler',
-      gradient: 'from-green-600 to-teal-700',
+      gradient: 'from-amber-500 to-orange-600',
       icon: 'nature',
       tags: [
         { label: 'GLOBAL', color: 'bg-gray-100' }

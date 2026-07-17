@@ -33,6 +33,7 @@ export default async function ProgramsTypePage({
     region: typeof searchParams.region === 'string' ? searchParams.region : 'All',
     subtype: typeof searchParams.subtype === 'string' ? searchParams.subtype : 'All',
     sort: typeof searchParams.sort === 'string' ? searchParams.sort : 'name',
+    stage: typeof searchParams.stage === 'string' ? searchParams.stage : 'All',
   }
 
   const label = TYPE_LABELS[typeParam] || 'All Programs'
@@ -51,7 +52,7 @@ export default async function ProgramsTypePage({
             <Suspense
               fallback={
                 <div className="flex items-center justify-center py-16">
-                  <div className="animate-spin rounded-full h-10 w-10 border-4 border-violet-400 border-t-transparent" />
+                  <div className="animate-spin rounded-full h-10 w-10 border-4 border-accent-yellow border-t-transparent" />
                 </div>
               }
             >

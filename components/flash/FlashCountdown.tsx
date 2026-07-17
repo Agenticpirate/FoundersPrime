@@ -9,8 +9,8 @@ interface FlashCountdownProps {
   durationHours?: number
   /** Count down to the next Monday or Thursday 00:00 (drop schedule). */
   nextDrop?: boolean
-  /** 'hero' = big stat boxes, 'inline' = compact "Ends in 02d : 14h …". */
-  variant?: 'hero' | 'inline'
+  /** 'hero' = big stat boxes, 'inline' = compact "Ends in 02d : 14h …", 'chip' = mini pill. */
+  variant?: 'hero' | 'inline' | 'chip'
 }
 
 interface Remaining {
@@ -90,25 +90,41 @@ export default function FlashCountdown({
 
   if (variant === 'hero') {
     return (
-      <div className="grid grid-cols-4 gap-2 sm:gap-2.5" role="timer" aria-label="Time until next flash deal drop">
+      <div
+        className="grid grid-cols-4 gap-1.5 sm:gap-2.5"
+        role="timer"
+        aria-label="Time until next flash deal drop"
+      >
         {units.map((u, i) => (
-          <div key={u.label} className="flex flex-col items-center">
-            <div className="w-full bg-black border border-accent-yellow/30 relative overflow-hidden">
-              {/* Inner glow */}
+          <div key={u.label} className="relative flex flex-col items-center">
+            <div className="w-full rounded-xl bg-black border border-accent-yellow/30 relative overflow-hidden">
               <div
                 className="absolute inset-0 pointer-events-none"
-                style={{ background: 'radial-gradient(ellipse at 50% 0%, rgba(255,215,0,0.08) 0%, transparent 70%)' }}
-                aria-hidden="true"
+                style={{
+                  background:
+                    'radial-gradient(ellipse at 50% 0%, rgba(255,215,0,0.1) 0%, transparent 70%)',
+                }}
+                aria-hidden
               />
-              <div className="relative font-mono font-black text-[28px] sm:text-[34px] md:text-[38px] text-white tabular-nums leading-none text-center py-3 px-1">
+              <div className="relative font-mono font-black text-[26px] sm:text-[32px] md:text-[36px] text-white tabular-nums leading-none text-center py-3 px-1 tracking-tight">
                 {rem ? pad(u.value ?? 0) : '--'}
               </div>
+              {/* Flip-style bottom edge */}
+              <div
+                aria-hidden
+                className="absolute inset-x-0 top-1/2 h-px bg-accent-yellow/10"
+              />
             </div>
-            <div className="font-mono text-[8px] sm:text-[9px] font-black uppercase tracking-[0.2em] text-accent-yellow mt-1.5">
+            <div className="font-mono text-[8px] sm:text-[9px] font-black uppercase tracking-[0.18em] text-accent-yellow mt-1.5">
               {u.label}
             </div>
             {i < 3 && (
-              <div className="absolute hidden" aria-hidden="true" />
+              <span
+                className="hidden sm:block absolute -right-[7px] top-[18px] font-mono text-accent-yellow/50 text-sm font-black"
+                aria-hidden
+              >
+                :
+              </span>
             )}
           </div>
         ))}
@@ -116,6 +132,18 @@ export default function FlashCountdown({
     )
   }
 
+  if (variant === 'chip') {
+    if (rem?.done) {
+      return (
+        <span className="font-mono text-[10px] font-bold text-red-400 uppercase">Expired</span>
+      )
+    }
+    return (
+      <span className="font-mono text-[10px] font-bold tabular-nums text-gray-700 dark:text-zinc-300">
+        {rem ? pad(rem.days) : '--'}d {rem ? pad(rem.hours) : '--'}h {rem ? pad(rem.mins) : '--'}m
+      </span>
+    )
+  }
 
   // inline variant
   return (

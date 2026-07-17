@@ -9,6 +9,48 @@ html {
   top: 0 !important;
   margin-top: 0 !important;
   padding-top: 0 !important;
+  /* Prevent iOS rubber-band horizontal bounce revealing white edges */
+  overflow-x: clip;
+}
+
+body {
+  overflow-x: clip;
+  /* Safe areas for notched devices (drawer, sticky bars, footer) */
+  padding-left: env(safe-area-inset-left, 0px);
+  padding-right: env(safe-area-inset-right, 0px);
+}
+
+/* Mobile: body lock while drawer open */
+body.mobile-nav-open {
+  overflow: hidden;
+  touch-action: none;
+  overscroll-behavior: none;
+}
+
+/* Tap highlight — subtle, not a yellow flash (mobile menu glitch fix) */
+@media (max-width: 767px) {
+  a,
+  button {
+    -webkit-tap-highlight-color: rgba(255, 255, 255, 0.06);
+  }
+
+  /* Drawer links: no sticky :hover yellow glow on touch */
+  #mobile-nav-drawer a,
+  #mobile-nav-drawer button {
+    -webkit-tap-highlight-color: transparent;
+    outline: none;
+  }
+
+  #mobile-nav-drawer .mobile-nav-item:active {
+    background-color: rgba(255, 255, 255, 0.06);
+  }
+
+  /* Prefer native 16px+ inputs to avoid iOS zoom-on-focus */
+  input,
+  select,
+  textarea {
+    font-size: 16px;
+  }
 }
 
 /* Custom Sleek Scrollbar */
@@ -479,6 +521,205 @@ h6 {
   }
   .grid-bg-dark {
     background-size: 30px 30px;
+  }
+
+  /* Lighter footer $ rain on small screens (perf + clarity) */
+  .footer-dollar:nth-child(2n),
+  .footer-dollar:nth-child(3n) {
+    display: none;
+  }
+
+  .footer-brand-sheen {
+    font-size: clamp(2.1rem, 11vw, 3.5rem);
+    opacity: 0.4;
+  }
+
+  /* Sticky chrome offset under mobile header (~56px) */
+  .sticky-mobile-filters {
+    top: calc(3.5rem + env(safe-area-inset-top, 0px));
+  }
+
+  /* Horizontal chip scroller without visible scrollbar */
+  .mobile-chip-scroll {
+    display: flex;
+    gap: 0.5rem;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: 2px;
+  }
+  .mobile-chip-scroll::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Pricing cards: no lift hover jank on touch */
+  #plans article {
+    transform: none !important;
+  }
+}
+
+/* Footer wordmark — continuous light sheen clipped to letters only (no box) */
+@keyframes footerBrandSheen {
+  0% {
+    background-position: 140% 50%;
+  }
+  100% {
+    background-position: -40% 50%;
+  }
+}
+
+.footer-brand-sheen {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: baseline;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-weight: 900;
+  font-size: clamp(2.75rem, 12vw, 8.75rem);
+  line-height: 1;
+  letter-spacing: -0.04em;
+  pointer-events: none;
+  user-select: none;
+  color: transparent;
+  background-image: linear-gradient(
+    105deg,
+    transparent 0%,
+    transparent 38%,
+    rgba(255, 255, 255, 0) 42%,
+    rgba(255, 255, 255, 0.55) 50%,
+    rgba(255, 255, 255, 0) 58%,
+    transparent 62%,
+    transparent 100%
+  );
+  background-size: 220% 100%;
+  background-repeat: no-repeat;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: footerBrandSheen 4.8s ease-in-out infinite;
+  opacity: 0.55;
+}
+
+@media (min-width: 768px) {
+  .footer-brand-sheen {
+    letter-spacing: -0.05em;
+  }
+}
+
+/*
+ * Footer $ pour — animate `top` (parent %) so dollars travel the full stage.
+ * (transform % is relative to the $ glyph itself and barely moves.)
+ */
+@keyframes footerDollarFall {
+  0% {
+    top: var(--dollar-from, -12%);
+    transform: translate3d(0, 0, 0) rotate(var(--dollar-rot-start, -10deg));
+    opacity: 0;
+  }
+  8% {
+    opacity: var(--dollar-opacity, 0.65);
+  }
+  55% {
+    opacity: var(--dollar-opacity, 0.65);
+  }
+  100% {
+    top: var(--dollar-to, 108%);
+    transform: translate3d(var(--dollar-drift, 0px), 0, 0)
+      rotate(var(--dollar-rot-end, 12deg));
+    opacity: 0;
+  }
+}
+
+.footer-dollar-rain {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  /* Soft vertical fade only — no rectangular “panel” mask */
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    #000 8%,
+    #000 88%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    #000 8%,
+    #000 88%,
+    transparent 100%
+  );
+}
+
+.footer-dollar-rain--back {
+  z-index: 0;
+}
+
+.footer-dollar-rain--front {
+  z-index: 3;
+  /* Keep full vertical travel so $ cross the wordmark */
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    #000 10%,
+    #000 85%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    #000 10%,
+    #000 85%,
+    transparent 100%
+  );
+}
+
+.footer-dollar {
+  position: absolute;
+  top: var(--dollar-from, -12%);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-weight: 800;
+  line-height: 1;
+  color: #ffd700;
+  text-shadow:
+    0 0 10px rgba(255, 215, 0, 0.65),
+    0 0 22px rgba(255, 215, 0, 0.35),
+    0 0 40px rgba(255, 215, 0, 0.15);
+  will-change: top, transform, opacity;
+  animation-name: footerDollarFall;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  user-select: none;
+}
+
+.footer-dollar--far {
+  color: rgba(255, 215, 0, 0.5);
+  text-shadow: 0 0 12px rgba(255, 215, 0, 0.2);
+  font-weight: 700;
+}
+
+.footer-dollar--front {
+  color: #ffe566;
+  text-shadow:
+    0 0 8px rgba(255, 215, 0, 0.75),
+    0 0 18px rgba(255, 215, 0, 0.4);
+  mix-blend-mode: screen;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .footer-brand-sheen {
+    animation: none;
+    opacity: 0;
+  }
+
+  .footer-dollar {
+    animation: none !important;
+    top: var(--dollar-static-y, 42%) !important;
+    opacity: calc(var(--dollar-opacity, 0.35) * 0.55) !important;
+    transform: translate3d(0, 0, 0) rotate(var(--dollar-rot-start, 0deg));
   }
 }
 

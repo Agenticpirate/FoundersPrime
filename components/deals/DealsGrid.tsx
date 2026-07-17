@@ -3,10 +3,62 @@
 import { useState, useEffect, useRef } from 'react'
 import { useRouter, useSearchParams, usePathname } from 'next/navigation'
 import { Deal, getAllCategories } from '@/lib/deals-database'
-import { getStartupProgramUrl } from '@/lib/comprehensive-startup-urls'
+import {
+  isCommercialDealRow,
+  normalizeDealCategory,
+} from '@/lib/catalog-segregation'
+import {
+  applyPopularityFlags,
+  compareDealsByPopularity,
+  isActivePaidFeatured,
+  popularityBadgeLabel,
+  scoreDealPopularity,
+} from '@/lib/deal-popularity'
+
+function normalizeDealRow(deal: Deal): Deal {
+  const normalized = {
+    ...deal,
+    category: normalizeDealCategory(deal.category, deal.subcategory, {
+      title: deal.title,
+      provider: deal.provider,
+      description: deal.description || deal.shortDescription,
+      tags: deal.tags,
+    }),
+  }
+  // Re-score client-side; Featured kept only for active paid placements
+  return applyPopularityFlags(normalized, { stripUnpaidFeatured: true }) as Deal
+}
+
+/** Stable commercial catalog: programs out, unique by slug, normalized. */
+function prepareCommercialCatalog(raw: Deal[] | null | undefined): Deal[] {
+  if (!raw?.length) return []
+  const bySlug = new Map<string, Deal>()
+  for (const deal of raw) {
+    if (!deal || !isCommercialDealRow(deal)) continue
+    const key = (deal.slug || deal.id || '').toLowerCase().trim()
+    if (!key) continue
+    // Prefer richer row when merging SSR + API
+    const prev = bySlug.get(key)
+    if (!prev) {
+      bySlug.set(key, normalizeDealRow(deal))
+      continue
+    }
+    const prevScore =
+      (prev.description?.length || 0) + (prev.logoUrl ? 50 : 0) + (prev.applicationUrl ? 20 : 0)
+    const nextScore =
+      (deal.description?.length || 0) + (deal.logoUrl ? 50 : 0) + (deal.applicationUrl ? 20 : 0)
+    if (nextScore >= prevScore) bySlug.set(key, normalizeDealRow(deal))
+  }
+  return Array.from(bySlug.values())
+}
+import {
+  getStartupProgramUrl,
+  resolveDealApplicationUrl,
+} from '@/lib/comprehensive-startup-urls'
 import DealCard from './DealCard'
 import Pagination from '@/components/Pagination'
-import FeaturedSlot from './featured/FeaturedSlot'
+import { StaggerGrid, StaggerGridItem } from '@/components/ui/premium-motion'
+
 import { useAuth } from '@/lib/auth/hooks'
 import { checkProStatus } from '@/lib/auth/user-context'
 
@@ -42,53 +94,87 @@ export default function DealsGrid({ filters, initialIsPro, initialDeals }: Deals
   const [isNextFounder, setIsNextFounder] = useState(false)
   const [checkingAccess, setCheckingAccess] = useState(initialIsPro === undefined)
 
-  // Seed module cache from SSR so first client paint has data.
+  // Seed module cache from SSR so first client paint has data (normalized).
   if (initialDeals?.length && !globalDealsCache) {
-    globalDealsCache = initialDeals
+    globalDealsCache = prepareCommercialCatalog(initialDeals)
     globalDealsCacheTime = Date.now()
   }
 
-  const [deals, setDeals] = useState<Deal[]>(() => globalDealsCache || initialDeals || [])
+  const [deals, setDeals] = useState<Deal[]>(() =>
+    prepareCommercialCatalog(globalDealsCache || initialDeals || [])
+  )
   const [filteredDeals, setFilteredDeals] = useState<Deal[]>([])
   const [loading, setLoading] = useState(!(globalDealsCache || initialDeals?.length))
+  // Must stay divisible by 2 (sm) and 3 (lg) so full pages fill complete rows
   const dealsPerPage = 12
 
   const categories = getAllCategories()
+
+  /** Apply commercial scope + slug dedupe. Empty list never wipes a good cache. */
+  const adoptDealList = (list: Deal[], { fromApi = false } = {}) => {
+    const prepared = prepareCommercialCatalog(list)
+    // Failed/empty network response — keep whatever we already have
+    if (prepared.length === 0 && globalDealsCache && globalDealsCache.length > 0) {
+      return globalDealsCache
+    }
+    // Successful API response is always source of truth (even if smaller after deletes)
+    if (fromApi && prepared.length > 0) {
+      globalDealsCache = prepared
+      globalDealsCacheTime = Date.now()
+      return prepared
+    }
+    // SSR / fallback: only replace if we grow the catalog or have nothing yet
+    if (!globalDealsCache || prepared.length >= globalDealsCache.length) {
+      globalDealsCache = prepared
+      globalDealsCacheTime = Date.now()
+    }
+    return globalDealsCache
+  }
 
   // Run auth check + deals fetch in PARALLEL — no waterfall
   useEffect(() => {
     if (initialIsPro !== undefined) {
       setIsPro(initialIsPro)
       setCheckingAccess(false)
-      // Still need to fetch deals if not cached
     }
 
-    const cacheValid = globalDealsCache && (Date.now() - globalDealsCacheTime < DEALS_CACHE_TTL)
-    const fetchDeals = cacheValid
+    const cacheValid =
+      globalDealsCache &&
+      globalDealsCache.length > 0 &&
+      Date.now() - globalDealsCacheTime < DEALS_CACHE_TTL
+
+    // Always revalidate from API at least once if cache is only SSR-seeded
+    // and might be a smaller JSON fallback vs full Supabase catalog.
+    const shouldForceRefresh =
+      !cacheValid ||
+      (initialDeals?.length &&
+        globalDealsCache &&
+        globalDealsCache.length <= (initialDeals.length || 0) + 5)
+
+    const fetchDeals = !shouldForceRefresh && cacheValid
       ? Promise.resolve(globalDealsCache as Deal[])
       : (() => {
-        // Prefer SSR payload for first paint; still revalidate via API.
-        if (initialDeals?.length && !globalDealsPromise) {
-          globalDealsCache = initialDeals
+        if (initialDeals?.length && !globalDealsCache?.length) {
+          globalDealsCache = prepareCommercialCatalog(initialDeals)
           globalDealsCacheTime = Date.now()
         }
         if (!globalDealsPromise) {
-          // `no-store` so the browser always revalidates (a stale browser
-          // copy would keep showing deleted deals). The CDN still serves
-          // cached responses via s-maxage, so this stays scalable.
-          globalDealsPromise = fetch('/api/deals', { cache: 'no-store' })
-            .then(res => res.json())
-            .then(data => {
-              const result = data.success ? data.deals : []
-              globalDealsCache = result
-              globalDealsCacheTime = Date.now()
-              globalDealsPromise = null // clear so the TTL can trigger a refetch later
-              return result
+          // Full commercial catalog — no-store so admin edits land; CDN still caches.
+          globalDealsPromise = fetch('/api/deals?scope=deals', { cache: 'no-store' })
+            .then((res) => res.json())
+            .then((data) => {
+              const raw = data.success && Array.isArray(data.deals) ? data.deals : []
+              // API is canonical when it returns rows; otherwise keep SSR/cache
+              const prepared = raw.length
+                ? adoptDealList(raw, { fromApi: true })
+                : adoptDealList(initialDeals || [], { fromApi: false })
+              globalDealsPromise = null
+              return prepared
             })
-            .catch(err => {
+            .catch((err) => {
               console.error('Error loading deals:', err)
-              globalDealsPromise = null // allow retry
-              return initialDeals || []
+              globalDealsPromise = null
+              return adoptDealList(globalDealsCache || initialDeals || [], { fromApi: false })
             })
         }
         return globalDealsPromise
@@ -96,7 +182,7 @@ export default function DealsGrid({ filters, initialIsPro, initialDeals }: Deals
 
     if (initialIsPro !== undefined) {
       fetchDeals.then((dealList) => {
-        setDeals(dealList)
+        setDeals(prepareCommercialCatalog(dealList))
         setLoading(false)
       })
       return
@@ -112,232 +198,154 @@ export default function DealsGrid({ filters, initialIsPro, initialDeals }: Deals
       : Promise.resolve({ isPro: false, isNextFounder: false })
 
     Promise.all([fetchDeals, fetchAuth]).then(([dealList, access]) => {
-      setDeals(dealList)
+      setDeals(prepareCommercialCatalog(dealList))
       setIsPro(access.isPro)
       setIsNextFounder(access.isNextFounder)
       setLoading(false)
       setCheckingAccess(false)
     })
-    // Key on the stable user id, not the user object. Supabase emits a new
-    // user object reference on token refresh / tab refocus; depending on the
-    // object would re-run this effect and re-fetch deals + access on every
-    // focus, causing a visible flicker for logged-in users.
   }, [authLoading, user?.id, initialIsPro])
 
 
   useEffect(() => {
-    let result = [...deals]
+    // ALWAYS start from commercial-only, deduped catalog (never raw dual sources)
+    let result = prepareCommercialCatalog(deals)
+    let searchScores: Map<string, number> | null = null
 
-    // Apply filters
-    if (filters) {
-      // Search filter — multi-token relevance scoring
-      // Tokens are AND-matched (all must appear), each token searches across
-      // title / provider / category / subcategory / shortDescription / description / tags.
-      // Matches contribute to a relevance score so the most relevant result floats up.
-      let searchScores: Map<string, number> | null = null
-      if (filters.search && filters.search.trim()) {
-        const raw = filters.search.toLowerCase().trim()
-        const tokens = raw.split(/\s+/).filter(t => t.length > 0)
-        searchScores = new Map<string, number>()
+    if (filters?.search && filters.search.trim()) {
+      const raw = filters.search.toLowerCase().trim()
+      const tokens = raw.split(/\s+/).filter((t) => t.length > 0)
+      searchScores = new Map<string, number>()
 
-        result = result.filter(deal => {
-          const title = deal.title?.toLowerCase() || ''
-          const provider = deal.provider?.toLowerCase() || ''
-          const category = (deal.category || '').toLowerCase().replace(/-/g, ' ')
-          const subcategory = (deal.subcategory || '').toLowerCase().replace(/-/g, ' ')
-          const shortDesc = deal.shortDescription?.toLowerCase() || ''
-          const desc = deal.description?.toLowerCase() || ''
-          const tagsLc = (deal.tags || []).map(t => String(t || '').toLowerCase())
+      result = result.filter((deal) => {
+        const title = deal.title?.toLowerCase() || ''
+        const provider = deal.provider?.toLowerCase() || ''
+        const category = (deal.category || '').toLowerCase().replace(/-/g, ' ')
+        const subcategory = (deal.subcategory || '').toLowerCase().replace(/-/g, ' ')
+        const shortDesc = deal.shortDescription?.toLowerCase() || ''
+        const desc = deal.description?.toLowerCase() || ''
+        const tagsLc = (deal.tags || []).map((t) => String(t || '').toLowerCase())
 
-          // Every token must match somewhere — otherwise drop the deal
-          const allTokensMatch = tokens.every(token =>
+        const allTokensMatch = tokens.every(
+          (token) =>
             title.includes(token) ||
             provider.includes(token) ||
             category.includes(token) ||
             subcategory.includes(token) ||
             shortDesc.includes(token) ||
             desc.includes(token) ||
-            tagsLc.some(tag => tag.includes(token))
-          )
-          if (!allTokensMatch) return false
-
-          // Score this deal — higher = more relevant
-          let score = 0
-          for (const token of tokens) {
-            // Strong: exact title or provider equals query token
-            if (title === token || provider === token) score += 100
-            // Strong: title starts with token (e.g. "aws" → "AWS Activate")
-            if (title.startsWith(token) || provider.startsWith(token)) score += 50
-            // Title contains token
-            if (title.includes(token)) score += 25
-            // Provider contains token
-            if (provider.includes(token)) score += 20
-            // Tag match
-            if (tagsLc.some(tag => tag === token)) score += 15
-            else if (tagsLc.some(tag => tag.includes(token))) score += 8
-            // Category / subcategory match
-            if (category.includes(token)) score += 12
-            if (subcategory.includes(token)) score += 12
-            // Description matches (less weight)
-            if (shortDesc.includes(token)) score += 4
-            else if (desc.includes(token)) score += 2
-          }
-
-          // Bonus: full phrase appears in title
-          if (tokens.length > 1 && title.includes(raw)) score += 60
-
-          // Recommended/featured deals get a small tiebreaker boost
-          if (deal.recommended) score += 3
-          if (deal.featured) score += 2
-
-          searchScores!.set(deal.slug, score)
-          return true
-        })
-      }
-
-      // Category filter
-      if (filters.category) {
-        result = result.filter(deal =>
-          deal.category === filters.category ||
-          deal.subcategory === filters.category
+            tagsLc.some((tag) => tag.includes(token))
         )
+        if (!allTokensMatch) return false
 
-        // Subcategory filter - show only a few recommended deals
-        if (filters.subcategory) {
-          result = result.filter(deal => deal.subcategory === filters.subcategory)
-
-          // For subcategory views, prioritize recommended deals and limit to 6
-          const recommendedDeals = result.filter(deal => deal.recommended)
-          const otherDeals = result.filter(deal => !deal.recommended)
-          result = [...recommendedDeals.slice(0, 6), ...otherDeals]
+        let score = 0
+        for (const token of tokens) {
+          if (title === token || provider === token) score += 100
+          if (title.startsWith(token) || provider.startsWith(token)) score += 50
+          if (title.includes(token)) score += 25
+          if (provider.includes(token)) score += 20
+          if (tagsLc.some((tag) => tag === token)) score += 15
+          else if (tagsLc.some((tag) => tag.includes(token))) score += 8
+          if (category.includes(token)) score += 12
+          if (subcategory.includes(token)) score += 12
+          if (shortDesc.includes(token)) score += 4
+          else if (desc.includes(token)) score += 2
         }
-      } else if (!searchScores) {
-        // Exclude accelerators and incubators if no category is selected (All Deals)
-        // — but keep them when the user is searching, so search can find them.
-        result = result.filter(deal =>
-          deal.category !== 'startup-programs' &&
-          deal.subcategory !== 'accelerators' &&
-          deal.subcategory !== 'incubators' &&
-          deal.category !== 'accelerators' &&
-          deal.category !== 'incubators'
-        )
-      }
+        if (tokens.length > 1 && title.includes(raw)) score += 60
+        const pop = scoreDealPopularity(deal)
+        if (pop >= 55) score += 5
+        else if (deal.recommended) score += 3
+        if (deal.featured) score += 2
 
-      // Value filter
-      if (filters.value) {
-        result = result.filter(deal => {
-          const value = (deal.value || '').replace(/[^0-9]/g, '')
-          const numValue = parseInt(value) || 0
+        searchScores!.set(deal.slug, score)
+        return true
+      })
+    }
 
-          switch (filters.value) {
-            case 'under-1k':
-              return numValue < 1000
-            case '1k-10k':
-              return numValue >= 1000 && numValue < 10000
-            case '10k-50k':
-              return numValue >= 10000 && numValue < 50000
-            case '50k-100k':
-              return numValue >= 50000 && numValue < 100000
-            case 'over-100k':
-              return numValue >= 100000
-            default:
-              return true
-          }
-        })
-      }
-
-      // Sort filter — when there's an active search, score-based relevance
-      // wins over the default brand-priority sort.
-      if (searchScores && (filters.sort === 'relevance' || !filters.sort)) {
-        result.sort((a, b) => {
-          const sa = searchScores!.get(a.slug) || 0
-          const sb = searchScores!.get(b.slug) || 0
-          if (sa !== sb) return sb - sa
-          return a.title.localeCompare(b.title)
-        })
+    // Category filter
+    if (filters?.category) {
+      if (
+        filters.category === 'startup-programs' ||
+        filters.category === 'accelerators' ||
+        filters.category === 'incubators' ||
+        filters.category === 'grants'
+      ) {
+        result = []
       } else {
-        switch (filters.sort) {
-          case 'newest':
-            result.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
-            break
-          case 'value-high':
-            result.sort((a, b) => {
-              const aValue = parseInt((a.value || '').replace(/[^0-9]/g, '')) || 0
-              const bValue = parseInt((b.value || '').replace(/[^0-9]/g, '')) || 0
-              return bValue - aValue
-            })
-            break
-          case 'value-low':
-            result.sort((a, b) => {
-              const aValue = parseInt((a.value || '').replace(/[^0-9]/g, '')) || 0
-              const bValue = parseInt((b.value || '').replace(/[^0-9]/g, '')) || 0
-              return aValue - bValue
-            })
-            break
-          case 'deadline':
-            result.sort((a, b) => {
-              if (!a.expiryDate && !b.expiryDate) return 0
-              if (!a.expiryDate) return 1
-              if (!b.expiryDate) return -1
-              return new Date(a.expiryDate).getTime() - new Date(b.expiryDate).getTime()
-            })
-            break
-          case 'alphabetical':
-            result.sort((a, b) => a.title.localeCompare(b.title))
-            break
-          default:
-            // For "All Deals" (no category filter), show paid Featured first, then recommended, then popular brands
-            if (!filters?.category) {
-              result.sort((a, b) => {
-                // Paid Featured pinned at top (only if featured_until is in the future)
-                const now = Date.now()
-                const aFeatActive = a.featured && a.featuredUntil && new Date(a.featuredUntil).getTime() > now ? 1 : 0
-                const bFeatActive = b.featured && b.featuredUntil && new Date(b.featuredUntil).getTime() > now ? 1 : 0
-                if (aFeatActive !== bFeatActive) return bFeatActive - aFeatActive
-
-                // Recommended deals next
-                const aRec = a.recommended ? 1 : 0;
-                const bRec = b.recommended ? 1 : 0;
-                if (aRec !== bRec) return bRec - aRec;
-
-                const priorityBrands = [
-                  'github', 'airtable', 'aws', 'google for startups', 'microsoft for startups',
-                  'linear', 'stripe', 'notion', 'webflow', 'alibaba', 'algolia', 'auth0',
-                  'cloudflare', 'customer.io', 'datadog', 'databricks', 'devrev', 'digitalocean',
-                  'document360', 'elevenlabs', 'flippa', 'framer', 'gitlab', 'heroku',
-                  'instatus', 'intercom', 'linkedin'
-                ];
-                const aIdx = priorityBrands.findIndex(brand => (a.title || '').toLowerCase().includes(brand) || (a.provider || '').toLowerCase().includes(brand));
-                const bIdx = priorityBrands.findIndex(brand => (b.title || '').toLowerCase().includes(brand) || (b.provider || '').toLowerCase().includes(brand));
-                const aPriority = aIdx >= 0 ? aIdx : 9999;
-                const bPriority = bIdx >= 0 ? bIdx : 9999;
-                if (aPriority !== bPriority) return aPriority - bPriority;
-
-                const aHasOriginalLogo = a.logoUrl && !a.logoUrl.includes('rocket') && !a.logoUrl.includes('ui-avatars') ? 1 : 0;
-                const bHasOriginalLogo = b.logoUrl && !b.logoUrl.includes('rocket') && !b.logoUrl.includes('ui-avatars') ? 1 : 0;
-                if (aHasOriginalLogo !== bHasOriginalLogo) return bHasOriginalLogo - aHasOriginalLogo;
-                const aOrder = (a as any).sortOrder ?? 9999
-                const bOrder = (b as any).sortOrder ?? 9999
-                if (aOrder !== bOrder) return aOrder - bOrder
-                return a.title.localeCompare(b.title)
-              })
-            } else {
-              result.sort((a, b) => {
-                const now = Date.now()
-                const aFeatActive = a.featured && a.featuredUntil && new Date(a.featuredUntil).getTime() > now ? 1 : 0
-                const bFeatActive = b.featured && b.featuredUntil && new Date(b.featuredUntil).getTime() > now ? 1 : 0
-                if (aFeatActive !== bFeatActive) return bFeatActive - aFeatActive
-
-                if (a.recommended && !b.recommended) return -1
-                if (!a.recommended && b.recommended) return 1
-                if (a.featured && !b.featured) return -1
-                if (!a.featured && b.featured) return 1
-                if (a.status === 'active' && b.status !== 'active') return -1
-                if (a.status !== 'active' && b.status === 'active') return 1
-                return 0
-              })
-            }
+        result = result.filter(
+          (deal) =>
+            deal.category === filters.category || deal.subcategory === filters.category
+        )
+        if (filters.subcategory) {
+          result = result.filter((deal) => deal.subcategory === filters.subcategory)
         }
+      }
+    }
+
+    // Value filter
+    if (filters?.value) {
+      result = result.filter((deal) => {
+        const value = (deal.value || '').replace(/[^0-9]/g, '')
+        const numValue = parseInt(value) || 0
+        switch (filters.value) {
+          case 'under-1k':
+            return numValue < 1000
+          case '1k-10k':
+            return numValue >= 1000 && numValue < 10000
+          case '10k-50k':
+            return numValue >= 10000 && numValue < 50000
+          case '50k-100k':
+            return numValue >= 50000 && numValue < 100000
+          case 'over-100k':
+            return numValue >= 100000
+          default:
+            return true
+        }
+      })
+    }
+
+    // Sort
+    if (searchScores && (filters?.sort === 'relevance' || !filters?.sort)) {
+      result.sort((a, b) => {
+        const sa = searchScores!.get(a.slug) || 0
+        const sb = searchScores!.get(b.slug) || 0
+        if (sa !== sb) return sb - sa
+        return a.title.localeCompare(b.title)
+      })
+    } else {
+      switch (filters?.sort) {
+        case 'newest':
+          result.sort(
+            (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+          )
+          break
+        case 'value-high':
+          result.sort((a, b) => {
+            const aValue = parseInt((a.value || '').replace(/[^0-9]/g, '')) || 0
+            const bValue = parseInt((b.value || '').replace(/[^0-9]/g, '')) || 0
+            return bValue - aValue
+          })
+          break
+        case 'value-low':
+          result.sort((a, b) => {
+            const aValue = parseInt((a.value || '').replace(/[^0-9]/g, '')) || 0
+            const bValue = parseInt((b.value || '').replace(/[^0-9]/g, '')) || 0
+            return aValue - bValue
+          })
+          break
+        case 'deadline':
+          result.sort((a, b) => {
+            if (!a.expiryDate && !b.expiryDate) return 0
+            if (!a.expiryDate) return 1
+            if (!b.expiryDate) return -1
+            return new Date(a.expiryDate).getTime() - new Date(b.expiryDate).getTime()
+          })
+          break
+        case 'alphabetical':
+          result.sort((a, b) => a.title.localeCompare(b.title))
+          break
+        default:
+          result.sort((a, b) => compareDealsByPopularity(a, b))
       }
     }
 
@@ -351,23 +359,28 @@ export default function DealsGrid({ filters, initialIsPro, initialDeals }: Deals
     let badge = undefined
     let badgeColor = undefined
 
-    const isPaidFeatured = deal.featured && deal.featuredUntil && new Date(deal.featuredUntil).getTime() > Date.now()
+    // Featured badge is paid-ad only (featured + active featuredUntil)
+    const isPaidFeatured = isActivePaidFeatured(deal)
 
     if (isPaidFeatured) {
       badge = '⭐ Featured'
       badgeColor = 'bg-amber-400 text-black'
-    } else if (deal.recommended) {
-      badge = 'Recommended'
-      badgeColor = 'bg-orange-500'
-    } else if (deal.featured) {
-      badge = 'Featured'
-      badgeColor = 'bg-yellow-400'
-    } else if (deal.status === 'limited') {
-      badge = 'Limited'
-      badgeColor = 'bg-red-500'
-    } else if (deal.status === 'coming-soon') {
-      badge = 'Soon'
-      badgeColor = 'bg-blue-500'
+    } else {
+      const popLabel = popularityBadgeLabel(deal)
+      if (popLabel === 'Popular') {
+        badge = 'Popular'
+        badgeColor = 'bg-orange-500'
+      } else if (popLabel === 'Recommended' || deal.recommended) {
+        badge = 'Recommended'
+        badgeColor = 'bg-orange-500'
+      } else if (deal.status === 'limited') {
+        badge = 'Limited'
+        badgeColor = 'bg-red-500'
+      } else if (deal.status === 'coming-soon') {
+        badge = 'Soon'
+        badgeColor = 'bg-blue-500'
+      }
+      // Never show a plain "Featured" badge for non-paid catalog deals
     }
 
     const hasVerifiedEligibility = deal.eligibility &&
@@ -381,14 +394,14 @@ export default function DealsGrid({ filters, initialIsPro, initialDeals }: Deals
       deal.timeToApply !== 'Varies' &&
       deal.verified
 
-    const providerUrl = deal.providerWebsite || getStartupProgramUrl(deal.provider);
-    let logoFallback: string | null = null;
+    const applyUrl = resolveDealApplicationUrl(deal)
+    const providerUrl = deal.providerWebsite || applyUrl || getStartupProgramUrl(deal.provider)
+    let logoFallback: string | null = null
     if (providerUrl) {
       try {
-        const domain = new URL(providerUrl).hostname.replace('www.', '');
-        // Use Google Favicons for fast, reliable logos
-        logoFallback = `https://www.google.com/s2/favicons?domain=${domain}&sz=128`;
-      } catch (e) {
+        const domain = new URL(providerUrl).hostname.replace('www.', '')
+        logoFallback = `https://www.google.com/s2/favicons?domain=${domain}&sz=128`
+      } catch {
         // Ignore invalid URL — logoFallback stays null, card shows initials
       }
     }
@@ -404,12 +417,13 @@ export default function DealsGrid({ filters, initialIsPro, initialDeals }: Deals
       provider: `By ${deal.provider}`,
       value: deal.value,
       valueSubtext: deal.savings ? `Save ${deal.savings}` : 'Value',
-      valueStyle: deal.featured ? 'bg-ink text-white text-primary' : 'bg-white text-ink border-2 border-ink',
+      valueStyle: isPaidFeatured ? 'bg-ink text-white text-primary' : 'bg-white text-ink border-2 border-ink',
       description: deal.shortDescription,
       eligibility: hasVerifiedEligibility ? deal.eligibility[0] : undefined,
       validFor: hasVerifiedTimeToApply ? deal.timeToApply : undefined,
-      applicationUrl: getStartupProgramUrl(deal.provider),
-      verified: deal.verified
+      // Prefer real deal.applicationUrl; never Google-search placeholders
+      applicationUrl: applyUrl,
+      verified: deal.verified,
     }
   }
 
@@ -436,37 +450,16 @@ export default function DealsGrid({ filters, initialIsPro, initialDeals }: Deals
     lastFiltersRef.current = filterKey
   }, [filters, searchParams])
 
-  // Dynamically compute page boundaries so that each page's total grid items (deals + ads) is a multiple of 3,
-  // preventing any blank spots in the grid on desktop.
+  // Page size is always a multiple of 2 and 3 (grid is 2-col mobile / 3-col lg),
+  // so full pages never end with a single orphan card. (We no longer inject
+  // in-grid ad cells — that old logic bumped page 1 to 13 deals.)
   const pageBoundaries: { start: number; end: number }[] = []
   let currentIdx = 0
-  let pageNum = 1
   while (currentIdx < filteredDeals.length) {
-    let adCount = 0
-    if (pageNum === 1) {
-      const adPositions = [4, 10]
-      adPositions.forEach((pos) => {
-        if (filteredDeals.length - currentIdx >= pos) {
-          adCount++
-        }
-      })
-    }
-    
-    let dealsCount = dealsPerPage // 12
-    const initialTotal = dealsCount + adCount
-    const remainder = initialTotal % 3
-    if (remainder !== 0) {
-      dealsCount += (3 - remainder)
-    }
-    
     const remainingDeals = filteredDeals.length - currentIdx
-    if (remainingDeals <= dealsCount) {
-      dealsCount = remainingDeals
-    }
-    
+    const dealsCount = Math.min(dealsPerPage, remainingDeals)
     pageBoundaries.push({ start: currentIdx, end: currentIdx + dealsCount })
     currentIdx += dealsCount
-    pageNum++
   }
 
   const totalPages = pageBoundaries.length || 1
@@ -576,14 +569,14 @@ export default function DealsGrid({ filters, initialIsPro, initialDeals }: Deals
       {/* Free resource strip — visible & grabbable even on gated pages.
           Shown only when a shareable ?unlock=<slug> link targets a deal. */}
       {!loading && !authLoading && !checkingAccess && freeResourceDeals.length > 0 && (
-        <div className="mb-5 bg-emerald-50 dark:bg-emerald-950/20 border-2 border-black dark:border-emerald-500/20 rounded-sm shadow-[3px_3px_0px_#111] dark:shadow-[3px_3px_0px_rgba(16,185,129,0.05)] p-3 md:p-4">
+        <div className="mb-5 bg-amber-50 dark:bg-accent-yellow/10 border-2 border-black dark:border-accent-yellow/25 rounded-sm shadow-[3px_3px_0px_#111] dark:shadow-[3px_3px_0px_rgba(16,185,129,0.05)] p-3 md:p-4">
           <div className="flex items-center gap-2 mb-3">
-            <span className="material-symbols-outlined !text-[18px] text-emerald-700 dark:text-emerald-400">redeem</span>
-            <span className="font-mono text-[11px] md:text-[12px] font-black uppercase tracking-[0.12em] text-black dark:text-emerald-300">
+            <span className="material-symbols-outlined !text-[18px] text-amber-800 dark:text-accent-yellow">redeem</span>
+            <span className="font-mono text-[11px] md:text-[12px] font-black uppercase tracking-[0.12em] text-black dark:text-accent-yellow">
               Free resource — grab it, no membership needed
             </span>
           </div>
-          <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
+          <div className="grid grid-cols-2 lg:grid-cols-3 gap-2 md:gap-4">
             {freeResourceDeals.map((deal) => (
               <DealCard key={`free-${deal.id ?? deal.slug}`} deal={convertDealToCardFormat(deal)} />
             ))}
@@ -601,16 +594,14 @@ export default function DealsGrid({ filters, initialIsPro, initialDeals }: Deals
         let bullets: string[] = [
           'Save a minimum of $3,000+ in your first week (average founder metrics)',
           'Stack six-figure cloud credits across AWS, GCP, Azure & OpenAI',
-          'Vetted SaaS discounts & government grants matched to your stage',
+          'Vetted SaaS & cloud offers matched to your stage',
         ];
         let primaryCta = "See Plans · Unlock Now";
         let reassurance = "Cancel anytime · Instant access · No risk";
 
         // Gate: only the first page of the catalog is open. Every page beyond
         // page 1 is locked for all non-Pro members — applied uniformly across
-        // All Deals AND every category filter (cloud credits, SaaS, ad credits,
-        // accelerators…), so the limit can't be bypassed by entering through a
-        // subcategory. Pro (paid) members keep unlimited access.
+        // All deals and every category (cloud, SaaS, ads). Pro keeps unlimited access.
         if (!isPro && currentPage > 1) {
           isLocked = true;
           if (isNextFounder) {
@@ -629,46 +620,26 @@ export default function DealsGrid({ filters, initialIsPro, initialDeals }: Deals
             bullets = [
               'Save a minimum of $3,000+ in your first week (average founder metrics)',
               'Stack six-figure cloud credits across AWS, GCP, Azure & OpenAI',
-              'Vetted SaaS discounts & government grants matched to your stage',
+              'Vetted SaaS & cloud offers matched to your stage',
             ];
           }
         }
 
         return (
           <div className="relative mb-4 md:mb-5">
-            <div
-              className={`grid grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4 transition-all duration-300 ${isLocked ? 'pointer-events-none select-none' : ''
+            <StaggerGrid
+              animKey={`${currentPage}-${filters?.search || ''}-${filters?.category || ''}-${filters?.subcategory || ''}-${filters?.sort || ''}`}
+              className={`grid grid-cols-2 lg:grid-cols-3 gap-2 md:gap-4 transition-all duration-300 ${isLocked ? 'pointer-events-none select-none' : ''
                 }`}
               aria-hidden={isLocked}
               style={isLocked ? { filter: 'blur(7px) saturate(0.8)' } : undefined}
             >
-              {(() => {
-                // Interleave rotating Featured ad cells into the grid on page 1
-                // (skipped when the grid is locked/blurred for non-members).
-                const items: React.ReactNode[] = currentDeals.map((deal) => (
-                  <DealCard key={deal.id} deal={convertDealToCardFormat(deal)} />
-                ))
-                if (currentPage === 1 && !isLocked) {
-                  const adPositions = [4, 10] // insert after the 4th and 10th cards
-                  adPositions.forEach((pos, idx) => {
-                    const insertAt = Math.min(pos + idx, items.length)
-                    items.splice(
-                      insertAt,
-                      0,
-                      <FeaturedSlot
-                        key={`featured-ad-${idx}`}
-                        variant="inline"
-                        count={1}
-                        intervalMs={5500}
-                        offset={6 + idx * 3}
-                        className="h-full"
-                      />
-                    )
-                  })
-                }
-                return items
-              })()}
-            </div>
+              {currentDeals.map((deal) => (
+                <StaggerGridItem key={deal.id ?? deal.slug}>
+                  <DealCard deal={convertDealToCardFormat(deal)} />
+                </StaggerGridItem>
+              ))}
+            </StaggerGrid>
 
             {/* Lock overlay — content remains visible but blurred underneath */}
             {isLocked && (
@@ -717,7 +688,7 @@ export default function DealsGrid({ filters, initialIsPro, initialDeals }: Deals
                     <ul className="space-y-1.5 mb-5 pb-4 border-b-2 border-black dark:border-white/10 border-dashed">
                       {bullets.map((b, i) => (
                         <li key={i} className="flex items-start gap-2 text-[12px] text-gray-800 dark:text-gray-300">
-                          <span className="material-symbols-outlined !text-[14px] text-emerald-600 dark:text-emerald-400 flex-shrink-0 mt-0.5">check_circle</span>
+                          <span className="material-symbols-outlined !text-[14px] text-amber-700 dark:text-accent-yellow flex-shrink-0 mt-0.5">check_circle</span>
                           <span>{b}</span>
                         </li>
                       ))}

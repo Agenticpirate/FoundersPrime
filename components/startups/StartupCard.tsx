@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import { StartupCardData } from "@/lib/startups-data";
 import { MapPin, ArrowRight, Bookmark } from "lucide-react";
 import Link from "next/link";
+import { CardHoverGlow, cardHoverClass, cardLogoHoverClass, cardTitleHoverClass } from "@/components/ui/card-hover";
 
 interface StartupCardProps {
   company: StartupCardData;
@@ -81,13 +82,14 @@ export default function StartupCard({ company }: StartupCardProps) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.25 }}
-      className="group relative flex flex-col bg-[#0c0c0c] border border-white/10 rounded-xl hover:shadow-[0_4px_24px_rgba(255,215,0,0.04)] transition-all duration-200 overflow-hidden h-full"
+      className={`flex flex-col bg-[#0c0c0c] border border-white/10 rounded-xl h-full ${cardHoverClass}`}
     >
+      <CardHoverGlow />
       {/* Header: logo + name + verified badge + bookmark */}
-      <div className="flex items-start justify-between gap-2 px-4 pt-4 pb-2">
+      <div className="relative flex items-start justify-between gap-2 px-4 pt-4 pb-2">
         <div className="flex items-start gap-3 min-w-0">
           {/* Logo */}
-          <div className="w-11 h-11 flex-shrink-0 bg-white/5 border border-white/10 rounded-lg flex items-center justify-center overflow-hidden group-hover:border-accent-yellow/20 transition-colors">
+          <div className={`w-11 h-11 flex-shrink-0 bg-white border border-black/10 rounded-lg flex items-center justify-center overflow-hidden p-1 ${cardLogoHoverClass}`}>
             {imgSrc ? (
               <Image
                 src={imgSrc}
@@ -98,7 +100,7 @@ export default function StartupCard({ company }: StartupCardProps) {
                 onError={handleImageError}
               />
             ) : (
-              <span className="text-lg font-black text-white/20">
+              <span className="text-lg font-black text-gray-400">
                 {company.name.charAt(0)}
               </span>
             )}
@@ -107,13 +109,13 @@ export default function StartupCard({ company }: StartupCardProps) {
           {/* Name + location */}
           <div className="min-w-0">
             <div className="flex items-center gap-1.5">
-              <h3 className="font-mono text-[13px] font-bold text-white leading-tight group-hover:text-accent-yellow transition-colors truncate">
+              <h3 className={`font-mono text-[13px] font-bold text-white leading-tight truncate ${cardTitleHoverClass}`}>
                 <Link href={`/startups/${company.slug}`} className="focus:outline-none">
                   {company.name}
                 </Link>
               </h3>
               {/* Verified check indicator */}
-              <span className="flex items-center justify-center w-3.5 h-3.5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex-shrink-0" title="Verified Startup">
+              <span className="flex items-center justify-center w-3.5 h-3.5 rounded-full bg-accent-yellow/20 text-accent-yellow border border-accent-yellow/30 flex-shrink-0" title="Verified Startup">
                 <span className="material-symbols-outlined text-[9px] font-bold">check</span>
               </span>
             </div>

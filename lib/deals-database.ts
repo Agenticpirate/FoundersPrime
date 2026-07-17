@@ -72,7 +72,7 @@ export interface DealStats {
   recentlyAdded: number
 }
 
-// NEW Category Structure - 13 main categories matching recategorized deals
+// Commercial deals only — startup programs live under /programs
 export const dealCategories: DealCategory[] = [
   {
     id: 'cloud-credits',
@@ -88,8 +88,8 @@ export const dealCategories: DealCategory[] = [
       { id: 'cloud-computing', name: 'Cloud Computing', slug: 'cloud-computing', parentCategory: 'cloud-credits', dealCount: 0 },
       { id: 'cloud-storage', name: 'Cloud Storage', slug: 'cloud-storage', parentCategory: 'cloud-credits', dealCount: 0 },
       { id: 'database', name: 'Database', slug: 'database', parentCategory: 'cloud-credits', dealCount: 0 },
-      { id: 'serverless', name: 'Serverless', slug: 'serverless', parentCategory: 'cloud-credits', dealCount: 0 }
-    ]
+      { id: 'serverless', name: 'Serverless', slug: 'serverless', parentCategory: 'cloud-credits', dealCount: 0 },
+    ],
   },
   {
     id: 'ad-credits',
@@ -104,14 +104,14 @@ export const dealCategories: DealCategory[] = [
     subcategories: [
       { id: 'social-ads', name: 'Social Media Ads', slug: 'social-ads', parentCategory: 'ad-credits', dealCount: 0 },
       { id: 'search-ads', name: 'Search Ads', slug: 'search-ads', parentCategory: 'ad-credits', dealCount: 0 },
-      { id: 'display-ads', name: 'Display Ads', slug: 'display-ads', parentCategory: 'ad-credits', dealCount: 0 }
-    ]
+      { id: 'display-ads', name: 'Display Ads', slug: 'display-ads', parentCategory: 'ad-credits', dealCount: 0 },
+    ],
   },
   {
     id: 'saas-discounts',
-    name: 'SaaS Discounts',
+    name: 'SaaS & Tools',
     slug: 'saas-discounts',
-    description: 'Discounts on essential software tools',
+    description: 'Software discounts, AI tools, and founder productivity perks',
     icon: '💻',
     color: 'bg-indigo-100',
     dealCount: 0,
@@ -125,26 +125,9 @@ export const dealCategories: DealCategory[] = [
       { id: 'dev-tools', name: 'Dev Tools', slug: 'dev-tools', parentCategory: 'saas-discounts', dealCount: 0 },
       { id: 'design-tools', name: 'Design Tools', slug: 'design-tools', parentCategory: 'saas-discounts', dealCount: 0 },
       { id: 'finance-legal', name: 'Finance & Legal', slug: 'finance-legal', parentCategory: 'saas-discounts', dealCount: 0 },
-      { id: 'hr-ops', name: 'HR & Ops', slug: 'hr-ops', parentCategory: 'saas-discounts', dealCount: 0 }
-    ]
+      { id: 'hr-ops', name: 'HR & Ops', slug: 'hr-ops', parentCategory: 'saas-discounts', dealCount: 0 },
+    ],
   },
-  {
-    id: 'startup-programs',
-    name: 'Startup Programs',
-    slug: 'startup-programs',
-    description: 'Accelerators, incubators, and startup support programs',
-    icon: '🚀',
-    color: 'bg-orange-100',
-    dealCount: 0,
-    totalValue: 'Priceless',
-    featured: false,
-    subcategories: [
-      { id: 'accelerators', name: 'Accelerators', slug: 'accelerators', parentCategory: 'startup-programs', dealCount: 0 },
-      { id: 'incubators', name: 'Incubators', slug: 'incubators', parentCategory: 'startup-programs', dealCount: 0 },
-      { id: 'grants', name: 'Grants', slug: 'grants', parentCategory: 'startup-programs', dealCount: 0 },
-      { id: 'communities', name: 'Communities', slug: 'communities', parentCategory: 'startup-programs', dealCount: 0 }
-    ]
-  }
 ]
 
 // Category utilities

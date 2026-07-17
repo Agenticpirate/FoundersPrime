@@ -91,7 +91,7 @@ export default function RichDescription({ text }: { text: string }) {
             <ul key={i} className="grid grid-cols-1 md:grid-cols-2 gap-x-5 gap-y-1.5">
               {block.items.map((item, j) => (
                 <li key={j} className="flex items-start gap-2 text-[12.5px] leading-snug">
-                  <span className="material-symbols-outlined text-emerald-600 dark:text-emerald-400 flex-shrink-0 !text-[15px] mt-0.5">
+                  <span className="material-symbols-outlined text-amber-700 dark:text-accent-yellow flex-shrink-0 !text-[15px] mt-0.5">
                     check_circle
                   </span>
                   <span className="text-gray-800 dark:text-gray-200">{item}</span>

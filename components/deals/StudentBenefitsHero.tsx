@@ -1,56 +1,194 @@
 'use client'
 
-import SectionHero from '@/components/ui/SectionHero'
+import { useEffect, useState } from 'react'
+import { motion, useReducedMotion } from 'framer-motion'
+import Mandala from '@/components/ui/Mandala'
+import { FadeUp, premiumEase, staggerContainer, staggerItem } from '@/components/ui/premium-motion'
+import StudentBrandMarquee from './StudentBrandMarquee'
+import { studentBenefits2026 } from '@/data/student-benefits-2026'
+import { isStudentCatalogEligibility } from '@/lib/catalog-segregation'
+import { matchesStudentBenefitType } from './student-benefit-types'
+
+function computeCounts() {
+  const student = studentBenefits2026.filter((b) => isStudentCatalogEligibility(b.eligibility))
+  return {
+    total: student.length,
+    free: student.filter((b) => matchesStudentBenefitType(b, 'free-access')).length,
+    credits: student.filter((b) => matchesStudentBenefitType(b, 'credits-savings')).length,
+    funding: student.filter((b) => matchesStudentBenefitType(b, 'funding')).length,
+  }
+}
 
 export default function StudentBenefitsHero() {
+  const reduce = useReducedMotion()
+  const [counts, setCounts] = useState(computeCounts)
+
+  // Recompute once on client (same data; keeps SSR/CSR stable)
+  useEffect(() => {
+    setCounts(computeCounts())
+  }, [])
+
+  const stats = [
+    {
+      label: 'Student perks',
+      value: `${counts.total.toLocaleString()}+`,
+      delta: 'Campus-only offers',
+      icon: 'school',
+      accent: 'text-sky-500',
+      bg: 'bg-sky-500/10',
+    },
+    {
+      label: 'Credits & savings',
+      value: `${counts.credits}+`,
+      delta: 'Discounts & free months',
+      icon: 'savings',
+      accent: 'text-amber-600 dark:text-accent-yellow',
+      bg: 'bg-accent-yellow/15',
+      highlight: true,
+    },
+    {
+      label: 'Free software',
+      value: `${counts.free}+`,
+      delta: 'Tools & licenses',
+      icon: 'devices',
+      accent: 'text-violet-500',
+      bg: 'bg-violet-500/10',
+    },
+    {
+      label: 'Funding',
+      value: `${counts.funding}+`,
+      delta: 'Grants & fellowships',
+      icon: 'monetization_on',
+      accent: 'text-orange-500',
+      bg: 'bg-orange-500/10',
+    },
+  ]
+
   return (
-    <SectionHero
-      eyebrowIcon="school"
-      eyebrowText="Student Benefits"
-      eyebrowClass="bg-cyan-100 dark:bg-cyan-950/20 border-cyan-300 dark:border-cyan-500/30 text-cyan-900 dark:text-cyan-300"
-      eyebrowAccentClass="text-cyan-600"
-      mandalaColorClass="text-cyan-500 dark:text-cyan-500/10"
-      statsMinWidth="lg:min-w-[560px]"
-      title={<>Free Software, Credits &amp; Funding.</>}
-      subtitle={
-        <>
-          Over{' '}
-          <span className="font-bold text-gray-900 dark:text-cyan-300 bg-cyan-100 dark:bg-cyan-950/40 px-1 rounded-sm">
-            $200k+ in free licenses, cloud credits, and opportunities
-          </span>{' '}
-          exclusively for verified student founders and builders.
-        </>
-      }
-      stats={[
-        {
-          label: 'Student Deals',
-          value: '900+',
-          delta: 'Verified &amp; active',
-          icon: 'school',
-          iconColor: 'text-cyan-600',
-          iconBg: 'bg-cyan-100',
-          highlight: true,
-          accent: '6,182,212',
-          valueGradient: 'from-cyan-400 to-sky-300',
-          ornamentColor: 'text-cyan-300',
-        },
-        {
-          label: 'Free Value',
-          value: '$200K+',
-          delta: 'Per eligible founder',
-          icon: 'savings',
-          iconColor: 'text-emerald-600',
-          iconBg: 'bg-emerald-100',
-        },
-        {
-          label: 'Categories',
-          value: '15+',
-          delta: 'Developer, design &amp; retail',
-          icon: 'apps',
-          iconColor: 'text-indigo-600',
-          iconBg: 'bg-indigo-100',
-        },
-      ]}
-    />
+    <div className="relative mb-7 md:mb-9">
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -top-20 right-0 w-[28rem] h-[28rem] rounded-full bg-accent-yellow/[0.06] dark:bg-accent-yellow/[0.04] blur-3xl"
+      />
+      <Mandala
+        variant="rings"
+        colorClass="text-gray-900 dark:text-white/5"
+        opacity={0.06}
+        speed={90}
+        className="absolute -top-10 -right-8 w-64 h-64 hidden md:block pointer-events-none"
+      />
+
+      <div className="relative rounded-3xl border border-black/[0.05] dark:border-white/[0.07] bg-gradient-to-br from-white via-white to-amber-50/30 dark:from-[#0a0a0a] dark:via-[#080808] dark:to-[#12100a] p-5 md:p-7 shadow-[0_1px_0_rgba(255,255,255,0.5)_inset,0_20px_50px_rgba(0,0,0,0.06)] overflow-hidden">
+        <div
+          aria-hidden
+          className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-accent-yellow/40 to-transparent"
+        />
+
+        <div className="relative flex flex-col xl:flex-row xl:items-end xl:justify-between gap-7">
+          <div className="min-w-0 flex-1">
+            <FadeUp>
+              <div className="inline-flex items-center gap-1.5 mb-3.5 px-3 py-1 rounded-full border border-accent-yellow/25 bg-accent-yellow/10 text-amber-700 dark:text-accent-yellow">
+                <span className="material-symbols-outlined !text-[13px]">school</span>
+                <span className="font-mono text-[9px] font-bold uppercase tracking-[0.14em]">
+                  Student-verified · .edu / campus ID
+                </span>
+              </div>
+            </FadeUp>
+
+            <FadeUp delay={0.06}>
+              <h1 className="font-mono text-3xl md:text-4xl lg:text-[42px] font-black tracking-tight text-gray-900 dark:text-white leading-[1.08] mb-3">
+                Free software, credits &amp;{' '}
+                <span className="relative inline-block text-accent-yellow">
+                  funding
+                  {!reduce && (
+                    <motion.span
+                      aria-hidden
+                      className="absolute -bottom-1 left-0 right-0 h-[3px] rounded-full bg-accent-yellow/70"
+                      initial={{ scaleX: 0 }}
+                      animate={{ scaleX: 1 }}
+                      transition={{ delay: 0.35, duration: 0.55, ease: premiumEase }}
+                      style={{ originX: 0 }}
+                    />
+                  )}
+                </span>
+              </h1>
+            </FadeUp>
+
+            <FadeUp delay={0.12}>
+              <p className="font-sans text-sm md:text-[15px] text-gray-500 dark:text-gray-400 leading-relaxed max-w-2xl mb-5">
+                Campus-only perks in one place:{' '}
+                <strong className="text-gray-700 dark:text-gray-300">free tools</strong>,{' '}
+                <strong className="text-gray-700 dark:text-gray-300">credits &amp; savings</strong>, and{' '}
+                <strong className="text-gray-700 dark:text-gray-300">student funding</strong>. Startup commercial
+                deals live under{' '}
+                <a href="/deals" className="text-accent-yellow font-semibold hover:underline">
+                  Deals
+                </a>
+                ; accelerators &amp; grants under{' '}
+                <a href="/programs" className="text-accent-yellow font-semibold hover:underline">
+                  Programs
+                </a>
+                .
+              </p>
+            </FadeUp>
+
+            <FadeUp delay={0.16}>
+              <div className="flex flex-wrap items-center gap-2">
+                {[
+                  { text: 'Student eligibility', icon: 'badge' },
+                  { text: 'Free & discounted plans', icon: 'redeem' },
+                  { text: 'Direct claim links', icon: 'open_in_new' },
+                ].map((pill) => (
+                  <span
+                    key={pill.text}
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-black/[0.06] dark:border-white/[0.08] bg-white/80 dark:bg-white/[0.04] font-mono text-[10px] font-semibold text-gray-600 dark:text-gray-300"
+                  >
+                    <span className="material-symbols-outlined !text-[13px] text-accent-yellow">
+                      {pill.icon}
+                    </span>
+                    {pill.text}
+                  </span>
+                ))}
+              </div>
+            </FadeUp>
+          </div>
+
+          <motion.div
+            className="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-2 gap-2.5 xl:w-[320px] flex-shrink-0"
+            variants={reduce ? undefined : staggerContainer}
+            initial={reduce ? false : 'hidden'}
+            animate={reduce ? undefined : 'show'}
+          >
+            {stats.map((s) => (
+              <motion.div
+                key={s.label}
+                variants={reduce ? undefined : staggerItem}
+                className={`rounded-2xl border p-3.5 transition-transform duration-300 hover:-translate-y-0.5 ${
+                  s.highlight
+                    ? 'border-accent-yellow/30 bg-accent-yellow/10 dark:bg-accent-yellow/[0.08]'
+                    : 'border-black/[0.05] dark:border-white/[0.07] bg-white/70 dark:bg-white/[0.03]'
+                }`}
+              >
+                <div className="flex items-center gap-2 mb-2">
+                  <span className={`w-7 h-7 rounded-lg ${s.bg} flex items-center justify-center`}>
+                    <span className={`material-symbols-outlined !text-[15px] ${s.accent}`}>{s.icon}</span>
+                  </span>
+                  <span className="font-mono text-[9px] font-bold uppercase tracking-[0.12em] text-gray-400">
+                    {s.label}
+                  </span>
+                </div>
+                <p className="font-mono text-xl font-black text-gray-900 dark:text-white leading-none mb-1">
+                  {s.value}
+                </p>
+                <p className="text-[10px] text-gray-500 dark:text-gray-400">{s.delta}</p>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+
+        <StudentBrandMarquee />
+      </div>
+    </div>
   )
 }
+

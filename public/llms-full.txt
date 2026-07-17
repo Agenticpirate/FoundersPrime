@@ -15,7 +15,6 @@
 - Incubators: https://www.foundersprime.com/programs/incubators
 - Grants: https://www.foundersprime.com/programs/grants
 - Ideas: https://www.foundersprime.com/ideas
-- Startups: https://www.foundersprime.com/startups
 - Student benefits: https://www.foundersprime.com/student-benefits
 - Pricing: https://www.foundersprime.com/pricing
 - Agent index: https://www.foundersprime.com/llms.txt

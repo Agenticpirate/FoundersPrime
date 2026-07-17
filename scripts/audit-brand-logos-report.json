@@ -1,0 +1,5426 @@
+{
+  "summary": {
+    "totalRows": 500,
+    "uniqueBrands": 492,
+    "withLocal": 491,
+    "missingLocal": 1,
+    "missingNoDomain": 1,
+    "missingNoDomainNoLogo": 1
+  },
+  "missing": [
+    {
+      "name": "Deals",
+      "domain": "",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": null,
+      "hasUsableLogoField": false,
+      "logoSample": ""
+    }
+  ],
+  "withLocal": [
+    {
+      "name": "Perplexity AI",
+      "domain": "perplexity.ai",
+      "kinds": [
+        "deal"
+      ],
+      "count": 2,
+      "localFile": "perplexity.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://cdn.simpleicons.org/perplexity"
+    },
+    {
+      "name": "Stripe",
+      "domain": "stripe.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 2,
+      "localFile": "stripe.svg",
+      "hasUsableLogoField": true,
+      "logoSample": "https://cdn.simpleicons.org/stripe/635BFF"
+    },
+    {
+      "name": "Merge",
+      "domain": "merge.dev",
+      "kinds": [
+        "deal"
+      ],
+      "count": 2,
+      "localFile": "merge.png",
+      "hasUsableLogoField": false,
+      "logoSample": "https://logo.clearbit.com/merge.dev"
+    },
+    {
+      "name": "Microsoft",
+      "domain": "img-prod-cms-rt-microsoft-com.akamaized.net",
+      "kinds": [
+        "deal"
+      ],
+      "count": 2,
+      "localFile": "microsoft.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE1Mu3b?ver=5c31"
+    },
+    {
+      "name": "Freshworks",
+      "domain": "freshworks.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 2,
+      "localFile": "freshworks.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://www.freshworks.com/favicon.ico"
+    },
+    {
+      "name": "MyOperator",
+      "domain": "myoperator.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 2,
+      "localFile": "myoperator.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://myoperator.com/favicon.ico"
+    },
+    {
+      "name": "Alibaba Cloud",
+      "domain": "alibabacloud.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 2,
+      "localFile": "alibabacloud.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://"
+    },
+    {
+      "name": "Vercel",
+      "domain": "vercel.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 2,
+      "localFile": "vercel.svg",
+      "hasUsableLogoField": true,
+      "logoSample": "https://cdn.simpleicons.org/vercel"
+    },
+    {
+      "name": "Yandex Cloud",
+      "domain": "yandex.cloud",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "yandexcloud.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://www.google.com/s2/favicons?domain=yandex.cloud&sz=128"
+    },
+    {
+      "name": "Deel",
+      "domain": "deel.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "deel.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://cdn.simpleicons.org/deel"
+    },
+    {
+      "name": "Teachable",
+      "domain": "teachable.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "teachable.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://cdn.simpleicons.org/teachable"
+    },
+    {
+      "name": "Kajabi",
+      "domain": "kajabi.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "kajabi.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://cdn.simpleicons.org/kajabi"
+    },
+    {
+      "name": "Somewhere",
+      "domain": "somewhere.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "somewhere.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://somewhere.com/favicon.ico"
+    },
+    {
+      "name": "Confluence",
+      "domain": "atlassian.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "atlassian.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https%3A"
+    },
+    {
+      "name": "Mollie",
+      "domain": "mollie.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "mollie.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://cdn.simpleicons.org/mollie"
+    },
+    {
+      "name": "LiveChat",
+      "domain": "livechat.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "livechat.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://cdn.simpleicons.org/livechat"
+    },
+    {
+      "name": "Notion",
+      "domain": "notion.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "notion.svg",
+      "hasUsableLogoField": true,
+      "logoSample": "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https%3A"
+    },
+    {
+      "name": "Google Cloud",
+      "domain": "t1.gstatic.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "googlecloud.svg",
+      "hasUsableLogoField": true,
+      "logoSample": "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://"
+    },
+    {
+      "name": "Airtable",
+      "domain": "airtable.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "airtable.svg",
+      "hasUsableLogoField": true,
+      "logoSample": "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https%3A"
+    },
+    {
+      "name": "Auth0 (Okta)",
+      "domain": "auth0.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "auth0.svg",
+      "hasUsableLogoField": true,
+      "logoSample": "https://cdn.simpleicons.org/auth0/EB5424"
+    },
+    {
+      "name": "ElevenLabs",
+      "domain": "elevenlabs.io",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "elevenlabs.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://elevenlabs.io/favicon.ico"
+    },
+    {
+      "name": "AWS",
+      "domain": "aws.amazon.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "aws.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://"
+    },
+    {
+      "name": "Arpio",
+      "domain": "arpio.io",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "arpio.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://"
+    },
+    {
+      "name": "Tracebit",
+      "domain": "tracebit.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "tracebit.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://"
+    },
+    {
+      "name": "Deepgram",
+      "domain": "deepgram.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "deepgram.png",
+      "hasUsableLogoField": false,
+      "logoSample": "https://logo.clearbit.com/deepgram.com"
+    },
+    {
+      "name": "Linear",
+      "domain": "linear.app",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "linear.svg",
+      "hasUsableLogoField": true,
+      "logoSample": "https://linear.app/static/apple-touch-icon.png"
+    },
+    {
+      "name": "DigitalOcean",
+      "domain": "digitalocean.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "digitalocean.svg",
+      "hasUsableLogoField": true,
+      "logoSample": "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://"
+    },
+    {
+      "name": "Framer",
+      "domain": "framer.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "framer.svg",
+      "hasUsableLogoField": true,
+      "logoSample": "https://framerusercontent.com/images/48ha9ZR9oZQGQ6gZ8YUfElP3T0A.png"
+    },
+    {
+      "name": "Webflow",
+      "domain": "cdn.simpleicons.org",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "webflow.svg",
+      "hasUsableLogoField": true,
+      "logoSample": "https://cdn.simpleicons.org/webflow/146EF5"
+    },
+    {
+      "name": "Intercom",
+      "domain": "intercom.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "intercom.svg",
+      "hasUsableLogoField": true,
+      "logoSample": "https://cdn.worldvectorlogo.com/logos/intercom-1.svg"
+    },
+    {
+      "name": "Customer.io",
+      "domain": "t1.gstatic.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "customer.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https%3A"
+    },
+    {
+      "name": "Mixpanel",
+      "domain": "cdn.worldvectorlogo.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "mixpanel.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://cdn.worldvectorlogo.com/logos/mixpanel.svg"
+    },
+    {
+      "name": "Miro",
+      "domain": "t1.gstatic.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "miro.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https%3A"
+    },
+    {
+      "name": "Retool",
+      "domain": "retool.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "retool.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://retool.com/favicon.ico"
+    },
+    {
+      "name": "Sentry",
+      "domain": "t1.gstatic.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "sentry.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https%3A"
+    },
+    {
+      "name": "Reddit Ads",
+      "domain": "redditstatic.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "reddit.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://www.redditstatic.com/desktop2x/img/favicon/android-icon-192x192.png"
+    },
+    {
+      "name": "Wise",
+      "domain": "wise.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "wise.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://wise.com/public-resources/assets/logos/wise/brand_logo.svg"
+    },
+    {
+      "name": "Voiceflow",
+      "domain": "t1.gstatic.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "voiceflow.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https%3A"
+    },
+    {
+      "name": "PostHog",
+      "domain": "posthog.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "posthog.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://posthog.com/brand/posthog-logo.svg"
+    },
+    {
+      "name": "Snapchat",
+      "domain": "upload.wikimedia.org",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "snapchat.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://upload.wikimedia.org/wikipedia/en/c/c4/Snapchat_logo.svg"
+    },
+    {
+      "name": "GitHub",
+      "domain": "github.githubassets.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "github.svg",
+      "hasUsableLogoField": true,
+      "logoSample": "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
+    },
+    {
+      "name": "ActiveCampaign",
+      "domain": "activecampaign.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "activecampaign.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://www.activecampaign.com/favicon.ico"
+    },
+    {
+      "name": "Google Ads",
+      "domain": "gstatic.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "ads.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://www.gstatic.com/images/branding/product/2x/ads_48dp.png"
+    },
+    {
+      "name": "DevRev",
+      "domain": "devrev.ai",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "devrev.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://devrev.ai/favicon.ico"
+    },
+    {
+      "name": "BytePlus",
+      "domain": "byteplus.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "byteplus.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://www.byteplus.com/favicon.ico"
+    },
+    {
+      "name": "ManyChat",
+      "domain": "manychat.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "manychat.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://manychat.com/favicon.ico"
+    },
+    {
+      "name": "FireTail",
+      "domain": "d22k7geae6sy8h.cloudfront.net",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "d22k7geae6sy8h.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://d22k7geae6sy8h.cloudfront.net/files/6a0e210fa78a55000b626c32/FireTail_AWSSEAOLogo.png"
+    },
+    {
+      "name": "OVHcloud",
+      "domain": "t1.gstatic.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "ovhcloud.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https%3A"
+    },
+    {
+      "name": "Databricks",
+      "domain": "databricks.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "databricks.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://www.databricks.com/wp-content/uploads/2022/06/db-nav-logo.svg"
+    },
+    {
+      "name": "Agency",
+      "domain": "t1.gstatic.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "agency.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https%3A"
+    },
+    {
+      "name": "Flippa",
+      "domain": "t1.gstatic.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "flippa.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https%3A"
+    },
+    {
+      "name": "QuickNode",
+      "domain": "quicknode.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "quicknode.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://www.quicknode.com/favicon.ico"
+    },
+    {
+      "name": "LinkedIn",
+      "domain": "content.linkedin.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "content.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://content.linkedin.com/content/dam/me/business/en-us/amp/brand-site/v2/bg/LI-Bug.svg.original."
+    },
+    {
+      "name": "Zoho",
+      "domain": "zoho.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "zoho.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://www.zoho.com/favicon.ico"
+    },
+    {
+      "name": "Document360",
+      "domain": "document360.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "document360.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://document360.com/favicon.ico"
+    },
+    {
+      "name": "Netcore Cloud",
+      "domain": "netcorecloud.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "netcorecloud.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://netcorecloud.com/favicon.ico"
+    },
+    {
+      "name": "Datadog",
+      "domain": "imgix.datadoghq.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "imgix.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://imgix.datadoghq.com/img/favicons/favicon-32x32.png"
+    },
+    {
+      "name": "Algolia",
+      "domain": "algolia.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "algolia.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://www.algolia.com/favicon.ico"
+    },
+    {
+      "name": "Galaxy (ex. Meteor Cloud)",
+      "domain": "meteor.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "meteor.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://www.meteor.com/favicon.ico"
+    },
+    {
+      "name": "Confluent",
+      "domain": "confluent.io",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "confluent.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://www.confluent.io/favicon.ico"
+    },
+    {
+      "name": "Content Beta",
+      "domain": "contentbeta.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "contentbeta.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://contentbeta.com/favicon.ico"
+    },
+    {
+      "name": "Tomorro (ex. Leeway)",
+      "domain": "tomorro.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "tomorro.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://tomorro.com/favicon.ico"
+    },
+    {
+      "name": "Blue Strawberry",
+      "domain": "bluestrawberry.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "bluestrawberry.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://bluestrawberry.com/favicon.ico"
+    },
+    {
+      "name": "Mux",
+      "domain": "mux.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "mux.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://mux.com/favicon.ico"
+    },
+    {
+      "name": "Mainstreet",
+      "domain": "mainstreet.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "mainstreet.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://mainstreet.com/favicon.ico"
+    },
+    {
+      "name": "MongoDB",
+      "domain": "mongodb.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "mongodb.svg",
+      "hasUsableLogoField": true,
+      "logoSample": "https://www.mongodb.com/assets/images/global/favicon.ico"
+    },
+    {
+      "name": "Indeed",
+      "domain": "indeed.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "indeed.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://www.indeed.com/favicon.ico"
+    },
+    {
+      "name": "Scalingo",
+      "domain": "scalingo.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "scalingo.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://scalingo.com/favicon.ico"
+    },
+    {
+      "name": "Make",
+      "domain": "make.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "make.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://www.make.com/favicon.ico"
+    },
+    {
+      "name": "Brevo",
+      "domain": "brevo.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "brevo.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://www.brevo.com/favicon.ico"
+    },
+    {
+      "name": "Zoom",
+      "domain": "t1.gstatic.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "zoom.svg",
+      "hasUsableLogoField": true,
+      "logoSample": "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https%3A"
+    },
+    {
+      "name": "HubSpot Customer Platform",
+      "domain": "hubspot.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "hubspot.svg",
+      "hasUsableLogoField": true,
+      "logoSample": "https://www.hubspot.com/hubfs/HubSpot_Logos/HubSpot-Inversed-Favicon.png"
+    },
+    {
+      "name": "Hubspot Sales Hub",
+      "domain": "hubspot.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "hubspot.svg",
+      "hasUsableLogoField": true,
+      "logoSample": "https://www.hubspot.com/hubfs/HubSpot_Logos/HubSpot-Inversed-Favicon.png"
+    },
+    {
+      "name": "Hubspot Service Hub",
+      "domain": "hubspot.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "hubspot.svg",
+      "hasUsableLogoField": true,
+      "logoSample": "https://www.hubspot.com/hubfs/HubSpot_Logos/HubSpot-Inversed-Favicon.png"
+    },
+    {
+      "name": "WorldFirst",
+      "domain": "worldfirst.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "worldfirst.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://"
+    },
+    {
+      "name": "Mercury",
+      "domain": "mercury.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "mercury.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://mercury.com/favicon.ico"
+    },
+    {
+      "name": "Apollo.io",
+      "domain": "apollo.io",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "apollo.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://www.apollo.io/_next/static/media/logo.adddd611.svg"
+    },
+    {
+      "name": "ClearCRM",
+      "domain": "clearcrm.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "clearcrm.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://clearcrm.com/wp-content/uploads/2025/09/ClearCRM-Logo-Color-1.svg"
+    },
+    {
+      "name": "RanksPro.io",
+      "domain": "framerusercontent.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "rankspro.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://framerusercontent.com/images/enTLjKkTFsBthd5rReD6Z1iuVfE.png"
+    },
+    {
+      "name": "Prisma",
+      "domain": "prisma.io",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "prisma.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://www.prisma.io/logo-white.svg"
+    },
+    {
+      "name": "AdCreative.ai",
+      "domain": "t1.gstatic.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "adcreative.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https%3A"
+    },
+    {
+      "name": "Amazon Music",
+      "domain": "t1.gstatic.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "amazonmusic.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://"
+    },
+    {
+      "name": "ApparelMagic",
+      "domain": "apparelmagic.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "apparelmagic.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://apparelmagic.com/favicon.ico"
+    },
+    {
+      "name": "AVG Technologies",
+      "domain": "t1.gstatic.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "avgtechnologies.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://"
+    },
+    {
+      "name": "Beefree SDK",
+      "domain": "t1.gstatic.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "beefreesdk.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https%3A"
+    },
+    {
+      "name": "BetterWay Devs",
+      "domain": "betterwaydevs.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "betterwaydevs.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://betterwaydevs.com/favicon.ico"
+    },
+    {
+      "name": "BLACKBOX AI",
+      "domain": "box.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "blackbox.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://www.box.com/favicon.ico"
+    },
+    {
+      "name": "BlockSurvey",
+      "domain": "blocksurvey.io",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "blocksurvey.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://blocksurvey.io/favicon.ico"
+    },
+    {
+      "name": "Bright Data",
+      "domain": "brightdata.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "brightdata.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://brightdata.com/favicon.ico"
+    },
+    {
+      "name": "Builderall",
+      "domain": "builderall.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "builderall.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://builderall.com/favicon.ico"
+    },
+    {
+      "name": "Campaigner",
+      "domain": "campaigner.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "campaigner.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://www.campaigner.com/favicon.ico"
+    },
+    {
+      "name": "Captain Contrat",
+      "domain": "captaincontrat.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "captaincontrat.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://www.captaincontrat.com/favicon.ico"
+    },
+    {
+      "name": "Carepatron",
+      "domain": "carepatron.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "carepatron.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://www.carepatron.com/favicon.ico"
+    },
+    {
+      "name": "CatchApp Bookings",
+      "domain": "catchapp.mobi",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "catchapp.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://catchapp.mobi/favicon.ico"
+    },
+    {
+      "name": "Chatsimple.ai",
+      "domain": "chatsimple.ai",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "chatsimple.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://www.chatsimple.ai/favicon.ico"
+    },
+    {
+      "name": "ChemiCloud",
+      "domain": "chemicloud.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "chemicloud.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://www.chemicloud.com/favicon.ico"
+    },
+    {
+      "name": "Cherry Servers",
+      "domain": "cherryservers.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "cherryservers.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://www.cherryservers.com/favicon.ico"
+    },
+    {
+      "name": "ClickFunnels",
+      "domain": "clickfunnels.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "clickfunnels.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://www.clickfunnels.com/favicon.ico"
+    },
+    {
+      "name": "Cloudimage",
+      "domain": "cloudimage.io",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "cloudimage.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://www.cloudimage.io/favicon.ico"
+    },
+    {
+      "name": "Contract-factory",
+      "domain": "contract-factory.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "contractfactory.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://contract-factory.com/favicon.ico"
+    },
+    {
+      "name": "Crunchbase",
+      "domain": "crunchbase.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "crunchbase.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://www.crunchbase.com/favicon.ico"
+    },
+    {
+      "name": "DepositPhotos",
+      "domain": "depositphotos.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "depositphotos.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://depositphotos.com/favicon.ico"
+    },
+    {
+      "name": "Distrobird",
+      "domain": "distrobird.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "distrobird.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://distrobird.com/favicon.ico"
+    },
+    {
+      "name": "Dotcom-Monitor",
+      "domain": "dotcommonitor.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "dotcommonitor.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://dotcommonitor.com/favicon.ico"
+    },
+    {
+      "name": "Elementor: Hosting",
+      "domain": "elementorhosting.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "elementor.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://elementorhosting.com/favicon.ico"
+    },
+    {
+      "name": "Elementor: Website Builder",
+      "domain": "elementorwebsitebuilder.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "elementor.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://elementorwebsitebuilder.com/favicon.ico"
+    },
+    {
+      "name": "Epidemic Sound",
+      "domain": "epidemicsound.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "epidemicsound.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://epidemicsound.com/favicon.ico"
+    },
+    {
+      "name": "ESET PROTECT Advanced",
+      "domain": "esetprotectadvanced.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "esetprotectadvanced.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://esetprotectadvanced.com/favicon.ico"
+    },
+    {
+      "name": "ExpressVPN",
+      "domain": "expressvpn.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "expressvpn.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://expressvpn.com/favicon.ico"
+    },
+    {
+      "name": "Faaaster (ex. Themecloud)",
+      "domain": "faaaster.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "faaaster.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://faaaster.com/favicon.ico"
+    },
+    {
+      "name": "Fellow.app",
+      "domain": "fellow.app.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "fellow.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://fellow.app.com/favicon.ico"
+    },
+    {
+      "name": "Findcustomer",
+      "domain": "findcustomer.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "findcustomer.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://findcustomer.com/favicon.ico"
+    },
+    {
+      "name": "FlexOffers",
+      "domain": "flexoffers.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "flexoffers.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://flexoffers.com/favicon.ico"
+    },
+    {
+      "name": "Fraud Blocker",
+      "domain": "fraudblocker.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "fraudblocker.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://fraudblocker.com/favicon.ico"
+    },
+    {
+      "name": "FreshBooks",
+      "domain": "freshbooks.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "freshbooks.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://www.freshbooks.com/favicon.ico"
+    },
+    {
+      "name": "Freshservice",
+      "domain": "freshservice.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "freshservice.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://freshservice.com/favicon.ico"
+    },
+    {
+      "name": "FutureLearn",
+      "domain": "futurelearn.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "futurelearn.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://futurelearn.com/favicon.ico"
+    },
+    {
+      "name": "GetResponse",
+      "domain": "getresponse.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "getresponse.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://www.getresponse.com/favicon.ico"
+    },
+    {
+      "name": "GitLab",
+      "domain": "about.gitlab.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "about.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://about.gitlab.com/images/press/press-kit-icon.svg"
+    },
+    {
+      "name": "Guideline Retirement",
+      "domain": "guidelineretirement.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "guidelineretirement.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://guidelineretirement.com/favicon.ico"
+    },
+    {
+      "name": "hide.me VPN",
+      "domain": "hide.mevpn.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "hide.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://hide.mevpn.com/favicon.ico"
+    },
+    {
+      "name": "Hiver Gmail Extension",
+      "domain": "hivergmailextension.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "hivergmailextension.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://hivergmailextension.com/favicon.ico"
+    },
+    {
+      "name": "Hostinger Horizons",
+      "domain": "hostingerhorizons.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "hostingerhorizons.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://hostingerhorizons.com/favicon.ico"
+    },
+    {
+      "name": "Hygraph (ex. GraphCMS)",
+      "domain": "hygraph.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "hygraph.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://hygraph.com/favicon.ico"
+    },
+    {
+      "name": "Hypervault",
+      "domain": "hypervault.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "hypervault.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://hypervault.com/favicon.ico"
+    },
+    {
+      "name": "Iconosquare",
+      "domain": "squareup.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "squareup.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://squareup.com/favicon.ico"
+    },
+    {
+      "name": "Illustrator",
+      "domain": "illustrator.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "illustrator.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://illustrator.com/favicon.ico"
+    },
+    {
+      "name": "impact.com",
+      "domain": "impact.com.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "impact.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://impact.com.com/favicon.ico"
+    },
+    {
+      "name": "InfluenceKit",
+      "domain": "influencekit.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "influencekit.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://influencekit.com/favicon.ico"
+    },
+    {
+      "name": "Instantly.ai",
+      "domain": "instantly.ai.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "instantly.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://instantly.ai.com/favicon.ico"
+    },
+    {
+      "name": "InvoiceBerry",
+      "domain": "invoiceberry.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "invoiceberry.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://invoiceberry.com/favicon.ico"
+    },
+    {
+      "name": "June Analytics",
+      "domain": "juneanalytics.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "juneanalytics.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://juneanalytics.com/favicon.ico"
+    },
+    {
+      "name": "Keeper Security",
+      "domain": "keepersecurity.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "keepersecurity.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://www.keepersecurity.com/favicon.ico"
+    },
+    {
+      "name": "LambdaTest",
+      "domain": "lambdatest.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "lambdatest.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://lambdatest.com/favicon.ico"
+    },
+    {
+      "name": "LeadSquared",
+      "domain": "leadsquared.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "leadsquared.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://www.leadsquared.com/favicon.ico"
+    },
+    {
+      "name": "LearnWorlds",
+      "domain": "learnworlds.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "learnworlds.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://learnworlds.com/favicon.ico"
+    },
+    {
+      "name": "LegalPlace",
+      "domain": "legalplace.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "legalplace.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://legalplace.com/favicon.ico"
+    },
+    {
+      "name": "Legalstart",
+      "domain": "legalstart.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "legalstart.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://legalstart.com/favicon.ico"
+    },
+    {
+      "name": "LetsEnhance",
+      "domain": "letsenhance.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "letsenhance.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://letsenhance.com/favicon.ico"
+    },
+    {
+      "name": "LetterBucket",
+      "domain": "letterbucket.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "letterbucket.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://letterbucket.com/favicon.ico"
+    },
+    {
+      "name": "LiveChatAI",
+      "domain": "livechat.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "livechat.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://www.livechat.com/favicon.ico"
+    },
+    {
+      "name": "LiveSession",
+      "domain": "livesession.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "livesession.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://livesession.com/favicon.ico"
+    },
+    {
+      "name": "LogicBalls",
+      "domain": "logicballs.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "logicballs.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://logicballs.com/favicon.ico"
+    },
+    {
+      "name": "MailerSend",
+      "domain": "mailersend.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "mailersend.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://mailersend.com/favicon.ico"
+    },
+    {
+      "name": "Mashup Web Social",
+      "domain": "mashupwebsocial.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "mashupwebsocial.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://mashupwebsocial.com/favicon.ico"
+    },
+    {
+      "name": "MasterClass",
+      "domain": "masterclass.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "masterclass.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://masterclass.com/favicon.ico"
+    },
+    {
+      "name": "Memberstack",
+      "domain": "memberstack.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "memberstack.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://memberstack.com/favicon.ico"
+    },
+    {
+      "name": "Mobiroller",
+      "domain": "mobiroller.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "mobiroller.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://mobiroller.com/favicon.ico"
+    },
+    {
+      "name": "Monday CRM",
+      "domain": "dapulse-res.cloudinary.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "dapulseres.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://dapulse-res.cloudinary.com/image/upload/monday_platform/signup/monday-logo.png"
+    },
+    {
+      "name": "Monday Dev",
+      "domain": "dapulse-res.cloudinary.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "dapulseres.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://dapulse-res.cloudinary.com/image/upload/monday_platform/signup/monday-logo.png"
+    },
+    {
+      "name": "MonsterONE",
+      "domain": "monsterone.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "monsterone.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://monsterone.com/favicon.ico"
+    },
+    {
+      "name": "More",
+      "domain": "tidio.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "tidio.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://www.tidio.com/favicon.ico"
+    },
+    {
+      "name": "Multiplier",
+      "domain": "multiplier.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "multiplier.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://multiplier.com/favicon.ico"
+    },
+    {
+      "name": "myPresences",
+      "domain": "mypresences.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "mypresences.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://mypresences.com/favicon.ico"
+    },
+    {
+      "name": "Norton AntiVirus",
+      "domain": "t1.gstatic.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "nortonantivirus.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://"
+    },
+    {
+      "name": "Outreachly",
+      "domain": "outreach.io",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "outreach.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://www.outreach.io/favicon.ico"
+    },
+    {
+      "name": "PartnerStack",
+      "domain": "partnerstack.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "partnerstack.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://partnerstack.com/favicon.ico"
+    },
+    {
+      "name": "PhantomBuster",
+      "domain": "phantombuster.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "phantombuster.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://phantombuster.com/favicon.ico"
+    },
+    {
+      "name": "Piktochart",
+      "domain": "piktochart.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "piktochart.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://piktochart.com/favicon.ico"
+    },
+    {
+      "name": "Post Affiliate Pro",
+      "domain": "postaffiliatepro.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "postaffiliatepro.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://postaffiliatepro.com/favicon.ico"
+    },
+    {
+      "name": "Process Street",
+      "domain": "processstreet.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "processstreet.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://processstreet.com/favicon.ico"
+    },
+    {
+      "name": "Proton Drive",
+      "domain": "protondrive.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "proton.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://protondrive.com/favicon.ico"
+    },
+    {
+      "name": "Proton Mail",
+      "domain": "protonmail.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "proton.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://protonmail.com/favicon.ico"
+    },
+    {
+      "name": "Proton VPN",
+      "domain": "protonvpn.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "proton.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://protonvpn.com/favicon.ico"
+    },
+    {
+      "name": "QuickBooks",
+      "domain": "quickbooks.intuit.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "quickbooks.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://quickbooks.intuit.com/favicon.ico"
+    },
+    {
+      "name": "Quickbooks Online",
+      "domain": "quickbooks.intuit.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "quickbooks.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://quickbooks.intuit.com/favicon.ico"
+    },
+    {
+      "name": "Quo (ex. OpenPhone)",
+      "domain": "quo.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "quo.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://quo.com/favicon.ico"
+    },
+    {
+      "name": "RemotePass",
+      "domain": "remote.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "remote.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://remote.com/favicon.ico"
+    },
+    {
+      "name": "Riverside.fm",
+      "domain": "riverside.fm",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "riverside.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://riverside.fm/favicon.ico"
+    },
+    {
+      "name": "Rocket.new",
+      "domain": "rocket.new.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "rocket.png",
+      "hasUsableLogoField": false,
+      "logoSample": "https://rocket.new.com/favicon.ico"
+    },
+    {
+      "name": "Sage Accounting",
+      "domain": "sageaccounting.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "sageaccounting.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://sageaccounting.com/favicon.ico"
+    },
+    {
+      "name": "Salesforce",
+      "domain": "salesforce.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "salesforce.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://www.salesforce.com/etc/designs/sfdc-www/en_us/favicon.ico"
+    },
+    {
+      "name": "Seamless.AI",
+      "domain": "seamless.ai.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "seamless.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://seamless.ai.com/favicon.ico"
+    },
+    {
+      "name": "Search Ads",
+      "domain": "gstatic.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "ads.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://www.gstatic.com/images/branding/product/2x/ads_48dp.png"
+    },
+    {
+      "name": "Sender.net",
+      "domain": "sender.net.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "sender.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://sender.net.com/favicon.ico"
+    },
+    {
+      "name": "Shutterstock",
+      "domain": "shutterstock.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "shutterstock.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://shutterstock.com/favicon.ico"
+    },
+    {
+      "name": "Signaturit",
+      "domain": "signaturit.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "signaturit.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://signaturit.com/favicon.ico"
+    },
+    {
+      "name": "SimilarContent",
+      "domain": "similarcontent.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "similarcontent.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://similarcontent.com/favicon.ico"
+    },
+    {
+      "name": "Similarweb",
+      "domain": "similarweb.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "similarweb.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://similarweb.com/favicon.ico"
+    },
+    {
+      "name": "Simplified",
+      "domain": "simplified.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "simplified.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://simplified.com/favicon.ico"
+    },
+    {
+      "name": "Skillshare",
+      "domain": "skillshare.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "skillshare.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://skillshare.com/favicon.ico"
+    },
+    {
+      "name": "SnowcatCloud",
+      "domain": "snowcatcloud.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "snowcatcloud.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://snowcatcloud.com/favicon.ico"
+    },
+    {
+      "name": "Social Champ",
+      "domain": "socialchamp.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "socialchamp.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://socialchamp.com/favicon.ico"
+    },
+    {
+      "name": "Somewhere (ex. Support Shepherd)",
+      "domain": "somewhere.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "somewhere.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://somewhere.com/favicon.ico"
+    },
+    {
+      "name": "Squarespace",
+      "domain": "squarespace.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "squarespace.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://www.squarespace.com/favicon.ico"
+    },
+    {
+      "name": "SuperProfile",
+      "domain": "superprofile.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "superprofile.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://superprofile.com/favicon.ico"
+    },
+    {
+      "name": "SurveySparrow",
+      "domain": "surveysparrow.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "surveysparrow.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://surveysparrow.com/favicon.ico"
+    },
+    {
+      "name": "Swipe Pages",
+      "domain": "swipepages.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "swipepages.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://swipepages.com/favicon.ico"
+    },
+    {
+      "name": "Tailor Brands",
+      "domain": "tailorbrands.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "tailorbrands.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://tailorbrands.com/favicon.ico"
+    },
+    {
+      "name": "Talent Sam",
+      "domain": "talentsam.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "talentsam.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://talentsam.com/favicon.ico"
+    },
+    {
+      "name": "Tella (ex. Tella.tv)",
+      "domain": "tella.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "tella.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://tella.com/favicon.ico"
+    },
+    {
+      "name": "The SaaSy People",
+      "domain": "thesaasypeople.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "thesaasypeople.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://thesaasypeople.com/favicon.ico"
+    },
+    {
+      "name": "Visible.vc",
+      "domain": "visible.vc.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "visible.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://visible.vc.com/favicon.ico"
+    },
+    {
+      "name": "Cloudflare",
+      "domain": "t1.gstatic.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "cloudflare.svg",
+      "hasUsableLogoField": true,
+      "logoSample": "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https%3A"
+    },
+    {
+      "name": "Zendesk",
+      "domain": "t1.gstatic.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "zendesk.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https%3A"
+    },
+    {
+      "name": "TikTok for Business",
+      "domain": "upload.wikimedia.org",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "tiktok.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://upload.wikimedia.org/wikipedia/en/a/a9/TikTok_logo.svg"
+    },
+    {
+      "name": "Vultr",
+      "domain": "t1.gstatic.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "vultr.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://"
+    },
+    {
+      "name": "Oracle Cloud",
+      "domain": "t1.gstatic.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "oracle.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://"
+    },
+    {
+      "name": "IBM Cloud",
+      "domain": "t1.gstatic.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "ibmcloud.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://"
+    },
+    {
+      "name": "Microsoft Azure",
+      "domain": "t1.gstatic.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "microsoft.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://"
+    },
+    {
+      "name": "Scaleway",
+      "domain": "t1.gstatic.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "scaleway.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://"
+    },
+    {
+      "name": "Linode (Akamai)",
+      "domain": "t1.gstatic.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "linodeakamai.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://"
+    },
+    {
+      "name": "Tencent Cloud",
+      "domain": "t1.gstatic.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "tencentcloud.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://"
+    },
+    {
+      "name": "Heroku",
+      "domain": "t1.gstatic.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "heroku.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://"
+    },
+    {
+      "name": "Yelp",
+      "domain": "yelp.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "yelp.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://www.yelp.com/favicon.ico"
+    },
+    {
+      "name": "Apple",
+      "domain": "upload.wikimedia.org",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "apple.svg",
+      "hasUsableLogoField": true,
+      "logoSample": "https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg"
+    },
+    {
+      "name": "Pinterest",
+      "domain": "upload.wikimedia.org",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "pinterest.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://upload.wikimedia.org/wikipedia/commons/0/08/Pinterest-logo.png"
+    },
+    {
+      "name": "Reddit",
+      "domain": "redditstatic.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "reddit.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://www.redditstatic.com/desktop2x/img/favicon/android-icon-192x192.png"
+    },
+    {
+      "name": "Spotify",
+      "domain": "upload.wikimedia.org",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "spotify.svg",
+      "hasUsableLogoField": true,
+      "logoSample": "https://upload.wikimedia.org/wikipedia/commons/1/19/Spotify_logo_without_text.svg"
+    },
+    {
+      "name": "Quora",
+      "domain": "upload.wikimedia.org",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "quora.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://upload.wikimedia.org/wikipedia/commons/9/91/Quora_logo_2015.svg"
+    },
+    {
+      "name": "Sprout Social",
+      "domain": "sproutsocial.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "sproutsocial.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://"
+    },
+    {
+      "name": "Aiden",
+      "domain": "aws.amazon.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "aws.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://www.google.com/s2/favicons?domain=aws.amazon.com&sz=128"
+    },
+    {
+      "name": "Echo",
+      "domain": "echohq.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "echohq.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://www.google.com/s2/favicons?domain=echohq.com&sz=128"
+    },
+    {
+      "name": "Discord",
+      "domain": "discord.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "discord.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://cdn.simpleicons.org/discord"
+    },
+    {
+      "name": "Gravatar",
+      "domain": "gravatar.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "gravatar.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://cdn.simpleicons.org/gravatar"
+    },
+    {
+      "name": "Superblocks",
+      "domain": "superblocks.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "superblocks.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://www.google.com/s2/favicons?domain=superblocks.com&sz=128"
+    },
+    {
+      "name": "Render",
+      "domain": "render.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "render.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://cdn.simpleicons.org/render"
+    },
+    {
+      "name": "Supabase",
+      "domain": "supabase.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "supabase.svg",
+      "hasUsableLogoField": true,
+      "logoSample": "https://cdn.simpleicons.org/supabase"
+    },
+    {
+      "name": "Twilio Segment",
+      "domain": "segment.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "segment.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://www.google.com/s2/favicons?domain=segment.com&sz=128"
+    },
+    {
+      "name": "Amplitude",
+      "domain": "amplitude.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "amplitude.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://www.google.com/s2/favicons?domain=amplitude.com&sz=128"
+    },
+    {
+      "name": "Help Scout",
+      "domain": "helpscout.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "helpscout.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://cdn.simpleicons.org/helpscout"
+    },
+    {
+      "name": "Drift",
+      "domain": "drift.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "drift.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://www.google.com/s2/favicons?domain=drift.com&sz=128"
+    },
+    {
+      "name": "SendGrid (Twilio)",
+      "domain": "sendgrid.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "sendgrid.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://www.google.com/s2/favicons?domain=sendgrid.com&sz=128"
+    },
+    {
+      "name": "Postmark",
+      "domain": "postmarkapp.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "postmarkapp.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://www.google.com/s2/favicons?domain=postmarkapp.com&sz=128"
+    },
+    {
+      "name": "Twilio",
+      "domain": "twilio.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "twilio.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://www.google.com/s2/favicons?domain=twilio.com&sz=128"
+    },
+    {
+      "name": "Exotel",
+      "domain": "exotel.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "exotel.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://www.google.com/s2/favicons?domain=exotel.com&sz=128"
+    },
+    {
+      "name": "MSG91",
+      "domain": "msg91.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "msg91.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://www.google.com/s2/favicons?domain=msg91.com&sz=128"
+    },
+    {
+      "name": "Razorpay",
+      "domain": "razorpay.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "razorpay.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://cdn.simpleicons.org/razorpay"
+    },
+    {
+      "name": "Sarvam AI",
+      "domain": "sarvam.ai",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "sarvam.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://www.google.com/s2/favicons?domain=sarvam.ai&sz=128"
+    },
+    {
+      "name": "Esri",
+      "domain": "esri.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "esri.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://cdn.simpleicons.org/esri"
+    },
+    {
+      "name": "MathWorks",
+      "domain": "mathworks.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "mathworks.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://www.google.com/s2/favicons?domain=mathworks.com&sz=128"
+    },
+    {
+      "name": "Chargebee",
+      "domain": "chargebee.com",
+      "kinds": [
+        "deal"
+      ],
+      "count": 1,
+      "localFile": "chargebee.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://www.google.com/s2/favicons?domain=chargebee.com&sz=128"
+    },
+    {
+      "name": "Y Combinator",
+      "domain": "ycombinator.com",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "ycombinator.svg",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.ycombinator.com.ico"
+    },
+    {
+      "name": "Techstars",
+      "domain": "techstars.com",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "techstars.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/techstars.com.ico"
+    },
+    {
+      "name": "500 Global",
+      "domain": "500.co",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "500global.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/500.co.ico"
+    },
+    {
+      "name": "MassChallenge",
+      "domain": "masschallenge.org",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "masschallenge.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/masschallenge.org.ico"
+    },
+    {
+      "name": "Plug and Play",
+      "domain": "plugandplaytechcenter.com",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "plugandplaytechcenter.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.plugandplaytechcenter.com.ico"
+    },
+    {
+      "name": "Alchemist Accelerator",
+      "domain": "alchemistaccelerator.com",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "alchemistaccelerator.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/alchemistaccelerator.com.ico"
+    },
+    {
+      "name": "Mucker Accelerator",
+      "domain": "mucker.com",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "mucker.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/muckercapital.com.ico"
+    },
+    {
+      "name": "StartX",
+      "domain": "startx.com",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "startx.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/startx.com.ico"
+    },
+    {
+      "name": "Dreamit Ventures",
+      "domain": "dreamit.com",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "dreamit.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.dreamit.com.ico"
+    },
+    {
+      "name": "Founder Institute",
+      "domain": "fi.co",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "foundersinstitute.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/fi.co.ico"
+    },
+    {
+      "name": "Greentown Labs",
+      "domain": "greentownlabs.com",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "greentownlabs.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/greentownlabs.com.ico"
+    },
+    {
+      "name": "Praxis Accelerator",
+      "domain": "praxis.vc",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "praxis.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.praxis.vc.ico"
+    },
+    {
+      "name": "Generalcatalyst Accelerator",
+      "domain": "generalcatalyst.com",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "generalcatalyst.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.generalcatalyst.com.ico"
+    },
+    {
+      "name": "A16z Accelerator",
+      "domain": "a16z.com",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "a16z.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/a16z.com.ico"
+    },
+    {
+      "name": "Firstround Accelerator",
+      "domain": "firstround.com",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "firstround.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.firstround.com.ico"
+    },
+    {
+      "name": "Neo Accelerator",
+      "domain": "neo.com",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "neo.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/neo.com.ico"
+    },
+    {
+      "name": "Invisiblecollege Accelerator",
+      "domain": "invisiblecollege.xyz",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "invisiblecollege.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.invisiblecollege.xyz.ico"
+    },
+    {
+      "name": "Joinef Accelerator",
+      "domain": "joinef.com",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "joinef.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.joinef.com.ico"
+    },
+    {
+      "name": "Antler",
+      "domain": "antler.co",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "antler.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.antler.co.ico"
+    },
+    {
+      "name": "Zfellows Accelerator",
+      "domain": "zfellows.com",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "zfellows.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.zfellows.com.ico"
+    },
+    {
+      "name": "Launchaccelerator",
+      "domain": "launchaccelerator.co",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "launchaccelerator.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/launchaccelerator.co.ico"
+    },
+    {
+      "name": "Pear Accelerator",
+      "domain": "pear.vc",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "pear.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.pear.vc.ico"
+    },
+    {
+      "name": "8vc Accelerator",
+      "domain": "8vc.com",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "8vc.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.8vc.com.ico"
+    },
+    {
+      "name": "Accel Accelerator",
+      "domain": "accel.com",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "accel.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.accel.com.ico"
+    },
+    {
+      "name": "Lsvp Accelerator",
+      "domain": "lsvp.com",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "lsvp.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/lsvp.com.ico"
+    },
+    {
+      "name": "Seedcamp Accelerator",
+      "domain": "seedcamp.com",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "seedcamp.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/seedcamp.com.ico"
+    },
+    {
+      "name": "Station F",
+      "domain": "stationf.co",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "stationf.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/stationf.co.ico"
+    },
+    {
+      "name": "Eita Accelerator",
+      "domain": "eita.eitdigital.eu",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "eita.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/eitdigital.eu.ico"
+    },
+    {
+      "name": "Startupbootcamp",
+      "domain": "startupbootcamp.org",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "startupbootcamp.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.startupbootcamp.org.ico"
+    },
+    {
+      "name": "Hubraum Accelerator",
+      "domain": "hubraum.com",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "hubraum.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.hubraum.com.ico"
+    },
+    {
+      "name": "Wayra Accelerator",
+      "domain": "wayra.com",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "wayra.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.wayra.com.ico"
+    },
+    {
+      "name": "Axelspringerplugsandplay Accelerator",
+      "domain": "axelspringerplugsandplay.com",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "axelspringerplugsandplay.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/axelspringer.com.ico"
+    },
+    {
+      "name": "Zinc Accelerator",
+      "domain": "zinc.vc",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "zinc.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/zinc.vc.ico"
+    },
+    {
+      "name": "L Spark Accelerator",
+      "domain": "l-spark.com",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "lspark.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/l-spark.com.ico"
+    },
+    {
+      "name": "Creativedestructionlab Accelerator",
+      "domain": "creativedestructionlab.com",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "creativedestructionlab.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/creativedestructionlab.com.ico"
+    },
+    {
+      "name": "Foundersfactory Accelerator",
+      "domain": "foundersfactory.com",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "foundersfactory.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/foundersfactory.com.ico"
+    },
+    {
+      "name": "Barclays Labs",
+      "domain": "labs.barclays",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "labs.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/labs.barclays.ico"
+    },
+    {
+      "name": "Bpifrance Accelerator",
+      "domain": "bpifrance.fr",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "bpifrance.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.bpifrance.fr.ico"
+    },
+    {
+      "name": "Nordicstartupbits Accelerator",
+      "domain": "nordicstartupbits.com",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "nordicstartupbits.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/nordicstartupbits.com.ico"
+    },
+    {
+      "name": "Vinnova",
+      "domain": "vinnova.se",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "vinnova.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/vinnova.se.ico"
+    },
+    {
+      "name": "Iterative Accelerator",
+      "domain": "iterative.vc",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "iterative.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/iterative.vc.ico"
+    },
+    {
+      "name": "Startup Accelerator",
+      "domain": "startup.google.com",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "startup.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/startup.google.com.ico"
+    },
+    {
+      "name": "Surge (Peak XV)",
+      "domain": "surgeahead.com",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "surgeahead.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.surgeahead.com.ico"
+    },
+    {
+      "name": "SOSV",
+      "domain": "sosv.com",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "sosv.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/sosv.com.ico"
+    },
+    {
+      "name": "Incubate Accelerator",
+      "domain": "incubate.org.au",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "incubate.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.incubate.org.au.ico"
+    },
+    {
+      "name": "Muru D Accelerator",
+      "domain": "muru-d.com",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "murud.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/telstra.com.ico"
+    },
+    {
+      "name": "Nasscom Accelerator",
+      "domain": "nasscom.in",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "nasscom.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.nasscom.in.ico"
+    },
+    {
+      "name": "Icreate Accelerator",
+      "domain": "icreate.org.in",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "icreate.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/icreate.org.in.ico"
+    },
+    {
+      "name": "Expara Accelerator",
+      "domain": "expara.com",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "expara.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.expara.com.ico"
+    },
+    {
+      "name": "Kkfund Accelerator",
+      "domain": "kkfund.co",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "kkfund.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.kkfund.co.ico"
+    },
+    {
+      "name": "Hub71 Accelerator",
+      "domain": "hub71.com",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "hub71.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.hub71.com.ico"
+    },
+    {
+      "name": "Fintechhive Accelerator",
+      "domain": "fintechhive.ae",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "fintechhive.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/difc.ae.ico"
+    },
+    {
+      "name": "Flat6labs Accelerator",
+      "domain": "flat6labs.com",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "flat6labs.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.flat6labs.com.ico"
+    },
+    {
+      "name": "Astrolabs Accelerator",
+      "domain": "astrolabs.com",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "astrolabs.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.astrolabs.com.ico"
+    },
+    {
+      "name": "ITIDA Egypt",
+      "domain": "itida.gov.eg",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "itida.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.itida.gov.eg.ico"
+    },
+    {
+      "name": "Cchubnigeria Accelerator",
+      "domain": "cchubnigeria.com",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "cchubnigeria.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/cchubnigeria.com.ico"
+    },
+    {
+      "name": "Growthafrica Accelerator",
+      "domain": "growthafrica.com",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "growthafrica.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.growthafrica.com.ico"
+    },
+    {
+      "name": "Vc4a Accelerator",
+      "domain": "vc4a.com",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "vc4a.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/vc4a.com.ico"
+    },
+    {
+      "name": "Womenintechaccelerator",
+      "domain": "womenintechaccelerator.com",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "womenintechaccelerator.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/womenintech.co.uk.ico"
+    },
+    {
+      "name": "I2iaccelerator",
+      "domain": "i2iaccelerator.org",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "i2iaccelerator.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/i2i.org.ico"
+    },
+    {
+      "name": "Startupchile Accelerator",
+      "domain": "startupchile.org",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "startupchile.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.startupchile.org.ico"
+    },
+    {
+      "name": "Incmty Accelerator",
+      "domain": "incmty.com",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "incmty.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/incmty.com.ico"
+    },
+    {
+      "name": "Inovahub Accelerator",
+      "domain": "inovahub.com.br",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "inovahub.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/inovahub.com.br.ico"
+    },
+    {
+      "name": "Eulacdigitalaccelerator",
+      "domain": "eulacdigitalaccelerator.com",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "eulacdigitalaccelerator.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/eulacdigitalaccelerator.com.ico"
+    },
+    {
+      "name": "Trailhead Accelerator",
+      "domain": "trailhead.salesforce.com",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "trailhead.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/trailhead.salesforce.com.ico"
+    },
+    {
+      "name": "Salesforce Accelerator",
+      "domain": "salesforce.org",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "salesforce.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.salesforce.org.ico"
+    },
+    {
+      "name": "Intelignite Accelerator",
+      "domain": "intelignite.com",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "intelignite.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/intelignite.com.ico"
+    },
+    {
+      "name": "Databricks Accelerator",
+      "domain": "databricks.com",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "databricks.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.databricks.com.ico"
+    },
+    {
+      "name": "Blackbaud Accelerator",
+      "domain": "blackbaud.com",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "blackbaud.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.blackbaud.com.ico"
+    },
+    {
+      "name": "Usa Accelerator",
+      "domain": "usa.visa.com",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "usa.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/usa.visa.com.ico"
+    },
+    {
+      "name": "Mastercardstartpath Accelerator",
+      "domain": "mastercardstartpath.com",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "mastercardstartpath.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/mastercard.com.ico"
+    },
+    {
+      "name": "Lamaisondesstartups Accelerator",
+      "domain": "lamaisondesstartups.lvmh.com",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "lamaisondesstartups.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/lvmh.com.ico"
+    },
+    {
+      "name": "BMW Startup Garage",
+      "domain": "bmwstartupgarage.com",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "bmwstartupgarage.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.bmwstartupgarage.com.ico"
+    },
+    {
+      "name": "G4a Accelerator",
+      "domain": "g4a.health",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "g4a.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/bayer.com.ico"
+    },
+    {
+      "name": "Bosch Startup Harbour",
+      "domain": "bosch-startup-harbour.com",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "boschstartupharbour.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/bosch-startup-harbour.com.ico"
+    },
+    {
+      "name": "Samsungnext Accelerator",
+      "domain": "samsungnext.com",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "samsungnext.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/samsungnext.com.ico"
+    },
+    {
+      "name": "Entrepreneurship Accelerator",
+      "domain": "entrepreneurship.mit.edu",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "entrepreneurship.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/entrepreneurship.mit.edu.ico"
+    },
+    {
+      "name": "Dormroomfund Accelerator",
+      "domain": "dormroomfund.com",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "dormroomfund.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/dormroomfund.com.ico"
+    },
+    {
+      "name": "Roughdraft Accelerator",
+      "domain": "roughdraft.vc",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "roughdraft.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.roughdraft.vc.ico"
+    },
+    {
+      "name": "Solve Accelerator",
+      "domain": "solve.mit.edu",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "solve.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/solve.mit.edu.ico"
+    },
+    {
+      "name": "Medtechinnovator Accelerator",
+      "domain": "medtechinnovator.org",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "medtechinnovator.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/medtechinnovator.org.ico"
+    },
+    {
+      "name": "Rockhealth Accelerator",
+      "domain": "rockhealth.com",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "rockhealth.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/rockhealth.com.ico"
+    },
+    {
+      "name": "Accelerator",
+      "domain": "accelerator.cedars-sinai.edu",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "accelerator.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/cedars-sinai.edu.ico"
+    },
+    {
+      "name": "Mayoclinicplatform Accelerator",
+      "domain": "mayoclinicplatform.org",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "mayoclinicplatform.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/mayoclinic.org.ico"
+    },
+    {
+      "name": "Third Derivative Accelerator",
+      "domain": "third-derivative.org",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "thirdderivative.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.third-derivative.org.ico"
+    },
+    {
+      "name": "Climate Kic Accelerator",
+      "domain": "climate-kic.org",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "climatekic.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.climate-kic.org.ico"
+    },
+    {
+      "name": "Eithealth Accelerator",
+      "domain": "eithealth.eu",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "eithealth.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/eithealth.eu.ico"
+    },
+    {
+      "name": "Innoenergy Accelerator",
+      "domain": "innoenergy.com",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "innoenergy.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.innoenergy.com.ico"
+    },
+    {
+      "name": "Gen8tor Accelerator",
+      "domain": "gen8tor.com",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "gen8tor.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/gen8tor.com.ico"
+    },
+    {
+      "name": "Ffwd Accelerator",
+      "domain": "ffwd.org",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "ffwd.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.ffwd.org.ico"
+    },
+    {
+      "name": "Vilcap Accelerator",
+      "domain": "vilcap.com",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "vilcap.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/vilcap.com.ico"
+    },
+    {
+      "name": "Commonfuture Accelerator",
+      "domain": "commonfuture.co",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "commonfuture.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.commonfuture.co.ico"
+    },
+    {
+      "name": "Indiebio Accelerator",
+      "domain": "indiebio.co",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "indiebio.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/indiebio.co.ico"
+    },
+    {
+      "name": "Allevcap Accelerator",
+      "domain": "allevcap.com",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "allevcap.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/allevcap.com.ico"
+    },
+    {
+      "name": "Agfunder Accelerator",
+      "domain": "agfunder.com",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "agfunder.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/agfunder.com.ico"
+    },
+    {
+      "name": "Rockstart Accelerator",
+      "domain": "rockstart.com",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "rockstart.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.rockstart.com.ico"
+    },
+    {
+      "name": "Lemnos Accelerator",
+      "domain": "lemnos.vc",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "lemnos.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/lemnos.vc.ico"
+    },
+    {
+      "name": "Seraphimcapital Accelerator",
+      "domain": "seraphimcapital.com",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "seraphimcapital.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/seraphimcapital.com.ico"
+    },
+    {
+      "name": "Cyberstarts Accelerator",
+      "domain": "cyberstarts.com",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "cyberstarts.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/cyberstarts.com.ico"
+    },
+    {
+      "name": "Cisa Accelerator",
+      "domain": "cisa.gov",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "cisa.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.cisa.gov.ico"
+    },
+    {
+      "name": "Afwerx Accelerator",
+      "domain": "afwerx.com",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "afwerx.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/afwerx.com.ico"
+    },
+    {
+      "name": "Diu Accelerator",
+      "domain": "diu.mil",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "diu.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.diu.mil.ico"
+    },
+    {
+      "name": "Sofwerx Accelerator",
+      "domain": "sofwerx.org",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "sofwerx.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.sofwerx.org.ico"
+    },
+    {
+      "name": "Aim Accelerator",
+      "domain": "aim.gov.in",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "aim.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/aim.gov.in.ico"
+    },
+    {
+      "name": "Dubaifuture Accelerator",
+      "domain": "dubaifuture.ae",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "dubaifuture.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.dubaifuture.ae.ico"
+    },
+    {
+      "name": "Mercycorpsventures Accelerator",
+      "domain": "mercycorpsventures.org",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "mercycorpsventures.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/mercycorps.org.ico"
+    },
+    {
+      "name": "Rebrightpartners Accelerator",
+      "domain": "rebrightpartners.com",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "rebrightpartners.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.rebrightpartners.com.ico"
+    },
+    {
+      "name": "Cyberagent Accelerator",
+      "domain": "cyberagent.co.jp",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "cyberagent.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.cyberagent.co.jp.ico"
+    },
+    {
+      "name": "Fintechsaudi Accelerator",
+      "domain": "fintechsaudi.com",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "fintechsaudi.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/fintechsaudi.com.ico"
+    },
+    {
+      "name": "Seedstars Accelerator",
+      "domain": "seedstars.com",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "seedstars.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.seedstars.com.ico"
+    },
+    {
+      "name": "Gsma Accelerator",
+      "domain": "gsma.com",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "gsma.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.gsma.com.ico"
+    },
+    {
+      "name": "Pioneer Accelerator",
+      "domain": "pioneer.app",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "pioneer.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/pioneer.app.ico"
+    },
+    {
+      "name": "Eranyc Accelerator",
+      "domain": "eranyc.com",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "eranyc.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.eranyc.com.ico"
+    },
+    {
+      "name": "Pegasustechventures Accelerator",
+      "domain": "pegasustechventures.com",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "pegasustechventures.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.pegasustechventures.com.ico"
+    },
+    {
+      "name": "Startmate Accelerator",
+      "domain": "startmate.com",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "startmate.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.startmate.com.ico"
+    },
+    {
+      "name": "Sproutaccelerator",
+      "domain": "sproutaccelerator.com",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "sproutaccelerator.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/sproutaccelerator.com.ico"
+    },
+    {
+      "name": "Unreasonablegroup Accelerator",
+      "domain": "unreasonablegroup.com",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "unreasonablegroup.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/unreasonablegroup.com.ico"
+    },
+    {
+      "name": "Khoslaventures Accelerator",
+      "domain": "khoslaventures.com",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "khoslaventures.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.khoslaventures.com.ico"
+    },
+    {
+      "name": "Eiturbanmobility Accelerator",
+      "domain": "eiturbanmobility.eu",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "eiturbanmobility.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.eiturbanmobility.eu.ico"
+    },
+    {
+      "name": "Tenity Accelerator",
+      "domain": "tenity.com",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "tenity.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/tenity.com.ico"
+    },
+    {
+      "name": "Hax Accelerator",
+      "domain": "hax.co",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "hax.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/hax.co.ico"
+    },
+    {
+      "name": "Thefoundertrack Accelerator",
+      "domain": "thefoundertrack.com",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "thefoundertrack.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/thefoundertrack.com.ico"
+    },
+    {
+      "name": "Nextcanada Accelerator",
+      "domain": "nextcanada.com",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "nextcanada.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/nextcanada.com.ico"
+    },
+    {
+      "name": "Powerhouse Accelerator",
+      "domain": "powerhouse.fund",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "powerhouse.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/powerhouse.fund.ico"
+    },
+    {
+      "name": "Rtp Accelerator",
+      "domain": "rtp.vc",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "rtp.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/rtp.vc.ico"
+    },
+    {
+      "name": "Luminar Accelerator",
+      "domain": "luminar.vc",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "luminar.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/luminar.vc.ico"
+    },
+    {
+      "name": "Tidalventures Accelerator",
+      "domain": "tidalventures.com.au",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "tidalventures.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/tidalventures.com.au.ico"
+    },
+    {
+      "name": "Climathon Accelerator",
+      "domain": "climathon.climate-kic.org",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "climathon.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/climathon.climate-kic.org.ico"
+    },
+    {
+      "name": "Urban X Accelerator",
+      "domain": "urban-x.com",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "urbanx.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/bmwgroup.com.ico"
+    },
+    {
+      "name": "Forumvc Accelerator",
+      "domain": "forumvc.com",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "forumvc.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.forumvc.com.ico"
+    },
+    {
+      "name": "Cometlabs Accelerator",
+      "domain": "cometlabs.io",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "cometlabs.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/cometlabs.io.ico"
+    },
+    {
+      "name": "Tauventures Accelerator",
+      "domain": "tauventures.com",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "tauventures.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.tauventures.com.ico"
+    },
+    {
+      "name": "Cleanenergytrust Accelerator",
+      "domain": "cleanenergytrust.org",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "cleanenergytrust.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/cleanenergytrust.org.ico"
+    },
+    {
+      "name": "Apex Accelerator",
+      "domain": "apex.ventures",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "apex.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.apex.ventures.ico"
+    },
+    {
+      "name": "Startupwiseguys Accelerator",
+      "domain": "startupwiseguys.com",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "startupwiseguys.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/startupwiseguys.com.ico"
+    },
+    {
+      "name": "Katapultaccelerator",
+      "domain": "katapultaccelerator.com",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "katapultaccelerator.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/katapultaccelerator.com.ico"
+    },
+    {
+      "name": "Foodhack Accelerator",
+      "domain": "foodhack.global",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "foodhack.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/foodhack.global.ico"
+    },
+    {
+      "name": "Digitalhealth Accelerator",
+      "domain": "digitalhealth.london",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "digitalhealth.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/digitalhealth.london.ico"
+    },
+    {
+      "name": "Lmarks Accelerator",
+      "domain": "lmarks.com",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "lmarks.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.lmarks.com.ico"
+    },
+    {
+      "name": "Bethnalgreenventures Accelerator",
+      "domain": "bethnalgreenventures.com",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "bethnalgreenventures.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/bethnalgreenventures.com.ico"
+    },
+    {
+      "name": "Nordicmakers Accelerator",
+      "domain": "nordicmakers.vc",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "nordicmakers.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/nordicmakers.vc.ico"
+    },
+    {
+      "name": "Superangel Accelerator",
+      "domain": "superangel.io",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "superangel.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/superangel.io.ico"
+    },
+    {
+      "name": "Weempower Accelerator",
+      "domain": "weempower.eu",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "weempower.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/weempower.eu.ico"
+    },
+    {
+      "name": "Zealcp Accelerator",
+      "domain": "zealcp.com",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "zealcp.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/zealcp.com.ico"
+    },
+    {
+      "name": "Portfolia Accelerator",
+      "domain": "portfolia.co",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "portfolia.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/portfolia.co.ico"
+    },
+    {
+      "name": "Standtogether Accelerator",
+      "domain": "standtogether.org",
+      "kinds": [
+        "accelerator"
+      ],
+      "count": 1,
+      "localFile": "standtogether.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/standtogether.org.ico"
+    },
+    {
+      "name": "Zhangjiang Hi-Tech Park",
+      "domain": "zjpark.com",
+      "kinds": [
+        "incubator"
+      ],
+      "count": 1,
+      "localFile": "zjpark.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.zjpark.com.ico"
+    },
+    {
+      "name": "T-Hub",
+      "domain": "t-hub.co",
+      "kinds": [
+        "incubator"
+      ],
+      "count": 1,
+      "localFile": "thub.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/t-hub.co.ico"
+    },
+    {
+      "name": "Cchubnigeria Incubator",
+      "domain": "cchubnigeria.com",
+      "kinds": [
+        "incubator"
+      ],
+      "count": 1,
+      "localFile": "cchubnigeria.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/cchubnigeria.com.ico"
+    },
+    {
+      "name": "Entrepreneurship Incubator",
+      "domain": "entrepreneurship.mit.edu",
+      "kinds": [
+        "incubator"
+      ],
+      "count": 1,
+      "localFile": "entrepreneurship.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/entrepreneurship.mit.edu.ico"
+    },
+    {
+      "name": "Innovationlabs Incubator",
+      "domain": "innovationlabs.harvard.edu",
+      "kinds": [
+        "incubator"
+      ],
+      "count": 1,
+      "localFile": "innovationlabs.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/innovationlabs.harvard.edu.ico"
+    },
+    {
+      "name": "Oxfordfoundry Incubator",
+      "domain": "oxfordfoundry.ox.ac.uk",
+      "kinds": [
+        "incubator"
+      ],
+      "count": 1,
+      "localFile": "oxfordfoundry.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/ox.ac.uk.ico"
+    },
+    {
+      "name": "Enterprise Incubator",
+      "domain": "enterprise.cam.ac.uk",
+      "kinds": [
+        "incubator"
+      ],
+      "count": 1,
+      "localFile": "enterprise.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.enterprise.cam.ac.uk.ico"
+    },
+    {
+      "name": "Imperialenterpriselab Incubator",
+      "domain": "imperialenterpriselab.com",
+      "kinds": [
+        "incubator"
+      ],
+      "count": 1,
+      "localFile": "imperialenterpriselab.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.imperialenterpriselab.com.ico"
+    },
+    {
+      "name": "Ucl Incubator",
+      "domain": "ucl.ac.uk",
+      "kinds": [
+        "incubator"
+      ],
+      "count": 1,
+      "localFile": "ucl.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.ucl.ac.uk.ico"
+    },
+    {
+      "name": "Epfl Innovationpark Incubator",
+      "domain": "epfl-innovationpark.ch",
+      "kinds": [
+        "incubator"
+      ],
+      "count": 1,
+      "localFile": "epflinnovationpark.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.epfl-innovationpark.ch.ico"
+    },
+    {
+      "name": "Ethz Incubator",
+      "domain": "ethz.ch",
+      "kinds": [
+        "incubator"
+      ],
+      "count": 1,
+      "localFile": "ethz.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/ethz.ch.ico"
+    },
+    {
+      "name": "X Lab Incubator",
+      "domain": "x-lab.tsinghua.edu.cn",
+      "kinds": [
+        "incubator"
+      ],
+      "count": 1,
+      "localFile": "xlab.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.x-lab.tsinghua.edu.cn.ico"
+    },
+    {
+      "name": "Sineiitb Incubator",
+      "domain": "sineiitb.org",
+      "kinds": [
+        "incubator"
+      ],
+      "count": 1,
+      "localFile": "sineiitb.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.sineiitb.org.ico"
+    },
+    {
+      "name": "Fitt Iitd Incubator",
+      "domain": "fitt-iitd.in",
+      "kinds": [
+        "incubator"
+      ],
+      "count": 1,
+      "localFile": "fittiitd.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/fitt-iitd.in.ico"
+    },
+    {
+      "name": "Babson Incubator",
+      "domain": "babson.edu",
+      "kinds": [
+        "incubator"
+      ],
+      "count": 1,
+      "localFile": "babson.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.babson.edu.ico"
+    },
+    {
+      "name": "Endlessfrontierlabs Incubator",
+      "domain": "endlessfrontierlabs.com",
+      "kinds": [
+        "incubator"
+      ],
+      "count": 1,
+      "localFile": "endlessfrontierlabs.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.endlessfrontierlabs.com.ico"
+    },
+    {
+      "name": "Jlabs Incubator",
+      "domain": "jlabs.jnjinnovation.com",
+      "kinds": [
+        "incubator"
+      ],
+      "count": 1,
+      "localFile": "jlabs.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/jlabs.jnjinnovation.com.ico"
+    },
+    {
+      "name": "Halcyonhouse Incubator",
+      "domain": "halcyonhouse.org",
+      "kinds": [
+        "incubator"
+      ],
+      "count": 1,
+      "localFile": "halcyonhouse.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/halcyonhouse.org.ico"
+    },
+    {
+      "name": "Portalinnovations Incubator",
+      "domain": "portalinnovations.com",
+      "kinds": [
+        "incubator"
+      ],
+      "count": 1,
+      "localFile": "portalinnovations.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/portalinnovations.com.ico"
+    },
+    {
+      "name": "Newlab Incubator",
+      "domain": "newlab.com",
+      "kinds": [
+        "incubator"
+      ],
+      "count": 1,
+      "localFile": "newlab.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/newlab.com.ico"
+    },
+    {
+      "name": "Engine Incubator",
+      "domain": "engine.xyz",
+      "kinds": [
+        "incubator"
+      ],
+      "count": 1,
+      "localFile": "engine.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.engine.xyz.ico"
+    },
+    {
+      "name": "Tenity Incubator",
+      "domain": "tenity.com",
+      "kinds": [
+        "incubator"
+      ],
+      "count": 1,
+      "localFile": "tenity.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/tenity.com.ico"
+    },
+    {
+      "name": "Marsdd Incubator",
+      "domain": "marsdd.com",
+      "kinds": [
+        "incubator"
+      ],
+      "count": 1,
+      "localFile": "marsdd.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.marsdd.com.ico"
+    },
+    {
+      "name": "Communitech Incubator",
+      "domain": "communitech.ca",
+      "kinds": [
+        "incubator"
+      ],
+      "count": 1,
+      "localFile": "communitech.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/communitech.ca.ico"
+    },
+    {
+      "name": "Ifj Incubator",
+      "domain": "ifj.ch",
+      "kinds": [
+        "incubator"
+      ],
+      "count": 1,
+      "localFile": "ifj.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.ifj.ch.ico"
+    },
+    {
+      "name": "EIC Accelerator",
+      "domain": "eic.ec.europa.eu",
+      "kinds": [
+        "grant"
+      ],
+      "count": 1,
+      "localFile": "eic.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/eic.ec.europa.eu.ico"
+    },
+    {
+      "name": "MIT Enterprise Forum Arab Startup Competition",
+      "domain": "mitarabcompetition.com",
+      "kinds": [
+        "grant"
+      ],
+      "count": 1,
+      "localFile": "mitarabcompetition.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.mitarabcompetition.com.ico"
+    },
+    {
+      "name": "Startupchile Program",
+      "domain": "startupchile.org",
+      "kinds": [
+        "grant"
+      ],
+      "count": 1,
+      "localFile": "startupchile.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.startupchile.org.ico"
+    },
+    {
+      "name": "Codelaunch Program",
+      "domain": "codelaunch.com",
+      "kinds": [
+        "grant"
+      ],
+      "count": 1,
+      "localFile": "codelaunch.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/codelaunch.com.ico"
+    },
+    {
+      "name": "Usa Program",
+      "domain": "usa.visa.com",
+      "kinds": [
+        "grant"
+      ],
+      "count": 1,
+      "localFile": "usa.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/usa.visa.com.ico"
+    },
+    {
+      "name": "Ethz Program",
+      "domain": "ethz.ch",
+      "kinds": [
+        "grant"
+      ],
+      "count": 1,
+      "localFile": "ethz.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/ethz.ch.ico"
+    },
+    {
+      "name": "Echoinggreen Program",
+      "domain": "echoinggreen.org",
+      "kinds": [
+        "grant"
+      ],
+      "count": 1,
+      "localFile": "echoinggreen.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/echoinggreen.org.ico"
+    },
+    {
+      "name": "Activate Fellowship",
+      "domain": "activate.org",
+      "kinds": [
+        "grant"
+      ],
+      "count": 1,
+      "localFile": "activate.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.activate.org.ico"
+    },
+    {
+      "name": "Cisa Program",
+      "domain": "cisa.gov",
+      "kinds": [
+        "grant"
+      ],
+      "count": 1,
+      "localFile": "cisa.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.cisa.gov.ico"
+    },
+    {
+      "name": "Sbir Program",
+      "domain": "sbir.nsf.gov",
+      "kinds": [
+        "grant"
+      ],
+      "count": 1,
+      "localFile": "sbir.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/nsf.gov.ico"
+    },
+    {
+      "name": "Dodsbirsttr Program",
+      "domain": "dodsbirsttr.mil",
+      "kinds": [
+        "grant"
+      ],
+      "count": 1,
+      "localFile": "dodsbirsttr.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/defense.gov.ico"
+    },
+    {
+      "name": "Science Program",
+      "domain": "science.osti.gov",
+      "kinds": [
+        "grant"
+      ],
+      "count": 1,
+      "localFile": "science.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/science.osti.gov.ico"
+    },
+    {
+      "name": "Darpa Program",
+      "domain": "darpa.mil",
+      "kinds": [
+        "grant"
+      ],
+      "count": 1,
+      "localFile": "darpa.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.darpa.mil.ico"
+    },
+    {
+      "name": "Nifa Program",
+      "domain": "nifa.usda.gov",
+      "kinds": [
+        "grant"
+      ],
+      "count": 1,
+      "localFile": "nifa.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/nifa.usda.gov.ico"
+    },
+    {
+      "name": "Epa Program",
+      "domain": "epa.gov",
+      "kinds": [
+        "grant"
+      ],
+      "count": 1,
+      "localFile": "epa.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.epa.gov.ico"
+    },
+    {
+      "name": "Nist Program",
+      "domain": "nist.gov",
+      "kinds": [
+        "grant"
+      ],
+      "count": 1,
+      "localFile": "nist.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.nist.gov.ico"
+    },
+    {
+      "name": "Sba Program",
+      "domain": "sba.gov",
+      "kinds": [
+        "grant"
+      ],
+      "count": 1,
+      "localFile": "sba.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.sba.gov.ico"
+    },
+    {
+      "name": "Eda Program",
+      "domain": "eda.gov",
+      "kinds": [
+        "grant"
+      ],
+      "count": 1,
+      "localFile": "eda.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.eda.gov.ico"
+    },
+    {
+      "name": "Afwerx Program",
+      "domain": "afwerx.com",
+      "kinds": [
+        "grant"
+      ],
+      "count": 1,
+      "localFile": "afwerx.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/afwerx.com.ico"
+    },
+    {
+      "name": "Diu Program",
+      "domain": "diu.mil",
+      "kinds": [
+        "grant"
+      ],
+      "count": 1,
+      "localFile": "diu.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.diu.mil.ico"
+    },
+    {
+      "name": "Sofwerx Program",
+      "domain": "sofwerx.org",
+      "kinds": [
+        "grant"
+      ],
+      "count": 1,
+      "localFile": "sofwerx.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.sofwerx.org.ico"
+    },
+    {
+      "name": "Nsf Program",
+      "domain": "nsf.gov",
+      "kinds": [
+        "grant"
+      ],
+      "count": 1,
+      "localFile": "nsf.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.nsf.gov.ico"
+    },
+    {
+      "name": "New Program",
+      "domain": "new.nsf.gov",
+      "kinds": [
+        "grant"
+      ],
+      "count": 1,
+      "localFile": "new.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/nsf.gov.ico"
+    },
+    {
+      "name": "Cdfifund Program",
+      "domain": "cdfifund.gov",
+      "kinds": [
+        "grant"
+      ],
+      "count": 1,
+      "localFile": "cdfifund.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.cdfifund.gov.ico"
+    },
+    {
+      "name": "Hhs Program",
+      "domain": "hhs.gov",
+      "kinds": [
+        "grant"
+      ],
+      "count": 1,
+      "localFile": "hhs.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/hhs.gov.ico"
+    },
+    {
+      "name": "Arpa E Program",
+      "domain": "arpa-e.energy.gov",
+      "kinds": [
+        "grant"
+      ],
+      "count": 1,
+      "localFile": "arpae.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/arpa-e.energy.gov.ico"
+    },
+    {
+      "name": "Startup Program",
+      "domain": "startup.google.com",
+      "kinds": [
+        "grant"
+      ],
+      "count": 1,
+      "localFile": "startup.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/startup.google.com.ico"
+    },
+    {
+      "name": "Apply Program",
+      "domain": "apply.comcastrise.com",
+      "kinds": [
+        "grant"
+      ],
+      "count": 1,
+      "localFile": "apply.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/comcast.com.ico"
+    },
+    {
+      "name": "Fedex Program",
+      "domain": "fedex.com",
+      "kinds": [
+        "grant"
+      ],
+      "count": 1,
+      "localFile": "fedex.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.fedex.com.ico"
+    },
+    {
+      "name": "T Mobile Program",
+      "domain": "t-mobile.com",
+      "kinds": [
+        "grant"
+      ],
+      "count": 1,
+      "localFile": "tmobile.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.t-mobile.com.ico"
+    },
+    {
+      "name": "Score Program",
+      "domain": "score.org",
+      "kinds": [
+        "grant"
+      ],
+      "count": 1,
+      "localFile": "score.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.score.org.ico"
+    },
+    {
+      "name": "Ec Program",
+      "domain": "ec.europa.eu",
+      "kinds": [
+        "grant"
+      ],
+      "count": 1,
+      "localFile": "ec.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/ec.europa.eu.ico"
+    },
+    {
+      "name": "Eurekanetwork Program",
+      "domain": "eurekanetwork.org",
+      "kinds": [
+        "grant"
+      ],
+      "count": 1,
+      "localFile": "eurekanetwork.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.eurekanetwork.org.ico"
+    },
+    {
+      "name": "Eib Program",
+      "domain": "eib.org",
+      "kinds": [
+        "grant"
+      ],
+      "count": 1,
+      "localFile": "eib.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.eib.org.ico"
+    },
+    {
+      "name": "Ukri Program",
+      "domain": "ukri.org",
+      "kinds": [
+        "grant"
+      ],
+      "count": 1,
+      "localFile": "ukri.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.ukri.org.ico"
+    },
+    {
+      "name": "Bbh Program",
+      "domain": "bbh.co.uk",
+      "kinds": [
+        "grant"
+      ],
+      "count": 1,
+      "localFile": "bbh.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/bbh.co.uk.ico"
+    },
+    {
+      "name": "Gov Program",
+      "domain": "gov.uk",
+      "kinds": [
+        "grant"
+      ],
+      "count": 1,
+      "localFile": "gov.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.gov.uk.ico"
+    },
+    {
+      "name": "Bpifrance Program",
+      "domain": "bpifrance.fr",
+      "kinds": [
+        "grant"
+      ],
+      "count": 1,
+      "localFile": "bpifrance.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.bpifrance.fr.ico"
+    },
+    {
+      "name": "Kfw Program",
+      "domain": "kfw.de",
+      "kinds": [
+        "grant"
+      ],
+      "count": 1,
+      "localFile": "kfw.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.kfw.de.ico"
+    },
+    {
+      "name": "Exist Program",
+      "domain": "exist.de",
+      "kinds": [
+        "grant"
+      ],
+      "count": 1,
+      "localFile": "exist.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/exist.de.ico"
+    },
+    {
+      "name": "Nrc Program",
+      "domain": "nrc.canada.ca",
+      "kinds": [
+        "grant"
+      ],
+      "count": 1,
+      "localFile": "nrc.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/nrc.canada.ca.ico"
+    },
+    {
+      "name": "Bdc Program",
+      "domain": "bdc.ca",
+      "kinds": [
+        "grant"
+      ],
+      "count": 1,
+      "localFile": "bdc.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.bdc.ca.ico"
+    },
+    {
+      "name": "Canada Program",
+      "domain": "canada.ca",
+      "kinds": [
+        "grant"
+      ],
+      "count": 1,
+      "localFile": "canada.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.canada.ca.ico"
+    },
+    {
+      "name": "Enterprise Ireland Program",
+      "domain": "enterprise-ireland.com",
+      "kinds": [
+        "grant"
+      ],
+      "count": 1,
+      "localFile": "enterpriseireland.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.enterprise-ireland.com.ico"
+    },
+    {
+      "name": "Enisa Program",
+      "domain": "enisa.es",
+      "kinds": [
+        "grant"
+      ],
+      "count": 1,
+      "localFile": "enisa.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/enisa.es.ico"
+    },
+    {
+      "name": "Cdti Program",
+      "domain": "cdti.es",
+      "kinds": [
+        "grant"
+      ],
+      "count": 1,
+      "localFile": "cdti.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.cdti.es.ico"
+    },
+    {
+      "name": "Nesta Program",
+      "domain": "nesta.org.uk",
+      "kinds": [
+        "grant"
+      ],
+      "count": 1,
+      "localFile": "nesta.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.nesta.org.uk.ico"
+    },
+    {
+      "name": "Businessfinland Program",
+      "domain": "businessfinland.fi",
+      "kinds": [
+        "grant"
+      ],
+      "count": 1,
+      "localFile": "businessfinland.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.businessfinland.fi.ico"
+    },
+    {
+      "name": "Innovationsfonden Program",
+      "domain": "innovationsfonden.dk",
+      "kinds": [
+        "grant"
+      ],
+      "count": 1,
+      "localFile": "innovationsfonden.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/innovationsfonden.dk.ico"
+    },
+    {
+      "name": "Seedfund Program",
+      "domain": "seedfund.startupindia.gov.in",
+      "kinds": [
+        "grant"
+      ],
+      "count": 1,
+      "localFile": "seedfund.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/seedfund.startupindia.gov.in.ico"
+    },
+    {
+      "name": "Startupindia Program",
+      "domain": "startupindia.gov.in",
+      "kinds": [
+        "grant"
+      ],
+      "count": 1,
+      "localFile": "startupindia.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/startupindia.gov.in.ico"
+    },
+    {
+      "name": "Aim Program",
+      "domain": "aim.gov.in",
+      "kinds": [
+        "grant"
+      ],
+      "count": 1,
+      "localFile": "aim.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/aim.gov.in.ico"
+    },
+    {
+      "name": "Tdb Program",
+      "domain": "tdb.gov.in",
+      "kinds": [
+        "grant"
+      ],
+      "count": 1,
+      "localFile": "tdb.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/tdb.gov.in.ico"
+    },
+    {
+      "name": "Mdec Program",
+      "domain": "mdec.my",
+      "kinds": [
+        "grant"
+      ],
+      "count": 1,
+      "localFile": "mdec.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/mdec.my.ico"
+    },
+    {
+      "name": "Sginnovate Program",
+      "domain": "sginnovate.com",
+      "kinds": [
+        "grant"
+      ],
+      "count": 1,
+      "localFile": "sginnovate.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.sginnovate.com.ico"
+    },
+    {
+      "name": "Enterprisesg Program",
+      "domain": "enterprisesg.gov.sg",
+      "kinds": [
+        "grant"
+      ],
+      "count": 1,
+      "localFile": "enterprisesg.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.enterprisesg.gov.sg.ico"
+    },
+    {
+      "name": "Itc Program",
+      "domain": "itc.gov.hk",
+      "kinds": [
+        "grant"
+      ],
+      "count": 1,
+      "localFile": "itc.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/hkstp.org.ico"
+    },
+    {
+      "name": "Koica Program",
+      "domain": "koica.go.kr",
+      "kinds": [
+        "grant"
+      ],
+      "count": 1,
+      "localFile": "koica.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/koica.go.kr.ico"
+    },
+    {
+      "name": "Csiro Program",
+      "domain": "csiro.au",
+      "kinds": [
+        "grant"
+      ],
+      "count": 1,
+      "localFile": "csiro.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/csiro.au.ico"
+    },
+    {
+      "name": "Business Program",
+      "domain": "business.gov.au",
+      "kinds": [
+        "grant"
+      ],
+      "count": 1,
+      "localFile": "business.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/business.gov.au.ico"
+    },
+    {
+      "name": "Callaghaninnovation Program",
+      "domain": "callaghaninnovation.govt.nz",
+      "kinds": [
+        "grant"
+      ],
+      "count": 1,
+      "localFile": "callaghaninnovation.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.callaghaninnovation.govt.nz.ico"
+    },
+    {
+      "name": "Afdb Program",
+      "domain": "afdb.org",
+      "kinds": [
+        "grant"
+      ],
+      "count": 1,
+      "localFile": "afdb.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.afdb.org.ico"
+    },
+    {
+      "name": "Tonyelumelufoundation Program",
+      "domain": "tonyelumelufoundation.org",
+      "kinds": [
+        "grant"
+      ],
+      "count": 1,
+      "localFile": "tonyelumelufoundation.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.tonyelumelufoundation.org.ico"
+    },
+    {
+      "name": "Mastercardfdn Program",
+      "domain": "mastercardfdn.org",
+      "kinds": [
+        "grant"
+      ],
+      "count": 1,
+      "localFile": "mastercardfdn.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/mastercardfdn.org.ico"
+    },
+    {
+      "name": "Dubaifuture Program",
+      "domain": "dubaifuture.ae",
+      "kinds": [
+        "grant"
+      ],
+      "count": 1,
+      "localFile": "dubaifuture.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.dubaifuture.ae.ico"
+    },
+    {
+      "name": "Zayedsustainabilityprize Program",
+      "domain": "zayedsustainabilityprize.com",
+      "kinds": [
+        "grant"
+      ],
+      "count": 1,
+      "localFile": "zayedsustainabilityprize.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.zayedsustainabilityprize.com.ico"
+    },
+    {
+      "name": "Gcgh Program",
+      "domain": "gcgh.grandchallenges.org",
+      "kinds": [
+        "grant"
+      ],
+      "count": 1,
+      "localFile": "gcgh.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/gcgh.grandchallenges.org.ico"
+    },
+    {
+      "name": "Wellcome Program",
+      "domain": "wellcome.org",
+      "kinds": [
+        "grant"
+      ],
+      "count": 1,
+      "localFile": "wellcome.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/wellcome.org.ico"
+    },
+    {
+      "name": "Rockefellerfoundation Program",
+      "domain": "rockefellerfoundation.org",
+      "kinds": [
+        "grant"
+      ],
+      "count": 1,
+      "localFile": "rockefellerfoundation.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.rockefellerfoundation.org.ico"
+    },
+    {
+      "name": "Cartierwomensinitiative Program",
+      "domain": "cartierwomensinitiative.com",
+      "kinds": [
+        "grant"
+      ],
+      "count": 1,
+      "localFile": "cartierwomensinitiative.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.cartierwomensinitiative.com.ico"
+    },
+    {
+      "name": "Hultprize Program",
+      "domain": "hultprize.org",
+      "kinds": [
+        "grant"
+      ],
+      "count": 1,
+      "localFile": "hultprize.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.hultprize.org.ico"
+    },
+    {
+      "name": "Mercycorpsventures Program",
+      "domain": "mercycorpsventures.org",
+      "kinds": [
+        "grant"
+      ],
+      "count": 1,
+      "localFile": "mercycorpsventures.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/mercycorps.org.ico"
+    },
+    {
+      "name": "Foundingtogive Program",
+      "domain": "foundingtogive.com",
+      "kinds": [
+        "grant"
+      ],
+      "count": 1,
+      "localFile": "foundingtogive.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/foundingtogive.com.ico"
+    },
+    {
+      "name": "Fintechsaudi Program",
+      "domain": "fintechsaudi.com",
+      "kinds": [
+        "grant"
+      ],
+      "count": 1,
+      "localFile": "fintechsaudi.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/fintechsaudi.com.ico"
+    },
+    {
+      "name": "Seedstars Program",
+      "domain": "seedstars.com",
+      "kinds": [
+        "grant"
+      ],
+      "count": 1,
+      "localFile": "seedstars.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.seedstars.com.ico"
+    },
+    {
+      "name": "Microsoft Program",
+      "domain": "microsoft.com",
+      "kinds": [
+        "grant"
+      ],
+      "count": 1,
+      "localFile": "microsoft.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.microsoft.com.ico"
+    },
+    {
+      "name": "Impactchallenge Program",
+      "domain": "impactchallenge.withgoogle.com",
+      "kinds": [
+        "grant"
+      ],
+      "count": 1,
+      "localFile": "impactchallenge.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/impactchallenge.withgoogle.com.ico"
+    },
+    {
+      "name": "Omidyar Program",
+      "domain": "omidyar.com",
+      "kinds": [
+        "grant"
+      ],
+      "count": 1,
+      "localFile": "omidyar.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/omidyar.com.ico"
+    },
+    {
+      "name": "Schmidtfutures Program",
+      "domain": "schmidtfutures.com",
+      "kinds": [
+        "grant"
+      ],
+      "count": 1,
+      "localFile": "schmidtfutures.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.schmidtfutures.com.ico"
+    },
+    {
+      "name": "Breakthroughenergy Program",
+      "domain": "breakthroughenergy.org",
+      "kinds": [
+        "grant"
+      ],
+      "count": 1,
+      "localFile": "breakthroughenergy.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/breakthroughenergy.org.ico"
+    },
+    {
+      "name": "Weempower Program",
+      "domain": "weempower.eu",
+      "kinds": [
+        "grant"
+      ],
+      "count": 1,
+      "localFile": "weempower.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/weempower.eu.ico"
+    },
+    {
+      "name": "Newvoicesfoundation Program",
+      "domain": "newvoicesfoundation.org",
+      "kinds": [
+        "grant"
+      ],
+      "count": 1,
+      "localFile": "newvoicesfoundation.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.newvoicesfoundation.org.ico"
+    },
+    {
+      "name": "Blackinnovationalliance Program",
+      "domain": "blackinnovationalliance.com",
+      "kinds": [
+        "grant"
+      ],
+      "count": 1,
+      "localFile": "blackinnovationalliance.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.blackinnovationalliance.com.ico"
+    },
+    {
+      "name": "Standtogether Program",
+      "domain": "standtogether.org",
+      "kinds": [
+        "grant"
+      ],
+      "count": 1,
+      "localFile": "standtogether.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/standtogether.org.ico"
+    },
+    {
+      "name": "Drkfoundation Program",
+      "domain": "drkfoundation.org",
+      "kinds": [
+        "grant"
+      ],
+      "count": 1,
+      "localFile": "drkfoundation.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.drkfoundation.org.ico"
+    },
+    {
+      "name": "Macfound Program",
+      "domain": "macfound.org",
+      "kinds": [
+        "grant"
+      ],
+      "count": 1,
+      "localFile": "macfound.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.macfound.org.ico"
+    },
+    {
+      "name": "Foundation Program",
+      "domain": "foundation.mozilla.org",
+      "kinds": [
+        "grant"
+      ],
+      "count": 1,
+      "localFile": "foundation.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/foundation.mozilla.org.ico"
+    },
+    {
+      "name": "Opensocietyfoundations Program",
+      "domain": "opensocietyfoundations.org",
+      "kinds": [
+        "grant"
+      ],
+      "count": 1,
+      "localFile": "opensocietyfoundations.png",
+      "hasUsableLogoField": true,
+      "logoSample": "https://icons.duckduckgo.com/ip3/www.opensocietyfoundations.org.ico"
+    }
+  ]
+}

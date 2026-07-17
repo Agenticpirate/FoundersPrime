@@ -21,7 +21,7 @@ export default function GrantsStrategy() {
         <div className="relative bg-white border-2 border-black shadow-[4px_4px_0px_#111] rounded-sm p-5 md:p-6 overflow-hidden">
           {/* Decorative mandala */}
           <div className="absolute -bottom-12 -right-12 w-44 h-44 pointer-events-none opacity-[0.06]" aria-hidden="true">
-            <svg viewBox="0 0 200 200" className="w-full h-full text-emerald-700 grants-strategy-mandala-spin" fill="none" stroke="currentColor" strokeWidth="0.6">
+            <svg viewBox="0 0 200 200" className="w-full h-full text-amber-800 grants-strategy-mandala-spin" fill="none" stroke="currentColor" strokeWidth="0.6">
               {[20, 35, 50, 65].map((r, i) => (
                 <ellipse
                   key={i}
@@ -52,9 +52,9 @@ export default function GrantsStrategy() {
             {/* Drivers — 3 cards */}
             <div className="grid grid-cols-3 gap-2.5 mb-4">
               {drivers.map((item) => (
-                <div key={item.title} className="bg-emerald-50 border-2 border-black border-dashed rounded-sm p-2.5 md:p-3">
+                <div key={item.title} className="bg-amber-50 border-2 border-black border-dashed rounded-sm p-2.5 md:p-3">
                   <span className="inline-flex items-center justify-center w-7 h-7 bg-white border-2 border-black rounded-sm shadow-[1px_1px_0px_#111] mb-2">
-                    <span className="material-symbols-outlined !text-[14px] text-emerald-700">{item.icon}</span>
+                    <span className="material-symbols-outlined !text-[14px] text-amber-800">{item.icon}</span>
                   </span>
                   <h3 className="font-mono font-black text-[10px] md:text-[11px] text-black mb-1 uppercase tracking-wide">{item.title}</h3>
                   <p className="text-[10px] md:text-[11px] text-gray-700 leading-snug">{item.desc}</p>
@@ -71,7 +71,7 @@ export default function GrantsStrategy() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 {trends.map((t, i) => (
                   <div key={t.title} className="flex items-start gap-2.5 py-1 border-b border-dashed border-gray-300 last:border-0 sm:[&:nth-last-child(2)]:border-0">
-                    <span className="bg-emerald-100 text-emerald-900 border-2 border-black w-5 h-5 flex items-center justify-center text-[9px] font-black rounded-sm flex-shrink-0 shadow-[1px_1px_0px_#111]">
+                    <span className="bg-amber-100 text-amber-900 border-2 border-black w-5 h-5 flex items-center justify-center text-[9px] font-black rounded-sm flex-shrink-0 shadow-[1px_1px_0px_#111]">
                       {i + 1}
                     </span>
                     <div className="min-w-0">

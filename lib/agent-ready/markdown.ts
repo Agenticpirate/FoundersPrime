@@ -82,7 +82,7 @@ const PAGES: Record<string, PageDoc> = {
     sections: [
       {
         heading: 'What is FoundersPrime?',
-        body: `${SITE_NAME} is a curated intelligence terminal for founders: verified cloud credits, SaaS discounts, ad credits, non-dilutive grants, accelerators, incubators, startup ideas, and a verified startups database.`,
+        body: `${SITE_NAME} is a curated intelligence terminal for founders: verified cloud credits, SaaS discounts, ad credits, non-dilutive grants, accelerators, incubators, and startup ideas.`,
       },
       {
         heading: 'Primary destinations',
@@ -92,7 +92,6 @@ const PAGES: Record<string, PageDoc> = {
           `- Accelerators: ${SITE_URL}/programs/accelerators`,
           `- Incubators: ${SITE_URL}/programs/incubators`,
           `- Grants: ${SITE_URL}/programs/grants`,
-          `- Startups: ${SITE_URL}/startups`,
           `- Ideas: ${SITE_URL}/ideas`,
           `- Student benefits: ${SITE_URL}/student-benefits`,
           `- Pricing: ${SITE_URL}/pricing`,
@@ -165,16 +164,6 @@ const PAGES: Record<string, PageDoc> = {
       {
         heading: 'Ideas catalog',
         body: `Browse ideas at ${SITE_URL}/ideas. Detail pages: ${SITE_URL}/ideas/{slug}.`,
-      },
-    ],
-  },
-  '/startups': {
-    title: 'Verified Startups | FoundersPrime',
-    description: 'Database of funded and verified startups with program context.',
-    sections: [
-      {
-        heading: 'Startups',
-        body: `Browse startups at ${SITE_URL}/startups. Detail pages: ${SITE_URL}/startups/{slug}.`,
       },
     ],
   },

@@ -41,15 +41,15 @@ export default function NotFound() {
             </h3>
             <ul className="text-left space-y-3 font-sans text-xs md:text-sm text-gray-700 dark:text-gray-300">
               <li className="flex items-start gap-2.5">
-                <span className="material-symbols-outlined text-green-500 text-base flex-shrink-0" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
+                <span className="material-symbols-outlined text-accent-yellow text-base flex-shrink-0" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
                 <span>Check the URL for typos</span>
               </li>
               <li className="flex items-start gap-2.5">
-                <span className="material-symbols-outlined text-green-500 text-base flex-shrink-0" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
+                <span className="material-symbols-outlined text-accent-yellow text-base flex-shrink-0" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
                 <span>Use search to find what you're looking for</span>
               </li>
               <li className="flex items-start gap-2.5">
-                <span className="material-symbols-outlined text-green-500 text-base flex-shrink-0" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
+                <span className="material-symbols-outlined text-accent-yellow text-base flex-shrink-0" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
                 <span>Browse our deals, startups, or ideas sections</span>
               </li>
             </ul>

@@ -14,7 +14,7 @@ interface SingleIdeaHeaderProps {
 export default function SingleIdeaHeader({ idea }: SingleIdeaHeaderProps) {
   const getComplexityColor = (complexity: string) => {
     switch (complexity) {
-      case 'Low': return 'bg-green-100 text-green-800 border-green-900'
+      case 'Low': return 'bg-amber-100 text-amber-900 border-amber-800'
       case 'Medium': return 'bg-yellow-100 text-yellow-800 border-yellow-900'
       case 'High': return 'bg-red-100 text-red-800 border-red-900'
       default: return 'bg-gray-100 text-gray-800 border-gray-900'
@@ -22,7 +22,7 @@ export default function SingleIdeaHeader({ idea }: SingleIdeaHeaderProps) {
   }
 
   const getDemandScoreColor = (score: number) => {
-    if (score >= 8.5) return 'text-green-600'
+    if (score >= 8.5) return 'text-amber-700'
     if (score >= 7.0) return 'text-yellow-600'
     return 'text-red-600'
   }

@@ -124,7 +124,7 @@ export default function ProUpgradeModal({ isOpen, onClose, isStudentBenefit = fa
                         <ul className="space-y-2">
                             {(isStudentBenefit
                                 ? [
-                                    '900+ student benefits and verified discounts',
+                                    '1000+ student benefits and verified discounts',
                                     'Premium AI, cloud & developer credits',
                                     'Grants, hackathons, and early-stage fellowships',
                                     'Also included in Founder & Legend plans',
@@ -132,12 +132,12 @@ export default function ProUpgradeModal({ isOpen, onClose, isStudentBenefit = fa
                                 : [
                                     'Unlimited deal claims across every category',
                                     'Grants, accelerators, and incubator programs',
-                                    'Verified Startups + Startup Ideas database',
+                                    'Startup Ideas hub & validated problem database',
                                   ]
                             ).map((item) => (
                                 <li key={item} className="flex items-start gap-2.5">
                                     <span
-                                        className="material-symbols-outlined !text-[16px] text-emerald-600 dark:text-emerald-400 flex-shrink-0 mt-0.5"
+                                        className="material-symbols-outlined !text-[16px] text-amber-700 dark:text-accent-yellow flex-shrink-0 mt-0.5"
                                         style={{ fontVariationSettings: "'FILL' 1" }}
                                     >
                                         check_circle

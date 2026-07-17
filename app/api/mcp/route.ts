@@ -181,7 +181,6 @@ async function callTool(name: string, args: Record<string, any>): Promise<string
             { id: 'incubators', name: 'Incubators', url: `${SITE_URL}/programs/incubators` },
             { id: 'grants', name: 'Grants', url: `${SITE_URL}/programs/grants` },
             { id: 'ideas', name: 'Startup Ideas', url: `${SITE_URL}/ideas` },
-            { id: 'startups', name: 'Verified Startups', url: `${SITE_URL}/startups` },
             { id: 'student-benefits', name: 'Student Benefits', url: `${SITE_URL}/student-benefits` },
           ],
         },

@@ -1,10 +1,15 @@
+import { CardHoverGlow, cardHoverClass, cardTitleHoverClass } from '@/components/ui/card-hover'
+
 interface SearchResult {
   type: 'deal' | 'startup' | 'idea' | 'resource' | 'blog'
   title: string
   description: string
   category: string
   url: string
+  /** @deprecated catalog flag — do not use for badge */
   featured?: boolean
+  /** Active paid ad placement only */
+  paidFeatured?: boolean
   metadata: Record<string, any>
   [key: string]: any
 }
@@ -34,7 +39,7 @@ export default function SearchResultCard({ result }: SearchResultCardProps) {
   const getTypeColor = (type: string) => {
     switch (type) {
       case 'deal':
-        return 'bg-green-400'
+        return 'bg-accent-yellow'
       case 'startup':
         return 'bg-primary'
       case 'idea':
@@ -55,7 +60,7 @@ export default function SearchResultCard({ result }: SearchResultCardProps) {
           <div className="flex items-center gap-4 text-sm">
             <div className="flex items-center gap-1">
               <span className="material-symbols-outlined text-sm text-gray-400">payments</span>
-              <span className="font-mono font-bold text-green-600">{result.value}</span>
+              <span className="font-mono font-bold text-amber-700">{result.value}</span>
             </div>
             <div className="flex items-center gap-1">
               <span className="material-symbols-outlined text-sm text-gray-400">business</span>
@@ -141,8 +146,9 @@ export default function SearchResultCard({ result }: SearchResultCardProps) {
   }
 
   return (
-    <div className="bg-white border-3 border-black shadow-[6px_6px_0px_0px_#1a1a1a] rounded-sm p-6 hover:translate-y-[-2px] transition-transform">
-      <div className="flex items-start gap-4">
+    <div className={`bg-white dark:bg-[#0c0c0c] border border-black/10 dark:border-white/10 shadow-sm rounded-2xl p-6 ${cardHoverClass}`}>
+      <CardHoverGlow />
+      <div className="relative flex items-start gap-4">
         {/* Type Icon */}
         <div className={`size-12 ${getTypeColor(result.type)} border-2 border-black rounded-sm flex items-center justify-center flex-shrink-0`}>
           <span className="material-symbols-outlined text-lg text-black">
@@ -161,9 +167,10 @@ export default function SearchResultCard({ result }: SearchResultCardProps) {
               <span className="px-2 py-1 bg-white text-black font-mono text-xs font-bold rounded-sm border-2 border-black">
                 {result.category}
               </span>
-              {result.featured && (
+              {/* FEATURED is reserved for paid ad placements (handled by result.paidFeatured) */}
+              {result.paidFeatured && (
                 <span className="px-2 py-1 bg-yellow-400 text-black font-mono text-xs font-bold rounded-sm border-2 border-black">
-                  FEATURED
+                  ⭐ FEATURED
                 </span>
               )}
             </div>
@@ -179,7 +186,7 @@ export default function SearchResultCard({ result }: SearchResultCardProps) {
           </div>
           
           {/* Title */}
-          <h3 className="font-mono text-lg font-bold text-black mb-2 hover:text-primary transition-colors">
+          <h3 className={`font-mono text-lg font-bold text-black dark:text-white mb-2 ${cardTitleHoverClass}`}>
             <a href={result.url}>
               {result.title}
             </a>

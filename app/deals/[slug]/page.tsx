@@ -2,14 +2,13 @@
 import { notFound } from 'next/navigation'
 import type { Metadata, ResolvingMetadata } from 'next'
 import SingleDealContent from '@/components/deals/SingleDealContent'
-import SingleDealSidebar from '@/components/deals/SingleDealSidebar'
+import SingleDealHero from '@/components/deals/SingleDealHero'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import DealProBadge from '@/components/deals/DealProBadge'
-import DealLogo from '@/components/deals/DealLogo'
 import { getAllCategories } from '@/lib/deals-database'
 import { fetchDealBySlugFromDB, fetchAllDealSlugsFromDB, isDealsDbConfigured } from '@/lib/deals-server'
-import { getStartupProgramUrl } from '@/lib/comprehensive-startup-urls'
+import { resolveDealApplicationUrl } from '@/lib/comprehensive-startup-urls'
 import { checkProStatusServer } from '@/lib/auth/user-server'
 import fs from 'fs'
 import path from 'path'
@@ -107,6 +106,22 @@ export async function generateMetadata(
 function convertDealForDisplay(deal: any, displaySimilarDeals: any[]) {
   const categories = getAllCategories()
   const category = categories.find(cat => cat.id === deal.category)
+  const isProgram =
+    deal.category === 'accelerators' ||
+    deal.category === 'incubators' ||
+    deal.category === 'grants' ||
+    String(category?.name || '').toLowerCase().includes('accelerator') ||
+    String(category?.name || '').toLowerCase().includes('incubator') ||
+    String(category?.name || '').toLowerCase().includes('grant')
+
+  const programKind =
+    deal.category === 'grants'
+      ? 'Grant'
+      : deal.category === 'incubators'
+        ? 'Incubator'
+        : deal.category === 'accelerators'
+          ? 'Accelerator'
+          : category?.name || deal.category
 
   return {
     id: deal.slug,
@@ -114,61 +129,113 @@ function convertDealForDisplay(deal: any, displaySimilarDeals: any[]) {
     provider: deal.provider,
     category: category?.name || deal.category,
     value: deal.value,
-    status: deal.status === 'active' ? 'Open - Rolling Basis' :
-      deal.status === 'limited' ? 'Limited Time' :
-        deal.status === 'coming-soon' ? 'Coming Soon' : 'Expired',
+    status: deal.status === 'active'
+      ? (isProgram ? 'Applications Open' : 'Open - Rolling Basis')
+      : deal.status === 'limited' ? 'Limited Time'
+        : deal.status === 'coming-soon' ? 'Coming Soon' : 'Expired',
     description: deal.description,
     badges: [
-      deal.status === 'active' ? 'Open - Rolling Basis' : deal.status,
-      category?.name || deal.category,
-      ...(deal.featured ? ['Recommended'] : [])
+      deal.status === 'active' ? (isProgram ? 'Applications Open' : 'Open - Rolling Basis') : deal.status,
+      programKind,
+      ...(deal.featured && deal.featuredUntil && new Date(deal.featuredUntil).getTime() > Date.now()
+        ? ['⭐ Featured']
+        : deal.recommended
+          ? ['Recommended']
+          : []),
     ],
-    stats: {
-      appTime: deal.timeToApply || '~15 min',
-      approval: '1-7 days',
-      difficulty: deal.difficulty || 'Medium',
-      successRate: deal.successRate || '75%+'
-    },
+    // Program pages: Funding / Equity / Duration / Selectivity
+    // Deal pages: Timeline / Approval / Difficulty / Signal
+    stats: isProgram
+      ? {
+          appTime: deal.programDuration || deal.timeToApply || 'Varies',
+          approval: deal.savings || deal.equity || 'See terms',
+          difficulty: deal.value || deal.fundingAmount || 'Funding varies',
+          successRate: deal.successRate || 'Competitive',
+        }
+      : {
+          appTime: deal.timeToApply || '~15 min',
+          approval: '1-7 days',
+          difficulty: deal.difficulty || 'Medium',
+          successRate: deal.successRate || '75%+',
+        },
     overview: deal.description,
     included: [
-      { title: 'Value', description: deal.value },
-      { title: 'Provider', description: deal.provider },
-      { title: 'Category', description: category?.name || deal.category },
-      ...(deal.savings ? [{ title: 'Savings', description: deal.savings }] : [])
+      {
+        title: isProgram
+          ? (deal.category === 'grants' ? 'Funding' : 'Investment')
+          : 'Value',
+        description: deal.value,
+      },
+      ...(deal.savings || deal.equity
+        ? [{ title: 'Equity', description: deal.savings || deal.equity }]
+        : []),
+      ...(deal.programDuration
+        ? [{ title: 'Duration', description: deal.programDuration }]
+        : []),
+      { title: isProgram ? 'Program' : 'Provider', description: deal.provider },
+      { title: 'Type', description: programKind },
     ],
-    eligibility: deal.eligibility || ['Startups', 'Early stage companies'],
+    eligibility: deal.eligibility || (isProgram
+      ? ['Early-stage startups', 'Founder-led companies']
+      : ['Startups', 'Early stage companies']),
     steps: deal.applicationProcess?.map((step: string, index: number) => ({
       title: `Step ${index + 1}`,
       description: step
-    })) || [
-        { title: 'Check Eligibility', description: 'Review the requirements to ensure you qualify.' },
-        { title: 'Gather Information', description: 'Prepare required documents and information.' },
-        { title: 'Submit Application', description: 'Complete the application form.' },
-        { title: 'Wait for Approval', description: 'Approval typically takes 5-7 business days.' }
-      ],
-    faq: [
-      {
-        question: 'Who is eligible for this deal?',
-        answer: deal.eligibility?.join(', ') || 'Check the eligibility requirements above.'
-      },
-      {
-        question: 'How long does approval take?',
-        answer: 'Approval typically takes 5-7 business days, but may vary depending on the provider.'
-      },
-      {
-        question: 'What do I need to apply?',
-        answer: deal.requirements?.join(', ') || 'Basic company information and documentation.'
-      }
-    ],
+    })) || (isProgram
+      ? [
+          { title: 'Check fit', description: 'Confirm stage, focus area, and geo match the program.' },
+          { title: 'Prep materials', description: 'Pitch deck, team bios, metrics, and product demo.' },
+          { title: 'Apply', description: 'Submit through the official application portal.' },
+          { title: 'Interview', description: 'If shortlisted, complete partner interviews and diligence.' },
+        ]
+      : [
+          { title: 'Check Eligibility', description: 'Review the requirements to ensure you qualify.' },
+          { title: 'Gather Information', description: 'Prepare required documents and information.' },
+          { title: 'Submit Application', description: 'Complete the application form.' },
+          { title: 'Wait for Approval', description: 'Approval typically takes 5-7 business days.' },
+        ]),
+    faq: isProgram
+      ? [
+          {
+            question: `Who is eligible for ${deal.title}?`,
+            answer: deal.eligibility?.filter(Boolean).join(' · ') || 'Review the eligibility section above for stage, geo, and focus requirements.',
+          },
+          {
+            question: 'How competitive is admission?',
+            answer: deal.successRate || 'Most top programs are highly selective. Strong traction and a clear founder narrative improve odds.',
+          },
+          {
+            question: 'What do I need to apply?',
+            answer: deal.requirements?.filter(Boolean).join(', ') || 'Pitch deck, team info, product overview, and basic metrics.',
+          },
+        ]
+      : [
+          {
+            question: 'Who is eligible for this deal?',
+            answer: deal.eligibility?.join(', ') || 'Check the eligibility requirements above.',
+          },
+          {
+            question: 'How long does approval take?',
+            answer: 'Approval typically takes 5-7 business days, but may vary depending on the provider.',
+          },
+          {
+            question: 'What do I need to apply?',
+            answer: deal.requirements?.join(', ') || 'Basic company information and documentation.',
+          },
+        ],
     similarDeals: displaySimilarDeals,
     verification: {
       lastVerified: deal.lastUpdated || deal.lastVerified || new Date().toISOString().split('T')[0],
       appliedCount: typeof deal.appliedCount === 'number' ? deal.appliedCount : null
     },
-    applicationUrl: deal.applicationUrl,
+    applicationUrl: resolveDealApplicationUrl(deal),
     actualDealUrl: deal.actualDealUrl,
-    providerWebsite: deal.providerWebsite || deal.applicationUrl,
-    tags: deal.tags || []
+    providerWebsite:
+      deal.providerWebsite && !String(deal.providerWebsite).includes('google.com/search')
+        ? deal.providerWebsite
+        : resolveDealApplicationUrl(deal),
+    tags: deal.tags || [],
+    isProgram,
   }
 }
 
@@ -225,8 +292,6 @@ export default async function SingleDealPage({ params }: PageProps) {
     if (!dealData) {
       const accelerator = accelerators2026.find(a => a.slug === params.slug)
       if (accelerator) {
-
-        // Map accelerator to deal format
         dealData = {
           id: accelerator.slug,
           slug: accelerator.slug,
@@ -239,22 +304,42 @@ export default async function SingleDealPage({ params }: PageProps) {
           value: accelerator.investment,
           savings: accelerator.equity,
           applicationUrl: accelerator.applicationLink || accelerator.website,
+          providerWebsite: accelerator.website,
           status: 'active',
           featured: true,
-          eligibility: [accelerator.founderStage, `Focus: ${accelerator.focusArea}`],
-          requirements: ['Early Stage Startup', accelerator.founderStage],
-          tags: accelerator.features || [],
-          timeToApply: accelerator.applicationDeadline ? `Deadline: ${accelerator.applicationDeadline}` : 'Rolling',
+          eligibility: [
+            accelerator.founderStage,
+            `Focus: ${accelerator.focusArea}`,
+            `Location: ${accelerator.location}`,
+            `Region: ${accelerator.region}`,
+          ].filter(Boolean),
+          requirements: ['Early Stage Startup', accelerator.founderStage, accelerator.focusArea].filter(Boolean),
+          tags: [
+            ...(accelerator.features || []),
+            accelerator.focusArea,
+            accelerator.region,
+            'Accelerator',
+          ].filter(Boolean),
+          timeToApply: accelerator.applicationDeadline
+            ? `Deadline: ${accelerator.applicationDeadline}`
+            : 'Rolling',
           difficulty: 'hard',
           successRate: 'Competitive',
-          applicationProcess: [],
+          applicationProcess: [
+            `Review ${accelerator.name} eligibility (${accelerator.founderStage}; focus: ${accelerator.focusArea}).`,
+            'Prepare pitch deck, team bios, and traction metrics.',
+            `Submit via ${accelerator.applicationLink || accelerator.website}.`,
+            'Complete interviews if invited; accept offer and join the cohort.',
+          ],
           recommended: true,
           verified: true,
+          programDuration: accelerator.programDuration,
+          equity: accelerator.equity,
           lastUpdated: new Date().toISOString(),
           createdAt: new Date().toISOString(),
           updatedAt: new Date().toISOString(),
           sourceVerified: true,
-          dataSource: 'manual'
+          dataSource: 'manual',
         }
       }
     }
@@ -276,6 +361,7 @@ export default async function SingleDealPage({ params }: PageProps) {
           value: incubator.support,
           savings: incubator.equity,
           applicationUrl: incubator.applicationLink || incubator.website,
+          providerWebsite: incubator.website,
           logoUrl: incubator.logo,
           status: 'active',
           featured: true,
@@ -285,7 +371,14 @@ export default async function SingleDealPage({ params }: PageProps) {
           timeToApply: incubator.applicationDeadline ? `Deadline: ${incubator.applicationDeadline}` : 'Rolling',
           difficulty: 'medium',
           successRate: 'Moderate',
-          applicationProcess: [],
+          applicationProcess: [
+            `Review ${incubator.name} fit for your stage (${incubator.founderStage}).`,
+            'Prepare materials and application narrative.',
+            `Apply at ${incubator.applicationLink || incubator.website}.`,
+            'Complete interviews and join if accepted.',
+          ],
+          programDuration: incubator.programDuration,
+          equity: incubator.equity,
           recommended: true,
           verified: true,
           lastUpdated: new Date().toISOString(),
@@ -507,127 +600,43 @@ export default async function SingleDealPage({ params }: PageProps) {
         />
         <Header />
         <main className="flex-1">
-          {/* Neo-brutalist hero header — gradient bg + mandala ornaments */}
-          <div className="relative w-full bg-white dark:bg-[#000000] border-b-3 border-b-black dark:border-b-white/10 overflow-hidden transition-colors duration-300">
-            {/* Subtle grid bg removed */}
-
-            {/* Decorative mandalas */}
-            <div className="absolute -top-16 -right-16 w-72 h-72 pointer-events-none opacity-[0.08] dark:opacity-[0.12] hidden md:block" aria-hidden="true">
-              <svg viewBox="0 0 200 200" className="w-full h-full text-gray-900 dark:text-white single-deal-mandala-spin" fill="none" stroke="currentColor" strokeWidth="0.7">
-                <circle cx="100" cy="100" r="40" />
-                <circle cx="100" cy="100" r="60" strokeDasharray="2 4" />
-                <circle cx="100" cy="100" r="80" strokeDasharray="1 6" />
-                <circle cx="100" cy="100" r="3" fill="currentColor" />
-                {[0, 45, 90, 135, 180, 225, 270, 315].map((deg) => (
-                  <g key={deg} transform={`rotate(${deg} 100 100)`}>
-                    <line x1="100" y1="40" x2="100" y2="20" />
-                    <circle cx="100" cy="20" r="2" fill="currentColor" />
-                  </g>
-                ))}
-              </svg>
-            </div>
-            <div className="absolute -bottom-20 -left-20 w-64 h-64 pointer-events-none opacity-[0.06] dark:opacity-[0.10] hidden md:block" aria-hidden="true">
-              <svg viewBox="0 0 200 200" className="w-full h-full text-accent-yellow single-deal-mandala-spin-reverse" fill="none" stroke="currentColor" strokeWidth="0.7">
-                <circle cx="100" cy="100" r="50" />
-                <circle cx="100" cy="100" r="35" strokeDasharray="3 3" />
-                {[...Array(12)].map((_, i) => (
-                  <line
-                    key={i}
-                    x1="100"
-                    y1="100"
-                    x2={100 + Math.cos((i * Math.PI) / 6) * 90}
-                    y2={100 + Math.sin((i * Math.PI) / 6) * 90}
-                  />
-                ))}
-                <circle cx="100" cy="100" r="2" fill="currentColor" />
-              </svg>
-            </div>
-
-            <div className="relative max-w-[1600px] mx-auto px-4 lg:px-6 py-4 lg:py-6">
-              {(() => {
-                const subcategoryMap: Record<string, { label: string; href: string; parentLabel: string }> = {
-                  'accelerators': { label: 'Accelerators', href: '/deals/accelerators', parentLabel: 'Programs' },
-                  'incubators': { label: 'Incubators', href: '/deals/incubators', parentLabel: 'Programs' },
-                  'grants': { label: 'Grants', href: '/deals/grants', parentLabel: 'Programs' },
-                  'cloud-credits': { label: 'Cloud Credits', href: '/deals?category=cloud-credits', parentLabel: 'Deals' },
-                  'saas-discounts': { label: 'SaaS Discounts', href: '/deals?category=saas-discounts', parentLabel: 'Deals' },
-                  'ad-credits': { label: 'Ad Credits', href: '/deals?category=ad-credits', parentLabel: 'Deals' },
-                }
-                const sub = subcategoryMap[dealData.category]
-
-                return (
-                  <nav aria-label="Breadcrumb" className="flex mb-4">
-                    <ol className="inline-flex items-center gap-1.5 font-mono text-[11px] md:text-xs text-gray-600 dark:text-gray-400 whitespace-nowrap">
-                      <li><a className="hover:text-black dark:hover:text-white transition-colors" href="/">Home</a></li>
-                      <li className="text-gray-400 dark:text-gray-600">/</li>
-                      <li><a className="hover:text-black dark:hover:text-white transition-colors" href="/deals">{sub ? sub.parentLabel : 'Deals'}</a></li>
-                      {sub && (
-                        <>
-                          <li className="text-gray-400 dark:text-gray-600">/</li>
-                          <li><a className="hover:text-black dark:hover:text-white transition-colors" href={sub.href}>{sub.label}</a></li>
-                        </>
-                      )}
-                      <li className="text-gray-400 dark:text-gray-600">/</li>
-                      <li aria-current="page">
-                        <span className="text-black dark:text-white font-bold bg-accent-yellow/30 dark:bg-accent-yellow/20 px-2 py-0.5 border-2 border-black dark:border-white/10 rounded-sm truncate max-w-[180px] md:max-w-[280px] inline-block align-bottom">{deal.title}</span>
-                      </li>
-                    </ol>
-                  </nav>
-                )
-              })()}
-
-              {/* Header — logo + title block */}
-              <div className="flex items-start gap-3 lg:gap-5">
-                <div className="flex-shrink-0">
-                  <div className="relative w-14 h-14 lg:w-20 lg:h-20 rounded-sm bg-white dark:bg-[#0c0c0c] border-2 border-black dark:border-white/10 shadow-[3px_3px_0px_#111] dark:shadow-[3px_3px_0px_rgba(255,255,255,0.05)] overflow-hidden flex items-center justify-center">
-                    <DealLogo
-                      logoUrl={dealData.logoUrl}
-                      brandIcon={dealData.brandIcon}
-                      provider={dealData.provider}
-                      size="sm"
-                    />
-                  </div>
-                </div>
-                <div className="flex-1 min-w-0">
-                  <div className="mb-2 flex flex-wrap gap-1.5">
-                    <span className="inline-flex items-center gap-1 rounded-sm px-2.5 py-0.5 font-mono text-[10px] font-black uppercase tracking-wide bg-emerald-100 dark:bg-emerald-950/20 text-black dark:text-emerald-400 border-2 border-black dark:border-white/10 shadow-[1px_1px_0px_#111] dark:shadow-[1px_1px_0px_rgba(255,255,255,0.05)]">
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                      {deal.status}
-                    </span>
-                    <span className="inline-flex items-center rounded-sm px-2.5 py-0.5 font-mono text-[10px] font-black uppercase tracking-wide bg-sky-100 dark:bg-sky-950/20 text-black dark:text-sky-400 border-2 border-black dark:border-white/10 shadow-[1px_1px_0px_#111] dark:shadow-[1px_1px_0px_rgba(255,255,255,0.05)]">
-                      {deal.category}
-                    </span>
-                    <DealProBadge />
-                  </div>
-                  <h1 className="font-mono text-xl sm:text-2xl lg:text-[34px] font-black tracking-tight text-black dark:text-white leading-[1.1] mb-1.5 transition-colors duration-300">
-                    {deal.title}
-                  </h1>
-                  <div className="flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-xs lg:text-sm text-gray-700 dark:text-gray-300">
-                    <span className="inline-flex items-center gap-1">
-                      <span className="material-symbols-outlined text-[16px] text-gray-600 dark:text-gray-400">domain</span>
-                      <span className="font-bold text-black dark:text-white">{deal.provider}</span>
-                    </span>
-                    <span className="hidden md:inline text-gray-400 dark:text-gray-600">·</span>
-                    <span className="inline-flex items-center gap-1">
-                      <span className="material-symbols-outlined text-[16px] text-amber-600 dark:text-amber-500">verified</span>
-                      <span>Verified · Last checked {new Date(deal.verification.lastVerified).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</span>
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Mandala spin keyframes */}
-            <style dangerouslySetInnerHTML={{ __html: `
-              @keyframes singleDealMandalaSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-              @keyframes singleDealMandalaSpinReverse { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
-              .single-deal-mandala-spin { animation: singleDealMandalaSpin 80s linear infinite; transform-origin: center; }
-              .single-deal-mandala-spin-reverse { animation: singleDealMandalaSpinReverse 100s linear infinite; transform-origin: center; }
-              @media (prefers-reduced-motion: reduce) {
-                .single-deal-mandala-spin, .single-deal-mandala-spin-reverse { animation: none; }
-              }
-            ` }} />
-          </div>
+          {(() => {
+            const subcategoryMap: Record<string, { label: string; href: string; parentLabel: string; parentHref: string }> = {
+              accelerators: { label: 'Accelerators', href: '/programs?type=accelerators', parentLabel: 'Programs', parentHref: '/programs' },
+              incubators: { label: 'Incubators', href: '/programs?type=incubators', parentLabel: 'Programs', parentHref: '/programs' },
+              grants: { label: 'Grants', href: '/programs?type=grants', parentLabel: 'Programs', parentHref: '/programs' },
+              'cloud-credits': { label: 'Cloud Credits', href: '/deals?category=cloud-credits', parentLabel: 'Deals', parentHref: '/deals' },
+              'saas-discounts': { label: 'SaaS Discounts', href: '/deals?category=saas-discounts', parentLabel: 'Deals', parentHref: '/deals' },
+              'ad-credits': { label: 'Ad Credits', href: '/deals?category=ad-credits', parentLabel: 'Deals', parentHref: '/deals' },
+            }
+            const sub = subcategoryMap[dealData.category]
+            const breadcrumbs = [
+              { label: 'Home', href: '/' },
+              { label: sub?.parentLabel || 'Deals', href: sub?.parentHref || '/deals' },
+              ...(sub ? [{ label: sub.label, href: sub.href }] : []),
+              { label: deal.title },
+            ]
+            return (
+              <SingleDealHero
+                breadcrumbs={breadcrumbs}
+                logo={{
+                  logoUrl: dealData.logoUrl,
+                  brandIcon: dealData.brandIcon,
+                  provider: dealData.provider,
+                  website: dealData.providerWebsite || dealData.applicationUrl,
+                  size: 'md',
+                }}
+                badges={[
+                  { label: deal.status, tone: 'yellow', pulse: true },
+                  { label: deal.category, tone: 'sky' },
+                ]}
+                badgeSlot={<DealProBadge />}
+                title={deal.title}
+                providerLabel={deal.provider}
+                verificationLabel={`Verified · ${new Date(deal.verification.lastVerified).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}`}
+              />
+            )
+          })()}
 
           {/* Main content */}
           <div className="max-w-[1600px] mx-auto px-4 lg:px-6 py-4 lg:py-6">

@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server';
 import DodoPayments from 'dodopayments';
-import { createClient } from '@/lib/supabase/server';
 import { createClient as createServiceClient } from '@supabase/supabase-js';
 import { getPlanByProductId, getFeaturedPlanConfig } from '@/lib/featured-plans';
 
@@ -106,52 +105,113 @@ async function activateFeaturedListing(data: any, durationDays: number) {
   }
 }
 
+/**
+ * Resolve a Supabase auth user for webhook activation.
+ * Prefer explicit user_id from checkout metadata; fall back to email (case-insensitive).
+ * MUST use the service-role client — cookie/anon clients cannot call auth.admin.*
+ * and have no session on webhook requests.
+ */
+async function resolveAuthUser(opts: {
+  userId?: string | null
+  email?: string | null
+}): Promise<{ id: string; email?: string } | null> {
+  const supabase = getServiceRoleClient()
+  if (!supabase) {
+    console.error('⚠️ activatePlan: SUPABASE_SERVICE_ROLE_KEY not configured')
+    return null
+  }
+
+  if (opts.userId) {
+    const { data, error } = await supabase.auth.admin.getUserById(opts.userId)
+    if (!error && data?.user) {
+      return { id: data.user.id, email: data.user.email || undefined }
+    }
+    console.warn(`⚠️ getUserById failed for ${opts.userId}:`, error?.message)
+  }
+
+  const email = (opts.email || '').trim().toLowerCase()
+  if (!email) return null
+
+  // Paginate — default listUsers only returns the first page (~50–200 users).
+  let page = 1
+  const perPage = 200
+  while (page <= 50) {
+    const { data, error } = await supabase.auth.admin.listUsers({ page, perPage })
+    if (error) {
+      console.error('Error listing users for plan activation:', error.message)
+      break
+    }
+    const batch = data?.users || []
+    const hit = batch.find((u) => String(u.email || '').toLowerCase().trim() === email)
+    if (hit) return { id: hit.id, email: hit.email || undefined }
+    if (batch.length < perPage) break
+    page += 1
+  }
+
+  // REST fallback with email filter (GoTrue supports email query on some versions)
+  try {
+    const base = process.env.NEXT_PUBLIC_SUPABASE_URL?.replace(/\/$/, '')
+    const key = process.env.SUPABASE_SERVICE_ROLE_KEY
+    if (base && key) {
+      const res = await fetch(
+        `${base}/auth/v1/admin/users?page=1&per_page=50&email=${encodeURIComponent(email)}`,
+        {
+          headers: { apikey: key, Authorization: `Bearer ${key}` },
+          cache: 'no-store',
+        }
+      )
+      if (res.ok) {
+        const body = await res.json()
+        const users: any[] = Array.isArray(body?.users) ? body.users : []
+        const hit = users.find(
+          (u) => String(u.email || '').toLowerCase().trim() === email
+        )
+        if (hit) return { id: hit.id, email: hit.email || undefined }
+      }
+    }
+  } catch (e) {
+    console.warn('Email REST lookup failed:', e)
+  }
+
+  console.warn(`⚠️ No Supabase user found for email: ${email}`)
+  return null
+}
+
 // Activate / update a user's subscription in Supabase using DELETE + INSERT
 // (required because ON CONFLICT doesn't work with partial unique indexes)
 async function activatePlan({
   email,
+  userId,
   plan,
   periodEnd,
   dodoSubscriptionId,
   dodoCustomerId,
   amountCents,
 }: {
-  email: string;
-  plan: 'nextfounder' | 'founder' | 'legend';
-  periodEnd?: string | null;
-  dodoSubscriptionId?: string | null;
-  dodoCustomerId?: string | null;
-  amountCents?: number | null;
+  email?: string | null
+  userId?: string | null
+  plan: 'nextfounder' | 'founder' | 'legend'
+  periodEnd?: string | null
+  dodoSubscriptionId?: string | null
+  dodoCustomerId?: string | null
+  amountCents?: number | null
 }) {
-  const supabase = createClient();
-
-  // Find the Supabase user by email via admin API
-  const { data: { users }, error: listError } = await supabase.auth.admin.listUsers();
-
-  if (listError) {
-    console.error('Error fetching users:', listError);
-    return;
+  const supabase = getServiceRoleClient()
+  if (!supabase) {
+    console.error('⚠️ activatePlan aborted — service role not configured')
+    return
   }
 
-  const user = users.find((u) => u.email === email);
-  if (!user) {
-    console.warn(`⚠️ No Supabase user found for email: ${email}`);
-    return;
-  }
+  const user = await resolveAuthUser({ userId, email })
+  if (!user) return
 
-  // Delete any existing active subscription for this user first
-  const { error: deleteError } = await supabase
+  // Soft-cancel any existing active rows (keep history), then insert the new active plan
+  await supabase
     .from('user_subscriptions')
-    .delete()
+    .update({ status: 'cancelled', updated_at: new Date().toISOString() })
     .eq('user_id', user.id)
-    .eq('status', 'active');
+    .eq('status', 'active')
 
-  if (deleteError) {
-    console.error('Error deleting old subscription:', deleteError);
-    return;
-  }
-
-  // Base row (always-present columns)
   const baseRow: Record<string, any> = {
     user_id: user.id,
     plan,
@@ -162,45 +222,73 @@ async function activatePlan({
     stripe_subscription_id: dodoSubscriptionId || null,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-  };
+  }
 
-  // Store the real charged amount (pre-tax, in cents) when available.
-  // Retry without the column if the schema hasn't been migrated yet, so a
-  // missing `amount_cents` column never blocks payment activation.
-  let insertError = null as any;
+  // Store real charged amount when the column exists
+  let insertError = null as any
   if (typeof amountCents === 'number') {
-    ({ error: insertError } = await supabase
+    ;({ error: insertError } = await supabase
       .from('user_subscriptions')
-      .insert({ ...baseRow, amount_cents: amountCents }));
+      .insert({ ...baseRow, amount_cents: amountCents }))
     if (insertError && /amount_cents/i.test(insertError.message || '')) {
-      ({ error: insertError } = await supabase.from('user_subscriptions').insert(baseRow));
+      ;({ error: insertError } = await supabase.from('user_subscriptions').insert(baseRow))
     }
   } else {
-    ({ error: insertError } = await supabase.from('user_subscriptions').insert(baseRow));
+    ;({ error: insertError } = await supabase.from('user_subscriptions').insert(baseRow))
   }
 
   if (insertError) {
-    console.error('Error inserting subscription:', insertError);
+    console.error('Error inserting subscription:', insertError)
   } else {
-    console.log(`✅ Plan "${plan}" activated for user: ${email}`);
+    console.log(
+      `✅ Plan "${plan}" activated for user: ${user.email || email || user.id}`
+    )
   }
 }
 
 // Cancel/deactivate a plan in Supabase
-async function deactivatePlan(email: string) {
-  const supabase = createClient();
+async function deactivatePlan(email: string, userId?: string | null) {
+  const supabase = getServiceRoleClient()
+  if (!supabase) {
+    console.error('⚠️ deactivatePlan aborted — service role not configured')
+    return
+  }
 
-  const { data: { users } } = await supabase.auth.admin.listUsers();
-  const user = users?.find((u) => u.email === email);
-  if (!user) return;
+  const user = await resolveAuthUser({ userId, email })
+  if (!user) return
 
-  await supabase
+  // Prefer cancel_at_period_end column; fall back if missing
+  let { error } = await supabase
     .from('user_subscriptions')
-    .update({ status: 'cancelled', cancel_at_period_end: false, updated_at: new Date().toISOString() })
+    .update({
+      status: 'cancelled',
+      cancel_at_period_end: false,
+      updated_at: new Date().toISOString(),
+    })
     .eq('user_id', user.id)
-    .eq('status', 'active');
+    .eq('status', 'active')
 
-  console.log(`🚫 Plan deactivated for user: ${email}`);
+  if (error && /cancel_at_period_end/i.test(error.message || '')) {
+    ;({ error } = await supabase
+      .from('user_subscriptions')
+      .update({ status: 'cancelled', updated_at: new Date().toISOString() })
+      .eq('user_id', user.id)
+      .eq('status', 'active'))
+  }
+
+  if (error) {
+    console.error('deactivatePlan error:', error.message)
+  } else {
+    console.log(`🚫 Plan deactivated for user: ${user.email || email}`)
+  }
+}
+
+function extractMeta(data: any): { userId?: string | null; planFromMeta?: string | null } {
+  const meta = data?.metadata || data?.payload?.metadata || {}
+  return {
+    userId: meta.user_id || meta.userId || null,
+    planFromMeta: meta.plan || null,
+  }
 }
 
 export async function POST(request: Request) {
@@ -252,19 +340,30 @@ export async function POST(request: Request) {
 
         // Otherwise: subscription/lifetime plan activation
         const email = data?.customer?.email;
-        const plan = productId ? PRODUCT_TO_PLAN[productId] : undefined;
+        const { userId, planFromMeta } = extractMeta(data);
+        const plan =
+          (productId ? PRODUCT_TO_PLAN[productId] : undefined) ||
+          (planFromMeta && ['nextfounder', 'founder', 'legend'].includes(planFromMeta)
+            ? (planFromMeta as 'nextfounder' | 'founder' | 'legend')
+            : undefined);
 
         if (!plan && productId) {
           console.warn(`⚠️ Unknown product ID in payment.succeeded: ${productId}. Known IDs: ${Object.keys(PRODUCT_TO_PLAN).join(', ')}`);
         }
 
-        if (email && plan) {
+        if ((email || userId) && plan) {
           await activatePlan({
             email,
+            userId,
             plan,
-            periodEnd: null, // lifetime — no expiry
+            periodEnd: plan === 'legend' ? null : (data?.next_billing_date || null),
             dodoCustomerId: data?.customer?.customer_id,
-            amountCents: typeof data?.recurring_pre_tax_amount === 'number' ? data.recurring_pre_tax_amount : null,
+            amountCents:
+              typeof data?.total_amount === 'number'
+                ? data.total_amount
+                : typeof data?.recurring_pre_tax_amount === 'number'
+                  ? data.recurring_pre_tax_amount
+                  : null,
           });
         }
         break;
@@ -275,15 +374,21 @@ export async function POST(request: Request) {
       case 'subscription.renewed': {
         const email = data?.customer?.email;
         const productId = data?.product_id;
-        const plan = productId ? PRODUCT_TO_PLAN[productId] : undefined;
+        const { userId, planFromMeta } = extractMeta(data);
+        const plan =
+          (productId ? PRODUCT_TO_PLAN[productId] : undefined) ||
+          (planFromMeta && ['nextfounder', 'founder', 'legend'].includes(planFromMeta)
+            ? (planFromMeta as 'nextfounder' | 'founder' | 'legend')
+            : undefined);
 
         if (!plan && productId) {
           console.warn(`⚠️ Unknown product ID in ${event.type as string}: ${productId}. Known IDs: ${Object.keys(PRODUCT_TO_PLAN).join(', ')}`);
         }
 
-        if (email && plan) {
+        if ((email || userId) && plan) {
           await activatePlan({
             email,
+            userId,
             plan,
             periodEnd: data?.next_billing_date || null,
             dodoSubscriptionId: data?.subscription_id,
@@ -297,15 +402,21 @@ export async function POST(request: Request) {
       case 'subscription.plan_changed': {
         const email = data?.customer?.email;
         const productId = data?.product_id;
-        const plan = productId ? PRODUCT_TO_PLAN[productId] : undefined;
+        const { userId, planFromMeta } = extractMeta(data);
+        const plan =
+          (productId ? PRODUCT_TO_PLAN[productId] : undefined) ||
+          (planFromMeta && ['nextfounder', 'founder', 'legend'].includes(planFromMeta)
+            ? (planFromMeta as 'nextfounder' | 'founder' | 'legend')
+            : undefined);
 
         if (!plan && productId) {
           console.warn(`⚠️ Unknown product ID in subscription.plan_changed: ${productId}`);
         }
 
-        if (email && plan) {
+        if ((email || userId) && plan) {
           await activatePlan({
             email,
+            userId,
             plan,
             periodEnd: data?.next_billing_date || null,
             dodoSubscriptionId: data?.subscription_id,
@@ -320,8 +431,9 @@ export async function POST(request: Request) {
       case 'subscription.expired':
       case 'subscription.failed': {
         const email = data?.customer?.email;
-        if (email) {
-          await deactivatePlan(email);
+        const { userId } = extractMeta(data);
+        if (email || userId) {
+          await deactivatePlan(email || '', userId);
         }
         break;
       }

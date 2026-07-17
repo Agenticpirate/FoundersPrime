@@ -9,59 +9,26 @@ import Pagination from '@/components/Pagination'
 import { useAuth } from '@/lib/auth/hooks'
 import { checkProStatus } from '@/lib/auth/user-context'
 import ProGateOverlay from '@/components/ProGateOverlay'
+import { StaggerGrid, StaggerGridItem } from '@/components/ui/premium-motion'
+import { CardHoverGlow, cardHoverClass, cardLogoHoverClass, cardTitleHoverClass } from '@/components/ui/card-hover'
+import BrandLogo from '@/components/ui/BrandLogo'
+import { cleanDomain } from '@/lib/logo-utils'
 
-// Logo component with fallback chain
 function GrantLogo({ grant }: { grant: Grant }) {
-  const [fallbackIndex, setFallbackIndex] = useState(0)
-  const [loaded, setLoaded] = useState(false)
-  const [failed, setFailed] = useState(false)
-
   let domain = ''
   try {
-    domain = new URL(grant.website).hostname.replace('www.', '')
+    domain = cleanDomain(new URL(grant.website).hostname)
   } catch {}
 
-  const fallbackChain = [
-    grant.logo,
-    domain ? `https://www.google.com/s2/favicons?domain=${domain}&sz=128` : null,
-    domain ? `https://logo.clearbit.com/${domain}` : null,
-  ].filter(Boolean) as string[]
-
-  if (fallbackChain.length === 0) {
-    fallbackChain.push(`https://ui-avatars.com/api/?name=${encodeURIComponent(grant.organization)}&background=f3f4f6&color=374151&bold=true&size=128`)
-  }
-
-  const handleError = () => {
-    const nextIndex = fallbackIndex + 1
-    if (nextIndex < fallbackChain.length) {
-      setFallbackIndex(nextIndex)
-      setLoaded(false)
-    } else {
-      setFailed(true)
-    }
-  }
-
-  useEffect(() => {
-    setFallbackIndex(0)
-    setLoaded(false)
-    setFailed(false)
-  }, [grant.id])
-
-  if (failed) {
-    return (
-      <span className="text-xs font-black font-mono text-gray-400">
-        {grant.organization.substring(0, 2).toUpperCase()}
-      </span>
-    )
-  }
-
   return (
-    <img
-      src={fallbackChain[fallbackIndex]}
-      alt=""
-      className={`w-full h-full object-contain transition-opacity duration-200 ${loaded ? 'opacity-100' : 'opacity-0'}`}
-      onLoad={() => setLoaded(true)}
-      onError={handleError}
+    <BrandLogo
+      name={grant.organization || grant.name}
+      domain={domain || undefined}
+      logo={grant.logo}
+      size="md"
+      plate
+      eager
+      className="!w-full !h-full !rounded-xl"
     />
   )
 }
@@ -138,7 +105,7 @@ export default function GrantsGrid({ defaultRegion = 'All' }: { defaultRegion?: 
 
   const getStatusColor = (status: Grant['applicationStatus']) => {
     switch (status) {
-      case 'Active': return 'bg-green-600 text-white'
+      case 'Active': return 'bg-amber-600 text-white'
       case 'Rolling': return 'bg-blue-600 text-white'
       case 'Closed': return 'bg-gray-600 text-white'
       case 'Opening Soon': return 'bg-yellow-600 text-white'
@@ -152,7 +119,7 @@ export default function GrantsGrid({ defaultRegion = 'All' }: { defaultRegion?: 
       case 'Corporate': return 'bg-purple-600 text-white'
       case 'Foundation': return 'bg-yellow-600 text-white'
       case 'Competition': return 'bg-red-600 text-white'
-      case 'State/Regional': return 'bg-green-600 text-white'
+      case 'State/Regional': return 'bg-amber-600 text-white'
       default: return 'bg-gray-600 text-white'
     }
   }
@@ -169,7 +136,7 @@ export default function GrantsGrid({ defaultRegion = 'All' }: { defaultRegion?: 
       <div className="relative bg-white border-2 border-black shadow-[3px_3px_0px_#111] rounded-sm overflow-hidden">
         {/* Decorative mandala */}
         <div className="absolute -top-12 -right-12 w-44 h-44 pointer-events-none opacity-[0.05]" aria-hidden="true">
-          <svg viewBox="0 0 200 200" className="w-full h-full text-emerald-700 grants-toolbar-mandala-spin" fill="none" stroke="currentColor" strokeWidth="0.7">
+          <svg viewBox="0 0 200 200" className="w-full h-full text-amber-800 grants-toolbar-mandala-spin" fill="none" stroke="currentColor" strokeWidth="0.7">
             <circle cx="100" cy="100" r="40" />
             <circle cx="100" cy="100" r="60" strokeDasharray="2 4" />
             <circle cx="100" cy="100" r="80" strokeDasharray="1 6" />
@@ -187,8 +154,8 @@ export default function GrantsGrid({ defaultRegion = 'All' }: { defaultRegion?: 
           {/* Header row */}
           <div className="flex items-center justify-between gap-3 mb-3 pb-3 border-b-2 border-black border-dashed">
             <div className="flex items-center gap-2.5 min-w-0">
-              <span className="inline-flex items-center justify-center w-7 h-7 bg-emerald-100 border-2 border-black rounded-sm shadow-[1px_1px_0px_#111] flex-shrink-0">
-                <span className="material-symbols-outlined !text-[14px] text-emerald-700">payments</span>
+              <span className="inline-flex items-center justify-center w-7 h-7 bg-amber-100 border-2 border-black rounded-sm shadow-[1px_1px_0px_#111] flex-shrink-0">
+                <span className="material-symbols-outlined !text-[14px] text-amber-800">payments</span>
               </span>
               <div className="min-w-0">
                 <h2 className="font-mono text-[13px] md:text-sm font-black uppercase tracking-[0.06em] text-black leading-none truncate">
@@ -331,27 +298,31 @@ export default function GrantsGrid({ defaultRegion = 'All' }: { defaultRegion?: 
       </div>
 
       {/* Grants Grid */}
-      <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-4">
+      <StaggerGrid
+        animKey={`${currentPage}-${selectedRegion}-${selectedType}-${searchQuery}`}
+        className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-4"
+      >
         {(isPro ? currentGrants : currentGrants.slice(0, 3)).map((grant) => (
+          <StaggerGridItem key={grant.id}>
           <Link
-            key={grant.id}
             href={isPro ? `/deals/${grant.slug}` : '/pricing'}
-            className="flex flex-col bg-white border-2 border-black shadow-[2px_2px_0px_#111] hover:shadow-[3px_3px_0px_#111] hover:-translate-x-px hover:-translate-y-px transition-all duration-200 overflow-hidden group h-full"
+            className={`flex flex-col bg-white dark:bg-[#0c0c0c] border border-black/10 dark:border-white/10 rounded-2xl shadow-sm h-full ${cardHoverClass}`}
           >
-            {/* Status */}
-            <div className="px-3 pt-2.5">
-              <span className={`inline-block px-1.5 py-0.5 ${getStatusColor(grant.applicationStatus)} text-[8px] font-bold uppercase tracking-wider`}>
+            <CardHoverGlow />
+            {/* Fixed status strip — same height so logos align across cards */}
+            <div className="relative px-3 pt-2.5 h-[26px] flex items-center">
+              <span className={`inline-block px-1.5 py-0.5 ${getStatusColor(grant.applicationStatus)} text-[8px] font-bold uppercase tracking-wider leading-none`}>
                 {grant.applicationStatus}
               </span>
             </div>
 
-            {/* Logo + Title */}
-            <div className="flex items-center gap-2 px-3 pt-2 pb-2">
-              <div className="w-8 h-8 md:w-10 md:h-10 bg-gray-50 border border-gray-200 flex items-center justify-center p-1 flex-shrink-0 rounded-sm overflow-hidden">
+            {/* Logo + Title — top-aligned fixed plate */}
+            <div className="relative flex items-start gap-2 px-3 pt-2 pb-2">
+              <div className={`w-8 h-8 md:w-10 md:h-10 bg-white border border-black/10 flex items-center justify-center p-1 flex-shrink-0 rounded-xl overflow-hidden ${cardLogoHoverClass}`}>
                 <GrantLogo grant={grant} />
               </div>
-              <div className="flex-1 min-w-0">
-                <h3 className="text-[11px] md:text-sm font-bold text-gray-900 leading-snug group-hover:text-black transition-colors line-clamp-2">
+              <div className="flex-1 min-w-0 pt-0.5">
+                <h3 className={`text-[11px] md:text-sm font-bold text-gray-900 dark:text-white leading-snug line-clamp-2 min-h-[2.25rem] md:min-h-[2.5rem] ${cardTitleHoverClass}`}>
                   {grant.name.length > 40 ? grant.name.substring(0, 40) + '…' : grant.name}
                 </h3>
                 <p className="text-[9px] text-gray-400 font-mono truncate mt-0.5">{grant.organization}</p>
@@ -363,14 +334,28 @@ export default function GrantsGrid({ defaultRegion = 'All' }: { defaultRegion?: 
               <p className="text-[10px] md:text-xs text-gray-500 leading-snug line-clamp-2">{grant.description}</p>
             </div>
 
-            {/* Value — pinned bottom */}
-            <div className="px-3 pb-3 mt-auto border-t border-gray-100 pt-2">
-              <p className="text-xs md:text-sm font-bold text-green-600 font-mono line-clamp-1">{grant.fundingAmount}</p>
-              <p className="text-[9px] text-gray-400">{grant.equity}</p>
+            {/* Value + CTA — pinned bottom */}
+            <div className="px-3 pb-3 mt-auto border-t border-gray-100 dark:border-white/10 pt-2">
+              <div className="flex items-center justify-between gap-2">
+                <div className="min-w-0 flex-1">
+                  <p className="text-xs md:text-sm font-bold text-amber-700 dark:text-accent-yellow font-mono line-clamp-1">{grant.fundingAmount}</p>
+                  <p className="text-[9px] text-gray-400">{grant.equity}</p>
+                </div>
+                <span
+                  className="shrink-0 inline-flex items-center gap-0.5 bg-black dark:bg-white text-white dark:text-black text-[9px] font-bold uppercase tracking-wide px-2.5 py-1.5 rounded-md shadow-sm group-hover:bg-accent-yellow group-hover:text-black transition-all duration-200"
+                  aria-hidden="true"
+                >
+                  View
+                  <span className="material-symbols-outlined !text-[12px] group-hover:translate-x-0.5 transition-transform">
+                    arrow_forward
+                  </span>
+                </span>
+              </div>
             </div>
           </Link>
+          </StaggerGridItem>
         ))}
-      </div>
+      </StaggerGrid>
 
       {/* Pro Gate Overlay */}
       {!isPro && filteredGrants.length > 3 && (
@@ -392,7 +377,7 @@ export default function GrantsGrid({ defaultRegion = 'All' }: { defaultRegion?: 
                   </div>
                 </div>
                 <p className="text-[10px] md:text-xs text-gray-500 line-clamp-2">{grant.description}</p>
-                <p className="text-xs font-bold text-green-600 font-mono mt-auto">{grant.fundingAmount}</p>
+                <p className="text-xs font-bold text-amber-700 font-mono mt-auto">{grant.fundingAmount}</p>
               </div>
             ))}
           </div>

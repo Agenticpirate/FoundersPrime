@@ -9,6 +9,7 @@ import { accelerators2026, Accelerator } from '@/data/accelerators-2026'
 import { useAuth } from '@/lib/auth/hooks'
 import { checkProStatus } from '@/lib/auth/user-context'
 import ProGateOverlay from '@/components/ProGateOverlay'
+import { StaggerGrid, StaggerGridItem } from '@/components/ui/premium-motion'
 
 type SortOption = 'name' | 'investment' | 'deadline' | 'equity'
 
@@ -101,7 +102,7 @@ export default function AcceleratorsGrid() {
  logo: acc.logo || '',
  category: 'Accelerator',
  badge: acc.applicationStatus === 'Active' ? 'Applications Open' : acc.applicationStatus,
- badgeColor: acc.applicationStatus === 'Active' ? 'bg-green-600' : 'bg-gray-500',
+ badgeColor: acc.applicationStatus === 'Active' ? 'bg-amber-600' : 'bg-gray-500',
  title: acc.name,
  provider: acc.name,
  value: acc.investment,
@@ -274,21 +275,23 @@ export default function AcceleratorsGrid() {
  {filteredAndSearchedDeals.length > 0 ? (
  <div>
  {/* Always-visible cards (first 3 for free users, all for pro) */}
- <div
+ <StaggerGrid
+ animKey={`${viewMode}-${isPro}-${filteredAndSearchedDeals.length}`}
  className={
  viewMode === 'grid'
- ? 'grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4'
+ ? 'grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-4'
  : 'flex flex-col gap-4'
  }
  >
  {(isPro ? filteredAndSearchedDeals : filteredAndSearchedDeals.slice(0, 3)).map((acc) => (
+ <StaggerGridItem key={acc.id}>
  <DealCard
- key={acc.id}
  deal={convertToCard(acc)}
  overrideHref={isPro ? undefined : '/pricing'}
  />
+ </StaggerGridItem>
  ))}
- </div>
+ </StaggerGrid>
 
  {/* Pro Gate — real cards blurred behind glass */}
  {!isPro && filteredAndSearchedDeals.length > 3 && (

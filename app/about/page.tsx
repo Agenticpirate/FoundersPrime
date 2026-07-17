@@ -136,15 +136,15 @@ export default function AboutPage() {
                 How We Maintain Quality
               </h2>
               <div className="font-mono text-xs md:text-sm border-2 border-black dark:border-white/15 px-2 py-1 md:px-3 md:py-1.5 bg-white dark:bg-[#0c0c0c] flex items-center gap-2 self-start shadow-[3px_3px_0px_#111] dark:shadow-[3px_3px_0px_rgba(255,255,255,0.05)] text-gray-900 dark:text-white">
-                <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse inline-block"></span>
-                System Status: <span className="text-green-600 font-bold ml-1">OPERATIONAL</span>
+                <span className="w-2 h-2 bg-accent-yellow rounded-full animate-pulse inline-block"></span>
+                System Status: <span className="text-amber-700 font-bold ml-1">OPERATIONAL</span>
               </div>
             </div>
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-8">
               {[
                 { num: '01', icon: 'search', color: 'text-primary', bg: 'bg-primary/10', title: 'Research', desc: 'We scour government portals, corporate partner pages, and investor networks daily to find new opportunities.' },
                 { num: '02', icon: 'verified', color: 'text-accent-yellow', bg: 'bg-accent-yellow/10', title: 'Verify', desc: 'We personally test promo codes, call grant offices, and apply ourselves to confirm every listing is active.' },
-                { num: '03', icon: 'update', color: 'text-green-600', bg: 'bg-green-50 dark:bg-green-500/10', title: 'Update', desc: 'Dead links are removed weekly. If it\'s listed on FoundersPrime, it works. No 404s allowed.' },
+                { num: '03', icon: 'update', color: 'text-amber-700', bg: 'bg-amber-50 dark:bg-accent-yellow/10', title: 'Update', desc: 'Dead links are removed weekly. If it\'s listed on FoundersPrime, it works. No 404s allowed.' },
                 { num: '04', icon: 'visibility', color: 'text-accent-red', bg: 'bg-red-50 dark:bg-red-500/10', title: 'Add Context', desc: 'We translate legalese into plain English so you know exactly what the catch is — before you apply.' },
               ].map(({ num, icon, color, bg, title, desc }) => (
                 <div key={num} className="relative bg-white dark:bg-[#0c0c0c] border-2 border-black dark:border-white/10 shadow-[5px_5px_0px_#111] dark:shadow-[5px_5px_0px_rgba(255,255,255,0.05)] p-4 md:p-6 group hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[7px_7px_0px_#111] transition-all">
@@ -205,7 +205,7 @@ export default function AboutPage() {
               {[
                 { icon: 'target', color: 'bg-primary/15 text-primary', label: '01', title: 'Accuracy Over Quantity', desc: "We'd rather list 50 grants that actually pay out than 5,000 that are expired or scams. Quality is our single metric." },
                 { icon: 'person', color: 'bg-accent-yellow/20 text-yellow-700 dark:text-accent-yellow', label: '02', title: 'Founder-First', desc: 'We build for the founder with 2 months of runway left. Every resource is vetted for speed, utility, and zero friction.' },
-                { icon: 'visibility', color: 'bg-green-100 dark:bg-green-500/15 text-green-700 dark:text-green-400', label: '03', title: 'Radical Transparency', desc: "If we earn a commission on a tool, we say so. If a grant is hard to get, we say so. No surprises. Ever." },
+                { icon: 'visibility', color: 'bg-amber-100 dark:bg-accent-yellow/15 text-amber-800 dark:text-accent-yellow', label: '03', title: 'Radical Transparency', desc: "If we earn a commission on a tool, we say so. If a grant is hard to get, we say so. No surprises. Ever." },
                 { icon: 'block', color: 'bg-red-100 dark:bg-red-500/15 text-red-700 dark:text-red-400', label: '04', title: 'No Bullshit', desc: 'Zero hype. Zero growth-hacking buzzwords. Just verified tools and money to build your company.' },
               ].map(({ icon, color, label, title, desc }, i) => (
                 <div key={i} className={`p-5 md:p-8 hover:bg-background-light dark:hover:bg-white/5 transition-colors ${i < 2 ? 'border-b-2' : ''} ${i % 2 === 0 ? 'md:border-r-2' : ''} border-black dark:border-white/10`}>

@@ -115,7 +115,7 @@ export default function SingleIdeaSidebar({ idea }: SingleIdeaSidebarProps) {
           {validationChecklist.map((item, index) => (
             <div key={index} className="flex items-center gap-3">
               <span className={`material-symbols-outlined text-lg ${
-                item.status === 'complete' ? 'text-green-600' : 
+                item.status === 'complete' ? 'text-amber-700' : 
                 item.status === 'partial' ? 'text-yellow-600' : 'text-gray-400'
               }`}>
                 {item.status === 'complete' ? 'check_circle' : 
@@ -172,7 +172,7 @@ export default function SingleIdeaSidebar({ idea }: SingleIdeaSidebarProps) {
       <div className="bg-gray-50 border-2 border-gray-300 rounded-sm p-4">
         <h4 className="font-mono text-sm font-bold mb-2">Analysis Methodology</h4>
         <div className="flex items-center gap-2 mb-2">
-          <span className="material-symbols-outlined text-sm text-green-600">verified</span>
+          <span className="material-symbols-outlined text-sm text-amber-700">verified</span>
           <span className="font-mono text-xs text-gray-600">Validated by FoundersPrime</span>
         </div>
         <p className="font-sans text-xs text-gray-500">

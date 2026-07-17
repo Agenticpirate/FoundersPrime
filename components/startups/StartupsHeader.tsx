@@ -78,8 +78,8 @@ export default function StartupsHeader({ count }: StartupsHeaderProps) {
             value: "$3.5M",
             delta: "Per round",
             icon: "paid",
-            iconColor: "text-emerald-600",
-            iconBg: "bg-emerald-100 dark:bg-emerald-900/30",
+            iconColor: "text-amber-700",
+            iconBg: "bg-amber-100 dark:bg-accent-yellow/15",
           },
         ]}
       />

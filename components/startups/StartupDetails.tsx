@@ -67,7 +67,7 @@ export default function StartupDetails({ company }: StartupDetailsProps) {
 
   const statusColor =
     company.status === "Active"
-      ? "bg-emerald-500/20 text-emerald-400 border-emerald-500/30"
+      ? "bg-accent-yellow/20 text-accent-yellow border-accent-yellow/30"
       : company.status === "Acquired"
       ? "bg-sky-500/20 text-sky-400 border-sky-500/30"
       : "bg-white/10 text-gray-400 border-white/10";
@@ -160,8 +160,8 @@ export default function StartupDetails({ company }: StartupDetailsProps) {
                       </span>
                     )}
                     {c.isHiring && (
-                      <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-emerald-500/15 dark:bg-emerald-500/20 text-emerald-700 dark:text-emerald-400 border border-emerald-500/30 text-[10px] font-bold rounded-full uppercase tracking-wide">
-                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                      <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-accent-yellow/15 dark:bg-accent-yellow/20 text-amber-800 dark:text-accent-yellow border border-accent-yellow/30 text-[10px] font-bold rounded-full uppercase tracking-wide">
+                        <span className="w-1.5 h-1.5 rounded-full bg-accent-yellow animate-pulse" />
                         Hiring
                       </span>
                     )}
@@ -415,11 +415,11 @@ export default function StartupDetails({ company }: StartupDetailsProps) {
               variants={fadeUp} initial="hidden" animate="show" custom={2}
               className="relative bg-gray-900 dark:bg-[#0c0c0c] border border-gray-800 dark:border-white/10 rounded-xl overflow-hidden"
             >
-              <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-emerald-500/60 to-transparent" />
+              <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-accent-yellow/60 to-transparent" />
               <div className="p-4 md:p-5">
                 <div className="flex items-center gap-2 mb-2">
-                  <div className="w-7 h-7 rounded-lg bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center">
-                    <span className="material-symbols-outlined text-emerald-400 text-[16px]">verified</span>
+                  <div className="w-7 h-7 rounded-lg bg-accent-yellow/20 border border-accent-yellow/30 flex items-center justify-center">
+                    <span className="material-symbols-outlined text-accent-yellow text-[16px]">verified</span>
                   </div>
                   <h4 className="font-mono text-[11px] font-black uppercase tracking-[0.1em] text-white">
                     Data Verified
