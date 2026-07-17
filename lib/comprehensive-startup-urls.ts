@@ -196,13 +196,14 @@ export const startupProgramUrls: { [key: string]: string } = {
  * Get startup program URL with better matching
  */
 export function getStartupProgramUrl(providerName: string): string {
-  const normalized = providerName.toLowerCase().trim()
-  
+  const normalized = (providerName || '').toLowerCase().trim()
+  if (!normalized) return 'https://www.foundersprime.com/deals'
+
   // Direct match
   if (startupProgramUrls[normalized]) {
     return startupProgramUrls[normalized]
   }
-  
+
   // Try variations
   const variations = [
     normalized.replace(/[^a-z0-9\s]/g, ''),
@@ -210,24 +211,21 @@ export function getStartupProgramUrl(providerName: string): string {
     normalized.replace(/\s+/g, '-'),
     normalized.replace(/\./g, ''),
   ]
-  
+
   for (const variation of variations) {
     if (startupProgramUrls[variation]) {
       return startupProgramUrls[variation]
     }
   }
-  
+
   // Partial match
   for (const [key, url] of Object.entries(startupProgramUrls)) {
     if (normalized.includes(key) || key.includes(normalized)) {
       return url
     }
   }
-  
+
   // Generate URL as fallback
-  const domain = providerName
-    .toLowerCase()
-    .replace(/[^a-z0-9]/g, '')
-  
+  const domain = normalized.replace(/[^a-z0-9]/g, '') || 'foundersprime'
   return `https://www.${domain}.com/`
 }

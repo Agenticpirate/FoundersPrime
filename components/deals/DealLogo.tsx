@@ -42,7 +42,7 @@ function InitialsFallback({ provider, size }: { provider: string; size: 'sm' | '
 
 // Helper to get domain from provider name
 function providerToDomain(provider: string): string {
-  const cleaned = provider.toLowerCase().replace(/[^a-z0-9]/g, '')
+  const cleaned = (provider || '').toLowerCase().replace(/[^a-z0-9]/g, '')
   const domainMap: Record<string, string> = {
     'aws': 'aws.amazon.com',
     'amazon': 'amazon.com',

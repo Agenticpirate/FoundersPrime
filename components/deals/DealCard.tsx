@@ -30,7 +30,7 @@ interface DealCardProps {
 
 // Generate domain from provider name
 const providerToDomain = (provider: string): string => {
-  const cleaned = provider.replace(/^By\s+/i, '').toLowerCase().replace(/[^a-z0-9]/g, '')
+  const cleaned = (provider || '').replace(/^By\s+/i, '').toLowerCase().replace(/[^a-z0-9]/g, '')
   const domainMap: Record<string, string> = {
     'aws': 'aws.amazon.com', 'amazon': 'amazon.com', 'amazonwebservices': 'aws.amazon.com',
     'googlecloud': 'cloud.google.com', 'googleforstartups': 'startup.google.com', 'google': 'google.com',

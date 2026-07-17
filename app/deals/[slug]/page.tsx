@@ -43,8 +43,8 @@ export async function generateMetadata(
   let image = 'https://www.foundersprime.com/og-image.png'
 
   if (deal) {
-    title = `${deal.title} Deal - ${deal.value} Value`
-    description = `Get ${deal.title} credits and save ${deal.value}. ${deal.description.substring(0, 150)}... Verified startup deal.`
+    title = `${deal.title || 'Deal'} Deal - ${deal.value || 'Verified'} Value`
+    description = `Get ${deal.title || 'this deal'} credits and save ${deal.value || 'verified value'}. ${(deal.description || '').substring(0, 150)}... Verified startup deal.`
     image = deal.logoUrl || image
   } else {
     const accelerator = accelerators2026.find(a => a.slug === params.slug)
@@ -403,7 +403,7 @@ export default async function SingleDealPage({ params }: PageProps) {
         .map((d: any) => ({
           title: d.title,
           value: d.value,
-          description: d.shortDescription || d.description.substring(0, 100) + '...',
+          description: d.shortDescription || `${(d.description || '').substring(0, 100)}...`,
           slug: d.slug
         }))
     }

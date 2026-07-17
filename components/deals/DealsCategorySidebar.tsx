@@ -45,10 +45,10 @@ export default function DealsCategorySidebar({
           const catCounts: Record<string, number> = {}
           const subCounts: Record<string, number> = {}
           deals.forEach(deal => {
-            const catId = deal.category.toLowerCase().replace(/\s+/g, '-')
+            const catId = (deal.category || '').toLowerCase().replace(/\s+/g, '-')
             catCounts[catId] = (catCounts[catId] || 0) + 1
             if (deal.subcategory) {
-              const subId = deal.subcategory.toLowerCase().replace(/\s+/g, '-')
+              const subId = (deal.subcategory || '').toLowerCase().replace(/\s+/g, '-')
               subCounts[`${catId}/${subId}`] = (subCounts[`${catId}/${subId}`] || 0) + 1
             }
           })

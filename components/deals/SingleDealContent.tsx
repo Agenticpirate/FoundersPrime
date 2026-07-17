@@ -423,7 +423,10 @@ export default function SingleDealContent({
               <li>
                 {(() => {
                   const isDofollow = deal.tags?.includes('dofollow');
-                  const targetUrl = deal.providerWebsite || `https://www.${deal.provider.toLowerCase().replace(/\s+/g, '')}.com`;
+                  const providerName = deal.provider || deal.title || 'provider'
+                  const targetUrl =
+                    deal.providerWebsite ||
+                    `https://www.${providerName.toLowerCase().replace(/\s+/g, '')}.com`
                   return (
                     <a
                       href={targetUrl}
@@ -433,7 +436,7 @@ export default function SingleDealContent({
                     >
                       <span className="flex items-center gap-2">
                         <span className="material-symbols-outlined !text-[16px] text-sky-500">info</span>
-                        About {deal.provider}
+                        About {providerName}
                       </span>
                       {isDofollow && (
                         <span className="inline-flex items-center gap-1 text-[9px] font-mono font-bold uppercase tracking-wider text-emerald-500 bg-emerald-500/10 border border-emerald-500/20 rounded-sm px-1.5 py-0.5">

@@ -36,7 +36,10 @@ export const getBestLogoUrl = (
 ): { primary: string; fallback: string; avatar: string } => {
   let domain = providerDomain
   if (!domain && logoUrl) domain = extractDomainFromUrl(logoUrl) || undefined
-  if (!domain) domain = `${providerName.toLowerCase().replace(/[^a-z0-9]/g, '')}.com`
+  if (!domain) {
+    const name = (providerName || 'unknown').toString()
+    domain = `${name.toLowerCase().replace(/[^a-z0-9]/g, '') || 'unknown'}.com`
+  }
 
   return {
     primary: getFaviconUrl(domain),

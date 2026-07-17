@@ -147,7 +147,7 @@ export default function DealsGrid({ filters, initialIsPro, initialDeals }: Deals
           const subcategory = (deal.subcategory || '').toLowerCase().replace(/-/g, ' ')
           const shortDesc = deal.shortDescription?.toLowerCase() || ''
           const desc = deal.description?.toLowerCase() || ''
-          const tagsLc = (deal.tags || []).map(t => t.toLowerCase())
+          const tagsLc = (deal.tags || []).map(t => String(t || '').toLowerCase())
 
           // Every token must match somewhere — otherwise drop the deal
           const allTokensMatch = tokens.every(token =>
