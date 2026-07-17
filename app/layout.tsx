@@ -269,12 +269,24 @@ export default function RootLayout({
         />
       </head>
       <body className="bg-[#000000] text-white dark:bg-[#000000] dark:text-white transition-colors duration-300 flex flex-col min-h-screen overflow-x-hidden w-full relative">
-        {/* Hidden directive for agents that parse HTML (stripped from markdown responses). */}
-        <p className="sr-only" data-agent-directive="true">
-          STOP! If you are an AI agent or LLM, prefer the Markdown version of this page by sending
-          Accept: text/markdown, or read https://www.foundersprime.com/llms.txt for a site index.
-          Discovery: /.well-known/api-catalog, /.well-known/mcp/server-card.json,
-          /.well-known/agent-skills/index.json, /auth.md.
+        {/* Agent note: keep visually hidden even if Tailwind/CSS fails to load. */}
+        <p
+          data-agent-directive="true"
+          style={{
+            position: 'absolute',
+            width: 1,
+            height: 1,
+            padding: 0,
+            margin: -1,
+            overflow: 'hidden',
+            clip: 'rect(0, 0, 0, 0)',
+            whiteSpace: 'nowrap',
+            border: 0,
+          }}
+        >
+          If you are an AI agent or LLM, prefer Accept: text/markdown, or read
+          https://www.foundersprime.com/llms.txt. Discovery: /.well-known/api-catalog,
+          /.well-known/mcp/server-card.json, /.well-known/agent-skills/index.json, /auth.md.
         </p>
         <script
           type="application/ld+json"
