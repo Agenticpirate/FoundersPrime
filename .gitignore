@@ -39,6 +39,7 @@ next-env.d.ts
 /.kiro
 /*.md
 !README.md
+!LOCAL-DEV.md
 
 # backup and disabled files
 *.bak
