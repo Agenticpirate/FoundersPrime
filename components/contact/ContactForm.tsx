@@ -1,8 +1,8 @@
 'use client'
 
 import { useState } from 'react'
-import { motion, useReducedMotion } from 'framer-motion'
-import { premiumEase } from '@/components/ui/premium-motion'
+import { m, useReducedMotion } from 'framer-motion'
+import { premiumEase } from '@/lib/premium-motion-variants'
 
 const CATEGORIES = [
   { value: 'general', label: 'General', icon: 'chat_bubble' },
@@ -44,7 +44,7 @@ export default function ContactForm() {
 
   if (submitted) {
     return (
-      <motion.div
+      <m.div
         initial={reduce ? false : { opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4, ease: premiumEase }}
@@ -90,12 +90,15 @@ export default function ContactForm() {
             />
           </svg>
         </button>
-      </motion.div>
+      </m.div>
     )
   }
 
   return (
-    <div className="relative overflow-hidden rounded-2xl border border-black/[0.06] dark:border-white/[0.08] bg-white dark:bg-[#0c0c0c] p-5 md:p-7 shadow-[0_8px_30px_rgba(0,0,0,0.06)]">
+    <div
+      id="contact-form"
+      className="relative overflow-hidden rounded-2xl border border-black/[0.06] dark:border-white/[0.08] bg-white dark:bg-[#0c0c0c] p-5 md:p-7 shadow-[0_8px_30px_rgba(0,0,0,0.06)] scroll-mt-24"
+    >
       <div
         aria-hidden
         className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-accent-yellow/40 to-transparent"
@@ -118,7 +121,7 @@ export default function ContactForm() {
       <form onSubmit={handleSubmit} className="relative space-y-5">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label className="block font-mono text-[10px] font-bold text-gray-500 dark:text-gray-400 mb-1.5 uppercase tracking-[0.12em]">
+            <label htmlFor="contact-name" className="block font-mono text-[10px] font-bold text-gray-500 dark:text-gray-400 mb-1.5 uppercase tracking-[0.12em]">
               Full name
             </label>
             <div className="relative group">
@@ -126,6 +129,7 @@ export default function ContactForm() {
                 person
               </span>
               <input
+                id="contact-name"
                 type="text"
                 name="name"
                 value={formData.name}
@@ -138,7 +142,7 @@ export default function ContactForm() {
             </div>
           </div>
           <div>
-            <label className="block font-mono text-[10px] font-bold text-gray-500 dark:text-gray-400 mb-1.5 uppercase tracking-[0.12em]">
+            <label htmlFor="contact-email" className="block font-mono text-[10px] font-bold text-gray-500 dark:text-gray-400 mb-1.5 uppercase tracking-[0.12em]">
               Email
             </label>
             <div className="relative group">
@@ -146,6 +150,7 @@ export default function ContactForm() {
                 alternate_email
               </span>
               <input
+                id="contact-email"
                 type="email"
                 name="email"
                 value={formData.email}
@@ -161,9 +166,9 @@ export default function ContactForm() {
 
         {/* Category chips */}
         <div>
-          <label className="block font-mono text-[10px] font-bold text-gray-500 dark:text-gray-400 mb-2.5 uppercase tracking-[0.12em]">
+          <span className="block font-mono text-[10px] font-bold text-gray-500 dark:text-gray-400 mb-2.5 uppercase tracking-[0.12em]">
             Topic
-          </label>
+          </span>
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
             {CATEGORIES.map((category) => {
               const active = formData.category === category.value
@@ -190,7 +195,7 @@ export default function ContactForm() {
         </div>
 
         <div>
-          <label className="block font-mono text-[10px] font-bold text-gray-500 dark:text-gray-400 mb-1.5 uppercase tracking-[0.12em]">
+          <label htmlFor="contact-subject" className="block font-mono text-[10px] font-bold text-gray-500 dark:text-gray-400 mb-1.5 uppercase tracking-[0.12em]">
             Subject
           </label>
           <div className="relative group">
@@ -198,6 +203,7 @@ export default function ContactForm() {
               topic
             </span>
             <input
+              id="contact-subject"
               type="text"
               name="subject"
               value={formData.subject}
@@ -210,10 +216,11 @@ export default function ContactForm() {
         </div>
 
         <div>
-          <label className="block font-mono text-[10px] font-bold text-gray-500 dark:text-gray-400 mb-1.5 uppercase tracking-[0.12em]">
+          <label htmlFor="contact-message" className="block font-mono text-[10px] font-bold text-gray-500 dark:text-gray-400 mb-1.5 uppercase tracking-[0.12em]">
             Message
           </label>
           <textarea
+            id="contact-message"
             name="message"
             value={formData.message}
             onChange={handleChange}
@@ -224,7 +231,7 @@ export default function ContactForm() {
           />
         </div>
 
-        <motion.button
+        <m.button
           type="submit"
           disabled={isSubmitting}
           whileHover={reduce || isSubmitting ? undefined : { y: -1 }}
@@ -257,7 +264,7 @@ export default function ContactForm() {
               </svg>
             </>
           )}
-        </motion.button>
+        </m.button>
 
         <p className="text-center font-mono text-[10px] text-gray-400 dark:text-gray-500">
           Prefer email?{' '}

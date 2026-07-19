@@ -50,7 +50,7 @@ export default function ResourcesHero({ searchQuery, onSearchChange, totalCount 
                 onChange={(e) => onSearchChange(e.target.value)}
               />
             </div>
-            <button className="h-10 px-5 bg-[#ffd700] hover:bg-[#ffe033] text-black font-mono text-[12.5px] font-bold rounded-lg transition-colors flex items-center justify-center">
+            <button type="button" className="h-10 px-5 bg-[#ffd700] hover:bg-[#ffe033] text-black font-mono text-[12.5px] font-bold rounded-lg transition-colors flex items-center justify-center">
               Search
             </button>
           </div>
@@ -59,7 +59,7 @@ export default function ResourcesHero({ searchQuery, onSearchChange, totalCount 
           <div className="flex flex-wrap items-center gap-1.5 mt-3 text-[11px] font-mono">
             <span className="text-gray-500">Popular:</span>
             {["Pitch Deck", "Business Plan", "Legal Docs", "Marketing", "Financial Model"].map((term) => (
-              <button
+              <button type="button"
                 key={term}
                 onClick={() => onSearchChange(term)}
                 className="px-2.5 py-1 bg-white/5 border border-white/10 text-gray-300 hover:text-white hover:bg-white/10 rounded-lg transition-all"

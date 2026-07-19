@@ -34,42 +34,49 @@ async function getFeaturedDealsServer(): Promise<Deal[]> {
     
     if (error || !rawDeals) return []
     
-    return rawDeals.map((d: any) => ({
-      id: d.id,
-      slug: d.slug,
-      title: d.title,
-      provider: d.provider,
-      category: d.category,
-      subcategory: d.subcategory,
-      description: d.description,
-      shortDescription: d.shortDescription || d.short_description || '',
-      value: d.value,
-      originalPrice: d.originalPrice || d.original_price || '',
-      discountedPrice: d.discountedPrice || d.discounted_price || '',
-      savings: d.savings || '',
-      eligibility: d.eligibility || [],
-      requirements: d.requirements || [],
-      applicationProcess: d.applicationProcess || d.application_process || [],
-      proTips: d.proTips || d.pro_tips || [],
-      tags: d.tags || [],
-      status: d.status,
-      expiryDate: d.expiryDate || d.expiry_date || '',
-      applicationUrl: d.applicationUrl || d.application_url || '',
-      providerWebsite: d.providerWebsite || d.provider_website || '',
-      logoUrl: d.logoUrl || d.logo_url || '',
-      featured: d.featured,
-      recommended: d.recommended,
-      verified: d.verified,
-      difficulty: d.difficulty || 'medium',
-      timeToApply: d.timeToApply || d.time_to_apply || '',
-      successRate: d.successRate || d.success_rate || '',
-      lastUpdated: d.lastUpdated || d.last_updated || d.updated_at || '',
-      createdAt: d.createdAt || d.created_at || '',
-      updatedAt: d.updatedAt || d.updated_at || '',
-      sourceVerified: d.sourceVerified || d.source_verified || true,
-      dataSource: d.dataSource || d.data_source || 'supabase',
-      featuredUntil: d.featuredUntil || d.featured_until || '',
-    })).filter(d => !!(d.featured && d.featuredUntil && new Date(d.featuredUntil).getTime() > Date.now()))
+    const now = Date.now()
+    const featured: any[] = []
+    for (const d of rawDeals as any[]) {
+      const featuredUntil = d.featuredUntil || d.featured_until || ''
+      if (!(d.featured && featuredUntil && new Date(featuredUntil).getTime() > now)) continue
+      featured.push({
+        id: d.id,
+        slug: d.slug,
+        title: d.title,
+        provider: d.provider,
+        category: d.category,
+        subcategory: d.subcategory,
+        description: d.description,
+        shortDescription: d.shortDescription || d.short_description || '',
+        value: d.value,
+        originalPrice: d.originalPrice || d.original_price || '',
+        discountedPrice: d.discountedPrice || d.discounted_price || '',
+        savings: d.savings || '',
+        eligibility: d.eligibility || [],
+        requirements: d.requirements || [],
+        applicationProcess: d.applicationProcess || d.application_process || [],
+        proTips: d.proTips || d.pro_tips || [],
+        tags: d.tags || [],
+        status: d.status,
+        expiryDate: d.expiryDate || d.expiry_date || '',
+        applicationUrl: d.applicationUrl || d.application_url || '',
+        providerWebsite: d.providerWebsite || d.provider_website || '',
+        logoUrl: d.logoUrl || d.logo_url || '',
+        featured: d.featured,
+        recommended: d.recommended,
+        verified: d.verified,
+        difficulty: d.difficulty || 'medium',
+        timeToApply: d.timeToApply || d.time_to_apply || '',
+        successRate: d.successRate || d.success_rate || '',
+        lastUpdated: d.lastUpdated || d.last_updated || d.updated_at || '',
+        createdAt: d.createdAt || d.created_at || '',
+        updatedAt: d.updatedAt || d.updated_at || '',
+        sourceVerified: d.sourceVerified || d.source_verified || true,
+        dataSource: d.dataSource || d.data_source || 'supabase',
+        featuredUntil,
+      })
+    }
+    return featured
   } catch (e) {
     console.error('Error fetching featured deals server-side:', e)
     return []

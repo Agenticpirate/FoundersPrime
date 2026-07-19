@@ -193,7 +193,7 @@ export function rateLimitHeaders(result: RateLimitResult): Record<string, string
  *   const limited = applyRateLimit(authLimiter, clientIp)
  *   if (limited) return limited
  */
-export function applyRateLimit(
+function applyRateLimit(
   limiter: ReturnType<typeof createRateLimiter>,
   identifier: string,
   message = 'Too many requests. Please try again later.'

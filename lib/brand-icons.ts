@@ -3498,7 +3498,7 @@ const NAME_TO_SLUG: Record<string, string> = {
   vaadin: 'vaadin',
   'vc4a accelerator': 'vc4a',
   vectary: 'avectary',
-  vercel: 'v0',
+  vercel: 'vercel',
   verizon: 'verizon',
   'vilcap accelerator': 'vilcap',
   'village global': 'villageglobal',
@@ -3575,6 +3575,12 @@ const NAME_TO_SLUG: Record<string, string> = {
   zyte: 'zyte',
 }
 
+// Correct known generated-name collisions. Domain matches still take priority.
+Object.assign(NAME_TO_SLUG, {
+  framer: 'framer',
+  perplexity: 'perplexity',
+})
+
 
 function normalizeHost(domain?: string | null): string {
   if (!domain) return ''
@@ -3645,7 +3651,46 @@ function resolveBrandSlug(
   return null
 }
 
-/** Same-origin logo path(s). */
+/** Slugs that have a real /brand-logos/*.svg (do not invent paths for missing SVGs). */
+/**
+ * Prefer SVG only when the local SVG is the true multi-color / correct brand mark.
+ * Do NOT prefer single-fill simple-icons that misrepresent multi-color brands.
+ * Figma/OpenAI/Intercom: PNG or curated SVG handled via SLUG_FILE + chain order.
+ */
+const SLUGS_WITH_SVG = new Set([
+  'airtable',
+  'anthropic',
+  'apple',
+  'auth0',
+  'autodesk',
+  'cloudflare',
+  'datadog',
+  'digitalocean',
+  'dropbox',
+  'figma', // multi-color official paths
+  'framer',
+  'github',
+  'googlecloud',
+  'hubspot',
+  'intercom', // classic chat mark (not Fin cyan wordmark)
+  'jetbrains',
+  'linear',
+  'mongodb',
+  'notion',
+  'openai', // official black monochrome bloom (NOT green)
+  'slack',
+  'spotify',
+  'stripe',
+  'supabase',
+  'threads',
+  'unity',
+  'vercel',
+  'webflow',
+  'ycombinator',
+  'zoom',
+])
+
+/** Same-origin logo path(s). Prefer official SVG mark when present (colored brand). */
 export function getLocalBrandLogoCandidates(
   name?: string | null,
   domain?: string | null
@@ -3654,7 +3699,14 @@ export function getLocalBrandLogoCandidates(
   if (!slug) return []
   const file = SLUG_FILE[slug]
   if (!file) return []
-  return [`/brand-logos/${file}`]
+  const base = file.replace(/\.(png|svg|webp|jpg|jpeg)$/i, '')
+  const paths: string[] = []
+  // Prefer crisp colored SVG when we actually have the file
+  if (SLUGS_WITH_SVG.has(slug) || SLUGS_WITH_SVG.has(base)) {
+    paths.push(`/brand-logos/${base}.svg`)
+  }
+  paths.push(`/brand-logos/${file}`)
+  return [...new Set(paths)]
 }
 
 export function resolveLocalBrandSlug(

@@ -1,6 +1,7 @@
 'use client'
 
 import Mandala from '@/components/ui/Mandala'
+import { ContactCardDecor } from '@/components/contact/ContactAmbientDecor'
 
 const STANDARDS = [
   { value: '24–48 hrs', label: 'Avg response', icon: 'bolt' },
@@ -83,6 +84,7 @@ export default function ContactInfo() {
           speed={90}
           className="absolute -top-10 -right-10 w-32 h-32"
         />
+        <ContactCardDecor variant="desk" />
         <div className="relative">
           <div className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-accent-yellow/15 border border-accent-yellow/30 mb-3">
             <span className="w-1.5 h-1.5 rounded-full bg-accent-yellow animate-pulse" />
@@ -161,11 +163,15 @@ export default function ContactInfo() {
 
       {/* Social channels — X, LinkedIn, Instagram, Threads */}
       <div className="relative overflow-hidden rounded-2xl border border-white/[0.08] bg-[#0c0c0c] p-5">
-        <h3 className="font-mono text-[10px] font-bold uppercase tracking-[0.14em] text-gray-500 mb-3.5 flex items-center gap-2">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute -bottom-8 -left-6 w-24 h-24 rounded-full bg-accent-yellow/[0.04] blur-2xl"
+        />
+        <h3 className="relative font-mono text-[10px] font-bold uppercase tracking-[0.14em] text-gray-500 mb-3.5 flex items-center gap-2">
           <span className="material-symbols-outlined !text-[14px] text-accent-yellow">hub</span>
           Social channels
         </h3>
-        <div className="grid grid-cols-2 gap-2.5">
+        <div className="relative grid grid-cols-2 gap-2.5">
           {SOCIALS.map((social) => (
             <a
               key={social.platform}

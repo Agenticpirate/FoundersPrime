@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { motion, useReducedMotion } from 'framer-motion'
+import { m, useReducedMotion } from 'framer-motion'
 
 type Brand = {
   name: string
@@ -36,14 +36,15 @@ function MarqueeLogo({ brand }: { brand: Brand }) {
   const src = failed ? fallback : brand.logo
 
   return (
-    <span className="relative w-6 h-6 flex-shrink-0 rounded-full bg-white border border-black/[0.08] dark:border-white/10 overflow-hidden flex items-center justify-center p-0.5 shadow-sm">
+    <span className="relative w-6 h-6 flex-shrink-0 rounded-full bg-white border border-black/[0.08] dark:border-white/10 overflow-hidden flex items-center justify-center p-1 shadow-sm box-border min-w-0 min-h-0">
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={src}
         alt=""
-        width={24}
-        height={24}
-        className="w-full h-full object-contain"
+        width={16}
+        height={16}
+        className="block w-full h-full max-w-full max-h-full object-contain"
+        style={{ width: '100%', height: '100%', maxWidth: '100%', maxHeight: '100%' }}
         loading="eager"
         decoding="async"
         draggable={false}
@@ -66,23 +67,31 @@ function BrandPill({ brand }: { brand: Brand }) {
   )
 }
 
-export default function ProgramsBrandMarquee() {
+export default function ProgramsBrandMarquee({ compact = false }: { compact?: boolean }) {
   const reduce = useReducedMotion()
-  // Triple row for seamless longer strip (matches deals marquee)
-  const row = [...BRANDS, ...BRANDS, ...BRANDS]
 
   return (
-    <div className="relative mt-6 overflow-hidden rounded-2xl border border-black/[0.05] dark:border-white/[0.06] bg-white/60 dark:bg-white/[0.02] backdrop-blur-sm py-3">
+    <div
+      className={`relative overflow-hidden rounded-xl md:rounded-2xl border border-black/[0.05] dark:border-white/[0.06] bg-white/60 dark:bg-white/[0.02] backdrop-blur-sm ${
+        compact ? 'mt-3 py-2 md:mt-6 md:py-3' : 'mt-6 py-3'
+      }`}
+    >
       <div
-        className="pointer-events-none absolute inset-y-0 left-0 w-12 z-10 bg-gradient-to-r from-gray-50 dark:from-black to-transparent"
+        className="pointer-events-none absolute inset-y-0 left-0 w-8 md:w-12 z-10 bg-gradient-to-r from-gray-50 dark:from-black to-transparent"
         aria-hidden
       />
       <div
-        className="pointer-events-none absolute inset-y-0 right-0 w-12 z-10 bg-gradient-to-l from-gray-50 dark:from-black to-transparent"
+        className="pointer-events-none absolute inset-y-0 right-0 w-8 md:w-12 z-10 bg-gradient-to-l from-gray-50 dark:from-black to-transparent"
         aria-hidden
       />
 
-      <p className="px-4 mb-2.5 font-mono text-[9px] font-bold uppercase tracking-[0.16em] text-gray-400 dark:text-gray-500">
+      <p
+        className={`px-3 md:px-4 font-mono font-bold uppercase tracking-[0.14em] text-gray-400 dark:text-gray-500 ${
+          compact
+            ? 'mb-1.5 text-[8px] md:mb-2.5 md:text-[9px] md:tracking-[0.16em]'
+            : 'mb-2.5 text-[9px] tracking-[0.16em]'
+        }`}
+      >
         Featured programs in the directory
       </p>
 
@@ -94,15 +103,17 @@ export default function ProgramsBrandMarquee() {
         </div>
       ) : (
         <div className="flex overflow-hidden">
-          <motion.div
+          <m.div
             className="flex gap-2.5 px-4 will-change-transform"
             animate={{ x: ['0%', '-33.333%'] }}
             transition={{ duration: 48, ease: 'linear', repeat: Infinity }}
           >
-            {row.map((b, idx) => (
-              <BrandPill key={`${b.domain}-${idx}`} brand={b} />
-            ))}
-          </motion.div>
+            {(['a', 'b', 'c'] as const).flatMap((pass) =>
+              BRANDS.map((b) => (
+                <BrandPill key={`${pass}-${b.domain}`} brand={b} />
+              ))
+            )}
+          </m.div>
         </div>
       )}
     </div>

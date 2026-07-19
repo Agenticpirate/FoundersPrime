@@ -1,6 +1,31 @@
 import { NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 import { verifyAdminServer as verifyAdmin } from '@/lib/admin/verify-admin-server'
+const headers = ['ID', 'Slug', 'Title', 'Provider', 'Category', 'Subcategory', 'Value', 'Website', 'Featured', 'Dofollow', 'Description']
+
+const escapeCSV = (val: any) => {
+  if (val === null || val === undefined) return ''
+  let str = String(val)
+  // Escape quotes
+  str = str.replace(/"/g, '""')
+  // Wrap in quotes if it contains comma, newline, or quotes
+  if (str.includes(',') || str.includes('\n') || str.includes('"')) {
+    return `"${str}"`
+  }
+  return str
+}
+
+function hasDofollowTag(tags: unknown): boolean {
+  if (!Array.isArray(tags)) return false
+  for (let i = 0; i < tags.length; i++) {
+    if (tags[i] === 'dofollow') return true
+  }
+  return false
+}
+
+
+
+
 
 export const dynamic = 'force-dynamic'
 
@@ -59,7 +84,7 @@ export async function GET(request: Request) {
         txtContent += `Website:     ${r.provider_website || r.application_url || 'N/A'}\n`
         txtContent += `Status:      ${r.status || 'active'}\n`
         txtContent += `Featured:    ${r.featured ? 'Yes' : 'No'}\n`
-        txtContent += `Dofollow:    ${(r.tags || []).includes('dofollow') ? 'Yes' : 'No'}\n`
+        txtContent += `Dofollow:    ${hasDofollowTag(r.tags) ? 'Yes' : 'No'}\n`
         txtContent += `Description: ${r.description || 'No description available.'}\n`
         txtContent += `================================================================================\n\n`
       })
@@ -79,19 +104,6 @@ export async function GET(request: Request) {
       })
     } else {
       // Excel/CSV Layout (Default)
-      const headers = ['ID', 'Slug', 'Title', 'Provider', 'Category', 'Subcategory', 'Value', 'Website', 'Featured', 'Dofollow', 'Description']
-      
-      const escapeCSV = (val: any) => {
-        if (val === null || val === undefined) return ''
-        let str = String(val)
-        // Escape quotes
-        str = str.replace(/"/g, '""')
-        // Wrap in quotes if it contains comma, newline, or quotes
-        if (str.includes(',') || str.includes('\n') || str.includes('"')) {
-          return `"${str}"`
-        }
-        return str
-      }
 
       let csvContent = headers.join(',') + '\n'
       records.forEach((r: any) => {
@@ -105,7 +117,7 @@ export async function GET(request: Request) {
           r.value,
           r.provider_website || r.application_url,
           r.featured ? 'TRUE' : 'FALSE',
-          (r.tags || []).includes('dofollow') ? 'TRUE' : 'FALSE',
+          hasDofollowTag(r.tags) ? 'TRUE' : 'FALSE',
           r.description
         ]
         csvContent += row.map(escapeCSV).join(',') + '\n'

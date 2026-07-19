@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { motion, useReducedMotion } from 'framer-motion'
+import { m, useReducedMotion } from 'framer-motion'
 
 type Brand = {
   name: string
@@ -15,31 +15,34 @@ type Brand = {
  * Logos are fixed local PNGs under /public/brand-logos (logo.dev quality).
  * Do not use BrandLogo here — plate/lazy/SVG issues were causing blank/initials pills.
  */
+/** Cache-bust after repairing wrong marks (GCP G, Intercom Fin, etc.) */
+const LOGO_V = '20260718official'
+
 const BRANDS: Brand[] = [
-  { name: 'AWS', domain: 'aws.amazon.com', logo: '/brand-logos/aws.png' },
-  { name: 'Google Cloud', domain: 'cloud.google.com', logo: '/brand-logos/googlecloud.png' },
-  { name: 'Microsoft', domain: 'microsoft.com', logo: '/brand-logos/microsoft.png' },
-  { name: 'OpenAI', domain: 'openai.com', logo: '/brand-logos/openai.png' },
-  { name: 'Stripe', domain: 'stripe.com', logo: '/brand-logos/stripe.png' },
-  { name: 'Notion', domain: 'notion.so', logo: '/brand-logos/notion.png' },
-  { name: 'Vercel', domain: 'vercel.com', logo: '/brand-logos/vercel.png' },
-  { name: 'GitHub', domain: 'github.com', logo: '/brand-logos/github.png' },
-  { name: 'HubSpot', domain: 'hubspot.com', logo: '/brand-logos/hubspot.png' },
-  { name: 'Figma', domain: 'figma.com', logo: '/brand-logos/figma.png' },
-  { name: 'DigitalOcean', domain: 'digitalocean.com', logo: '/brand-logos/digitalocean.png' },
-  { name: 'Cloudflare', domain: 'cloudflare.com', logo: '/brand-logos/cloudflare.png' },
-  { name: 'Anthropic', domain: 'anthropic.com', logo: '/brand-logos/anthropic.png' },
-  { name: 'MongoDB', domain: 'mongodb.com', logo: '/brand-logos/mongodb.png' },
-  { name: 'Twilio', domain: 'twilio.com', logo: '/brand-logos/twilio.png' },
-  { name: 'Datadog', domain: 'datadoghq.com', logo: '/brand-logos/datadog.png' },
-  { name: 'Airtable', domain: 'airtable.com', logo: '/brand-logos/airtable.png' },
-  { name: 'Linear', domain: 'linear.app', logo: '/brand-logos/linear.png' },
-  { name: 'Supabase', domain: 'supabase.com', logo: '/brand-logos/supabase.png' },
-  { name: 'Slack', domain: 'slack.com', logo: '/brand-logos/slack.png' },
-  { name: 'Intercom', domain: 'intercom.com', logo: '/brand-logos/intercom.png' },
-  { name: 'Auth0', domain: 'auth0.com', logo: '/brand-logos/auth0.png' },
-  { name: 'Webflow', domain: 'webflow.com', logo: '/brand-logos/webflow.png' },
-  { name: 'Framer', domain: 'framer.com', logo: '/brand-logos/framer.png' },
+  { name: 'AWS', domain: 'aws.amazon.com', logo: `/brand-logos/aws.png?v=${LOGO_V}` },
+  { name: 'Google Cloud', domain: 'cloud.google.com', logo: `/brand-logos/googlecloud.svg?v=${LOGO_V}` },
+  { name: 'Microsoft', domain: 'microsoft.com', logo: `/brand-logos/microsoft.svg?v=${LOGO_V}` },
+  { name: 'OpenAI', domain: 'openai.com', logo: `/brand-logos/openai.svg?v=${LOGO_V}` },
+  { name: 'Stripe', domain: 'stripe.com', logo: `/brand-logos/stripe.svg?v=${LOGO_V}` },
+  { name: 'Notion', domain: 'notion.so', logo: `/brand-logos/notion.png?v=${LOGO_V}` },
+  { name: 'Vercel', domain: 'vercel.com', logo: `/brand-logos/vercel.svg?v=${LOGO_V}` },
+  { name: 'GitHub', domain: 'github.com', logo: `/brand-logos/github.svg?v=${LOGO_V}` },
+  { name: 'HubSpot', domain: 'hubspot.com', logo: `/brand-logos/hubspot.png?v=${LOGO_V}` },
+  { name: 'Figma', domain: 'figma.com', logo: `/brand-logos/figma.svg?v=${LOGO_V}` },
+  { name: 'DigitalOcean', domain: 'digitalocean.com', logo: `/brand-logos/digitalocean.svg?v=${LOGO_V}` },
+  { name: 'Cloudflare', domain: 'cloudflare.com', logo: `/brand-logos/cloudflare.png?v=${LOGO_V}` },
+  { name: 'Anthropic', domain: 'anthropic.com', logo: `/brand-logos/anthropic.png?v=${LOGO_V}` },
+  { name: 'MongoDB', domain: 'mongodb.com', logo: `/brand-logos/mongodb.png?v=${LOGO_V}` },
+  { name: 'Twilio', domain: 'twilio.com', logo: `/brand-logos/twilio.png?v=${LOGO_V}` },
+  { name: 'Datadog', domain: 'datadoghq.com', logo: `/brand-logos/datadog.png?v=${LOGO_V}` },
+  { name: 'Airtable', domain: 'airtable.com', logo: `/brand-logos/airtable.png?v=${LOGO_V}` },
+  { name: 'Linear', domain: 'linear.app', logo: `/brand-logos/linear.svg?v=${LOGO_V}` },
+  { name: 'Supabase', domain: 'supabase.com', logo: `/brand-logos/supabase.svg?v=${LOGO_V}` },
+  { name: 'Slack', domain: 'slack.com', logo: `/brand-logos/slack.svg?v=${LOGO_V}` },
+  { name: 'Intercom', domain: 'intercom.com', logo: `/brand-logos/intercom.svg?v=${LOGO_V}` },
+  { name: 'Auth0', domain: 'auth0.com', logo: `/brand-logos/auth0.png?v=${LOGO_V}` },
+  { name: 'Webflow', domain: 'webflow.com', logo: `/brand-logos/webflow.svg?v=${LOGO_V}` },
+  { name: 'Framer', domain: 'framer.com', logo: `/brand-logos/framer.svg?v=${LOGO_V}` },
 ]
 
 function MarqueeLogo({ brand }: { brand: Brand }) {
@@ -49,14 +52,15 @@ function MarqueeLogo({ brand }: { brand: Brand }) {
   const src = failed ? fallback : brand.logo
 
   return (
-    <span className="relative w-6 h-6 flex-shrink-0 rounded-full bg-white border border-black/[0.08] dark:border-white/10 overflow-hidden flex items-center justify-center p-0.5 shadow-sm">
+    <span className="relative w-6 h-6 flex-shrink-0 rounded-full bg-white border border-black/[0.08] dark:border-white/10 overflow-hidden flex items-center justify-center p-1 shadow-sm box-border min-w-0 min-h-0">
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={src}
         alt=""
-        width={24}
-        height={24}
-        className="w-full h-full object-contain"
+        width={16}
+        height={16}
+        className="block w-full h-full max-w-full max-h-full object-contain"
+        style={{ width: '100%', height: '100%', maxWidth: '100%', maxHeight: '100%' }}
         loading="eager"
         decoding="async"
         draggable={false}
@@ -81,8 +85,6 @@ function BrandPill({ brand }: { brand: Brand }) {
 
 export default function DealsBrandMarquee({ compact = false }: { compact?: boolean }) {
   const reduce = useReducedMotion()
-  // Triple row for seamless longer strip
-  const row = [...BRANDS, ...BRANDS, ...BRANDS]
 
   return (
     <div
@@ -115,15 +117,17 @@ export default function DealsBrandMarquee({ compact = false }: { compact?: boole
         </div>
       ) : (
         <div className="flex overflow-hidden">
-          <motion.div
+          <m.div
             className="flex gap-2 md:gap-2.5 px-3 md:px-4 will-change-transform"
             animate={{ x: ['0%', '-33.333%'] }}
             transition={{ duration: 55, ease: 'linear', repeat: Infinity }}
           >
-            {row.map((b, idx) => (
-              <BrandPill key={`${b.domain}-${idx}`} brand={b} />
-            ))}
-          </motion.div>
+            {(['a', 'b', 'c'] as const).flatMap((pass) =>
+              BRANDS.map((b) => (
+                <BrandPill key={`${pass}-${b.domain}`} brand={b} />
+              ))
+            )}
+          </m.div>
         </div>
       )}
     </div>

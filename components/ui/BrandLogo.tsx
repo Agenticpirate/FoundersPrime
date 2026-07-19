@@ -11,7 +11,9 @@ interface BrandLogoProps {
   className?: string
   /** Marquee / above-the-fold — load immediately, never opacity-gate */
   eager?: boolean
-  /** Light circular plate (deals / programs / students marquees) */
+  /**
+   * Light circular plate (marquees). Card grids should use BrandLogoPlate instead.
+   */
   plate?: boolean
   /** Parent is a dark strip (no plate) — light initials */
   onDark?: boolean
@@ -32,11 +34,31 @@ const textSizeClasses = {
 }
 
 function initialsOf(name: string): string {
-  const parts = name.split(/\s+/).filter(Boolean)
+  const raw = (name || '?').trim()
+  const parts = raw
+    .replace(/([a-z])([A-Z])/g, '$1 $2')
+    .replace(/([0-9])([A-Za-z])/g, '$1 $2')
+    .replace(/([A-Za-z])([0-9])/g, '$1 $2')
+    .split(/[\s\-_./]+/)
+    .filter(Boolean)
   if (parts.length >= 2) {
     return `${parts[0][0] || ''}${parts[1][0] || ''}`.toUpperCase()
   }
-  return (name || '?').slice(0, 2).toUpperCase()
+  return raw.slice(0, 2).toUpperCase()
+}
+
+/** Google’s “no favicon” placeholder is a 16×16 globe that still loads successfully. */
+function isLikelyPlaceholderFavicon(src: string, naturalWidth: number): boolean {
+  if (naturalWidth > 0 && naturalWidth < 24) return true
+  const s = src || ''
+  if (
+    (s.includes('gstatic.com') || s.includes('google.com/s2/favicons')) &&
+    naturalWidth > 0 &&
+    naturalWidth <= 32
+  ) {
+    return true
+  }
+  return false
 }
 
 function isLocalAsset(src: string | null | undefined): boolean {
@@ -49,11 +71,8 @@ function isLocalAsset(src: string | null | undefined): boolean {
 }
 
 /**
- * Permanent brand mark:
- * 1. Local /brand-logos first (same-origin)
- * 2. Google → logo.dev → DDG → ui-avatars
- * 3. Dark initials always visible on light plates (never blank discs)
- * 4. Local + plate logos paint immediately (no lazy/opacity trap inside Framer Motion grids)
+ * Permanent brand mark (inline / marquee / detail).
+ * Card grids MUST use BrandLogoPlate — it owns sizing so marks never crop.
  */
 export default function BrandLogo({
   logo,
@@ -100,26 +119,20 @@ export default function BrandLogo({
       ? 'text-gray-100'
       : 'text-gray-800 dark:text-gray-100'
 
-  // Critical: local assets + plate logos (card grids) must never wait on lazy/onLoad.
-  // Framer Motion transforms break IntersectionObserver for loading="lazy", leaving
-  // opacity-0 images forever and only initials visible.
   const paintNow = eager || plate || isLocalAsset(currentSrc) || isLocalAsset(logo)
   const showImg = paintNow || imgOk
   const hideInitials = Boolean(imgOk && !exhausted)
 
   return (
     <span
-      className={`relative inline-flex items-center justify-center overflow-hidden flex-shrink-0 ${box} ${
-        plate
-          ? 'rounded-full bg-white border border-black/[0.08] p-[3px] shadow-sm'
-          : ''
+      className={`relative inline-flex items-center justify-center overflow-hidden flex-shrink-0 min-w-0 min-h-0 ${box} ${
+        plate ? 'rounded-full bg-white border border-black/[0.08] p-1.5 shadow-sm' : ''
       } ${className}`}
       title={name}
     >
-      {/* Initials fallback — hidden only after a real image has loaded */}
       <span
         aria-hidden
-        className={`absolute inset-0 z-0 flex items-center justify-center font-black font-mono leading-none select-none ${textSizeClasses[size]} ${initialsColor} ${
+        className={`absolute inset-0 z-0 flex items-center justify-center font-black font-mono leading-none select-none pointer-events-none ${textSizeClasses[size]} ${initialsColor} ${
           hideInitials ? 'opacity-0' : 'opacity-100'
         }`}
       >
@@ -132,20 +145,30 @@ export default function BrandLogo({
           key={`${index}-${currentSrc}`}
           src={currentSrc}
           alt=""
-          width={64}
-          height={64}
-          className={`relative z-[1] w-full h-full object-contain ${
+          width={32}
+          height={32}
+          className={`relative z-[1] block object-contain object-center ${
             showImg ? 'opacity-100' : 'opacity-0'
           }`}
+          style={{
+            width: '100%',
+            height: '100%',
+            maxWidth: '100%',
+            maxHeight: '100%',
+            objectFit: 'contain',
+            objectPosition: 'center',
+          }}
           loading={paintNow ? 'eager' : 'lazy'}
           decoding="async"
           onLoad={(e) => {
             const img = e.currentTarget
-            // Skip empty CDN placeholders; allow SVG (naturalWidth often 0 until laid out)
-            const isSvg =
-              (img.currentSrc || img.src || '').includes('.svg') ||
-              isLocalAsset(img.currentSrc || img.src)
+            const src = img.currentSrc || img.src || ''
+            const isSvg = src.includes('.svg') || isLocalAsset(src)
             if (!isSvg && (!img.naturalWidth || img.naturalWidth < 12)) {
+              advance()
+              return
+            }
+            if (!isLocalAsset(src) && isLikelyPlaceholderFavicon(src, img.naturalWidth)) {
               advance()
               return
             }
@@ -157,3 +180,6 @@ export default function BrandLogo({
     </span>
   )
 }
+
+// Card grids: use the dedicated plate (pixel-locked, absolute inset mark).
+export { BrandLogoPlate, type BrandLogoPlateProps, type BrandLogoPlateSize } from './BrandLogoPlate'

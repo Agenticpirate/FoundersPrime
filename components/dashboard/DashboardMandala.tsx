@@ -28,13 +28,13 @@ export default function DashboardMandala() {
         <svg viewBox="0 0 200 200" className="w-full h-full text-white dashboard-hero-mandala-spin-reverse" fill="none" stroke="currentColor" strokeWidth="0.6">
           <circle cx="100" cy="100" r="50" />
           <circle cx="100" cy="100" r="35" strokeDasharray="3 3" />
-          {[...Array(12)].map((_, i) => (
+          {Array.from({ length: 12 }, (_, i) => i * 30).map((deg) => (
             <line
-              key={i}
+              key={`dash-ray-${deg}`}
               x1="100"
               y1="100"
-              x2={100 + Math.cos((i * Math.PI) / 6) * 90}
-              y2={100 + Math.sin((i * Math.PI) / 6) * 90}
+              x2={100 + Math.cos((deg * Math.PI) / 180) * 90}
+              y2={100 + Math.sin((deg * Math.PI) / 180) * 90}
             />
           ))}
           <circle cx="100" cy="100" r="2" fill="currentColor" />

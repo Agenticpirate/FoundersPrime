@@ -90,7 +90,7 @@ export async function checkAdminStatus(): Promise<{
 }
 
 // Get all admin users (for super_admin only)
-export async function getAdminUsers(): Promise<AdminUser[]> {
+async function getAdminUsers(): Promise<AdminUser[]> {
   try {
     const supabase = createClient()
     
@@ -117,7 +117,7 @@ export async function getAdminUsers(): Promise<AdminUser[]> {
 }
 
 // Add new admin user
-export async function addAdminUser(
+async function addAdminUser(
   email: string,
   name: string,
   role: 'admin' | 'editor' = 'admin'
@@ -148,7 +148,7 @@ export async function addAdminUser(
 }
 
 // Remove admin user
-export async function removeAdminUser(adminId: string): Promise<{ success: boolean; error?: string }> {
+async function removeAdminUser(adminId: string): Promise<{ success: boolean; error?: string }> {
   try {
     const supabase = createClient()
     

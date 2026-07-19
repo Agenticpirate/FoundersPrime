@@ -1,47 +1,49 @@
 'use client'
 
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
+
+const filterCategories = [
+  {
+    name: 'Content Type',
+    filters: ['Deals', 'Startups', 'Ideas', 'Resources', 'Blog Posts']
+  },
+  {
+    name: 'Category',
+    filters: ['Cloud Credits', 'SaaS Tools', 'Funding', 'Marketing', 'Analytics']
+  },
+  {
+    name: 'Value Range',
+    filters: ['$0-$1K', '$1K-$10K', '$10K-$50K', '$50K+']
+  },
+  {
+    name: 'Status',
+    filters: ['Active', 'Verified', 'Featured', 'New', 'Trending']
+  }
+]
+
+const sortOptions = [
+  'Relevance',
+  'Most Recent',
+  'Most Popular',
+  'Highest Value',
+  'Alphabetical'
+]
+
+const dateOptions = [
+  { value: 'all', label: 'All Time' },
+  { value: 'today', label: 'Today' },
+  { value: 'week', label: 'This Week' },
+  { value: 'month', label: 'This Month' },
+  { value: 'quarter', label: 'This Quarter' },
+  { value: 'year', label: 'This Year' }
+]
+
 
 export default function SearchFilters() {
   const [activeFilters, setActiveFilters] = useState<string[]>([])
   const [sortBy, setSortBy] = useState('relevance')
   const [dateRange, setDateRange] = useState('all')
-
-  const filterCategories = [
-    {
-      name: 'Content Type',
-      filters: ['Deals', 'Startups', 'Ideas', 'Resources', 'Blog Posts']
-    },
-    {
-      name: 'Category',
-      filters: ['Cloud Credits', 'SaaS Tools', 'Funding', 'Marketing', 'Analytics']
-    },
-    {
-      name: 'Value Range',
-      filters: ['$0-$1K', '$1K-$10K', '$10K-$50K', '$50K+']
-    },
-    {
-      name: 'Status',
-      filters: ['Active', 'Verified', 'Featured', 'New', 'Trending']
-    }
-  ]
-
-  const sortOptions = [
-    'Relevance',
-    'Most Recent',
-    'Most Popular',
-    'Highest Value',
-    'Alphabetical'
-  ]
-
-  const dateOptions = [
-    { value: 'all', label: 'All Time' },
-    { value: 'today', label: 'Today' },
-    { value: 'week', label: 'This Week' },
-    { value: 'month', label: 'This Month' },
-    { value: 'quarter', label: 'This Quarter' },
-    { value: 'year', label: 'This Year' }
-  ]
+  const activeFilterSet = useMemo(() => new Set(activeFilters), [activeFilters])
 
   const toggleFilter = (filter: string) => {
     setActiveFilters(prev => 
@@ -65,8 +67,8 @@ export default function SearchFilters() {
           {/* Filter Categories */}
           <div className="flex flex-wrap gap-4">
             {filterCategories.map((category, index) => (
-              <div key={index} className="relative group">
-                <button className="px-4 py-2 bg-gray-100 hover:bg-gray-200 border-2 border-black rounded-sm font-mono text-sm font-bold transition-colors">
+              <div key={category.name} className="relative group">
+                <button type="button" className="px-4 py-2 bg-gray-100 hover:bg-gray-200 border-2 border-black rounded-sm font-mono text-sm font-bold transition-colors">
                   {category.name}
                   <span className="material-symbols-outlined text-sm ml-1">expand_more</span>
                 </button>
@@ -78,7 +80,7 @@ export default function SearchFilters() {
                       <label key={filterIndex} className="flex items-center gap-2 cursor-pointer">
                         <input
                           type="checkbox"
-                          checked={activeFilters.includes(filter)}
+                          checked={activeFilterSet.has(filter)}
                           onChange={() => toggleFilter(filter)}
                           className="size-4 border-2 border-black rounded-sm"
                         />
@@ -96,6 +98,7 @@ export default function SearchFilters() {
             <div className="flex items-center gap-2">
               <span className="font-mono text-sm font-bold text-black">Sort:</span>
               <select
+                aria-label="Sort search results"
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
                 className="px-3 py-2 border-2 border-black rounded-sm font-mono text-sm bg-white focus:outline-none focus:shadow-[2px_2px_0px_0px_#1a1a1a]"
@@ -111,6 +114,7 @@ export default function SearchFilters() {
             <div className="flex items-center gap-2">
               <span className="font-mono text-sm font-bold text-black">Date:</span>
               <select
+                aria-label="Filter by date range"
                 value={dateRange}
                 onChange={(e) => setDateRange(e.target.value)}
                 className="px-3 py-2 border-2 border-black rounded-sm font-mono text-sm bg-white focus:outline-none focus:shadow-[2px_2px_0px_0px_#1a1a1a]"
@@ -133,7 +137,7 @@ export default function SearchFilters() {
             <span className="font-mono text-sm font-bold text-black">
               Active Filters ({activeFilters.length})
             </span>
-            <button
+            <button type="button"
               onClick={clearAllFilters}
               className="font-mono text-sm text-red-600 hover:text-black transition-colors"
             >
@@ -143,11 +147,11 @@ export default function SearchFilters() {
           <div className="flex flex-wrap gap-2">
             {activeFilters.map((filter, index) => (
               <span
-                key={index}
+                key={filter}
                 className="px-3 py-1 bg-white border-2 border-black rounded-sm font-mono text-xs flex items-center gap-2"
               >
                 {filter}
-                <button
+                <button type="button"
                   onClick={() => toggleFilter(filter)}
                   className="text-red-600 hover:text-black transition-colors"
                 >

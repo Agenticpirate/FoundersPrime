@@ -120,14 +120,21 @@ export default function sitemap(): MetadataRoute.Sitemap {
     }))
 
     // 7. Student benefits (slug pages)
-    const studentRoutes = (Array.isArray(studentBenefits2026) ? studentBenefits2026 : [])
-        .filter((item: any) => item?.slug)
-        .map((item: any) => ({
+    const studentRoutes: {
+        url: string
+        lastModified: Date | string
+        changeFrequency: 'monthly'
+        priority: number
+    }[] = []
+    for (const item of Array.isArray(studentBenefits2026) ? studentBenefits2026 : []) {
+        if (!item?.slug) continue
+        studentRoutes.push({
             url: `${baseUrl}/student-benefits/${item.slug}`,
             lastModified: lastModifiedFor(item),
-            changeFrequency: 'monthly' as const,
+            changeFrequency: 'monthly',
             priority: 0.65,
-        }))
+        })
+    }
 
     // 8. Startup ideas
     const ideaRoutes = getAllIdeaSlugs().map((slug) => ({

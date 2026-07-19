@@ -81,7 +81,15 @@ export default async function ProgramsPage({ searchParams }: { searchParams: { [
         <div className="max-w-[1600px] mx-auto px-4 lg:px-6 pt-6 md:pt-8 pb-10 lg:pb-14">
           <DealsHeader
             parentSection={{ name: 'Programs', href: '/programs' }}
-            currentSection="All Programs"
+            currentSection={
+              typeParam === 'accelerators'
+                ? 'Accelerators'
+                : typeParam === 'incubators'
+                  ? 'Incubators'
+                  : typeParam === 'grants'
+                    ? 'Grants'
+                    : 'All Programs'
+            }
           />
           <ProgramsHero />
           <Suspense

@@ -30,7 +30,6 @@ export default function CheckoutContent() {
   const plan = PLAN_KEY_MAP[rawPlan] || 'founder'
 
   const [error, setError] = useState<string | null>(null)
-  const [isLoading, setIsLoading] = useState(true)
   const [redirectCountdown, setRedirectCountdown] = useState(3)
 
   // ── Payment return flow ──────────────────────────────────────────────────────
@@ -44,18 +43,19 @@ export default function CheckoutContent() {
     // Give the client-side auth store a moment to re-hydrate from localStorage
     // before redirecting to dashboard (which checks server-side session).
     const timer = setInterval(() => {
-      setRedirectCountdown((c) => {
-        if (c <= 1) {
-          clearInterval(timer)
-          router.replace('/dashboard')
-          return 0
-        }
-        return c - 1
-      })
+      setRedirectCountdown((c) => (c <= 1 ? 0 : c - 1))
     }, 1000)
 
     return () => clearInterval(timer)
   }, [isPaymentReturn, authLoading, router])
+
+  // Navigate after countdown hits 0 — keep side effects out of setState updaters
+  useEffect(() => {
+    if (!isPaymentReturn) return
+    if (authLoading) return
+    if (redirectCountdown > 0) return
+    router.replace('/dashboard')
+  }, [isPaymentReturn, authLoading, redirectCountdown, router])
 
   // ── Initiate checkout flow ───────────────────────────────────────────────────
   useEffect(() => {
@@ -90,7 +90,6 @@ export default function CheckoutContent() {
       } catch (err: unknown) {
         const message = err instanceof Error ? err.message : 'Unknown error'
         setError(message)
-        setIsLoading(false)
       }
     }
 
@@ -127,13 +126,13 @@ export default function CheckoutContent() {
           </div>
         ) : (
           <div className="flex gap-3 justify-center">
-            <button
+            <button type="button"
               onClick={() => router.push('/pricing')}
               className="px-4 py-2 border border-white/20 text-white font-mono text-xs uppercase hover:bg-white/10 transition-colors"
             >
               Back to Pricing
             </button>
-            <button
+            <button type="button"
               onClick={() => router.push('/checkout?plan=' + rawPlan)}
               className="px-4 py-2 bg-accent-yellow text-black font-mono font-black text-xs uppercase hover:bg-yellow-400 transition-colors"
             >
@@ -179,13 +178,13 @@ export default function CheckoutContent() {
           </p>
           <p className="mt-2 text-sm font-sans">{error}</p>
           <div className="mt-4 flex gap-3 justify-center">
-            <button
+            <button type="button"
               onClick={() => router.push('/pricing')}
               className="px-4 py-2 border border-white/20 text-white font-mono text-xs uppercase hover:bg-white/10 transition-colors"
             >
               Back to Pricing
             </button>
-            <button
+            <button type="button"
               onClick={() => window.location.reload()}
               className="px-4 py-2 bg-accent-yellow text-black font-mono font-black text-xs uppercase hover:bg-yellow-400 transition-colors"
             >

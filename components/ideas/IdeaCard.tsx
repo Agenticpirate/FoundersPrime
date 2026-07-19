@@ -1,8 +1,14 @@
 'use client'
 
 import Link from 'next/link'
-import IdeaSaveButton, { ideaIdFromTitle } from './IdeaSaveButton'
-import { CardHoverGlow, cardHoverClass, cardTitleHoverClass } from '@/components/ui/card-hover'
+import IdeaSaveButton from './IdeaSaveButton'
+import { getSignalScore, ideaIdFromTitle } from '@/lib/ideas'
+import {
+  CardHoverGlowShell,
+  cardHoverClass,
+  cardTitleHoverClass,
+} from '@/components/ui/card-hover'
+import { cardTitle, cardDescription } from '@/lib/card-text'
 
 interface IdeaCardProps {
   idea: {
@@ -61,131 +67,121 @@ function getCategoryConfig(category: string) {
   )
 }
 
-/** Stable pseudo-signal from title when itchScore missing */
-export function getSignalScore(title: string, itchScore?: string): number {
-  if (itchScore) {
-    const n = parseInt(itchScore, 10)
-    if (!Number.isNaN(n)) return Math.min(99, Math.max(1, n))
-  }
-  let hash = 0
-  for (let i = 0; i < title.length; i++) hash = ((hash << 5) - hash + title.charCodeAt(i)) | 0
-  return 75 + (Math.abs(hash) % 25)
-}
-
 function getSourceLabel(source: string): string {
   if (source.includes('YC')) return 'YC'
   if (source.includes('Razorpay')) return 'Razorpay'
-  if (source.includes('AI') || source.includes('PDF')) return 'AI brief'
-  return source || 'FoundersPrime'
+  if (source.includes('AI') || source.includes('PDF')) return 'AI'
+  return source?.slice(0, 12) || 'FP'
 }
 
+/**
+ * Mobile-compact idea card — matches All Deals density:
+ * fixed height, 2-col friendly, short title/desc, signal + Explore bar.
+ */
 export default function IdeaCard({ idea, index = 0 }: IdeaCardProps) {
   const cfg = getCategoryConfig(idea.category)
   const signal = getSignalScore(idea.title, idea.itchScore)
   const srcLabel = getSourceLabel(idea.source)
   const slug = ideaIdFromTitle(idea.title)
+  const shortTitle = cardTitle(idea.title, 34)
+  const shortDesc = cardDescription(idea.description, 64)
 
   return (
     <article
-      className={`idea-card group flex flex-col h-full rounded-2xl border border-black/[0.06] dark:border-white/[0.08] bg-white dark:bg-gradient-to-b dark:from-[#121212] dark:to-[#0a0a0a] ${cardHoverClass}`}
-      style={{ animationDelay: `${Math.min(index, 9) * 0.035}s` }}
+      className={`idea-card group relative h-[168px] md:h-[196px] flex flex-col rounded-xl md:rounded-2xl min-w-0 border border-black/[0.06] dark:border-white/[0.08] bg-white dark:bg-gradient-to-b dark:from-[#121212] dark:to-[#0a0a0a] overflow-visible ${cardHoverClass}`}
+      style={{ animationDelay: `${Math.min(index, 9) * 0.03}s` }}
     >
-      <CardHoverGlow />
-      <div
-        aria-hidden
-        className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-transparent to-transparent group-hover:via-accent-yellow/45 transition-all duration-300 z-[1]"
-      />
+      <CardHoverGlowShell />
 
-      <div className="relative flex flex-col flex-1 p-4 md:p-[1.1rem]">
-        {/* Top row */}
-        <div className="flex items-start justify-between gap-2 mb-3.5">
+      <div className="relative z-[1] flex flex-col flex-1 p-2.5 md:p-3.5 min-w-0">
+        {/* Top: icon + category + save */}
+        <div
+          className="shrink-0 pr-1 min-w-0 mb-1.5"
+          style={{
+            display: 'grid',
+            gridTemplateColumns: '32px minmax(0, 1fr) auto',
+            columnGap: 8,
+            alignItems: 'center',
+          }}
+        >
           <div
-            className={`w-9 h-9 rounded-xl ${cfg.bg} border ${cfg.border} flex items-center justify-center flex-shrink-0 transition-transform duration-300 group-hover:scale-105`}
+            className={`w-8 h-8 rounded-lg ${cfg.bg} border ${cfg.border} flex items-center justify-center flex-shrink-0`}
           >
-            <span className={`material-symbols-outlined !text-[17px] ${cfg.text}`}>{cfg.icon}</span>
+            <span className={`material-symbols-outlined !text-[15px] ${cfg.text}`}>{cfg.icon}</span>
+          </div>
+          <div className="min-w-0 flex items-center gap-1 overflow-hidden">
+            <span
+              className={`px-1.5 py-0.5 font-mono text-[7px] md:text-[8px] font-bold rounded-md border uppercase tracking-wide truncate max-w-full ${cfg.bg} ${cfg.text} ${cfg.border}`}
+            >
+              {idea.category}
+            </span>
+            <span className="hidden sm:inline-flex px-1.5 py-0.5 font-mono text-[7px] md:text-[8px] font-bold rounded-md border uppercase tracking-wide bg-black/[0.03] dark:bg-white/[0.04] text-gray-500 dark:text-gray-400 border-black/[0.05] dark:border-white/10 shrink-0">
+              {srcLabel}
+            </span>
           </div>
           <IdeaSaveButton
             ideaId={slug}
             variant="icon"
-            className="p-2 min-h-[40px] min-w-[40px] flex items-center justify-center border border-black/[0.06] dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.04] active:bg-accent-yellow active:border-accent-yellow active:text-black md:hover:bg-accent-yellow md:hover:border-accent-yellow text-gray-400 md:hover:text-black rounded-lg transition-all duration-150 disabled:opacity-60"
+            className="p-1 min-h-[28px] min-w-[28px] flex items-center justify-center border border-black/[0.06] dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.04] active:bg-accent-yellow active:border-accent-yellow active:text-black md:hover:bg-accent-yellow md:hover:border-accent-yellow text-gray-400 md:hover:text-black rounded-md transition-all duration-150 disabled:opacity-60 shrink-0"
           />
         </div>
 
-        {/* Category + source */}
-        <div className="flex flex-wrap items-center gap-1.5 mb-2.5">
-          <span
-            className={`px-1.5 py-0.5 font-mono text-[9px] font-bold rounded-md border uppercase tracking-wide ${cfg.bg} ${cfg.text} ${cfg.border}`}
-          >
-            {idea.category}
-          </span>
-          <span className="px-1.5 py-0.5 font-mono text-[9px] font-bold rounded-md border uppercase tracking-wide bg-black/[0.03] dark:bg-white/[0.04] text-gray-500 dark:text-gray-400 border-black/[0.05] dark:border-white/10">
-            {srcLabel}
-          </span>
-        </div>
-
-        {/* Title + description — whole card body navigates */}
-        <Link href={`/ideas/${slug}`} className="block flex-1 group/link">
+        <Link href={`/ideas/${slug}`} className="block flex-1 min-w-0 group/link">
           <h3
-            className={`font-mono text-[13.5px] font-bold text-gray-900 dark:text-white leading-snug mb-2 line-clamp-2 min-h-[2.55rem] ${cardTitleHoverClass}`}
+            className={`font-bold text-[11px] md:text-[13px] text-gray-900 dark:text-white leading-[1.2] line-clamp-2 h-[1.65rem] md:h-[2.35rem] ${cardTitleHoverClass}`}
+            title={idea.title}
           >
-            {idea.title}
+            {shortTitle}
           </h3>
-          <p className="font-sans text-[12px] text-gray-500 dark:text-gray-400 leading-relaxed line-clamp-2 mb-4">
-            {idea.description}
+          <p
+            className="mt-1 text-[10px] md:text-[11px] leading-[1.3] h-[1.3rem] md:h-[2.6rem] text-gray-500 dark:text-gray-400 line-clamp-1 md:line-clamp-2 overflow-hidden"
+            title={idea.description}
+          >
+            {shortDesc}
           </p>
         </Link>
 
-        {/* Signal bar */}
-        <div className="mb-3.5">
-          <div className="flex items-center justify-between mb-1.5">
-            <span className="font-mono text-[9px] font-bold uppercase tracking-wider text-gray-400 dark:text-gray-500">
-              Signal
-            </span>
-            <span className="font-mono text-[10px] font-bold tabular-nums text-gray-700 dark:text-gray-300">
-              {signal}%
-            </span>
-          </div>
-          <div
-            className="h-1 rounded-full bg-black/[0.05] dark:bg-white/[0.06] overflow-hidden"
-            role="meter"
-            aria-label={`Signal strength ${signal} percent`}
-            aria-valuenow={signal}
-            aria-valuemin={0}
-            aria-valuemax={100}
-          >
-            <div
-              className="h-full rounded-full bg-gradient-to-r from-accent-yellow/70 to-accent-yellow transition-all duration-500"
-              style={{ width: `${signal}%` }}
-            />
-          </div>
-        </div>
-
-        {/* Footer CTA */}
-        <div className="flex items-center gap-2 pt-3 border-t border-black/[0.05] dark:border-white/[0.07] mt-auto">
-          {(idea.tags || []).slice(0, 2).map((tag) => (
-            <span
-              key={tag}
-              className="hidden xs:inline-flex px-1.5 py-0.5 font-mono text-[9px] font-semibold rounded text-gray-400 dark:text-gray-500 truncate max-w-[72px]"
+        {/* Signal + Explore — same density as deal value/CTA bar */}
+        <div className="mt-auto shrink-0 w-full min-w-0 pt-1.5">
+          <div className="w-full flex items-center justify-between gap-1.5 h-8 md:h-9 rounded-lg border border-black/[0.06] dark:border-white/10 bg-gray-50 dark:bg-white/[0.04] pl-2 md:pl-2.5 pr-0.5 md:pr-1 min-w-0">
+            <div className="min-w-0 flex-1 flex items-center gap-1.5">
+              <span className="font-mono text-[8px] font-bold uppercase tracking-wider text-gray-400 shrink-0">
+                Signal
+              </span>
+              <div
+                className="h-1 flex-1 max-w-[48px] rounded-full bg-black/[0.05] dark:bg-white/[0.06] overflow-hidden"
+                role="meter"
+                aria-label={`Signal strength ${signal} percent`}
+                aria-valuenow={signal}
+                aria-valuemin={0}
+                aria-valuemax={100}
+              >
+                <div
+                  className="h-full rounded-full bg-gradient-to-r from-accent-yellow/70 to-accent-yellow"
+                  style={{ width: `${signal}%` }}
+                />
+              </div>
+              <span className="font-mono text-[9px] md:text-[10px] font-bold tabular-nums text-amber-700 dark:text-accent-yellow shrink-0">
+                {signal}%
+              </span>
+            </div>
+            <Link
+              href={`/ideas/${slug}`}
+              className="shrink-0 inline-flex h-6 md:h-7 items-center justify-center gap-0.5 md:gap-1 bg-[#000000] text-white border border-[#FFD500]/40 text-[8px] md:text-[9px] font-bold uppercase tracking-wide px-1.5 md:px-2.5 rounded-md shadow-sm group-hover:bg-[#FFD500] group-hover:text-black group-hover:border-[#FFD500] hover:bg-[#FFD500] hover:text-black hover:border-[#FFD500] transition-all duration-200 leading-none"
             >
-              {tag}
-            </span>
-          ))}
-          <div className="flex-1" />
-          <Link
-            href={`/ideas/${slug}`}
-            className="inline-flex h-10 min-h-[40px] items-center justify-center gap-1.5 px-3.5 bg-gray-900 dark:bg-white text-white dark:text-black active:bg-accent-yellow active:text-black md:hover:bg-accent-yellow md:hover:text-black dark:md:hover:bg-accent-yellow font-mono text-[10px] font-black uppercase tracking-wide rounded-lg transition-colors leading-none shrink-0"
-          >
-            Explore
-            <svg width="11" height="11" viewBox="0 0 14 14" fill="none" className="block shrink-0" aria-hidden>
-              <path
-                d="M2.5 7h9M7.5 3.5 11 7l-3.5 3.5"
-                stroke="currentColor"
-                strokeWidth="1.75"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </Link>
+              <span className="leading-none md:hidden">Open</span>
+              <span className="leading-none hidden md:inline">Explore</span>
+              <svg width="10" height="10" viewBox="0 0 14 14" fill="none" className="block shrink-0" aria-hidden>
+                <path
+                  d="M2.5 7h9M7.5 3.5 11 7l-3.5 3.5"
+                  stroke="currentColor"
+                  strokeWidth="1.75"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </Link>
+          </div>
         </div>
       </div>
 
@@ -193,7 +189,7 @@ export default function IdeaCard({ idea, index = 0 }: IdeaCardProps) {
         @keyframes ideaCardFadeIn {
           from {
             opacity: 0;
-            transform: translateY(6px);
+            transform: translateY(5px);
           }
           to {
             opacity: 1;
@@ -201,7 +197,7 @@ export default function IdeaCard({ idea, index = 0 }: IdeaCardProps) {
           }
         }
         .idea-card {
-          animation: ideaCardFadeIn 0.32s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+          animation: ideaCardFadeIn 0.28s cubic-bezier(0.22, 1, 0.36, 1) backwards;
         }
         @media (prefers-reduced-motion: reduce) {
           .idea-card {

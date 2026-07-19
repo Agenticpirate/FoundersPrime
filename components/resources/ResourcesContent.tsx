@@ -121,7 +121,7 @@ export default function ResourcesContent() {
           </p>
 
           <div className="flex justify-center">
-            <button
+            <button type="button"
               onClick={() => window.history.back()}
               className="inline-flex items-center gap-2 bg-black dark:bg-white text-white dark:text-black font-mono font-black text-xs uppercase tracking-wider px-5 py-3 border-2 border-black rounded-sm shadow-[3px_3px_0px_#111] hover:bg-accent-yellow hover:text-black hover:shadow-[5px_5px_0px_#111] hover:-translate-x-px hover:-translate-y-px transition-all"
             >

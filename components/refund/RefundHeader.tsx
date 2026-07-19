@@ -1,19 +1,15 @@
 'use client'
 
-import { ArrowLeft, Shield } from 'lucide-react'
-import Link from 'next/link'
+import { Shield } from 'lucide-react'
+import PageBreadcrumb from '@/components/ui/PageBreadcrumb'
 
 export default function RefundHeader() {
   return (
     <div className="mb-6">
-      {/* Breadcrumb */}
-      <div className="flex items-center gap-2 text-xs font-mono text-gray-500 dark:text-gray-400 mb-4">
-        <Link href="/" className="hover:text-gray-900 dark:hover:text-white transition-colors uppercase">
-          Home
-        </Link>
-        <span className="text-gray-400 dark:text-neutral-600">/</span>
-        <span className="text-gray-900 dark:text-white font-bold uppercase">Refund Policy</span>
-      </div>
+      <PageBreadcrumb
+        className="mb-4"
+        items={[{ label: 'Home', href: '/' }, { label: 'Refund Policy' }]}
+      />
 
       {/* Header */}
       <div className="bg-white dark:bg-[#09090b]/90 border border-gray-200 dark:border-neutral-900 shadow-sm dark:shadow-[0_8px_30px_rgb(0,0,0,0.5)] rounded-xl backdrop-blur-md p-6">

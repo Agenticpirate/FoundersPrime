@@ -1,36 +1,41 @@
+
+const searchStats = [
+  { label: 'Total Results', value: '1,247', icon: 'search' },
+  { label: 'Deals Found', value: '156', icon: 'local_offer' },
+  { label: 'Startups Found', value: '892', icon: 'business' },
+  { label: 'Ideas Found', value: '134', icon: 'lightbulb' },
+  { label: 'Resources Found', value: '45', icon: 'folder' },
+  { label: 'Blog Posts Found', value: '20', icon: 'article' }
+]
+
+const trendingSearches = [
+  { query: 'AWS credits', searches: '2.5K', trend: 'up' },
+  { query: 'Y Combinator', searches: '1.8K', trend: 'up' },
+  { query: 'SaaS tools', searches: '1.2K', trend: 'down' },
+  { query: 'Stripe integration', searches: '980', trend: 'up' },
+  { query: 'Marketing automation', searches: '756', trend: 'stable' }
+]
+
+const recentSearches = [
+  'cloud hosting deals',
+  'fintech startups',
+  'AI startup ideas',
+  'pitch deck templates',
+  'funding guides'
+]
+
+const suggestedFilters = [
+  { name: 'High Value Deals', count: 45, type: 'deals' },
+  { name: 'Recently Funded', count: 123, type: 'startups' },
+  { name: 'Trending Ideas', count: 67, type: 'ideas' },
+  { name: 'Free Resources', count: 234, type: 'resources' },
+  { name: 'Latest Posts', count: 12, type: 'blog' }
+]
+
 export default function SearchSidebar() {
-  const searchStats = [
-    { label: 'Total Results', value: '1,247', icon: 'search' },
-    { label: 'Deals Found', value: '156', icon: 'local_offer' },
-    { label: 'Startups Found', value: '892', icon: 'business' },
-    { label: 'Ideas Found', value: '134', icon: 'lightbulb' },
-    { label: 'Resources Found', value: '45', icon: 'folder' },
-    { label: 'Blog Posts Found', value: '20', icon: 'article' }
-  ]
 
-  const trendingSearches = [
-    { query: 'AWS credits', searches: '2.5K', trend: 'up' },
-    { query: 'Y Combinator', searches: '1.8K', trend: 'up' },
-    { query: 'SaaS tools', searches: '1.2K', trend: 'down' },
-    { query: 'Stripe integration', searches: '980', trend: 'up' },
-    { query: 'Marketing automation', searches: '756', trend: 'stable' }
-  ]
 
-  const recentSearches = [
-    'cloud hosting deals',
-    'fintech startups',
-    'AI startup ideas',
-    'pitch deck templates',
-    'funding guides'
-  ]
 
-  const suggestedFilters = [
-    { name: 'High Value Deals', count: 45, type: 'deals' },
-    { name: 'Recently Funded', count: 123, type: 'startups' },
-    { name: 'Trending Ideas', count: 67, type: 'ideas' },
-    { name: 'Free Resources', count: 234, type: 'resources' },
-    { name: 'Latest Posts', count: 12, type: 'blog' }
-  ]
 
   return (
     <div className="space-y-6">
@@ -41,7 +46,7 @@ export default function SearchSidebar() {
         </h3>
         <div className="space-y-3">
           {searchStats.map((stat, index) => (
-            <div key={index} className="flex items-center justify-between">
+            <div key={stat.label} className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <span className="material-symbols-outlined text-primary text-sm">{stat.icon}</span>
                 <span className="font-sans text-sm text-gray-700">{stat.label}</span>
@@ -58,10 +63,10 @@ export default function SearchSidebar() {
           Trending Searches
         </h3>
         <div className="space-y-3">
-          {trendingSearches.map((search, index) => (
-            <div key={index} className="flex items-center justify-between">
+          {trendingSearches.map((search) => (
+            <div key={search.query} className="flex items-center justify-between">
               <div className="flex-1">
-                <button className="font-mono text-sm text-primary hover:text-black transition-colors text-left">
+                <button type="button" className="font-mono text-sm text-primary hover:text-black transition-colors text-left">
                   {search.query}
                 </button>
                 <div className="flex items-center gap-2 mt-1">
@@ -87,8 +92,8 @@ export default function SearchSidebar() {
         </h3>
         <div className="space-y-2">
           {recentSearches.map((search, index) => (
-            <button
-              key={index}
+            <button type="button"
+              key={search}
               className="block w-full text-left font-mono text-sm text-gray-600 hover:text-primary transition-colors p-2 hover:bg-gray-50 rounded-sm"
             >
               <span className="material-symbols-outlined text-sm mr-2">history</span>
@@ -97,7 +102,7 @@ export default function SearchSidebar() {
           ))}
         </div>
         <div className="mt-4 pt-4 border-t-2 border-gray-100">
-          <button className="font-mono text-sm text-red-600 hover:text-black transition-colors">
+          <button type="button" className="font-mono text-sm text-red-600 hover:text-black transition-colors">
             Clear search history
           </button>
         </div>
@@ -110,8 +115,8 @@ export default function SearchSidebar() {
         </h3>
         <div className="space-y-2">
           {suggestedFilters.map((filter, index) => (
-            <button
-              key={index}
+            <button type="button"
+              key={filter.name}
               className="flex items-center justify-between w-full p-2 hover:bg-gray-50 rounded-sm transition-colors"
             >
               <span className="font-mono text-sm text-black">{filter.name}</span>
@@ -168,7 +173,7 @@ export default function SearchSidebar() {
         <p className="font-sans text-sm text-gray-700 mb-4">
           Use our advanced search for more precise filtering and boolean operators.
         </p>
-        <button className="w-full px-4 py-2 bg-primary hover:bg-black hover:text-white border-2 border-black text-black font-mono font-bold rounded-sm transition-all">
+        <button type="button" className="w-full px-4 py-2 bg-primary hover:bg-black hover:text-white border-2 border-black text-black font-mono font-bold rounded-sm transition-all">
           Advanced Search
         </button>
       </div>
@@ -181,7 +186,7 @@ export default function SearchSidebar() {
         <p className="font-sans text-sm text-gray-700 mb-4">
           Get notified when new results match your search criteria.
         </p>
-        <button className="w-full px-4 py-2 bg-yellow-400 hover:bg-black hover:text-white border-2 border-black text-black font-mono font-bold rounded-sm transition-all mb-2">
+        <button type="button" className="w-full px-4 py-2 bg-yellow-400 hover:bg-black hover:text-white border-2 border-black text-black font-mono font-bold rounded-sm transition-all mb-2">
           Save Search Alert
         </button>
         <p className="font-sans text-xs text-gray-600">

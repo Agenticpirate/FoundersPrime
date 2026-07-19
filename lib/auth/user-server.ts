@@ -1,6 +1,6 @@
 // Server-side check for Pro status
 import { createClient } from '@/lib/supabase/server'
-import { UserProfile } from './user-context'
+import { UserProfile, normalizeUserPlan, type UserPlan } from './user-context'
 
 const PRO_USERS = [
   'raviteja.journal@gmail.com',
@@ -52,15 +52,12 @@ export async function checkProStatusServer(): Promise<{
       .limit(1)
       .maybeSingle()
 
-    let computedPlan: 'free' | 'nextfounder' | 'founder' | 'legend' = 'free'
+    let computedPlan: UserPlan = 'free'
     
     if (isAdmin || isHardcodedPro) {
       computedPlan = 'legend'
     } else if (subData) {
-      const dbPlan = subData.plan as string
-      computedPlan = (
-        dbPlan === 'explorer' || dbPlan === 'campus' ? 'nextfounder' : dbPlan
-      ) as any
+      computedPlan = normalizeUserPlan(subData.plan as string)
     }
 
     const isPro = ['founder', 'legend'].includes(computedPlan) || isAdmin

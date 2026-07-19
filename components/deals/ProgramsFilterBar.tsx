@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
-import type { ProgramType } from './ProgramsSidebar'
+import type { ProgramType } from './program-type'
 
 interface ProgramFilterState {
   search: string
@@ -79,6 +79,25 @@ const DEFAULT: ProgramFilterState = {
   stage: 'All',
 }
 
+const quickChips = [
+  { label: 'AI & ML', value: 'AI' },
+  { label: 'Fintech', value: 'Fintech' },
+  { label: 'Climate Tech', value: 'Climate' },
+  { label: 'Health Tech', value: 'Health' },
+  { label: 'Web3', value: 'Web3' },
+  { label: 'SaaS', value: 'SaaS' },
+  { label: 'Consumer', value: 'Consumer' },
+  { label: 'Deep Tech', value: 'Deep Tech' },
+]
+
+
+const searchPlaceholders: Record<ProgramType, string> = {
+  all: 'Search programs by name, keyword, or focus area…',
+  accelerators: 'Search accelerators by name, location, or focus area…',
+  incubators: 'Search incubators by name, location, or focus area…',
+  grants: 'Search grants by name, organization, or category…',
+}
+
 export default function ProgramsFilterBar({
   activeType,
   onFilterChange,
@@ -132,26 +151,10 @@ export default function ProgramsFilterBar({
 
   const sortOptions = SORT_OPTIONS[activeType] || SORT_OPTIONS.all
 
-  const quickChips = [
-    { label: 'AI & ML', value: 'AI' },
-    { label: 'Fintech', value: 'Fintech' },
-    { label: 'Climate Tech', value: 'Climate' },
-    { label: 'Health Tech', value: 'Health' },
-    { label: 'Web3', value: 'Web3' },
-    { label: 'SaaS', value: 'SaaS' },
-    { label: 'Consumer', value: 'Consumer' },
-    { label: 'Deep Tech', value: 'Deep Tech' },
-  ]
 
   const selectClass =
     'h-10 w-full appearance-none rounded-lg border border-black/[0.06] dark:border-white/[0.08] bg-white dark:bg-white/[0.03] pl-3 pr-9 text-[12px] font-medium text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-1 focus:ring-accent-yellow/50 focus:border-accent-yellow/40 cursor-pointer hover:border-black/10 dark:hover:border-white/15 transition-colors'
 
-  const searchPlaceholders: Record<ProgramType, string> = {
-    all: 'Search programs by name, keyword, or focus area…',
-    accelerators: 'Search accelerators by name, location, or focus area…',
-    incubators: 'Search incubators by name, location, or focus area…',
-    grants: 'Search grants by name, organization, or category…',
-  }
 
   return (
     <div className="relative sticky top-14 md:top-20 z-30 rounded-2xl border border-black/[0.06] dark:border-white/[0.08] bg-white/90 dark:bg-[#0a0a0a]/90 backdrop-blur-xl shadow-[0_1px_0_rgba(255,255,255,0.04)_inset,0_8px_30px_rgba(0,0,0,0.12)] overflow-hidden transition-colors duration-300">

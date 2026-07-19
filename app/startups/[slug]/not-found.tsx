@@ -20,12 +20,12 @@ export default function NotFound() {
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link href="/startups">
-                <button className="px-6 py-3 bg-primary hover:bg-black hover:text-white border-3 border-black text-black font-mono font-bold rounded-sm shadow-[4px_4px_0px_0px_#1a1a1a] hover:shadow-[2px_2px_0px_0px_#1a1a1a] hover:translate-x-[2px] hover:translate-y-[2px] transition-all">
+                <button type="button" className="px-6 py-3 bg-primary hover:bg-black hover:text-white border-3 border-black text-black font-mono font-bold rounded-sm shadow-[4px_4px_0px_0px_#1a1a1a] hover:shadow-[2px_2px_0px_0px_#1a1a1a] hover:translate-x-[2px] hover:translate-y-[2px] transition-all">
                   Browse All Startups
                 </button>
               </Link>
               <Link href="/">
-                <button className="px-6 py-3 bg-white hover:bg-gray-100 border-3 border-black text-black font-mono font-bold rounded-sm shadow-[4px_4px_0px_0px_#1a1a1a] hover:shadow-[2px_2px_0px_0px_#1a1a1a] hover:translate-x-[2px] hover:translate-y-[2px] transition-all">
+                <button type="button" className="px-6 py-3 bg-white hover:bg-gray-100 border-3 border-black text-black font-mono font-bold rounded-sm shadow-[4px_4px_0px_0px_#1a1a1a] hover:shadow-[2px_2px_0px_0px_#1a1a1a] hover:translate-x-[2px] hover:translate-y-[2px] transition-all">
                   Back to Home
                 </button>
               </Link>

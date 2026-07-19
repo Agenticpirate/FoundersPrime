@@ -5,60 +5,17 @@ import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { useAuth } from '@/lib/auth/hooks'
 import { useEffect, useRef, useState } from 'react'
-import { checkProStatus } from '@/lib/auth/user-context'
-import { motion, AnimatePresence } from 'framer-motion'
+import { checkProStatus, normalizeUserPlan } from '@/lib/auth/user-context'
+import { m, AnimatePresence } from 'framer-motion'
 import ThemeToggle from './ThemeToggle'
-
-/** Section-level match: path matches (ignores most query params). */
-function navIsActive(pathname: string, _search: string, href: string): boolean {
-  if (!href || href === '#') return false
-  try {
-    const url = new URL(href, 'http://local')
-    if (url.pathname === '/') return pathname === '/'
-    return pathname === url.pathname || pathname.startsWith(`${url.pathname}/`)
-  } catch {
-    return pathname === href
-  }
-}
-
-/** Exact dropdown match: path + relevant query (category / type). */
-function navIsExact(pathname: string, search: string, href: string): boolean {
-  if (!href || href === '#') return false
-  try {
-    const url = new URL(href, 'http://local')
-    if (url.pathname !== pathname) return false
-    const have = new URLSearchParams(search.startsWith('?') ? search.slice(1) : search)
-    const want = url.searchParams
-    if ([...want.keys()].length === 0) {
-      // "All X" — active only when no category/type filter is set
-      return !have.get('category') && !have.get('type')
-    }
-    for (const [k, v] of want.entries()) {
-      if (have.get(k) !== v) return false
-    }
-    return true
-  } catch {
-    return false
-  }
-}
-
-type PlanType = 'free' | 'nextfounder' | 'founder' | 'legend'
-
-// Maps a paid plan to its display badge (label + styling).
-const PLAN_BADGES: Record<Exclude<PlanType, 'free'>, { label: string; className: string }> = {
-  nextfounder: {
-    label: 'Next Founder',
-    className: 'bg-sky-400 text-black',
-  },
-  founder: {
-    label: 'Founder',
-    className: 'bg-accent-yellow text-black',
-  },
-  legend: {
-    label: 'Legend',
-    className: 'bg-gradient-to-r from-amber-400 to-orange-500 text-black',
-  },
-}
+import HeaderMobileDrawer from './HeaderMobileDrawer'
+import {
+  navIsActive,
+  navIsExact,
+  PLAN_BADGES,
+  mobileNavSections,
+  type PlanType,
+} from '@/lib/header-nav'
 
 export default function Header() {
   const { user, loading, signOut } = useAuth()
@@ -129,7 +86,7 @@ export default function Header() {
       if (user && hasCheckedRef.current !== user.id) {
         hasCheckedRef.current = user.id
         const { isAdmin: hasAdminAccess, user: profile } = await checkProStatus()
-        setPlan(profile?.plan ?? 'free')
+        setPlan(normalizeUserPlan(profile?.plan))
         setIsAdmin(hasAdminAccess)
       } else if (!user) {
         hasCheckedRef.current = null
@@ -139,6 +96,20 @@ export default function Header() {
     }
     checkAccess()
   }, [user])
+
+  useEffect(() => {
+    const syncAccess = (event: Event) => {
+      const detail = (event as CustomEvent<{
+        isAdmin?: boolean
+        user?: { plan?: string | null } | null
+      }>).detail
+      setPlan(normalizeUserPlan(detail?.user?.plan))
+      setIsAdmin(Boolean(detail?.isAdmin))
+    }
+
+    window.addEventListener('foundersprime:access-updated', syncAccess)
+    return () => window.removeEventListener('foundersprime:access-updated', syncAccess)
+  }, [])
 
   const planBadge = plan !== 'free' ? PLAN_BADGES[plan] : null
 
@@ -177,54 +148,6 @@ export default function Header() {
   const dropdownItemClasses =
     'group/item relative flex items-center gap-3 px-4 py-3 text-[11.5px] font-mono font-bold uppercase tracking-[0.04em] text-gray-300 hover:bg-white/[0.04] hover:text-accent-yellow border-b border-white/[0.06] last:border-0 transition-all'
 
-  const mobileNavSections = [
-    {
-      id: 'deals',
-      label: 'Deals',
-      href: '/deals',
-      icon: 'local_offer',
-      children: [
-        { label: 'All deals', href: '/deals', icon: 'grid_view', colorClass: 'text-accent-yellow' },
-        { label: 'Cloud Credits', href: '/deals?category=cloud-credits', icon: 'cloud', colorClass: 'text-sky-400' },
-        { label: 'SaaS & Tools', href: '/deals?category=saas-discounts', icon: 'apps', colorClass: 'text-purple-400' },
-        { label: 'Ad Credits', href: '/deals?category=ad-credits', icon: 'campaign', colorClass: 'text-pink-400' },
-      ],
-    },
-    {
-      id: 'programs',
-      label: 'Programs',
-      href: '/programs',
-      icon: 'rocket_launch',
-      children: [
-        { label: 'All Programs', href: '/programs', icon: 'grid_view', colorClass: 'text-accent-yellow' },
-        { label: 'Accelerators', href: '/programs?type=accelerators', icon: 'rocket_launch', colorClass: 'text-orange-400' },
-        { label: 'Incubators', href: '/programs?type=incubators', icon: 'lightbulb', colorClass: 'text-violet-400' },
-        { label: 'Grants', href: '/programs?type=grants', icon: 'payments', colorClass: 'text-sky-400' },
-      ],
-    },
-    {
-      id: 'studentbenefits',
-      label: 'Students',
-      href: '/student-benefits',
-      icon: 'school',
-      children: [
-        { label: 'Credits & Savings', href: '/student-benefits?type=credits-savings', icon: 'savings', colorClass: 'text-sky-400' },
-        { label: 'Campus Edge', href: '/student-benefits?type=free-access', icon: 'workspace_premium', colorClass: 'text-violet-400' },
-        { label: 'Funding & Opportunities', href: '/student-benefits?type=funding', icon: 'monetization_on', colorClass: 'text-orange-400' },
-      ],
-    },
-    {
-      id: 'resources',
-      label: 'Resources',
-      href: '/resources',
-      icon: 'folder_open',
-      children: [
-        { label: 'Startup Ideas', href: '/ideas', icon: 'emoji_objects', colorClass: 'text-accent-yellow' },
-        { label: 'Founder Vault', href: '/resources', icon: 'lock', colorClass: 'text-violet-400' },
-        { label: 'Contact', href: '/contact', icon: 'mail', colorClass: 'text-gray-400' },
-      ],
-    },
-  ]
 
   return (
     <>
@@ -477,7 +400,8 @@ export default function Header() {
                   </span>
                   {planBadge && (
                     <span
-                      className={`${planBadge.className} inline-flex h-4 items-center rounded px-1.5 text-[8px] font-black uppercase tracking-wide leading-none`}
+                      className={`${planBadge.className} inline-flex h-4 items-center rounded-md border border-white/10 px-1.5 text-[8px] font-black uppercase tracking-[0.08em] leading-none`}
+                      style={planBadge.style}
                     >
                       {planBadge.label}
                     </span>
@@ -507,7 +431,7 @@ export default function Header() {
                       <span className="material-symbols-outlined text-base text-accent-yellow">credit_card</span>
                       Billing
                     </Link>
-                    <button
+                    <button type="button"
                       onClick={() => signOut()}
                       className="w-full flex items-center gap-2.5 px-4 py-3 text-[12px] font-mono font-black uppercase tracking-tight text-red-400 hover:bg-red-500/10 hover:text-red-300 transition-colors"
                     >
@@ -610,215 +534,20 @@ export default function Header() {
       `}</style>
     </header>
 
-      {/* ─── Mobile Drawer ─── */}
-      <AnimatePresence>
-        {mobileMenuOpen && (
-          <>
-            {/* Solid dim — no blur (blur samples yellow hero CTAs and causes glow glitch) */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.18 }}
-              className="fixed inset-0 bg-black/80 z-40 xl:hidden"
-              onClick={() => setMobileMenuOpen(false)}
-              aria-hidden
-            />
-            {/* Solid drawer — fully opaque so page glow never bleeds through */}
-            <motion.div
-              id="mobile-nav-drawer"
-              initial={{ x: '100%' }}
-              animate={{ x: 0 }}
-              exit={{ x: '100%' }}
-              transition={{ type: 'spring', damping: 30, stiffness: 280 }}
-              className="fixed top-0 right-0 bottom-0 w-[min(86vw,320px)] bg-[#050505] border-l border-white/10 z-50 xl:hidden flex flex-col shadow-[-12px_0_40px_rgba(0,0,0,0.65)] pt-[env(safe-area-inset-top,0px)] pb-[env(safe-area-inset-bottom,0px)]"
-              role="dialog"
-              aria-modal="true"
-              aria-label="Site navigation"
-            >
-              {/* Drawer Header */}
-              <div className="flex items-center justify-between px-4 h-14 border-b border-white/10 flex-shrink-0 bg-[#050505]">
-                <span className="font-mono font-black text-xs tracking-widest uppercase text-white">
-                  Menu
-                </span>
-                <button
-                  type="button"
-                  className="text-gray-400 rounded-xl bg-white/5 transition-colors h-10 w-10 min-h-[40px] min-w-[40px] flex items-center justify-center"
-                  onClick={() => setMobileMenuOpen(false)}
-                  aria-label="Close menu"
-                >
-                  <span className="material-symbols-outlined !text-[20px]">close</span>
-                </button>
-              </div>
-
-              {/* Drawer Content */}
-              <div className="flex-1 overflow-y-auto overscroll-contain px-3.5 py-4 bg-[#050505]">
-                <div className="flex flex-col gap-2">
-                  {mobileNavSections.map((section) => {
-                    const isOpen = expandedSection === section.id
-                    return (
-                    <div
-                      key={section.id}
-                      className={`border rounded-xl overflow-hidden bg-[#0c0c0c] ${
-                        isOpen ? 'border-white/15' : 'border-white/10'
-                      }`}
-                    >
-                      <button
-                        type="button"
-                        onClick={() => toggleSection(section.id)}
-                        className="w-full flex items-center justify-between min-h-[48px] px-3.5 py-3 text-left font-mono font-bold uppercase text-[11px] text-gray-200 bg-[#0c0c0c]"
-                      >
-                        <div className="flex items-center gap-2.5">
-                          <span className="material-symbols-outlined text-accent-yellow !text-base">{section.icon}</span>
-                          {section.label}
-                        </div>
-                        {section.children && (
-                          <span
-                            className="material-symbols-outlined transition-transform duration-200 !text-base text-gray-400"
-                            style={{ transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)' }}
-                          >
-                            expand_more
-                          </span>
-                        )}
-                      </button>
-                      
-                      <AnimatePresence initial={false}>
-                        {isOpen && section.children && (
-                          <motion.div
-                            initial={{ height: 0, opacity: 0 }}
-                            animate={{ height: 'auto', opacity: 1 }}
-                            exit={{ height: 0, opacity: 0 }}
-                            transition={{ duration: 0.2, ease: 'easeOut' }}
-                            className="overflow-hidden bg-[#080808]"
-                          >
-                            <div className="px-3 pb-3 pt-1 flex flex-col gap-0.5">
-                              {section.children.map((child) => {
-                                const active = navIsExact(pathname, search, child.href)
-                                return (
-                                <Link
-                                  key={child.href}
-                                  href={child.href}
-                                  onClick={() => {
-                                    setMobileMenuOpen(false)
-                                    setExpandedSection(null)
-                                  }}
-                                  aria-current={active ? 'page' : undefined}
-                                  className={`mobile-nav-item flex items-center gap-2.5 min-h-[44px] px-2.5 py-2.5 rounded-lg text-[11px] font-mono font-bold uppercase ${
-                                    active
-                                      ? 'text-accent-yellow bg-white/[0.06]'
-                                      : 'text-gray-400'
-                                  }`}
-                                >
-                                  <span className={`material-symbols-outlined text-sm ${child.colorClass || 'text-gray-500'}`}>{child.icon}</span>
-                                  {child.label}
-                                </Link>
-                                )
-                              })}
-                            </div>
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
-                    </div>
-                    )
-                  })}
-
-                  {/* Flash Deals standalone */}
-                  <Link
-                    href="/flash-deals"
-                    onClick={() => {
-                      setMobileMenuOpen(false)
-                      setExpandedSection(null)
-                    }}
-                    aria-current={pathname.startsWith('/flash-deals') ? 'page' : undefined}
-                    className={`mobile-nav-item flex items-center justify-between min-h-[48px] px-3.5 py-3 rounded-xl font-mono font-bold uppercase text-[11px] border ${
-                      pathname.startsWith('/flash-deals')
-                        ? 'text-white border-white/20 bg-[#0c0c0c]'
-                        : 'text-gray-200 border-white/10 bg-[#0c0c0c]'
-                    }`}
-                  >
-                    <div className="flex items-center gap-2.5">
-                      <span className="material-symbols-outlined text-accent-yellow !text-base">bolt</span>
-                      Flash Deals
-                    </div>
-                    <span className="bg-accent-yellow text-black text-[8px] px-1.5 py-0.5 rounded-sm font-black tracking-wider leading-none">NEW</span>
-                  </Link>
-
-                  {/* Pricing standalone */}
-                  <Link
-                    href="/pricing"
-                    onClick={() => {
-                      setMobileMenuOpen(false)
-                      setExpandedSection(null)
-                    }}
-                    aria-current={pathname.startsWith('/pricing') ? 'page' : undefined}
-                    className="mobile-nav-item flex items-center justify-between min-h-[48px] px-3.5 py-3 rounded-xl font-mono font-bold uppercase text-[11px] text-white border border-white/15 bg-[#0c0c0c] mt-1 mb-2"
-                  >
-                    <div className="flex items-center gap-2.5">
-                      <span className="material-symbols-outlined text-accent-yellow !text-base">sell</span>
-                      Pricing
-                    </div>
-                  </Link>
-
-                  {/* Auth Actions (Moved up to fill blank space) */}
-                  {user ? (
-                    <div className="flex flex-col gap-2 mt-2 pt-4 border-t border-white/10">
-                      <div className="flex items-center gap-2.5 p-2 bg-white/5 rounded-xl border border-white/10">
-                        <span className="material-symbols-outlined text-accent-yellow">account_circle</span>
-                        <div className="flex flex-col min-w-0">
-                          <span className="text-[11px] font-mono font-bold truncate text-white">
-                            {user.user_metadata?.full_name?.split(' ')[0] || user.email?.split('@')[0]}
-                          </span>
-                          {planBadge && (
-                            <span className={`text-[8px] font-bold uppercase mt-0.5 ${planBadge.className === 'bg-accent-yellow text-black' ? 'text-accent-yellow' : 'text-sky-400'}`}>
-                              {planBadge.label}
-                            </span>
-                          )}
-                        </div>
-                      </div>
-                      <div className="grid grid-cols-2 gap-2">
-                        <Link
-                          href="/dashboard"
-                          onClick={() => {
-                            setMobileMenuOpen(false)
-                            setExpandedSection(null)
-                          }}
-                          className="flex items-center justify-center gap-2 p-2 rounded-lg bg-accent-yellow text-black font-mono font-bold text-[10px] uppercase !min-h-0"
-                        >
-                          Dashboard
-                        </Link>
-                        <button
-                          type="button"
-                          onClick={() => {
-                            signOut()
-                            setMobileMenuOpen(false)
-                            setExpandedSection(null)
-                          }}
-                          className="flex items-center justify-center gap-2 p-2 rounded-lg border border-white/10 text-red-400 font-mono font-bold text-[10px] uppercase bg-transparent !min-h-0"
-                        >
-                          Sign Out
-                        </button>
-                      </div>
-                    </div>
-                  ) : (
-                    <div className="mt-2 pt-4 border-t border-white/10">
-                      <Link
-                        href="/login"
-                        onClick={() => {
-                          setMobileMenuOpen(false)
-                          setExpandedSection(null)
-                        }}
-                        className="flex items-center justify-center h-10 w-full rounded-xl border border-white/15 bg-[#0c0c0c] text-accent-yellow font-mono font-bold text-[11px] uppercase tracking-wider !min-h-0"
-                      >
-                        Log In
-                      </Link>
-                    </div>
-                  )}
-                </div>
-              </div>
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
+      <HeaderMobileDrawer
+        open={mobileMenuOpen}
+        onClose={() => {
+          setMobileMenuOpen(false)
+          setExpandedSection(null)
+        }}
+        pathname={pathname}
+        search={search}
+        user={user}
+        planBadge={planBadge}
+        expandedSection={expandedSection}
+        setExpandedSection={setExpandedSection}
+        signOut={signOut}
+      />
 
     </>
   )

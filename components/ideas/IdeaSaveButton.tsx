@@ -1,13 +1,7 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useRef, useState } from 'react'
 import { useRouter } from 'next/navigation'
-
-// Stable id for an idea. Detail pages pass an explicit id; list cards derive
-// one from the title so saving works without a dedicated slug field.
-export function ideaIdFromTitle(title: string): string {
-  return title.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 80)
-}
 
 interface Props {
   ideaId: string
@@ -19,15 +13,23 @@ export default function IdeaSaveButton({ ideaId, variant = 'icon', className = '
   const router = useRouter()
   const [saved, setSaved] = useState(false)
   const [busy, setBusy] = useState(false)
+  const statusLoadedRef = useRef(false)
 
-  useEffect(() => {
-    let active = true
-    fetch('/api/saved-ideas')
-      .then((r) => (r.ok ? r.json() : null))
-      .then((d) => { if (active && d?.success) setSaved((d.savedIdeas || []).includes(ideaId)) })
-      .catch(() => {})
-    return () => { active = false }
-  }, [ideaId])
+  /** Load save status on first interaction — avoids fetch-in-effect races. */
+  const ensureStatus = async (): Promise<boolean> => {
+    if (statusLoadedRef.current) return saved
+    try {
+      const r = await fetch('/api/saved-ideas')
+      const d = r.ok ? await r.json() : null
+      const isSaved = Boolean(d?.success && (d.savedIdeas || []).includes(ideaId))
+      setSaved(isSaved)
+      statusLoadedRef.current = true
+      return isSaved
+    } catch {
+      statusLoadedRef.current = true
+      return saved
+    }
+  }
 
   const toggle = async (e: React.MouseEvent) => {
     e.preventDefault()
@@ -35,7 +37,8 @@ export default function IdeaSaveButton({ ideaId, variant = 'icon', className = '
     if (busy) return
     setBusy(true)
     try {
-      const res = saved
+      const currentlySaved = await ensureStatus()
+      const res = currentlySaved
         ? await fetch(`/api/saved-ideas?ideaId=${encodeURIComponent(ideaId)}`, { method: 'DELETE' })
         : await fetch('/api/saved-ideas', {
             method: 'POST',
@@ -44,7 +47,7 @@ export default function IdeaSaveButton({ ideaId, variant = 'icon', className = '
           })
       if (res.status === 401) { router.push(`/login?redirect=${encodeURIComponent(window.location.pathname)}`); return }
       const data = await res.json().catch(() => ({}))
-      if (data?.success) setSaved(!saved)
+      if (data?.success) setSaved(!currentlySaved)
     } catch {
       // swallow — UI stays in current state
     } finally {
@@ -57,6 +60,8 @@ export default function IdeaSaveButton({ ideaId, variant = 'icon', className = '
       <button
         type="button"
         onClick={toggle}
+        onMouseEnter={() => { void ensureStatus() }}
+        onFocus={() => { void ensureStatus() }}
         disabled={busy}
         aria-pressed={saved}
         className={className || 'w-full py-3 bg-primary hover:bg-black hover:text-white border-2 border-black text-black font-mono font-bold rounded-sm transition-all flex items-center justify-center gap-2 disabled:opacity-60'}
@@ -73,6 +78,8 @@ export default function IdeaSaveButton({ ideaId, variant = 'icon', className = '
     <button
       type="button"
       onClick={toggle}
+      onMouseEnter={() => { void ensureStatus() }}
+      onFocus={() => { void ensureStatus() }}
       disabled={busy}
       aria-pressed={saved}
       aria-label={saved ? 'Remove saved idea' : 'Save idea'}

@@ -56,51 +56,55 @@ interface UserProfileContentProps {
   user: User
 }
 
+const getActivityIcon = (type: string) => {
+  switch (type) {
+    case 'comment': return MessageSquare
+    case 'discussion': return MessageSquare
+    case 'deal': return CheckCircle
+    default: return MessageSquare
+  }
+}
+
+const getActivityColor = (type: string) => {
+  switch (type) {
+    case 'comment': return 'bg-blue-50 border-blue-500 text-blue-600'
+    case 'discussion': return 'bg-green-50 border-green-500 text-green-600'
+    case 'deal': return 'bg-yellow-50 border-yellow-500 text-yellow-600'
+    default: return 'bg-gray-50 border-gray-500 text-gray-600'
+  }
+}
+
+const getStatusIcon = (status: string) => {
+  switch (status) {
+    case 'Approved': return CheckCircle
+    case 'Pending': return Clock
+    case 'Rejected': return XCircle
+    default: return Clock
+  }
+}
+
+const getStatusColor = (status: string) => {
+  switch (status) {
+    case 'Approved': return 'text-green-600 bg-green-50 border-green-500'
+    case 'Pending': return 'text-yellow-600 bg-yellow-50 border-yellow-500'
+    case 'Rejected': return 'text-red-600 bg-red-50 border-red-500'
+    default: return 'text-gray-600 bg-gray-50 border-gray-500'
+  }
+}
+
 export default function UserProfileContent({ user }: UserProfileContentProps) {
   const [activeTab, setActiveTab] = useState<'activity' | 'discussions' | 'deals'>('activity')
 
-  const getActivityIcon = (type: string) => {
-    switch (type) {
-      case 'comment': return MessageSquare
-      case 'discussion': return MessageSquare
-      case 'deal': return CheckCircle
-      default: return MessageSquare
-    }
-  }
 
-  const getActivityColor = (type: string) => {
-    switch (type) {
-      case 'comment': return 'bg-blue-50 border-blue-500 text-blue-600'
-      case 'discussion': return 'bg-green-50 border-green-500 text-green-600'
-      case 'deal': return 'bg-yellow-50 border-yellow-500 text-yellow-600'
-      default: return 'bg-gray-50 border-gray-500 text-gray-600'
-    }
-  }
 
-  const getStatusIcon = (status: string) => {
-    switch (status) {
-      case 'Approved': return CheckCircle
-      case 'Pending': return Clock
-      case 'Rejected': return XCircle
-      default: return Clock
-    }
-  }
 
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case 'Approved': return 'text-green-600 bg-green-50 border-green-500'
-      case 'Pending': return 'text-yellow-600 bg-yellow-50 border-yellow-500'
-      case 'Rejected': return 'text-red-600 bg-red-50 border-red-500'
-      default: return 'text-gray-600 bg-gray-50 border-gray-500'
-    }
-  }
 
   return (
     <div className="space-y-6">
       {/* Tab Navigation */}
       <div className="bg-white border-3 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] p-6">
         <div className="flex flex-wrap gap-2">
-          <button
+          <button type="button"
             onClick={() => setActiveTab('activity')}
             className={`px-4 py-2 font-bold border-3 border-black shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] transition-all ${activeTab === 'activity'
                 ? 'bg-[#13b6ec] text-white'
@@ -109,7 +113,7 @@ export default function UserProfileContent({ user }: UserProfileContentProps) {
           >
             Recent Activity
           </button>
-          <button
+          <button type="button"
             onClick={() => setActiveTab('discussions')}
             className={`px-4 py-2 font-bold border-3 border-black shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] transition-all ${activeTab === 'discussions'
                 ? 'bg-[#13b6ec] text-white'
@@ -118,7 +122,7 @@ export default function UserProfileContent({ user }: UserProfileContentProps) {
           >
             Top Discussions
           </button>
-          <button
+          <button type="button"
             onClick={() => setActiveTab('deals')}
             className={`px-4 py-2 font-bold border-3 border-black shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] transition-all ${activeTab === 'deals'
                 ? 'bg-[#13b6ec] text-white'
@@ -141,7 +145,7 @@ export default function UserProfileContent({ user }: UserProfileContentProps) {
             {user.recentActivity.map((activity, index) => {
               const IconComponent = getActivityIcon(activity.type)
               return (
-                <div key={index} className="flex items-start gap-4 pb-6 border-b border-gray-200 last:border-b-0 last:pb-0">
+                <div key={activity.title} className="flex items-start gap-4 pb-6 border-b border-gray-200 last:border-b-0 last:pb-0">
                   <div className={`p-2 border-2 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] flex-shrink-0 ${getActivityColor(activity.type)}`}>
                     <IconComponent className="w-5 h-5" />
                   </div>
@@ -171,7 +175,7 @@ export default function UserProfileContent({ user }: UserProfileContentProps) {
           </div>
 
           <div className="mt-6 text-center">
-            <button className="bg-gray-200 hover:bg-gray-100 text-black font-bold py-3 px-6 border-3 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all duration-200">
+            <button type="button" className="bg-gray-200 hover:bg-gray-100 text-black font-bold py-3 px-6 border-3 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all duration-200">
               Load More Activity
             </button>
           </div>
@@ -187,7 +191,7 @@ export default function UserProfileContent({ user }: UserProfileContentProps) {
 
           <div className="space-y-4">
             {user.topDiscussions.map((discussion, index) => (
-              <div key={index} className="bg-gray-50 border-3 border-gray-300 p-4 shadow-[3px_3px_0px_0px_rgba(107,114,128,1)] hover:shadow-[5px_5px_0px_0px_rgba(107,114,128,1)] transition-all">
+              <div key={discussion.title} className="bg-gray-50 border-3 border-gray-300 p-4 shadow-[3px_3px_0px_0px_rgba(107,114,128,1)] hover:shadow-[5px_5px_0px_0px_rgba(107,114,128,1)] transition-all">
                 <div className="flex items-start justify-between mb-3">
                   <Link
                     href={discussion.link}
@@ -231,10 +235,10 @@ export default function UserProfileContent({ user }: UserProfileContentProps) {
           </h3>
 
           <div className="space-y-4">
-            {user.dealActivity.map((deal, index) => {
+            {user.dealActivity.map((deal) => {
               const StatusIcon = getStatusIcon(deal.status)
               return (
-                <div key={index} className="bg-gray-50 border-3 border-gray-300 p-4 shadow-[3px_3px_0px_0px_rgba(107,114,128,1)]">
+                <div key={deal.deal || deal.link} className="bg-gray-50 border-3 border-gray-300 p-4 shadow-[3px_3px_0px_0px_rgba(107,114,128,1)]">
                   <div className="flex items-start justify-between mb-3">
                     <div className="flex-1">
                       <div className="flex items-center gap-3 mb-2">

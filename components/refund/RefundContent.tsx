@@ -169,7 +169,7 @@ export default function RefundContent() {
             <p className="text-xs text-gray-600 dark:text-gray-400 mb-3 font-sans">
               Need to download an invoice or manage your card?
             </p>
-            <button className="bg-gradient-to-r from-[#FFD700] to-[#FDB931] hover:from-[#FDB931] hover:to-[#FFD700] text-black shadow-[0_0_15px_rgba(255,215,0,0.25)] hover:shadow-[0_0_25px_rgba(255,215,0,0.4)] border border-[#FFD700]/40 font-bold py-2 px-4 rounded-lg transition-all duration-200 text-xs font-mono">
+            <button type="button" className="bg-gradient-to-r from-[#FFD700] to-[#FDB931] hover:from-[#FDB931] hover:to-[#FFD700] text-black shadow-[0_0_15px_rgba(255,215,0,0.25)] hover:shadow-[0_0_25px_rgba(255,215,0,0.4)] border border-[#FFD700]/40 font-bold py-2 px-4 rounded-lg transition-all duration-200 text-xs font-mono">
               Go to Billing Portal
             </button>
           </div>

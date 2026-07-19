@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useRef, useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { m, AnimatePresence } from 'framer-motion'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 
@@ -63,7 +63,7 @@ export default function SubmitDealPage() {
     const featuredAnchor = featuredPlan === 'weekly' ? '$99' : '$299'
     const featuredDuration = featuredPlan === 'weekly' ? '7 days' : '30 days'
 
-    const formLoadedAt = useRef<number>(Date.now())
+    const formLoadedAt = useRef(0)
     useEffect(() => {
         formLoadedAt.current = Date.now()
     }, [])
@@ -178,7 +178,7 @@ export default function SubmitDealPage() {
                     </div>
 
                     {submissionStatus === 'success' ? (
-                        <motion.div
+                        <m.div
                             initial={{ opacity: 0, y: 24, scale: 0.96 }}
                             animate={{ opacity: 1, y: 0, scale: 1 }}
                             transition={{ type: 'spring', stiffness: 220, damping: 22 }}
@@ -186,53 +186,52 @@ export default function SubmitDealPage() {
                         >
                             {/* Particles background */}
                             <div className="pointer-events-none absolute inset-0 flex items-start justify-center">
-                                {[...Array(8)].map((_, i) => {
-                                    const angle = (i / 8) * Math.PI * 2
-                                    return (
-                                        <motion.span
-                                            key={i}
+                                {Array.from({ length: 8 }, (_, i) => ({ angle: (i / 8) * Math.PI * 2, i })).map(
+                                    ({ angle, i }) => (
+                                        <m.span
+                                            key={`burst-${Math.round(angle * 1000)}`}
                                             className="absolute top-[64px] md:top-[80px] w-2 h-2 bg-yellow-400 rounded-full"
-                                            initial={{ opacity: 0, x: 0, y: 0, scale: 0 }}
+                                            initial={{ opacity: 0, x: 0, y: 0, scale: 0.95 }}
                                             animate={{
                                                 opacity: [0, 1, 0],
                                                 x: Math.cos(angle) * 110,
                                                 y: Math.sin(angle) * 110,
-                                                scale: [0, 1.2, 0.4],
+                                                scale: [0.95, 1.2, 0.4],
                                             }}
                                             transition={{ duration: 1.2, delay: 0.2 + i * 0.03, ease: 'easeOut' }}
                                         />
                                     )
-                                })}
+                                )}
                             </div>
 
-                            <motion.div
-                                initial={{ scale: 0, rotate: -25 }}
+                            <m.div
+                                initial={{ scale: 0.95, rotate: -25 }}
                                 animate={{ scale: 1, rotate: 0 }}
                                 transition={{ type: 'spring', stiffness: 260, damping: 14, delay: 0.1 }}
                                 className="relative inline-flex items-center justify-center w-16 h-16 md:w-20 md:h-20 bg-green-500/10 border border-green-500/20 text-green-400 rounded-full mb-6"
                             >
                                 <span className="material-symbols-outlined text-4xl md:text-5xl">check_circle</span>
-                            </motion.div>
+                            </m.div>
 
-                            <motion.h2
+                            <m.h2
                                 initial={{ opacity: 0, y: 10 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ delay: 0.3 }}
                                 className="font-heading text-2xl md:text-3xl font-bold mb-2 uppercase tracking-tight text-gray-900 dark:text-white"
                             >
                                 Submission Received!
-                            </motion.h2>
-                            <motion.p
+                            </m.h2>
+                            <m.p
                                 initial={{ opacity: 0, y: 10 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ delay: 0.4 }}
                                 className="font-sans text-xs md:text-sm text-gray-600 dark:text-gray-400 mb-8 max-w-md mx-auto leading-relaxed"
                             >
                                 Your deal request has been logged. Here is what you can expect next from our vetting process.
-                            </motion.p>
+                            </m.p>
 
                             {/* Timeline style details */}
-                            <motion.ol
+                            <m.ol
                                 initial="hidden"
                                 animate="show"
                                 variants={{
@@ -254,7 +253,7 @@ export default function SubmitDealPage() {
                                         { n: '3', t: 'Live Listing', d: 'Your deal goes live and is listed chronologically in our active directory.' },
                                     ]
                                 ).map((step) => (
-                                    <motion.li
+                                    <m.li
                                         key={step.n}
                                         variants={{
                                             hidden: { opacity: 0, x: -16 },
@@ -269,11 +268,11 @@ export default function SubmitDealPage() {
                                             <p className="font-mono text-xs md:text-sm font-bold uppercase tracking-wider text-gray-900 dark:text-white">{step.t}</p>
                                             <p className="font-sans text-[11px] md:text-xs text-gray-600 dark:text-gray-400 mt-1 leading-relaxed">{step.d}</p>
                                         </div>
-                                    </motion.li>
+                                    </m.li>
                                 ))}
-                            </motion.ol>
+                            </m.ol>
 
-                            <motion.div
+                            <m.div
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
                                 transition={{ delay: 1 }}
@@ -281,9 +280,9 @@ export default function SubmitDealPage() {
                             >
                                 <span className="material-symbols-outlined !text-[16px] shrink-0">info</span>
                                 Updates and status details will be sent to your provided submitter email address.
-                            </motion.div>
+                            </m.div>
 
-                            <motion.button
+                            <m.button
                                 initial={{ opacity: 0, y: 10 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ delay: 1.1 }}
@@ -293,8 +292,8 @@ export default function SubmitDealPage() {
                                 className="px-6 py-3 bg-yellow-400 hover:bg-yellow-500 text-black font-mono text-xs font-bold uppercase rounded-md transition-colors shadow-lg shadow-yellow-400/10"
                             >
                                 Submit Another Deal
-                            </motion.button>
-                        </motion.div>
+                            </m.button>
+                        </m.div>
                     ) : (
                         <form className="relative bg-white dark:bg-[#0d0d0d] border border-gray-200 dark:border-zinc-800 rounded-2xl p-6 md:p-10 space-y-8 md:space-y-10 shadow-xl dark:shadow-2xl" onSubmit={handleSubmit}>
 
@@ -310,17 +309,17 @@ export default function SubmitDealPage() {
 
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                                     <div>
-                                        <label className="block font-mono text-[10px] font-bold text-gray-600 dark:text-gray-400 mb-2 uppercase tracking-wider">Company Name *</label>
+                                        <label className="block font-mono text-[10px] font-bold text-gray-600 dark:text-gray-400 mb-2 uppercase tracking-wider" htmlFor="fld-company_name">Company Name *</label>
                                         <div className="relative">
                                             <span className="material-symbols-outlined !text-[16px] text-gray-500 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none">business</span>
-                                            <input name="company_name" type="text" placeholder="e.g. Acme Corp" className="w-full pl-10 pr-4 py-3 text-xs bg-gray-50 dark:bg-[#131316] border border-gray-200 dark:border-zinc-800 rounded-lg text-gray-900 dark:text-white font-sans focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition-all placeholder:text-gray-400 dark:placeholder:text-gray-600" required />
+                                            <input name="company_name" type="text" placeholder="e.g. Acme Corp" className="w-full pl-10 pr-4 py-3 text-xs bg-gray-50 dark:bg-[#131316] border border-gray-200 dark:border-zinc-800 rounded-lg text-gray-900 dark:text-white font-sans focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition-all placeholder:text-gray-400 dark:placeholder:text-gray-600" required id="fld-company_name" />
                                         </div>
                                     </div>
                                     <div>
-                                        <label className="block font-mono text-[10px] font-bold text-gray-600 dark:text-gray-400 mb-2 uppercase tracking-wider">Website URL *</label>
+                                        <label className="block font-mono text-[10px] font-bold text-gray-600 dark:text-gray-400 mb-2 uppercase tracking-wider" htmlFor="fld-website_url">Website URL *</label>
                                         <div className="relative">
                                             <span className="material-symbols-outlined !text-[16px] text-gray-500 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none">link</span>
-                                            <input name="website_url" type="url" placeholder="https://acme.com" className="w-full pl-10 pr-4 py-3 text-xs bg-gray-50 dark:bg-[#131316] border border-gray-200 dark:border-zinc-800 rounded-lg text-gray-900 dark:text-white font-sans focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition-all placeholder:text-gray-400 dark:placeholder:text-gray-600" required />
+                                            <input name="website_url" type="url" placeholder="https://acme.com" className="w-full pl-10 pr-4 py-3 text-xs bg-gray-50 dark:bg-[#131316] border border-gray-200 dark:border-zinc-800 rounded-lg text-gray-900 dark:text-white font-sans focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition-all placeholder:text-gray-400 dark:placeholder:text-gray-600" required id="fld-website_url" />
                                         </div>
                                     </div>
                                 </div>
@@ -333,7 +332,7 @@ export default function SubmitDealPage() {
                                 </div>
 
                                 <div>
-                                    <label className="block font-mono text-[10px] font-bold text-gray-600 dark:text-gray-400 mb-3 uppercase tracking-wider">Logo Upload *</label>
+                                    <span className="block font-mono text-[10px] font-bold text-gray-600 dark:text-gray-400 mb-3 uppercase tracking-wider">Logo Upload *</span>
 
                                     <div className="flex gap-2.5 mb-3">
                                         <button
@@ -380,6 +379,7 @@ export default function SubmitDealPage() {
                                                     ref={fileInputRef}
                                                     type="file"
                                                     accept="image/*"
+                                                    aria-label="Upload logo file"
                                                     className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
                                                     onChange={handleFileChange}
                                                     required={logoMethod === 'upload'}
@@ -415,16 +415,16 @@ export default function SubmitDealPage() {
                                 </div>
 
                                 <div>
-                                    <label className="block font-mono text-[10px] font-bold text-gray-600 dark:text-gray-400 mb-2 uppercase tracking-wider">Benefit Description *</label>
+                                    <label className="block font-mono text-[10px] font-bold text-gray-600 dark:text-gray-400 mb-2 uppercase tracking-wider" htmlFor="fld-benefit_description">Benefit Description *</label>
                                     <div className="relative">
                                         <span className="material-symbols-outlined !text-[16px] text-gray-500 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none">featured_play_list</span>
-                                        <input name="benefit_description" type="text" placeholder="e.g. $5,000 in Credits for 12 months" className="w-full pl-10 pr-4 py-3 text-xs bg-gray-50 dark:bg-[#131316] border border-gray-200 dark:border-zinc-800 rounded-lg text-gray-900 dark:text-white font-sans focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition-all placeholder:text-gray-400 dark:placeholder:text-gray-600" required />
+                                        <input name="benefit_description" type="text" placeholder="e.g. $5,000 in Credits for 12 months" className="w-full pl-10 pr-4 py-3 text-xs bg-gray-50 dark:bg-[#131316] border border-gray-200 dark:border-zinc-800 rounded-lg text-gray-900 dark:text-white font-sans focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition-all placeholder:text-gray-400 dark:placeholder:text-gray-600" required id="fld-benefit_description" />
                                     </div>
                                 </div>
 
                                 {/* Category Selection Grid Cards */}
                                 <div>
-                                    <label className="block font-mono text-[10px] font-bold text-gray-600 dark:text-gray-400 mb-3 uppercase tracking-wider">Category *</label>
+                                    <span className="block font-mono text-[10px] font-bold text-gray-600 dark:text-gray-400 mb-3 uppercase tracking-wider">Category *</span>
                                     <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
                                         {CATEGORIES.map((cat) => {
                                             const isSelected = selectedCategory === cat.value
@@ -455,23 +455,23 @@ export default function SubmitDealPage() {
 
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                                     <div>
-                                        <label className="block font-mono text-[10px] font-bold text-gray-600 dark:text-gray-400 mb-2 uppercase tracking-wider">Deal Value ($ USD) *</label>
+                                        <label className="block font-mono text-[10px] font-bold text-gray-600 dark:text-gray-400 mb-2 uppercase tracking-wider" htmlFor="fld-deal_value">Deal Value ($ USD) *</label>
                                         <div className="relative">
                                             <span className="material-symbols-outlined !text-[16px] text-gray-500 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none">payments</span>
-                                            <input name="deal_value" type="text" placeholder="e.g. 5000" className="w-full pl-10 pr-4 py-3 text-xs bg-gray-50 dark:bg-[#131316] border border-gray-200 dark:border-zinc-800 rounded-lg text-gray-900 dark:text-white font-sans focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition-all placeholder:text-gray-400 dark:placeholder:text-gray-600" required />
+                                            <input name="deal_value" type="text" placeholder="e.g. 5000" className="w-full pl-10 pr-4 py-3 text-xs bg-gray-50 dark:bg-[#131316] border border-gray-200 dark:border-zinc-800 rounded-lg text-gray-900 dark:text-white font-sans focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition-all placeholder:text-gray-400 dark:placeholder:text-gray-600" required id="fld-deal_value" />
                                         </div>
                                     </div>
                                     <div>
-                                        <label className="block font-mono text-[10px] font-bold text-gray-600 dark:text-gray-400 mb-2 uppercase tracking-wider">Your Email (Status Updates)</label>
+                                        <label className="block font-mono text-[10px] font-bold text-gray-600 dark:text-gray-400 mb-2 uppercase tracking-wider" htmlFor="fld-submitter_email">Your Email (Status Updates)</label>
                                         <div className="relative">
                                             <span className="material-symbols-outlined !text-[16px] text-gray-500 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none">mail</span>
-                                            <input name="submitter_email" type="email" placeholder="hello@yourcompany.com" className="w-full pl-10 pr-4 py-3 text-xs bg-gray-50 dark:bg-[#131316] border border-gray-200 dark:border-zinc-800 rounded-lg text-gray-900 dark:text-white font-sans focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition-all placeholder:text-gray-400 dark:placeholder:text-gray-600" />
+                                            <input name="submitter_email" type="email" placeholder="hello@yourcompany.com" className="w-full pl-10 pr-4 py-3 text-xs bg-gray-50 dark:bg-[#131316] border border-gray-200 dark:border-zinc-800 rounded-lg text-gray-900 dark:text-white font-sans focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition-all placeholder:text-gray-400 dark:placeholder:text-gray-600" id="fld-submitter_email" />
                                         </div>
                                     </div>
                                 </div>
 
                                 <div>
-                                    <label className="block font-mono text-[10px] font-bold text-gray-600 dark:text-gray-400 mb-3 uppercase tracking-wider">Redemption Method *</label>
+                                    <span className="block font-mono text-[10px] font-bold text-gray-600 dark:text-gray-400 mb-3 uppercase tracking-wider">Redemption Method *</span>
                                     <div className="flex gap-2.5 mb-3">
                                         <button
                                             type="button"
@@ -492,7 +492,7 @@ export default function SubmitDealPage() {
                                 </div>
 
                                 <div>
-                                    <label className="block font-mono text-[10px] font-bold text-gray-600 dark:text-gray-400 mb-2 uppercase tracking-wider">
+                                    <label className="block font-mono text-[10px] font-bold text-gray-600 dark:text-gray-400 mb-2 uppercase tracking-wider" htmlFor="fld-redemption_link">
                                         {redemptionMethod === 'link' ? 'Redemption Link / URL *' : 'Coupon Code / Details *'}
                                     </label>
                                     <div className="relative">
@@ -504,8 +504,7 @@ export default function SubmitDealPage() {
                                             type="text"
                                             placeholder={redemptionMethod === 'link' ? "https://yourcompany.com/foundersprime" : "PRIME2026"}
                                             className="w-full pl-10 pr-4 py-3 text-xs bg-gray-50 dark:bg-[#131316] border border-gray-200 dark:border-zinc-800 rounded-lg text-gray-900 dark:text-white font-sans focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition-all placeholder:text-gray-400 dark:placeholder:text-gray-600"
-                                            required
-                                        />
+                                            required id="fld-redemption_link" />
                                     </div>
                                 </div>
                             </div>
@@ -536,8 +535,17 @@ export default function SubmitDealPage() {
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     {/* Standard Tier Card */}
                                     <div
+                                        role="button"
+                                        tabIndex={0}
+                                        aria-pressed={tier === 'standard'}
                                         onClick={() => setTier('standard')}
-                                        className={`relative cursor-pointer border rounded-xl p-5 md:p-6 transition-all flex flex-col justify-between group ${
+                                        onKeyDown={(e) => {
+                                            if (e.key === 'Enter' || e.key === ' ') {
+                                                e.preventDefault()
+                                                setTier('standard')
+                                            }
+                                        }}
+                                        className={`relative cursor-pointer border rounded-xl p-5 md:p-6 transition-all flex flex-col justify-between group text-left ${
                                             tier === 'standard'
                                                 ? 'bg-gray-50 dark:bg-[#111114] border-yellow-400 dark:border-zinc-500 shadow-xl shadow-black/[0.02] dark:shadow-white/[0.02]'
                                                 : 'bg-white dark:bg-[#0d0d0f] border-gray-200 dark:border-zinc-800/80 hover:border-gray-300 dark:hover:border-zinc-700/80'
@@ -564,8 +572,17 @@ export default function SubmitDealPage() {
 
                                     {/* Featured Tier Card */}
                                     <div
+                                        role="button"
+                                        tabIndex={0}
+                                        aria-pressed={tier === 'featured'}
                                         onClick={() => setTier('featured')}
-                                        className={`relative cursor-pointer border rounded-xl p-5 md:p-6 transition-all flex flex-col justify-between group overflow-hidden ${
+                                        onKeyDown={(e) => {
+                                            if (e.key === 'Enter' || e.key === ' ') {
+                                                e.preventDefault()
+                                                setTier('featured')
+                                            }
+                                        }}
+                                        className={`relative cursor-pointer border rounded-xl p-5 md:p-6 transition-all flex flex-col justify-between group overflow-hidden text-left ${
                                             tier === 'featured'
                                                 ? 'bg-yellow-50/20 dark:bg-[#161614] border-yellow-400 shadow-lg shadow-yellow-400/[0.03]'
                                                 : 'bg-white dark:bg-[#0d0d0f] border-gray-200 dark:border-zinc-800/80 hover:border-gray-300 dark:hover:border-zinc-700/80'
@@ -650,7 +667,7 @@ export default function SubmitDealPage() {
 
                             {/* Section 5: Security Check */}
                             <div className="border-t border-gray-200 dark:border-zinc-800 pt-6">
-                                <label className="block font-mono text-[10px] font-bold text-gray-600 dark:text-gray-400 mb-2.5 uppercase tracking-wider">Verification Security Check *</label>
+                                <span className="block font-mono text-[10px] font-bold text-gray-600 dark:text-gray-400 mb-2.5 uppercase tracking-wider">Verification Security Check *</span>
                                 <div className="bg-gray-50 dark:bg-[#111114] border border-gray-200 dark:border-zinc-800 p-4 rounded-xl flex items-center justify-between gap-4">
                                     <span className="font-mono text-sm font-bold text-gray-900 dark:text-white tracking-wider">
                                         ENTER THE SUM OF: <span className="text-yellow-400">{challenge.num1}</span> + <span className="text-yellow-400">{challenge.num2}</span>

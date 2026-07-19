@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from 'react'
 import Link from 'next/link'
-import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
+import { m, AnimatePresence, useReducedMotion } from 'framer-motion'
 import { flashDeals, FLASH_CATEGORIES } from '@/data/flash-deals'
 import FlashDealCard from './FlashDealCard'
 import { StaggerGrid, StaggerGridItem } from '@/components/ui/premium-motion'
@@ -58,94 +58,96 @@ export default function FlashDealsBrowse() {
   return (
     <section
       id="flash-deals-grid"
-      className="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-14 scroll-mt-20"
+      className="relative max-w-[1280px] mx-auto px-3 sm:px-6 lg:px-8 py-6 sm:py-10 md:py-14 scroll-mt-16"
     >
       {/* Hot strip */}
       {showHotStrip && (
-        <div className="mb-10">
-          <div className="flex items-center justify-between gap-3 mb-4">
-            <div className="flex items-center gap-2.5">
-              <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-red-500/15 border border-red-500/25 text-red-500">
-                <span className="material-symbols-outlined !text-[18px]">local_fire_department</span>
+        <div className="mb-6 sm:mb-10">
+          <div className="flex items-center justify-between gap-2 mb-2.5 sm:mb-4">
+            <div className="flex items-center gap-2">
+              <span className="flex h-7 w-7 sm:h-8 sm:w-8 items-center justify-center rounded-lg sm:rounded-xl bg-red-500/15 border border-red-500/25 text-red-500">
+                <span className="material-symbols-outlined !text-[16px] sm:!text-[18px]">
+                  local_fire_department
+                </span>
               </span>
               <div>
-                <h2 className="font-mono font-black text-[12px] md:text-[13px] uppercase tracking-[0.16em] text-gray-900 dark:text-white">
+                <h2 className="font-mono font-black text-[11px] sm:text-[13px] uppercase tracking-[0.14em] text-gray-900 dark:text-white">
                   Hot right now
                 </h2>
-                <p className="text-[11px] text-gray-500 dark:text-zinc-500 mt-0.5">
-                  Highest demand — claim before they vanish
+                <p className="text-[10px] sm:text-[11px] text-gray-500 dark:text-zinc-500 mt-0.5">
+                  Claim before they vanish
                 </p>
               </div>
             </div>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3 md:gap-4">
             {hotDeals.map((deal, i) => (
-              <motion.div
+              <m.div
                 key={deal.id}
                 initial={reduce ? false : { opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.05 }}
               >
                 <FlashDealCard deal={deal} featured />
-              </motion.div>
+              </m.div>
             ))}
           </div>
         </div>
       )}
 
       {/* Heading + search */}
-      <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4 mb-5">
-        <div className="flex items-start gap-3 min-w-0">
+      <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-2.5 sm:gap-4 mb-3 sm:mb-5">
+        <div className="flex items-start gap-2 sm:gap-3 min-w-0">
           <span
             className="hidden sm:block w-[3px] h-10 bg-accent-yellow rounded-full mt-0.5"
             aria-hidden
             style={{ boxShadow: '0 0 10px rgba(255,215,0,0.55)' }}
           />
           <div>
-            <h2 className="font-mono font-black text-[13px] md:text-[14px] uppercase tracking-[0.16em] text-gray-900 dark:text-white">
-              Browse all flash deals
+            <h2 className="font-mono font-black text-[11px] sm:text-[14px] uppercase tracking-[0.14em] text-gray-900 dark:text-white">
+              Browse flash deals
             </h2>
-            <p className="text-[12px] text-gray-500 dark:text-zinc-500 mt-1">
-              Filter by category or search — timers refresh every second
+            <p className="text-[11px] sm:text-[12px] text-gray-500 dark:text-zinc-500 mt-0.5 sm:mt-1">
+              Filter or search — timers live
             </p>
           </div>
         </div>
-        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 w-full lg:w-auto">
-          <label className="relative flex-1 lg:w-64">
-            <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 !text-[18px] text-gray-400">
+        <div className="flex flex-row items-center gap-1.5 sm:gap-2 w-full lg:w-auto">
+          <label className="relative flex-1 lg:w-64 min-w-0">
+            <span className="material-symbols-outlined absolute left-2.5 sm:left-3 top-1/2 -translate-y-1/2 !text-[16px] sm:!text-[18px] text-gray-400">
               search
             </span>
             <input
               type="search"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="Search deals…"
-              className="w-full min-h-[44px] pl-10 pr-9 rounded-xl border border-black/10 dark:border-white/12 bg-white dark:bg-white/[0.04] text-[13px] text-gray-900 dark:text-white placeholder:text-gray-400 outline-none focus:border-accent-yellow/50 focus:ring-1 focus:ring-accent-yellow/20 transition-colors"
+              placeholder="Search…"
+              className="w-full min-h-[40px] sm:min-h-[44px] pl-9 sm:pl-10 pr-8 sm:pr-9 rounded-xl border border-black/10 dark:border-white/12 bg-white dark:bg-white/[0.04] text-[12px] sm:text-[13px] text-gray-900 dark:text-white placeholder:text-gray-400 outline-none focus:border-accent-yellow/50 focus:ring-1 focus:ring-accent-yellow/20 transition-colors"
             />
             {query && (
               <button
                 type="button"
                 onClick={() => setQuery('')}
-                className="absolute right-2.5 top-1/2 -translate-y-1/2 p-1 text-gray-400 hover:text-gray-700 dark:hover:text-white"
+                className="absolute right-2 top-1/2 -translate-y-1/2 p-1 text-gray-400 hover:text-gray-700 dark:hover:text-white"
                 aria-label="Clear search"
               >
-                <span className="material-symbols-outlined !text-[16px]">close</span>
+                <span className="material-symbols-outlined !text-[15px]">close</span>
               </button>
             )}
           </label>
           <Link
             href="/deals"
-            className="shrink-0 inline-flex items-center justify-center gap-1 min-h-[44px] px-4 rounded-xl border border-black/10 dark:border-white/12 font-mono font-bold text-[10px] uppercase tracking-[0.1em] text-gray-600 dark:text-gray-400 hover:text-accent-yellow hover:border-accent-yellow/40 transition-colors"
+            className="shrink-0 inline-flex items-center justify-center gap-1 min-h-[40px] sm:min-h-[44px] px-2.5 sm:px-4 rounded-xl border border-black/10 dark:border-white/12 font-mono font-bold text-[9px] sm:text-[10px] uppercase tracking-[0.08em] text-gray-600 dark:text-gray-400 hover:text-accent-yellow hover:border-accent-yellow/40 transition-colors"
           >
-            Full catalog
-            <span className="material-symbols-outlined !text-[14px]">arrow_forward</span>
+            Catalog
+            <span className="material-symbols-outlined !text-[13px]">arrow_forward</span>
           </Link>
         </div>
       </div>
 
-      {/* Category pills */}
+      {/* Category pills — horizontal scroll on mobile */}
       <div
-        className="flex flex-wrap gap-2 mb-3"
+        className="flex gap-1.5 sm:gap-2 mb-2.5 sm:mb-3 overflow-x-auto scrollbar-none -mx-0.5 px-0.5 pb-0.5"
         role="tablist"
         aria-label="Flash deal categories"
       >
@@ -160,17 +162,17 @@ export default function FlashDealsBrowse() {
               role="tab"
               aria-selected={isActive}
               onClick={() => setActive(cat.key)}
-              className={`inline-flex items-center gap-1.5 font-mono font-bold text-[10px] uppercase tracking-[0.08em] px-3.5 py-2 min-h-[40px] rounded-xl border transition-all duration-150 ${
+              className={`inline-flex shrink-0 items-center gap-1 sm:gap-1.5 font-mono font-bold text-[9px] sm:text-[10px] uppercase tracking-[0.08em] px-2.5 sm:px-3.5 py-1.5 sm:py-2 min-h-[34px] sm:min-h-[40px] rounded-lg sm:rounded-xl border transition-all duration-150 ${
                 isActive
                   ? 'bg-accent-yellow text-black border-accent-yellow shadow-[0_0_16px_rgba(255,215,0,0.28)]'
                   : 'bg-gray-50 dark:bg-white/[0.03] border-gray-200 dark:border-white/10 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:border-gray-300 dark:hover:border-white/30'
               }`}
             >
-              <span className="material-symbols-outlined !text-[14px]">{icon}</span>
+              <span className="material-symbols-outlined !text-[13px] sm:!text-[14px]">{icon}</span>
               {cat.label}
               {count > 0 && (
                 <span
-                  className={`text-[9px] font-black px-1.5 py-0.5 rounded-md leading-none ${
+                  className={`text-[8px] sm:text-[9px] font-black px-1 sm:px-1.5 py-0.5 rounded-md leading-none ${
                     isActive
                       ? 'bg-black/15 text-black'
                       : 'bg-black/5 dark:bg-white/10 text-gray-500'
@@ -185,9 +187,8 @@ export default function FlashDealsBrowse() {
       </div>
 
       {/* Result meta */}
-      <div className="flex items-center justify-between gap-3 mb-6">
-        <p className="font-mono text-[10px] uppercase tracking-[0.12em] text-gray-500">
-          Showing{' '}
+      <div className="flex items-center justify-between gap-2 mb-3.5 sm:mb-6">
+        <p className="font-mono text-[9px] sm:text-[10px] uppercase tracking-[0.12em] text-gray-500">
           <span className="text-gray-900 dark:text-white font-black">{visible.length}</span>
           {query ? ' match' : ' deal'}
           {visible.length === 1 ? '' : 's'}
@@ -208,20 +209,20 @@ export default function FlashDealsBrowse() {
               setQuery('')
               setActive('all')
             }}
-            className="font-mono text-[10px] font-bold uppercase tracking-wide text-gray-500 hover:text-accent-yellow transition-colors"
+            className="font-mono text-[9px] sm:text-[10px] font-bold uppercase tracking-wide text-gray-500 hover:text-accent-yellow transition-colors"
           >
-            Reset filters
+            Reset
           </button>
         )}
       </div>
 
-      {/* Grid */}
+      {/* Grid — 2 col mobile */}
       <AnimatePresence mode="wait">
         {visible.length > 0 ? (
           <StaggerGrid
             key={`${active}-${query}`}
             animKey={`${active}-${query}`}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4"
+            className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3 md:gap-4"
           >
             {visible.map((deal) => (
               <StaggerGridItem key={deal.id}>
@@ -230,7 +231,7 @@ export default function FlashDealsBrowse() {
             ))}
           </StaggerGrid>
         ) : (
-          <motion.div
+          <m.div
             key="empty"
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
@@ -261,7 +262,7 @@ export default function FlashDealsBrowse() {
             >
               Show all deals
             </button>
-          </motion.div>
+          </m.div>
         )}
       </AnimatePresence>
     </section>

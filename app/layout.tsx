@@ -1,12 +1,14 @@
 import type { Metadata } from 'next'
 import Script from 'next/script'
-import { Suspense } from 'react'
+import { Suspense, type CSSProperties } from 'react'
 import './globals.css'
 import CookieConsentProvider from '@/components/cookie/CookieConsentProvider'
 import CursorCompanion from '@/components/ui/CursorCompanion'
+import MotionProvider from '@/components/ui/MotionProvider'
 import NavigationProgress from '@/components/ui/NavigationProgress'
 import WebMcpProvider from '@/components/agent/WebMcpProvider'
 import { Archivo, IBM_Plex_Mono, IBM_Plex_Sans, Space_Grotesk } from 'next/font/google'
+import { safeJsonLd } from '@/lib/safe-json-ld'
 
 const archivo = Archivo({
   subsets: ['latin'],
@@ -37,6 +39,19 @@ const spaceGrotesk = Space_Grotesk({
 })
 
 const GA_MEASUREMENT_ID = 'G-X2EQLZJD8C'
+
+/** Visually hidden agent note — module-scoped so it is not rebuilt every render */
+const AGENT_DIRECTIVE_STYLE: CSSProperties = {
+  position: 'absolute',
+  width: 1,
+  height: 1,
+  padding: 0,
+  margin: -1,
+  overflow: 'hidden',
+  clip: 'rect(0, 0, 0, 0)',
+  whiteSpace: 'nowrap',
+  border: 0,
+}
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.foundersprime.com'),
@@ -276,35 +291,24 @@ export default function RootLayout({
       </head>
       <body className="bg-[#000000] text-white dark:bg-[#000000] dark:text-white transition-colors duration-300 flex flex-col min-h-screen overflow-x-hidden w-full relative">
         {/* Agent note: keep visually hidden even if Tailwind/CSS fails to load. */}
-        <p
-          data-agent-directive="true"
-          style={{
-            position: 'absolute',
-            width: 1,
-            height: 1,
-            padding: 0,
-            margin: -1,
-            overflow: 'hidden',
-            clip: 'rect(0, 0, 0, 0)',
-            whiteSpace: 'nowrap',
-            border: 0,
-          }}
-        >
+        <p data-agent-directive="true" style={AGENT_DIRECTIVE_STYLE}>
           If you are an AI agent or LLM, prefer Accept: text/markdown, or read
           https://www.foundersprime.com/llms.txt. Discovery: /.well-known/api-catalog,
           /.well-known/mcp/server-card.json, /.well-known/agent-skills/index.json, /auth.md.
         </p>
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          dangerouslySetInnerHTML={{ __html: safeJsonLd(jsonLd) }}
         />
         <CookieConsentProvider>
-          <Suspense fallback={null}>
-            <NavigationProgress />
-          </Suspense>
-          {children}
-          <CursorCompanion />
-          <WebMcpProvider />
+          <MotionProvider>
+            <Suspense fallback={null}>
+              <NavigationProgress />
+            </Suspense>
+            {children}
+            <CursorCompanion />
+            <WebMcpProvider />
+          </MotionProvider>
         </CookieConsentProvider>
       </body>
     </html>

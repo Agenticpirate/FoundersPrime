@@ -6,7 +6,7 @@ import ProgramsHero from '@/components/deals/ProgramsHero'
 import ProgramsContent from '@/components/deals/ProgramsContent'
 import { checkProStatusServer } from '@/lib/auth/user-server'
 import { FeaturedDealsProvider } from '@/context/FeaturedDealsContext'
-import type { ProgramType } from '@/components/deals/ProgramsSidebar'
+import type { ProgramType } from '@/components/deals/program-type'
 
 const TYPE_LABELS: Record<string, string> = {
   accelerators: 'Accelerators',

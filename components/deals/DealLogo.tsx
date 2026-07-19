@@ -24,8 +24,15 @@ function usable(url?: string): string | undefined {
 
 /**
  * Deal / student / program detail logo —
- * fixed plate size so brand marks always sit on the same origin.
+ * fixed plate size with padding so brand marks never crop.
  */
+const sizeClasses = {
+  sm: 'w-12 h-12 p-2.5',
+  md: 'w-20 h-20 p-3.5',
+  lg: 'w-24 h-24 p-4',
+}
+
+
 export default function DealLogo({
   logoUrl,
   brandIcon,
@@ -33,11 +40,6 @@ export default function DealLogo({
   website,
   size = 'md',
 }: DealLogoProps) {
-  const sizeClasses = {
-    sm: 'w-12 h-12',
-    md: 'w-20 h-20',
-    lg: 'w-24 h-24',
-  }
   const brandSize = size === 'sm' ? 'md' : 'lg'
 
   const domain = resolveBrandDomain({
@@ -49,16 +51,16 @@ export default function DealLogo({
 
   return (
     <div
-      className={`relative ${sizeClasses[size]} bg-white border border-black/10 dark:border-white/10 rounded-xl flex-shrink-0 shadow-[0_1px_0_rgba(255,255,255,0.5)_inset,0_4px_16px_rgba(0,0,0,0.08)] overflow-hidden`}
+      className={`relative ${sizeClasses[size]} bg-white border border-black/10 dark:border-white/10 rounded-xl flex-shrink-0 shadow-[0_1px_0_rgba(255,255,255,0.5)_inset,0_4px_16px_rgba(0,0,0,0.08)] flex items-center justify-center overflow-hidden box-border min-w-0 min-h-0`}
     >
-      <div className="absolute inset-0 flex items-center justify-center p-2">
+      <div className="relative w-full h-full min-w-0 min-h-0 flex items-center justify-center overflow-hidden">
         <BrandLogo
           name={provider}
           domain={domain}
           logo={logo}
           size={brandSize}
           eager
-          className="!w-full !h-full !max-w-full !max-h-full !rounded-none !border-0 !p-0 !bg-transparent !shadow-none !inline-flex"
+          className="!w-full !h-full !min-w-0 !min-h-0 !max-w-full !max-h-full !rounded-none !border-0 !p-0 !bg-transparent !shadow-none !flex !overflow-hidden"
         />
       </div>
     </div>

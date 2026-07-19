@@ -140,7 +140,7 @@ export default function UserProfileSidebar({ user }: UserProfileSidebarProps) {
 
         <div className="space-y-3">
           {user.badges.slice(0, 3).map((badge, index) => (
-            <div key={index} className="bg-gray-50 border-2 border-gray-300 p-3 shadow-[2px_2px_0px_0px_rgba(107,114,128,1)]">
+            <div key={badge.name} className="bg-gray-50 border-2 border-gray-300 p-3 shadow-[2px_2px_0px_0px_rgba(107,114,128,1)]">
               <div className="flex items-center gap-2 mb-1">
                 <span className="text-lg">{badge.icon}</span>
                 <span className="text-sm font-bold text-gray-800">{badge.name}</span>
@@ -151,7 +151,7 @@ export default function UserProfileSidebar({ user }: UserProfileSidebarProps) {
         </div>
 
         <div className="mt-4">
-          <button className="w-full bg-gray-200 hover:bg-gray-100 text-black font-bold py-2 px-4 text-sm border-3 border-black shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] hover:shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] transition-all duration-200">
+          <button type="button" className="w-full bg-gray-200 hover:bg-gray-100 text-black font-bold py-2 px-4 text-sm border-3 border-black shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] hover:shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] transition-all duration-200">
             View All Badges
           </button>
         </div>
@@ -191,11 +191,11 @@ export default function UserProfileSidebar({ user }: UserProfileSidebarProps) {
         </h3>
 
         <div className="space-y-3">
-          <button className="w-full bg-[#13b6ec] hover:bg-[#0ea5db] text-white font-bold py-3 px-4 border-3 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all duration-200">
+          <button type="button" className="w-full bg-[#13b6ec] hover:bg-[#0ea5db] text-white font-bold py-3 px-4 border-3 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all duration-200">
             Send Message
           </button>
 
-          <button className="w-full bg-gray-200 hover:bg-gray-100 text-black font-bold py-3 px-4 border-3 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all duration-200">
+          <button type="button" className="w-full bg-gray-200 hover:bg-gray-100 text-black font-bold py-3 px-4 border-3 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all duration-200">
             Follow Updates
           </button>
         </div>

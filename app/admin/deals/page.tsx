@@ -5,6 +5,8 @@ import { useSearchParams } from 'next/navigation'
 import { Deal, dealCategories } from '@/lib/deals-database'
 import SmartDealImporter from '@/components/admin/SmartDealImporter'
 import AdminHeader from '@/components/admin/AdminHeader'
+import AdminDealModal from '@/components/admin/AdminDealModal'
+import AdminDealsCatalog from '@/components/admin/AdminDealsCatalog'
 
 export default function AdminDealsPage() {
   const searchParams = useSearchParams()
@@ -183,8 +185,8 @@ export default function AdminDealsPage() {
           <p className="text-zinc-500 font-mono text-[10px]">{stats.total} deals in database</p>
         </div>
         <div className="flex gap-2">
-          <button onClick={() => setShowAddModal(true)} className="bg-cyan-600 text-white px-3 py-1.5 border border-white/15 font-bold hover:bg-cyan-600  transition-all font-mono uppercase text-[10px]">+ Add</button>
-          <button onClick={() => setShowImportModal(true)} className="bg-purple-500 text-white px-3 py-1.5 border border-white/15 font-bold hover:bg-purple-600  transition-all font-mono uppercase text-[10px]">Import</button>
+          <button type="button" onClick={() => setShowAddModal(true)} className="bg-cyan-600 text-white px-3 py-1.5 border border-white/15 font-bold hover:bg-cyan-600  transition-all font-mono uppercase text-[10px]">+ Add</button>
+          <button type="button" onClick={() => setShowImportModal(true)} className="bg-purple-500 text-white px-3 py-1.5 border border-white/15 font-bold hover:bg-purple-600  transition-all font-mono uppercase text-[10px]">Import</button>
           <div className="inline-flex gap-1">
             <a href="/api/admin/export?format=txt" download className="bg-green-500 text-white px-2.5 py-1.5 border border-white/15 font-bold hover:bg-green-600  transition-all font-mono uppercase text-[10px] flex items-center gap-1">
               Notepad
@@ -192,7 +194,7 @@ export default function AdminDealsPage() {
             <a href="/api/admin/export?format=csv" download className="bg-emerald-600 text-white px-2.5 py-1.5 border border-white/15 font-bold hover:bg-emerald-700  transition-all font-mono uppercase text-[10px] flex items-center gap-1">
               Excel
             </a>
-            <button onClick={exportAsPdf} className="bg-red-500 text-white px-2.5 py-1.5 border border-white/15 font-bold hover:bg-red-600  transition-all font-mono uppercase text-[10px] flex items-center gap-1">
+            <button type="button" onClick={exportAsPdf} className="bg-red-500 text-white px-2.5 py-1.5 border border-white/15 font-bold hover:bg-red-600  transition-all font-mono uppercase text-[10px] flex items-center gap-1">
               PDF
             </button>
           </div>
@@ -208,7 +210,24 @@ export default function AdminDealsPage() {
           { label: 'Categories', value: stats.categories, color: 'text-purple-500' },
           { label: 'Duplicates', value: duplicateDeals.length, color: 'text-orange-500', clickable: true },
         ].map(s => (
-          <div key={s.label} className={`bg-[#0d0e12] border border-white/10 p-2  ${s.clickable ? 'cursor-pointer hover:bg-white/5' : ''}`} onClick={s.clickable ? () => setShowDuplicatesOnly(!showDuplicatesOnly) : undefined}>
+          <div
+            key={s.label}
+            role={s.clickable ? 'button' : undefined}
+            tabIndex={s.clickable ? 0 : undefined}
+            aria-label={s.clickable ? 'Toggle duplicates filter' : undefined}
+            className={`bg-[#0d0e12] border border-white/10 p-2  ${s.clickable ? 'cursor-pointer hover:bg-white/5' : ''}`}
+            onClick={s.clickable ? () => setShowDuplicatesOnly(!showDuplicatesOnly) : undefined}
+            onKeyDown={
+              s.clickable
+                ? (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault()
+                      setShowDuplicatesOnly(!showDuplicatesOnly)
+                    }
+                  }
+                : undefined
+            }
+          >
             <div className={`text-xl md:text-2xl font-black ${s.color}`}>{s.value}</div>
             <div className="text-zinc-500 font-bold text-[9px] uppercase">{s.label}</div>
           </div>
@@ -218,23 +237,23 @@ export default function AdminDealsPage() {
       {/* Filters */}
       <div className="bg-[#0d0e12] border border-white/10 p-2 ">
         <div className="flex flex-wrap gap-2 items-center">
-          <input type="text" placeholder="Search..." value={searchQuery} onChange={e => setSearchQuery(e.target.value)} className="px-3 py-1.5 border border-white/15 bg-[#121318] text-white w-full sm:w-48 font-mono text-xs rounded-lg" />
-          <select value={selectedCategory} onChange={e => setSelectedCategory(e.target.value)} className="px-2 py-1.5 border border-white/15 bg-[#121318] text-white font-mono text-xs rounded-lg">
+          <input type="text" aria-label="Search deals" placeholder="Search..." value={searchQuery} onChange={e => setSearchQuery(e.target.value)} className="px-3 py-1.5 border border-white/15 bg-[#121318] text-white w-full sm:w-48 font-mono text-xs rounded-lg" />
+          <select aria-label="Filter by category" value={selectedCategory} onChange={e => setSelectedCategory(e.target.value)} className="px-2 py-1.5 border border-white/15 bg-[#121318] text-white font-mono text-xs rounded-lg">
             <option value="all">All ({deals.length})</option>
             {dealCategories.map(c => <option key={c.id} value={c.id}>{c.name} ({deals.filter(d => d.category === c.id).length})</option>)}
           </select>
-          <select value={`${sortBy}-${sortOrder}`} onChange={e => { const [f, o] = e.target.value.split('-'); setSortBy(f as any); setSortOrder(o as any) }} className="px-2 py-1.5 border border-white/15 bg-[#121318] text-white font-mono text-xs rounded-lg">
+          <select aria-label="Sort deals" value={`${sortBy}-${sortOrder}`} onChange={e => { const [f, o] = e.target.value.split('-'); setSortBy(f as any); setSortOrder(o as any) }} className="px-2 py-1.5 border border-white/15 bg-[#121318] text-white font-mono text-xs rounded-lg">
             <option value="createdAt-desc">Newest</option>
             <option value="createdAt-asc">Oldest</option>
             <option value="title-asc">A-Z</option>
             <option value="provider-asc">Provider</option>
           </select>
-          <button onClick={() => setShowDuplicatesOnly(!showDuplicatesOnly)} className={`px-2 py-1.5 border border-white/15 font-bold text-[10px] font-mono rounded-lg ${showDuplicatesOnly ? 'bg-orange-500 text-white' : 'bg-[#121318] text-zinc-300'}`}>
+          <button type="button" onClick={() => setShowDuplicatesOnly(!showDuplicatesOnly)} className={`px-2 py-1.5 border border-white/15 font-bold text-[10px] font-mono rounded-lg ${showDuplicatesOnly ? 'bg-orange-500 text-white' : 'bg-[#121318] text-zinc-300'}`}>
             {showDuplicatesOnly ? 'Dupes ✓' : 'Dupes'}
           </button>
           <div className="ml-auto flex gap-1">
-            <button onClick={() => setViewMode('table')} className={`p-1.5 border border-white/15 text-xs rounded-lg ${viewMode === 'table' ? 'bg-cyan-600 text-white' : 'bg-[#121318] text-zinc-300'}`}>☰</button>
-            <button onClick={() => setViewMode('grid')} className={`p-1.5 border border-white/15 text-xs rounded-lg ${viewMode === 'grid' ? 'bg-cyan-600 text-white' : 'bg-[#121318] text-zinc-300'}`}>⊞</button>
+            <button type="button" aria-label="Table view" onClick={() => setViewMode('table')} className={`p-1.5 border border-white/15 text-xs rounded-lg ${viewMode === 'table' ? 'bg-cyan-600 text-white' : 'bg-[#121318] text-zinc-300'}`}>☰</button>
+            <button type="button" aria-label="Grid view" onClick={() => setViewMode('grid')} className={`p-1.5 border border-white/15 text-xs rounded-lg ${viewMode === 'grid' ? 'bg-cyan-600 text-white' : 'bg-[#121318] text-zinc-300'}`}>⊞</button>
           </div>
         </div>
       </div>
@@ -244,134 +263,29 @@ export default function AdminDealsPage() {
         <div className="bg-yellow-100 border border-white/15 p-2 ">
           <div className="flex items-center gap-3 text-xs font-mono">
             <span className="font-bold">{selectedDeals.size} selected</span>
-            <button onClick={bulkDelete} className="bg-red-500 text-white px-3 py-1 border border-white/15 font-bold hover:bg-red-600 text-[10px]">Delete</button>
-            <button onClick={() => setSelectedDeals(new Set())} className="bg-zinc-700 text-white px-3 py-1 border border-white/15 font-bold text-[10px]">Clear</button>
+            <button type="button" onClick={bulkDelete} className="bg-red-500 text-white px-3 py-1 border border-white/15 font-bold hover:bg-red-600 text-[10px]">Delete</button>
+            <button type="button" onClick={() => setSelectedDeals(new Set())} className="bg-zinc-700 text-white px-3 py-1 border border-white/15 font-bold text-[10px]">Clear</button>
           </div>
         </div>
       )}
 
-      {/* Deals Display */}
-      <div className="bg-[#0d0e12] border border-white/10  overflow-hidden">
-        {loading ? (
-          <div className="p-12 text-center">
-            <div className="text-4xl animate-spin inline-block">⚡</div>
-            <p className="mt-4 font-bold">Loading deals...</p>
-          </div>
-        ) : filtered.length === 0 ? (
-          <div className="p-12 text-center">
-            <div className="text-6xl mb-4">📭</div>
-            <p className="text-xl font-bold mb-2">No deals found</p>
-            <p className="text-zinc-500 mb-4">Try adjusting your filters or import some deals</p>
-            <button
-              onClick={() => setShowImportModal(true)}
-              className="bg-purple-500 text-white px-6 py-3 border border-white/15 font-bold hover:bg-purple-600"
-            >
-              📥 Import Deals
-            </button>
-          </div>
-        ) : viewMode === 'table' ? (
-          <div className="overflow-x-auto">
-            <table className="w-full font-mono text-[11px] md:text-xs">
-              <thead className="bg-[#121318] border-b border-white/10">
-                <tr>
-                  <th className="p-2 text-left w-8">
-                    <input type="checkbox" checked={selectedDeals.size === filtered.length && filtered.length > 0} onChange={toggleSelectAll} className="w-4 h-4 cursor-pointer accent-cyan-500" />
-                  </th>
-                  <th className="p-2 text-left font-bold uppercase">Deal</th>
-                  <th className="p-2 text-left font-bold uppercase hidden sm:table-cell">Category</th>
-                  <th className="p-2 text-left font-bold uppercase">Value</th>
-                  <th className="p-2 text-left font-bold uppercase hidden md:table-cell">Status</th>
-                  <th className="p-2 text-left font-bold uppercase">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {filtered.slice(0, 100).map(deal => {
-                  const isDuplicate = duplicateIds.has(deal.id)
-                  return (
-                    <tr key={deal.id} className={`border-b border-white/5 hover:bg-white/[0.03] ${isDuplicate ? 'bg-orange-500/10' : ''}`}>
-                      <td className="p-2">
-                        <input type="checkbox" checked={selectedDeals.has(deal.id)} onChange={() => toggleSelect(deal.id)} className="w-4 h-4 cursor-pointer accent-cyan-500" />
-                      </td>
-                      <td className="p-2">
-                        <div className="font-bold truncate max-w-[200px]">{deal.title}</div>
-                        <div className="text-[10px] text-zinc-500">{deal.provider}</div>
-                      </td>
-                      <td className="p-2 hidden sm:table-cell">
-                        <span className="bg-gray-100 px-1.5 py-0.5 text-[9px] font-bold border border-white/15">
-                          {dealCategories.find(c => c.id === deal.category)?.name || deal.category}
-                        </span>
-                      </td>
-                      <td className="p-2 font-bold text-green-600">{deal.value}</td>
-                      <td className="p-2 hidden md:table-cell">
-                        <select value={deal.status || 'active'} onChange={e => updateStatus(deal.id, e.target.value)} className={`px-1.5 py-0.5 border border-white/15 text-[9px] font-bold cursor-pointer ${deal.status === 'active' ? 'bg-emerald-500/20 text-emerald-300' : deal.status === 'expired' ? 'bg-red-500/20 text-red-300' : 'bg-amber-500/20 text-amber-200'}`}>
-                          <option value="active">Active</option>
-                          <option value="expired">Expired</option>
-                          <option value="coming-soon">Soon</option>
-                        </select>
-                      </td>
-                      <td className="p-2">
-                        <div className="flex gap-1">
-                          <button onClick={() => setEditingDeal(deal)} className="bg-blue-500 text-white px-2 py-0.5 text-[10px] font-bold border border-white/15">Edit</button>
-                          <a href={`/deals/${deal.slug}`} target="_blank" className="bg-green-500 text-white px-2 py-0.5 text-[10px] font-bold border border-white/15">View</a>
-                          <button onClick={() => deleteDeal(deal.id, deal.title)} className="bg-red-500 text-white px-2 py-0.5 text-[10px] font-bold border border-white/15">Del</button>
-                        </div>
-                      </td>
-                    </tr>
-                  )
-                })}
-              </tbody>
-            </table>
-            {filtered.length > 100 && (
-              <div className="p-4 text-center bg-[#121318] border-t border-white/10">
-                <p className="text-gray-600">Showing 100 of {filtered.length} deals</p>
-              </div>
-            )}
-          </div>
-        ) : (
-          <div className="p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {filtered.slice(0, 50).map(deal => (
-              <div key={deal.id} className="border border-white/15 p-4 hover:border-accent-yellow/30 transition-all">
-                <div className="flex items-start justify-between mb-2">
-                  <input
-                    type="checkbox"
-                    checked={selectedDeals.has(deal.id)}
-                    onChange={() => toggleSelect(deal.id)}
-                    className="w-5 h-5 cursor-pointer accent-cyan-500"
-                  />
-                  <span className={`px-2 py-1 text-xs font-bold ${deal.status === 'active' ? 'bg-emerald-500/20 text-emerald-300' :
-                    deal.status === 'expired' ? 'bg-red-500/20 text-red-300' : 'bg-amber-500/20 text-amber-200'
-                    }`}>
-                    {deal.status}
-                  </span>
-                </div>
-                <h3 className="font-bold text-lg mb-1">{deal.title}</h3>
-                <p className="text-zinc-500 text-sm mb-2">{deal.provider}</p>
-                <p className="text-green-600 font-bold mb-3">{deal.value}</p>
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => setEditingDeal(deal)}
-                    className="flex-1 bg-blue-500 text-white py-1 text-sm font-bold border border-white/15"
-                  >
-                    Edit
-                  </button>
-                  <button
-                    onClick={() => deleteDeal(deal.id, deal.title)}
-                    className="bg-red-500 text-white px-3 py-1 text-sm font-bold border border-white/15"
-                  >
-                    🗑️
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
-
-
-      </div>
+      <AdminDealsCatalog
+        loading={loading}
+        filtered={filtered}
+        viewMode={viewMode}
+        selectedDeals={selectedDeals}
+        duplicateIds={duplicateIds}
+        onToggleSelect={toggleSelect}
+        onToggleSelectAll={toggleSelectAll}
+        onEdit={setEditingDeal}
+        onDelete={deleteDeal}
+        onUpdateStatus={updateStatus}
+        onOpenImport={() => setShowImportModal(true)}
+      />
       {/* Modals */}
       {
         (showAddModal || editingDeal) && (
-          <DealModal
+          <AdminDealModal
             deal={editingDeal}
             onClose={() => { setShowAddModal(false); setEditingDeal(null) }}
             onSave={() => { setShowAddModal(false); setEditingDeal(null); loadDeals() }}
@@ -388,166 +302,5 @@ export default function AdminDealsPage() {
       }
     </div>
     </>
-  )
-}
-
-function DealModal({ deal, onClose, onSave }: { deal: Deal | null; onClose: () => void; onSave: () => void }) {
-  const [form, setForm] = useState({
-    title: deal?.title || '',
-    provider: deal?.provider || '',
-    category: deal?.category || 'saas-discounts',
-    value: deal?.value || '',
-    description: deal?.description || '',
-    applicationUrl: deal?.applicationUrl || '',
-    status: (deal?.status || 'active') as 'active' | 'expired' | 'coming-soon' | 'limited',
-    eligibility: deal?.eligibility?.join('\n') || '',
-    tags: deal?.tags?.join(', ') || ''
-  })
-  const [saving, setSaving] = useState(false)
-
-  const submit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setSaving(true)
-
-    const payload = {
-      ...form,
-      eligibility: form.eligibility.split('\n').filter(Boolean),
-      tags: form.tags.split(',').map(t => t.trim()).filter(Boolean)
-    }
-
-    const res = await fetch('/api/deals', {
-      method: deal ? 'PUT' : 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(deal ? { ...payload, id: deal.id } : payload)
-    })
-    const data = await res.json()
-    if (data.success) { onSave() }
-    else alert(data.error || 'Failed')
-    setSaving(false)
-  }
-
-  return (
-    <div className="fixed inset-0 bg-black/70 flex items-center justify-center p-4 z-[9999]">
-      <div className="bg-[#0d0e12] border border-white/10 rounded-2xl w-full max-w-2xl max-h-[90vh] overflow-auto">
-        <div className="bg-[#121318] p-4 border-b border-white/10 rounded-t-2xl">
-          <h2 className="text-xl font-black text-white">{deal ? '✏️ Edit Deal' : '➕ Add New Deal'}</h2>
-        </div>
-        <form onSubmit={submit} className="p-6 space-y-4">
-          <div>
-            <label className="font-bold block mb-1">Title *</label>
-            <input
-              required
-              value={form.title}
-              onChange={e => setForm({ ...form, title: e.target.value })}
-              className="w-full p-3 rounded-lg bg-[#121318] text-white border border-white/15"
-              placeholder="e.g., AWS Activate Credits"
-            />
-          </div>
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="font-bold block mb-1">Provider *</label>
-              <input
-                required
-                value={form.provider}
-                onChange={e => setForm({ ...form, provider: e.target.value })}
-                className="w-full p-3 rounded-lg bg-[#121318] text-white border border-white/15"
-                placeholder="e.g., Amazon Web Services"
-              />
-            </div>
-            <div>
-              <label className="font-bold block mb-1">Value *</label>
-              <input
-                required
-                value={form.value}
-                onChange={e => setForm({ ...form, value: e.target.value })}
-                className="w-full p-3 rounded-lg bg-[#121318] text-white border border-white/15"
-                placeholder="e.g., $100,000 or 50% off"
-              />
-            </div>
-          </div>
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="font-bold block mb-1">Category</label>
-              <select
-                value={form.category}
-                onChange={e => setForm({ ...form, category: e.target.value })}
-                className="w-full p-3 border border-white/15 bg-[#121318] text-white rounded-lg"
-              >
-                {dealCategories.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
-              </select>
-            </div>
-            <div>
-              <label className="font-bold block mb-1">Status</label>
-              <select
-                value={form.status}
-                onChange={e => setForm({ ...form, status: e.target.value as any })}
-                className="w-full p-3 border border-white/15 bg-[#121318] text-white rounded-lg"
-              >
-                <option value="active">Active</option>
-                <option value="expired">Expired</option>
-                <option value="coming-soon">Coming Soon</option>
-              </select>
-            </div>
-          </div>
-          <div>
-            <label className="font-bold block mb-1">Description *</label>
-            <textarea
-              required
-              rows={4}
-              value={form.description}
-              onChange={e => setForm({ ...form, description: e.target.value })}
-              className="w-full p-3 rounded-lg bg-[#121318] text-white border border-white/15"
-              placeholder="Describe the deal, what's included, and any important details..."
-            />
-          </div>
-          <div>
-            <label className="font-bold block mb-1">Application URL *</label>
-            <input
-              required
-              type="url"
-              value={form.applicationUrl}
-              onChange={e => setForm({ ...form, applicationUrl: e.target.value })}
-              className="w-full p-3 rounded-lg bg-[#121318] text-white border border-white/15"
-              placeholder="https://..."
-            />
-          </div>
-          <div>
-            <label className="font-bold block mb-1">Eligibility (one per line)</label>
-            <textarea
-              rows={3}
-              value={form.eligibility}
-              onChange={e => setForm({ ...form, eligibility: e.target.value })}
-              className="w-full p-3 rounded-lg bg-[#121318] text-white border border-white/15"
-              placeholder="Early-stage startups&#10;Less than 2 years old&#10;Under $10M funding"
-            />
-          </div>
-          <div>
-            <label className="font-bold block mb-1">Tags (comma separated)</label>
-            <input
-              value={form.tags}
-              onChange={e => setForm({ ...form, tags: e.target.value })}
-              className="w-full p-3 rounded-lg bg-[#121318] text-white border border-white/15"
-              placeholder="cloud, aws, credits, startup"
-            />
-          </div>
-          <div className="flex gap-4 pt-4 border-t border-white/10">
-            <button
-              type="button"
-              onClick={onClose}
-              className="flex-1 p-3 border border-white/15 font-bold hover:bg-white/5"
-            >
-              Cancel
-            </button>
-            <button
-              type="submit"
-              disabled={saving}
-              className="flex-1 p-3 bg-cyan-600 text-white border border-white/15 font-bold hover:bg-cyan-600 disabled:opacity-50"
-            >
-              {saving ? 'Saving...' : deal ? 'Update Deal' : 'Create Deal'}
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
   )
 }

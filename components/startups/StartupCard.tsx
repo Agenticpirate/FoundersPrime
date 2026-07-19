@@ -2,22 +2,27 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { StartupCardData } from "@/lib/startups-data";
 import { MapPin, ArrowRight, Bookmark } from "lucide-react";
 import Link from "next/link";
-import { CardHoverGlow, cardHoverClass, cardLogoHoverClass, cardTitleHoverClass } from "@/components/ui/card-hover";
+import {
+  CardHoverGlowShell,
+  cardHoverClass,
+  cardLogoHoverClass,
+  cardTitleHoverClass,
+} from "@/components/ui/card-hover";
+import { cardTitle, cardDescription } from "@/lib/card-text";
 
 interface StartupCardProps {
   company: StartupCardData;
 }
 
-// Internal component to handle founder image errors
 const FounderAvatar = ({ founder }: { founder: { name: string; avatar?: string } }) => {
   const [error, setError] = useState(false);
   return (
     <div
-      className="h-6 w-6 rounded-full ring-2 ring-[#0c0c0c] border border-white/10 bg-white/10 flex items-center justify-center overflow-hidden relative z-0 hover:z-10 transition-all"
+      className="h-5 w-5 md:h-6 md:w-6 rounded-full ring-2 ring-[#0c0c0c] border border-white/10 bg-white/10 flex items-center justify-center overflow-hidden relative z-0 hover:z-10 transition-all"
       title={founder.name}
     >
       {founder.avatar && !error ? (
@@ -30,14 +35,16 @@ const FounderAvatar = ({ founder }: { founder: { name: string; avatar?: string }
           onError={() => setError(true)}
         />
       ) : (
-        <span className="text-[9px] font-bold text-gray-400 uppercase">
-          {founder.name.charAt(0)}
-        </span>
+        <span className="text-[8px] font-bold text-gray-400 uppercase">{founder.name.charAt(0)}</span>
       )}
     </div>
   );
 };
 
+/**
+ * Mobile-compact startup card — same density as All Deals:
+ * fixed height, 2-col grid friendly, short copy, value/CTA bar.
+ */
 export default function StartupCard({ company }: StartupCardProps) {
   const getDomain = () => {
     if (!company.website) return null;
@@ -54,7 +61,7 @@ export default function StartupCard({ company }: StartupCardProps) {
     const domain = getDomain();
     if (domain) {
       chain.push(`https://www.google.com/s2/favicons?domain=${domain}&sz=128`);
-      chain.push(`https://logo.clearbit.com/${domain}`);
+      chain.push(`https://img.logo.dev/${domain}?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg&size=128&format=png`);
       chain.push(`https://icons.duckduckgo.com/ip3/${domain}.ico`);
     }
     chain.push(
@@ -76,51 +83,65 @@ export default function StartupCard({ company }: StartupCardProps) {
     setFallbackIndex((prev) => Math.min(prev + 1, fallbackChain.length - 1));
   };
 
+  const shortName = cardTitle(company.name, 28);
+  const shortLine = cardDescription(company.one_liner || "", 64);
+
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 16 }}
+    <m.div
+      initial={{ opacity: 0, y: 12 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ duration: 0.25 }}
-      className={`flex flex-col bg-[#0c0c0c] border border-white/10 rounded-xl h-full ${cardHoverClass}`}
+      transition={{ duration: 0.22 }}
+      className={`relative h-[168px] md:h-[196px] flex flex-col rounded-xl md:rounded-2xl min-w-0 border border-white/10 bg-[#0c0c0c] overflow-visible ${cardHoverClass}`}
     >
-      <CardHoverGlow />
-      {/* Header: logo + name + verified badge + bookmark */}
-      <div className="relative flex items-start justify-between gap-2 px-4 pt-4 pb-2">
-        <div className="flex items-start gap-3 min-w-0">
-          {/* Logo */}
-          <div className={`w-11 h-11 flex-shrink-0 bg-white border border-black/10 rounded-lg flex items-center justify-center overflow-hidden p-1 ${cardLogoHoverClass}`}>
+      <CardHoverGlowShell />
+
+      <div className="relative z-[1] flex flex-col flex-1 p-2.5 md:p-3.5 min-w-0">
+        {/* Logo + name + bookmark */}
+        <div
+          className="shrink-0 min-w-0 pr-7"
+          style={{
+            display: "grid",
+            gridTemplateColumns: "40px minmax(0, 1fr)",
+            columnGap: 8,
+            alignItems: "start",
+          }}
+        >
+          <div
+            className={`w-10 h-10 flex-shrink-0 bg-white border border-black/10 rounded-[10px] flex items-center justify-center overflow-hidden p-1.5 ${cardLogoHoverClass}`}
+          >
             {imgSrc ? (
               <Image
                 src={imgSrc}
                 alt={`${company.name} logo`}
-                width={44}
-                height={44}
+                width={40}
+                height={40}
                 className="w-full h-full object-contain"
                 onError={handleImageError}
               />
             ) : (
-              <span className="text-lg font-black text-gray-400">
-                {company.name.charAt(0)}
-              </span>
+              <span className="text-sm font-black text-gray-400">{company.name.charAt(0)}</span>
             )}
           </div>
-
-          {/* Name + location */}
-          <div className="min-w-0">
-            <div className="flex items-center gap-1.5">
-              <h3 className={`font-mono text-[13px] font-bold text-white leading-tight truncate ${cardTitleHoverClass}`}>
+          <div className="min-w-0 overflow-hidden pt-0.5">
+            <div className="flex items-center gap-1 min-w-0">
+              <h3
+                className={`font-bold text-[11px] md:text-[13px] text-white leading-[1.2] truncate ${cardTitleHoverClass}`}
+                title={company.name}
+              >
                 <Link href={`/startups/${company.slug}`} className="focus:outline-none">
-                  {company.name}
+                  {shortName}
                 </Link>
               </h3>
-              {/* Verified check indicator */}
-              <span className="flex items-center justify-center w-3.5 h-3.5 rounded-full bg-accent-yellow/20 text-accent-yellow border border-accent-yellow/30 flex-shrink-0" title="Verified Startup">
-                <span className="material-symbols-outlined text-[9px] font-bold">check</span>
+              <span
+                className="flex items-center justify-center w-3 h-3 rounded-full bg-accent-yellow/20 text-accent-yellow border border-accent-yellow/30 flex-shrink-0"
+                title="Verified Startup"
+              >
+                <span className="material-symbols-outlined text-[8px] font-bold">check</span>
               </span>
             </div>
             {company.all_locations && (
-              <div className="mt-1 flex items-center gap-1 text-[10px] text-gray-500 font-mono">
+              <div className="mt-0.5 flex items-center gap-0.5 text-[9px] text-gray-500 font-mono min-w-0">
                 <MapPin className="h-2.5 w-2.5 flex-shrink-0" />
                 <span className="truncate">{company.all_locations}</span>
               </div>
@@ -128,14 +149,14 @@ export default function StartupCard({ company }: StartupCardProps) {
           </div>
         </div>
 
-        {/* Bookmark action button */}
         <button
+          type="button"
           onClick={(e) => {
             e.preventDefault();
             e.stopPropagation();
             setIsBookmarked(!isBookmarked);
           }}
-          className={`flex-shrink-0 p-1.5 rounded-lg border transition-colors ${
+          className={`absolute top-2 right-2 z-10 flex-shrink-0 p-1 rounded-md border transition-colors ${
             isBookmarked
               ? "bg-accent-yellow border-accent-yellow text-black"
               : "border-white/10 text-gray-500 hover:text-white hover:bg-white/5"
@@ -144,51 +165,50 @@ export default function StartupCard({ company }: StartupCardProps) {
         >
           <Bookmark className="h-3 w-3 fill-current" />
         </button>
-      </div>
 
-      {/* Description */}
-      <div className="px-4 pb-3 flex-grow mt-1">
-        <p className="text-[12px] text-gray-400 leading-relaxed line-clamp-2 font-sans">
-          {company.one_liner}
-        </p>
-      </div>
-
-      {/* Tags */}
-      {company.tags && company.tags.length > 0 && (
-        <div className="px-4 pb-3 flex flex-wrap gap-1">
-          {company.tags.slice(0, 2).map((tag, idx) => (
-            <span
-              key={idx}
-              className="text-[9px] font-mono font-semibold uppercase tracking-wide text-gray-400 bg-white/5 px-2.5 py-0.5 rounded-full border border-white/5"
-            >
-              {tag}
-            </span>
-          ))}
-        </div>
-      )}
-
-      {/* Footer: founders + Redirect CTA */}
-      <div className="mt-auto px-4 pb-4 pt-3 border-t border-white/5 flex items-center justify-between gap-2">
-        {/* Founder avatars */}
-        <div className="flex -space-x-1.5 overflow-hidden">
-          {(company.founders_enriched || []).slice(0, 3).map((founder, i) => (
-            <FounderAvatar key={i} founder={founder} />
-          ))}
-          {(!company.founders_enriched || company.founders_enriched.length === 0) && (
-            <div className="h-6 w-6 rounded-full bg-white/5 border border-white/10 flex items-center justify-center">
-              <span className="text-[9px] font-bold text-gray-500">–</span>
-            </div>
-          )}
-        </div>
-
-        {/* View Details Redirect Button */}
-        <Link
-          href={`/startups/${company.slug}`}
-          className="w-7 h-7 flex items-center justify-center rounded-lg bg-white text-black hover:bg-accent-yellow hover:text-black transition-colors"
+        <p
+          className="mt-1.5 md:mt-2 shrink-0 text-[10px] md:text-[11px] leading-[1.3] h-[1.3rem] md:h-[2.6rem] text-gray-400 line-clamp-1 md:line-clamp-2 overflow-hidden"
+          title={company.one_liner}
         >
-          <ArrowRight className="h-3.5 w-3.5" />
-        </Link>
+          {shortLine}
+        </p>
+
+        {/* Tags — desktop only to keep mobile dense */}
+        {company.tags && company.tags.length > 0 && (
+          <div className="hidden md:flex mt-1.5 flex-wrap gap-1">
+            {company.tags.slice(0, 2).map((tag, idx) => (
+              <span
+                key={tag}
+                className="text-[8px] font-mono font-semibold uppercase tracking-wide text-gray-400 bg-white/5 px-1.5 py-0.5 rounded-full border border-white/5"
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+        )}
+
+        {/* Footer bar */}
+        <div className="mt-auto shrink-0 w-full min-w-0 pt-1.5">
+          <div className="w-full flex items-center justify-between gap-1.5 h-8 md:h-9 rounded-lg border border-white/[0.08] bg-white/[0.04] pl-2 pr-0.5 md:pr-1 min-w-0">
+            <div className="flex -space-x-1.5 overflow-hidden min-w-0">
+              {(company.founders_enriched || []).slice(0, 3).map((founder) => (
+                <FounderAvatar key={founder.name || founder.avatar} founder={founder} />
+              ))}
+              {(!company.founders_enriched || company.founders_enriched.length === 0) && (
+                <span className="text-[9px] font-mono text-gray-500 truncate">—</span>
+              )}
+            </div>
+            <Link
+              href={`/startups/${company.slug}`}
+              className="shrink-0 inline-flex h-6 md:h-7 items-center justify-center gap-0.5 md:gap-1 bg-[#000000] text-white border border-[#FFD500]/40 text-[8px] md:text-[9px] font-bold uppercase tracking-wide px-1.5 md:px-2.5 rounded-md shadow-sm group-hover:bg-[#FFD500] group-hover:text-black group-hover:border-[#FFD500] hover:bg-[#FFD500] hover:text-black hover:border-[#FFD500] transition-all duration-200 leading-none"
+            >
+              <span className="leading-none md:hidden">View</span>
+              <span className="leading-none hidden md:inline">Details</span>
+              <ArrowRight className="h-3 w-3 shrink-0" />
+            </Link>
+          </div>
+        </div>
       </div>
-    </motion.div>
+    </m.div>
   );
 }

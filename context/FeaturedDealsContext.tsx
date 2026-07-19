@@ -1,21 +1,8 @@
 'use client'
 
-import React, { createContext, useContext } from 'react'
+import React, { useMemo } from 'react'
 import type { Deal } from '@/lib/deals-database'
-
-interface FeaturedDealsContextType {
-  featuredDeals: Deal[]
-  isPro: boolean
-  isNextFounder?: boolean
-  loading: boolean
-}
-
-const FeaturedDealsContext = createContext<FeaturedDealsContextType>({
-  featuredDeals: [],
-  isPro: false,
-  isNextFounder: false,
-  loading: true,
-})
+import { FeaturedDealsContext } from '@/lib/featured-deals-context'
 
 export function FeaturedDealsProvider({
   children,
@@ -28,20 +15,19 @@ export function FeaturedDealsProvider({
   initialIsPro: boolean
   initialIsNextFounder?: boolean
 }) {
+  const value = useMemo(
+    () => ({
+      featuredDeals: initialFeaturedDeals,
+      isPro: initialIsPro,
+      isNextFounder: initialIsNextFounder,
+      loading: false,
+    }),
+    [initialFeaturedDeals, initialIsPro, initialIsNextFounder]
+  )
+
   return (
-    <FeaturedDealsContext.Provider
-      value={{
-        featuredDeals: initialFeaturedDeals,
-        isPro: initialIsPro,
-        isNextFounder: initialIsNextFounder,
-        loading: false,
-      }}
-    >
+    <FeaturedDealsContext.Provider value={value}>
       {children}
     </FeaturedDealsContext.Provider>
   )
-}
-
-export function useHydratedDeals() {
-  return useContext(FeaturedDealsContext)
 }

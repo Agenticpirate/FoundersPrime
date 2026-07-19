@@ -291,6 +291,24 @@ function extractMeta(data: any): { userId?: string | null; planFromMeta?: string
   }
 }
 
+/**
+ * Verify Dodo webhook HMAC signature before processing the body.
+ * Uses the official SDK unwrap (timing-safe signature check against WEBHOOK_SECRET).
+ * Throws if the signature is missing or invalid — callers must not trust the payload.
+ */
+function verifyWebhookSignature(rawBody: string, headers: Headers) {
+  if (!WEBHOOK_SECRET) {
+    throw new Error('DODO_PAYMENTS_WEBHOOK_SECRET is not set')
+  }
+  if (!client) {
+    throw new Error('DODO_PAYMENTS_API_KEY is not set')
+  }
+  return client.webhooks.unwrap(rawBody, {
+    headers: Object.fromEntries(headers),
+    key: WEBHOOK_SECRET,
+  })
+}
+
 export async function POST(request: Request) {
   if (!WEBHOOK_SECRET) {
     console.error('⚠️ DODO_PAYMENTS_WEBHOOK_SECRET is not set');
@@ -304,13 +322,9 @@ export async function POST(request: Request) {
 
   try {
     const rawBody = await request.text();
-    const headers = Object.fromEntries(request.headers);
 
-    // Verify signature — throws if invalid
-    const event = client.webhooks.unwrap(rawBody, {
-      headers,
-      key: WEBHOOK_SECRET,
-    });
+    // Signature verification first — reject forged webhooks before any side effects
+    const event = verifyWebhookSignature(rawBody, request.headers);
 
     const data = event.data as any;
 

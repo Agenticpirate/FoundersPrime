@@ -39,6 +39,60 @@ const TARGET_FIELDS = [
   { key: 'status', label: 'Status', required: false },
 ]
 
+const guessTargetField = (sourceField: string): string => {
+  const field = sourceField.toLowerCase().replace(/[_-]/g, ' ')
+  const mappings: Record<string, string[]> = {
+    title: ['title', 'name', 'deal', 'offer', 'deal name', 'offer name'],
+    provider: ['provider', 'company', 'vendor', 'brand', 'from', 'by', 'company name'],
+    value: ['value', 'discount', 'amount', 'price', 'savings', 'worth', 'credits', 'deal value'],
+    description: ['description', 'details', 'about', 'summary', 'info', 'content', 'body'],
+    applicationUrl: ['url', 'link', 'apply', 'website', 'application url', 'apply url', 'href'],
+    category: ['category', 'type', 'kind', 'group', 'section'],
+    eligibility: ['eligibility', 'requirements', 'who', 'eligible', 'criteria'],
+    tags: ['tags', 'keywords', 'labels'],
+    status: ['status', 'state', 'active'],
+  }
+
+  for (const [target, sources] of Object.entries(mappings)) {
+    if (sources.some(s => field.includes(s) || s.includes(field))) {
+      return target
+    }
+  }
+  return ''
+}
+
+const parseCSVLine = (line: string): string[] => {
+  const result: string[] = []
+  let current = ''
+  let inQuotes = false
+  for (const char of line) {
+    if (char === '"') inQuotes = !inQuotes
+    else if (char === ',' && !inQuotes) { result.push(current); current = '' }
+    else current += char
+  }
+  result.push(current)
+  return result.map(s => s.replace(/^"|"$/g, '').trim())
+}
+
+const detectCategory = (text: string): string => {
+  const lower = text.toLowerCase()
+  const keywords: Record<string, string[]> = {
+    'cloud-credits': ['aws', 'azure', 'gcp', 'google cloud', 'cloud credits', 'infrastructure'],
+    'ai': ['ai', 'artificial intelligence', 'machine learning', 'gpt', 'llm', 'openai'],
+    'grants': ['grant', 'funding', 'non-dilutive', 'award'],
+    'accelerators': ['accelerator', 'yc', 'y combinator', 'techstars'],
+    'incubators': ['incubator', 'incubation'],
+    'ad-credits': ['ad credits', 'advertising', 'google ads', 'facebook ads', 'meta ads'],
+    'marketing': ['marketing', 'seo', 'email marketing', 'social media'],
+    'development': ['developer', 'api', 'sdk', 'github', 'coding'],
+    'finance': ['payment', 'banking', 'fintech', 'stripe', 'accounting'],
+  }
+  for (const [cat, kws] of Object.entries(keywords)) {
+    if (kws.some(kw => lower.includes(kw))) return cat
+  }
+  return 'saas-discounts'
+}
+
 export default function SmartDealImporter({ onClose, onImport }: SmartDealImporterProps) {
   const [step, setStep] = useState<'upload' | 'mapping' | 'preview' | 'importing'>('upload')
   const [rawData, setRawData] = useState<any[]>([])
@@ -52,27 +106,6 @@ export default function SmartDealImporter({ onClose, onImport }: SmartDealImport
   const fileInputRef = useRef<HTMLInputElement>(null)
 
   // Smart field name matching
-  const guessTargetField = (sourceField: string): string => {
-    const field = sourceField.toLowerCase().replace(/[_-]/g, ' ')
-    const mappings: Record<string, string[]> = {
-      title: ['title', 'name', 'deal', 'offer', 'deal name', 'offer name'],
-      provider: ['provider', 'company', 'vendor', 'brand', 'from', 'by', 'company name'],
-      value: ['value', 'discount', 'amount', 'price', 'savings', 'worth', 'credits', 'deal value'],
-      description: ['description', 'details', 'about', 'summary', 'info', 'content', 'body'],
-      applicationUrl: ['url', 'link', 'apply', 'website', 'application url', 'apply url', 'href'],
-      category: ['category', 'type', 'kind', 'group', 'section'],
-      eligibility: ['eligibility', 'requirements', 'who', 'eligible', 'criteria'],
-      tags: ['tags', 'keywords', 'labels'],
-      status: ['status', 'state', 'active'],
-    }
-    
-    for (const [target, sources] of Object.entries(mappings)) {
-      if (sources.some(s => field.includes(s) || s.includes(field))) {
-        return target
-      }
-    }
-    return ''
-  }
 
   // Parse various input formats
   const parseInput = useCallback((input: string): any[] => {
@@ -148,18 +181,6 @@ export default function SmartDealImporter({ onClose, onImport }: SmartDealImport
     return deals
   }, [])
 
-  const parseCSVLine = (line: string): string[] => {
-    const result: string[] = []
-    let current = ''
-    let inQuotes = false
-    for (const char of line) {
-      if (char === '"') inQuotes = !inQuotes
-      else if (char === ',' && !inQuotes) { result.push(current); current = '' }
-      else current += char
-    }
-    result.push(current)
-    return result.map(s => s.replace(/^"|"$/g, '').trim())
-  }
 
   // Handle file upload
   const handleFile = async (file: File) => {
@@ -229,24 +250,6 @@ export default function SmartDealImporter({ onClose, onImport }: SmartDealImport
     setStep('preview')
   }
 
-  const detectCategory = (text: string): string => {
-    const lower = text.toLowerCase()
-    const keywords: Record<string, string[]> = {
-      'cloud-credits': ['aws', 'azure', 'gcp', 'google cloud', 'cloud credits', 'infrastructure'],
-      'ai': ['ai', 'artificial intelligence', 'machine learning', 'gpt', 'llm', 'openai'],
-      'grants': ['grant', 'funding', 'non-dilutive', 'award'],
-      'accelerators': ['accelerator', 'yc', 'y combinator', 'techstars'],
-      'incubators': ['incubator', 'incubation'],
-      'ad-credits': ['ad credits', 'advertising', 'google ads', 'facebook ads', 'meta ads'],
-      'marketing': ['marketing', 'seo', 'email marketing', 'social media'],
-      'development': ['developer', 'api', 'sdk', 'github', 'coding'],
-      'finance': ['payment', 'banking', 'fintech', 'stripe', 'accounting'],
-    }
-    for (const [cat, kws] of Object.entries(keywords)) {
-      if (kws.some(kw => lower.includes(kw))) return cat
-    }
-    return 'saas-discounts'
-  }
 
   // Import deals
   const handleImport = async () => {
@@ -256,30 +259,43 @@ export default function SmartDealImporter({ onClose, onImport }: SmartDealImport
     
     const results = { success: 0, failed: 0, errors: [] as string[] }
     const batchSize = 10
-    
+    const total = parsedDeals.length || 1
+
+    // Build batches first, then run a limited parallel window (admin-only importer)
+    const batches: typeof parsedDeals[] = []
     for (let i = 0; i < parsedDeals.length; i += batchSize) {
-      const batch = parsedDeals.slice(i, i + batchSize)
-      
-      try {
-        const res = await fetch('/api/deals', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ deals: batch })
+      batches.push(parsedDeals.slice(i, i + batchSize))
+    }
+
+    let completed = 0
+    const CONCURRENCY = 2
+    for (let b = 0; b < batches.length; b += CONCURRENCY) {
+      const window = batches.slice(b, b + CONCURRENCY)
+      const windowResults = await Promise.all(
+        window.map(async (batch) => {
+          try {
+            const res = await fetch('/api/deals', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ deals: batch }),
+            })
+            const data = await res.json()
+            if (data.success) {
+              return { ok: batch.length, fail: 0, error: '' as string }
+            }
+            return { ok: 0, fail: batch.length, error: data.error || 'Unknown error' }
+          } catch {
+            return { ok: 0, fail: batch.length, error: 'Network error' }
+          }
         })
-        const data = await res.json()
-        
-        if (data.success) {
-          results.success += batch.length
-        } else {
-          results.failed += batch.length
-          results.errors.push(data.error || 'Unknown error')
-        }
-      } catch (err) {
-        results.failed += batch.length
-        results.errors.push('Network error')
+      )
+      for (const r of windowResults) {
+        results.success += r.ok
+        results.failed += r.fail
+        if (r.error) results.errors.push(r.error)
+        completed += r.ok + r.fail
       }
-      
-      setProgress(Math.round(((i + batch.length) / parsedDeals.length) * 100))
+      setProgress(Math.round((completed / total) * 100))
     }
     
     setResult(results)
@@ -327,7 +343,7 @@ export default function SmartDealImporter({ onClose, onImport }: SmartDealImport
             <h2 className="text-2xl font-black text-white">🚀 Smart Deal Importer</h2>
             <p className="text-white/80 text-sm">Paste any format - we&apos;ll figure it out</p>
           </div>
-          <button onClick={onClose} className="bg-white/20 hover:bg-white/30 text-white p-2 rounded">
+          <button type="button" aria-label="Close importer" onClick={onClose} className="bg-white/20 hover:bg-white/30 text-white p-2 rounded">
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
           </button>
         </div>
@@ -373,7 +389,7 @@ export default function SmartDealImporter({ onClose, onImport }: SmartDealImport
                 <div className="text-6xl mb-4">📁</div>
                 <p className="text-xl font-bold mb-2">Drop your file here</p>
                 <p className="text-zinc-500 mb-4">Supports JSON, CSV, TXT files</p>
-                <button
+                <button type="button"
                   onClick={() => fileInputRef.current?.click()}
                   className="bg-cyan-600 text-white px-6 py-2 border border-white/15 font-bold hover:bg-cyan-600"
                 >
@@ -385,8 +401,8 @@ export default function SmartDealImporter({ onClose, onImport }: SmartDealImport
 
               {/* Text Input */}
               <div>
-                <label className="font-bold block mb-2">Paste your data (JSON, CSV, or plain text)</label>
-                <textarea
+                <label className="font-bold block mb-2" htmlFor="paste-your-data-json-csv-or-plain-text">Paste your data (JSON, CSV, or plain text)</label>
+                <textarea id="paste-your-data-json-csv-or-plain-text"
                   rows={10}
                   value={inputText}
                   onChange={e => setInputText(e.target.value)}
@@ -405,7 +421,7 @@ Provider: Amazon
 Value: $100K
 URL: https://aws.amazon.com`}
                 />
-                <button
+                <button type="button"
                   onClick={() => inputText.trim() && processInput(inputText)}
                   disabled={!inputText.trim()}
                   className="mt-4 bg-purple-600 text-white px-6 py-3 border border-white/15 font-bold hover:bg-purple-600 disabled:opacity-50"
@@ -425,13 +441,14 @@ URL: https://aws.amazon.com`}
 
               <div className="space-y-3">
                 {fieldMappings.map((mapping, idx) => (
-                  <div key={idx} className="flex items-center gap-4 p-3 bg-white/5 border border-white/10">
+                  <div key={mapping.sourceField || `map-${idx}`} className="flex items-center gap-4 p-3 bg-white/5 border border-white/10">
                     <div className="w-1/4">
                       <span className="font-mono text-sm bg-gray-200 px-2 py-1">{mapping.sourceField}</span>
                     </div>
                     <div className="text-2xl">→</div>
                     <div className="w-1/4">
                       <select
+                        aria-label={`Map field ${mapping.sourceField}`}
                         value={mapping.targetField}
                         onChange={e => {
                           const updated = [...fieldMappings]
@@ -454,10 +471,10 @@ URL: https://aws.amazon.com`}
               </div>
 
               <div className="flex gap-4">
-                <button onClick={() => setStep('upload')} className="px-6 py-2 border border-white/15 font-bold hover:bg-white/5">
+                <button type="button" onClick={() => setStep('upload')} className="px-6 py-2 border border-white/15 font-bold hover:bg-white/5">
                   ← Back
                 </button>
-                <button onClick={applyMappings} className="px-6 py-2 bg-cyan-600 text-white border border-white/15 font-bold hover:bg-cyan-600">
+                <button type="button" onClick={applyMappings} className="px-6 py-2 bg-cyan-600 text-white border border-white/15 font-bold hover:bg-cyan-600">
                   Apply Mappings →
                 </button>
               </div>
@@ -469,7 +486,7 @@ URL: https://aws.amazon.com`}
             <div className="space-y-6">
               <div className="bg-green-100 border-2 border-green-500 p-4 flex justify-between items-center">
                 <p className="font-bold">✅ {parsedDeals.length} deals ready to import</p>
-                <button
+                <button type="button"
                   onClick={() => setParsedDeals(parsedDeals.filter(d => d.title && d.provider && d.applicationUrl))}
                   className="text-sm bg-[#121318] text-white px-3 py-1 border border-green-500 font-bold"
                 >
@@ -479,39 +496,39 @@ URL: https://aws.amazon.com`}
 
               <div className="space-y-4 max-h-[400px] overflow-auto">
                 {parsedDeals.slice(0, 50).map((deal, idx) => (
-                  <div key={idx} className="border-2 border-gray-300 p-4 bg-[#121318] text-white">
+                  <div key={deal.title} className="border-2 border-gray-300 p-4 bg-[#121318] text-white">
                     <div className="flex justify-between items-start mb-3">
                       <span className="bg-gray-800 text-white px-2 py-1 text-xs font-bold">#{idx + 1}</span>
-                      <button onClick={() => removeDeal(idx)} className="text-red-500 hover:text-red-700 text-sm font-bold">✕ Remove</button>
+                      <button type="button" onClick={() => removeDeal(idx)} className="text-red-500 hover:text-red-700 text-sm font-bold">✕ Remove</button>
                     </div>
                     <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                       <div>
-                        <label className="text-xs font-bold text-zinc-500">Title *</label>
-                        <input
+                        <label className="text-xs font-bold text-zinc-500" htmlFor={`import-title-${idx}`}>Title *</label>
+                        <input id={`import-title-${idx}`}
                           value={deal.title}
                           onChange={e => updateDeal(idx, 'title', e.target.value)}
                           className={`w-full p-2 border text-sm ${!deal.title ? 'border-red-500 bg-red-50' : 'border-gray-300'}`}
                         />
                       </div>
                       <div>
-                        <label className="text-xs font-bold text-zinc-500">Provider *</label>
-                        <input
+                        <label className="text-xs font-bold text-zinc-500" htmlFor={`import-provider-${idx}`}>Provider *</label>
+                        <input id={`import-provider-${idx}`}
                           value={deal.provider}
                           onChange={e => updateDeal(idx, 'provider', e.target.value)}
                           className={`w-full p-2 border text-sm ${!deal.provider ? 'border-red-500 bg-red-50' : 'border-gray-300'}`}
                         />
                       </div>
                       <div>
-                        <label className="text-xs font-bold text-zinc-500">Value *</label>
-                        <input
+                        <label className="text-xs font-bold text-zinc-500" htmlFor={`import-value-${idx}`}>Value *</label>
+                        <input id={`import-value-${idx}`}
                           value={deal.value}
                           onChange={e => updateDeal(idx, 'value', e.target.value)}
                           className={`w-full p-2 border text-sm ${!deal.value ? 'border-red-500 bg-red-50' : 'border-gray-300'}`}
                         />
                       </div>
                       <div>
-                        <label className="text-xs font-bold text-zinc-500">Category</label>
-                        <select
+                        <label className="text-xs font-bold text-zinc-500" htmlFor={`import-category-${idx}`}>Category</label>
+                        <select id={`import-category-${idx}`}
                           value={deal.category}
                           onChange={e => updateDeal(idx, 'category', e.target.value)}
                           className="w-full p-2 border border-gray-300 text-sm bg-[#121318] text-white"
@@ -520,8 +537,8 @@ URL: https://aws.amazon.com`}
                         </select>
                       </div>
                       <div className="col-span-2">
-                        <label className="text-xs font-bold text-zinc-500">URL *</label>
-                        <input
+                        <label className="text-xs font-bold text-zinc-500" htmlFor={`import-url-${idx}`}>URL *</label>
+                        <input id={`import-url-${idx}`}
                           value={deal.applicationUrl}
                           onChange={e => updateDeal(idx, 'applicationUrl', e.target.value)}
                           className={`w-full p-2 border text-sm ${!deal.applicationUrl ? 'border-red-500 bg-red-50' : 'border-gray-300'}`}
@@ -536,10 +553,10 @@ URL: https://aws.amazon.com`}
               </div>
 
               <div className="flex gap-4">
-                <button onClick={() => setStep('mapping')} className="px-6 py-2 border border-white/15 font-bold hover:bg-white/5">
+                <button type="button" onClick={() => setStep('mapping')} className="px-6 py-2 border border-white/15 font-bold hover:bg-white/5">
                   ← Back
                 </button>
-                <button
+                <button type="button"
                   onClick={handleImport}
                   disabled={parsedDeals.length === 0}
                   className="px-6 py-3 bg-emerald-600 text-white border border-white/15 font-bold hover:bg-green-600 disabled:opacity-50"
@@ -555,7 +572,7 @@ URL: https://aws.amazon.com`}
             <div className="text-center py-6 md:py-8">
               {importing ? (
                 <>
-                  <div className="text-6xl mb-6 animate-bounce">⚡</div>
+                  <div className="text-6xl mb-6 motion-safe:animate-pulse">⚡</div>
                   <h3 className="text-2xl font-bold mb-4">Importing Deals...</h3>
                   <div className="w-full max-w-md mx-auto bg-white/10 h-4 rounded border border-white/15 mb-4">
                     <div className="bg-cyan-500 h-full transition-all" style={{ width: `${progress}%` }} />
@@ -570,7 +587,7 @@ URL: https://aws.amazon.com`}
                     <p className="text-green-600 font-bold">✅ {result.success} deals imported successfully</p>
                     {result.failed > 0 && <p className="text-red-600 font-bold">❌ {result.failed} deals failed</p>}
                   </div>
-                  <button onClick={onClose} className="px-6 py-3 bg-cyan-600 text-white border border-white/15 font-bold hover:bg-cyan-600">
+                  <button type="button" onClick={onClose} className="px-6 py-3 bg-cyan-600 text-white border border-white/15 font-bold hover:bg-cyan-600">
                     Done
                   </button>
                 </>

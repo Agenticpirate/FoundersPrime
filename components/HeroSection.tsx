@@ -3,40 +3,113 @@
 import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import CountUp from 'react-countup'
-import { motion, useReducedMotion } from 'framer-motion'
+import { m, useReducedMotion } from 'framer-motion'
 import { GlowingEffect } from '@/components/ui/GlowingEffect'
-import BrandLogo from '@/components/ui/BrandLogo'
-import { FadeUp, SoftFloat, premiumEase } from '@/components/ui/premium-motion'
+import { FadeUp, SoftFloat } from '@/components/ui/premium-motion'
+import { premiumEase } from '@/lib/premium-motion-variants'
 
-/* ─── Trusted-by logos (bottom proof bar) ─── */
-const TRUSTED_BRANDS = [
-  { name: 'AWS', domain: 'aws.amazon.com' },
-  { name: 'Google Cloud', domain: 'cloud.google.com' },
-  { name: 'Stripe', domain: 'stripe.com' },
-  { name: 'Notion', domain: 'notion.so' },
-  { name: 'OpenAI', domain: 'openai.com' },
-  { name: 'Vercel', domain: 'vercel.com' },
-  { name: 'Supabase', domain: 'supabase.com' },
-  { name: 'Figma', domain: 'figma.com' },
-  { name: 'Slack', domain: 'slack.com' },
-  { name: 'Linear', domain: 'linear.app' },
-  { name: 'Framer', domain: 'framer.com' },
-  { name: 'Webflow', domain: 'webflow.com' },
-  { name: 'Airtable', domain: 'airtable.com' },
-  { name: 'HubSpot', domain: 'hubspot.com' },
-  { name: 'Intercom', domain: 'intercom.com' },
-  { name: 'Datadog', domain: 'datadoghq.com' },
-  { name: 'Sentry', domain: 'sentry.io' },
-  { name: 'Mixpanel', domain: 'mixpanel.com' },
-  { name: 'Twilio', domain: 'twilio.com' },
-  { name: 'DigitalOcean', domain: 'digitalocean.com' },
-  { name: 'Discord', domain: 'discord.com' },
-  { name: 'Canva', domain: 'canva.com' },
-  { name: 'Adobe', domain: 'adobe.com' },
-  { name: 'Salesforce', domain: 'salesforce.com' },
-  { name: 'Brex', domain: 'brex.com' },
-  { name: 'Ramp', domain: 'ramp.com' },
+/**
+ * Trusted-by logos — local files under /public/brand-logos only.
+ * Prefer official SVG mark when present (rasterized PNG fallback).
+ * Cache-bust query so browsers drop wrong CDN assets (e.g. old Intercom→Fin).
+ */
+/** Cache-bust after final official logo restore (no green OpenAI, multi-color Figma, etc.) */
+/** Cache-bust after logo repairs (wrong GCP/G, Intercom Fin, etc.) */
+const LOGO_V = '20260718official'
+const TRUSTED_BRANDS: { name: string; domain: string; logo: string }[] = [
+  { name: 'AWS', domain: 'aws.amazon.com', logo: `/brand-logos/aws.png?v=${LOGO_V}` },
+  // Use cloud mark SVG — googlecloud.png had wrong multicolor "G"
+  { name: 'Google Cloud', domain: 'cloud.google.com', logo: `/brand-logos/googlecloud.svg?v=${LOGO_V}` },
+  { name: 'Stripe', domain: 'stripe.com', logo: `/brand-logos/stripe.svg?v=${LOGO_V}` },
+  { name: 'Notion', domain: 'notion.so', logo: `/brand-logos/notion.png?v=${LOGO_V}` },
+  // Official black monochrome bloom — never green
+  { name: 'OpenAI', domain: 'openai.com', logo: `/brand-logos/openai.svg?v=${LOGO_V}` },
+  { name: 'Vercel', domain: 'vercel.com', logo: `/brand-logos/vercel.svg?v=${LOGO_V}` },
+  { name: 'Supabase', domain: 'supabase.com', logo: `/brand-logos/supabase.svg?v=${LOGO_V}` },
+  // Multi-color official Figma mark
+  { name: 'Figma', domain: 'figma.com', logo: `/brand-logos/figma.svg?v=${LOGO_V}` },
+  { name: 'Slack', domain: 'slack.com', logo: `/brand-logos/slack.svg?v=${LOGO_V}` },
+  { name: 'Linear', domain: 'linear.app', logo: `/brand-logos/linear.svg?v=${LOGO_V}` },
+  { name: 'Framer', domain: 'framer.com', logo: `/brand-logos/framer.svg?v=${LOGO_V}` },
+  { name: 'Webflow', domain: 'webflow.com', logo: `/brand-logos/webflow.svg?v=${LOGO_V}` },
+  { name: 'Airtable', domain: 'airtable.com', logo: `/brand-logos/airtable.png?v=${LOGO_V}` },
+  { name: 'HubSpot', domain: 'hubspot.com', logo: `/brand-logos/hubspot.png?v=${LOGO_V}` },
+  // Classic messenger bars (not Fin wordmark)
+  { name: 'Intercom', domain: 'intercom.com', logo: `/brand-logos/intercom.svg?v=${LOGO_V}` },
+  { name: 'DigitalOcean', domain: 'digitalocean.com', logo: `/brand-logos/digitalocean.svg?v=${LOGO_V}` },
+  { name: 'Datadog', domain: 'datadoghq.com', logo: `/brand-logos/datadog.png?v=${LOGO_V}` },
+  { name: 'Sentry', domain: 'sentry.io', logo: `/brand-logos/sentry.png?v=${LOGO_V}` },
+  { name: 'Mixpanel', domain: 'mixpanel.com', logo: `/brand-logos/mixpanel.png?v=${LOGO_V}` },
+  { name: 'Twilio', domain: 'twilio.com', logo: `/brand-logos/twilio.png?v=${LOGO_V}` },
+  { name: 'Discord', domain: 'discord.com', logo: `/brand-logos/discord.png?v=${LOGO_V}` },
+  { name: 'Canva', domain: 'canva.com', logo: `/brand-logos/canva.png?v=${LOGO_V}` },
+  { name: 'Adobe', domain: 'adobe.com', logo: `/brand-logos/adobe.png?v=${LOGO_V}` },
+  { name: 'Salesforce', domain: 'salesforce.com', logo: `/brand-logos/salesforce.png?v=${LOGO_V}` },
+  { name: 'Brex', domain: 'brex.com', logo: `/brand-logos/brex.png?v=${LOGO_V}` },
+  { name: 'GitHub', domain: 'github.com', logo: `/brand-logos/github.svg?v=${LOGO_V}` },
+  { name: 'Microsoft', domain: 'microsoft.com', logo: `/brand-logos/microsoft.svg?v=${LOGO_V}` },
+  { name: 'Cloudflare', domain: 'cloudflare.com', logo: `/brand-logos/cloudflare.png?v=${LOGO_V}` },
+  { name: 'Shopify', domain: 'shopify.com', logo: `/brand-logos/shopify.png?v=${LOGO_V}` },
+  { name: 'MongoDB', domain: 'mongodb.com', logo: `/brand-logos/mongodb.png?v=${LOGO_V}` },
 ]
+
+/** Same-origin logo pill — local file first, Google favicon only if PNG missing */
+function TrustedBrandLogo({
+  brand,
+  size = 24,
+}: {
+  brand: (typeof TRUSTED_BRANDS)[number]
+  size?: number
+}) {
+  const [src, setSrc] = useState(brand.logo)
+  const failedLocalRef = useRef(false)
+
+  return (
+    <span
+      className="relative flex-shrink-0 rounded-full bg-white border border-black/[0.08] dark:border-white/10 overflow-hidden flex items-center justify-center p-0.5 shadow-sm"
+      style={{ width: size, height: size }}
+    >
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={src}
+        alt=""
+        width={size}
+        height={size}
+        className="w-full h-full object-contain"
+        loading="eager"
+        decoding="async"
+        draggable={false}
+        onError={() => {
+          if (!failedLocalRef.current) {
+            failedLocalRef.current = true
+            setSrc(`https://www.google.com/s2/favicons?domain=${brand.domain}&sz=128`)
+          }
+        }}
+      />
+    </span>
+  )
+}
+
+function TrustedBrandPill({
+  brand,
+  size = 24,
+  textClass = 'text-[8px]',
+}: {
+  brand: (typeof TRUSTED_BRANDS)[number]
+  size?: number
+  textClass?: string
+}) {
+  return (
+    <div className="inline-flex items-center gap-2 flex-shrink-0">
+      <TrustedBrandLogo brand={brand} size={size} />
+      <span
+        className={`font-mono font-bold text-gray-600 dark:text-zinc-300 uppercase tracking-wider whitespace-nowrap ${textClass}`}
+      >
+        {brand.name}
+      </span>
+    </div>
+  )
+}
 
 /* ─── Stat grid inside the dark "total saved" card (2 × 3) ─── */
 const STAT_CARDS = [
@@ -126,12 +199,17 @@ export default function HeroSection() {
     const interval = setInterval(() => {
       const increase = Math.floor(Math.random() * 480) + 120
       setSavedEnd((prev) => {
-        savedStartRef.current = prev
+        // Pure updater only — ref is synced in a separate effect below
         return prev + increase
       })
     }, 4200)
     return () => clearInterval(interval)
   }, [])
+
+  // Keep start ref in sync after commit (not inside setState)
+  useEffect(() => {
+    savedStartRef.current = savedEnd
+  }, [savedEnd])
 
   return (
     <section className="relative overflow-hidden grid-bg bg-[#f6f8f8] dark:bg-[#000000] text-[#1a1a1a] dark:text-white pt-8 md:pt-12 pb-0 transition-colors duration-300">
@@ -295,28 +373,21 @@ export default function HeroSection() {
               ))}
             </div>
 
-            {/* Trusted brands marquee — white plates so logos never disappear */}
+            {/* Trusted brands — local /brand-logos PNGs only */}
             <div className="relative -mx-4 overflow-hidden border-y border-black/[0.06] dark:border-white/[0.07] bg-gray-50/80 dark:bg-white/[0.02] py-3">
               <div className="absolute inset-y-0 left-0 w-10 bg-gradient-to-r from-[#f6f8f8] dark:from-black to-transparent z-10 pointer-events-none" />
               <div className="absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-[#f6f8f8] dark:from-black to-transparent z-10 pointer-events-none" />
-              <div className="flex gap-5 animate-[marquee_55s_linear_infinite] whitespace-nowrap w-max px-4">
-                {[...TRUSTED_BRANDS, ...TRUSTED_BRANDS, ...TRUSTED_BRANDS].map((brand, idx) => (
-                  <div
-                    key={`${brand.name}-${idx}`}
-                    className="inline-flex items-center gap-2 opacity-95"
-                  >
-                    <BrandLogo
-                      name={brand.name}
-                      domain={brand.domain}
-                      size="sm"
-                      eager
-                      plate
+              <div className="flex gap-4 animate-[marquee_55s_linear_infinite] whitespace-nowrap w-max px-4">
+                {(['a', 'b', 'c'] as const).flatMap((pass) =>
+                  TRUSTED_BRANDS.map((brand) => (
+                    <TrustedBrandPill
+                      key={`${pass}-${brand.name}`}
+                      brand={brand}
+                      size={22}
+                      textClass="text-[8px] text-gray-500 dark:text-zinc-400"
                     />
-                    <span className="font-mono text-[8px] font-bold text-gray-500 dark:text-zinc-400 uppercase tracking-wider">
-                      {brand.name}
-                    </span>
-                  </div>
-                ))}
+                  ))
+                )}
               </div>
             </div>
           </div>
@@ -428,7 +499,7 @@ export default function HeroSection() {
           </div>
 
           {/* ─── RIGHT: Dark "total saved" card ─── */}
-          <motion.div
+          <m.div
             className="lg:col-span-5 relative"
             initial={reduce ? false : { opacity: 0, y: 24, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -517,7 +588,7 @@ export default function HeroSection() {
                 />
               </Link>
             </div>
-          </motion.div>
+          </m.div>
         </div>
       </div>
 
@@ -535,15 +606,20 @@ export default function HeroSection() {
               WebkitMaskImage: 'linear-gradient(to right, transparent, black 8%, black 92%, transparent)'
             }}
           >
-            <div className="flex gap-12 animate-[marquee_45s_linear_infinite] whitespace-nowrap items-center w-max">
-              {[...TRUSTED_BRANDS, ...TRUSTED_BRANDS].map((b, index) => (
-                <div key={`${b.name}-${index}`} className="inline-flex items-center gap-2.5 transition-all flex-shrink-0 hover:scale-105">
-                  <BrandLogo name={b.name} domain={b.domain} size="md" eager plate />
-                  <span className="font-mono text-xs md:text-sm font-bold text-gray-700 dark:text-gray-300 whitespace-nowrap">
-                    {b.name}
-                  </span>
-                </div>
-              ))}
+            <div className="flex gap-10 animate-[marquee_45s_linear_infinite] whitespace-nowrap items-center w-max">
+              {(['a', 'b'] as const).flatMap((pass) =>
+                TRUSTED_BRANDS.map((b) => (
+                  <div
+                    key={`${pass}-${b.name}`}
+                    className="inline-flex items-center gap-2.5 transition-all flex-shrink-0 hover:scale-105"
+                  >
+                    <TrustedBrandLogo brand={b} size={28} />
+                    <span className="font-mono text-xs md:text-sm font-bold text-gray-700 dark:text-gray-300 whitespace-nowrap">
+                      {b.name}
+                    </span>
+                  </div>
+                ))
+              )}
             </div>
           </div>
         </div>

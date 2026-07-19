@@ -121,8 +121,8 @@ const BRAND_DOMAIN: Record<string, string> = {
   azureforstudents: 'azure.microsoft.com',
   awseducate: 'aws.amazon.com',
   namecheap: 'namecheap.com',
-  digialocean: 'digitalocean.com',
-  heroku: 'heroku.com',
+  digialocean: 'digitalocean.com', // typo alias kept for stored brand keys
+  // heroku already mapped above
   replit: 'replit.com',
   codesandbox: 'codesandbox.io',
   mongodbforstudents: 'mongodb.com',
@@ -182,6 +182,26 @@ function normalizeKey(s: string): string {
 }
 
 /**
+ * Aggregator / pack hosts that hijack product logos (e.g. Azure deal listed under GitHub Student Pack).
+ * Prefer brand name mapping instead of these hosts.
+ */
+export function isAggregatorLogoHost(host: string, fullUrl?: string): boolean {
+  const h = cleanDomain(host || '')
+  if (!h) return true
+  if (h === 'education.github.com' || h === 'education.github.io') return true
+  // github.com/pack (and hash deep-links) list third-party tools — not the product brand
+  if (h === 'github.com' || h.endsWith('.github.com')) {
+    const path = (fullUrl || '').toLowerCase()
+    if (path.includes('/pack') || path.includes('/experiences') || path.includes('student')) {
+      return true
+    }
+  }
+  if (h.includes('unidays') || h.includes('sheerid') || h.includes('studentbeans')) return true
+  if (h.includes('linktr.ee') || h.includes('bit.ly') || h.includes('t.co')) return true
+  return false
+}
+
+/**
  * Resolve the best brand domain from optional website URL, logo URL, and name.
  */
 export function resolveBrandDomain(opts: {
@@ -189,11 +209,16 @@ export function resolveBrandDomain(opts: {
   website?: string | null
   logo?: string | null
 }): string {
-  // 1) Explicit website / claim URL host
+  // 1) Explicit website / claim URL host (skip aggregators so Azure ≠ GitHub logo)
   if (opts.website) {
     try {
-      const host = cleanDomain(new URL(opts.website, 'https://x').hostname)
-      if (host && !isGarbageLogoDomain(host)) {
+      const parsed = new URL(opts.website, 'https://x')
+      const host = cleanDomain(parsed.hostname)
+      if (
+        host &&
+        !isGarbageLogoDomain(host) &&
+        !isAggregatorLogoHost(host, opts.website)
+      ) {
         if (host.includes('youtube')) return 'youtube.com'
         return host
       }

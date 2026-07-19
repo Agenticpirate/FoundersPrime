@@ -1,9 +1,11 @@
 'use client'
 
+import Link from 'next/link'
 import { useEffect, useState } from 'react'
-import { motion, useReducedMotion } from 'framer-motion'
+import { m, useReducedMotion } from 'framer-motion'
 import Mandala from '@/components/ui/Mandala'
-import { FadeUp, premiumEase, staggerContainer, staggerItem } from '@/components/ui/premium-motion'
+import { FadeUp } from '@/components/ui/premium-motion'
+import { premiumEase, staggerContainer, staggerItem } from '@/lib/premium-motion-variants'
 import DealsBrandMarquee from './DealsBrandMarquee'
 
 export default function DealsHero() {
@@ -55,8 +57,12 @@ export default function DealsHero() {
         const cloud = deals.filter((d) => d.category === 'cloud-credits').length
         const saas = deals.filter((d) => d.category === 'saas-discounts').length
         const ads = deals.filter((d) => d.category === 'ad-credits').length
-        const providers = new Set(deals.map((d) => (d.provider || '').toLowerCase()).filter(Boolean))
-          .size
+        const providers = new Set(
+          deals.flatMap((d) => {
+            const p = (d.provider || '').toLowerCase()
+            return p ? [p] : []
+          })
+        ).size
         if (cancelled) return
         setStats([
           {
@@ -139,7 +145,7 @@ export default function DealsHero() {
                 <span className="relative inline-block text-accent-yellow">
                   credits
                   {!reduce && (
-                    <motion.span
+                    <m.span
                       aria-hidden
                       className="absolute -bottom-0.5 md:-bottom-1 left-0 right-0 h-[2px] md:h-[3px] rounded-full bg-accent-yellow/70"
                       initial={{ scaleX: 0 }}
@@ -156,13 +162,13 @@ export default function DealsHero() {
               {/* Mobile: short blurb · Desktop: full copy */}
               <p className="md:hidden font-sans text-[12px] text-gray-500 dark:text-gray-400 leading-snug mb-2.5">
                 Cloud, SaaS &amp; ad credits — hand-verified. Also see{' '}
-                <a href="/programs" className="text-accent-yellow font-semibold">
+                <Link href="/programs" className="text-accent-yellow font-semibold">
                   Programs
-                </a>{' '}
+                </Link>{' '}
                 &amp;{' '}
-                <a href="/student-benefits" className="text-accent-yellow font-semibold">
+                <Link href="/student-benefits" className="text-accent-yellow font-semibold">
                   Students
-                </a>
+                </Link>
                 .
               </p>
               <p className="hidden md:block font-sans text-sm md:text-[15px] text-gray-500 dark:text-gray-400 leading-relaxed max-w-2xl mb-5">
@@ -171,16 +177,16 @@ export default function DealsHero() {
                 <strong className="text-gray-700 dark:text-gray-300">SaaS &amp; Tools</strong>, and{' '}
                 <strong className="text-gray-700 dark:text-gray-300">Ad Credits</strong>. Accelerators
                 &amp; grants are under{' '}
-                <a href="/programs" className="text-accent-yellow font-semibold hover:underline">
+                <Link href="/programs" className="text-accent-yellow font-semibold hover:underline">
                   Programs
-                </a>
+                </Link>
                 ; campus-only perks under{' '}
-                <a
+                <Link
                   href="/student-benefits"
                   className="text-accent-yellow font-semibold hover:underline"
                 >
                   Student Benefits
-                </a>
+                </Link>
                 .
               </p>
             </FadeUp>
@@ -207,14 +213,14 @@ export default function DealsHero() {
             </FadeUp>
           </div>
 
-          <motion.div
+          <m.div
             className="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-2 gap-1.5 md:gap-2.5 xl:w-[320px] flex-shrink-0"
             variants={reduce ? undefined : staggerContainer}
             initial={reduce ? false : 'hidden'}
             animate={reduce ? undefined : 'show'}
           >
             {stats.map((s) => (
-              <motion.div
+              <m.div
                 key={s.label}
                 variants={reduce ? undefined : staggerItem}
                 className={`rounded-xl md:rounded-2xl border p-2 md:p-3.5 transition-transform duration-300 md:hover:-translate-y-0.5 ${
@@ -241,9 +247,9 @@ export default function DealsHero() {
                 <p className="text-[9px] md:text-[10px] text-gray-500 dark:text-gray-400 truncate">
                   {s.delta}
                 </p>
-              </motion.div>
+              </m.div>
             ))}
-          </motion.div>
+          </m.div>
         </div>
 
         <DealsBrandMarquee compact />

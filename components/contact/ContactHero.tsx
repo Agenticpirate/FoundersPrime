@@ -1,9 +1,11 @@
 'use client'
 
-import Link from 'next/link'
-import { motion, useReducedMotion } from 'framer-motion'
+import { m, useReducedMotion } from 'framer-motion'
 import Mandala from '@/components/ui/Mandala'
-import { FadeUp, premiumEase } from '@/components/ui/premium-motion'
+import { FadeUp } from '@/components/ui/premium-motion'
+import { premiumEase } from '@/lib/premium-motion-variants'
+import { ContactCardDecor } from '@/components/contact/ContactAmbientDecor'
+import PageBreadcrumb from '@/components/ui/PageBreadcrumb'
 
 const TRUST = [
   { value: '24–48h', label: 'Avg response', icon: 'bolt' },
@@ -29,30 +31,21 @@ export default function ContactHero() {
         className="absolute -top-8 -right-6 w-56 h-56 hidden md:block pointer-events-none"
       />
 
-      {/* Breadcrumb */}
-      <nav aria-label="Breadcrumb" className="relative flex mb-4">
-        <ol className="inline-flex items-center gap-1.5 font-mono text-[11px] md:text-xs text-gray-500 dark:text-gray-400 whitespace-nowrap">
-          <li>
-            <Link className="hover:text-gray-900 dark:hover:text-white transition-colors" href="/">
-              Home
-            </Link>
-          </li>
-          <li className="text-gray-300 dark:text-white/20">/</li>
-          <li aria-current="page">
-            <span className="text-gray-900 dark:text-white font-semibold bg-accent-yellow/20 dark:bg-accent-yellow/15 px-2 py-0.5 rounded-md border border-black/5 dark:border-white/10">
-              Contact
-            </span>
-          </li>
-        </ol>
-      </nav>
+      <PageBreadcrumb
+        className="relative mb-4"
+        highlightCurrent
+        items={[{ label: 'Home', href: '/' }, { label: 'Contact' }]}
+      />
 
       <div className="relative rounded-3xl border border-black/[0.05] dark:border-white/[0.07] bg-gradient-to-br from-white via-white to-amber-50/30 dark:from-[#0a0a0a] dark:via-[#080808] dark:to-[#12100a] p-5 md:p-7 shadow-[0_1px_0_rgba(255,255,255,0.5)_inset,0_20px_50px_rgba(0,0,0,0.06)] overflow-hidden">
         <div
           aria-hidden
           className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-accent-yellow/40 to-transparent"
         />
+        {/* Paper planes + startup marks in the dark hero field */}
+        <ContactCardDecor variant="hero" />
         {!reduce && (
-          <motion.div
+          <m.div
             aria-hidden
             className="pointer-events-none absolute -left-1/4 top-0 h-full w-1/3 bg-gradient-to-r from-transparent via-accent-yellow/[0.04] to-transparent skew-x-12"
             animate={{ x: ['0%', '280%'] }}
@@ -116,7 +109,7 @@ export default function ContactHero() {
           <FadeUp delay={0.12} className="w-full lg:w-auto lg:min-w-[280px]">
             <div className="grid grid-cols-2 gap-2.5">
               {TRUST.map((s, i) => (
-                <motion.div
+                <m.div
                   key={s.label}
                   initial={reduce ? false : { opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -140,7 +133,7 @@ export default function ContactHero() {
                   <p className="mt-1 font-mono text-[9px] uppercase tracking-wider text-gray-500 dark:text-gray-400">
                     {s.label}
                   </p>
-                </motion.div>
+                </m.div>
               ))}
             </div>
           </FadeUp>

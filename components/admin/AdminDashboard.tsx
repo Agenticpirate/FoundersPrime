@@ -11,10 +11,14 @@ import {
   Download,
   Lightbulb,
   RefreshCw,
-  AlertTriangle,
 } from 'lucide-react'
 import Link from 'next/link'
 import AdminStatCard from '@/components/admin/ui/AdminStatCard'
+import AdminDashboardAside from '@/components/admin/AdminDashboardAside'
+import AdminDashboardQueue from '@/components/admin/AdminDashboardQueue'
+import AdminDashboardRevenue from '@/components/admin/AdminDashboardRevenue'
+import AdminDashboardDealStrip from '@/components/admin/AdminDashboardDealStrip'
+import AdminDashboardErrors from '@/components/admin/AdminDashboardErrors'
 
 type PlanRow = { plan: string; label: string; subscribers: number; revenue: number }
 type Stats = {
@@ -168,12 +172,24 @@ export default function AdminDashboard() {
       icon: BarChart3,
       className: 'border-purple-500/25 text-purple-400 hover:border-purple-400/50',
     },
+    {
+      label: 'Ideas hub',
+      href: '/admin/ideas',
+      icon: Lightbulb,
+      className: 'border-fuchsia-500/25 text-fuchsia-400 hover:border-fuchsia-400/50',
+    },
+    {
+      label: 'Paid members',
+      href: '/admin/users?role=paid',
+      icon: Users,
+      className: 'border-accent-yellow/25 text-accent-yellow hover:border-accent-yellow/50',
+    },
   ]
 
   return (
-    <div className="p-4 md:p-8 flex-1 bg-[#090a0f] text-white">
+    <div className="p-4 md:p-6 lg:p-8 flex-1 bg-[#090a0f] text-white min-w-0">
       <div className="flex flex-wrap items-center justify-between gap-3 mb-5">
-        <div>
+        <div className="min-w-0">
           <p className="font-mono text-[10px] font-bold uppercase tracking-[0.16em] text-zinc-500">
             Command center
           </p>
@@ -193,33 +209,7 @@ export default function AdminDashboard() {
       </div>
 
       {errors.length > 0 && (
-        <div className="mb-4 rounded-xl border border-amber-500/30 bg-amber-500/10 px-4 py-3">
-          <div className="flex items-start gap-2.5">
-            <AlertTriangle className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
-            <div className="min-w-0 flex-1">
-              <p className="font-mono text-[11px] font-bold text-amber-200 uppercase tracking-wide">
-                Partial load
-              </p>
-              <ul className="mt-1.5 space-y-1">
-                {errors.map((e) => (
-                  <li key={e.label} className="font-mono text-[11px] text-amber-100/90">
-                    <span className="font-black">{e.label}:</span> {e.detail}
-                  </li>
-                ))}
-              </ul>
-              <p className="mt-2 font-mono text-[10px] text-amber-200/70">
-                Confirm you&apos;re signed in as an admin and SUPABASE_SERVICE_ROLE_KEY is set.
-              </p>
-            </div>
-            <button
-              type="button"
-              onClick={() => load(true)}
-              className="shrink-0 font-mono text-[10px] font-bold uppercase text-amber-200 underline"
-            >
-              Retry
-            </button>
-          </div>
-        </div>
+        <AdminDashboardErrors errors={errors} onRetry={() => load(true)} />
       )}
 
       {/* Quick actions */}
@@ -276,221 +266,26 @@ export default function AdminDashboard() {
         />
       </div>
 
-      {/* Secondary deal strip */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-2 mb-6">
-        {[
-          { label: 'Catalog deals', value: deals.total },
-          { label: 'Active deals', value: deals.active },
-          { label: 'Featured', value: deals.featured },
-          { label: 'Expired', value: deals.expired },
-        ].map((x) => (
-          <div
-            key={x.label}
-            className="rounded-lg border border-white/10 bg-[#0d0e12] px-3 py-2.5"
-          >
-            <p className="font-mono text-[9px] uppercase tracking-wider text-zinc-500">{x.label}</p>
-            <p className="font-mono text-lg font-black text-white tabular-nums mt-0.5">
-              {loading ? '—' : x.value}
-            </p>
-          </div>
-        ))}
-      </div>
+      <AdminDashboardDealStrip loading={loading} deals={deals} />
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-6">
         <div className="lg:col-span-2 flex flex-col gap-4 md:gap-6">
-          {/* Attention queue */}
-          <section className="rounded-xl border border-white/10 bg-[#0d0e12] p-4 md:p-5">
-            <div className="flex items-center justify-between mb-4 border-b border-white/10 pb-3">
-              <h3 className="font-mono font-bold text-sm uppercase tracking-wider text-white">
-                Attention queue
-              </h3>
-              <Link
-                href="/admin/submissions"
-                className="font-mono text-[10px] font-bold uppercase text-accent-yellow inline-flex items-center gap-1 hover:text-yellow-300"
-              >
-                All submissions <ArrowRight className="w-3.5 h-3.5" />
-              </Link>
-            </div>
-            {loading && (
-              <p className="font-mono text-[11px] text-zinc-500 py-6 text-center">Loading…</p>
-            )}
-            {!loading && pendingList.length === 0 && (
-              <div className="py-8 text-center border border-dashed border-white/10 rounded-lg">
-                <p className="font-mono text-[11px] text-zinc-500">
-                  No pending submissions — queue clear
-                </p>
-                <Link
-                  href="/submit-deal"
-                  className="inline-block mt-2 font-mono text-[10px] text-accent-yellow hover:underline"
-                >
-                  Open public submit form →
-                </Link>
-              </div>
-            )}
-            <div className="space-y-2">
-              {pendingList.map((s) => (
-                <Link
-                  key={s.id}
-                  href={`/admin/submissions/${s.id}`}
-                  className="flex items-center gap-3 p-3 rounded-lg border border-white/10 hover:border-accent-yellow/30 hover:bg-white/[0.03] transition-colors"
-                >
-                  <div className="min-w-0 flex-1">
-                    <p className="font-mono text-xs font-bold text-white truncate">
-                      {s.company_name || 'Untitled'}
-                      {s.featured_requested && (
-                        <span className="ml-2 text-[9px] text-accent-yellow">★ Featured</span>
-                      )}
-                    </p>
-                    <p className="font-mono text-[10px] text-zinc-500 mt-0.5 truncate">
-                      {s.category || '—'}
-                      {s.deal_value != null && s.deal_value !== ''
-                        ? ` · $${s.deal_value}`
-                        : ''}
-                      {s.submitter_email ? ` · ${s.submitter_email}` : ''}
-                      {s.created_at
-                        ? ` · ${new Date(s.created_at).toLocaleDateString()}`
-                        : ''}
-                    </p>
-                  </div>
-                  <span className="shrink-0 font-mono text-[10px] font-bold uppercase text-black bg-accent-yellow px-2.5 py-1.5 rounded-md">
-                    Review
-                  </span>
-                </Link>
-              ))}
-            </div>
-          </section>
+          <AdminDashboardQueue loading={loading} pendingList={pendingList} />
 
-          {/* Revenue by plan */}
-          <section className="rounded-xl border border-white/10 bg-[#0d0e12] p-4 md:p-5">
-            <div className="flex justify-between items-center mb-4 border-b border-white/10 pb-3">
-              <h3 className="font-mono font-bold text-sm uppercase tracking-wider text-white">
-                Revenue by plan
-              </h3>
-              <span className="font-mono text-[9px] font-bold text-zinc-500 uppercase">
-                Active subs
-              </span>
-            </div>
-            <div className="rounded-lg border border-white/10 bg-[#121318] p-4 mb-4 text-center">
-              <p className="font-mono text-[9px] text-zinc-500 uppercase mb-1">Realized revenue</p>
-              <p className="font-black text-3xl font-mono text-emerald-400">
-                {money(stats?.revenue ?? 0)}
-              </p>
-              <p className="font-mono text-[10px] text-zinc-500 mt-1">
-                {fmt(stats?.totalSubscribers ?? 0)} subscriber(s) · excl. tax · list-price fallback
-              </p>
-            </div>
-            <div className="overflow-x-auto">
-              <table className="w-full text-left font-mono text-[11px] md:text-xs">
-                <thead className="border-b border-white/10 text-zinc-500">
-                  <tr>
-                    <th className="p-2.5 font-bold uppercase">Plan</th>
-                    <th className="p-2.5 font-bold uppercase">Subs</th>
-                    <th className="p-2.5 font-bold uppercase">Revenue</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-white/5">
-                  {(stats?.planBreakdown ?? []).map((r) => (
-                    <tr key={r.plan} className="hover:bg-white/[0.03]">
-                      <td className="p-2.5 font-bold text-zinc-200">{r.label}</td>
-                      <td className="p-2.5 text-zinc-400 tabular-nums">{r.subscribers}</td>
-                      <td className="p-2.5 font-bold text-emerald-400 tabular-nums">
-                        ${r.revenue.toLocaleString('en-US')}
-                      </td>
-                    </tr>
-                  ))}
-                  {!loading && (stats?.planBreakdown ?? []).length === 0 && (
-                    <tr>
-                      <td colSpan={3} className="p-5 text-center text-zinc-500">
-                        No subscription data
-                      </td>
-                    </tr>
-                  )}
-                </tbody>
-              </table>
-            </div>
-          </section>
+          <AdminDashboardRevenue
+            loading={loading}
+            revenue={stats?.revenue ?? 0}
+            totalSubscribers={stats?.totalSubscribers ?? 0}
+            planBreakdown={stats?.planBreakdown ?? []}
+            fmt={fmt}
+            money={money}
+          />
         </div>
 
-        <div className="flex flex-col gap-4">
-          <section className="rounded-xl border border-white/10 bg-[#0d0e12] p-4 md:p-5">
-            <div className="flex items-center gap-2 mb-4 border-b border-white/10 pb-3">
-              <span className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse" />
-              <h3 className="font-mono font-bold text-sm uppercase tracking-wider text-white">
-                Recent paid
-              </h3>
-            </div>
-            <div className="flex flex-col gap-2">
-              {(stats?.recentSubscribers ?? []).map((sub, i) => (
-                <div
-                  key={`${sub.email || sub.plan}-${i}`}
-                  className="flex gap-3 items-center p-2.5 rounded-lg border border-white/5 bg-white/[0.02]"
-                >
-                  <div className="w-8 h-8 shrink-0 rounded-lg bg-accent-yellow/15 border border-accent-yellow/20 text-accent-yellow flex items-center justify-center font-mono text-[10px] font-black">
-                    $
-                  </div>
-                  <div className="min-w-0 flex-1">
-                    <p className="font-bold text-[11px] text-zinc-100 truncate">
-                      {sub.label} · ${sub.price}
-                    </p>
-                    <p className="font-mono text-[9px] text-zinc-400 mt-0.5 truncate">
-                      {sub.email || '—'}
-                    </p>
-                    <p className="font-mono text-[9px] text-zinc-600 mt-0.5">
-                      {sub.createdAt
-                        ? new Date(sub.createdAt).toLocaleDateString('en-US', {
-                            month: 'short',
-                            day: 'numeric',
-                            year: 'numeric',
-                          })
-                        : '—'}
-                      {sub.periodEnd
-                        ? ` · ends ${new Date(sub.periodEnd).toLocaleDateString('en-US', {
-                            month: 'short',
-                            year: 'numeric',
-                          })}`
-                        : ''}
-                    </p>
-                  </div>
-                </div>
-              ))}
-              {!loading && (stats?.recentSubscribers ?? []).length === 0 && (
-                <p className="text-center text-[10px] font-mono text-zinc-600 py-6 border border-dashed border-white/10 rounded-lg">
-                  No paid subscriptions yet
-                </p>
-              )}
-            </div>
-            <Link
-              href="/admin/users?role=founder"
-              className="mt-3 flex items-center justify-center gap-1 min-h-[40px] rounded-lg border border-white/10 font-mono text-[10px] font-bold uppercase text-zinc-400 hover:text-accent-yellow hover:border-accent-yellow/30 transition-colors"
-            >
-              View all users <ArrowRight className="w-3.5 h-3.5" />
-            </Link>
-          </section>
-
-          <section className="rounded-xl border border-white/10 bg-[#0d0e12] p-4 md:p-5">
-            <h3 className="font-mono font-bold text-sm uppercase tracking-wider text-white mb-3">
-              Shortcuts
-            </h3>
-            <div className="grid grid-cols-1 gap-2">
-              {[
-                { href: '/deals', label: 'Live deals catalog', icon: Handshake },
-                { href: '/ideas', label: 'Ideas hub', icon: Lightbulb },
-                { href: '/pricing', label: 'Pricing page', icon: Download },
-                { href: '/admin/ideas', label: 'Manage ideas list', icon: Lightbulb },
-              ].map((l) => (
-                <Link
-                  key={l.href}
-                  href={l.href}
-                  className="flex items-center gap-2.5 p-2.5 rounded-lg border border-white/10 text-zinc-300 hover:border-accent-yellow/30 hover:text-white font-mono text-[11px] transition-colors"
-                >
-                  <l.icon className="w-3.5 h-3.5 text-zinc-500" />
-                  {l.label}
-                  <ArrowRight className="w-3 h-3 ml-auto text-zinc-600" />
-                </Link>
-              ))}
-            </div>
-          </section>
-        </div>
+        <AdminDashboardAside
+          loading={loading}
+          recentSubscribers={stats?.recentSubscribers ?? []}
+        />
       </div>
     </div>
   )

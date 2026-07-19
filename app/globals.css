@@ -636,21 +636,19 @@ h6 {
   pointer-events: none;
   position: absolute;
   inset: 0;
-  overflow: hidden;
-  /* Soft vertical fade only — no rectangular “panel” mask */
-  -webkit-mask-image: linear-gradient(
-    to bottom,
-    transparent 0%,
-    #000 8%,
-    #000 88%,
-    transparent 100%
+  overflow: visible;
+  /* Very soft elliptical fade — avoids a rectangular “panel” */
+  -webkit-mask-image: radial-gradient(
+    ellipse 92% 78% at 50% 48%,
+    #000 0%,
+    #000 42%,
+    transparent 78%
   );
-  mask-image: linear-gradient(
-    to bottom,
-    transparent 0%,
-    #000 8%,
-    #000 88%,
-    transparent 100%
+  mask-image: radial-gradient(
+    ellipse 92% 78% at 50% 48%,
+    #000 0%,
+    #000 42%,
+    transparent 78%
   );
 }
 
@@ -660,21 +658,56 @@ h6 {
 
 .footer-dollar-rain--front {
   z-index: 3;
-  /* Keep full vertical travel so $ cross the wordmark */
-  -webkit-mask-image: linear-gradient(
-    to bottom,
-    transparent 0%,
-    #000 10%,
-    #000 85%,
-    transparent 100%
+  -webkit-mask-image: radial-gradient(
+    ellipse 95% 82% at 50% 48%,
+    #000 0%,
+    #000 48%,
+    transparent 80%
   );
-  mask-image: linear-gradient(
-    to bottom,
-    transparent 0%,
-    #000 10%,
-    #000 85%,
-    transparent 100%
+  mask-image: radial-gradient(
+    ellipse 95% 82% at 50% 48%,
+    #000 0%,
+    #000 48%,
+    transparent 80%
   );
+}
+
+/* Seamless glass blooms — no hard edges / no boxed panel */
+.footer-glass-bloom {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: min(160vw, 1200px);
+  height: min(90vw, 520px);
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: radial-gradient(
+    ellipse 70% 55% at 50% 50%,
+    rgba(255, 213, 0, 0.1) 0%,
+    rgba(255, 213, 0, 0.045) 28%,
+    rgba(255, 213, 0, 0.015) 48%,
+    transparent 70%
+  );
+  filter: blur(2px);
+  pointer-events: none;
+}
+
+.footer-glass-haze {
+  position: absolute;
+  left: 50%;
+  top: 48%;
+  width: min(100vw, 780px);
+  height: min(55vw, 340px);
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: radial-gradient(
+    ellipse 60% 50% at 50% 50%,
+    rgba(255, 255, 255, 0.035) 0%,
+    rgba(255, 255, 255, 0.01) 40%,
+    transparent 68%
+  );
+  filter: blur(8px);
+  pointer-events: none;
 }
 
 .footer-dollar {
@@ -709,6 +742,251 @@ h6 {
   mix-blend-mode: screen;
 }
 
+/* Footer sparks — yellow + charcoal micro-particles */
+@keyframes footerSparkTwinkle {
+  0%,
+  100% {
+    opacity: 0.15;
+    transform: scale(0.7) translateY(0);
+  }
+  40% {
+    opacity: 1;
+    transform: scale(1.15) translateY(-3px);
+  }
+  70% {
+    opacity: 0.45;
+    transform: scale(0.9) translateY(-1px);
+  }
+}
+
+@keyframes footerSparkDrift {
+  0% {
+    transform: translate3d(0, 0, 0) scale(0.6);
+    opacity: 0;
+  }
+  12% {
+    opacity: var(--spark-opacity, 0.7);
+  }
+  100% {
+    transform: translate3d(var(--spark-dx, 12px), var(--spark-dy, -48px), 0) scale(0.2);
+    opacity: 0;
+  }
+}
+
+@keyframes footerStrikeSweep {
+  0% {
+    transform: translate(-55%, -50%) rotate(-12deg) scaleX(0.4);
+    opacity: 0;
+  }
+  18% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 0.25;
+  }
+  100% {
+    transform: translate(55%, -50%) rotate(-12deg) scaleX(0.4);
+    opacity: 0;
+  }
+}
+
+@keyframes footerPulseRing {
+  0% {
+    transform: translate(-50%, -50%) scale(0.82);
+    opacity: 0.22;
+  }
+  70% {
+    transform: translate(-50%, -50%) scale(1.28);
+    opacity: 0;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1.28);
+    opacity: 0;
+  }
+}
+
+@keyframes footerQuoteIn {
+  0% {
+    opacity: 0;
+    transform: translateY(6px);
+    filter: blur(4px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+.footer-spark {
+  position: absolute;
+  border-radius: 9999px;
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+
+.footer-spark--yellow {
+  background: #ffd500;
+  box-shadow:
+    0 0 6px 1px rgba(255, 213, 0, 0.75),
+    0 0 14px 2px rgba(255, 213, 0, 0.35);
+  animation: footerSparkTwinkle var(--spark-dur, 2.8s) ease-in-out infinite;
+}
+
+.footer-spark--dark {
+  background: #2a2a2a;
+  box-shadow:
+    0 0 5px 1px rgba(255, 255, 255, 0.12),
+    0 0 10px 2px rgba(0, 0, 0, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  animation: footerSparkTwinkle var(--spark-dur, 3.2s) ease-in-out infinite;
+}
+
+.footer-spark--rise {
+  animation-name: footerSparkDrift;
+  animation-timing-function: cubic-bezier(0.22, 0.8, 0.3, 1);
+  animation-iteration-count: infinite;
+}
+
+/* Thin soft slash — never a full-width rectangular bar */
+.footer-strike-beam {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: min(70vw, 720px);
+  height: 2px;
+  margin: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.08) 28%,
+    rgba(255, 213, 0, 0.45) 50%,
+    rgba(255, 255, 255, 0.08) 72%,
+    transparent 100%
+  );
+  filter: blur(6px);
+  mix-blend-mode: screen;
+  animation: footerStrikeSweep 6.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  animation-delay: 1.4s;
+  border-radius: 9999px;
+}
+
+.footer-pulse-ring {
+  position: absolute;
+  left: 50%;
+  top: 48%;
+  width: min(42vw, 280px);
+  height: min(42vw, 280px);
+  border-radius: 9999px;
+  /* Soft glow ring — no hard 1px border (that reads as a boxed circle) */
+  box-shadow:
+    0 0 0 1px rgba(255, 213, 0, 0.08),
+    0 0 40px 2px rgba(255, 213, 0, 0.06);
+  background: transparent;
+  pointer-events: none;
+  animation: footerPulseRing 4.8s ease-out infinite;
+}
+
+.footer-pulse-ring--delay {
+  animation-delay: 2.4s;
+  width: min(52vw, 360px);
+  height: min(52vw, 360px);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.04),
+    0 0 48px 2px rgba(255, 255, 255, 0.03);
+}
+
+.footer-rotating-quote {
+  animation: footerQuoteIn 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Cursor companion — micro sparks + strike-in quote */
+@keyframes cursorSparkPop {
+  0% {
+    opacity: 1;
+    transform: translate(0, 0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--cx, 0px), var(--cy, -20px)) scale(0.2);
+  }
+}
+
+@keyframes cursorQuoteStrike {
+  0% {
+    opacity: 0;
+    letter-spacing: 0.22em;
+    filter: blur(3px);
+    transform: translateX(-50%) translateY(4px) scale(0.96);
+  }
+  55% {
+    opacity: 1;
+    filter: blur(0);
+  }
+  100% {
+    opacity: 1;
+    letter-spacing: 0.1em;
+    filter: blur(0);
+    transform: translateX(-50%) translateY(0) scale(1);
+  }
+}
+
+.cursor-spark {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  border-radius: 9999px;
+  pointer-events: none;
+  animation: cursorSparkPop 0.55s ease-out forwards;
+}
+
+.cursor-spark--yellow {
+  background: #ffd500;
+  box-shadow: 0 0 6px 1px rgba(255, 213, 0, 0.8);
+}
+
+.cursor-spark--dark {
+  background: #1a1a1a;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Tiny $ glyphs that drift with the dice trail / roll burst */
+@keyframes cursorDollarPop {
+  0% {
+    opacity: 0.95;
+    transform: translate(-50%, -50%) rotate(var(--rot, 0deg)) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(
+        calc(-50% + var(--cx, 0px)),
+        calc(-50% + var(--cy, -18px))
+      )
+      rotate(calc(var(--rot, 0deg) + 28deg)) scale(0.35);
+  }
+}
+
+.cursor-dollar {
+  position: absolute;
+  pointer-events: none;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-weight: 800;
+  line-height: 1;
+  color: #ffd500;
+  text-shadow:
+    0 0 4px rgba(255, 213, 0, 0.85),
+    0 0 10px rgba(255, 213, 0, 0.35);
+  animation: cursorDollarPop 0.58s cubic-bezier(0.22, 0.8, 0.3, 1) forwards;
+  user-select: none;
+  will-change: transform, opacity;
+}
+
+.cursor-quote-strike {
+  animation: cursorQuoteStrike 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .footer-brand-sheen {
     animation: none;
@@ -720,6 +998,16 @@ h6 {
     top: var(--dollar-static-y, 42%) !important;
     opacity: calc(var(--dollar-opacity, 0.35) * 0.55) !important;
     transform: translate3d(0, 0, 0) rotate(var(--dollar-rot-start, 0deg));
+  }
+
+  .footer-spark,
+  .footer-strike-beam,
+  .footer-pulse-ring,
+  .footer-rotating-quote,
+  .cursor-spark,
+  .cursor-dollar,
+  .cursor-quote-strike {
+    animation: none !important;
   }
 }
 

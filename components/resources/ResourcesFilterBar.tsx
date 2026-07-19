@@ -57,6 +57,7 @@ export default function ResourcesFilterBar({ filters, onFilterChange, onClear }:
         {/* Category Dropdown */}
         <div className="relative flex-shrink-0">
           <select
+            aria-label="Filter by category"
             value={filters.category || 'All Categories'}
             onChange={(e) => handleChange('category', e.target.value)}
             className={`${selectClass} w-36 sm:w-40`}
@@ -83,6 +84,7 @@ export default function ResourcesFilterBar({ filters, onFilterChange, onClear }:
         {/* Type Dropdown */}
         <div className="relative flex-shrink-0">
           <select
+            aria-label="Filter by type"
             value={filters.type || 'All Types'}
             onChange={(e) => handleChange('type', e.target.value)}
             className={`${selectClass} w-32`}
@@ -105,6 +107,7 @@ export default function ResourcesFilterBar({ filters, onFilterChange, onClear }:
         {/* Format Dropdown */}
         <div className="relative flex-shrink-0 hidden sm:block">
           <select
+            aria-label="Filter by format"
             value={filters.format || 'All Formats'}
             onChange={(e) => handleChange('format', e.target.value)}
             className={`${selectClass} w-32`}
@@ -126,6 +129,7 @@ export default function ResourcesFilterBar({ filters, onFilterChange, onClear }:
         {/* Price Dropdown */}
         <div className="relative flex-shrink-0 hidden md:block">
           <select
+            aria-label="Filter by price"
             value={filters.price || 'All Prices'}
             onChange={(e) => handleChange('price', e.target.value)}
             className={`${selectClass} w-32`}
@@ -144,6 +148,7 @@ export default function ResourcesFilterBar({ filters, onFilterChange, onClear }:
         {/* Sort Dropdown */}
         <div className="relative flex-shrink-0 hidden md:block">
           <select
+            aria-label="Sort resources"
             value={filters.sort}
             onChange={(e) => handleChange('sort', e.target.value)}
             className={`${selectClass} w-36`}
@@ -160,7 +165,7 @@ export default function ResourcesFilterBar({ filters, onFilterChange, onClear }:
         </div>
 
         {/* Action Toggle Clear Button */}
-        <button
+        <button type="button"
           className={`flex-shrink-0 w-9 h-9 flex items-center justify-center rounded-lg border transition-all ${
             hasActiveFilters
               ? "bg-[#ffd700] border-[#ffd700] text-black shadow-sm"

@@ -1,16 +1,13 @@
 import Mandala from '@/components/ui/Mandala'
+import PageBreadcrumb from '@/components/ui/PageBreadcrumb'
 
 export default function TermsHeader() {
   return (
     <div className="mb-4 md:mb-6">
-      {/* Breadcrumb */}
-      <nav className="flex items-center gap-2 text-xs md:text-sm font-mono mb-4 md:mb-6">
-        <a href="/" className="text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">
-          Home
-        </a>
-        <span className="text-gray-400 dark:text-neutral-600">/</span>
-        <span className="text-gray-900 dark:text-white font-bold">Terms of Service</span>
-      </nav>
+      <PageBreadcrumb
+        className="mb-4 md:mb-6"
+        items={[{ label: 'Home', href: '/' }, { label: 'Terms of Service' }]}
+      />
 
       {/* Page Header */}
       <div className="relative overflow-hidden bg-white dark:bg-[#09090b]/90 border border-gray-200 dark:border-neutral-900 shadow-sm dark:shadow-[0_8px_30px_rgb(0,0,0,0.5)] rounded-xl backdrop-blur-md p-5 md:p-8 mb-4 md:mb-6">

@@ -12,11 +12,17 @@ import {
   STUDENT_TYPE_LABELS,
 } from './student-benefit-types'
 import ProGateOverlay from '@/components/ProGateOverlay'
-import { useHydratedDeals } from '@/context/FeaturedDealsContext'
+import { useHydratedDeals } from '@/hooks/useHydratedDeals'
 import { StaggerGrid, StaggerGridItem } from '@/components/ui/premium-motion'
 import { isUsableLogoUrl } from '@/lib/logo-utils'
 import { resolveBrandDomain } from '@/lib/brand-domain'
 import { getStudentBenefitBadge } from '@/lib/student-benefit-badges'
+import {
+  cardTitle,
+  cardValueLabel,
+  cardDescription,
+  productWebsiteForLogo,
+} from '@/lib/card-text'
 
 const PRIORITY_COMPANIES = [
   'github',
@@ -47,21 +53,41 @@ const PRIORITY_COMPANIES = [
 
 /** Display brand for logo: product name when title/slug is the product. */
 function brandNameForLogo(benefit: StudentBenefit): string {
-  const title = `${benefit.title || ''} ${benefit.slug || ''}`
+  const title = `${benefit.title || ''} ${benefit.slug || ''} ${benefit.company || ''}`
   if (/youtube/i.test(title)) return 'YouTube'
   if (/spotify/i.test(title) && !/spotify/i.test(benefit.company || '')) return 'Spotify'
-  if (/github/i.test(title) && !/github/i.test(benefit.company || '')) return 'GitHub'
-  if (/figma/i.test(title) && !/figma/i.test(benefit.company || '')) return 'Figma'
-  if (/notion/i.test(title) && !/notion/i.test(benefit.company || '')) return 'Notion'
+  if (/github/i.test(title)) return 'GitHub'
+  if (/gitlab/i.test(title)) return 'GitLab'
+  if (/figma/i.test(title)) return 'Figma'
+  if (/notion/i.test(title)) return 'Notion'
   if (/jetbrains/i.test(title)) return 'JetBrains'
-  if (/azure/i.test(title) && /microsoft|azure/i.test(benefit.company || 'microsoft')) return 'Microsoft'
-  return benefit.company || benefit.title || 'Brand'
+  if (/cursor/i.test(title)) return 'Cursor'
+  if (/unity/i.test(title)) return 'Unity'
+  if (/firebase/i.test(title)) return 'Firebase'
+  if (/openai|chatgpt|codex/i.test(title)) return 'OpenAI'
+  if (/linkedin/i.test(title)) return 'LinkedIn'
+  if (/adobe/i.test(title)) return 'Adobe'
+  if (/visual\s*studio|vs\s*community/i.test(title)) return 'Microsoft'
+  if (/azure/i.test(title)) return 'Microsoft Azure'
+  if (/google\s*cloud|gcp/i.test(title)) return 'Google Cloud'
+  if (/microsoft|copilot/i.test(title)) return 'Microsoft'
+  // Prefer short company over long "GitHub Certification" style company strings
+  const company = (benefit.company || '').trim()
+  if (company && company.length <= 28 && !/certification|student pack|for education/i.test(company)) {
+    return company
+  }
+  // First words of title as brand
+  const head = (benefit.title || '').split(/\s+[–—-]\s+/)[0].trim()
+  if (head && head.length <= 24) return head
+  return company || head || 'Brand'
 }
 
 /** Explicit logo URL if usable — BrandLogo rebuilds the full fallback chain. */
 function explicitLogo(benefit: StudentBenefit): string {
   const l = (benefit.logo || '').trim()
   if (!l || !isUsableLogoUrl(l)) return ''
+  // Google s2 tiny favicons often render as blank/globe — let local chain win
+  if (l.includes('google.com/s2/favicons') || l.includes('gstatic.com')) return ''
   return l
 }
 
@@ -69,12 +95,20 @@ function convertToCard(benefit: StudentBenefit, idx: number) {
   const badgeInfo = getStudentBenefitBadge(benefit)
   const name = brandNameForLogo(benefit)
   const logo = explicitLogo(benefit)
-  // Claim URL host wins (YouTube under Google, etc.)
+  // Never use GitHub Student Pack URLs as the brand domain (Azure/etc. hijack)
+  const productSite = productWebsiteForLogo(benefit.claimUrl, benefit.url)
   const domain = resolveBrandDomain({
     name,
-    website: benefit.claimUrl || benefit.url,
-    logo: benefit.logo,
+    website: productSite,
+    logo: logo || undefined,
   })
+
+  const rawValue =
+    benefit.value === 'N/A' || !benefit.value
+      ? benefit.benefitType === 'Free'
+        ? 'Free access'
+        : 'Student deal'
+      : benefit.value
 
   return {
     id: benefit.slug || `${benefit.company}-${idx}`,
@@ -83,21 +117,16 @@ function convertToCard(benefit: StudentBenefit, idx: number) {
     category: benefit.category,
     badge: badgeInfo?.label,
     badgeColor: badgeInfo?.color,
-    title: benefit.title,
+    // Short title for the card; full title is on the detail page
+    title: cardTitle(benefit.title, 38),
     provider: name,
-    value:
-      benefit.value === 'N/A' || !benefit.value
-        ? benefit.benefitType === 'Free'
-          ? 'Free'
-          : 'Student deal'
-        : benefit.value,
+    value: cardValueLabel(rawValue, 16),
     valueSubtext: benefit.benefitType || 'Student',
     valueStyle:
       'bg-white dark:bg-black text-black dark:text-white border-2 border-black dark:border-white/15',
-    description: benefit.offerSummary,
+    description: cardDescription(benefit.offerSummary || benefit.description || '', 72),
     eligibility: benefit.eligibility,
-    // Keep claim URL for domain resolution + external fallbacks
-    applicationUrl: benefit.claimUrl || benefit.url,
+    applicationUrl: productSite || benefit.claimUrl || benefit.url,
     verified: true,
   }
 }
@@ -241,7 +270,7 @@ export default function StudentBenefitsGrid({ activeType, filters }: StudentBene
   const gridContent = (
     <StaggerGrid
       animKey={`${activeType}-${currentPage}-${filteredList.length}-${filters.sort}`}
-      className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-4 items-stretch"
+      className="grid grid-cols-2 lg:grid-cols-3 gap-2 md:gap-3.5 items-stretch"
     >
       {paginated.map((b, idx) => (
         <StaggerGridItem key={b.slug || `${b.company}-${startIndex + idx}`}>

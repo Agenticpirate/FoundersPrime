@@ -18,6 +18,9 @@ function VerifyEmailContent() {
   const type = searchParams.get('type')
 
   useEffect(() => {
+    let redirectTimer: ReturnType<typeof setTimeout> | null = null
+    let cancelled = false
+
     const verifyEmail = async () => {
       if (!token || type !== 'signup') {
         setStatus('error')
@@ -32,6 +35,8 @@ function VerifyEmailContent() {
           type: 'signup',
         })
 
+        if (cancelled) return
+
         if (verifyError) {
           setStatus('error')
           setError(verifyError.message)
@@ -39,18 +44,24 @@ function VerifyEmailContent() {
         }
 
         setStatus('success')
-        
-        // Redirect to dashboard after 3 seconds
-        setTimeout(() => {
+
+        // Redirect to dashboard after 3 seconds (always cleaned up on unmount)
+        redirectTimer = setTimeout(() => {
           router.push('/dashboard')
         }, 3000)
-      } catch (err) {
+      } catch {
+        if (cancelled) return
         setStatus('error')
         setError('An unexpected error occurred')
       }
     }
 
     verifyEmail()
+
+    return () => {
+      cancelled = true
+      if (redirectTimer) clearTimeout(redirectTimer)
+    }
   }, [token, type, router])
 
   return (

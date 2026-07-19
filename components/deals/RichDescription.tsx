@@ -74,11 +74,11 @@ export default function RichDescription({ text }: { text: string }) {
 
   return (
     <div className="space-y-3 text-[13.5px] text-gray-700 dark:text-gray-300 leading-relaxed">
-      {visible.map((block, i) => {
+      {visible.map((block) => {
         if (block.type === 'heading') {
           return (
             <h3
-              key={i}
+              key={`heading-${block.text}`}
               className="font-mono text-[11.5px] font-black uppercase tracking-[0.1em] text-black dark:text-white inline-flex items-center gap-2 pt-1 bg-accent-yellow/40 dark:bg-accent-yellow/20 border-2 border-black dark:border-white/10 px-2.5 py-1 rounded-sm"
             >
               <span className="w-1.5 h-1.5 bg-black dark:bg-white rounded-full" />
@@ -88,9 +88,9 @@ export default function RichDescription({ text }: { text: string }) {
         }
         if (block.type === 'bullets') {
           return (
-            <ul key={i} className="grid grid-cols-1 md:grid-cols-2 gap-x-5 gap-y-1.5">
-              {block.items.map((item, j) => (
-                <li key={j} className="flex items-start gap-2 text-[12.5px] leading-snug">
+            <ul key={`bullets-${block.items.join('|').slice(0, 48)}`} className="grid grid-cols-1 md:grid-cols-2 gap-x-5 gap-y-1.5">
+              {block.items.map((item) => (
+                <li key={item} className="flex items-start gap-2 text-[12.5px] leading-snug">
                   <span className="material-symbols-outlined text-amber-700 dark:text-accent-yellow flex-shrink-0 !text-[15px] mt-0.5">
                     check_circle
                   </span>
@@ -101,7 +101,7 @@ export default function RichDescription({ text }: { text: string }) {
           )
         }
         return (
-          <p key={i} className="text-[13px] text-gray-800 dark:text-gray-200 leading-relaxed">
+          <p key={`p-${block.text.slice(0, 48)}`} className="text-[13px] text-gray-800 dark:text-gray-200 leading-relaxed">
             {block.text}
           </p>
         )
@@ -109,7 +109,7 @@ export default function RichDescription({ text }: { text: string }) {
 
       {isLong && (
         <div className="pt-2">
-          <button
+          <button type="button"
             onClick={() => setExpanded((v) => !v)}
             className="inline-flex items-center gap-1.5 text-[11px] font-mono font-black uppercase tracking-[0.1em] text-black dark:text-white bg-white dark:bg-white/5 border-2 border-black dark:border-white/10 px-3 py-1.5 rounded-sm shadow-[2px_2px_0px_#111] dark:shadow-none hover:bg-accent-yellow dark:hover:bg-accent-yellow dark:hover:text-black hover:shadow-[3px_3px_0px_#111] dark:hover:shadow-none hover:-translate-x-px hover:-translate-y-px transition-all"
           >

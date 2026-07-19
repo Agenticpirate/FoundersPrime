@@ -39,13 +39,14 @@ export async function login(formData: FormData): Promise<AuthResult> {
     if (!data.session) {
       return { error: 'Failed to create session. Please try again.' }
     }
-
-    revalidatePath('/', 'layout')
-    redirect('/dashboard')
   } catch (error: any) {
     console.error('Login error:', error)
     return { error: 'An unexpected error occurred during login. Please try again.' }
   }
+
+  // redirect() throws a control-flow error — must stay outside try/catch
+  revalidatePath('/', 'layout')
+  redirect('/dashboard')
 }
 
 export async function signup(formData: FormData): Promise<AuthResult> {
@@ -107,7 +108,13 @@ export async function signup(formData: FormData): Promise<AuthResult> {
 
 export async function logout(): Promise<void> {
   const supabase = createClient()
-  await supabase.auth.signOut()
+  // Only touch the session when one exists — safe if called while logged out.
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
+  if (user) {
+    await supabase.auth.signOut()
+  }
   revalidatePath('/', 'layout')
   redirect('/login')
 }
@@ -128,8 +135,9 @@ export async function forgotPassword(formData: FormData): Promise<AuthResult> {
   }
 
   try {
+    const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://www.foundersprime.com'
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: `${process.env.NEXT_PUBLIC_APP_URL || 'https://www.foundersprime.com'}/auth/reset-password`,
+      redirectTo: `${appUrl}/auth/callback?next=${encodeURIComponent('/login?view=reset')}`,
     })
 
     if (error) {
@@ -153,6 +161,13 @@ export async function forgotPassword(formData: FormData): Promise<AuthResult> {
 
 export async function updatePassword(formData: FormData): Promise<AuthResult> {
   const supabase = createClient()
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
+  if (!user) {
+    return { error: 'You must be signed in to update your password.' }
+  }
 
   const password = formData.get('password') as string
 

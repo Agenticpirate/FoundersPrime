@@ -11,8 +11,7 @@ interface SearchResult {
   [key: string]: any
 }
 
-export default function SearchResults() {
-  const searchResults: SearchResult[] = [
+const searchResults: SearchResult[] = [
     {
       type: 'deal',
       title: 'AWS Activate - Up to $100,000 in Credits',
@@ -161,6 +160,7 @@ export default function SearchResults() {
     }
   ]
 
+export default function SearchResults() {
   return (
     <div>
       {/* Results Header */}
@@ -177,10 +177,10 @@ export default function SearchResults() {
         <div className="flex items-center gap-2">
           <span className="font-mono text-sm text-gray-600">View:</span>
           <div className="flex border-2 border-black rounded-sm overflow-hidden">
-            <button className="p-2 bg-primary border-r-2 border-black">
+            <button type="button" className="p-2 bg-primary border-r-2 border-black">
               <span className="material-symbols-outlined text-sm">view_list</span>
             </button>
-            <button className="p-2 bg-white hover:bg-gray-100">
+            <button type="button" className="p-2 bg-white hover:bg-gray-100">
               <span className="material-symbols-outlined text-sm">grid_view</span>
             </button>
           </div>
@@ -189,20 +189,20 @@ export default function SearchResults() {
 
       {/* Results List */}
       <div className="space-y-6">
-        {searchResults.map((result, index) => (
-          <SearchResultCard key={index} result={result} />
+        {searchResults.map((result) => (
+          <SearchResultCard key={result.id || result.slug || result.title || result.href} result={result} />
         ))}
       </div>
 
       {/* Pagination */}
       <div className="mt-12 flex items-center justify-center gap-2">
-        <button className="px-4 py-2 border-2 border-black bg-white hover:bg-gray-100 font-mono font-bold rounded-sm transition-colors disabled:opacity-50" disabled>
+        <button type="button" className="px-4 py-2 border-2 border-black bg-white hover:bg-gray-100 font-mono font-bold rounded-sm transition-colors disabled:opacity-50" disabled>
           Previous
         </button>
 
         <div className="flex gap-1">
           {[1, 2, 3, 4, 5].map((page) => (
-            <button
+            <button type="button"
               key={page}
               className={`px-4 py-2 border-2 border-black font-mono font-bold rounded-sm transition-colors ${page === 1
                   ? 'bg-primary text-black'
@@ -213,12 +213,12 @@ export default function SearchResults() {
             </button>
           ))}
           <span className="px-4 py-2 text-gray-400">...</span>
-          <button className="px-4 py-2 border-2 border-black bg-white hover:bg-gray-100 font-mono font-bold rounded-sm transition-colors">
+          <button type="button" className="px-4 py-2 border-2 border-black bg-white hover:bg-gray-100 font-mono font-bold rounded-sm transition-colors">
             125
           </button>
         </div>
 
-        <button className="px-4 py-2 border-2 border-black bg-white hover:bg-gray-100 font-mono font-bold rounded-sm transition-colors">
+        <button type="button" className="px-4 py-2 border-2 border-black bg-white hover:bg-gray-100 font-mono font-bold rounded-sm transition-colors">
           Next
         </button>
       </div>
@@ -227,7 +227,7 @@ export default function SearchResults() {
       <div className="mt-6 text-center">
         <div className="flex items-center justify-center gap-2">
           <span className="font-mono text-sm text-gray-600">Results per page:</span>
-          <select className="px-3 py-1 border-2 border-black rounded-sm font-mono text-sm bg-white">
+          <select aria-label="Results per page" className="px-3 py-1 border-2 border-black rounded-sm font-mono text-sm bg-white">
             <option value="10">10</option>
             <option value="25">25</option>
             <option value="50">50</option>

@@ -5,7 +5,7 @@ import Link from 'next/link'
 import AdminHeader from '@/components/admin/AdminHeader'
 import AdminStatCard from '@/components/admin/ui/AdminStatCard'
 import ideasData from '@/data/startup_ideas.json'
-import { ideaIdFromTitle } from '@/components/ideas/IdeaSaveButton'
+import { ideaIdFromTitle } from '@/lib/ideas'
 
 type Idea = {
   title: string
@@ -21,7 +21,7 @@ export default function AdminIdeasPage() {
   const [category, setCategory] = useState('')
 
   const categories = useMemo(() => {
-    const c = new Set(ideas.map((i) => i.category).filter(Boolean))
+    const c = new Set(ideas.flatMap((i) => (i.category ? [i.category] : [])))
     return Array.from(c).sort()
   }, [ideas])
 
@@ -79,6 +79,7 @@ export default function AdminIdeasPage() {
             className="flex-1 min-h-[44px] px-3 py-2 rounded-lg border border-white/10 bg-[#0d0e12] text-white font-mono text-sm focus:outline-none focus:border-accent-yellow/40"
           />
           <select
+            aria-label="Filter ideas by market"
             value={category}
             onChange={(e) => setCategory(e.target.value)}
             className="min-h-[44px] px-3 py-2 rounded-lg border border-white/10 bg-[#0d0e12] text-white font-mono text-sm"

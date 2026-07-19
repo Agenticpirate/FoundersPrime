@@ -5,7 +5,7 @@ import ideasData from '@/data/startup_ideas.json'
 import IdeasFilterBar, { type IdeasFilterState } from './IdeasFilterBar'
 import IdeasGrid from './IdeasGrid'
 import IdeasSidebar from './IdeasSidebar'
-import { getSignalScore } from './IdeaCard'
+import { getSignalScore } from '@/lib/ideas'
 
 const DEFAULT_FILTERS: IdeasFilterState = {
   search: '',
@@ -99,7 +99,7 @@ export default function IdeasContent() {
         onReset={handleReset}
       />
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-7">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-6">
         <div className="lg:col-span-8 min-w-0 order-2 lg:order-1">
           <IdeasGrid ideas={filteredIdeas} onClearFilters={handleReset} />
         </div>

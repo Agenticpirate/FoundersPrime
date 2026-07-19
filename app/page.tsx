@@ -8,6 +8,7 @@ import ProblemSection from '@/components/ProblemSection'
 import SystemModules from '@/components/SystemModules'
 import Footer from '@/components/Footer'
 import HashScroll from '@/components/HashScroll'
+import { safeJsonLd } from '@/lib/safe-json-ld'
 
 /* ─── Below-fold: lazy-loaded to reduce initial JS parse cost ─── */
 const FounderLogs = dynamic(() => import('@/components/FounderLogs'))
@@ -75,7 +76,7 @@ export default function Home() {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: safeJsonLd(jsonLd) }}
       />
       <HashScroll />
       <AnnouncementBar />

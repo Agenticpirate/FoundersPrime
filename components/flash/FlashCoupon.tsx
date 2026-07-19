@@ -40,75 +40,74 @@ const PLANS = [
 
 export default function FlashCoupon() {
   return (
-    <div className="space-y-2.5">
-      <p className="flex items-center gap-1.5 font-mono text-[9px] font-black uppercase tracking-[0.2em] text-gray-500">
+    <div className="space-y-1.5 sm:space-y-2.5 w-full max-w-lg">
+      <p className="flex items-center gap-1.5 font-mono text-[8px] sm:text-[9px] font-black uppercase tracking-[0.16em] text-gray-500">
         <span
-          className="material-symbols-outlined text-[12px] text-accent-yellow"
+          className="material-symbols-outlined text-[11px] sm:text-[12px] text-accent-yellow"
           style={{ fontVariationSettings: "'FILL' 1" }}
         >
           local_offer
         </span>
-        Membership — launch pricing
+        Launch pricing
       </p>
 
-      <div className="flex flex-wrap gap-2">
+      {/* Always one row — equal width cards */}
+      <div className="grid grid-cols-3 gap-1.5 sm:gap-2 w-full">
         {PLANS.map((p) => (
           <Link
             key={p.plan}
             href="/pricing"
-            className="group relative flex items-center gap-2 px-3 py-2 rounded-xl transition-all duration-200 hover:-translate-y-0.5 hover:brightness-110"
+            className="group relative flex min-w-0 flex-col sm:flex-row sm:items-center gap-1 sm:gap-2 px-2 sm:px-2.5 py-2 sm:py-2 rounded-lg sm:rounded-xl transition-all duration-200 md:hover:-translate-y-0.5 hover:brightness-110"
             style={{
               background: `${p.color}12`,
               border: `1.5px solid ${p.color}45`,
-              boxShadow: `0 0 14px ${p.glow.replace('0.5', '0.1')}`,
+              boxShadow: `0 0 12px ${p.glow.replace('0.5', '0.08')}`,
             }}
           >
             <span
-              className="material-symbols-outlined text-[15px] flex-shrink-0"
+              className="material-symbols-outlined text-[14px] sm:text-[15px] flex-shrink-0"
               style={{ color: p.color, fontVariationSettings: "'FILL' 1" }}
             >
               {p.icon}
             </span>
-            <div className="min-w-0">
+            <div className="min-w-0 flex-1">
               <p
-                className="font-mono text-[8px] uppercase tracking-widest"
+                className="font-mono text-[7px] sm:text-[8px] uppercase tracking-widest truncate"
                 style={{ color: `${p.color}aa` }}
               >
                 {p.tag}
               </p>
-              <div className="flex items-baseline gap-1.5 flex-wrap">
+              <div className="flex items-baseline gap-1 flex-wrap">
                 <span
-                  className="font-mono font-black text-[15px] leading-none"
+                  className="font-mono font-black text-[13px] sm:text-[15px] leading-none"
                   style={{ color: p.color }}
                 >
                   {p.price}
                 </span>
-                <span className="text-[9px] text-gray-500 line-through font-mono">
+                <span className="text-[8px] sm:text-[9px] text-gray-500 line-through font-mono">
                   {p.originalPrice}
                 </span>
+              </div>
+              <div className="flex items-center gap-1 mt-0.5 flex-wrap">
                 <span
-                  className="text-[8px] font-black font-mono px-1 py-0.5 rounded"
+                  className="text-[7px] sm:text-[8px] font-black font-mono px-1 py-0.5 rounded leading-none"
                   style={{ background: `${p.color}22`, color: p.color }}
                 >
                   {p.discount}
                 </span>
+                <span className="font-mono text-[7px] sm:text-[8px] text-gray-500 truncate">
+                  {p.period}
+                </span>
               </div>
-              <p className="font-mono text-[8px] text-gray-500">
-                {p.plan} · {p.period}
-              </p>
             </div>
-            <span
-              className="material-symbols-outlined text-[12px] opacity-0 group-hover:opacity-100 transition-opacity ml-auto flex-shrink-0"
-              style={{ color: p.color }}
-            >
-              arrow_forward
-            </span>
           </Link>
         ))}
       </div>
 
-      <p className="flex items-center gap-1.5 font-sans text-[10.5px] text-gray-600 dark:text-gray-500">
-        <span className="material-symbols-outlined text-[13px] text-gray-500">info</span>
+      <p className="flex items-center gap-1.5 font-sans text-[10px] sm:text-[10.5px] text-gray-600 dark:text-gray-500">
+        <span className="material-symbols-outlined text-[12px] sm:text-[13px] text-gray-500">
+          info
+        </span>
         Launch rates won&apos;t last.{' '}
         <Link href="/pricing" className="text-accent-yellow hover:underline font-semibold">
           See all plans →

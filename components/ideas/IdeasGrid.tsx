@@ -58,7 +58,7 @@ export default function IdeasGrid({ ideas, onClearFilters }: IdeasGridProps) {
           <button
             type="button"
             onClick={onClearFilters}
-            className="inline-flex h-9 items-center gap-1.5 px-4 rounded-xl bg-gray-900 dark:bg-white text-white dark:text-black font-mono text-[11px] font-bold uppercase tracking-wide hover:bg-accent-yellow hover:text-black transition-colors"
+            className="inline-flex h-9 items-center gap-1.5 px-4 rounded-xl bg-[#000000] text-white border border-[#FFD500]/40 font-mono text-[11px] font-bold uppercase tracking-wide hover:bg-[#FFD500] hover:text-black hover:border-[#FFD500] transition-all duration-200"
           >
             <span className="material-symbols-outlined !text-[15px]">restart_alt</span>
             Clear filters
@@ -72,7 +72,7 @@ export default function IdeasGrid({ ideas, onClearFilters }: IdeasGridProps) {
     <div id="ideas-results">
       <StaggerGrid
         animKey={`${safePage}-${ideas.length}-${currentIdeas[0]?.title || ''}`}
-        className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3.5 md:gap-4 mb-8"
+        className="grid grid-cols-2 xl:grid-cols-3 gap-2 md:gap-3.5 mb-6 md:mb-8"
       >
         {currentIdeas.map((idea: any, index: number) => (
           <StaggerGridItem

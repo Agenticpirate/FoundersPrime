@@ -1,6 +1,36 @@
 // User Context and Pro Status Utilities
 import { createClient } from '@/lib/supabase/client'
 
+export type UserPlan = 'free' | 'nextfounder' | 'founder' | 'legend'
+
+/**
+ * Normalize canonical, legacy, and human-readable plan values from storage.
+ * Unknown values fail closed to free instead of leaking through as an invalid badge key.
+ */
+export function normalizeUserPlan(plan?: string | null): UserPlan {
+  const normalized = (plan || '')
+    .trim()
+    .toLowerCase()
+    .replace(/[\s_-]+/g, '')
+
+  switch (normalized) {
+    case 'nextfounder':
+    case 'explorer':
+    case 'campus':
+    case 'student':
+      return 'nextfounder'
+    case 'founder':
+    case 'pro':
+      return 'founder'
+    case 'legend':
+    case 'proplus':
+    case 'lifetime':
+      return 'legend'
+    default:
+      return 'free'
+  }
+}
+
 export interface UserProfile {
   id: string
   email: string
@@ -8,7 +38,7 @@ export interface UserProfile {
   isPro: boolean        // True for Founder, Legend, Admin (Full Access)
   isNextFounder: boolean // True for NextFounder / Student plan ($1/yr)
   isAdmin: boolean
-  plan: 'free' | 'nextfounder' | 'founder' | 'legend'
+  plan: UserPlan
   subscription?: {
     plan: 'free' | 'nextfounder' | 'founder' | 'legend' | 'campus' | 'explorer' | 'pro' | 'pro-plus'
     status: 'active' | 'cancelled' | 'expired'
@@ -163,16 +193,12 @@ async function fetchAndCacheProStatus(): Promise<{
       .limit(1)
       .maybeSingle()
 
-    let computedPlan: 'free' | 'nextfounder' | 'founder' | 'legend' = 'free'
+    let computedPlan: UserPlan = 'free'
     
     if (isAdmin || isHardcodedPro) {
       computedPlan = 'legend'
     } else if (subData) {
-      // Map legacy 'explorer' / 'campus' subscriptions to 'nextfounder'
-      const dbPlan = subData.plan as string
-      computedPlan = (
-        dbPlan === 'explorer' || dbPlan === 'campus' ? 'nextfounder' : dbPlan
-      ) as any
+      computedPlan = normalizeUserPlan(subData.plan as string)
     }
 
     const isPro = ['founder', 'legend'].includes(computedPlan) || isAdmin
@@ -205,6 +231,9 @@ async function fetchAndCacheProStatus(): Promise<{
       try {
         sessionStorage.setItem('user_pro_status', JSON.stringify(result))
       } catch {}
+      window.dispatchEvent(
+        new CustomEvent('foundersprime:access-updated', { detail: result })
+      )
     }
 
     return result

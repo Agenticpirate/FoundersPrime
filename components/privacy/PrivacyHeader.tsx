@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import Mandala from '@/components/ui/Mandala'
 
 export default function PrivacyHeader() {
@@ -5,9 +6,9 @@ export default function PrivacyHeader() {
     <div className="mb-4 md:mb-6">
       {/* Breadcrumb */}
       <nav className="flex items-center gap-2 text-xs md:text-sm font-mono mb-4 md:mb-6">
-        <a href="/" className="text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">
+        <Link href="/" className="text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">
           Home
-        </a>
+        </Link>
         <span className="text-gray-400 dark:text-neutral-600">/</span>
         <span className="text-gray-900 dark:text-white font-bold">Privacy Policy</span>
       </nav>

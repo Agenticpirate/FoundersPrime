@@ -89,13 +89,13 @@ export default function Mandala({
           <>
             <circle cx="100" cy="100" r="40" />
             <circle cx="100" cy="100" r="60" strokeDasharray="2 4" />
-            {[...Array(12)].map((_, i) => (
+            {Array.from({ length: 12 }, (_, i) => i * 30).map((deg) => (
               <line
-                key={i}
+                key={`mandala-ray-${deg}`}
                 x1="100"
                 y1="100"
-                x2={100 + Math.cos((i * Math.PI) / 6) * 90}
-                y2={100 + Math.sin((i * Math.PI) / 6) * 90}
+                x2={100 + Math.cos((deg * Math.PI) / 180) * 90}
+                y2={100 + Math.sin((deg * Math.PI) / 180) * 90}
                 strokeDasharray="3 4"
               />
             ))}
@@ -107,7 +107,7 @@ export default function Mandala({
           <>
             {[20, 35, 50, 65].map((r, i) => (
               <ellipse
-                key={i}
+                key={r}
                 cx="100"
                 cy="100"
                 rx={r}

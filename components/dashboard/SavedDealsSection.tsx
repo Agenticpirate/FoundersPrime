@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import Image from 'next/image'
 
 interface Deal {
   id: string
@@ -30,8 +29,9 @@ export default function SavedDealsSection({ savedDealSlugs }: SavedDealsSectionP
         const data = await response.json()
 
         if (data.success) {
-          const savedDeals = data.deals.filter((deal: Deal) =>
-            savedDealSlugs.includes(deal.slug) || savedDealSlugs.includes(deal.id)
+          const savedSet = new Set(savedDealSlugs)
+          const savedDeals = data.deals.filter(
+            (deal: Deal) => savedSet.has(deal.slug) || savedSet.has(deal.id)
           )
           setDeals(savedDeals)
         }
@@ -99,14 +99,13 @@ export default function SavedDealsSection({ savedDealSlugs }: SavedDealsSectionP
             className="border-2 border-black dark:border-white/10 bg-white dark:bg-[#0d0d0d] shadow-[4px_4px_0px_#111111] dark:shadow-[4px_4px_0px_rgba(255,255,255,0.06)] p-4 hover:shadow-[6px_6px_0px_#111111] dark:hover:shadow-[6px_6px_0px_rgba(255,255,255,0.1)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all"
           >
             <div className="flex items-start gap-3 mb-3">
-              <div className="w-10 h-10 bg-gray-100 dark:bg-white/5 border-2 border-black dark:border-white/20 rounded flex items-center justify-center overflow-hidden flex-shrink-0 relative">
+              <div className="w-10 h-10 bg-white dark:bg-white border-2 border-black dark:border-white/20 rounded flex items-center justify-center overflow-visible flex-shrink-0 relative p-2">
                 {deal.logoUrl ? (
-                  <Image
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
                     src={deal.logoUrl}
                     alt={deal.title}
-                    fill
-                    sizes="40px"
-                    className="object-contain"
+                    className="w-full h-full object-contain"
                   />
                 ) : (
                   <span className="text-lg font-bold text-black dark:text-white">{deal.provider.charAt(0)}</span>
@@ -116,7 +115,7 @@ export default function SavedDealsSection({ savedDealSlugs }: SavedDealsSectionP
                 <h3 className="font-bold text-sm truncate text-black dark:text-white">{deal.title}</h3>
                 <p className="text-xs text-gray-500 dark:text-gray-400">{deal.provider}</p>
               </div>
-              <button
+              <button type="button"
                 onClick={() => handleRemove(deal.slug || deal.id)}
                 className="text-gray-400 hover:text-red-500 transition-colors"
                 title="Remove from saved"

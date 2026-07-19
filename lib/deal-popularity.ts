@@ -445,7 +445,7 @@ export function compareDealsByPopularity(
   return (a.title || '').localeCompare(b.title || '')
 }
 
-export function sortDealsPopularFirst<T extends PopularityDealInput & { title?: string | null }>(
+function sortDealsPopularFirst<T extends PopularityDealInput & { title?: string | null }>(
   deals: T[]
 ): T[] {
   const now = Date.now()

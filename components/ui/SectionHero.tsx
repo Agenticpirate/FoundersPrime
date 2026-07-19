@@ -96,7 +96,7 @@ export default function SectionHero({
         {/* Right: inline stat strip */}
         <div className={`grid grid-cols-3 gap-2.5 lg:gap-3 lg:flex-shrink-0 ${statsMinWidth}`}>
           {stats.map((stat, i) => (
-            <StatCard key={i} {...stat} delay={stat.delay ?? `${i * 0.08}s`} />
+            <StatCard key={stat.label || stat.value || `stat-${i}`} {...stat} delay={stat.delay ?? `${i * 0.08}s`} />
           ))}
         </div>
       </div>

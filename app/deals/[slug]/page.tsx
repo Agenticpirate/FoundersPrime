@@ -16,6 +16,7 @@ import { accelerators2026 } from '@/data/accelerators-2026'
 import { incubators2026 } from '@/data/incubators-2026'
 import { grants2026 } from '@/data/grants-2026'
 import { merchantReturnPolicy } from '@/lib/seo/merchant-return-policy'
+import { safeJsonLd } from '@/lib/safe-json-ld'
 
 // Statically generate deal pages and refresh them periodically (ISR).
 // Content is identical for every visitor — the only per-user element (the
@@ -273,8 +274,7 @@ interface PageProps {
 }
 
 export default async function SingleDealPage({ params }: PageProps) {
-  try {
-    const allDeals = getAllDeals()
+  const allDeals = getAllDeals()
 
     // Log for debugging slug lookups
 
@@ -430,14 +430,6 @@ export default async function SingleDealPage({ params }: PageProps) {
 
     if (!dealData) {
 
-      // Log similar slugs for debugging
-      const similarSlugs = allDeals
-        .filter((d: any) => d.slug && d.slug.includes(params.slug.substring(0, 5)))
-        .map((d: any) => d.slug)
-        .slice(0, 5)
-      if (similarSlugs.length > 0) {
-
-      }
       notFound()
     }
 
@@ -596,7 +588,7 @@ export default async function SingleDealPage({ params }: PageProps) {
       <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden bg-gray-50 dark:bg-[#000000] text-[#1a1a1a] dark:text-white transition-colors duration-300">
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          dangerouslySetInnerHTML={{ __html: safeJsonLd(jsonLd) }}
         />
         <Header />
         <main className="flex-1">
@@ -650,10 +642,6 @@ export default async function SingleDealPage({ params }: PageProps) {
         <Footer />
       </div>
     )
-  } catch (error) {
-    console.error('Error rendering deal page:', error)
-    notFound()
-  }
 }
 
 // Pre-render all known deal/program slugs at build time. Combined with

@@ -7,6 +7,14 @@ import AdminHeader from '@/components/admin/AdminHeader'
 import AdminStatCard from '@/components/admin/ui/AdminStatCard'
 import { RefreshCw, Search } from 'lucide-react'
 
+const statusChip = (st: string) => {
+  if (st === 'pending') return 'bg-amber-500/15 text-accent-yellow border-amber-500/30'
+  if (st === 'approved') return 'bg-emerald-500/15 text-emerald-400 border-emerald-500/30'
+  if (st === 'changes_requested') return 'bg-sky-500/15 text-sky-300 border-sky-500/30'
+  if (st === 'spam') return 'bg-zinc-500/15 text-zinc-400 border-zinc-500/30'
+  return 'bg-red-500/15 text-red-300 border-red-500/30'
+}
+
 export default function AdminSubmissionsPage() {
   const [submissions, setSubmissions] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
@@ -66,13 +74,6 @@ export default function AdminSubmissionsPage() {
     })
   }, [submissions, status, featuredOnly, query])
 
-  const statusChip = (st: string) => {
-    if (st === 'pending') return 'bg-amber-500/15 text-accent-yellow border-amber-500/30'
-    if (st === 'approved') return 'bg-emerald-500/15 text-emerald-400 border-emerald-500/30'
-    if (st === 'changes_requested') return 'bg-sky-500/15 text-sky-300 border-sky-500/30'
-    if (st === 'spam') return 'bg-zinc-500/15 text-zinc-400 border-zinc-500/30'
-    return 'bg-red-500/15 text-red-300 border-red-500/30'
-  }
 
   return (
     <>

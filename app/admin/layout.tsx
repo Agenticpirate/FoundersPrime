@@ -21,7 +21,8 @@ export default function AdminLayout({
     <AdminAuthGuard>
       <div className="min-h-screen bg-[#090a0f] antialiased flex flex-col md:flex-row overflow-x-hidden">
         <AdminSidebar />
-        <main className="flex-1 flex flex-col min-h-screen">
+        {/* min-w-0 prevents flex child overflow from breaking the layout */}
+        <main className="flex-1 flex flex-col min-h-screen min-w-0 w-full max-w-full overflow-x-hidden">
           {children}
         </main>
       </div>

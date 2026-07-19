@@ -1,37 +1,43 @@
+import Link from 'next/link'
+const tableOfContents = [
+  { title: 'Information We Collect', anchor: '#information-we-collect' },
+  { title: 'How We Use Information', anchor: '#how-we-use-information' },
+  { title: 'Information Sharing', anchor: '#information-sharing' },
+  { title: 'Data Security', anchor: '#data-security' },
+  { title: 'Your Rights', anchor: '#your-rights' },
+  { title: 'Cookies & Tracking', anchor: '#cookies-tracking' },
+  { title: 'International Transfers', anchor: '#international-transfers' },
+  { title: 'Data Retention', anchor: '#data-retention' },
+  { title: 'Children\'s Privacy', anchor: '#children-privacy' },
+  { title: 'Policy Changes', anchor: '#policy-changes' }
+]
+
+const quickActions = [
+  { title: 'Download Your Data', icon: 'download', description: 'Export all your personal data' },
+  { title: 'Update Preferences', icon: 'settings', description: 'Manage privacy settings' },
+  { title: 'Delete Account', icon: 'delete', description: 'Permanently remove your account' },
+  { title: 'Contact Privacy Team', icon: 'support_agent', description: 'Get help with privacy questions' }
+]
+
+const certifications = [
+  { name: 'SOC 2 Type II', icon: 'verified', description: 'Security and availability controls' },
+  { name: 'GDPR Compliant', icon: 'gavel', description: 'European data protection standards' },
+  { name: 'CCPA Compliant', icon: 'shield', description: 'California privacy rights' },
+  { name: 'ISO 27001', icon: 'security', description: 'Information security management' }
+]
+
+const privacyStats = [
+  { metric: '0', label: 'Data Breaches', icon: 'security' },
+  { metric: '256-bit', label: 'Encryption', icon: 'lock' },
+  { metric: '24/7', label: 'Monitoring', icon: 'visibility' },
+  { metric: '30 days', label: 'Response Time', icon: 'schedule' }
+]
+
+
 export default function PrivacySidebar() {
-  const tableOfContents = [
-    { title: 'Information We Collect', anchor: '#information-we-collect' },
-    { title: 'How We Use Information', anchor: '#how-we-use-information' },
-    { title: 'Information Sharing', anchor: '#information-sharing' },
-    { title: 'Data Security', anchor: '#data-security' },
-    { title: 'Your Rights', anchor: '#your-rights' },
-    { title: 'Cookies & Tracking', anchor: '#cookies-tracking' },
-    { title: 'International Transfers', anchor: '#international-transfers' },
-    { title: 'Data Retention', anchor: '#data-retention' },
-    { title: 'Children\'s Privacy', anchor: '#children-privacy' },
-    { title: 'Policy Changes', anchor: '#policy-changes' }
-  ]
 
-  const quickActions = [
-    { title: 'Download Your Data', icon: 'download', description: 'Export all your personal data' },
-    { title: 'Update Preferences', icon: 'settings', description: 'Manage privacy settings' },
-    { title: 'Delete Account', icon: 'delete', description: 'Permanently remove your account' },
-    { title: 'Contact Privacy Team', icon: 'support_agent', description: 'Get help with privacy questions' }
-  ]
 
-  const certifications = [
-    { name: 'SOC 2 Type II', icon: 'verified', description: 'Security and availability controls' },
-    { name: 'GDPR Compliant', icon: 'gavel', description: 'European data protection standards' },
-    { name: 'CCPA Compliant', icon: 'shield', description: 'California privacy rights' },
-    { name: 'ISO 27001', icon: 'security', description: 'Information security management' }
-  ]
 
-  const privacyStats = [
-    { metric: '0', label: 'Data Breaches', icon: 'security' },
-    { metric: '256-bit', label: 'Encryption', icon: 'lock' },
-    { metric: '24/7', label: 'Monitoring', icon: 'visibility' },
-    { metric: '30 days', label: 'Response Time', icon: 'schedule' }
-  ]
 
   return (
     <div className="space-y-6">
@@ -43,7 +49,7 @@ export default function PrivacySidebar() {
         <nav className="space-y-2">
           {tableOfContents.map((item, index) => (
             <a
-              key={index}
+              key={item.title}
               href={item.anchor}
               className="block font-sans text-sm text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors py-1 border-l-2 border-transparent hover:border-primary pl-3"
             >
@@ -60,8 +66,8 @@ export default function PrivacySidebar() {
         </h3>
         <div className="space-y-3">
           {quickActions.map((action, index) => (
-            <button
-              key={index}
+            <button type="button"
+              key={action.title}
               className="w-full flex items-start gap-3 p-3 border border-gray-200 dark:border-neutral-800 bg-gray-50 dark:bg-neutral-900/50 hover:bg-gray-100 dark:hover:bg-neutral-800 rounded-xl transition-colors text-left"
             >
               <span className="material-symbols-outlined text-primary mt-0.5">{action.icon}</span>
@@ -81,7 +87,7 @@ export default function PrivacySidebar() {
         </h3>
         <div className="space-y-4">
           {privacyStats.map((stat, index) => (
-            <div key={index} className="flex items-center justify-between">
+            <div key={stat.label} className="flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <span className="material-symbols-outlined text-primary">{stat.icon}</span>
                 <span className="font-sans text-sm text-gray-700 dark:text-gray-300">{stat.label}</span>
@@ -99,7 +105,7 @@ export default function PrivacySidebar() {
         </h3>
         <div className="space-y-4">
           {certifications.map((cert, index) => (
-            <div key={index} className="flex items-start gap-3">
+            <div key={cert.name} className="flex items-start gap-3">
               <span className="material-symbols-outlined text-green-500 mt-1">{cert.icon}</span>
               <div>
                 <p className="font-mono text-sm font-bold text-gray-900 dark:text-white">{cert.name}</p>
@@ -172,18 +178,18 @@ export default function PrivacySidebar() {
           Related Policies
         </h3>
         <div className="space-y-2">
-          <a href="/terms" className="block font-mono text-sm text-primary hover:text-gray-900 dark:hover:text-white transition-colors py-1">
+          <Link href="/terms" className="block font-mono text-sm text-primary hover:text-gray-900 dark:hover:text-white transition-colors py-1">
             Terms of Service
-          </a>
-          <a href="/cookies" className="block font-mono text-sm text-primary hover:text-gray-900 dark:hover:text-white transition-colors py-1">
+          </Link>
+          <Link href="/cookies" className="block font-mono text-sm text-primary hover:text-gray-900 dark:hover:text-white transition-colors py-1">
             Cookie Policy
-          </a>
-          <a href="/refund" className="block font-mono text-sm text-primary hover:text-gray-900 dark:hover:text-white transition-colors py-1">
+          </Link>
+          <Link href="/refund" className="block font-mono text-sm text-primary hover:text-gray-900 dark:hover:text-white transition-colors py-1">
             Refund Policy
-          </a>
-          <a href="/security" className="block font-mono text-sm text-primary hover:text-gray-900 dark:hover:text-white transition-colors py-1">
+          </Link>
+          <Link href="/security" className="block font-mono text-sm text-primary hover:text-gray-900 dark:hover:text-white transition-colors py-1">
             Security Policy
-          </a>
+          </Link>
         </div>
       </div>
 

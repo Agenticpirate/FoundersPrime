@@ -2,14 +2,16 @@
 
 import { useState, useCallback, useEffect, useRef } from 'react'
 import Link from 'next/link'
-import { useRouter, useSearchParams, usePathname } from 'next/navigation'
-import { motion, useReducedMotion } from 'framer-motion'
+import { useSearchParams, usePathname } from 'next/navigation'
+import { replaceUrlQuiet } from '@/lib/url-sync'
+import { m, useReducedMotion } from 'framer-motion'
 import StudentBenefitsSidebar, { type StudentBenefitType } from './StudentBenefitsSidebar'
 import StudentBenefitsFilterBar, {
   type StudentBenefitsFilterState,
 } from './StudentBenefitsFilterBar'
 import StudentBenefitsGrid from './StudentBenefitsGrid'
-import { FadeUp, premiumEase } from '@/components/ui/premium-motion'
+import { FadeUp } from '@/components/ui/premium-motion'
+import { premiumEase } from '@/lib/premium-motion-variants'
 import { STUDENT_TYPE_LABELS } from './student-benefit-types'
 
 function readFromUrl(params: URLSearchParams): {
@@ -51,7 +53,7 @@ function StudentPromoteBanner() {
         className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-accent-yellow/40 to-transparent"
       />
       {!reduce && (
-        <motion.div
+        <m.div
           aria-hidden
           className="pointer-events-none absolute -left-1/3 top-0 h-full w-1/3 bg-gradient-to-r from-transparent via-white/40 dark:via-white/5 to-transparent skew-x-12"
           animate={{ x: ['0%', '350%'] }}
@@ -60,14 +62,14 @@ function StudentPromoteBanner() {
       )}
 
       <div className="relative z-10 flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-2xl border border-black/[0.06] dark:border-white/10 bg-accent-yellow/20 dark:bg-accent-yellow/10 shadow-sm">
-        <motion.span
+        <m.span
           className="material-symbols-outlined text-amber-700 dark:text-accent-yellow !text-[22px]"
           style={{ fontVariationSettings: "'FILL' 1" }}
           animate={reduce ? undefined : { scale: [1, 1.08, 1] }}
           transition={{ duration: 2.4, repeat: Infinity, ease: 'easeInOut' }}
         >
           campaign
-        </motion.span>
+        </m.span>
       </div>
 
       <div className="relative z-10 min-w-0 flex-1">
@@ -105,7 +107,6 @@ export default function StudentBenefitsUnifiedContent({
   initialType?: StudentBenefitType
   initialFilters?: StudentBenefitsFilterState
 }) {
-  const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
   const reduceMotion = useReducedMotion()
@@ -119,7 +120,7 @@ export default function StudentBenefitsUnifiedContent({
   )
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false)
 
-  const lastWrittenUrlRef = useRef(searchParams.toString())
+  const lastWrittenUrlRef = useRef<string | null>(null)
   const isFirstSync = useRef(true)
 
   useEffect(() => {
@@ -144,7 +145,7 @@ export default function StudentBenefitsUnifiedContent({
     const next = params.toString()
     lastWrittenUrlRef.current = next
     const url = next ? `${pathname}?${next}` : pathname
-    router.replace(url, { scroll: false })
+    replaceUrlQuiet(url)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     activeType,
@@ -157,7 +158,7 @@ export default function StudentBenefitsUnifiedContent({
 
   useEffect(() => {
     const current = searchParams.toString()
-    if (current === lastWrittenUrlRef.current) return
+    if (lastWrittenUrlRef.current !== null && current === lastWrittenUrlRef.current) return
     lastWrittenUrlRef.current = current
     const { type, filters: fromUrl } = readFromUrl(new URLSearchParams(current))
     setActiveType(type)
@@ -213,8 +214,10 @@ export default function StudentBenefitsUnifiedContent({
       </div>
 
       {mobileSidebarOpen && (
-        <div
-          className="fixed inset-0 bg-black/40 z-40 lg:hidden backdrop-blur-[2px]"
+        <button
+          type="button"
+          aria-label="Close filters"
+          className="fixed inset-0 z-40 border-0 bg-black/40 p-0 lg:hidden backdrop-blur-[2px] cursor-default"
           onClick={() => setMobileSidebarOpen(false)}
         />
       )}
@@ -255,14 +258,14 @@ export default function StudentBenefitsUnifiedContent({
               currentFilters={filters}
             />
           </FadeUp>
-          <motion.div
+          <m.div
             key={activeType}
             initial={reduceMotion ? false : { opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.35, ease: premiumEase }}
           >
             <StudentBenefitsGrid activeType={activeType} filters={filters} />
-          </motion.div>
+          </m.div>
         </div>
       </div>
     </div>

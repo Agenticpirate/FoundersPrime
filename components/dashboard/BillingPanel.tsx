@@ -5,6 +5,9 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 import DodoPaymentsBadge from '@/components/ui/DodoPaymentsBadge'
+import { formatDateLong, formatMonthYear } from '@/lib/format-date'
+import { PLAN_LABELS, PLAN_PRICES, PLAN_ICONS, PLAN_FEATURES } from './billing-plan-config'
+import BillingCancelModal from './BillingCancelModal'
 
 type Subscription = {
   id: string
@@ -16,52 +19,6 @@ type Subscription = {
   stripe_subscription_id: string | null
   created_at: string
 } | null
-
-const PLAN_LABELS: Record<string, string> = {
-  nextfounder: "Next'Founder",
-  founder: 'Founder',
-  legend: 'Legend (Lifetime)',
-}
-
-const PLAN_PRICES: Record<string, string> = {
-  nextfounder: '$1/year',
-  founder: '$48/year',
-  legend: '$99 one-time',
-}
-
-const PLAN_ICONS: Record<string, string> = {
-  nextfounder: 'rocket_launch',
-  founder: 'workspace_premium',
-  legend: 'diamond',
-  free: 'person',
-  admin: 'admin_panel_settings',
-}
-
-const PLAN_FEATURES: Record<string, string[]> = {
-  nextfounder: [
-    '1,000+ student discounts',
-    'AI & SaaS credits for builders',
-    'Hackathons & early grants',
-    'Opportunity Hub access',
-  ],
-  founder: [
-    'Full cloud & SaaS catalog',
-    'Unlimited deal claims',
-    'Grants & accelerators',
-    'Founder Vault resources',
-  ],
-  legend: [
-    'Everything in Founder forever',
-    'No renewals ever',
-    'Future catalog updates included',
-    'Launch-locked lifetime rate',
-  ],
-  free: [
-    'Browse public previews',
-    'Limited catalog access',
-    'Upgrade anytime',
-  ],
-}
 
 interface BillingPanelProps {
   isPro: boolean
@@ -81,12 +38,6 @@ const fadeUp = {
   }),
 }
 
-const stepSlide = {
-  enter: (dir: number) => ({ opacity: 0, x: dir > 0 ? 18 : -18 }),
-  center: { opacity: 1, x: 0 },
-  exit: (dir: number) => ({ opacity: 0, x: dir > 0 ? -18 : 18 }),
-}
-
 function daysUntil(iso: string | null | undefined): number | null {
   if (!iso) return null
   const end = new Date(iso).getTime()
@@ -103,6 +54,46 @@ function periodProgress(start: string | null, end: string | null): number | null
   const pct = ((Date.now() - s) / (e - s)) * 100
   return Math.min(100, Math.max(0, Math.round(pct)))
 }
+
+const MANAGE_ITEMS =  [
+  {
+    href: '/pricing',
+    icon: 'swap_horiz',
+    label: 'Change plan',
+    sub: 'Upgrade or compare plans',
+  },
+  {
+    href: '/deals',
+    icon: 'local_offer',
+    label: 'Browse deals',
+    sub: 'Use your catalog access',
+  },
+  {
+    href: '/auth/reset-password',
+    icon: 'lock_reset',
+    label: 'Change password',
+    sub: 'Update credentials',
+  },
+  {
+    href: 'mailto:support@foundersprime.com?subject=Billing%20Support',
+    icon: 'support_agent',
+    label: 'Billing support',
+    sub: 'Email our team',
+  },
+  {
+    href: '/refund',
+    icon: 'receipt_long',
+    label: 'Refund policy',
+    sub: 'How billing & refunds work',
+  },
+  {
+    href: '/terms',
+    icon: 'gavel',
+    label: 'Terms of service',
+    sub: 'Legal & subscription terms',
+  },
+]
+
 
 export default function BillingPanel({
   isPro,
@@ -123,14 +114,7 @@ export default function BillingPanel({
   const [showCancelModal, setShowCancelModal] = useState(false)
   const modalRef = useRef<HTMLDivElement>(null)
 
-  const cancelSteps = [
-    { id: 'why' as const, label: 'Reason' },
-    { id: 'review' as const, label: 'Review' },
-    { id: 'done' as const, label: 'Done' },
-  ]
-  const cancelStepIndex = cancelSteps.findIndex((s) => s.id === cancelStep)
-
-  const planKey = subscription?.plan || (isPro ? 'founder' : 'free')
+    const planKey = subscription?.plan || (isPro ? 'founder' : 'free')
   const planLabel = isAdmin
     ? 'Admin'
     : subscription
@@ -145,11 +129,7 @@ export default function BillingPanel({
   const isLifetime = subscription?.plan === 'legend'
   const cancelPending = subscription?.cancel_at_period_end === true
   const renewalDate = subscription?.period_end
-    ? new Date(subscription.period_end).toLocaleDateString('en-US', {
-        month: 'long',
-        day: 'numeric',
-        year: 'numeric',
-      })
+    ? formatDateLong(subscription.period_end)
     : null
   const daysLeft = daysUntil(subscription?.period_end)
   const progress = periodProgress(subscription?.period_start ?? null, subscription?.period_end ?? null)
@@ -229,53 +209,6 @@ export default function BillingPanel({
       window.clearTimeout(t)
     }
   }, [showCancelModal, isCancelling, closeModal])
-
-  const FEEDBACK_OPTIONS = [
-    'Too expensive / pricing',
-    'Found a better alternative',
-    'Missing features I need',
-    'No longer need these credits/deals',
-    'Other (please specify below)',
-  ]
-
-  const manageItems = [
-    {
-      href: '/pricing',
-      icon: 'swap_horiz',
-      label: 'Change plan',
-      sub: 'Upgrade or compare plans',
-    },
-    {
-      href: '/deals',
-      icon: 'local_offer',
-      label: 'Browse deals',
-      sub: 'Use your catalog access',
-    },
-    {
-      href: '/auth/reset-password',
-      icon: 'lock_reset',
-      label: 'Change password',
-      sub: 'Update credentials',
-    },
-    {
-      href: 'mailto:support@foundersprime.com?subject=Billing%20Support',
-      icon: 'support_agent',
-      label: 'Billing support',
-      sub: 'Email our team',
-    },
-    {
-      href: '/refund',
-      icon: 'receipt_long',
-      label: 'Refund policy',
-      sub: 'How billing & refunds work',
-    },
-    {
-      href: '/terms',
-      icon: 'gavel',
-      label: 'Terms of service',
-      sub: 'Legal & subscription terms',
-    },
-  ]
 
   return (
     <section className="relative">
@@ -496,10 +429,11 @@ export default function BillingPanel({
                   <div className="mb-2.5">
                     <div className="h-1.5 rounded-full bg-black/5 dark:bg-white/10 overflow-hidden">
                       <motion.div
-                        initial={reduce ? false : { width: 0 }}
-                        animate={{ width: `${progress}%` }}
+                        initial={reduce ? false : { scaleX: 0 }}
+                        animate={{ scaleX: Math.min(1, Math.max(0, progress / 100)) }}
                         transition={{ duration: 0.8, ease: 'easeOut' }}
-                        className="h-full rounded-full bg-gradient-to-r from-accent-yellow to-amber-400"
+                        style={{ transformOrigin: 'left center' }}
+                        className="h-full w-full rounded-full bg-gradient-to-r from-accent-yellow to-amber-400"
                       />
                     </div>
                     <p className="mt-1.5 font-mono text-[9px] text-gray-400 uppercase tracking-wide">
@@ -622,11 +556,7 @@ export default function BillingPanel({
           </dl>
           {subscription?.created_at && (
             <p className="mt-5 pt-4 border-t border-black/[0.06] dark:border-white/10 font-mono text-[10px] text-gray-500">
-              Subscription since{' '}
-              {new Date(subscription.created_at).toLocaleDateString('en-US', {
-                month: 'short',
-                year: 'numeric',
-              })}
+              Subscription since {formatMonthYear(subscription.created_at)}
             </p>
           )}
         </motion.div>
@@ -644,7 +574,7 @@ export default function BillingPanel({
           Manage &amp; support
         </p>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5">
-          {manageItems.map((item, i) => (
+          {MANAGE_ITEMS.map((item, i) => (
             <motion.div
               key={item.label}
               custom={i}
@@ -747,385 +677,22 @@ export default function BillingPanel({
         </motion.div>
       )}
 
-      {/* ── Cancel auto-renewal modal — 3-step flow ── */}
-      <AnimatePresence>
-        {showCancelModal && (
-          <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4">
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
-              className="absolute inset-0 bg-black/70 backdrop-blur-[6px]"
-              onClick={() => {
-                if (isCancelling) return
-                // Allow backdrop close on why/done; soft-block on review
-                if (cancelStep !== 'review') closeModal()
-              }}
-              aria-hidden
-            />
-            <motion.div
-              ref={modalRef}
-              role="dialog"
-              aria-modal="true"
-              aria-labelledby="cancel-modal-title"
-              tabIndex={-1}
-              initial={reduce ? false : { opacity: 0, y: 28, scale: 0.97 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: 18, scale: 0.98 }}
-              transition={{ type: 'spring', stiffness: 380, damping: 32 }}
-              className="relative w-full sm:max-w-lg max-h-[92vh] overflow-y-auto rounded-t-3xl sm:rounded-2xl border border-black/10 dark:border-white/10 bg-white dark:bg-[#0c0c0c] shadow-2xl outline-none"
-            >
-              {/* Drag handle (mobile) */}
-              <div className="sm:hidden flex justify-center pt-2.5 pb-0" aria-hidden>
-                <div className="w-10 h-1 rounded-full bg-black/15 dark:bg-white/20" />
-              </div>
-
-              {/* Progress header */}
-              <div className="px-5 pt-4 sm:pt-5 pb-3 border-b border-black/5 dark:border-white/10 sticky top-0 bg-white/95 dark:bg-[#0c0c0c]/95 backdrop-blur-md z-10">
-                <div className="flex items-center justify-between mb-4">
-                  <h2
-                    id="cancel-modal-title"
-                    className="font-mono text-[12px] font-black uppercase tracking-[0.1em] text-gray-900 dark:text-white"
-                  >
-                    {cancelStep === 'why' && 'Cancel auto-renewal'}
-                    {cancelStep === 'review' && 'Confirm your choice'}
-                    {cancelStep === 'done' && "You're all set"}
-                  </h2>
-                  <button
-                    type="button"
-                    onClick={closeModal}
-                    disabled={isCancelling}
-                    aria-label="Close"
-                    className="w-9 h-9 flex items-center justify-center rounded-lg border border-black/10 dark:border-white/15 text-gray-600 dark:text-gray-300 hover:bg-black/5 dark:hover:bg-white/5 disabled:opacity-50 transition-colors"
-                  >
-                    <span className="material-symbols-outlined !text-[16px]">close</span>
-                  </button>
-                </div>
-
-                {/* Step indicators */}
-                <div className="flex items-center gap-0">
-                  {cancelSteps.map((s, i) => {
-                    const done = i < cancelStepIndex || cancelStep === 'done'
-                    const active = s.id === cancelStep
-                    return (
-                      <div key={s.id} className="flex items-center flex-1 last:flex-none">
-                        <div className="flex flex-col items-center gap-1.5 min-w-[56px]">
-                          <motion.div
-                            animate={{
-                              scale: active ? 1.05 : 1,
-                              backgroundColor:
-                                done || active
-                                  ? 'rgb(255, 215, 0)'
-                                  : 'rgba(128,128,128,0.15)',
-                            }}
-                            className={`flex h-7 w-7 items-center justify-center rounded-full font-mono text-[10px] font-black ${
-                              done || active
-                                ? 'text-black'
-                                : 'text-gray-400 dark:text-zinc-500'
-                            }`}
-                          >
-                            {done && !active ? (
-                              <span className="material-symbols-outlined !text-[14px]">check</span>
-                            ) : (
-                              i + 1
-                            )}
-                          </motion.div>
-                          <span
-                            className={`font-mono text-[9px] font-bold uppercase tracking-wide ${
-                              active || done
-                                ? 'text-gray-900 dark:text-white'
-                                : 'text-gray-400 dark:text-zinc-600'
-                            }`}
-                          >
-                            {s.label}
-                          </span>
-                        </div>
-                        {i < cancelSteps.length - 1 && (
-                          <div className="flex-1 h-0.5 mx-1 mb-5 rounded-full bg-black/10 dark:bg-white/10 overflow-hidden">
-                            <motion.div
-                              initial={false}
-                              animate={{ width: i < cancelStepIndex || cancelStep === 'done' ? '100%' : '0%' }}
-                              transition={{ duration: 0.35, ease: 'easeOut' }}
-                              className="h-full bg-accent-yellow"
-                            />
-                          </div>
-                        )}
-                      </div>
-                    )
-                  })}
-                </div>
-              </div>
-
-              <div className="p-5 md:p-6">
-                <AnimatePresence mode="wait" custom={stepDir}>
-                  {cancelStep === 'why' && (
-                    <motion.div
-                      key="why"
-                      custom={stepDir}
-                      variants={reduce ? undefined : stepSlide}
-                      initial="enter"
-                      animate="center"
-                      exit="exit"
-                      transition={{ duration: 0.22, ease: 'easeOut' }}
-                    >
-                      <div className="rounded-xl border border-emerald-500/20 bg-emerald-500/[0.06] p-3.5 mb-4 flex items-start gap-2.5">
-                        <span className="material-symbols-outlined !text-[18px] text-emerald-600 dark:text-emerald-400 mt-0.5">
-                          verified_user
-                        </span>
-                        <p className="text-[13px] text-gray-700 dark:text-gray-300 leading-relaxed">
-                          You keep{' '}
-                          <span className="font-semibold text-gray-900 dark:text-white">
-                            full access until {renewalDate || 'period end'}
-                          </span>
-                          . We only stop future charges — nothing is cut off today.
-                        </p>
-                      </div>
-
-                      <p className="text-[12px] font-medium text-gray-600 dark:text-zinc-400 mb-3">
-                        What&apos;s the main reason? (helps us improve)
-                      </p>
-                      <div className="space-y-2 mb-4" role="radiogroup" aria-label="Cancellation reason">
-                        {FEEDBACK_OPTIONS.map((opt) => {
-                          const selected = cancelReason === opt
-                          return (
-                            <label
-                              key={opt}
-                              className={`flex items-center gap-3 p-3.5 min-h-[48px] rounded-xl border cursor-pointer transition-all ${
-                                selected
-                                  ? 'border-accent-yellow/50 bg-accent-yellow/[0.08] dark:bg-accent-yellow/[0.06] shadow-[0_0_0_1px_rgba(255,215,0,0.15)]'
-                                  : 'border-black/[0.08] dark:border-white/10 hover:bg-gray-50 dark:hover:bg-white/5'
-                              }`}
-                            >
-                              <span
-                                className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 transition-colors ${
-                                  selected
-                                    ? 'border-accent-yellow bg-accent-yellow'
-                                    : 'border-gray-300 dark:border-white/25'
-                                }`}
-                              >
-                                {selected && (
-                                  <motion.span
-                                    layoutId="reason-dot"
-                                    className="h-2 w-2 rounded-full bg-black"
-                                  />
-                                )}
-                              </span>
-                              <input
-                                type="radio"
-                                name="cancelReason"
-                                value={opt}
-                                checked={selected}
-                                onChange={(e) => setCancelReason(e.target.value)}
-                                className="sr-only"
-                              />
-                              <span className="text-[12.5px] text-gray-800 dark:text-gray-200 font-medium">
-                                {opt}
-                              </span>
-                            </label>
-                          )
-                        })}
-                      </div>
-                      <textarea
-                        value={cancelComments}
-                        onChange={(e) => setCancelComments(e.target.value)}
-                        placeholder="Anything else we should know? (optional)"
-                        className="w-full h-20 p-3 text-[13px] rounded-xl bg-gray-50 dark:bg-white/5 text-gray-900 dark:text-white border border-black/10 dark:border-white/15 outline-none focus:border-accent-yellow/50 font-sans mb-5 resize-none transition-colors"
-                        maxLength={500}
-                      />
-                      <div className="flex flex-col-reverse sm:flex-row gap-2.5">
-                        <button
-                          type="button"
-                          onClick={closeModal}
-                          className="flex-1 min-h-[48px] rounded-xl border border-black/10 dark:border-white/15 font-mono text-[11px] font-bold uppercase text-gray-800 dark:text-white hover:bg-black/[0.03] dark:hover:bg-white/5 transition-colors"
-                        >
-                          Keep my plan
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => goStep('review')}
-                          className="flex-1 min-h-[48px] rounded-xl bg-gray-900 dark:bg-white text-white dark:text-black font-mono text-[11px] font-black uppercase inline-flex items-center justify-center gap-1.5 hover:opacity-90 active:scale-[0.99] transition-all"
-                        >
-                          Continue
-                          <span className="material-symbols-outlined !text-[16px]">arrow_forward</span>
-                        </button>
-                      </div>
-                    </motion.div>
-                  )}
-
-                  {cancelStep === 'review' && (
-                    <motion.div
-                      key="review"
-                      custom={stepDir}
-                      variants={reduce ? undefined : stepSlide}
-                      initial="enter"
-                      animate="center"
-                      exit="exit"
-                      transition={{ duration: 0.22, ease: 'easeOut' }}
-                    >
-                      <div className="rounded-2xl border border-black/[0.08] dark:border-white/10 bg-gray-50 dark:bg-white/[0.03] p-4 mb-4">
-                        <p className="font-mono text-[10px] font-bold uppercase tracking-wider text-gray-500 mb-3">
-                          What happens next
-                        </p>
-                        <ul className="space-y-3">
-                          {[
-                            {
-                              icon: 'event_available',
-                              title: 'Access stays active',
-                              body: `Until ${renewalDate || 'the end of your period'}`,
-                              tone: 'good' as const,
-                            },
-                            {
-                              icon: 'credit_card_off',
-                              title: 'No more charges',
-                              body: 'Auto-renewal stops after this period',
-                              tone: 'good' as const,
-                            },
-                            {
-                              icon: 'restart_alt',
-                              title: 'Easy to come back',
-                              body: 'Resubscribe anytime before period end',
-                              tone: 'good' as const,
-                            },
-                            {
-                              icon: 'info',
-                              title: 'Past payments',
-                              body: 'Already-paid amounts are non-refundable',
-                              tone: 'warn' as const,
-                            },
-                          ].map((row, i) => (
-                            <motion.li
-                              key={row.title}
-                              initial={reduce ? false : { opacity: 0, x: 8 }}
-                              animate={{ opacity: 1, x: 0 }}
-                              transition={{ delay: i * 0.05 }}
-                              className="flex items-start gap-3"
-                            >
-                              <span
-                                className={`material-symbols-outlined !text-[18px] mt-0.5 ${
-                                  row.tone === 'warn'
-                                    ? 'text-amber-600'
-                                    : 'text-emerald-600 dark:text-emerald-400'
-                                }`}
-                              >
-                                {row.icon}
-                              </span>
-                              <span>
-                                <span className="block text-[13px] font-semibold text-gray-900 dark:text-white">
-                                  {row.title}
-                                </span>
-                                <span className="block text-[12px] text-gray-500 dark:text-zinc-400 mt-0.5">
-                                  {row.body}
-                                </span>
-                              </span>
-                            </motion.li>
-                          ))}
-                        </ul>
-                      </div>
-
-                      <div className="rounded-xl border border-black/[0.06] dark:border-white/10 px-3.5 py-2.5 mb-5 flex items-center gap-2">
-                        <span className="material-symbols-outlined !text-[16px] text-gray-400">
-                          chat
-                        </span>
-                        <p className="text-[11px] text-gray-500 dark:text-zinc-500 font-mono truncate">
-                          Reason:{' '}
-                          <span className="text-gray-800 dark:text-zinc-300">{cancelReason}</span>
-                        </p>
-                      </div>
-
-                      <div className="flex flex-col-reverse sm:flex-row gap-2.5">
-                        <button
-                          type="button"
-                          onClick={() => goStep('why')}
-                          disabled={isCancelling}
-                          className="flex-1 min-h-[48px] rounded-xl border border-black/10 dark:border-white/15 font-mono text-[11px] font-bold uppercase disabled:opacity-50 hover:bg-black/[0.03] dark:hover:bg-white/5 transition-colors"
-                        >
-                          Back
-                        </button>
-                        <button
-                          type="button"
-                          onClick={handleCancel}
-                          disabled={isCancelling}
-                          className="flex-1 min-h-[48px] rounded-xl bg-red-500 hover:bg-red-600 text-white font-mono text-[11px] font-black uppercase inline-flex items-center justify-center gap-1.5 disabled:opacity-60 transition-colors active:scale-[0.99]"
-                        >
-                          {isCancelling ? (
-                            <>
-                              <span className="material-symbols-outlined !text-[16px] animate-spin">
-                                progress_activity
-                              </span>
-                              Cancelling…
-                            </>
-                          ) : (
-                            <>
-                              <span className="material-symbols-outlined !text-[16px]">check</span>
-                              Confirm cancel renewal
-                            </>
-                          )}
-                        </button>
-                      </div>
-                    </motion.div>
-                  )}
-
-                  {cancelStep === 'done' && (
-                    <motion.div
-                      key="done"
-                      custom={stepDir}
-                      variants={reduce ? undefined : stepSlide}
-                      initial="enter"
-                      animate="center"
-                      exit="exit"
-                      transition={{ duration: 0.25, ease: 'easeOut' }}
-                      className="text-center py-2"
-                    >
-                      <motion.div
-                        initial={reduce ? false : { scale: 0.6, opacity: 0 }}
-                        animate={{ scale: 1, opacity: 1 }}
-                        transition={{ type: 'spring', stiffness: 320, damping: 18 }}
-                        className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-emerald-500/15 border border-emerald-500/30 relative"
-                      >
-                        <span className="absolute inset-0 rounded-full bg-emerald-400/20 animate-ping opacity-40" />
-                        <span className="material-symbols-outlined !text-[32px] text-emerald-500 relative">
-                          check_circle
-                        </span>
-                      </motion.div>
-                      <h3 className="font-mono text-lg font-black text-gray-900 dark:text-white mb-2">
-                        Auto-renewal cancelled
-                      </h3>
-                      <p className="text-[13px] text-gray-600 dark:text-gray-400 leading-relaxed mb-2 max-w-sm mx-auto">
-                        {cancelResult?.message ||
-                          `You keep full access until ${renewalDate || 'period end'}. No further charges.`}
-                      </p>
-                      {renewalDate && (
-                        <p className="inline-flex items-center gap-1.5 font-mono text-[11px] text-emerald-700 dark:text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 rounded-full px-3 py-1 mb-6">
-                          <span className="material-symbols-outlined !text-[14px]">event</span>
-                          Access through {renewalDate}
-                        </p>
-                      )}
-                      {!renewalDate && <div className="mb-6" />}
-                      <div className="flex flex-col sm:flex-row gap-2.5">
-                        <button
-                          type="button"
-                          onClick={closeModal}
-                          className="flex-1 min-h-[48px] rounded-xl bg-accent-yellow text-black font-mono text-[11px] font-black uppercase hover:bg-yellow-300 transition-colors"
-                        >
-                          Back to billing
-                        </button>
-                        <Link
-                          href="/deals"
-                          onClick={closeModal}
-                          className="flex-1 min-h-[48px] rounded-xl border border-black/10 dark:border-white/15 font-mono text-[11px] font-bold uppercase inline-flex items-center justify-center text-gray-800 dark:text-white hover:bg-black/[0.03] dark:hover:bg-white/5 transition-colors"
-                        >
-                          Browse deals
-                        </Link>
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-            </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
+      <BillingCancelModal
+        show={showCancelModal}
+        cancelStep={cancelStep}
+        stepDir={stepDir}
+        cancelReason={cancelReason}
+        setCancelReason={setCancelReason}
+        cancelComments={cancelComments}
+        setCancelComments={setCancelComments}
+        isCancelling={isCancelling}
+        cancelResult={cancelResult}
+        renewalDate={renewalDate}
+        modalRef={modalRef}
+        goStep={goStep}
+        handleCancel={handleCancel}
+        closeModal={closeModal}
+      />
     </section>
   )
 }

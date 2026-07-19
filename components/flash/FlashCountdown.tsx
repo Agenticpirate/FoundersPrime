@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { nextDropTime, dropWindowMs } from '@/lib/flash-schedule'
 
 interface FlashCountdownProps {
   /** Absolute end time (ISO). Takes priority over durationHours / nextDrop. */
@@ -11,6 +12,8 @@ interface FlashCountdownProps {
   nextDrop?: boolean
   /** 'hero' = big stat boxes, 'inline' = compact "Ends in 02d : 14h …", 'chip' = mini pill. */
   variant?: 'hero' | 'inline' | 'chip'
+  /** Called when remaining time updates (hero card progress). */
+  onTick?: (remainingMs: number, totalMs: number) => void
 }
 
 interface Remaining {
@@ -19,28 +22,18 @@ interface Remaining {
   mins: number
   secs: number
   done: boolean
+  remainingMs: number
 }
 
 function pad(n: number) {
   return String(Math.max(0, n)).padStart(2, '0')
 }
 
-function nextDropTime(from: Date): number {
-  // Drops happen Monday (1) and Thursday (4) at local 00:00.
-  const target = new Date(from)
-  target.setHours(0, 0, 0, 0)
-  for (let i = 1; i <= 7; i++) {
-    const candidate = new Date(target)
-    candidate.setDate(target.getDate() + i)
-    const day = candidate.getDay()
-    if (day === 1 || day === 4) return candidate.getTime()
-  }
-  return target.getTime() + 24 * 3600 * 1000
-}
-
 function diff(targetMs: number): Remaining {
   const ms = targetMs - Date.now()
-  if (ms <= 0) return { days: 0, hours: 0, mins: 0, secs: 0, done: true }
+  if (ms <= 0) {
+    return { days: 0, hours: 0, mins: 0, secs: 0, done: true, remainingMs: 0 }
+  }
   const total = Math.floor(ms / 1000)
   return {
     days: Math.floor(total / 86400),
@@ -48,7 +41,66 @@ function diff(targetMs: number): Remaining {
     mins: Math.floor((total % 3600) / 60),
     secs: total % 60,
     done: false,
+    remainingMs: ms,
   }
+}
+
+function FlipDigit({
+  value,
+  label,
+  showColon,
+  urgent,
+}: {
+  value: string
+  label: string
+  showColon?: boolean
+  urgent?: boolean
+}) {
+  return (
+    <div className="relative flex flex-col items-center min-w-0">
+      {/* Clean digit — no middle seam, no heavy boxed flip-clock frame */}
+      <div
+        className={`relative w-full rounded-lg md:rounded-xl overflow-hidden transition-colors duration-300 ${
+          urgent
+            ? 'bg-red-500/[0.08] border border-red-400/25'
+            : 'bg-white/[0.04] border border-white/[0.08]'
+        }`}
+      >
+        <div
+          key={value}
+          className={`relative font-mono font-black text-[18px] sm:text-[28px] md:text-[36px] tabular-nums leading-none text-center py-2 sm:py-3 md:py-3.5 px-0.5 tracking-tight ${
+            urgent ? 'text-red-300' : 'text-white'
+          }`}
+          style={{
+            textShadow: urgent
+              ? '0 0 16px rgba(248,113,113,0.4)'
+              : '0 0 18px rgba(255,215,0,0.12)',
+          }}
+        >
+          {value}
+        </div>
+      </div>
+
+      <div
+        className={`font-mono text-[7px] sm:text-[9px] font-black uppercase tracking-[0.14em] mt-1 ${
+          urgent ? 'text-red-400' : 'text-accent-yellow/90'
+        }`}
+      >
+        {label}
+      </div>
+
+      {showColon && (
+        <span
+          className={`hidden sm:block absolute -right-[7px] top-[14px] font-mono text-sm font-black ${
+            urgent ? 'text-red-400/50' : 'text-accent-yellow/40'
+          }`}
+          aria-hidden
+        >
+          :
+        </span>
+      )}
+    </div>
+  )
 }
 
 export default function FlashCountdown({
@@ -56,10 +108,12 @@ export default function FlashCountdown({
   durationHours,
   nextDrop,
   variant = 'inline',
+  onTick,
 }: FlashCountdownProps) {
   // targetMs is resolved on the client only, so SSR/CSR markup stays identical
   // (we render placeholders until mounted) — no hydration mismatch.
   const [targetMs, setTargetMs] = useState<number | null>(null)
+  const [windowMs, setWindowMs] = useState(3.5 * 24 * 3600 * 1000)
   const [rem, setRem] = useState<Remaining | null>(null)
 
   useEffect(() => {
@@ -72,61 +126,47 @@ export default function FlashCountdown({
       resolved = Date.now() + (durationHours ?? 24) * 3600 * 1000
     }
     setTargetMs(resolved)
-    setRem(diff(resolved))
-  }, [endsAt, durationHours, nextDrop])
+    setWindowMs(nextDrop ? dropWindowMs(resolved) : (durationHours ?? 24) * 3600 * 1000)
+    const r = diff(resolved)
+    setRem(r)
+    onTick?.(r.remainingMs, nextDrop ? dropWindowMs(resolved) : (durationHours ?? 24) * 3600 * 1000)
+  }, [endsAt, durationHours, nextDrop, onTick])
 
   useEffect(() => {
     if (targetMs == null) return
-    const id = setInterval(() => setRem(diff(targetMs)), 1000)
+    const id = setInterval(() => {
+      const r = diff(targetMs)
+      setRem(r)
+      onTick?.(r.remainingMs, windowMs)
+    }, 1000)
     return () => clearInterval(id)
-  }, [targetMs])
+  }, [targetMs, windowMs, onTick])
 
   const units = [
-    { value: rem?.days, label: 'Days', short: 'd' },
-    { value: rem?.hours, label: 'Hrs', short: 'h' },
-    { value: rem?.mins, label: 'Mins', short: 'm' },
-    { value: rem?.secs, label: 'Secs', short: 's' },
+    { value: rem?.days, label: 'Days' },
+    { value: rem?.hours, label: 'Hrs' },
+    { value: rem?.mins, label: 'Mins' },
+    { value: rem?.secs, label: 'Secs' },
   ]
+
+  const urgent = Boolean(rem && !rem.done && rem.remainingMs < 6 * 3600 * 1000)
 
   if (variant === 'hero') {
     return (
       <div
-        className="grid grid-cols-4 gap-1.5 sm:gap-2.5"
+        className="grid grid-cols-4 gap-1 sm:gap-2.5"
         role="timer"
         aria-label="Time until next flash deal drop"
+        aria-live="polite"
       >
         {units.map((u, i) => (
-          <div key={u.label} className="relative flex flex-col items-center">
-            <div className="w-full rounded-xl bg-black border border-accent-yellow/30 relative overflow-hidden">
-              <div
-                className="absolute inset-0 pointer-events-none"
-                style={{
-                  background:
-                    'radial-gradient(ellipse at 50% 0%, rgba(255,215,0,0.1) 0%, transparent 70%)',
-                }}
-                aria-hidden
-              />
-              <div className="relative font-mono font-black text-[26px] sm:text-[32px] md:text-[36px] text-white tabular-nums leading-none text-center py-3 px-1 tracking-tight">
-                {rem ? pad(u.value ?? 0) : '--'}
-              </div>
-              {/* Flip-style bottom edge */}
-              <div
-                aria-hidden
-                className="absolute inset-x-0 top-1/2 h-px bg-accent-yellow/10"
-              />
-            </div>
-            <div className="font-mono text-[8px] sm:text-[9px] font-black uppercase tracking-[0.18em] text-accent-yellow mt-1.5">
-              {u.label}
-            </div>
-            {i < 3 && (
-              <span
-                className="hidden sm:block absolute -right-[7px] top-[18px] font-mono text-accent-yellow/50 text-sm font-black"
-                aria-hidden
-              >
-                :
-              </span>
-            )}
-          </div>
+          <FlipDigit
+            key={u.label}
+            value={rem ? pad(u.value ?? 0) : '--'}
+            label={u.label}
+            showColon={i < 3}
+            urgent={urgent && i >= 2}
+          />
         ))}
       </div>
     )

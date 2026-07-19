@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect, useCallback, useMemo } from 'react'
 import CookieConsentContext, { CookiePreferences } from '@/context/CookieConsentContext'
 import CookiePreferencesModal from './CookiePreferencesModal'
 import CookieBanner from './CookieBanner'
@@ -12,8 +12,11 @@ const DEFAULT_PREFERENCES: CookiePreferences = {
     functional: false
 }
 
-const STORAGE_KEY = 'cookie_preferences'
-const HISTORY_KEY = 'fp_browsing_history'
+/** Versioned keys so schema changes don’t clash with stale browser data */
+const STORAGE_KEY = 'fp:cookie_preferences:v1'
+const STORAGE_KEY_LEGACY = 'cookie_preferences'
+const HISTORY_KEY = 'fp:browsing_history:v1'
+const HISTORY_KEY_LEGACY = 'fp_browsing_history'
 const MAX_HISTORY = 50
 
 // ─── Google Analytics helpers ─────────────────────────────────────────────────
@@ -67,7 +70,9 @@ export interface BrowsingHistoryEntry {
 
 function loadHistory(): BrowsingHistoryEntry[] {
     try {
-        const raw = localStorage.getItem(HISTORY_KEY)
+        const raw =
+            localStorage.getItem(HISTORY_KEY) ||
+            localStorage.getItem(HISTORY_KEY_LEGACY)
         return raw ? JSON.parse(raw) : []
     } catch {
         return []
@@ -111,13 +116,18 @@ export default function CookieConsentProvider({ children }: { children: React.Re
 
     // ── Load saved preferences from localStorage on mount ───────────────────
     useEffect(() => {
-        const saved = localStorage.getItem(STORAGE_KEY)
+        const saved =
+            localStorage.getItem(STORAGE_KEY) ||
+            localStorage.getItem(STORAGE_KEY_LEGACY)
         if (saved) {
             try {
                 const parsed: CookiePreferences = JSON.parse(saved)
                 setPreferences(parsed)
                 setHasConsented(true)
                 applyConsent(parsed)
+                // Migrate legacy key → versioned key
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(parsed))
+                localStorage.removeItem(STORAGE_KEY_LEGACY)
             } catch (e) {
                 console.error('[CookieConsent] Failed to parse saved preferences', e)
             }
@@ -142,8 +152,8 @@ export default function CookieConsentProvider({ children }: { children: React.Re
         pushHistory(entry)
     }, [isLoaded, preferences.functional])
 
-    const openModal = () => setIsModalOpen(true)
-    const closeModal = () => setIsModalOpen(false)
+    const openModal = useCallback(() => setIsModalOpen(true), [])
+    const closeModal = useCallback(() => setIsModalOpen(false), [])
 
     const savePreferences = useCallback((newPrefs: CookiePreferences) => {
         // Always keep essential = true
@@ -170,17 +180,20 @@ export default function CookieConsentProvider({ children }: { children: React.Re
         console.log('[CookieConsent] Preferences saved:', safe)
     }, [applyConsent])
 
+    const value = useMemo(
+        () => ({
+            preferences,
+            isModalOpen,
+            openModal,
+            closeModal,
+            savePreferences,
+            hasConsented,
+        }),
+        [preferences, isModalOpen, openModal, closeModal, savePreferences, hasConsented]
+    )
+
     return (
-        <CookieConsentContext.Provider
-            value={{
-                preferences,
-                isModalOpen,
-                openModal,
-                closeModal,
-                savePreferences,
-                hasConsented,
-            }}
-        >
+        <CookieConsentContext.Provider value={value}>
             {children}
             {isLoaded && (
                 <>

@@ -4,41 +4,53 @@
 import { useState, useEffect, useMemo } from 'react'
 import Link from 'next/link'
 import { useRouter, useSearchParams, usePathname } from 'next/navigation'
-import { motion } from 'framer-motion'
+import { m } from 'framer-motion'
 import { useAuth } from '@/lib/auth/hooks'
 import Mandala from '@/components/ui/Mandala'
 import { checkProStatus } from '@/lib/auth/user-context'
-import type { ProgramType } from './ProgramsSidebar'
+import type { ProgramType } from './program-type'
 import type { ProgramFilterState } from './ProgramsFilterBar'
 import { StaggerGrid, StaggerGridItem } from '@/components/ui/premium-motion'
-import { CardHoverGlow, cardHoverClass, cardLogoHoverClass, cardTitleHoverClass } from '@/components/ui/card-hover'
+import { CardHoverGlowShell, cardHoverClass, cardLogoHoverClass, cardTitleHoverClass } from '@/components/ui/card-hover'
 import Pagination from '@/components/Pagination'
-import BrandLogo from '@/components/ui/BrandLogo'
-import { cleanDomain } from '@/lib/logo-utils'
+import { CardBrandHeader } from '@/components/ui/CardBrandHeader'
+import { isUsableLogoUrl } from '@/lib/logo-utils'
+import { resolveBrandDomain } from '@/lib/brand-domain'
+import { cardDescription } from '@/lib/card-text'
 import {
   getStaticPrograms,
   fromSupabaseProgram,
   type UnifiedProgram as CatalogProgram,
 } from '@/lib/programs-catalog'
 
-function websiteDomain(website?: string): string | undefined {
-  if (!website) return undefined
-  try {
-    return cleanDomain(new URL(website).hostname) || undefined
-  } catch {
-    return cleanDomain(website) || undefined
+function websiteDomain(name: string, website?: string, logo?: string): string | undefined {
+  return (
+    resolveBrandDomain({
+      name,
+      website: website || undefined,
+      logo: logo || undefined,
+    }) || undefined
+  )
+}
+
+/** Drop Google default-favicon URLs stored in DB — they render as a grey globe. */
+function usableProgramLogo(logo?: string): string | undefined {
+  if (!logo || !isUsableLogoUrl(logo)) return undefined
+  if (logo.includes('google.com/s2/favicons') || logo.includes('gstatic.com/faviconV2')) {
+    return undefined
   }
+  return logo
 }
 
 // ──────────────────────────────────────────────────────────
 // Redesigned Unified Program Card (matches YC/Techstars reference design)
 // ──────────────────────────────────────────────────────────
 interface ProgramCardProps {
-  name: string
+  brandName: string
+  programName: string
   website?: string
   logo?: string
   slug: string
-  badge?: string
   description: string
   funding: string
   equity: string
@@ -48,11 +60,11 @@ interface ProgramCardProps {
 }
 
 function ProgramCard({
-  name,
+  brandName,
+  programName,
   website,
   logo,
   slug,
-  badge,
   description,
   funding,
   equity,
@@ -60,139 +72,148 @@ function ProgramCard({
   isPro,
   type,
 }: ProgramCardProps) {
-  const domain = websiteDomain(website)
+  const displayBrand = (brandName || programName || 'Program').trim()
+  const domain = websiteDomain(displayBrand, website, logo)
+  const safeLogo = usableProgramLogo(logo)
 
-  const getBadgeStyle = (b?: string) => {
-    if (!b) return ''
-    const bLc = b.toLowerCase()
-    if (bLc.includes('open') || bLc.includes('active')) {
-      return 'bg-accent-yellow/15 text-accent-yellow border border-accent-yellow/30'
-    }
-    if (bLc.includes('invite')) {
-      return 'bg-violet-500/10 text-violet-400 border-violet-500/25'
-    }
-    if (bLc.includes('featured') || bLc.includes('recommended') || bLc.includes('popular')) {
-      return 'bg-orange-500/15 text-orange-400 border-orange-500/30'
-    }
-    return 'bg-white/5 text-gray-400 border border-white/10'
-  }
-
-  const ctaLabel = isPro ? 'View details' : 'Unlock'
+  const ctaLabel = isPro ? 'View' : 'Unlock'
+  const ctaFull = isPro ? 'View details' : 'Unlock'
+  const normalizeForCompare = (text: string) =>
+    text.toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim()
+  const normalizedBrand = normalizeForCompare(displayBrand)
+  const normalizedProgram = normalizeForCompare(programName)
+  const detailTitle =
+    normalizedProgram && normalizedProgram !== normalizedBrand
+      ? programName
+          .replace(
+            new RegExp(
+              `^${displayBrand.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\s*(?:[:|–—-])?\\s*`,
+              'i'
+            ),
+            ''
+          )
+          .trim()
+      : ''
+  const detailText = [detailTitle, description]
+    .map((part) => (part || '').trim())
+    .filter(Boolean)
+    .join(' — ')
+  const shortDesc = cardDescription(detailText, 150)
+  const shortFunding = (funding || 'N/A').length > 10 ? `${(funding || 'N/A').slice(0, 9)}…` : funding || 'N/A'
+  const typeBadge = type
+    ? {
+        accelerator: {
+          label: 'Accelerator',
+          badgeClass:
+            'border-amber-400/35 bg-amber-400/[0.12] text-amber-300 shadow-[0_0_14px_rgba(251,191,36,0.08)]',
+          dotClass: 'bg-amber-300 shadow-[0_0_6px_rgba(252,211,77,0.7)]',
+        },
+        incubator: {
+          label: 'Incubator',
+          badgeClass:
+            'border-violet-400/35 bg-violet-400/[0.12] text-violet-300 shadow-[0_0_14px_rgba(167,139,250,0.08)]',
+          dotClass: 'bg-violet-300 shadow-[0_0_6px_rgba(196,181,253,0.7)]',
+        },
+        grant: {
+          label: 'Grant',
+          badgeClass:
+            'border-cyan-400/35 bg-cyan-400/[0.12] text-cyan-300 shadow-[0_0_14px_rgba(34,211,238,0.08)]',
+          dotClass: 'bg-cyan-300 shadow-[0_0_6px_rgba(103,232,249,0.7)]',
+        },
+      }[type]
+    : null
 
   return (
-    <Link
-      href={isPro ? `/deals/${slug}` : '/pricing'}
-      className={`flex flex-col bg-gradient-to-b from-[#111] to-[#0a0a0a] border border-white/[0.07] rounded-xl md:rounded-2xl p-3 md:p-4 h-full text-left min-w-0 ${cardHoverClass}`}
-    >
-      <CardHoverGlow />
+    <div className="relative h-[228px] md:h-[248px] flex flex-col rounded-xl md:rounded-2xl min-w-0">
+      <Link
+        href={isPro ? `/deals/${slug}` : '/pricing'}
+        className={`relative flex h-full w-full min-w-0 flex-col overflow-visible rounded-xl border border-white/[0.07] bg-gradient-to-b from-[#111] to-[#0a0a0a] p-3.5 text-left md:rounded-2xl md:p-4 ${cardHoverClass}`}
+      >
+        <CardHoverGlowShell />
 
-      {/* Fixed badge strip — same height on every card */}
-      <div className="relative flex flex-wrap items-center gap-1 md:gap-1.5 mb-2 md:mb-3 min-h-[20px] md:min-h-[22px]">
-        {type && (
+        {/* Absolute badge + fixed spacer guarantees a true top-right anchor without moving brand rows. */}
+        {typeBadge ? (
           <span
-            className={`px-1.5 md:px-2 py-0.5 rounded-full text-[8px] md:text-[9px] font-bold uppercase tracking-wider font-mono border ${
-              type === 'accelerator'
-                ? 'bg-orange-500/10 text-orange-400 border-orange-500/25'
-                : type === 'incubator'
-                  ? 'bg-violet-500/10 text-violet-400 border-violet-500/25'
-                  : 'bg-sky-500/10 text-sky-400 border-sky-500/25'
-            }`}
+            className={`absolute z-20 inline-flex h-5 max-w-[55%] items-center gap-1.5 rounded-md border px-2 text-[7px] font-black uppercase leading-none tracking-[0.14em] backdrop-blur-sm md:text-[8px] ${typeBadge.badgeClass}`}
+            style={{ top: 14, right: 14 }}
           >
-            {type}
+            <span
+              className={`h-1.5 w-1.5 shrink-0 rounded-full ${typeBadge.dotClass}`}
+              aria-hidden="true"
+            />
+            <span className="truncate">{typeBadge.label}</span>
           </span>
-        )}
-        {badge && (
-          <span className={`px-1.5 md:px-2 py-0.5 rounded-full text-[8px] md:text-[9px] font-bold uppercase tracking-wider font-mono ${getBadgeStyle(badge)}`}>
-            {badge}
-          </span>
-        )}
-      </div>
+        ) : null}
+        <div className="mb-1.5 h-5 w-full shrink-0" aria-hidden="true" />
 
-      {/* Logo row: top-aligned fixed plate so icons line up across the grid */}
-      <div className="relative flex items-start gap-2 md:gap-3 mb-2 md:mb-3 min-h-0 md:min-h-[3rem] min-w-0">
-        <div className={`w-10 h-10 md:w-12 md:h-12 rounded-xl md:rounded-2xl overflow-hidden flex-shrink-0 bg-white ${cardLogoHoverClass}`}>
-          <BrandLogo
-            name={name}
-            domain={domain}
-            logo={logo}
-            size="md"
-            plate
-            eager
-            className="!w-10 !h-10 md:!w-12 md:!h-12 !rounded-xl md:!rounded-2xl"
-          />
-        </div>
-        <h3 className={`text-[12px] md:text-[14px] font-bold text-white leading-snug line-clamp-2 min-h-[2.25rem] md:min-h-[2.5rem] flex-1 pt-0.5 min-w-0 ${cardTitleHoverClass}`}>
-          {name}
-        </h3>
-      </div>
+        <CardBrandHeader
+          name={displayBrand}
+          domain={domain}
+          logo={safeLogo}
+          onDark
+          plateClassName={cardLogoHoverClass}
+          textClassName={cardTitleHoverClass}
+        />
 
-      <p className="relative text-[10px] md:text-[11.5px] text-gray-400 leading-relaxed mb-2.5 md:mb-4 line-clamp-2 md:line-clamp-3 flex-grow">
-        {description}
-      </p>
-
-      {/* Metrics fields — fixed rows for alignment across cards */}
-      <div className="relative grid grid-cols-3 gap-0.5 md:gap-1 py-2 md:py-2.5 px-0.5 md:px-1 rounded-xl bg-white/[0.03] border border-white/[0.05] mb-2.5 md:mb-3.5 font-mono">
-        <div className="min-w-0 px-1 md:px-1.5 flex flex-col items-center justify-center text-center">
-          <span className="block w-full text-[9px] sm:text-[11px] font-black text-accent-yellow truncate leading-tight">{funding || 'N/A'}</span>
-          <span className="block text-[7px] md:text-[8px] text-gray-500 uppercase tracking-wider mt-0.5 leading-none">Funding</span>
-        </div>
-        <div className="min-w-0 px-1 md:px-1.5 flex flex-col items-center justify-center text-center border-x border-white/[0.05]">
-          <span className="block w-full text-[9px] sm:text-[11px] font-black text-white truncate leading-tight">{equity || '0%'}</span>
-          <span className="block text-[7px] md:text-[8px] text-gray-500 uppercase tracking-wider mt-0.5 leading-none">Equity</span>
-        </div>
-        <div className="min-w-0 px-1 md:px-1.5 flex flex-col items-center justify-center text-center">
-          <span className="block w-full text-[9px] sm:text-[11px] font-black text-white truncate leading-tight">{duration || 'N/A'}</span>
-          <span className="block text-[7px] md:text-[8px] text-gray-500 uppercase tracking-wider mt-0.5 leading-none">Duration</span>
-        </div>
-      </div>
-
-      {/* CTA — full-width bar; CSS grid + SVG icon so text/icon never baseline-drift */}
-      <div className="relative mt-auto w-full pt-0.5 md:pt-1">
-        <span
-          className="grid h-9 md:h-10 w-full grid-flow-col auto-cols-max place-content-center place-items-center gap-1.5 md:gap-2 rounded-xl border border-black/5 bg-white text-black transition-colors duration-200 group-hover:bg-accent-yellow"
-          aria-hidden="true"
+        {/* Program title + richer description use the same three-line track. */}
+        <p
+          className="relative z-[1] mt-2 h-12 shrink-0 overflow-hidden text-[10px] md:text-[11px] leading-[1.4] text-gray-400 line-clamp-3"
+          title={[programName, description].filter(Boolean).join(' — ')}
         >
-          <span className="font-mono text-[10px] md:text-[11px] font-black uppercase tracking-[0.1em] leading-none">
-            {ctaLabel}
-          </span>
-          {isPro ? (
-            <svg
-              width="14"
-              height="14"
-              viewBox="0 0 14 14"
-              fill="none"
+          {shortDesc}
+        </p>
+
+        {/* Metrics — compact 3-up */}
+        <div className="relative z-[1] mt-1.5 grid grid-cols-3 gap-0.5 py-1.5 md:py-2 px-0.5 rounded-lg bg-white/[0.03] border border-white/[0.05] font-mono">
+          <div className="min-w-0 px-0.5 flex flex-col items-center text-center">
+            <span className="block w-full text-[8px] md:text-[10px] font-black text-accent-yellow truncate leading-tight">
+              {shortFunding}
+            </span>
+            <span className="block text-[6px] md:text-[7px] text-gray-500 uppercase tracking-wider mt-0.5 leading-none">
+              Fund
+            </span>
+          </div>
+          <div className="min-w-0 px-0.5 flex flex-col items-center text-center border-x border-white/[0.05]">
+            <span className="block w-full text-[8px] md:text-[10px] font-black text-white truncate leading-tight">
+              {equity || '0%'}
+            </span>
+            <span className="block text-[6px] md:text-[7px] text-gray-500 uppercase tracking-wider mt-0.5 leading-none">
+              Equity
+            </span>
+          </div>
+          <div className="min-w-0 px-0.5 flex flex-col items-center text-center">
+            <span className="block w-full text-[8px] md:text-[10px] font-black text-white truncate leading-tight">
+              {(duration || 'N/A').length > 8 ? `${(duration || 'N/A').slice(0, 7)}…` : duration || 'N/A'}
+            </span>
+            <span className="block text-[6px] md:text-[7px] text-gray-500 uppercase tracking-wider mt-0.5 leading-none">
+              Time
+            </span>
+          </div>
+        </div>
+
+        {/* Value-style CTA bar — matches All Deals density */}
+        <div className="relative z-[1] mt-auto shrink-0 w-full min-w-0 pt-1.5">
+          <div className="w-full flex items-center justify-end h-8 md:h-9 rounded-lg border border-white/[0.08] bg-white/[0.04] pr-0.5 md:pr-1 pl-2 min-w-0">
+            <span
+              className="shrink-0 inline-flex h-6 md:h-7 items-center justify-center gap-0.5 md:gap-1 bg-[#000000] text-white border border-[#FFD500]/40 text-[8px] md:text-[9px] font-bold uppercase tracking-wide px-1.5 md:px-2.5 rounded-md shadow-sm group-hover:bg-[#FFD500] group-hover:text-black group-hover:border-[#FFD500] transition-all duration-200 leading-none"
               aria-hidden
-              className="block shrink-0 transition-transform duration-200 group-hover:translate-x-0.5"
             >
-              <path
-                d="M2.5 7h9M7.5 3.5 11 7l-3.5 3.5"
-                stroke="currentColor"
-                strokeWidth="1.75"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          ) : (
-            <svg
-              width="13"
-              height="13"
-              viewBox="0 0 24 24"
-              fill="none"
-              aria-hidden
-              className="block shrink-0"
-            >
-              <path
-                d="M17 11V8a5 5 0 0 0-10 0v3M6 11h12v9H6v-9Z"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          )}
-        </span>
-      </div>
-    </Link>
+              <span className="leading-none md:hidden">{ctaLabel}</span>
+              <span className="leading-none hidden md:inline">{ctaFull}</span>
+              {isPro ? (
+                <svg width="10" height="10" viewBox="0 0 14 14" fill="none" className="block shrink-0" aria-hidden>
+                  <path d="M2.5 7h9M7.5 3.5 11 7l-3.5 3.5" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              ) : (
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" className="block shrink-0" aria-hidden>
+                  <path d="M17 11V8a5 5 0 0 0-10 0v3M6 11h12v9H6v-9Z" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              )}
+            </span>
+          </div>
+        </div>
+      </Link>
+    </div>
   )
 }
 
@@ -201,10 +222,10 @@ function ProgramCard({
 // ──────────────────────────────────────────────────────────
 function GridSkeleton() {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
-      {[...Array(8)].map((_, i) => (
+    <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-2 md:gap-3.5">
+      {Array.from({ length: 8 }, (_, i) => `prog-card-skel-${i}`).map((id) => (
         <div
-          key={i}
+          key={id}
           className="bg-[#0b0b0b] border border-white/5 p-4 rounded-lg animate-pulse h-60 flex flex-col justify-between"
         >
           <div>
@@ -229,15 +250,9 @@ function GridSkeleton() {
 // Premium CTA
 // ──────────────────────────────────────────────────────────
 function PremiumCTA() {
-  const verifiedAvatars = [
-    'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80',
-    'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80',
-    'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80',
-    'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80',
-  ]
 
   return (
-    <motion.div
+    <m.div
       initial={{ opacity: 0, y: 16 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-40px' }}
@@ -269,10 +284,10 @@ function PremiumCTA() {
       <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 z-10 flex-shrink-0">
         <div className="flex items-center gap-2">
           <div className="flex -space-x-2">
-            {verifiedAvatars.map((url, i) => (
+            {verifiedAvatars.map((url) => (
               // eslint-disable-next-line @next/next/no-img-element
               <img
-                key={i}
+                key={url}
                 src={url}
                 alt=""
                 className="w-7 h-7 rounded-full border-2 border-[#0c0c0c] object-cover"
@@ -291,7 +306,7 @@ function PremiumCTA() {
           <span className="material-symbols-outlined !text-[13px]">arrow_forward</span>
         </Link>
       </div>
-    </motion.div>
+    </m.div>
   )
 }
 
@@ -311,11 +326,10 @@ function ProgramsProGateOverlay({
 }: ProgramsProGateOverlayProps) {
   return (
     <div className="relative mt-8 mb-20">
-      {/* Blurred preview children absolute background */}
+      {/* Dimmed preview (no CSS filter — filter clips brand logo plates on mobile) */}
       <div
-        className="absolute inset-x-0 top-0 pointer-events-none select-none z-0"
+        className="absolute inset-x-0 top-0 pointer-events-none select-none z-0 opacity-35 saturate-50 brightness-75"
         style={{
-          filter: 'blur(10px) brightness(0.4) saturate(0.5)',
           maskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0) 100%)',
           WebkitMaskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0) 100%)',
         }}
@@ -371,8 +385,8 @@ function ProgramsProGateOverlay({
                 `Unlimited access to all verified ${label.toLowerCase()}`,
                 'Direct application links & verified deadlines',
                 'Full funding amounts, cohorts, and equity terms',
-              ].map((item, idx) => (
-                <li key={idx} className="flex items-start gap-2.5 font-mono text-[11.5px] text-gray-300 font-semibold leading-relaxed">
+              ].map((item) => (
+                <li key={item} className="flex items-start gap-2.5 font-mono text-[11.5px] text-gray-300 font-semibold leading-relaxed">
                   <span className="material-symbols-outlined !text-[16px] text-accent-yellow flex-shrink-0 mt-0.5" style={{ fontVariationSettings: "'FILL' 1" }}>
                     check_circle
                   </span>
@@ -414,6 +428,14 @@ interface ProgramsGridProps {
 
 type UnifiedProgram = CatalogProgram
 
+const verifiedAvatars = [
+  'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80',
+  'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80',
+  'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80',
+  'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80',
+]
+
+
 export default function ProgramsGrid({ activeType, filters, initialIsPro }: ProgramsGridProps) {
   const { user, loading: authLoading } = useAuth()
   const [isPro, setIsPro] = useState(initialIsPro ?? false)
@@ -435,9 +457,10 @@ export default function ProgramsGrid({ activeType, filters, initialIsPro }: Prog
         const res = await fetch('/api/deals?scope=programs')
         const data = await res.json()
         if (!data?.success || !Array.isArray(data.deals) || cancelled) return
-        const remote = data.deals
-          .map((d: any) => fromSupabaseProgram(d))
-          .filter(Boolean) as UnifiedProgram[]
+        const remote = data.deals.flatMap((d: any) => {
+          const row = fromSupabaseProgram(d)
+          return row ? [row as UnifiedProgram] : []
+        })
         if (cancelled || remote.length === 0) return
         setCatalog((prev) => {
           const seen = new Set(prev.map((p) => p.slug.toLowerCase()))
@@ -514,8 +537,9 @@ export default function ProgramsGrid({ activeType, filters, initialIsPro }: Prog
     })
 
     if (filters.region && filters.region !== 'All') {
+      const region = filters.region
       list = list.filter(
-        (p) => p.region === filters.region || p.region === 'Global' || (p.location || '').includes(filters.region)
+        (p) => p.region === region || p.region === 'Global' || (p.location || '').includes(region)
       )
     }
     if (filters.stage && filters.stage !== 'All') {
@@ -586,7 +610,7 @@ export default function ProgramsGrid({ activeType, filters, initialIsPro }: Prog
 
   if (totalVisible === 0) {
     return (
-      <motion.div
+      <m.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         className="text-center py-16 rounded-2xl border border-white/[0.07] bg-gradient-to-b from-[#111] to-[#0a0a0a]"
@@ -596,7 +620,7 @@ export default function ProgramsGrid({ activeType, filters, initialIsPro }: Prog
         <p className="text-gray-500 text-sm max-w-sm mx-auto">
           Try clearing chips, switching tabs, or broadening region / stage filters.
         </p>
-      </motion.div>
+      </m.div>
     )
   }
 
@@ -627,16 +651,16 @@ export default function ProgramsGrid({ activeType, filters, initialIsPro }: Prog
       <StaggerGrid
         // Only re-stagger on intentional user changes — not on silent catalog appends
         animKey={`${activeType}-${currentPage}-${searchLc}-${filters.region}-${filters.stage}-${filters.sort}`}
-        className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-2.5 md:gap-4"
+        className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-2 md:gap-3.5"
       >
         {paginatedPrograms.map((prog) => (
           <StaggerGridItem key={`${prog.type}-${prog.slug}`} layout={false}>
             <ProgramCard
-              name={prog.name}
+              brandName={prog.brandName || prog.name}
+              programName={prog.name}
               website={prog.website}
               logo={prog.logo}
               slug={prog.slug}
-              badge={prog.applicationStatus === 'Active' ? 'Applications Open' : prog.applicationStatus}
               description={prog.description}
               funding={prog.funding}
               equity={prog.equity}
@@ -658,9 +682,9 @@ export default function ProgramsGrid({ activeType, filters, initialIsPro }: Prog
           totalCount={totalVisible}
           label="Startup Programs"
         >
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 opacity-50 pointer-events-none">
-            {[...Array(4)].map((_, i) => (
-              <div key={i} className="bg-[#0b0b0b] border border-white/5 h-64 rounded-lg p-4" />
+          <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-2 md:gap-3.5 opacity-50 pointer-events-none">
+            {Array.from({ length: 4 }, (_, i) => `gate-skel-${i}`).map((id) => (
+              <div key={id} className="bg-[#0b0b0b] border border-white/5 h-64 rounded-lg p-4" />
             ))}
           </div>
         </ProgramsProGateOverlay>

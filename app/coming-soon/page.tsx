@@ -40,7 +40,7 @@ export default function ComingSoonPage() {
             </div>
             
             <div className="flex flex-col items-center text-center space-y-6">
-              <div className="text-6xl md:text-7xl animate-bounce select-none py-2">
+              <div className="text-6xl md:text-7xl select-none py-2 motion-safe:animate-pulse">
                 🚀
               </div>
               
@@ -55,9 +55,10 @@ export default function ComingSoonPage() {
 
               {/* CTA Section */}
               <div className="w-full max-w-md pt-6">
-                <label className="block text-left font-mono font-bold text-sm mb-2">Be the first to know when we launch:</label>
+                <label htmlFor="coming-soon-email" className="block text-left font-mono font-bold text-sm mb-2">Be the first to know when we launch:</label>
                 <form className="flex flex-col sm:flex-row gap-3">
                   <input 
+                    id="coming-soon-email"
                     type="email" 
                     placeholder="founder@foundersprime.com"
                     className="flex-1 h-12 px-4 border-3 border-black bg-[#f8f9fa] font-mono text-sm placeholder:text-gray-500 focus:bg-amber-50 focus:shadow-[4px_4px_0px_#111111] focus:-translate-x-[2px] focus:-translate-y-[2px] outline-none transition-all"

@@ -8,6 +8,7 @@ import {
 } from '@/lib/catalog-segregation'
 import { applyPopularityFlags } from '@/lib/deal-popularity'
 import { resolveDealApplicationUrl } from '@/lib/comprehensive-startup-urls'
+import { resolveDealDescription } from '@/lib/deal-description'
 import fs from 'fs'
 import path from 'path'
 
@@ -123,7 +124,7 @@ export async function GET(request: NextRequest) {
       let query = supabase.from('deals').select(
         isSingleLookup
           ? '*'
-          : 'id,slug,title,provider,category,subcategory,shortDescription,short_description,value,status,featured,recommended,verified,difficulty,timeToApply,time_to_apply,tags,logoUrl,logo_url,applicationUrl,application_url,providerWebsite,provider_website,expiryDate,expiry_date'
+          : 'id,slug,title,provider,category,subcategory,description,shortDescription,short_description,value,status,featured,recommended,verified,difficulty,timeToApply,time_to_apply,tags,logoUrl,logo_url,applicationUrl,application_url,providerWebsite,provider_website,expiryDate,expiry_date'
       );
 
       if (slug) query = query.eq('slug', slug);
@@ -184,7 +185,7 @@ export async function GET(request: NextRequest) {
         allDeals = allDeals.slice(0, LIST_HARD_CAP);
       }
 
-      deals = allDeals as Deal[];
+      deals = allDeals.map(formatDealFromDB);
     }
 
     // Apply search filter (works for both sources)
@@ -429,6 +430,14 @@ function cleanText(text: string | null | undefined): string {
 }
 
 function formatDealFromDB(d: any): Deal {
+  const descriptions = resolveDealDescription({
+    slug: d.slug,
+    provider: d.provider,
+    title: d.title,
+    description: cleanText(d.description),
+    shortDescription: cleanText(d.shortDescription || d.short_description || ''),
+  });
+
   return {
     id: d.id,
     slug: d.slug,
@@ -436,8 +445,8 @@ function formatDealFromDB(d: any): Deal {
     provider: cleanText(d.provider),
     category: d.category,
     subcategory: d.subcategory,
-    description: cleanText(d.description),
-    shortDescription: cleanText(d.shortDescription || d.short_description || ''),
+    description: descriptions.description,
+    shortDescription: descriptions.shortDescription,
     value: d.value,
     originalPrice: d.originalPrice || d.original_price || '',
     discountedPrice: d.discountedPrice || d.discounted_price || '',

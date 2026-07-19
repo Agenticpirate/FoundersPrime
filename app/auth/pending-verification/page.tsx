@@ -110,7 +110,7 @@ function PendingVerificationContent() {
             )}
 
             <div className="space-y-3">
-              <button
+              <button type="button"
                 onClick={handleResendEmail}
                 disabled={resending || resent}
                 className="w-full h-12 bg-amber-400 text-black font-bold uppercase border-3 border-black shadow-[4px_4px_0px_#111111] hover:bg-black hover:text-white hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_#111111] transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"

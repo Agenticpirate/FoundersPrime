@@ -19,7 +19,10 @@ import {
 export type UnifiedProgram = {
   id: string
   slug: string
+  /** Specific program/product name used for search and details. */
   name: string
+  /** Organization/provider shown as the bold card header. */
+  brandName: string
   type: ProgramKind
   logo?: string
   website?: string
@@ -48,6 +51,7 @@ function fromAccelerator(a: Accelerator): UnifiedProgram {
     id: a.id,
     slug: a.slug || slugify(a.name),
     name: a.name,
+    brandName: (a.organization || a.name).trim(),
     type: 'accelerator',
     logo: a.logo,
     website: a.website,
@@ -70,6 +74,7 @@ function fromIncubator(i: Incubator): UnifiedProgram {
     id: i.id,
     slug: i.slug || slugify(i.name),
     name: i.name,
+    brandName: (i.organization || i.name).trim(),
     type: 'incubator',
     logo: i.logo,
     website: i.website,
@@ -92,6 +97,7 @@ function fromGrant(g: Grant): UnifiedProgram {
     id: g.id,
     slug: g.slug || slugify(g.name),
     name: g.name,
+    brandName: (g.organization || g.name).trim(),
     type: 'grant',
     logo: g.logo,
     website: g.website,
@@ -111,7 +117,8 @@ function fromGrant(g: Grant): UnifiedProgram {
  * student-eligible → belong on /programs, not /student-benefits.
  */
 function fromStudentBenefitProgram(b: StudentBenefit): UnifiedProgram {
-  const name = (b.company || b.title || '').trim() || 'Program'
+  const brandName = (b.company || b.title || '').trim() || 'Program'
+  const name = (b.title || b.company || '').trim() || brandName
   const slug = b.slug || slugify(name)
   const blob = `${b.appCategory || ''} ${b.category || ''} ${b.title || ''} ${b.offerSummary || ''}`
   const lower = blob.toLowerCase()
@@ -129,6 +136,7 @@ function fromStudentBenefitProgram(b: StudentBenefit): UnifiedProgram {
     id: `sb-${slug}`,
     slug,
     name,
+    brandName,
     type,
     logo: b.logo,
     website: b.url,
@@ -147,9 +155,12 @@ function fromStudentBenefitProgram(b: StudentBenefit): UnifiedProgram {
 
 /** Founder-only rows still sitting in the student benefits JSON */
 export function getProgramsFromStudentDataset(): UnifiedProgram[] {
-  return studentBenefits2026
-    .filter((b) => !isStudentCatalogEligibility(b.eligibility))
-    .map(fromStudentBenefitProgram)
+  const out: UnifiedProgram[] = []
+  for (const b of studentBenefits2026) {
+    if (isStudentCatalogEligibility(b.eligibility)) continue
+    out.push(fromStudentBenefitProgram(b))
+  }
+  return out
 }
 
 /** Static baseline catalog (always available offline). */
@@ -184,6 +195,7 @@ export function fromSupabaseProgram(d: {
 }): UnifiedProgram | null {
   const name = (d.title || d.provider || '').trim()
   if (!name) return null
+  const brandName = (d.provider || d.title || '').trim() || name
   const slug = d.slug || slugify(name)
   const kind = classifyProgramKind({
     category: d.category,
@@ -200,6 +212,7 @@ export function fromSupabaseProgram(d: {
     id: String(d.id || slug),
     slug,
     name,
+    brandName,
     type,
     logo: d.logoUrl,
     website: d.providerWebsite || d.applicationUrl,

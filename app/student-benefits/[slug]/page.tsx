@@ -9,17 +9,19 @@ import { GlowingEffect } from '@/components/ui/GlowingEffect'
 import { merchantReturnPolicy } from '@/lib/seo/merchant-return-policy'
 import { checkProStatusServer } from '@/lib/auth/user-server'
 import { getStudentBenefitBadge } from '@/lib/student-benefit-badges'
+import { safeJsonLd } from '@/lib/safe-json-ld'
 
 // Force dynamic rendering
 export const dynamic = 'force-dynamic'
 
 // Generate static params for all benefits
 export async function generateStaticParams() {
-    return studentBenefits2026
-        .filter(benefit => benefit.slug)
-        .map((benefit) => ({
-            slug: benefit.slug,
-        }))
+    const params: { slug: string }[] = []
+    for (const benefit of studentBenefits2026) {
+        if (!benefit.slug) continue
+        params.push({ slug: benefit.slug })
+    }
+    return params
 }
 
 // Generate Metadata
@@ -151,93 +153,84 @@ interface PageProps {
 }
 
 export default async function StudentBenefitDetailPage({ params }: PageProps) {
-    try {
-
-
-        // Find the benefit by slug
-        const benefitData = studentBenefits2026.find((b) => b.slug === params.slug)
-
-        if (!benefitData) {
-
-            notFound()
-        }
-
-        const deal = convertBenefitToDeal(benefitData, studentBenefits2026)
-
-        // Resolve pro status server-side so the client never sees a loading flash
-        const { isPro: serverIsPro, user: serverUser } = await checkProStatusServer()
-        const serverIsNextFounder = !!serverUser?.isNextFounder
-
-        // Structured Data (JSON-LD)
-        const jsonLd = {
-            '@context': 'https://schema.org',
-            '@type': 'Product',
-            name: deal.title,
-            description: deal.description,
-            image: benefitData.logo || `https://ui-avatars.com/api/?name=${encodeURIComponent(benefitData.company)}&size=200`,
-            brand: {
-                '@type': 'Brand',
-                name: deal.provider
-            },
-            offers: {
-                '@type': 'Offer',
-                price: '0',
-                priceCurrency: 'USD',
-                availability: 'https://schema.org/InStock',
-                url: `https://www.foundersprime.com/student-benefits/${params.slug}`,
-                hasMerchantReturnPolicy: merchantReturnPolicy
-            }
-        }
-
-        return (
-            <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden bg-gray-50 dark:bg-[#000000] text-[#1a1a1a] dark:text-white transition-colors duration-300">
-                <script
-                    type="application/ld+json"
-                    dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-                />
-                <Header />
-                <main className="flex-1">
-                    <SingleDealHero
-                        breadcrumbs={[
-                            { label: 'Home', href: '/' },
-                            { label: 'Students', href: '/student-benefits' },
-                            { label: deal.title },
-                        ]}
-                        logo={{
-                            logoUrl: benefitData.logo,
-                            provider:
-                                /youtube/i.test(benefitData.title || '') ||
-                                /youtube/i.test(benefitData.slug || '')
-                                    ? 'YouTube'
-                                    : benefitData.company,
-                            website: benefitData.url,
-                            size: 'md',
-                        }}
-                        badges={[
-                            { label: benefitData.appCategory, tone: 'yellow', pulse: true },
-                            { label: benefitData.category, tone: 'purple' },
-                            { label: 'Free', tone: 'amber' },
-                        ]}
-                        title={deal.title}
-                        providerLabel={deal.provider}
-                        verificationLabel={`Verified via ${benefitData.verification}`}
-                    />
-
-                    {/* Main content */}
-                    <div className="max-w-[1600px] mx-auto px-4 lg:px-6 py-4 lg:py-6">
-                        <SingleDealContent
-                            deal={deal}
-                            basePath="/student-benefits"
-                            initialIsPro={serverIsPro}
-                            initialIsNextFounder={serverIsNextFounder}
-                        />
-                    </div>
-                </main>
-                <Footer />
-            </div>
-        )
-    } catch (error) {
-        console.error('Error rendering student benefit page:', error)
+    // notFound() must not run inside try/catch (control-flow throw)
+    const benefitData = studentBenefits2026.find((b) => b.slug === params.slug)
+    if (!benefitData) {
         notFound()
     }
+
+    const deal = convertBenefitToDeal(benefitData, studentBenefits2026)
+
+    // Resolve pro status server-side so the client never sees a loading flash
+    const { isPro: serverIsPro, user: serverUser } = await checkProStatusServer()
+    const serverIsNextFounder = !!serverUser?.isNextFounder
+
+    // Structured Data (JSON-LD)
+    const jsonLd = {
+        '@context': 'https://schema.org',
+        '@type': 'Product',
+        name: deal.title,
+        description: deal.description,
+        image: benefitData.logo || `https://ui-avatars.com/api/?name=${encodeURIComponent(benefitData.company)}&size=200`,
+        brand: {
+            '@type': 'Brand',
+            name: deal.provider
+        },
+        offers: {
+            '@type': 'Offer',
+            price: '0',
+            priceCurrency: 'USD',
+            availability: 'https://schema.org/InStock',
+            url: `https://www.foundersprime.com/student-benefits/${params.slug}`,
+            hasMerchantReturnPolicy: merchantReturnPolicy
+        }
+    }
+
+    return (
+        <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden bg-gray-50 dark:bg-[#000000] text-[#1a1a1a] dark:text-white transition-colors duration-300">
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: safeJsonLd(jsonLd) }}
+            />
+            <Header />
+            <main className="flex-1">
+                <SingleDealHero
+                    breadcrumbs={[
+                        { label: 'Home', href: '/' },
+                        { label: 'Students', href: '/student-benefits' },
+                        { label: deal.title },
+                    ]}
+                    logo={{
+                        logoUrl: benefitData.logo,
+                        provider:
+                            /youtube/i.test(benefitData.title || '') ||
+                            /youtube/i.test(benefitData.slug || '')
+                                ? 'YouTube'
+                                : benefitData.company,
+                        website: benefitData.url,
+                        size: 'md',
+                    }}
+                    badges={[
+                        { label: benefitData.appCategory, tone: 'yellow', pulse: true },
+                        { label: benefitData.category, tone: 'purple' },
+                        { label: 'Free', tone: 'amber' },
+                    ]}
+                    title={deal.title}
+                    providerLabel={deal.provider}
+                    verificationLabel={`Verified via ${benefitData.verification}`}
+                />
+
+                {/* Main content */}
+                <div className="max-w-[1600px] mx-auto px-4 lg:px-6 py-4 lg:py-6">
+                    <SingleDealContent
+                        deal={deal}
+                        basePath="/student-benefits"
+                        initialIsPro={serverIsPro}
+                        initialIsNextFounder={serverIsNextFounder}
+                    />
+                </div>
+            </main>
+            <Footer />
+        </div>
+    )
 }

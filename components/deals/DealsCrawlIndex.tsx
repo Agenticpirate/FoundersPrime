@@ -7,6 +7,18 @@ import type { Deal } from '@/lib/deals-database'
  * Hidden from visual UI (sr-only) but present in HTML so Google & agents
  * can follow deal detail URLs without waiting for client JS.
  */
+const hide: CSSProperties = {
+  position: 'absolute',
+  width: 1,
+  height: 1,
+  padding: 0,
+  margin: -1,
+  overflow: 'hidden',
+  clip: 'rect(0, 0, 0, 0)',
+  whiteSpace: 'nowrap',
+  border: 0,
+}
+
 export default function DealsCrawlIndex({
   deals,
   category,
@@ -21,17 +33,6 @@ export default function DealsCrawlIndex({
     : 'Verified startup deals catalog'
 
   // Inline clip styles so this never dumps a huge visible list if CSS 404s.
-  const hide: CSSProperties = {
-    position: 'absolute',
-    width: 1,
-    height: 1,
-    padding: 0,
-    margin: -1,
-    overflow: 'hidden',
-    clip: 'rect(0, 0, 0, 0)',
-    whiteSpace: 'nowrap',
-    border: 0,
-  }
 
   return (
     <section

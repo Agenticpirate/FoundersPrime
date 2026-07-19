@@ -3,7 +3,7 @@
 import { Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
-import { motion } from 'framer-motion'
+import { m } from 'framer-motion'
 import Header from '@/components/Header'
 
 function ThankYouContent() {
@@ -19,7 +19,7 @@ function ThankYouContent() {
         <div className="min-h-screen bg-background-light flex flex-col font-mono">
             <Header />
             <main className="flex-grow flex items-center justify-center py-10 px-4 grid-bg">
-                <motion.div
+                <m.div
                     initial={{ opacity: 0, y: 24, scale: 0.96 }}
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     transition={{ type: 'spring', stiffness: 220, damping: 22 }}
@@ -27,18 +27,17 @@ function ThankYouContent() {
                 >
                     {!failed && (
                         <div className="pointer-events-none absolute inset-0 flex items-start justify-center">
-                            {[...Array(8)].map((_, i) => {
-                                const angle = (i / 8) * Math.PI * 2
+                            {Array.from({ length: 8 }, (_, i) => (i / 8) * Math.PI * 2).map((angle, i) => {
                                 return (
-                                    <motion.span
-                                        key={i}
+                                    <m.span
+                                        key={`burst-${Math.round(angle * 1000)}`}
                                         className="absolute top-[64px] md:top-[80px] w-2 h-2 bg-accent-yellow border border-black"
-                                        initial={{ opacity: 0, x: 0, y: 0, scale: 0 }}
+                                        initial={{ opacity: 0, x: 0, y: 0, scale: 0.95 }}
                                         animate={{
                                             opacity: [0, 1, 0],
                                             x: Math.cos(angle) * 90,
                                             y: Math.sin(angle) * 90,
-                                            scale: [0, 1, 0.4],
+                                            scale: [0.95, 1, 0.4],
                                         }}
                                         transition={{ duration: 0.9, delay: 0.25 + i * 0.02, ease: 'easeOut' }}
                                     />
@@ -47,8 +46,8 @@ function ThankYouContent() {
                         </div>
                     )}
 
-                    <motion.div
-                        initial={{ scale: 0, rotate: -25 }}
+                    <m.div
+                        initial={{ scale: 0.95, rotate: -25 }}
                         animate={{ scale: 1, rotate: 0 }}
                         transition={{ type: 'spring', stiffness: 260, damping: 14, delay: 0.1 }}
                         className={`relative inline-flex items-center justify-center w-16 h-16 md:w-20 md:h-20 border-2 mb-4 ${
@@ -61,7 +60,7 @@ function ThankYouContent() {
                         >
                             {failed ? 'error' : 'star'}
                         </span>
-                    </motion.div>
+                    </m.div>
 
                     {failed ? (
                         <>
@@ -79,7 +78,7 @@ function ThankYouContent() {
                                 It usually goes live within a few minutes once payment confirms.
                             </p>
 
-                            <motion.ol
+                            <m.ol
                                 initial="hidden"
                                 animate="show"
                                 variants={{ hidden: {}, show: { transition: { staggerChildren: 0.12, delayChildren: 0.4 } } }}
@@ -90,7 +89,7 @@ function ThankYouContent() {
                                     { n: '2', t: 'Listing pinned', d: 'Your deal is pinned to the top with the ⭐ Featured badge.' },
                                     { n: '3', t: 'Receipt on the way', d: 'A payment receipt is sent to your email.' },
                                 ].map((step) => (
-                                    <motion.li
+                                    <m.li
                                         key={step.n}
                                         variants={{ hidden: { opacity: 0, x: -16 }, show: { opacity: 1, x: 0 } }}
                                         className="flex items-start gap-3 bg-gray-50 border-2 border-black p-3 shadow-[2px_2px_0px_#111]"
@@ -102,9 +101,9 @@ function ThankYouContent() {
                                             <p className="font-black uppercase text-xs md:text-sm tracking-tight">{step.t}</p>
                                             <p className="text-[11px] md:text-xs text-gray-600 leading-snug">{step.d}</p>
                                         </div>
-                                    </motion.li>
+                                    </m.li>
                                 ))}
-                            </motion.ol>
+                            </m.ol>
                         </>
                     )}
 
@@ -128,7 +127,7 @@ function ThankYouContent() {
                             Contact Support
                         </Link>
                     </div>
-                </motion.div>
+                </m.div>
             </main>
         </div>
     )

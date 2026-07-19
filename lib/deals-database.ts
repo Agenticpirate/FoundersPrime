@@ -135,15 +135,15 @@ export function getAllCategories(): DealCategory[] {
   return dealCategories
 }
 
-export function getFeaturedCategories(): DealCategory[] {
+function getFeaturedCategories(): DealCategory[] {
   return dealCategories.filter(category => category.featured)
 }
 
-export function getCategoryBySlug(slug: string): DealCategory | undefined {
+function getCategoryBySlug(slug: string): DealCategory | undefined {
   return dealCategories.find(category => category.slug === slug)
 }
 
-export function getCategoryById(id: string): DealCategory | undefined {
+function getCategoryById(id: string): DealCategory | undefined {
   return dealCategories.find(category => category.id === id)
 }
 
@@ -152,11 +152,11 @@ export function getSubcategoriesByCategory(categoryId: string): DealSubcategory[
   return category?.subcategories || []
 }
 
-export function searchDeals(_query: string): Deal[] {
+function searchDeals(_query: string): Deal[] {
   return []
 }
 
-export function getDealStats(deals: Deal[]): DealStats {
+function getDealStats(deals: Deal[]): DealStats {
   const totalSavings = deals.reduce((sum, deal) => sum + (deal.savingsAmount || 0), 0)
 
   return {
@@ -173,4 +173,4 @@ export function getDealStats(deals: Deal[]): DealStats {
   }
 }
 
-export const sampleDeals: Deal[] = []
+const sampleDeals: Deal[] = []

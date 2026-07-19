@@ -47,14 +47,14 @@ export default function FlashLogo({ deal }: { deal: FlashDeal }) {
       .join('')
       .toUpperCase()
     return (
-      <span className="w-10 h-10 flex items-center justify-center bg-accent-yellow/10 border border-accent-yellow/30 font-mono font-black text-[12px] text-accent-yellow rounded-md flex-shrink-0">
+      <span className="w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center bg-accent-yellow/10 border border-accent-yellow/30 font-mono font-black text-[10px] sm:text-[12px] text-accent-yellow rounded-md flex-shrink-0">
         {initials}
       </span>
     )
   }
 
   return (
-    <span className="w-10 h-10 flex items-center justify-center bg-white/[0.06] border border-white/10 rounded-md flex-shrink-0 overflow-hidden">
+    <span className="w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center bg-white/[0.06] border border-white/10 rounded-md flex-shrink-0 overflow-hidden">
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={uniqueChain[index]}
@@ -63,7 +63,7 @@ export default function FlashLogo({ deal }: { deal: FlashDeal }) {
         height={28}
         loading="lazy"
         decoding="async"
-        className="w-7 h-7 object-contain"
+        className="w-5 h-5 sm:w-7 sm:h-7 object-contain"
         onError={handleError}
       />
     </span>

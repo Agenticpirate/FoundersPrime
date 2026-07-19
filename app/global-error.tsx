@@ -12,7 +12,7 @@ export default function GlobalError({
     reset: () => void
 }) {
     return (
-        <html>
+        <html lang="en">
             <head>
                 {/* Google tag (gtag.js) — also included on the global error page */}
                 <Script
@@ -38,7 +38,7 @@ export default function GlobalError({
                         <p className="text-gray-600 dark:text-gray-400 text-xs md:text-sm mb-4 md:mb-6 max-w-md mx-auto leading-relaxed">
                             A critical system error occurred that prevented the application from loading.
                         </p>
-                        <button
+                        <button type="button"
                             onClick={() => reset()}
                             className="inline-flex items-center justify-center gap-2 border-2 border-black bg-accent-yellow px-8 py-3 font-mono text-xs font-black uppercase tracking-wider text-black shadow-[4px_4px_0px_#000] hover:bg-white hover:shadow-[2px_2px_0px_#000] hover:translate-x-[2px] hover:translate-y-[2px] transition-all rounded-md"
                         >

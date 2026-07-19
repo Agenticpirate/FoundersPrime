@@ -113,8 +113,8 @@ export default function ResourceDetailPage({ params }: PageProps) {
                   What's Included
                 </h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  {resource.features.map((feature, i) => (
-                    <div key={i} className="flex items-center gap-2">
+                  {resource.features.map((feature) => (
+                    <div key={feature} className="flex items-center gap-2">
                       <CheckCircle className="w-4 h-4 text-emerald-400 flex-shrink-0" />
                       <span className="text-[13px] text-gray-700 dark:text-gray-300">{feature}</span>
                     </div>
@@ -145,7 +145,7 @@ export default function ResourceDetailPage({ params }: PageProps) {
                   </div>
                 </div>
 
-                <button className="w-full py-2.5 bg-[#ffd700] hover:bg-[#ffe033] text-black font-mono text-[11px] font-bold rounded-lg transition-colors flex items-center justify-center gap-1.5">
+                <button type="button" className="w-full py-2.5 bg-[#ffd700] hover:bg-[#ffe033] text-black font-mono text-[11px] font-bold rounded-lg transition-colors flex items-center justify-center gap-1.5">
                   <Download className="w-4 h-4" />
                   {resource.price === 'Free' ? 'Download Free' : 'Access Now'}
                 </button>

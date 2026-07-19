@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { safeJsonLd } from '@/lib/safe-json-ld'
 
 const COUNTRY_NAMES: Record<string, string> = {
   us: 'United States',
@@ -86,7 +87,7 @@ export default function LocalizedGrantsLayout({
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+        dangerouslySetInnerHTML={{ __html: safeJsonLd(structuredData) }}
       />
       {children}
     </>

@@ -101,21 +101,21 @@ export default function ProfileManager({ initialName, initialEmail, initialAvata
   const hasValidAvatar = avatar && !avatarError
 
   return (
-    <div className="bg-white dark:bg-[#0d0d0d] border-2 border-black dark:border-white/10 shadow-[3px_3px_0px_#111] dark:shadow-[3px_3px_0px_rgba(255,255,255,0.06)] p-5 md:p-6">
-      <div className="flex items-center justify-between mb-5">
-        <h2 className="font-mono font-bold text-sm uppercase text-gray-400 dark:text-gray-500">Profile</h2>
+    <div className="bg-white dark:bg-[#0d0d0d] border border-black/[0.08] dark:border-white/[0.1] md:border-2 md:border-black dark:md:border-white/10 shadow-sm md:shadow-[3px_3px_0px_#111] dark:md:shadow-[3px_3px_0px_rgba(255,255,255,0.06)] rounded-xl md:rounded-none p-3.5 md:p-6">
+      <div className="flex items-center justify-between mb-3 md:mb-5">
+        <h2 className="font-mono font-bold text-[11px] md:text-sm uppercase text-gray-400 dark:text-gray-500">Profile</h2>
         {!isEditing ? (
-          <button onClick={() => setIsEditing(true)} className="text-xs font-mono font-bold text-primary hover:underline uppercase flex items-center gap-1">
-            <span className="material-symbols-outlined text-sm">edit</span> Edit
+          <button type="button" onClick={() => setIsEditing(true)} className="text-[10px] md:text-xs font-mono font-bold text-primary hover:underline uppercase flex items-center gap-1">
+            <span className="material-symbols-outlined !text-[14px]">edit</span> Edit
           </button>
         ) : (
           <div className="flex items-center gap-2">
-            <button onClick={() => { setIsEditing(false); setName(initialName) }}
-              className="text-xs font-mono font-bold text-gray-400 hover:text-black dark:hover:text-white uppercase px-2 py-1">
+            <button type="button" onClick={() => { setIsEditing(false); setName(initialName) }}
+              className="text-[10px] md:text-xs font-mono font-bold text-gray-400 hover:text-black dark:hover:text-white uppercase px-2 py-1">
               Cancel
             </button>
-            <button onClick={handleSave} disabled={saving}
-              className="text-xs font-mono font-bold bg-black dark:bg-white text-white dark:text-black px-3 py-1 uppercase hover:bg-gray-800 dark:hover:bg-gray-100 disabled:opacity-50 flex items-center gap-1">
+            <button type="button" onClick={handleSave} disabled={saving}
+              className="text-[10px] md:text-xs font-mono font-bold bg-black dark:bg-white text-white dark:text-black px-3 py-1 uppercase hover:bg-gray-800 dark:hover:bg-gray-100 disabled:opacity-50 flex items-center gap-1 rounded-md md:rounded-none">
               {saving ? <><span className="material-symbols-outlined text-xs animate-spin">progress_activity</span> Saving</> : 'Save'}
             </button>
           </div>
@@ -123,14 +123,13 @@ export default function ProfileManager({ initialName, initialEmail, initialAvata
       </div>
 
       {message && (
-        <div className={`mb-4 px-3 py-2 text-xs font-mono font-bold flex items-center gap-2 ${message.type === 'success' ? 'bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-300 border border-green-200 dark:border-green-700' : 'bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-300 border border-red-200 dark:border-red-700'}`}>
-          <span className="material-symbols-outlined text-sm">{message.type === 'success' ? 'check_circle' : 'error'}</span>
+        <div className={`mb-3 md:mb-4 px-2.5 md:px-3 py-1.5 md:py-2 text-[11px] md:text-xs font-mono font-bold flex items-center gap-2 rounded-lg md:rounded-none ${message.type === 'success' ? 'bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-300 border border-green-200 dark:border-green-700' : 'bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-300 border border-red-200 dark:border-red-700'}`}>
+          <span className="material-symbols-outlined !text-[14px]">{message.type === 'success' ? 'check_circle' : 'error'}</span>
           {message.text}
         </div>
       )}
 
-      <div className="flex items-start gap-5">
-        {/* Avatar */}
+      <div className="flex items-start gap-3 md:gap-5">
         <div className="flex-shrink-0">
           <button
             type="button"
@@ -138,7 +137,7 @@ export default function ProfileManager({ initialName, initialEmail, initialAvata
             disabled={uploading}
             className="relative group cursor-pointer disabled:cursor-wait focus:outline-none focus:ring-2 focus:ring-primary"
           >
-            <div className="w-16 h-16 md:w-20 md:h-20 bg-gray-100 dark:bg-white/5 flex items-center justify-center overflow-hidden border-2 border-black dark:border-white/20">
+            <div className="w-12 h-12 md:w-20 md:h-20 bg-gray-100 dark:bg-white/5 flex items-center justify-center overflow-hidden border border-black/10 dark:border-white/20 md:border-2 rounded-xl md:rounded-none">
               {hasValidAvatar ? (
                 <img
                   src={avatar!}
@@ -147,10 +146,10 @@ export default function ProfileManager({ initialName, initialEmail, initialAvata
                   onError={() => setAvatarError(true)}
                 />
               ) : (
-                <span className="material-symbols-outlined text-3xl md:text-4xl text-gray-400 dark:text-gray-600">account_circle</span>
+                <span className="material-symbols-outlined !text-[28px] md:text-4xl text-gray-400 dark:text-gray-600">account_circle</span>
               )}
             </div>
-            <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity border-2 border-black dark:border-white/20">
+            <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity rounded-xl md:rounded-none">
               {uploading ? (
                 <span className="material-symbols-outlined text-white text-lg animate-spin">progress_activity</span>
               ) : (
@@ -159,36 +158,36 @@ export default function ProfileManager({ initialName, initialEmail, initialAvata
             </div>
           </button>
           <input ref={fileRef} type="file" accept="image/png,image/jpeg,image/webp" className="hidden" onChange={handleAvatarUpload} />
-          <p className="text-[9px] text-gray-400 text-center mt-1.5 font-mono">
-            {uploading ? 'Uploading...' : 'Upload photo'}
+          <p className="text-[8px] md:text-[9px] text-gray-400 text-center mt-1 font-mono">
+            {uploading ? '…' : 'Photo'}
           </p>
         </div>
 
-        {/* Details */}
-        <div className="flex-1 space-y-3 min-w-0">
+        <div className="flex-1 space-y-2 md:space-y-3 min-w-0">
           <div>
-            <label className="text-[10px] font-mono font-bold text-gray-400 dark:text-gray-500 uppercase block mb-1">Display Name</label>
+            <label htmlFor="profile-display-name" className="text-[9px] md:text-[10px] font-mono font-bold text-gray-400 dark:text-gray-500 uppercase block mb-0.5 md:mb-1">Display Name</label>
             {isEditing ? (
               <input
+                id="profile-display-name"
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 maxLength={50}
-                className="w-full px-3 py-2 border-2 border-black dark:border-white/20 bg-gray-50 dark:bg-white/5 text-black dark:text-white focus:bg-white dark:focus:bg-white/10 focus:shadow-[2px_2px_0px_#111] dark:focus:shadow-[2px_2px_0px_rgba(255,255,255,0.2)] outline-none transition-all font-mono text-sm font-medium"
+                className="w-full px-2.5 md:px-3 py-1.5 md:py-2 border border-black/15 dark:border-white/20 md:border-2 bg-gray-50 dark:bg-white/5 text-black dark:text-white outline-none transition-all font-mono text-[13px] md:text-sm font-medium rounded-lg md:rounded-none"
                 placeholder="Your name"
                 autoFocus
               />
             ) : (
-              <p className="text-sm font-bold text-black dark:text-white">{name}</p>
+              <p className="text-[13px] md:text-sm font-bold text-black dark:text-white">{name}</p>
             )}
           </div>
           <div>
-            <label className="text-[10px] font-mono font-bold text-gray-400 dark:text-gray-500 uppercase block mb-1">Email</label>
-            <p className="text-sm font-mono text-gray-600 dark:text-gray-400 truncate">{initialEmail}</p>
+            <span className="text-[9px] md:text-[10px] font-mono font-bold text-gray-400 dark:text-gray-500 uppercase block mb-0.5 md:mb-1">Email</span>
+            <p className="text-[12px] md:text-sm font-mono text-gray-600 dark:text-gray-400 truncate">{initialEmail}</p>
           </div>
           <div>
-            <label className="text-[10px] font-mono font-bold text-gray-400 dark:text-gray-500 uppercase block mb-1">Member Since</label>
-            <p className="text-sm text-gray-600 dark:text-gray-400">{memberSince}</p>
+            <span className="text-[9px] md:text-[10px] font-mono font-bold text-gray-400 dark:text-gray-500 uppercase block mb-0.5 md:mb-1">Member Since</span>
+            <p className="text-[12px] md:text-sm text-gray-600 dark:text-gray-400">{memberSince}</p>
           </div>
         </div>
       </div>

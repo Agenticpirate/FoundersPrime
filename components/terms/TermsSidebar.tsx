@@ -1,46 +1,53 @@
+import Link from 'next/link'
+const tableOfContents = [
+  { title: 'Acceptance of Terms', anchor: '#acceptance-of-terms' },
+  { title: 'Description of Service', anchor: '#description-of-service' },
+  { title: 'Deals, Offers & Eligibility', anchor: '#deals-offers-eligibility' },
+  { title: 'User Accounts', anchor: '#user-accounts' },
+  { title: 'Acceptable Use Policy', anchor: '#acceptable-use' },
+  { title: 'Subscription & Billing', anchor: '#subscription-billing' },
+  { title: 'Intellectual Property', anchor: '#intellectual-property' },
+  { title: 'Privacy & Data', anchor: '#privacy-data' },
+  { title: 'Disclaimers & Warranties', anchor: '#disclaimers-warranties' },
+  { title: 'Limitation of Liability', anchor: '#limitation-liability' },
+  { title: 'Indemnification', anchor: '#indemnification' },
+  { title: 'Termination', anchor: '#termination' },
+  { title: 'Governing Law', anchor: '#governing-law' }
+]
+
+const quickActions = [
+  { title: 'Download Terms PDF', icon: 'download', description: 'Get a PDF copy of these terms' },
+  { title: 'Contact Legal Team', icon: 'gavel', description: 'Questions about legal matters' },
+  { title: 'Report Violations', icon: 'report', description: 'Report terms violations' },
+  { title: 'Account Settings', icon: 'settings', description: 'Manage your account' }
+]
+
+const keyDates = [
+  { event: 'Terms Effective', date: 'June 21, 2026' },
+  { event: 'Last Updated', date: 'June 21, 2026' },
+  { event: 'Next Review', date: 'December 1, 2026' },
+  { event: 'Version', date: '3.2' }
+]
+
+const legalCompliance = [
+  { law: 'GDPR', region: 'European Union', status: 'Compliant' },
+  { law: 'CCPA', region: 'California', status: 'Compliant' },
+  { law: 'CAN-SPAM', region: 'United States', status: 'Compliant' },
+  { law: 'COPPA', region: 'United States', status: 'Compliant' }
+]
+
+const subscriptionInfo = [
+  { plan: 'Free', price: '$0/month', features: 'Basic access' },
+  { plan: 'Pro', price: '$29/month', features: 'Enhanced features' },
+  { plan: 'Pro+', price: '$79/month', features: 'Full access' }
+]
+
+
 export default function TermsSidebar() {
-  const tableOfContents = [
-    { title: 'Acceptance of Terms', anchor: '#acceptance-of-terms' },
-    { title: 'Description of Service', anchor: '#description-of-service' },
-    { title: 'Deals, Offers & Eligibility', anchor: '#deals-offers-eligibility' },
-    { title: 'User Accounts', anchor: '#user-accounts' },
-    { title: 'Acceptable Use Policy', anchor: '#acceptable-use' },
-    { title: 'Subscription & Billing', anchor: '#subscription-billing' },
-    { title: 'Intellectual Property', anchor: '#intellectual-property' },
-    { title: 'Privacy & Data', anchor: '#privacy-data' },
-    { title: 'Disclaimers & Warranties', anchor: '#disclaimers-warranties' },
-    { title: 'Limitation of Liability', anchor: '#limitation-liability' },
-    { title: 'Indemnification', anchor: '#indemnification' },
-    { title: 'Termination', anchor: '#termination' },
-    { title: 'Governing Law', anchor: '#governing-law' }
-  ]
 
-  const quickActions = [
-    { title: 'Download Terms PDF', icon: 'download', description: 'Get a PDF copy of these terms' },
-    { title: 'Contact Legal Team', icon: 'gavel', description: 'Questions about legal matters' },
-    { title: 'Report Violations', icon: 'report', description: 'Report terms violations' },
-    { title: 'Account Settings', icon: 'settings', description: 'Manage your account' }
-  ]
 
-  const keyDates = [
-    { event: 'Terms Effective', date: 'June 21, 2026' },
-    { event: 'Last Updated', date: 'June 21, 2026' },
-    { event: 'Next Review', date: 'December 1, 2026' },
-    { event: 'Version', date: '3.2' }
-  ]
 
-  const legalCompliance = [
-    { law: 'GDPR', region: 'European Union', status: 'Compliant' },
-    { law: 'CCPA', region: 'California', status: 'Compliant' },
-    { law: 'CAN-SPAM', region: 'United States', status: 'Compliant' },
-    { law: 'COPPA', region: 'United States', status: 'Compliant' }
-  ]
 
-  const subscriptionInfo = [
-    { plan: 'Free', price: '$0/month', features: 'Basic access' },
-    { plan: 'Pro', price: '$29/month', features: 'Enhanced features' },
-    { plan: 'Pro+', price: '$79/month', features: 'Full access' }
-  ]
 
   return (
     <div className="space-y-6">
@@ -52,7 +59,7 @@ export default function TermsSidebar() {
         <nav className="space-y-2">
           {tableOfContents.map((item, index) => (
             <a
-              key={index}
+              key={item.title}
               href={item.anchor}
               className="block font-sans text-sm text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors py-1 border-l-2 border-transparent hover:border-primary pl-3"
             >
@@ -69,8 +76,8 @@ export default function TermsSidebar() {
         </h3>
         <div className="space-y-3">
           {quickActions.map((action, index) => (
-            <button
-              key={index}
+            <button type="button"
+              key={action.title}
               className="w-full flex items-start gap-3 p-3 border border-gray-200 dark:border-neutral-800 bg-gray-50 dark:bg-neutral-900/50 hover:bg-gray-100 dark:hover:bg-neutral-800 rounded-xl transition-colors text-left"
             >
               <span className="material-symbols-outlined text-primary mt-0.5">{action.icon}</span>
@@ -89,8 +96,8 @@ export default function TermsSidebar() {
           Important Dates
         </h3>
         <div className="space-y-3">
-          {keyDates.map((item, index) => (
-            <div key={index} className="flex items-center justify-between">
+          {keyDates.map((item) => (
+            <div key={item.event} className="flex items-center justify-between">
               <span className="font-sans text-sm text-gray-700 dark:text-gray-300">{item.event}</span>
               <span className="font-mono text-sm font-bold text-gray-900 dark:text-white">{item.date}</span>
             </div>
@@ -104,8 +111,8 @@ export default function TermsSidebar() {
           Subscription Plans
         </h3>
         <div className="space-y-4">
-          {subscriptionInfo.map((plan, index) => (
-            <div key={index} className="border-b border-gray-100 dark:border-neutral-800 last:border-b-0 pb-3 last:pb-0">
+          {subscriptionInfo.map((plan) => (
+            <div key={plan.plan} className="border-b border-gray-100 dark:border-neutral-800 last:border-b-0 pb-3 last:pb-0">
               <div className="flex items-center justify-between mb-1">
                 <span className="font-mono text-sm font-bold text-gray-900 dark:text-white">{plan.plan}</span>
                 <span className="font-mono text-sm text-primary font-bold">{plan.price}</span>
@@ -115,9 +122,9 @@ export default function TermsSidebar() {
           ))}
         </div>
         <div className="mt-4 pt-4 border-t border-gray-100 dark:border-neutral-800">
-          <a href="/pricing" className="font-mono text-sm text-primary hover:text-gray-900 dark:hover:text-white transition-colors">
+          <Link href="/pricing" className="font-mono text-sm text-primary hover:text-gray-900 dark:hover:text-white transition-colors">
             View detailed pricing →
-          </a>
+          </Link>
         </div>
       </div>
 
@@ -127,8 +134,8 @@ export default function TermsSidebar() {
           Legal Compliance
         </h3>
         <div className="space-y-3">
-          {legalCompliance.map((item, index) => (
-            <div key={index} className="flex items-center justify-between">
+          {legalCompliance.map((item) => (
+            <div key={item.law} className="flex items-center justify-between">
               <div>
                 <p className="font-mono text-sm font-bold text-gray-900 dark:text-white">{item.law}</p>
                 <p className="font-sans text-xs text-gray-600 dark:text-gray-400">{item.region}</p>
@@ -185,18 +192,18 @@ export default function TermsSidebar() {
           Related Documents
         </h3>
         <div className="space-y-2">
-          <a href="/privacy" className="block font-mono text-sm text-primary hover:text-gray-900 dark:hover:text-white transition-colors py-1">
+          <Link href="/privacy" className="block font-mono text-sm text-primary hover:text-gray-900 dark:hover:text-white transition-colors py-1">
             Privacy Policy
-          </a>
-          <a href="/refund" className="block font-mono text-sm text-primary hover:text-gray-900 dark:hover:text-white transition-colors py-1">
+          </Link>
+          <Link href="/refund" className="block font-mono text-sm text-primary hover:text-gray-900 dark:hover:text-white transition-colors py-1">
             Refund Policy
-          </a>
-          <a href="/cookies" className="block font-mono text-sm text-primary hover:text-gray-900 dark:hover:text-white transition-colors py-1">
+          </Link>
+          <Link href="/cookies" className="block font-mono text-sm text-primary hover:text-gray-900 dark:hover:text-white transition-colors py-1">
             Cookie Policy
-          </a>
-          <a href="/community-guidelines" className="block font-mono text-sm text-primary hover:text-gray-900 dark:hover:text-white transition-colors py-1">
+          </Link>
+          <Link href="/community-guidelines" className="block font-mono text-sm text-primary hover:text-gray-900 dark:hover:text-white transition-colors py-1">
             Community Guidelines
-          </a>
+          </Link>
         </div>
       </div>
 

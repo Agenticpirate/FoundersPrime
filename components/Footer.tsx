@@ -11,15 +11,9 @@ import {
   type CSSProperties,
   type MouseEvent,
 } from 'react'
-import {
-  motion,
-  useMotionTemplate,
-  useMotionValue,
-  useReducedMotion,
-  useSpring,
-} from 'framer-motion'
+import { m, useMotionTemplate, useMotionValue, useReducedMotion, useSpring } from 'framer-motion'
 import GoogleTranslate from './GoogleTranslate'
-import { premiumEase } from '@/components/ui/premium-motion'
+import { premiumEase } from '@/lib/premium-motion-variants'
 
 function footerLinkActive(pathname: string, search: string, href: string): boolean {
   if (!href || href === '#') return false
@@ -38,6 +32,27 @@ function footerLinkActive(pathname: string, search: string, href: string): boole
 }
 
 const BRAND = 'FoundersPrime'
+const BRAND_CHARS = BRAND.split('').map((char, position) => ({
+  char,
+  position,
+  key: `brand-letter-${position}`,
+}))
+
+/** Short rotating lines under the wordmark — founder-energy, scannable. */
+const FOOTER_QUOTES = [
+  'Ship before you are ready.',
+  'Runway is oxygen. Guard it.',
+  'Customers beat opinions.',
+  'Small teams. Sharp focus.',
+  'Build. Charge. Learn. Repeat.',
+  'Distribution is half the product.',
+  'Default alive > default dead.',
+  'Talk to users every week.',
+  'Momentum compounds.',
+  'Stay scrappy. Stay shipping.',
+  'Proof beats pitch decks.',
+  'Speed is a feature.',
+]
 
 /**
  * Bright $ pour through the wordmark — full-stage fall via `top` (not transform %).
@@ -125,6 +140,84 @@ function DollarRain({ layer }: { layer: 'back' | 'front' }) {
   )
 }
 
+/** Yellow + charcoal sparks — modern “energy field” without clutter. */
+const SPARKS = Array.from({ length: 36 }, (_, i) => {
+  const left = 4 + ((i * 29.7) % 92)
+  const top = 8 + ((i * 41.3) % 78)
+  const size = 1.5 + (i % 4) * 0.9
+  const yellow = i % 3 !== 0
+  const rise = i % 4 === 0
+  return {
+    id: i,
+    left: `${left.toFixed(1)}%`,
+    top: `${top.toFixed(1)}%`,
+    size,
+    yellow,
+    rise,
+    delay: `${((i * 0.37) % 4.5).toFixed(2)}s`,
+    dur: `${(2.2 + (i % 6) * 0.45).toFixed(2)}s`,
+    dx: `${((i * 13) % 40) - 20}px`,
+    dy: `${-28 - (i % 5) * 10}px`,
+    opacity: yellow ? 0.55 + (i % 3) * 0.12 : 0.35 + (i % 2) * 0.1,
+  }
+})
+
+function SparkField() {
+  return (
+    <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>
+      {SPARKS.map((s) => (
+        <span
+          key={s.id}
+          className={`footer-spark ${s.yellow ? 'footer-spark--yellow' : 'footer-spark--dark'}${
+            s.rise ? ' footer-spark--rise' : ''
+          }`}
+          style={
+            {
+              left: s.left,
+              top: s.top,
+              width: s.size,
+              height: s.size,
+              animationDelay: s.delay,
+              '--spark-dur': s.dur,
+              '--spark-dx': s.dx,
+              '--spark-dy': s.dy,
+              '--spark-opacity': String(s.opacity),
+            } as CSSProperties
+          }
+        />
+      ))}
+    </div>
+  )
+}
+
+function RotatingFooterQuote({ reduce }: { reduce: boolean | null }) {
+  const [idx, setIdx] = useState(0)
+
+  useEffect(() => {
+    if (reduce) return
+    const id = window.setInterval(() => {
+      setIdx((i) => (i + 1) % FOOTER_QUOTES.length)
+    }, 3800)
+    return () => window.clearInterval(id)
+  }, [reduce])
+
+  const quote = FOOTER_QUOTES[idx]
+
+  return (
+    <div className="relative h-6 md:h-7 flex items-center justify-center w-full max-w-lg px-4">
+      <p
+        key={quote}
+        className={`font-mono text-[11px] md:text-[12px] text-zinc-400 tracking-wide text-center ${
+          reduce ? '' : 'footer-rotating-quote'
+        }`}
+      >
+        <span className="text-accent-yellow/80 mr-1.5">//</span>
+        {quote}
+      </p>
+    </div>
+  )
+}
+
 function BrandWordmark() {
   const reduce = useReducedMotion()
   const containerRef = useRef<HTMLDivElement>(null)
@@ -134,7 +227,7 @@ function BrandWordmark() {
   const mouseY = useMotionValue(50)
   const springX = useSpring(mouseX, { stiffness: 70, damping: 22 })
   const springY = useSpring(mouseY, { stiffness: 70, damping: 22 })
-  const glow = useMotionTemplate`radial-gradient(640px circle at ${springX}% ${springY}%, rgba(255,215,0,0.12), transparent 60%)`
+  const glow = useMotionTemplate`radial-gradient(520px circle at ${springX}% ${springY}%, rgba(255,215,0,0.1), transparent 62%)`
 
   const onMove = useCallback(
     (e: MouseEvent<HTMLDivElement>) => {
@@ -158,13 +251,31 @@ function BrandWordmark() {
       className="relative select-none w-full py-10 sm:py-14 md:py-20 lg:py-24"
       aria-label="FoundersPrime"
     >
-      {/* Open transparent stage — soft glow only, no boxed panel */}
-      <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>
-        <div className="absolute left-1/2 top-1/2 h-[min(70vw,420px)] w-[min(140vw,1100px)] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(255,215,0,0.11)_0%,rgba(255,215,0,0.04)_40%,transparent_72%)]" />
+      {/*
+        Open glass stage — pure soft radials only.
+        No overflow-hidden (clips into a box). No solid slab. No bordered panel.
+      */}
+      <div className="pointer-events-none absolute inset-0" aria-hidden>
+        {/* Wide soft amber glass bloom — fades fully to transparent */}
+        <div className="footer-glass-bloom" />
+        {/* Cool secondary haze for depth */}
+        <div className="footer-glass-haze" />
         {!reduce && (
-          <motion.div className="absolute inset-0" style={{ background: glow }} />
+          <m.div
+            className="absolute inset-0 mix-blend-soft-light opacity-80"
+            style={{ background: glow }}
+          />
         )}
-        {!reduce && <DollarRain layer="back" />}
+        {!reduce && (
+          <>
+            <div className="footer-pulse-ring" />
+            <div className="footer-pulse-ring footer-pulse-ring--delay" />
+            <SparkField />
+            {/* Soft diagonal flash — not a rectangular bar */}
+            <div className="footer-strike-beam" />
+            <DollarRain layer="back" />
+          </>
+        )}
       </div>
 
       {/* Front $ fall ON TOP of the brand letters */}
@@ -176,7 +287,13 @@ function BrandWordmark() {
 
       <div className="relative z-[1] flex flex-col items-center gap-5 md:gap-6 px-4">
         <p className="font-mono text-[10px] md:text-[11px] font-bold tracking-[0.38em] uppercase text-zinc-500">
-          Built for the underdogs
+          <span className="inline-flex items-center gap-2">
+            <span className="relative flex h-1.5 w-1.5">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent-yellow opacity-50" />
+              <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-accent-yellow" />
+            </span>
+            Built for the underdogs
+          </span>
         </p>
 
         <Link
@@ -188,25 +305,25 @@ function BrandWordmark() {
             className="relative flex flex-wrap justify-center items-baseline font-mono font-black leading-none tracking-[-0.04em] md:tracking-[-0.05em]"
             style={{ fontSize: 'clamp(2.75rem, 12vw, 8.75rem)' }}
           >
-            {BRAND.split('').map((char, i) => {
-              const isPrime = i >= 8
-              const isHover = hovered === i
-              const near = hovered !== null && Math.abs(hovered - i) === 1
+            {BRAND_CHARS.map(({ char, position, key }) => {
+              const isPrime = position >= 8
+              const isHover = hovered === position
+              const near = hovered !== null && Math.abs(hovered - position) === 1
               const lift = reduce ? 0 : isHover ? -10 : near ? -4 : 0
               const scale = reduce ? 1 : isHover ? 1.06 : 1
 
               return (
-                <motion.span
-                  key={`${char}-${i}`}
+                <m.span
+                  key={key}
                   className="relative inline-block will-change-transform"
-                  onMouseEnter={() => setHovered(i)}
+                  onMouseEnter={() => setHovered(position)}
                   onMouseLeave={() => setHovered(null)}
                   initial={reduce ? false : { opacity: 0, y: 28 }}
                   whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
                   viewport={{ once: true, amount: 0.4 }}
                   transition={{
                     duration: 0.55,
-                    delay: reduce ? 0 : i * 0.028,
+                    delay: reduce ? 0 : position * 0.028,
                     ease: premiumEase,
                   }}
                 >
@@ -233,7 +350,7 @@ function BrandWordmark() {
                   >
                     {char}
                   </span>
-                </motion.span>
+                </m.span>
               )
             })}
           </h2>
@@ -248,10 +365,128 @@ function BrandWordmark() {
         <p className="font-sans text-xs md:text-sm text-zinc-500 tracking-wide text-center max-w-md">
           The intelligence terminal for bootstrapped founders.
         </p>
+
+        <RotatingFooterQuote reduce={reduce} />
       </div>
     </div>
   )
 }
+
+const footerSections = [
+  {
+    title: 'Deals',
+    summary: 'Startup credits, SaaS deals & more',
+    icon: 'local_offer',
+    links: [
+      { text: 'All deals', href: '/deals' },
+      { text: 'Flash Deals', href: '/flash-deals', highlight: true },
+      { text: 'Cloud Credits', href: '/deals?category=cloud-credits' },
+      { text: 'SaaS & Tools', href: '/deals?category=saas-discounts' },
+      { text: 'Grants', href: '/programs?type=grants' },
+      { text: 'Ad Credits', href: '/deals?category=ad-credits' },
+    ],
+  },
+  {
+    title: 'Programs',
+    summary: 'Grants, incentives & founder perks',
+    icon: 'redeem',
+    links: [
+      { text: 'All Programs', href: '/programs' },
+      { text: 'Accelerators', href: '/programs?type=accelerators' },
+      { text: 'Incubators', href: '/programs?type=incubators' },
+      { text: 'Grants', href: '/programs?type=grants' },
+    ],
+  },
+  {
+    title: 'Student Benefits',
+    summary: 'Exclusive benefits for students',
+    icon: 'school',
+    links: [
+      { text: 'Credits & Savings', href: '/student-benefits?type=credits-savings' },
+      { text: 'Campus Edge', href: '/student-benefits?type=free-access' },
+      { text: 'Funding & Opps', href: '/student-benefits?type=funding' },
+    ],
+  },
+  {
+    title: 'Discover',
+    summary: 'Explore resources & opportunities',
+    icon: 'explore',
+    links: [
+      { text: 'Startup Ideas', href: '/ideas' },
+      { text: 'Founder Vault', href: '/resources' },
+      { text: 'Search', href: '/search' },
+    ],
+  },
+  {
+    title: 'Company',
+    summary: 'About us, careers & press',
+    icon: 'domain',
+    links: [
+      { text: 'About', href: '/about' },
+      { text: 'Pricing', href: '/pricing' },
+      { text: 'Contact', href: '/contact' },
+      { text: 'Submit a Deal', href: '/submit-deal' },
+    ],
+  },
+  {
+    title: 'Legal',
+    summary: 'Terms, privacy & policies',
+    icon: 'gavel',
+    links: [
+      { text: 'Privacy Policy', href: '/privacy' },
+      { text: 'Terms of Service', href: '/terms' },
+      { text: 'Cookie Policy', href: '/cookie-policy' },
+      { text: 'Refund Policy', href: '/refund-policy' },
+    ],
+  },
+]
+
+const socials = [
+  {
+    label: 'Twitter / X',
+    href: 'https://twitter.com/foundersprime',
+    bg: 'hover:bg-white/10 hover:border-white hover:shadow-[0_0_15px_rgba(255,255,255,0.15)]',
+    svg: (
+      <svg viewBox="0 0 24 24" className="w-5 h-5 transition-transform duration-300 group-hover:scale-110" fill="currentColor" aria-hidden>
+        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+      </svg>
+    ),
+    iconColor: 'text-white',
+  },
+  {
+    label: 'LinkedIn',
+    href: 'https://linkedin.com/company/foundersprime',
+    bg: 'hover:bg-[#0A66C2]/10 hover:border-[#0A66C2] hover:shadow-[0_0_15px_rgba(10,102,194,0.25)]',
+    svg: (
+      <svg viewBox="0 0 24 24" className="w-5 h-5 transition-transform duration-300 group-hover:scale-110" fill="currentColor" aria-hidden>
+        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.852 3.37-1.852 3.601 0 4.267 2.37 4.267 5.455v6.288zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.063 2.063 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+      </svg>
+    ),
+    iconColor: 'text-[#0A66C2]',
+  },
+  {
+    label: 'Discord',
+    href: '#',
+    bg: 'hover:bg-[#5865F2]/10 hover:border-[#5865F2] hover:shadow-[0_0_15px_rgba(88,101,242,0.25)]',
+    svg: (
+      <svg viewBox="0 0 24 24" className="w-5 h-5 transition-transform duration-300 group-hover:scale-110" fill="currentColor" aria-hidden>
+        <path d="M20.317 4.37a19.79 19.79 0 00-4.885-1.515.074.074 0 00-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 00-5.487 0 12.64 12.64 0 00-.617-1.25.077.077 0 00-.079-.037A19.74 19.74 0 003.677 4.37a.07.07 0 00-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 00.031.057 19.9 19.9 0 005.993 3.03.078.078 0 00.084-.028 14.09 14.09 0 001.226-1.994.076.076 0 00-.041-.106 13.107 13.107 0 01-1.872-.892.077.077 0 01-.008-.128 10.2 10.2 0 00.372-.292.074.074 0 01.077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 01.078.01c.12.098.246.198.373.292a.077.077 0 01-.006.127 12.299 12.299 0 01-1.873.892.077.077 0 00-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 00.084.028 19.839 19.839 0 006.002-3.03.077.077 0 00.032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 00-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z" />
+      </svg>
+    ),
+    iconColor: 'text-[#5865F2]',
+  },
+  {
+    label: 'Email',
+    href: 'mailto:hello@foundersprime.com',
+    bg: 'hover:bg-accent-yellow/10 hover:border-accent-yellow hover:shadow-[0_0_15px_rgba(255,215,0,0.25)]',
+    svg: (
+      <svg viewBox="0 0 24 24" className="w-5 h-5 transition-transform duration-300 group-hover:scale-110" fill="currentColor" aria-hidden>
+        <path d="M2 4h20a2 2 0 012 2v12a2 2 0 01-2 2H2a2 2 0 01-2-2V6a2 2 0 012-2zm10 7L2.5 5h19zM2 8.236V18h20V8.236l-9.445 5.667a2 2 0 01-2.11 0z" />
+      </svg>
+    ),
+    iconColor: 'text-accent-yellow',
+  },
+]
 
 export default function Footer() {
   const pathname = usePathname() || '/'
@@ -295,121 +530,7 @@ export default function Footer() {
       .join(' ')
   }
 
-  const footerSections = [
-    {
-      title: 'Deals',
-      summary: 'Startup credits, SaaS deals & more',
-      icon: 'local_offer',
-      links: [
-        { text: 'All deals', href: '/deals' },
-        { text: 'Flash Deals', href: '/flash-deals', highlight: true },
-        { text: 'Cloud Credits', href: '/deals?category=cloud-credits' },
-        { text: 'SaaS & Tools', href: '/deals?category=saas-discounts' },
-        { text: 'Grants', href: '/programs?type=grants' },
-        { text: 'Ad Credits', href: '/deals?category=ad-credits' },
-      ],
-    },
-    {
-      title: 'Programs',
-      summary: 'Grants, incentives & founder perks',
-      icon: 'redeem',
-      links: [
-        { text: 'All Programs', href: '/programs' },
-        { text: 'Accelerators', href: '/programs?type=accelerators' },
-        { text: 'Incubators', href: '/programs?type=incubators' },
-        { text: 'Grants', href: '/programs?type=grants' },
-      ],
-    },
-    {
-      title: 'Student Benefits',
-      summary: 'Exclusive benefits for students',
-      icon: 'school',
-      links: [
-        { text: 'Credits & Savings', href: '/student-benefits?type=credits-savings' },
-        { text: 'Campus Edge', href: '/student-benefits?type=free-access' },
-        { text: 'Funding & Opps', href: '/student-benefits?type=funding' },
-      ],
-    },
-    {
-      title: 'Discover',
-      summary: 'Explore resources & opportunities',
-      icon: 'explore',
-      links: [
-        { text: 'Startup Ideas', href: '/ideas' },
-        { text: 'Founder Vault', href: '/resources' },
-        { text: 'Search', href: '/search' },
-      ],
-    },
-    {
-      title: 'Company',
-      summary: 'About us, careers & press',
-      icon: 'domain',
-      links: [
-        { text: 'About', href: '/about' },
-        { text: 'Pricing', href: '/pricing' },
-        { text: 'Contact', href: '/contact' },
-        { text: 'Submit a Deal', href: '/submit-deal' },
-      ],
-    },
-    {
-      title: 'Legal',
-      summary: 'Terms, privacy & policies',
-      icon: 'gavel',
-      links: [
-        { text: 'Privacy Policy', href: '/privacy' },
-        { text: 'Terms of Service', href: '/terms' },
-        { text: 'Cookie Policy', href: '/cookie-policy' },
-        { text: 'Refund Policy', href: '/refund-policy' },
-      ],
-    },
-  ]
 
-  const socials = [
-    {
-      label: 'Twitter / X',
-      href: 'https://twitter.com/foundersprime',
-      bg: 'hover:bg-white/10 hover:border-white hover:shadow-[0_0_15px_rgba(255,255,255,0.15)]',
-      svg: (
-        <svg viewBox="0 0 24 24" className="w-5 h-5 transition-transform duration-300 group-hover:scale-110" fill="currentColor" aria-hidden>
-          <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-        </svg>
-      ),
-      iconColor: 'text-white',
-    },
-    {
-      label: 'LinkedIn',
-      href: 'https://linkedin.com/company/foundersprime',
-      bg: 'hover:bg-[#0A66C2]/10 hover:border-[#0A66C2] hover:shadow-[0_0_15px_rgba(10,102,194,0.25)]',
-      svg: (
-        <svg viewBox="0 0 24 24" className="w-5 h-5 transition-transform duration-300 group-hover:scale-110" fill="currentColor" aria-hidden>
-          <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.852 3.37-1.852 3.601 0 4.267 2.37 4.267 5.455v6.288zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.063 2.063 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
-        </svg>
-      ),
-      iconColor: 'text-[#0A66C2]',
-    },
-    {
-      label: 'Discord',
-      href: '#',
-      bg: 'hover:bg-[#5865F2]/10 hover:border-[#5865F2] hover:shadow-[0_0_15px_rgba(88,101,242,0.25)]',
-      svg: (
-        <svg viewBox="0 0 24 24" className="w-5 h-5 transition-transform duration-300 group-hover:scale-110" fill="currentColor" aria-hidden>
-          <path d="M20.317 4.37a19.79 19.79 0 00-4.885-1.515.074.074 0 00-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 00-5.487 0 12.64 12.64 0 00-.617-1.25.077.077 0 00-.079-.037A19.74 19.74 0 003.677 4.37a.07.07 0 00-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 00.031.057 19.9 19.9 0 005.993 3.03.078.078 0 00.084-.028 14.09 14.09 0 001.226-1.994.076.076 0 00-.041-.106 13.107 13.107 0 01-1.872-.892.077.077 0 01-.008-.128 10.2 10.2 0 00.372-.292.074.074 0 01.077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 01.078.01c.12.098.246.198.373.292a.077.077 0 01-.006.127 12.299 12.299 0 01-1.873.892.077.077 0 00-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 00.084.028 19.839 19.839 0 006.002-3.03.077.077 0 00.032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 00-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z" />
-        </svg>
-      ),
-      iconColor: 'text-[#5865F2]',
-    },
-    {
-      label: 'Email',
-      href: 'mailto:hello@foundersprime.com',
-      bg: 'hover:bg-accent-yellow/10 hover:border-accent-yellow hover:shadow-[0_0_15px_rgba(255,215,0,0.25)]',
-      svg: (
-        <svg viewBox="0 0 24 24" className="w-5 h-5 transition-transform duration-300 group-hover:scale-110" fill="currentColor" aria-hidden>
-          <path d="M2 4h20a2 2 0 012 2v12a2 2 0 01-2 2H2a2 2 0 01-2-2V6a2 2 0 012-2zm10 7L2.5 5h19zM2 8.236V18h20V8.236l-9.445 5.667a2 2 0 01-2.11 0z" />
-        </svg>
-      ),
-      iconColor: 'text-accent-yellow',
-    },
-  ]
 
   return (
     <footer className="relative bg-black text-white border-t border-white/[0.08] overflow-hidden grid-bg-dark transition-colors duration-300">
@@ -491,7 +612,7 @@ export default function Footer() {
           {/* Link Grid — desktop */}
           <div className="lg:col-span-8 hidden md:grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-x-6 gap-y-10">
             {footerSections.map((section, index) => (
-              <div key={index} className="flex flex-col gap-4">
+              <div key={section.title} className="flex flex-col gap-4">
                 <p className="font-mono text-[10.5px] font-black tracking-widest uppercase text-accent-yellow">
                   {section.title}
                 </p>

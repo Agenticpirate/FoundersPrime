@@ -218,9 +218,9 @@ export default function AdminAnalyticsPage() {
               Recent paid ({timeRange})
             </h3>
             <div className="space-y-1.5 max-h-64 overflow-y-auto">
-              {recentSubs.map((r, i) => (
+              {recentSubs.map((r) => (
                 <div
-                  key={i}
+                  key={`${r.email || r.label}-${r.price}-${r.createdAt || ''}`}
                   className="flex justify-between gap-2 p-2 rounded-lg border border-white/5 font-mono text-[11px]"
                 >
                   <div className="min-w-0">

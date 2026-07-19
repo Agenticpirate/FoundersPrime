@@ -86,12 +86,12 @@ export default function StartupGrid({ startups, selectedIndustry, setSelectedInd
           <svg viewBox="0 0 200 200" className="w-full h-full text-gray-900 dark:text-white startups-filterbar-spin" fill="none" stroke="currentColor" strokeWidth="0.6">
             <circle cx="100" cy="100" r="40" />
             <circle cx="100" cy="100" r="60" strokeDasharray="2 4" />
-            {[...Array(8)].map((_, i) => (
+            {Array.from({ length: 8 }, (_, i) => i * 45).map((deg) => (
               <line
-                key={i}
+                key={`ray-${deg}`}
                 x1="100" y1="100"
-                x2={100 + Math.cos((i * Math.PI) / 4) * 80}
-                y2={100 + Math.sin((i * Math.PI) / 4) * 80}
+                x2={100 + Math.cos((deg * Math.PI) / 180) * 80}
+                y2={100 + Math.sin((deg * Math.PI) / 180) * 80}
               />
             ))}
             <circle cx="100" cy="100" r="2" fill="currentColor" />
@@ -110,7 +110,7 @@ export default function StartupGrid({ startups, selectedIndustry, setSelectedInd
               onChange={(e) => setSearchQuery(e.target.value)}
             />
             {searchQuery && (
-              <button
+              <button type="button"
                 onClick={() => setSearchQuery("")}
                 className="absolute right-2 top-1/2 -translate-y-1/2 w-6 h-6 flex items-center justify-center rounded-full hover:bg-gray-100 dark:hover:bg-white/10 text-gray-400 hover:text-gray-700 dark:hover:text-white transition-colors"
                 aria-label="Clear search"
@@ -126,7 +126,7 @@ export default function StartupGrid({ startups, selectedIndustry, setSelectedInd
               Industry:
             </span>
             {industries.map((industry) => (
-              <button
+              <button type="button"
                 key={industry}
                 onClick={() => setSelectedIndustry(industry)}
                 className={`px-2.5 py-1 text-[11px] font-semibold rounded-full transition-all whitespace-nowrap flex-shrink-0 ${
@@ -139,7 +139,7 @@ export default function StartupGrid({ startups, selectedIndustry, setSelectedInd
               </button>
             ))}
             {hasActiveFilters && (
-              <button
+              <button type="button"
                 onClick={handleClearFilters}
                 className="ml-auto px-2.5 py-1 text-[11px] font-semibold rounded-full text-red-500 hover:bg-red-50 dark:hover:bg-red-950/20 transition-colors whitespace-nowrap flex-shrink-0 flex items-center gap-1"
               >
@@ -182,7 +182,7 @@ export default function StartupGrid({ startups, selectedIndustry, setSelectedInd
       {currentStartups.length > 0 ? (
         <StaggerGrid
           animKey={`${currentPage}-${searchQuery}-${selectedIndustry}`}
-          className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3 grid-fill-row-startups"
+          className="grid grid-cols-2 xl:grid-cols-3 gap-2 md:gap-3.5 grid-fill-row-startups"
         >
           {currentStartups.map((startup) => (
             <StaggerGridItem key={startup.id}>

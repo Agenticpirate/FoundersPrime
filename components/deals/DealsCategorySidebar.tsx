@@ -1,13 +1,16 @@
 'use client'
 
-import { useState, useEffect } from 'react'
-import { getSubcategoriesByCategory, getAllCategories } from '@/lib/deals-database'
+import Link from 'next/link'
+import { useMemo, useState } from 'react'
+import { getSubcategoriesByCategory, getAllCategories, type Deal } from '@/lib/deals-database'
 import { countDealsByCategory } from '@/lib/catalog-segregation'
 
 interface CategorySidebarProps {
   onCategorySelect?: (category: string, subcategory?: string) => void
   selectedCategory?: string
   selectedSubcategory?: string
+  /** SSR/catalog seed — avoids client fetch-in-effect for counts */
+  initialDeals?: Deal[]
 }
 
 const CATEGORY_ICONS: Record<string, string> = {
@@ -26,37 +29,33 @@ export default function DealsCategorySidebar({
   onCategorySelect,
   selectedCategory = '',
   selectedSubcategory = '',
+  initialDeals,
 }: CategorySidebarProps) {
   const [expandedCategories, setExpandedCategories] = useState<string[]>(
     [selectedCategory].filter(Boolean)
   )
-  const [categoryCounts, setCategoryCounts] = useState<Record<string, number>>({
-    'cloud-credits': 0,
-    'ad-credits': 0,
-    'saas-discounts': 0,
-  })
-  const [subcategoryCounts, setSubcategoryCounts] = useState<Record<string, number>>({})
-  const [totalDeals, setTotalDeals] = useState(0)
   const categories = getAllCategories()
+  const expandedSet = useMemo(() => new Set(expandedCategories), [expandedCategories])
 
-  useEffect(() => {
-    const loadCounts = async () => {
-      try {
-        // Explicit commercial scope — never use unscoped/all
-        const response = await fetch('/api/deals?scope=deals')
-        const data = await response.json()
-        if (data.success && Array.isArray(data.deals)) {
-          const { total, byCategory, bySubcategory } = countDealsByCategory(data.deals)
-          setTotalDeals(total)
-          setCategoryCounts(byCategory)
-          setSubcategoryCounts(bySubcategory)
-        }
-      } catch (error) {
-        console.error('Error loading deal counts:', error)
+  const { totalDeals, categoryCounts, subcategoryCounts } = useMemo(() => {
+    if (!initialDeals?.length) {
+      return {
+        totalDeals: 0,
+        categoryCounts: {
+          'cloud-credits': 0,
+          'ad-credits': 0,
+          'saas-discounts': 0,
+        } as Record<string, number>,
+        subcategoryCounts: {} as Record<string, number>,
       }
     }
-    loadCounts()
-  }, [])
+    const { total, byCategory, bySubcategory } = countDealsByCategory(initialDeals)
+    return {
+      totalDeals: total,
+      categoryCounts: byCategory,
+      subcategoryCounts: bySubcategory,
+    }
+  }, [initialDeals])
 
   const toggleCategory = (categoryId: string) => {
     setExpandedCategories((prev) =>
@@ -134,7 +133,7 @@ export default function DealsCategorySidebar({
             <div className="space-y-0.5">
               {categories.map((category) => {
                 const subcategories = getSubcategoriesByCategory(category.id)
-                const isExpanded = expandedCategories.includes(category.id)
+                const isExpanded = expandedSet.has(category.id)
                 const isActive = selectedCategory === category.id && !selectedSubcategory
                 const hasSubcategories = subcategories.length > 0
                 const icon = CATEGORY_ICONS[category.id] || 'folder'
@@ -252,9 +251,9 @@ export default function DealsCategorySidebar({
               <span className="font-semibold text-gray-700 dark:text-gray-300">Deals only</span>
               {' — '}
               cloud, ads, and SaaS offers. Accelerators &amp; grants are under{' '}
-              <a href="/programs" className="text-accent-yellow font-semibold hover:underline">
+              <Link href="/programs" className="text-accent-yellow font-semibold hover:underline">
                 Programs
-              </a>
+              </Link>
               .
             </p>
           </div>

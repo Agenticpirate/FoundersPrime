@@ -57,10 +57,10 @@ export default function IdeasFilterBar({
   }
 
   return (
-    <div className="mb-6 space-y-3">
+    <div className="mb-4 md:mb-6 space-y-2 md:space-y-3">
       {/* Unified filter shell */}
-      <div className="sticky sticky-mobile-filters top-14 md:top-20 z-30 rounded-2xl border border-black/[0.06] dark:border-white/[0.08] bg-white/95 dark:bg-[#0a0a0a]/95 backdrop-blur-xl shadow-[0_8px_32px_rgba(0,0,0,0.04)] dark:shadow-[0_12px_40px_rgba(0,0,0,0.35)]">
-        <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-0 p-2.5 sm:p-1.5 sm:pl-2">
+      <div className="sticky sticky-mobile-filters top-14 md:top-20 z-30 rounded-xl md:rounded-2xl border border-black/[0.06] dark:border-white/[0.08] bg-white/95 dark:bg-[#0a0a0a]/95 backdrop-blur-xl shadow-[0_8px_32px_rgba(0,0,0,0.04)] dark:shadow-[0_12px_40px_rgba(0,0,0,0.35)]">
+        <div className="flex flex-col sm:flex-row sm:items-center gap-1.5 sm:gap-0 p-2 sm:p-1.5 sm:pl-2">
           {/* Search */}
           <div className="relative flex-1 min-w-0">
             <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500 !text-[18px] pointer-events-none">

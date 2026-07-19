@@ -41,6 +41,14 @@ const SORT_OPTIONS = [
 
 export type { StudentBenefitsFilterState }
 
+const searchPlaceholders: Record<StudentBenefitType, string> = {
+  all: 'Search student discounts, licenses, opportunities…',
+  'free-access': 'Search free software, apps & student licenses…',
+  'credits-savings': 'Search credits, free months & subscription savings…',
+  funding: 'Search grants, scholarships, student fellowships…',
+  programs: 'Search student programs, fellowships & residencies…',
+}
+
 export default function StudentBenefitsFilterBar({
   activeType,
   onFilterChange,
@@ -152,13 +160,6 @@ export default function StudentBenefitsFilterBar({
   const selectClass =
     'h-10 w-full appearance-none rounded-lg border border-black/[0.06] dark:border-white/[0.08] bg-white dark:bg-white/[0.03] pl-3 pr-9 text-[12px] font-medium text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-1 focus:ring-accent-yellow/50 focus:border-accent-yellow/40 cursor-pointer hover:border-black/10 dark:hover:border-white/15 transition-colors disabled:opacity-40 disabled:cursor-not-allowed'
 
-  const searchPlaceholders: Record<StudentBenefitType, string> = {
-    all: 'Search student discounts, licenses, opportunities…',
-    'free-access': 'Search free software, apps & student licenses…',
-    'credits-savings': 'Search credits, free months & subscription savings…',
-    funding: 'Search grants, scholarships, student fellowships…',
-    programs: 'Search student programs, fellowships & residencies…',
-  }
 
   return (
     <div className="relative bg-white dark:bg-[#0c0c0c] border border-black/[0.06] dark:border-white/[0.08] rounded-2xl p-3 md:p-3.5 sticky top-14 md:top-20 z-30 shadow-sm overflow-hidden transition-colors duration-300">

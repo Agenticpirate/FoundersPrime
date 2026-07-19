@@ -2,7 +2,6 @@
 
 import type { ReactNode } from 'react'
 import Link from 'next/link'
-import BrandLogo from '@/components/ui/BrandLogo'
 import { Reveal, RevealStagger, RevealItem } from '@/components/ui/premium-motion'
 
 /* ─── Binoculars line-icon (no Material Symbols equivalent) ─── */
@@ -35,11 +34,11 @@ const badges = [
     { icon: 'percent', label: ['No Equity', 'Taken'] },
 ]
 
-/* ─── Logos shown inside the dark promo card ─── */
+/* ─── Logos shown inside the dark promo card (local brand-logos only) ─── */
 const promoLogos = [
-    { name: 'AWS', domain: 'aws.amazon.com' },
-    { name: 'Google Cloud', domain: 'cloud.google.com' },
-    { name: 'HubSpot', domain: 'hubspot.com' },
+    { name: 'AWS', logo: '/brand-logos/aws.png?v=20260718official' },
+    { name: 'Google Cloud', logo: '/brand-logos/googlecloud.svg?v=20260718official' },
+    { name: 'HubSpot', logo: '/brand-logos/hubspot.png?v=20260718official' },
 ]
 
 
@@ -193,10 +192,21 @@ export default function ProblemSection() {
                                             Across cloud credits, grants &amp; SaaS perks.
                                         </p>
 
-                                        <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2">
+                                        <div className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-2">
                                             {promoLogos.map((logo) => (
                                                 <div key={logo.name} className="flex items-center gap-1.5">
-                                                    <BrandLogo name={logo.name} domain={logo.domain} size="sm" plate eager />
+                                                    <span className="relative flex h-6 w-6 shrink-0 items-center justify-center overflow-hidden rounded-full bg-white border border-white/20 p-0.5">
+                                                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                                                        <img
+                                                            src={logo.logo}
+                                                            alt=""
+                                                            width={24}
+                                                            height={24}
+                                                            className="h-full w-full object-contain"
+                                                            loading="eager"
+                                                            decoding="async"
+                                                        />
+                                                    </span>
                                                     <span className="font-sans text-xs font-semibold text-white whitespace-nowrap">
                                                         {logo.name}
                                                     </span>

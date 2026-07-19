@@ -28,12 +28,9 @@ export async function POST(request: NextRequest) {
     return jsonRpcError(null, -32700, 'Parse error')
   }
 
-  // Support batch arrays minimally
+  // Support batch arrays (independent messages run in parallel)
   if (Array.isArray(body)) {
-    const results = []
-    for (const item of body) {
-      results.push(await handleMessage(item))
-    }
+    const results = await Promise.all(body.map((item) => handleMessage(item)))
     return NextResponse.json(results)
   }
 

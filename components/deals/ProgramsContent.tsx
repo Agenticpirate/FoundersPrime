@@ -3,14 +3,22 @@
 import { useState, useCallback, useEffect, useRef } from 'react'
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
-import { useRouter, useSearchParams, usePathname } from 'next/navigation'
-import { motion, useReducedMotion } from 'framer-motion'
-import type { ProgramType } from './ProgramsSidebar'
+import { useSearchParams, usePathname } from 'next/navigation'
+import { replaceUrlQuiet } from '@/lib/url-sync'
+import { m, useReducedMotion } from 'framer-motion'
+import type { ProgramType } from './program-type'
 import ProgramsFilterBar, { ProgramFilterState } from './ProgramsFilterBar'
 import { FadeUp } from '@/components/ui/premium-motion'
 import { getStaticProgramCounts } from '@/lib/programs-catalog'
 
 /** Single promote CTA — premium, minimal. Links to homepage advertise section. */
+const activeLabel: Record<ProgramType, string> = {
+  all: 'All Programs',
+  accelerators: 'Accelerators',
+  incubators: 'Incubators',
+  grants: 'Grants',
+}
+
 function ProgramsPromoteBanner() {
   const reduce = useReducedMotion()
   return (
@@ -27,7 +35,7 @@ function ProgramsPromoteBanner() {
         className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-accent-yellow/40 to-transparent"
       />
       {!reduce && (
-        <motion.div
+        <m.div
           aria-hidden
           className="pointer-events-none absolute -left-1/3 top-0 h-full w-1/3 bg-gradient-to-r from-transparent via-white/40 dark:via-white/5 to-transparent skew-x-12"
           animate={{ x: ['0%', '350%'] }}
@@ -36,14 +44,14 @@ function ProgramsPromoteBanner() {
       )}
 
       <div className="relative z-10 flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-2xl border border-black/[0.06] dark:border-white/10 bg-accent-yellow/20 dark:bg-accent-yellow/10 shadow-sm">
-        <motion.span
+        <m.span
           className="material-symbols-outlined text-amber-700 dark:text-accent-yellow !text-[22px]"
           style={{ fontVariationSettings: "'FILL' 1" }}
           animate={reduce ? undefined : { scale: [1, 1.08, 1] }}
           transition={{ duration: 2.4, repeat: Infinity, ease: 'easeInOut' }}
         >
           campaign
-        </motion.span>
+        </m.span>
       </div>
 
       <div className="relative z-10 min-w-0 flex-1">
@@ -79,9 +87,9 @@ const ProgramsGrid = dynamic(() => import('./ProgramsGrid'), {
   ssr: true,
   loading: () => (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
-      {Array.from({ length: 8 }).map((_, i) => (
+      {Array.from({ length: 8 }, (_, i) => `prog-skel-${i}`).map((id) => (
         <div
-          key={i}
+          key={id}
           className="h-64 rounded-lg border border-white/10 bg-[#0b0b0b] animate-pulse"
         />
       ))}
@@ -115,7 +123,6 @@ function readFromUrl(params: URLSearchParams): { type: ProgramType; filters: Pro
 }
 
 export default function ProgramsContent({ initialIsPro, initialType, initialFilters }: { initialIsPro?: boolean; initialType?: ProgramType; initialFilters?: ProgramFilterState }) {
-  const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
   const reduceMotion = useReducedMotion()
@@ -123,9 +130,8 @@ export default function ProgramsContent({ initialIsPro, initialType, initialFilt
   const initial = readFromUrl(new URLSearchParams(searchParams.toString()))
   const [activeType, setActiveType] = useState<ProgramType>(initialType || initial.type)
   const [filters, setFilters] = useState<ProgramFilterState>(initialFilters || initial.filters)
-  const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false)
 
-  const lastWrittenUrlRef = useRef(searchParams.toString())
+  const lastWrittenUrlRef = useRef<string | null>(null)
   const isFirstSync = useRef(true)
 
   // Sync state → URL
@@ -147,14 +153,14 @@ export default function ProgramsContent({ initialIsPro, initialType, initialFilt
     const next = params.toString()
     lastWrittenUrlRef.current = next
     const url = next ? `${pathname}?${next}` : pathname
-    router.replace(url, { scroll: false })
+    replaceUrlQuiet(url)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeType, filters.search, filters.region, filters.subtype, filters.sort, filters.stage])
 
   // Sync URL → state (browser back/forward)
   useEffect(() => {
     const current = searchParams.toString()
-    if (current === lastWrittenUrlRef.current) return
+    if (lastWrittenUrlRef.current !== null && current === lastWrittenUrlRef.current) return
     lastWrittenUrlRef.current = current
     const { type, filters: fromUrl } = readFromUrl(new URLSearchParams(current))
     setActiveType(type)
@@ -172,7 +178,6 @@ export default function ProgramsContent({ initialIsPro, initialType, initialFilt
 
   const handleTypeSelect = useCallback((type: ProgramType) => {
     setActiveType(type)
-    setMobileSidebarOpen(false)
     // Reset subtype-specific filter when switching types
     setFilters(prev => ({ ...prev, subtype: 'All' }))
   }, [])
@@ -181,12 +186,6 @@ export default function ProgramsContent({ initialIsPro, initialType, initialFilt
     setFilters(newFilters)
   }, [])
 
-  const activeLabel: Record<ProgramType, string> = {
-    all: 'All Programs',
-    accelerators: 'Accelerators',
-    incubators: 'Incubators',
-    grants: 'Grants',
-  }
 
   // Static baseline counts; grid merges Supabase programs on the client
   const staticCounts = getStaticProgramCounts()
@@ -205,9 +204,10 @@ export default function ProgramsContent({ initialIsPro, initialType, initialFilt
         const { fromSupabaseProgram, mergePrograms, getStaticPrograms } = await import(
           '@/lib/programs-catalog'
         )
-        const remote = data.deals
-          .map((d: any) => fromSupabaseProgram(d))
-          .filter(Boolean)
+        const remote = data.deals.flatMap((d: any) => {
+          const row = fromSupabaseProgram(d)
+          return row ? [row] : []
+        })
         const merged = mergePrograms(getStaticPrograms(), remote as any)
         if (cancelled) return
         setAccsCount(merged.filter((p) => p.type === 'accelerator').length)
@@ -247,7 +247,7 @@ export default function ProgramsContent({ initialIsPro, initialType, initialFilt
             ].map((tab) => {
               const isActive = activeType === tab.id
               return (
-                <button
+                <button type="button"
                   key={tab.id}
                   role="tab"
                   aria-selected={isActive}
@@ -269,7 +269,7 @@ export default function ProgramsContent({ initialIsPro, initialType, initialFilt
                     {tab.count}
                   </span>
                   {isActive && !reduceMotion && (
-                    <motion.span
+                    <m.span
                       layoutId="programs-tab-underline"
                       className="absolute bottom-0 left-2 right-2 h-0.5 bg-accent-yellow rounded-full"
                       transition={{ type: 'spring', stiffness: 380, damping: 32 }}

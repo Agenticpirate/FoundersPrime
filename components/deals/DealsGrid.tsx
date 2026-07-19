@@ -1,12 +1,9 @@
 'use client'
 
+import Link from 'next/link'
 import { useState, useEffect, useRef } from 'react'
 import { useRouter, useSearchParams, usePathname } from 'next/navigation'
 import { Deal, getAllCategories } from '@/lib/deals-database'
-import {
-  isCommercialDealRow,
-  normalizeDealCategory,
-} from '@/lib/catalog-segregation'
 import {
   applyPopularityFlags,
   compareDealsByPopularity,
@@ -14,60 +11,25 @@ import {
   popularityBadgeLabel,
   scoreDealPopularity,
 } from '@/lib/deal-popularity'
-
-function normalizeDealRow(deal: Deal): Deal {
-  const normalized = {
-    ...deal,
-    category: normalizeDealCategory(deal.category, deal.subcategory, {
-      title: deal.title,
-      provider: deal.provider,
-      description: deal.description || deal.shortDescription,
-      tags: deal.tags,
-    }),
-  }
-  // Re-score client-side; Featured kept only for active paid placements
-  return applyPopularityFlags(normalized, { stripUnpaidFeatured: true }) as Deal
-}
-
-/** Stable commercial catalog: programs out, unique by slug, normalized. */
-function prepareCommercialCatalog(raw: Deal[] | null | undefined): Deal[] {
-  if (!raw?.length) return []
-  const bySlug = new Map<string, Deal>()
-  for (const deal of raw) {
-    if (!deal || !isCommercialDealRow(deal)) continue
-    const key = (deal.slug || deal.id || '').toLowerCase().trim()
-    if (!key) continue
-    // Prefer richer row when merging SSR + API
-    const prev = bySlug.get(key)
-    if (!prev) {
-      bySlug.set(key, normalizeDealRow(deal))
-      continue
-    }
-    const prevScore =
-      (prev.description?.length || 0) + (prev.logoUrl ? 50 : 0) + (prev.applicationUrl ? 20 : 0)
-    const nextScore =
-      (deal.description?.length || 0) + (deal.logoUrl ? 50 : 0) + (deal.applicationUrl ? 20 : 0)
-    if (nextScore >= prevScore) bySlug.set(key, normalizeDealRow(deal))
-  }
-  return Array.from(bySlug.values())
-}
 import {
   getStartupProgramUrl,
   resolveDealApplicationUrl,
 } from '@/lib/comprehensive-startup-urls'
+import {
+  adoptDealList,
+  prepareCommercialCatalog,
+  globalDealsCache,
+  globalDealsPromise,
+  globalDealsCacheTime,
+  DEALS_CACHE_TTL,
+  setGlobalDealsCache,
+  setGlobalDealsPromise,
+} from '@/lib/deals-grid-catalog'
 import DealCard from './DealCard'
 import Pagination from '@/components/Pagination'
 import { StaggerGrid, StaggerGridItem } from '@/components/ui/premium-motion'
-
 import { useAuth } from '@/lib/auth/hooks'
 import { checkProStatus } from '@/lib/auth/user-context'
-
-let globalDealsCache: Deal[] | null = null;
-let globalDealsPromise: Promise<Deal[]> | null = null;
-let globalDealsCacheTime = 0;
-// Refresh the in-memory deal list periodically so admin edits/removals show
-// up within a session without needing a hard refresh.
-const DEALS_CACHE_TTL = 60_000; // 60s
 
 interface FilterState {
   search: string
@@ -96,8 +58,7 @@ export default function DealsGrid({ filters, initialIsPro, initialDeals }: Deals
 
   // Seed module cache from SSR so first client paint has data (normalized).
   if (initialDeals?.length && !globalDealsCache) {
-    globalDealsCache = prepareCommercialCatalog(initialDeals)
-    globalDealsCacheTime = Date.now()
+    setGlobalDealsCache(prepareCommercialCatalog(initialDeals))
   }
 
   const [deals, setDeals] = useState<Deal[]>(() =>
@@ -109,27 +70,6 @@ export default function DealsGrid({ filters, initialIsPro, initialDeals }: Deals
   const dealsPerPage = 12
 
   const categories = getAllCategories()
-
-  /** Apply commercial scope + slug dedupe. Empty list never wipes a good cache. */
-  const adoptDealList = (list: Deal[], { fromApi = false } = {}) => {
-    const prepared = prepareCommercialCatalog(list)
-    // Failed/empty network response — keep whatever we already have
-    if (prepared.length === 0 && globalDealsCache && globalDealsCache.length > 0) {
-      return globalDealsCache
-    }
-    // Successful API response is always source of truth (even if smaller after deletes)
-    if (fromApi && prepared.length > 0) {
-      globalDealsCache = prepared
-      globalDealsCacheTime = Date.now()
-      return prepared
-    }
-    // SSR / fallback: only replace if we grow the catalog or have nothing yet
-    if (!globalDealsCache || prepared.length >= globalDealsCache.length) {
-      globalDealsCache = prepared
-      globalDealsCacheTime = Date.now()
-    }
-    return globalDealsCache
-  }
 
   // Run auth check + deals fetch in PARALLEL — no waterfall
   useEffect(() => {
@@ -155,12 +95,11 @@ export default function DealsGrid({ filters, initialIsPro, initialDeals }: Deals
       ? Promise.resolve(globalDealsCache as Deal[])
       : (() => {
         if (initialDeals?.length && !globalDealsCache?.length) {
-          globalDealsCache = prepareCommercialCatalog(initialDeals)
-          globalDealsCacheTime = Date.now()
+          setGlobalDealsCache(prepareCommercialCatalog(initialDeals))
         }
         if (!globalDealsPromise) {
           // Full commercial catalog — no-store so admin edits land; CDN still caches.
-          globalDealsPromise = fetch('/api/deals?scope=deals', { cache: 'no-store' })
+          const p = fetch('/api/deals?scope=deals', { cache: 'no-store' })
             .then((res) => res.json())
             .then((data) => {
               const raw = data.success && Array.isArray(data.deals) ? data.deals : []
@@ -168,20 +107,22 @@ export default function DealsGrid({ filters, initialIsPro, initialDeals }: Deals
               const prepared = raw.length
                 ? adoptDealList(raw, { fromApi: true })
                 : adoptDealList(initialDeals || [], { fromApi: false })
-              globalDealsPromise = null
+              setGlobalDealsPromise(null)
               return prepared
             })
             .catch((err) => {
               console.error('Error loading deals:', err)
-              globalDealsPromise = null
+              setGlobalDealsPromise(null)
               return adoptDealList(globalDealsCache || initialDeals || [], { fromApi: false })
             })
+          setGlobalDealsPromise(p)
+          return p
         }
         return globalDealsPromise
       })()
 
     if (initialIsPro !== undefined) {
-      fetchDeals.then((dealList) => {
+      void fetchDeals.then((dealList) => {
         setDeals(prepareCommercialCatalog(dealList))
         setLoading(false)
       })
@@ -225,6 +166,7 @@ export default function DealsGrid({ filters, initialIsPro, initialDeals }: Deals
         const shortDesc = deal.shortDescription?.toLowerCase() || ''
         const desc = deal.description?.toLowerCase() || ''
         const tagsLc = (deal.tags || []).map((t) => String(t || '').toLowerCase())
+        const tagExact = new Set(tagsLc)
 
         const allTokensMatch = tokens.every(
           (token) =>
@@ -244,7 +186,7 @@ export default function DealsGrid({ filters, initialIsPro, initialDeals }: Deals
           if (title.startsWith(token) || provider.startsWith(token)) score += 50
           if (title.includes(token)) score += 25
           if (provider.includes(token)) score += 20
-          if (tagsLc.some((tag) => tag === token)) score += 15
+          if (tagExact.has(token)) score += 15
           else if (tagsLc.some((tag) => tag.includes(token))) score += 8
           if (category.includes(token)) score += 12
           if (subcategory.includes(token)) score += 12
@@ -395,34 +337,33 @@ export default function DealsGrid({ filters, initialIsPro, initialDeals }: Deals
       deal.verified
 
     const applyUrl = resolveDealApplicationUrl(deal)
-    const providerUrl = deal.providerWebsite || applyUrl || getStartupProgramUrl(deal.provider)
-    let logoFallback: string | null = null
-    if (providerUrl) {
-      try {
-        const domain = new URL(providerUrl).hostname.replace('www.', '')
-        logoFallback = `https://www.google.com/s2/favicons?domain=${domain}&sz=128`
-      } catch {
-        // Ignore invalid URL — logoFallback stays null, card shows initials
-      }
-    }
+    // Prefer real provider site / apply URL — BrandLogo builds a full chain (local → logo.dev).
+    // Do not bake Google s2 16×16 favicons as primary (they look cropped/blank on cards).
+    const rawLogo = (deal.logoUrl || '').trim()
+    const logo =
+      rawLogo &&
+      !rawLogo.includes('google.com/s2/favicons') &&
+      !rawLogo.includes('gstatic.com')
+        ? rawLogo
+        : ''
 
     return {
       id: deal.slug,
-      logo: deal.logoUrl || logoFallback || '',
-
+      logo,
+      domain: undefined as string | undefined,
       category: category?.name || deal.category,
       badge,
       badgeColor,
+      // Full title/desc still on detail page — DealCard shortens for list UI
       title: deal.title,
-      provider: `By ${deal.provider}`,
-      value: deal.value,
+      provider: deal.provider,
+      value: deal.value || deal.savings || 'Deal',
       valueSubtext: deal.savings ? `Save ${deal.savings}` : 'Value',
       valueStyle: isPaidFeatured ? 'bg-ink text-white text-primary' : 'bg-white text-ink border-2 border-ink',
-      description: deal.shortDescription,
+      description: deal.shortDescription || deal.description || '',
       eligibility: hasVerifiedEligibility ? deal.eligibility[0] : undefined,
       validFor: hasVerifiedTimeToApply ? deal.timeToApply : undefined,
-      // Prefer real deal.applicationUrl; never Google-search placeholders
-      applicationUrl: applyUrl,
+      applicationUrl: applyUrl || deal.providerWebsite || getStartupProgramUrl(deal.provider) || undefined,
       verified: deal.verified,
     }
   }
@@ -477,7 +418,10 @@ export default function DealsGrid({ filters, initialIsPro, initialDeals }: Deals
   // current page) so the shared link always shows the deal.
   const unlockParam = searchParams.get('unlock') || ''
   const unlockSlugs = new Set(
-    unlockParam.split(',').map(s => s.trim().toLowerCase()).filter(Boolean)
+    unlockParam.split(',').flatMap((s) => {
+      const v = s.trim().toLowerCase()
+      return v ? [v] : []
+    })
   )
   const freeResourceDeals = unlockSlugs.size > 0
     ? filteredDeals.filter(d => unlockSlugs.has((d.slug || '').toLowerCase()))
@@ -521,7 +465,7 @@ export default function DealsGrid({ filters, initialIsPro, initialDeals }: Deals
               : "Try adjusting your filters or search terms"
             }
           </p>
-          <button
+          <button type="button"
             onClick={() => {
               if (deals.length === 0) {
                 window.location.reload()
@@ -541,9 +485,9 @@ export default function DealsGrid({ filters, initialIsPro, initialDeals }: Deals
       {/* Loading State — skeleton cards */}
       {(loading || authLoading || checkingAccess) && (
         <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
-          {[...Array(12)].map((_, i) => (
+          {Array.from({ length: 12 }, (_, i) => `deal-skel-${i}`).map((id, i) => (
             <div
-              key={i}
+              key={id}
               className="bg-white dark:bg-[#0c0c0c] border-2 border-gray-100 dark:border-white/5 p-4 animate-pulse"
               style={{ animationDelay: `${i * 40}ms` }}
             >
@@ -627,12 +571,18 @@ export default function DealsGrid({ filters, initialIsPro, initialDeals }: Deals
 
         return (
           <div className="relative mb-4 md:mb-5">
+            {/*
+              NEVER apply CSS filter:blur() on this grid.
+              filter creates a containing block that clips overflow of every
+              descendant — that was cropping brand logo plates on mobile
+              (HubSpot / Hygraph left-edge cut on locked pages 2+).
+              Use a backdrop-blur overlay instead.
+            */}
             <StaggerGrid
               animKey={`${currentPage}-${filters?.search || ''}-${filters?.category || ''}-${filters?.subcategory || ''}-${filters?.sort || ''}`}
-              className={`grid grid-cols-2 lg:grid-cols-3 gap-2 md:gap-4 transition-all duration-300 ${isLocked ? 'pointer-events-none select-none' : ''
+              className={`grid grid-cols-2 lg:grid-cols-3 gap-2.5 md:gap-4 transition-all duration-300 ${isLocked ? 'pointer-events-none select-none' : ''
                 }`}
               aria-hidden={isLocked}
-              style={isLocked ? { filter: 'blur(7px) saturate(0.8)' } : undefined}
             >
               {currentDeals.map((deal) => (
                 <StaggerGridItem key={deal.id ?? deal.slug}>
@@ -641,11 +591,14 @@ export default function DealsGrid({ filters, initialIsPro, initialDeals }: Deals
               ))}
             </StaggerGrid>
 
-            {/* Lock overlay — content remains visible but blurred underneath */}
+            {/* Lock overlay — backdrop-blur (does not clip child paint) */}
             {isLocked && (
               <div className="absolute inset-0 z-20 flex items-center justify-center px-3 py-6">
-                {/* Soft fade so blur reads as depth, not noise */}
-                <div className="absolute inset-0 bg-gradient-to-b from-white/40 via-white/65 to-white/40 dark:from-black/40 dark:via-black/65 dark:to-black/40 pointer-events-none" />
+                {/* Soft frosted veil — replaces filter:blur on the grid */}
+                <div
+                  className="absolute inset-0 bg-white/55 dark:bg-black/55 backdrop-blur-[6px] pointer-events-none"
+                  aria-hidden
+                />
 
                 {/* Card */}
                 <div className="relative w-full max-w-md bg-white dark:bg-[#0c0c0c] border-2 border-black dark:border-white/10 rounded-sm shadow-[5px_5px_0px_#111] dark:shadow-[5px_5px_0px_rgba(255,255,255,0.05)] overflow-hidden lock-overlay-fade-in">
@@ -686,8 +639,8 @@ export default function DealsGrid({ filters, initialIsPro, initialDeals }: Deals
 
                     {/* Quick value props */}
                     <ul className="space-y-1.5 mb-5 pb-4 border-b-2 border-black dark:border-white/10 border-dashed">
-                      {bullets.map((b, i) => (
-                        <li key={i} className="flex items-start gap-2 text-[12px] text-gray-800 dark:text-gray-300">
+                      {bullets.map((b) => (
+                        <li key={b} className="flex items-start gap-2 text-[12px] text-gray-800 dark:text-gray-300">
                           <span className="material-symbols-outlined !text-[14px] text-amber-700 dark:text-accent-yellow flex-shrink-0 mt-0.5">check_circle</span>
                           <span>{b}</span>
                         </li>
@@ -696,19 +649,19 @@ export default function DealsGrid({ filters, initialIsPro, initialDeals }: Deals
 
                     {/* CTAs */}
                     <div className="flex flex-col sm:flex-row gap-2">
-                      <a
+                      <Link
                         href="/pricing"
                         className="group flex-1 inline-flex items-center justify-center gap-1.5 bg-accent-yellow text-black font-mono font-black px-4 py-2.5 text-[12px] uppercase tracking-[0.1em] rounded-sm border-2 border-black shadow-[3px_3px_0px_#111] hover:bg-amber-300 hover:shadow-[5px_5px_0px_#111] hover:-translate-x-px hover:-translate-y-px transition-all"
                       >
                         {primaryCta}
                         <span className="material-symbols-outlined !text-[14px] group-hover:translate-x-0.5 transition-transform">arrow_forward</span>
-                      </a>
-                      <a
+                      </Link>
+                      <Link
                         href="/login"
                         className="inline-flex items-center justify-center gap-1.5 bg-white dark:bg-[#1a1a1a] text-black dark:text-white font-mono font-black px-4 py-2.5 text-[12px] uppercase tracking-[0.1em] rounded-sm border-2 border-black dark:border-white/15 shadow-[2px_2px_0px_#111] dark:shadow-none hover:bg-gray-50 dark:hover:bg-white/5 hover:shadow-[3px_3px_0px_#111] hover:-translate-x-px hover:-translate-y-px transition-all"
                       >
                         Log In
-                      </a>
+                      </Link>
                     </div>
 
                     {/* Reassurance line */}

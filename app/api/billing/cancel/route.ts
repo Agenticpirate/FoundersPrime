@@ -35,12 +35,22 @@ export async function POST(req: NextRequest) {
 
     let reason = 'Not specified'
     let feedback = ''
+    let confirmed = false
     try {
       const body = await req.json()
       reason = body.reason || 'Not specified'
       feedback = body.feedback || ''
+      confirmed = body.confirm === true
     } catch (e) {
       // Ignore body parsing issues if none provided
+    }
+
+    // Require explicit client confirmation payload
+    if (!confirmed) {
+      return NextResponse.json(
+        { error: 'Please confirm cancellation before proceeding.' },
+        { status: 400 }
+      )
     }
 
     const apiKey = process.env.DODO_PAYMENTS_API_KEY
@@ -55,7 +65,7 @@ export async function POST(req: NextRequest) {
     // Find the active subscription row
     const { data: sub, error: subErr } = await supabase
       .from('user_subscriptions')
-      .select('id, plan, stripe_subscription_id, status, period_end')
+      .select('id, plan, stripe_subscription_id, status, period_end, cancel_at_period_end')
       .eq('user_id', user.id)
       .eq('status', 'active')
       .order('created_at', { ascending: false })
@@ -75,6 +85,17 @@ export async function POST(req: NextRequest) {
         { error: 'Legend plan is a one-time purchase. There is nothing to cancel — your access never expires.' },
         { status: 400 }
       )
+    }
+
+    // Already scheduled to cancel — treat as success (idempotent)
+    if (sub.cancel_at_period_end === true) {
+      return NextResponse.json({
+        success: true,
+        message: sub.period_end
+          ? `Auto-renewal is already off. You keep access until ${new Date(sub.period_end).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}.`
+          : 'Auto-renewal is already cancelled for this subscription.',
+        periodEnd: sub.period_end,
+      })
     }
 
     if (!sub.stripe_subscription_id) {

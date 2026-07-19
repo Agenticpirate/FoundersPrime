@@ -32,16 +32,17 @@ interface UserProfileHeaderProps {
   user: User
 }
 
-export default function UserProfileHeader({ user }: UserProfileHeaderProps) {
-  const getBadgeColor = (badge: string) => {
-    switch (badge) {
-      case 'PRO+': return 'bg-yellow-400 text-yellow-900 border-yellow-600'
-      case 'PRO': return 'bg-blue-400 text-blue-900 border-blue-600'
-      case 'VERIFIED': return 'bg-green-400 text-green-900 border-green-600'
-      case 'ADMIN': return 'bg-red-400 text-red-900 border-red-600'
-      default: return 'bg-gray-200 text-gray-800 border-gray-400'
-    }
+const getBadgeColor = (badge: string) => {
+  switch (badge) {
+    case 'PRO+': return 'bg-yellow-400 text-yellow-900 border-yellow-600'
+    case 'PRO': return 'bg-blue-400 text-blue-900 border-blue-600'
+    case 'VERIFIED': return 'bg-green-400 text-green-900 border-green-600'
+    case 'ADMIN': return 'bg-red-400 text-red-900 border-red-600'
+    default: return 'bg-gray-200 text-gray-800 border-gray-400'
   }
+}
+
+export default function UserProfileHeader({ user }: UserProfileHeaderProps) {
 
   return (
     <div className="mb-4 md:mb-6">
@@ -145,7 +146,7 @@ export default function UserProfileHeader({ user }: UserProfileHeaderProps) {
               <div className="flex flex-wrap gap-3">
                 {user.badges.map((badge, index) => (
                   <div
-                    key={index}
+                    key={badge.name}
                     className="bg-gray-50 border-2 border-gray-300 p-3 shadow-[2px_2px_0px_0px_rgba(107,114,128,1)] group hover:shadow-[4px_4px_0px_0px_rgba(107,114,128,1)] transition-all"
                     title={badge.description}
                   >

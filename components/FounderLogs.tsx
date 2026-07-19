@@ -115,9 +115,9 @@ const ratingBreakdown = [
 function Stars({ size = 16 }: { size?: number }) {
   return (
     <div className="flex gap-0.5">
-      {[...Array(5)].map((_, i) => (
+      {[1, 2, 3, 4, 5].map((star) => (
         <span
-          key={i}
+          key={`star-${star}`}
           className="material-symbols-outlined text-[#f5c800]"
           style={{
             fontSize: size,
@@ -227,9 +227,11 @@ export default function FounderLogs() {
           <div className="absolute inset-y-0 right-0 w-8 md:w-16 bg-gradient-to-l from-background-light dark:from-[#000000] to-transparent z-10 pointer-events-none" />
           
           <div className="flex gap-4 md:gap-5 w-max marquee hover:[animation-play-state:paused] py-2">
-            {[...testimonials, ...testimonials].map((t, i) => (
-              <TestimonialCard key={i} t={t} />
-            ))}
+            {(['a', 'b'] as const).flatMap((pass) =>
+              testimonials.map((t) => (
+                <TestimonialCard key={`${pass}-${t.name || 't'}`} t={t} />
+              ))
+            )}
           </div>
         </div>
 

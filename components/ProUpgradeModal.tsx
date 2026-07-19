@@ -47,7 +47,7 @@ export default function ProUpgradeModal({ isOpen, onClose, isStudentBenefit = fa
                     <svg viewBox="0 0 200 200" className="w-full h-full text-gray-900 dark:text-accent-yellow upgrade-mandala-spin-reverse" fill="none" stroke="currentColor" strokeWidth="0.6">
                         {[20, 35, 50, 65].map((r, i) => (
                             <ellipse
-                                key={i}
+                                key={r}
                                 cx="100"
                                 cy="100"
                                 rx={r}
@@ -70,7 +70,7 @@ export default function ProUpgradeModal({ isOpen, onClose, isStudentBenefit = fa
                         </span>
                         {isStudentBenefit ? 'Membership Required' : 'Founder Members Only'}
                     </h2>
-                    <button
+                    <button type="button"
                         onClick={onClose}
                         aria-label="Close upgrade dialog"
                         className="w-7 h-7 flex items-center justify-center bg-white dark:bg-[#1a1a1a] border-2 border-black dark:border-white/10 hover:bg-black dark:hover:bg-white hover:text-white dark:hover:text-black text-black dark:text-white transition-colors rounded-sm shadow-[1px_1px_0px_#111] dark:shadow-[1px_1px_0px_rgba(255,255,255,0.1)]"
@@ -165,7 +165,7 @@ export default function ProUpgradeModal({ isOpen, onClose, isStudentBenefit = fa
                     </p>
 
                     {/* Maybe later */}
-                    <button
+                    <button type="button"
                         onClick={onClose}
                         className="w-full mt-2.5 text-[10.5px] font-mono font-bold text-gray-400 hover:text-black dark:hover:text-white uppercase tracking-[0.1em] transition-colors"
                     >

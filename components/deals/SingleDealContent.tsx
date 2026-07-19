@@ -1,15 +1,19 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
-import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
+import { AnimatePresence, m, useReducedMotion } from 'framer-motion'
 import { resolveDealApplicationUrl } from '@/lib/comprehensive-startup-urls'
 import { useRouter } from 'next/navigation'
 import { isProUser, isNextFounderUser, checkProStatus } from '@/lib/auth/user-context'
 import ProUpgradeModal from '@/components/ProUpgradeModal'
 import { claimDeal } from '@/app/actions/deal-actions'
 import RichDescription from './RichDescription'
-import { FadeUp, Reveal, RevealStagger, RevealItem, premiumEase } from '@/components/ui/premium-motion'
+import { FadeUp, Reveal, RevealStagger, RevealItem } from '@/components/ui/premium-motion'
+import { premiumEase } from '@/lib/premium-motion-variants'
+import SingleDealCollapsibleList from './SingleDealCollapsibleList'
+import SingleDealFaq from './SingleDealFaq'
+import { formatDateMonthDay } from '@/lib/format-date'
 
 interface Deal {
   id: string
@@ -90,8 +94,8 @@ export default function SingleDealContent({
   // The useEffect below still runs to pick up any session changes on this page.
   const [isPro, setIsPro] = useState(freeAccess ? true : initialIsPro)
   const [isNextFounder, setIsNextFounder] = useState(freeAccess ? false : initialIsNextFounder)
-  // Only show loading spinner if we have no server-side hint AND not freeAccess
-  const [isLoadingPro, setIsLoadingPro] = useState(freeAccess ? false : !initialIsPro && !initialIsNextFounder)
+  // Gate apply-click while status is still resolving (not rendered — ref avoids extra paints)
+  const isLoadingProRef = useRef(freeAccess ? false : !initialIsPro && !initialIsNextFounder)
   const [showUpgradeModal, setShowUpgradeModal] = useState(false)
   const [isClaiming, setIsClaiming] = useState(false)
   const [claimError, setClaimError] = useState<string | null>(null)
@@ -106,12 +110,12 @@ export default function SingleDealContent({
   useEffect(() => {
     if (freeAccess) {
       setIsPro(true)
-      setIsLoadingPro(false)
+      isLoadingProRef.current = false
       return
     }
     // If server already confirmed pro, trust it — avoid a redundant round-trip
     if (initialIsPro || initialIsNextFounder) {
-      setIsLoadingPro(false)
+      isLoadingProRef.current = false
       return
     }
     const checkStatus = async () => {
@@ -122,7 +126,7 @@ export default function SingleDealContent({
       } catch (error) {
         console.error('Error checking pro status:', error)
       } finally {
-        setIsLoadingPro(false)
+        isLoadingProRef.current = false
       }
     }
     checkStatus()
@@ -239,7 +243,7 @@ export default function SingleDealContent({
   const handleApplyClick = async (e: React.MouseEvent) => {
     e.preventDefault()
 
-    if (isLoadingPro || isClaiming) {
+    if (isLoadingProRef.current || isClaiming) {
       return
     }
 
@@ -324,13 +328,13 @@ export default function SingleDealContent({
               <svg viewBox="0 0 200 200" className="w-full h-full text-gray-900 dark:text-white deal-apply-mandala-spin" fill="none" stroke="currentColor" strokeWidth="0.7">
                 <circle cx="100" cy="100" r="50" />
                 <circle cx="100" cy="100" r="35" strokeDasharray="3 3" />
-                {[...Array(12)].map((_, i) => (
+                {Array.from({ length: 12 }, (_, i) => i * 30).map((deg) => (
                   <line
-                    key={i}
+                    key={`mandala-ray-${deg}`}
                     x1="100"
                     y1="100"
-                    x2={100 + Math.cos((i * Math.PI) / 6) * 90}
-                    y2={100 + Math.sin((i * Math.PI) / 6) * 90}
+                    x2={100 + Math.cos((deg * Math.PI) / 180) * 90}
+                    y2={100 + Math.sin((deg * Math.PI) / 180) * 90}
                   />
                 ))}
                 <circle cx="100" cy="100" r="2" fill="currentColor" />
@@ -340,7 +344,7 @@ export default function SingleDealContent({
             <div className="relative p-5">
               <AnimatePresence mode="wait">
                 {claimError && (
-                  <motion.div
+                  <m.div
                     key={claimError}
                     initial={reduceMotion ? false : { opacity: 0, y: -6, height: 0 }}
                     animate={{ opacity: 1, y: 0, height: 'auto' }}
@@ -349,7 +353,7 @@ export default function SingleDealContent({
                     className={`mb-3 px-3 py-2 text-[11px] font-semibold rounded-sm border-2 overflow-hidden ${claimError.startsWith('⚡') ? 'bg-amber-50 text-amber-800 border-amber-400 dark:bg-amber-950/30 dark:text-amber-300 dark:border-amber-900/50' : 'bg-red-50 text-red-700 border-red-400 dark:bg-red-950/30 dark:text-red-300 dark:border-red-900/50'}`}
                   >
                     {claimError.startsWith('⚡') ? claimError : `⚠️ ${claimError}`}
-                  </motion.div>
+                  </m.div>
                 )}
               </AnimatePresence>
 
@@ -358,14 +362,14 @@ export default function SingleDealContent({
                 <div className="text-[10px] font-bold uppercase text-gray-500 dark:text-gray-400 font-mono tracking-[0.12em] mb-1">
                   {isProgram ? 'Funding / Offer' : 'Deal Value'}
                 </div>
-                <motion.div
+                <m.div
                   className="text-2xl md:text-3xl font-black font-mono text-black dark:text-white leading-none"
                   initial={reduceMotion ? false : { opacity: 0, scale: 0.96 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.4, delay: 0.12, ease: premiumEase }}
                 >
                   {displayValue}
-                </motion.div>
+                </m.div>
               </div>
 
               {/* Stat rows */}
@@ -382,7 +386,7 @@ export default function SingleDealContent({
                       { icon: 'event', label: 'Deadline', value: 'Rolling', accent: true },
                     ]
                 ).map((row, i) => (
-                  <motion.div
+                  <m.div
                     key={row.label}
                     className="flex justify-between items-center gap-3 text-[12.5px]"
                     initial={reduceMotion ? false : { opacity: 0, x: -6 }}
@@ -396,12 +400,12 @@ export default function SingleDealContent({
                     <span className={`font-bold font-mono text-right truncate ${row.accent ? 'text-amber-700 dark:text-accent-yellow' : 'text-black dark:text-white'}`}>
                       {row.value}
                     </span>
-                  </motion.div>
+                  </m.div>
                 ))}
               </div>
 
               {/* Apply button — soft sheen + press */}
-              <motion.button
+              <m.button
                 onClick={handleApplyClick}
                 disabled={isClaiming}
                 whileHover={reduceMotion ? undefined : { y: -2 }}
@@ -410,7 +414,7 @@ export default function SingleDealContent({
                 className="group relative w-full h-12 bg-accent-yellow text-black font-mono font-black text-[12px] uppercase tracking-[0.08em] rounded-xl border border-black/10 shadow-[0_4px_16px_rgba(245,158,11,0.25)] hover:bg-amber-300 hover:shadow-[0_8px_24px_rgba(245,158,11,0.35)] transition-colors duration-300 inline-flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 mb-2 overflow-hidden leading-none"
               >
                 {!reduceMotion && (
-                  <motion.span
+                  <m.span
                     aria-hidden
                     className="pointer-events-none absolute inset-y-0 w-1/3 -skew-x-12 bg-gradient-to-r from-transparent via-white/35 to-transparent"
                     initial={{ x: '-120%' }}
@@ -422,11 +426,11 @@ export default function SingleDealContent({
                 <span className="material-symbols-outlined relative !text-[18px] !leading-none !w-[18px] !h-[18px] flex items-center justify-center group-hover:translate-x-0.5 transition-transform">
                   {isClaiming ? 'hourglass_empty' : (freeAccess || isPro || isNextFounder ? 'arrow_forward' : 'lock')}
                 </span>
-              </motion.button>
+              </m.button>
 
               {/* Save / Share */}
               <div className="grid grid-cols-2 gap-2">
-                <button
+                <button type="button"
                   onClick={handleSave}
                   disabled={isSaving}
                   className={`rounded-sm border-2 border-black dark:border-white/10 py-2 font-mono text-[11px] font-bold uppercase tracking-wide transition-all flex items-center justify-center gap-1.5 hover:shadow-[2px_2px_0px_#111] dark:hover:shadow-none hover:-translate-x-px hover:-translate-y-px ${
@@ -439,7 +443,7 @@ export default function SingleDealContent({
                   {isSaved ? 'Saved' : 'Save'}
                 </button>
                 <div className="relative">
-                  <button
+                  <button type="button"
                     onClick={() => setShowShareMenu(!showShareMenu)}
                     className="w-full rounded-sm border-2 border-black dark:border-white/10 bg-white dark:bg-white/5 py-2 font-mono text-[11px] font-bold uppercase tracking-wide text-black dark:text-white hover:bg-gray-50 dark:hover:bg-white/10 hover:shadow-[2px_2px_0px_#111] dark:hover:shadow-none hover:-translate-x-px hover:-translate-y-px transition-all flex items-center justify-center gap-1.5"
                   >
@@ -447,27 +451,27 @@ export default function SingleDealContent({
                   </button>
                   <AnimatePresence>
                     {showShareMenu && (
-                      <motion.div
+                      <m.div
                         initial={reduceMotion ? false : { opacity: 0, y: 6, scale: 0.98 }}
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={reduceMotion ? undefined : { opacity: 0, y: 4, scale: 0.98 }}
                         transition={{ duration: 0.2, ease: premiumEase }}
                         className="absolute bottom-full left-0 right-0 mb-1.5 bg-white dark:bg-[#0c0c0c] border-2 border-black dark:border-white/10 rounded-sm shadow-[3px_3px_0px_#111] dark:shadow-none z-50 overflow-hidden origin-bottom"
                       >
-                        <button onClick={() => handleShare('copy')} className="w-full px-3 py-2 text-left text-[11px] font-bold hover:bg-gray-100 dark:hover:bg-white/5 flex items-center gap-2 text-black dark:text-white">
+                        <button type="button" onClick={() => handleShare('copy')} className="w-full px-3 py-2 text-left text-[11px] font-bold hover:bg-gray-100 dark:hover:bg-white/5 flex items-center gap-2 text-black dark:text-white">
                           <span className="material-symbols-outlined !text-[14px]">content_copy</span>
                           {showCopied ? 'Copied!' : 'Copy Link'}
                         </button>
-                        <button onClick={() => handleShare('twitter')} className="w-full px-3 py-2 text-left text-[11px] font-bold hover:bg-gray-100 dark:hover:bg-white/5 flex items-center gap-2 text-black dark:text-white border-t border-gray-200 dark:border-t-white/10">
+                        <button type="button" onClick={() => handleShare('twitter')} className="w-full px-3 py-2 text-left text-[11px] font-bold hover:bg-gray-100 dark:hover:bg-white/5 flex items-center gap-2 text-black dark:text-white border-t border-gray-200 dark:border-t-white/10">
                           <span className="material-symbols-outlined !text-[14px]">share</span>Share on X
                         </button>
-                        <button onClick={() => handleShare('linkedin')} className="w-full px-3 py-2 text-left text-[11px] font-bold hover:bg-gray-100 dark:hover:bg-white/5 flex items-center gap-2 text-black dark:text-white border-t border-gray-200 dark:border-t-white/10">
+                        <button type="button" onClick={() => handleShare('linkedin')} className="w-full px-3 py-2 text-left text-[11px] font-bold hover:bg-gray-100 dark:hover:bg-white/5 flex items-center gap-2 text-black dark:text-white border-t border-gray-200 dark:border-t-white/10">
                           <span className="material-symbols-outlined !text-[14px]">work</span>LinkedIn
                         </button>
-                        <button onClick={() => handleShare('email')} className="w-full px-3 py-2 text-left text-[11px] font-bold hover:bg-gray-100 dark:hover:bg-white/5 flex items-center gap-2 text-black dark:text-white border-t border-gray-200 dark:border-t-white/10">
+                        <button type="button" onClick={() => handleShare('email')} className="w-full px-3 py-2 text-left text-[11px] font-bold hover:bg-gray-100 dark:hover:bg-white/5 flex items-center gap-2 text-black dark:text-white border-t border-gray-200 dark:border-t-white/10">
                           <span className="material-symbols-outlined !text-[14px]">mail</span>Email
                         </button>
-                      </motion.div>
+                      </m.div>
                     )}
                   </AnimatePresence>
                 </div>
@@ -480,7 +484,7 @@ export default function SingleDealContent({
             <h4 className="font-mono text-[10px] font-bold uppercase tracking-[0.12em] text-gray-700 dark:text-gray-300 mb-3 pb-2 border-b-2 border-black dark:border-b-white/10 border-dashed">Quick Links</h4>
             <ul className="space-y-1">
               <li>
-                <button onClick={handleApplyClick} className="w-full flex items-center gap-2 text-[12.5px] font-bold text-black dark:text-white hover:bg-accent-yellow/15 dark:hover:bg-white/5 rounded-sm px-2 py-1.5 transition-colors">
+                <button type="button" onClick={handleApplyClick} className="w-full flex items-center gap-2 text-[12.5px] font-bold text-black dark:text-white hover:bg-accent-yellow/15 dark:hover:bg-white/5 rounded-sm px-2 py-1.5 transition-colors">
                   <span className="material-symbols-outlined !text-[16px] text-accent-yellow">open_in_new</span>
                   {isProgram ? 'Apply to program' : 'Apply for deal'}
                 </button>
@@ -496,7 +500,7 @@ export default function SingleDealContent({
                     <a
                       href={targetUrl}
                       target="_blank"
-                      rel={isDofollow ? "noopener" : "nofollow noopener noreferrer"}
+                      rel={isDofollow ? "noopener noreferrer" : "nofollow noopener noreferrer"}
                       className="flex items-center justify-between gap-2 text-[12.5px] font-bold text-black dark:text-white hover:bg-gray-100 dark:hover:bg-white/5 rounded-sm px-2 py-1.5 transition-colors"
                     >
                       <span className="flex items-center gap-2">
@@ -543,7 +547,7 @@ export default function SingleDealContent({
                   </p>
                   <p className="text-[11.5px] text-gray-400 leading-relaxed mb-3">
                     Founders applied through FoundersPrime. Last verified{' '}
-                    {new Date(deal.verification.lastVerified).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}.
+                    {formatDateMonthDay(deal.verification.lastVerified)}.
                   </p>
                 </>
               ) : (
@@ -553,7 +557,7 @@ export default function SingleDealContent({
                   </p>
                   <p className="text-[11.5px] text-gray-400 leading-relaxed mb-3">
                     Manually checked by the FoundersPrime team. Last verified{' '}
-                    {new Date(deal.verification.lastVerified).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}.
+                    {formatDateMonthDay(deal.verification.lastVerified)}.
                   </p>
                 </>
               )}
@@ -568,14 +572,14 @@ export default function SingleDealContent({
           <div className="hidden md:block relative rounded-sm bg-gray-50 dark:bg-white/5 border-2 border-black dark:border-white/10 p-5 overflow-hidden shadow-[3px_3px_0px_#111] dark:shadow-none">
             <div className="absolute -bottom-10 -left-10 w-36 h-36 pointer-events-none opacity-[0.10]" aria-hidden="true">
               <svg viewBox="0 0 200 200" className="w-full h-full text-gray-900 dark:text-white deal-apply-mandala-spin-reverse" fill="none" stroke="currentColor" strokeWidth="0.6">
-                {[20, 35, 50, 65].map((r, i) => (
+                {[20, 35, 50, 65].map((r, orbitIdx) => (
                   <ellipse
-                    key={i}
+                    key={`apply-orbit-${r}`}
                     cx="100"
                     cy="100"
                     rx={r}
                     ry={r / 1.8}
-                    transform={`rotate(${i * 30} 100 100)`}
+                    transform={`rotate(${orbitIdx * 30} 100 100)`}
                   />
                 ))}
                 <circle cx="100" cy="100" r="2" fill="currentColor" />
@@ -617,7 +621,7 @@ export default function SingleDealContent({
         <FadeUp delay={0.04}>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 md:gap-3">
             {statCards.map((s, i) => (
-              <motion.div
+              <m.div
                 key={s.label}
                 initial={reduceMotion ? false : { opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -634,7 +638,7 @@ export default function SingleDealContent({
                 <div className="text-[12px] md:text-sm font-black text-black dark:text-white font-mono leading-tight truncate" title={String(s.value)}>
                   {s.value}
                 </div>
-              </motion.div>
+              </m.div>
             ))}
           </div>
         </FadeUp>
@@ -656,15 +660,14 @@ export default function SingleDealContent({
 
         {/* What's Included / Benefits */}
         {Array.isArray(benefits) && benefits.length > 0 && (
-        <CollapsibleList
+        <SingleDealCollapsibleList
           icon="inventory_2"
           title={deal.benefits ? 'Benefits & Features' : "What's Included"}
           count={benefits.length}
           items={benefits as any[]}
           maxVisible={6}
-          renderItem={(item: any, index: number) => (
+          renderItem={(item: any) => (
             <div
-              key={index}
               className="flex items-start gap-2.5 p-3 rounded-xl border border-black/[0.06] dark:border-white/[0.08] bg-gray-50/80 dark:bg-white/[0.03] hover:border-accent-yellow/30 hover:bg-accent-yellow/[0.04] transition-colors duration-200"
             >
               <span className="material-symbols-outlined text-accent-yellow flex-shrink-0 !text-[16px] mt-0.5">check_circle</span>
@@ -686,15 +689,14 @@ export default function SingleDealContent({
 
         {/* Eligibility Requirements */}
         {eligibility && eligibility.length > 0 && (
-        <CollapsibleList
+        <SingleDealCollapsibleList
           icon="checklist"
           title="Eligibility"
           count={eligibility.length}
           items={eligibility as any[]}
           maxVisible={5}
-          renderItem={(requirement: string, index: number) => (
+          renderItem={(requirement: string) => (
             <li
-              key={index}
               className="flex items-start gap-2.5 px-3 py-2.5 list-none rounded-xl border border-black/[0.06] dark:border-white/[0.08] bg-gray-50/80 dark:bg-white/[0.03] hover:border-accent-yellow/30 hover:bg-accent-yellow/[0.04] transition-colors duration-200"
             >
               <span className="material-symbols-outlined text-accent-yellow flex-shrink-0 !text-[16px] mt-0.5">check_circle</span>
@@ -738,8 +740,8 @@ export default function SingleDealContent({
               const isFirst = index === 0
 
               return (
-                <motion.li
-                  key={index}
+                <m.li
+                  key={title ? `${title}-${text.slice(0, 32)}` : text.slice(0, 64) || `step-${index + 1}`}
                   className="flex gap-3.5"
                   initial={reduceMotion ? false : { opacity: 0, y: 6 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -780,14 +782,14 @@ export default function SingleDealContent({
                       </p>
                     </div>
                   </div>
-                </motion.li>
+                </m.li>
               )
             })}
           </ol>
 
           {/* Apply button */}
           <div className="mt-5 pt-4 border-t border-black/[0.06] dark:border-white/[0.08]">
-            <motion.button
+            <m.button
               onClick={handleApplyClick}
               disabled={isClaiming}
               whileHover={reduceMotion ? undefined : { y: -2 }}
@@ -813,68 +815,13 @@ export default function SingleDealContent({
                   strokeLinejoin="round"
                 />
               </svg>
-            </motion.button>
+            </m.button>
           </div>
         </section>
         </Reveal>
         )}
 
-        {/* FAQ Section */}
-        {faqs && faqs.length > 0 && (
-        <Reveal>
-        <section className="rounded-2xl border border-black/[0.06] dark:border-white/[0.08] bg-white dark:bg-[#0c0c0c] p-5 md:p-6 shadow-[0_8px_30px_rgba(0,0,0,0.04)]">
-          <h2 className="mb-3 flex items-center gap-2.5 font-mono text-[13px] md:text-sm font-black uppercase tracking-[0.08em] text-black dark:text-white pb-3 border-b border-black/[0.06] dark:border-white/[0.08]">
-            <span className="inline-flex items-center justify-center w-8 h-8 rounded-xl bg-accent-yellow/90 shadow-sm">
-              <span className="material-symbols-outlined text-black !text-[16px]">help</span>
-            </span>
-            FAQ
-          </h2>
-          <div className="space-y-2">
-            {faqs.map((faqItem, index) => {
-              const open = openFaqIndex === index
-              return (
-                <div
-                  key={index}
-                  className="rounded-xl border border-black/[0.06] dark:border-white/[0.08] bg-white dark:bg-white/[0.02] overflow-hidden transition-shadow hover:shadow-[0_4px_16px_rgba(0,0,0,0.06)]"
-                >
-                  <button
-                    onClick={() => setOpenFaqIndex(open ? null : index)}
-                    className={`flex items-center justify-between gap-3 px-3.5 py-3 w-full text-left transition-colors ${
-                      open ? 'bg-accent-yellow/10 dark:bg-white/5' : 'hover:bg-gray-50 dark:hover:bg-white/[0.03]'
-                    }`}
-                  >
-                    <span className="text-[12.5px] font-bold font-mono text-black dark:text-white pr-2">{faqItem.question}</span>
-                    <motion.span
-                      animate={{ rotate: open ? 180 : 0 }}
-                      transition={{ duration: 0.25, ease: premiumEase }}
-                      className="material-symbols-outlined !text-[18px] text-gray-500 dark:text-gray-400 flex-shrink-0"
-                    >
-                      expand_more
-                    </motion.span>
-                  </button>
-                  <AnimatePresence initial={false}>
-                    {open && (
-                      <motion.div
-                        key="content"
-                        initial={reduceMotion ? false : { height: 0, opacity: 0 }}
-                        animate={{ height: 'auto', opacity: 1 }}
-                        exit={reduceMotion ? undefined : { height: 0, opacity: 0 }}
-                        transition={{ duration: 0.28, ease: premiumEase }}
-                        className="overflow-hidden"
-                      >
-                        <div className="px-3.5 pb-3.5 pt-1 text-[12.5px] text-gray-600 dark:text-gray-300 leading-relaxed border-t border-black/[0.04] dark:border-white/[0.06]">
-                          {faqItem.answer}
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
-              )
-            })}
-          </div>
-        </section>
-        </Reveal>
-        )}
+        <SingleDealFaq faqs={faqs} openFaqIndex={openFaqIndex} setOpenFaqIndex={setOpenFaqIndex} />
 
         {/* Similar programs */}
         {Array.isArray(deal.similarDeals) && deal.similarDeals.length > 0 && (
@@ -899,7 +846,7 @@ export default function SingleDealContent({
               {deal.similarDeals.slice(0, 4).map((sim, i) => {
                 const href = sim.slug ? `${basePath}/${sim.slug}` : '/programs'
                 return (
-                  <RevealItem key={`${sim.title}-${i}`}>
+                  <RevealItem key={sim.slug || sim.title}>
                     <Link
                       href={href}
                       className="group h-full rounded-xl border border-black/[0.06] dark:border-white/[0.08] bg-gray-50/80 dark:bg-white/[0.02] p-3.5 hover:border-accent-yellow/40 hover:-translate-y-0.5 hover:shadow-[0_10px_28px_rgba(0,0,0,0.08)] transition-all duration-300 flex flex-col"
@@ -944,18 +891,18 @@ export default function SingleDealContent({
               Tags &amp; categories
             </h2>
             <div className="flex flex-wrap gap-1.5">
-              {deal.tags.map((tag, i) => (
-                <motion.span
-                  key={i}
+              {deal.tags.map((tag, tagIdx) => (
+                <m.span
+                  key={tag}
                   initial={reduceMotion ? false : { opacity: 0, scale: 0.92 }}
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
-                  transition={{ delay: i * 0.03, duration: 0.3, ease: premiumEase }}
+                  transition={{ delay: tagIdx * 0.03, duration: 0.3, ease: premiumEase }}
                   whileHover={reduceMotion ? undefined : { y: -1, scale: 1.03 }}
                   className="inline-flex items-center px-2.5 py-1 text-[11px] font-mono font-semibold tracking-wide text-gray-700 dark:text-gray-200 bg-white dark:bg-white/5 border border-black/[0.06] dark:border-white/[0.08] rounded-full hover:border-accent-yellow/50 hover:bg-accent-yellow/15 transition-colors duration-200"
                 >
                   #{tag}
-                </motion.span>
+                </m.span>
               ))}
             </div>
           </div>
@@ -971,84 +918,5 @@ export default function SingleDealContent({
         isStudentBenefit={basePath === '/student-benefits'}
       />
     </div>
-  )
-}
-
-/* ─── Collapsible list section ───────────────────────────── */
-function CollapsibleList({
-  icon,
-  title,
-  count,
-  items,
-  maxVisible,
-  renderItem,
-  listMode = 'div',
-  gridClass,
-}: {
-  icon: string
-  title: string
-  count: number
-  items: any[]
-  maxVisible: number
-  renderItem: (item: any, index: number) => JSX.Element
-  listMode?: 'ul' | 'div'
-  gridClass: string
-}) {
-  const [expanded, setExpanded] = useState(false)
-  const reduceMotion = useReducedMotion()
-  const isLong = items.length > maxVisible
-  const visible = expanded || !isLong ? items : items.slice(0, maxVisible)
-  const Container: any = listMode === 'ul' ? 'ul' : 'div'
-
-  return (
-    <Reveal>
-    <section className="rounded-2xl border border-black/[0.06] dark:border-white/[0.08] bg-white dark:bg-[#0c0c0c] p-5 md:p-6 shadow-[0_8px_30px_rgba(0,0,0,0.04)]">
-      <div className="flex items-center justify-between mb-3 pb-3 border-b border-black/[0.06] dark:border-white/[0.08]">
-        <h2 className="flex items-center gap-2.5 font-mono text-[13px] md:text-sm font-black uppercase tracking-[0.08em] text-black dark:text-white">
-          <span className="inline-flex items-center justify-center w-8 h-8 rounded-xl bg-accent-yellow/90 shadow-sm">
-            <span className="material-symbols-outlined text-black !text-[16px]">{icon}</span>
-          </span>
-          {title}
-        </h2>
-        <span className="font-mono text-[10px] font-bold uppercase tracking-[0.1em] text-gray-600 dark:text-gray-300 bg-gray-100 dark:bg-white/5 px-2 py-0.5 rounded-md border border-black/[0.06] dark:border-white/10">
-          {count} items
-        </span>
-      </div>
-      <Container className={gridClass}>
-        {visible.map((item, i) => (
-          <motion.div
-            key={i}
-            // Keep <ul> → <li> semantics: contents makes the wrapper layout-transparent
-            className={listMode === 'ul' ? 'contents' : undefined}
-            initial={reduceMotion ? false : { opacity: 0, y: 8 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-10px' }}
-            transition={{ delay: Math.min(i, 8) * 0.04, duration: 0.32, ease: premiumEase }}
-          >
-            {renderItem(item, i)}
-          </motion.div>
-        ))}
-      </Container>
-      {isLong && (
-        <div className="pt-3 mt-3 border-t border-black/[0.06] dark:border-white/[0.08]">
-          <button
-            onClick={() => setExpanded((v) => !v)}
-            className="inline-flex items-center gap-1.5 text-[11px] font-mono font-bold uppercase tracking-[0.1em] text-black dark:text-white bg-gray-50 dark:bg-white/5 border border-black/[0.08] dark:border-white/10 px-3 py-1.5 rounded-lg hover:bg-accent-yellow hover:text-black hover:border-accent-yellow/50 transition-all"
-          >
-            <span>
-              {expanded ? 'Show Less' : `Show All ${count}`}
-            </span>
-            <span
-              className={`material-symbols-outlined !text-[14px] transition-transform duration-300 ${
-                expanded ? 'rotate-180' : ''
-              }`}
-            >
-              expand_more
-            </span>
-          </button>
-        </div>
-      )}
-    </section>
-    </Reveal>
   )
 }

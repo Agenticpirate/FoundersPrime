@@ -1,167 +1,215 @@
 'use client'
 
 import Link from 'next/link'
-import { motion, useReducedMotion } from 'framer-motion'
+import { m, useReducedMotion } from 'framer-motion'
 import Mandala from '@/components/ui/Mandala'
-import { Reveal, RevealStagger, RevealItem, premiumEase } from '@/components/ui/premium-motion'
+import { Reveal, RevealStagger, RevealItem } from '@/components/ui/premium-motion'
+import { premiumEase } from '@/lib/premium-motion-variants'
 
 type Category = {
   name: string
+  /** Short label for narrow mobile cells */
+  shortName?: string
   icon: string
-  value: string
+  metric: string
+  metricLabel: string
   desc: string
   href: string
-  /** Tailwind text class for value + icon */
   accent: string
-  /** Soft icon plate bg */
   plate: string
-  /** Glow on hover (rgba) */
   glow: string
-  tag: string
 }
 
+/**
+ * Six equal tracks — fixed typography zones so every card aligns:
+ * icon row → metric → description → CTA.
+ */
 const categories: Category[] = [
   {
     name: 'Cloud Credits',
+    shortName: 'Cloud',
     icon: 'cloud',
-    value: 'Up to $200K+',
+    metricLabel: 'Up to',
+    metric: '$200K+',
     desc: 'AWS, Google Cloud, Azure & more.',
     href: '/deals?category=cloud-credits',
     accent: 'text-sky-400',
-    plate: 'bg-sky-500/10 border-sky-500/20',
-    glow: 'rgba(56,189,248,0.18)',
-    tag: 'Cloud',
+    plate: 'bg-sky-500/12 border-sky-500/25',
+    glow: 'rgba(56,189,248,0.16)',
   },
   {
     name: 'Grants',
     icon: 'redeem',
-    value: 'Up to $10M+',
+    metricLabel: 'Up to',
+    metric: '$10M+',
     desc: 'Non-dilutive capital for builders.',
     href: '/programs?type=grants',
     accent: 'text-accent-yellow',
-    plate: 'bg-accent-yellow/10 border-accent-yellow/25',
-    glow: 'rgba(255,215,0,0.16)',
-    tag: 'Non-dilutive',
+    plate: 'bg-accent-yellow/12 border-accent-yellow/30',
+    glow: 'rgba(255,215,0,0.14)',
   },
   {
     name: 'SaaS & Tools',
+    shortName: 'SaaS',
     icon: 'apps',
-    value: '200+',
+    metricLabel: 'Catalog',
+    metric: '200+',
     desc: 'Founder-friendly software deals.',
     href: '/deals?category=saas-discounts',
     accent: 'text-violet-400',
-    plate: 'bg-violet-500/10 border-violet-500/20',
-    glow: 'rgba(167,139,250,0.16)',
-    tag: 'SaaS',
+    plate: 'bg-violet-500/12 border-violet-500/25',
+    glow: 'rgba(167,139,250,0.14)',
   },
   {
     name: 'Accelerators',
+    shortName: 'Accel',
     icon: 'rocket_launch',
-    value: '50+',
-    desc: 'Top cohorts, perks & programs.',
+    metricLabel: 'Programs',
+    metric: '50+',
+    desc: 'Top cohorts, perks & equity deals.',
     href: '/programs?type=accelerators',
     accent: 'text-orange-400',
-    plate: 'bg-orange-500/10 border-orange-500/20',
-    glow: 'rgba(251,146,60,0.16)',
-    tag: 'Programs',
+    plate: 'bg-orange-500/12 border-orange-500/25',
+    glow: 'rgba(251,146,60,0.14)',
   },
   {
     name: 'Resources',
     icon: 'auto_awesome',
-    value: '100+',
+    metricLabel: 'Playbooks',
+    metric: '100+',
     desc: 'Guides & tools to ship faster.',
     href: '/resources',
     accent: 'text-amber-300',
-    plate: 'bg-amber-500/10 border-amber-500/20',
-    glow: 'rgba(252,211,77,0.14)',
-    tag: 'Playbooks',
+    plate: 'bg-amber-500/12 border-amber-500/25',
+    glow: 'rgba(252,211,77,0.12)',
   },
   {
     name: 'Students',
     icon: 'school',
-    value: '1000+',
-    desc: 'Campus credits, free tools & more.',
+    metricLabel: 'Campus',
+    metric: '1000+',
+    desc: 'Credits, free tools & campus perks.',
     href: '/student-benefits',
     accent: 'text-sky-300',
-    plate: 'bg-sky-400/10 border-sky-400/20',
-    glow: 'rgba(125,211,252,0.14)',
-    tag: 'Campus',
+    plate: 'bg-sky-400/12 border-sky-400/25',
+    glow: 'rgba(125,211,252,0.12)',
   },
 ]
 
 function CategoryCard({ c, index }: { c: Category; index: number }) {
   const reduce = useReducedMotion()
+  const mobileTitle = c.shortName || c.name
 
   return (
     <Link
       href={c.href}
       aria-label={`Explore ${c.name}`}
-      className="group relative flex flex-col h-full min-h-[248px] md:min-h-[268px] overflow-hidden rounded-2xl border border-white/[0.08] bg-gradient-to-b from-[#141414] to-[#0a0a0a] p-4 md:p-5 transition-all duration-300 hover:-translate-y-1.5 hover:border-accent-yellow/35"
-      style={{
-        boxShadow: 'inset 0 1px 0 0 rgba(255,255,255,0.04)',
-      }}
+      className="group relative flex h-full flex-col overflow-hidden rounded-xl md:rounded-2xl border border-white/[0.08] bg-[#0c0c0c] p-2 md:p-5 transition-all duration-300 md:hover:-translate-y-1 active:border-accent-yellow/40 hover:border-accent-yellow/35"
+      style={{ boxShadow: 'inset 0 1px 0 0 rgba(255,255,255,0.04)' }}
     >
-      {/* Top hairline accent */}
       <span
         aria-hidden
-        className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-60 group-hover:via-accent-yellow/60 transition-all duration-300"
+        className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/15 to-transparent group-hover:via-accent-yellow/50 transition-all"
       />
-
-      {/* Hover glow blob */}
       <span
         aria-hidden
-        className="pointer-events-none absolute -top-10 -right-10 w-28 h-28 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+        className="pointer-events-none absolute -right-6 -top-6 h-16 w-16 md:h-24 md:w-24 rounded-full opacity-0 blur-2xl transition-opacity duration-500 group-hover:opacity-100"
         style={{ background: c.glow }}
       />
 
-      {/* Index — fixed corner, never competes with title */}
-      <span className="absolute top-3.5 right-3.5 z-[1] font-mono text-[9px] font-bold tracking-[0.16em] text-white/15 group-hover:text-accent-yellow/45 transition-colors">
-        {String(index + 1).padStart(2, '0')}
-      </span>
-
-      {/* ── Zone 1: icon + label (fixed height) ── */}
-      <div className="relative flex items-center gap-2.5 pr-7 mb-4 min-h-[40px]">
-        <motion.span
-          className={`w-10 h-10 rounded-xl border flex items-center justify-center flex-shrink-0 ${c.plate}`}
-          whileHover={reduce ? undefined : { scale: 1.06, rotate: -3 }}
-          transition={{ type: 'spring', stiffness: 400, damping: 18 }}
-        >
+      {/* ── Mobile-only dense layout (< md) ── */}
+      <div className="relative flex h-full flex-col md:hidden">
+        <div className="flex items-center gap-1.5 mb-1.5">
           <span
-            className={`material-symbols-outlined !text-[20px] ${c.accent}`}
-            style={{ fontVariationSettings: "'FILL' 1" }}
+            className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-md border ${c.plate}`}
           >
-            {c.icon}
+            <span
+              className={`material-symbols-outlined !text-[15px] ${c.accent}`}
+              style={{ fontVariationSettings: "'FILL' 1" }}
+            >
+              {c.icon}
+            </span>
           </span>
-        </motion.span>
-        <div className="min-w-0 flex flex-col justify-center">
-          <span className="font-mono text-[8px] font-bold uppercase tracking-[0.14em] text-white/40 leading-none mb-1.5">
-            {c.tag}
-          </span>
-          <h3 className="font-sans font-bold text-[13px] md:text-[14px] text-white leading-tight line-clamp-2 min-h-[2.1rem]">
-            {c.name}
-          </h3>
+          <div className="min-w-0 flex-1">
+            <span className="font-mono text-[7px] font-bold uppercase tracking-[0.14em] text-white/35">
+              {String(index + 1).padStart(2, '0')}
+            </span>
+            <h3 className="font-mono text-[10.5px] font-black uppercase tracking-wide text-white leading-none">
+              {mobileTitle}
+            </h3>
+          </div>
         </div>
+
+        <div className="mb-1">
+          <span className="font-mono text-[7px] font-bold uppercase tracking-[0.12em] text-white/30">
+            {c.metricLabel}
+          </span>
+          <p
+            className={`font-mono text-[17px] font-black leading-none tracking-tight tabular-nums ${c.accent}`}
+          >
+            {c.metric}
+          </p>
+        </div>
+
+        <p className="mb-2 font-sans text-[9.5px] leading-snug text-zinc-500 line-clamp-2 flex-1">
+          {c.desc}
+        </p>
+
+        <span
+          className={`mt-auto inline-flex w-full items-center justify-center gap-0.5 rounded-md border border-white/[0.1] bg-white/[0.03] py-1.5 font-mono text-[8.5px] font-black uppercase tracking-[0.1em] text-zinc-300 ${c.accent}`}
+        >
+          Explore
+          <span className="material-symbols-outlined !text-[11px]">arrow_forward</span>
+        </span>
       </div>
 
-      {/* ── Zone 2: metric (single line, fixed height) ── */}
-      <p
-        className={`relative font-mono font-black text-[17px] md:text-[18px] leading-none tracking-tight whitespace-nowrap mb-2.5 min-h-[1.25rem] ${c.accent}`}
-      >
-        {c.value}
-      </p>
+      {/* ── Desktop / tablet layout (md+) ── */}
+      <div className="relative hidden h-full flex-col md:flex">
+        <div className="relative mb-4 flex items-start gap-3">
+          <m.span
+            className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border ${c.plate}`}
+            whileHover={reduce ? undefined : { scale: 1.05 }}
+            transition={{ type: 'spring', stiffness: 400, damping: 20 }}
+          >
+            <span
+              className={`material-symbols-outlined !text-[20px] ${c.accent}`}
+              style={{ fontVariationSettings: "'FILL' 1" }}
+            >
+              {c.icon}
+            </span>
+          </m.span>
+          <div className="min-w-0 flex-1 pt-0.5">
+            <p className="mb-1 font-mono text-[9px] font-bold uppercase tracking-[0.14em] text-white/40">
+              {String(index + 1).padStart(2, '0')}
+            </p>
+            <h3 className="font-mono text-[13px] font-black uppercase tracking-wide text-white leading-snug">
+              {c.name}
+            </h3>
+          </div>
+        </div>
 
-      {/* ── Zone 3: description (2 lines max, equal height) ── */}
-      <p className="relative font-sans text-[11.5px] md:text-[12px] text-gray-400 leading-snug line-clamp-2 min-h-[2.4rem] mb-4">
-        {c.desc}
-      </p>
+        <div className="relative mb-3 min-h-[3.25rem]">
+          <p className="mb-1 font-mono text-[9px] font-bold uppercase tracking-[0.14em] text-white/35">
+            {c.metricLabel}
+          </p>
+          <p
+            className={`font-mono text-[22px] font-black leading-none tracking-tight tabular-nums ${c.accent}`}
+          >
+            {c.metric}
+          </p>
+        </div>
 
-      {/* ── Zone 4: CTA pinned to bottom ── */}
-      <span className="relative mt-auto inline-flex items-center justify-center gap-1.5 w-full rounded-lg border border-white/[0.08] bg-white/[0.03] px-3 py-2.5 font-mono text-[10px] font-black uppercase tracking-[0.12em] text-gray-200 group-hover:bg-accent-yellow group-hover:text-black group-hover:border-accent-yellow transition-all duration-300">
-        Explore
-        <span className="material-symbols-outlined !text-[13px] transition-transform duration-300 group-hover:translate-x-0.5">
-          arrow_forward
+        <p className="relative mb-5 min-h-[2.5rem] font-sans text-[12px] leading-snug text-zinc-400 line-clamp-2">
+          {c.desc}
+        </p>
+
+        <span className="relative mt-auto inline-flex w-full items-center justify-center gap-1.5 rounded-xl border border-white/[0.08] bg-white/[0.04] px-3 py-2.5 font-mono text-[10px] font-black uppercase tracking-[0.12em] text-zinc-200 transition-all duration-300 group-hover:border-accent-yellow group-hover:bg-accent-yellow group-hover:text-black">
+          Explore
+          <span className="material-symbols-outlined !text-[14px] transition-transform group-hover:translate-x-0.5">
+            arrow_forward
+          </span>
         </span>
-      </span>
+      </div>
     </Link>
   )
 }
@@ -170,54 +218,53 @@ export default function SystemModules() {
   const reduce = useReducedMotion()
 
   return (
-    <section className="relative overflow-hidden bg-black grid-bg-dark py-16 md:py-24 border-y border-white/5">
-      {/* Ambient depth */}
+    <section className="relative overflow-hidden border-y border-white/5 bg-black py-7 md:py-24">
+      <div
+        aria-hidden
+        className="pointer-events-none absolute left-1/2 top-0 h-28 md:h-40 w-[min(90vw,40rem)] -translate-x-1/2 bg-accent-yellow/[0.04] blur-3xl"
+      />
       <Mandala
         variant="rings"
         colorClass="text-white"
-        opacity={0.025}
+        opacity={0.02}
         speed={140}
-        direction="cw"
-        className="hidden md:block absolute -top-36 -left-32 w-[28rem] h-[28rem] pointer-events-none"
-      />
-      <Mandala
-        variant="orbital"
-        colorClass="text-accent-yellow"
-        opacity={0.055}
-        speed={160}
-        direction="ccw"
-        className="hidden md:block absolute -bottom-44 -right-32 w-[32rem] h-[32rem] pointer-events-none"
-      />
-      <div
-        aria-hidden
-        className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 w-[min(90vw,40rem)] h-32 bg-accent-yellow/[0.04] blur-3xl"
+        className="pointer-events-none absolute -left-32 -top-36 hidden h-[28rem] w-[28rem] md:block"
       />
 
-      <div className="relative z-10 max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <Reveal className="mb-10 md:mb-12">
-          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-5">
+      <div className="relative z-10 mx-auto max-w-[1280px] px-3 sm:px-6 lg:px-8">
+        {/* Section header — mobile denser */}
+        <Reveal className="mb-3.5 md:mb-12">
+          <div className="flex flex-col gap-2 md:gap-5 md:flex-row md:items-end md:justify-between">
             <div className="max-w-2xl">
-              <span className="inline-flex items-center gap-1.5 bg-accent-yellow/10 border border-accent-yellow/25 text-accent-yellow font-mono text-[9px] md:text-[10px] font-black uppercase tracking-[0.16em] px-3 py-1.5 rounded-full mb-4">
-                <span className="material-symbols-outlined !text-[13px]" style={{ fontVariationSettings: "'FILL' 1" }}>
-                  bolt
+              <div className="mb-1.5 md:mb-4 flex flex-wrap items-center gap-2">
+                <span className="inline-flex items-center gap-1 rounded-full border border-accent-yellow/25 bg-accent-yellow/10 px-2 py-0.5 md:px-3 md:py-1.5 font-mono text-[8px] md:text-[10px] font-black uppercase tracking-[0.14em] text-accent-yellow">
+                  <span
+                    className="material-symbols-outlined !text-[11px] md:!text-[13px]"
+                    style={{ fontVariationSettings: "'FILL' 1" }}
+                  >
+                    bolt
+                  </span>
+                  Everything you need
                 </span>
-                Everything you need
-              </span>
-              <h2 className="font-mono font-black uppercase text-white tracking-tight leading-[1.05] text-2xl sm:text-3xl lg:text-[36px]">
+                <span className="inline-flex items-center gap-1 font-mono text-[8px] md:text-[10px] font-bold uppercase tracking-widest text-zinc-500 md:hidden">
+                  <span className="h-1 w-1 rounded-full bg-accent-yellow" />
+                  Weekly
+                </span>
+              </div>
+              <h2 className="font-mono text-lg sm:text-2xl md:text-3xl lg:text-[36px] font-black uppercase leading-[1.1] tracking-tight text-white">
                 Every category.{' '}
-                <span className="text-white/90">Every advantage.</span>
+                <span className="text-white/80">Every advantage.</span>
               </h2>
-              <p className="mt-3 font-mono text-[11px] md:text-[12px] uppercase tracking-[0.18em] text-gray-500">
-                <span className="text-accent-yellow/90">//</span> Six curated tracks. One terminal for the entire founder stack.
+              <p className="mt-1 md:mt-3 font-mono text-[9px] md:text-[12px] uppercase tracking-[0.12em] text-zinc-500">
+                Six tracks · one catalog
               </p>
             </div>
 
-            <div className="flex flex-wrap items-center gap-3 flex-shrink-0">
-              <span className="inline-flex items-center gap-1.5 font-mono text-[10px] font-bold uppercase tracking-widest text-gray-400">
+            <div className="hidden shrink-0 flex-wrap items-center gap-3 md:flex">
+              <span className="inline-flex items-center gap-1.5 font-mono text-[10px] font-bold uppercase tracking-widest text-zinc-400">
                 <span className="relative flex h-1.5 w-1.5">
                   {!reduce && (
-                    <span className="absolute inline-flex h-full w-full rounded-full bg-accent-yellow opacity-70 animate-ping" />
+                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent-yellow opacity-70" />
                   )}
                   <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-accent-yellow" />
                 </span>
@@ -225,7 +272,7 @@ export default function SystemModules() {
               </span>
               <Link
                 href="/deals"
-                className="hidden sm:inline-flex items-center gap-1 font-mono text-[10px] font-black uppercase tracking-wider text-accent-yellow hover:text-white transition-colors"
+                className="inline-flex items-center gap-1 font-mono text-[10px] font-black uppercase tracking-wider text-accent-yellow transition-colors hover:text-white"
               >
                 Browse catalog
                 <span className="material-symbols-outlined !text-[14px]">arrow_forward</span>
@@ -234,78 +281,64 @@ export default function SystemModules() {
           </div>
         </Reveal>
 
-        {/* Category grid */}
-        <RevealStagger className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 md:gap-3.5 items-stretch">
+        {/* 2×3 mobile · 3 tablet · 6 desktop */}
+        <RevealStagger className="grid grid-cols-2 gap-1.5 sm:gap-2.5 md:grid-cols-3 md:gap-3.5 lg:grid-cols-6">
           {categories.map((c, i) => (
-            <RevealItem key={c.name} className="h-full min-h-0 flex">
-              <div className="w-full h-full">
-                <CategoryCard c={c} index={i} />
-              </div>
+            <RevealItem key={c.name} className="min-h-0">
+              <CategoryCard c={c} index={i} />
             </RevealItem>
           ))}
         </RevealStagger>
 
-        {/* Bottom CTA — premium strip */}
-        <Reveal className="relative mt-8 md:mt-10">
-          <div className="relative overflow-hidden rounded-2xl border border-accent-yellow/25 bg-gradient-to-r from-[#0c0c0c] via-[#12100a] to-[#0c0c0c] px-5 md:px-8 py-5 md:py-6 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-[0_0_0_1px_rgba(255,215,0,0.06),0_20px_50px_rgba(0,0,0,0.35)]">
-            {/* Top gold line */}
+        {/* Bottom CTA — mobile compact strip */}
+        <Reveal className="relative mt-3.5 md:mt-10">
+          <div className="relative flex flex-row items-center justify-between gap-2.5 overflow-hidden rounded-xl md:rounded-2xl border border-accent-yellow/25 bg-gradient-to-r from-[#0c0c0c] via-[#12100a] to-[#0c0c0c] px-2.5 py-2 md:px-8 md:py-6 shadow-[0_0_0_1px_rgba(255,215,0,0.06)] md:flex-row md:gap-4">
             <span
               aria-hidden
               className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-accent-yellow/50 to-transparent"
             />
-            <Mandala
-              variant="orbital"
-              colorClass="text-accent-yellow"
-              opacity={0.12}
-              speed={100}
-              direction="cw"
-              className="pointer-events-none absolute -right-8 -top-10 w-40 h-40"
-            />
-            <Mandala
-              variant="rings"
-              colorClass="text-white"
-              opacity={0.05}
-              speed={130}
-              direction="ccw"
-              className="pointer-events-none absolute -left-12 -bottom-14 w-44 h-44 hidden sm:block"
-            />
-
-            <div className="relative flex items-start sm:items-center gap-3 text-center sm:text-left">
-              <span className="hidden sm:flex w-10 h-10 rounded-xl bg-accent-yellow/15 border border-accent-yellow/30 items-center justify-center flex-shrink-0">
+            <div className="relative flex min-w-0 flex-1 items-center gap-2 text-left">
+              <span className="flex h-7 w-7 md:h-10 md:w-10 shrink-0 items-center justify-center rounded-lg md:rounded-xl border border-accent-yellow/30 bg-accent-yellow/15">
                 <span
-                  className="material-symbols-outlined !text-[20px] text-accent-yellow"
+                  className="material-symbols-outlined !text-[14px] md:!text-[20px] text-accent-yellow"
                   style={{ fontVariationSettings: "'FILL' 1" }}
                 >
                   bolt
                 </span>
               </span>
-              <div>
-                <p className="font-sans text-sm md:text-[15px] text-white leading-snug">
-                  Unlock up to{' '}
-                  <span className="font-mono font-black text-accent-yellow">$500K+</span> in perks and
-                  credits.
+              <div className="min-w-0">
+                <p className="font-sans text-[11px] md:text-[15px] leading-snug text-white">
+                  Up to{' '}
+                  <span className="font-mono font-black text-accent-yellow">$500K+</span>
+                  <span className="hidden sm:inline"> in perks</span>
                 </p>
-                <p className="mt-1 font-mono text-[10px] uppercase tracking-wider text-gray-500">
-                  Full catalog · Verified programs · Weekly updates
+                <p className="mt-0.5 font-mono text-[8px] md:text-[10px] uppercase tracking-wider text-zinc-500 truncate">
+                  Full catalog · Weekly updates
                 </p>
               </div>
             </div>
 
             <Link
               href="/pricing"
-              className="group/cta relative z-[1] inline-flex items-center justify-center gap-2 w-full sm:w-auto rounded-xl bg-accent-yellow text-black font-mono font-black text-[11px] uppercase tracking-[0.1em] px-6 py-3.5 border border-black shadow-[3px_3px_0_0_#000] hover:bg-white hover:shadow-[4px_4px_0_0_#000] hover:-translate-y-0.5 active:translate-y-0 transition-all whitespace-nowrap overflow-hidden"
+              className="group/cta relative z-[1] inline-flex shrink-0 items-center justify-center gap-1 overflow-hidden whitespace-nowrap rounded-lg md:rounded-xl border border-black bg-accent-yellow px-3 py-2 md:px-6 md:py-3.5 font-mono text-[9px] md:text-[11px] font-black uppercase tracking-[0.08em] text-black shadow-[2px_2px_0_0_#000] md:shadow-[3px_3px_0_0_#000] transition-all active:scale-[0.98] md:hover:-translate-y-0.5 md:hover:bg-white"
             >
-              Unlock full access
-              <span className="material-symbols-outlined !text-[16px] transition-transform group-hover/cta:translate-x-0.5">
+              Unlock
+              <span className="hidden md:inline"> full access</span>
+              <span className="material-symbols-outlined !text-[13px] md:!text-[16px] transition-transform group-hover/cta:translate-x-0.5">
                 arrow_forward
               </span>
               {!reduce && (
-                <motion.span
+                <m.span
                   aria-hidden
-                  className="pointer-events-none absolute inset-y-0 w-1/3 bg-gradient-to-r from-transparent via-white/50 to-transparent skew-x-12"
-                  initial={{ left: '-40%' }}
-                  animate={{ left: '140%' }}
-                  transition={{ duration: 2.4, repeat: Infinity, repeatDelay: 3.5, ease: premiumEase }}
+                  className="pointer-events-none absolute inset-y-0 left-0 w-1/3 skew-x-12 bg-gradient-to-r from-transparent via-white/50 to-transparent hidden md:block"
+                  initial={{ x: '-100%' }}
+                  animate={{ x: '400%' }}
+                  transition={{
+                    duration: 2.4,
+                    repeat: Infinity,
+                    repeatDelay: 3.5,
+                    ease: premiumEase,
+                  }}
                 />
               )}
             </Link>

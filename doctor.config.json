@@ -1,0 +1,64 @@
+{
+  "$schema": "https://react.doctor/schema/config.json",
+  "ignore": {
+    "files": [
+      ".next/**",
+      "node_modules/**",
+      "archive/**",
+      "public/data/**",
+      "public/brand-logos/**",
+      "public/images/**",
+      "scripts/**",
+      "**/*.d.ts",
+      "components/startups/**",
+      "lib/startups-data.ts",
+      "app/startups/**",
+      "lib/auth/actions.ts",
+      "lib/auth/jwt.ts",
+      "lib/auth/oauth.ts",
+      "types/startup.ts",
+      "lib/auth/**"
+    ],
+    "overrides": [
+      {
+        "files": [
+          "lib/admin/auth.ts",
+          "lib/auth/session.ts"
+        ],
+        "rules": [
+          "react-doctor/supabase-client-owned-authz-field"
+        ]
+      },
+      {
+        "files": [
+          "components/Header.tsx",
+          "components/HeaderMobileDrawer.tsx",
+          "components/deals/SingleDealContent.tsx",
+          "components/deals/SingleDealFaq.tsx",
+          "components/deals/SingleDealCollapsibleList.tsx"
+        ],
+        "rules": [
+          "react-doctor/no-layout-property-animation"
+        ]
+      },
+      {
+        "files": ["next.config.js"],
+        "rules": ["react-doctor/active-static-asset"]
+      },
+      {
+        "files": ["app/login/page.tsx"],
+        "rules": ["react-doctor/url-prefilled-privileged-action"]
+      },
+      {
+        "files": ["components/HeroSection.tsx"],
+        "rules": ["react-doctor/prefer-tag-over-role"]
+      }
+    ]
+  },
+  "serverAuthFunctionNames": [
+    "getUser",
+    "requireAdmin",
+    "checkProStatus",
+    "checkProStatusServer"
+  ]
+}

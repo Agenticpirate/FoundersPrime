@@ -26,6 +26,19 @@ function getServiceRoleClient() {
 }
 
 // ─── GET: real subscription + revenue stats (admin only) ──────────────────────
+const normalizePlan = (p: string) =>
+  p === 'explorer' || p === 'campus' ? 'nextfounder' : p
+
+const amountFor = (row: any, plan: string): number => {
+  if (row?.amount_cents != null && !Number.isNaN(Number(row.amount_cents))) {
+    return Number(row.amount_cents) / 100
+  }
+  if (row?.amount != null && !Number.isNaN(Number(row.amount))) {
+    return Number(row.amount)
+  }
+  return PLAN_PRICE[plan] || 0
+}
+
 export async function GET() {
   const auth = await verifyAdmin()
   if (!auth.ok) return NextResponse.json({ error: auth.error }, { status: auth.status })
@@ -35,8 +48,6 @@ export async function GET() {
     return NextResponse.json({ error: 'Service role not configured' }, { status: 500 })
   }
 
-  const normalizePlan = (p: string) =>
-    p === 'explorer' || p === 'campus' ? 'nextfounder' : p
 
   const result = {
     totalSubscribers: 0,
@@ -60,15 +71,6 @@ export async function GET() {
     }[],
   }
 
-  const amountFor = (row: any, plan: string): number => {
-    if (row?.amount_cents != null && !Number.isNaN(Number(row.amount_cents))) {
-      return Number(row.amount_cents) / 100
-    }
-    if (row?.amount != null && !Number.isNaN(Number(row.amount))) {
-      return Number(row.amount)
-    }
-    return PLAN_PRICE[plan] || 0
-  }
 
   try {
     // Active subscriptions
@@ -102,19 +104,27 @@ export async function GET() {
     }))
     result.revenue = result.planBreakdown.reduce((sum, p) => sum + p.revenue, 0)
 
-    // Resolve emails for recent paid rows
+    // Resolve emails for recent paid rows (parallel — independent lookups)
     const recent = rows.slice(0, 8)
     const emailById = new Map<string, string>()
+    const uniqueIds: string[] = []
+    const seenIds = new Set<string>()
     for (const row of recent) {
       const uid = String(row.user_id || '')
-      if (!uid || emailById.has(uid)) continue
-      try {
-        const { data: u } = await svc.auth.admin.getUserById(uid)
-        if (u?.user?.email) emailById.set(uid, u.user.email)
-      } catch {
-        // ignore per-user lookup failures
-      }
+      if (!uid || seenIds.has(uid)) continue
+      seenIds.add(uid)
+      uniqueIds.push(uid)
     }
+    await Promise.all(
+      uniqueIds.map(async (uid) => {
+        try {
+          const { data: u } = await svc.auth.admin.getUserById(uid)
+          if (u?.user?.email) emailById.set(uid, u.user.email)
+        } catch {
+          // ignore per-user lookup failures
+        }
+      })
+    )
 
     result.recentSubscribers = recent.map((row) => {
       const plan = normalizePlan(String(row.plan))

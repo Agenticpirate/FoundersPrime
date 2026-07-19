@@ -77,7 +77,7 @@ export default function CookieHeader() {
               Essential cookies enabled, Analytics cookies enabled
             </p>
           </div>
-          <button
+          <button type="button"
             onClick={openModal}
             className="bg-[#13b6ec] hover:bg-black hover:text-white text-white font-bold py-2 px-4 border-2 border-black shadow-[2px_2px_0px_0px_#1a1a1a] hover:shadow-none hover:translate-x-[1px] hover:translate-y-[1px] transition-all duration-200 text-xs font-mono"
           >

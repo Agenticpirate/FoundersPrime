@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { Bookmark, Download, Eye } from "lucide-react";
-import { CardHoverGlow, cardHoverClass, cardTitleHoverClass } from "@/components/ui/card-hover";
+import { CardHoverGlowShell, cardHoverClass, cardTitleHoverClass } from "@/components/ui/card-hover";
 
 interface ResourceCardProps {
   resource: {
@@ -25,38 +25,40 @@ interface ResourceCardProps {
   };
 }
 
+const getFormatBg = (thumbnail: string) => {
+  const char = thumbnail.toUpperCase().charAt(0);
+  const bgColors: Record<string, string> = {
+    P: "bg-purple-500/20 text-purple-400 border-purple-500/30",
+    B: "bg-blue-500/20 text-blue-400 border-blue-500/30",
+    M: "bg-emerald-500/20 text-emerald-400 border-emerald-500/30",
+    F: "bg-cyan-500/20 text-cyan-400 border-cyan-500/30",
+    R: "bg-amber-500/20 text-amber-400 border-amber-500/30",
+    L: "bg-indigo-500/20 text-indigo-400 border-indigo-500/30",
+    C: "bg-orange-500/20 text-orange-400 border-orange-500/30",
+    T: "bg-teal-500/20 text-teal-400 border-teal-500/30",
+    S: "bg-pink-500/20 text-pink-400 border-pink-500/30",
+  };
+  return bgColors[char] || "bg-white/10 text-white/70 border-white/10";
+};
+
+const getCategoryColor = (cat: string) => {
+  const lower = cat.toLowerCase();
+  if (lower.includes("planning") || lower.includes("strategy")) return "bg-blue-500/10 text-blue-400 border-blue-500/20";
+  if (lower.includes("legal") || lower.includes("compliance")) return "bg-indigo-500/10 text-indigo-400 border-indigo-500/20";
+  if (lower.includes("marketing") || lower.includes("sales")) return "bg-emerald-500/10 text-emerald-400 border-emerald-500/20";
+  if (lower.includes("fundraising")) return "bg-purple-500/10 text-purple-400 border-purple-500/20";
+  if (lower.includes("finance") || lower.includes("accounting")) return "bg-cyan-500/10 text-cyan-400 border-cyan-500/20";
+  return "bg-white/5 text-gray-400 border-white/5";
+};
+
 export default function ResourceCard({ resource }: ResourceCardProps) {
   const [isBookmarked, setIsBookmarked] = useState(false);
 
-  const getFormatBg = (thumbnail: string) => {
-    const char = thumbnail.toUpperCase().charAt(0);
-    const bgColors: Record<string, string> = {
-      P: "bg-purple-500/20 text-purple-400 border-purple-500/30",
-      B: "bg-blue-500/20 text-blue-400 border-blue-500/30",
-      M: "bg-emerald-500/20 text-emerald-400 border-emerald-500/30",
-      F: "bg-cyan-500/20 text-cyan-400 border-cyan-500/30",
-      R: "bg-amber-500/20 text-amber-400 border-amber-500/30",
-      L: "bg-indigo-500/20 text-indigo-400 border-indigo-500/30",
-      C: "bg-orange-500/20 text-orange-400 border-orange-500/30",
-      T: "bg-teal-500/20 text-teal-400 border-teal-500/30",
-      S: "bg-pink-500/20 text-pink-400 border-pink-500/30",
-    };
-    return bgColors[char] || "bg-white/10 text-white/70 border-white/10";
-  };
 
-  const getCategoryColor = (cat: string) => {
-    const lower = cat.toLowerCase();
-    if (lower.includes("planning") || lower.includes("strategy")) return "bg-blue-500/10 text-blue-400 border-blue-500/20";
-    if (lower.includes("legal") || lower.includes("compliance")) return "bg-indigo-500/10 text-indigo-400 border-indigo-500/20";
-    if (lower.includes("marketing") || lower.includes("sales")) return "bg-emerald-500/10 text-emerald-400 border-emerald-500/20";
-    if (lower.includes("fundraising")) return "bg-purple-500/10 text-purple-400 border-purple-500/20";
-    if (lower.includes("finance") || lower.includes("accounting")) return "bg-cyan-500/10 text-cyan-400 border-cyan-500/20";
-    return "bg-white/5 text-gray-400 border-white/5";
-  };
 
   return (
-    <div className={`flex flex-col bg-[#0c0c0c] border border-white/10 rounded-xl p-4 h-full ${cardHoverClass}`}>
-      <CardHoverGlow />
+    <div className={`flex flex-col bg-[#0c0c0c] border border-white/10 rounded-xl p-4 h-full overflow-visible ${cardHoverClass}`}>
+      <CardHoverGlowShell className="rounded-xl" />
       {/* Top Header: icon badge + rating badge */}
       <div className="relative flex items-start justify-between gap-2 mb-3">
         {/* Format Initial Icon Badge */}
@@ -124,7 +126,7 @@ export default function ResourceCard({ resource }: ResourceCardProps) {
         </Link>
         
         {/* Redirection Direct Download Arrow Button */}
-        <button
+        <button type="button"
           className="w-9 h-9 flex items-center justify-center rounded-lg bg-[#ffd700] text-black hover:bg-[#ffe033] transition-colors"
           title={resource.price === 'Free' ? 'Get Free' : 'Access'}
           aria-label={resource.price === 'Free' ? 'Get Free Resource' : 'Access Resource'}

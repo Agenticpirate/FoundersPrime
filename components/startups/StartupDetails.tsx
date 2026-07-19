@@ -6,7 +6,8 @@ import { YCCompany } from "@/types/startup";
 import { Globe, Linkedin, Twitter, ArrowLeft, MapPin, Users, Calendar, ExternalLink } from "lucide-react";
 import Link from "next/link";
 import Mandala from "@/components/ui/Mandala";
-import { motion } from "framer-motion";
+import PageBreadcrumb from "@/components/ui/PageBreadcrumb";
+import { m } from "framer-motion";
 
 interface StartupDetailsProps {
   company: YCCompany;
@@ -100,18 +101,14 @@ export default function StartupDetails({ company }: StartupDetailsProps) {
         className="absolute top-1/3 -left-28 w-72 h-72 hidden lg:block pointer-events-none" />
 
       <div className="relative mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-8 pt-4 md:pt-6 pb-10 md:pb-16">
-        {/* ── Breadcrumb ── */}
-        <nav className="flex mb-3 md:mb-4" aria-label="Breadcrumb">
-          <ol className="inline-flex items-center gap-1.5 font-mono text-[11px] md:text-xs text-gray-500 dark:text-gray-400 flex-wrap">
-            <li><Link className="hover:text-gray-900 dark:hover:text-white transition-colors" href="/">Home</Link></li>
-            <li className="text-gray-300 dark:text-white/20">/</li>
-            <li><Link className="hover:text-gray-900 dark:hover:text-white transition-colors" href="/startups">Verified Startups</Link></li>
-            <li className="text-gray-300 dark:text-white/20">/</li>
-            <li aria-current="page">
-              <span className="text-gray-900 dark:text-white font-semibold truncate max-w-[140px] md:max-w-none inline-block align-bottom">{company.name}</span>
-            </li>
-          </ol>
-        </nav>
+        <PageBreadcrumb
+          className="mb-3 md:mb-4"
+          items={[
+            { label: 'Home', href: '/' },
+            { label: 'Verified Startups', href: '/startups' },
+            { label: company.name },
+          ]}
+        />
 
         {/* ── Back link ── */}
         <Link
@@ -127,7 +124,7 @@ export default function StartupDetails({ company }: StartupDetailsProps) {
           <div className="lg:col-span-2 space-y-4 md:space-y-5">
 
             {/* ── Hero card ── */}
-            <motion.div
+            <m.div
               variants={fadeUp} initial="hidden" animate="show" custom={0}
               className="relative bg-white dark:bg-[#0c0c0c] border border-gray-200 dark:border-white/10 rounded-xl shadow-sm overflow-hidden"
             >
@@ -198,7 +195,7 @@ export default function StartupDetails({ company }: StartupDetailsProps) {
                   {/* Tags */}
                   <div className="flex flex-wrap gap-1.5">
                     {tags.map((tag, idx) => (
-                      <span key={idx} className="px-2 py-0.5 bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 text-[10px] md:text-[11px] font-mono font-semibold text-gray-600 dark:text-gray-400 rounded-full uppercase tracking-wide">
+                      <span key={tag} className="px-2 py-0.5 bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 text-[10px] md:text-[11px] font-mono font-semibold text-gray-600 dark:text-gray-400 rounded-full uppercase tracking-wide">
                         {tag}
                       </span>
                     ))}
@@ -241,10 +238,10 @@ export default function StartupDetails({ company }: StartupDetailsProps) {
                   </a>
                 )}
               </div>
-            </motion.div>
+            </m.div>
 
             {/* ── About ── */}
-            <motion.div
+            <m.div
               variants={fadeUp} initial="hidden" animate="show" custom={1}
               className="bg-white dark:bg-[#0c0c0c] border border-gray-200 dark:border-white/10 rounded-xl shadow-sm p-4 md:p-6 overflow-hidden"
             >
@@ -255,11 +252,11 @@ export default function StartupDetails({ company }: StartupDetailsProps) {
               <div className="text-[13px] md:text-sm text-gray-600 dark:text-gray-300 leading-relaxed font-medium whitespace-pre-line">
                 {company.long_description || company.one_liner}
               </div>
-            </motion.div>
+            </m.div>
 
             {/* ── In Their Words (Q&A) ── */}
             {qa.length > 0 && (
-              <motion.div
+              <m.div
                 variants={fadeUp} initial="hidden" animate="show" custom={2}
                 className="bg-white dark:bg-[#0c0c0c] border border-gray-200 dark:border-white/10 rounded-xl shadow-sm p-4 md:p-6 overflow-hidden"
               >
@@ -269,7 +266,7 @@ export default function StartupDetails({ company }: StartupDetailsProps) {
                 </h2>
                 <div className="space-y-4">
                   {qa.slice(0, 3).map((item, i) => (
-                    <div key={i} className="border-l-2 border-accent-yellow/50 dark:border-accent-yellow/40 pl-3 md:pl-4">
+                    <div key={item.question} className="border-l-2 border-accent-yellow/50 dark:border-accent-yellow/40 pl-3 md:pl-4">
                       <p className="font-mono text-[10px] font-bold uppercase tracking-wide text-gray-400 dark:text-gray-500 mb-1.5">
                         {item.question.replace(/&#x27;/g, "'")}
                       </p>
@@ -279,12 +276,12 @@ export default function StartupDetails({ company }: StartupDetailsProps) {
                     </div>
                   ))}
                 </div>
-              </motion.div>
+              </m.div>
             )}
 
             {/* ── Founders ── */}
             {company.founders_enriched && company.founders_enriched.length > 0 && (
-              <motion.div
+              <m.div
                 variants={fadeUp} initial="hidden" animate="show" custom={3}
                 className="relative bg-gray-900 dark:bg-[#0c0c0c] border border-gray-800 dark:border-white/10 rounded-xl overflow-hidden"
               >
@@ -300,7 +297,7 @@ export default function StartupDetails({ company }: StartupDetailsProps) {
                   </h2>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     {company.founders_enriched.map((founder, i) => (
-                      <div key={i} className="bg-white/5 border border-white/10 rounded-xl p-3 md:p-4 hover:bg-white/8 transition-colors">
+                      <div key={founder.title} className="bg-white/5 border border-white/10 rounded-xl p-3 md:p-4 hover:bg-white/8 transition-colors">
                         <div className="flex items-start gap-3 mb-2">
                           <FounderAvatar founder={founder} />
                           <div className="flex-1 min-w-0">
@@ -331,14 +328,14 @@ export default function StartupDetails({ company }: StartupDetailsProps) {
                     ))}
                   </div>
                 </div>
-              </motion.div>
+              </m.div>
             )}
           </div>
 
           {/* ════ RIGHT SIDEBAR ════ */}
           <div className="space-y-4 md:space-y-5">
             {/* Company Facts card */}
-            <motion.div
+            <m.div
               variants={fadeUp} initial="hidden" animate="show" custom={1}
               className="relative bg-white dark:bg-[#0c0c0c] border border-gray-200 dark:border-white/10 rounded-xl shadow-sm lg:sticky lg:top-20 overflow-hidden"
             >
@@ -388,7 +385,7 @@ export default function StartupDetails({ company }: StartupDetailsProps) {
                 {/* Facts list */}
                 <div className="space-y-0 text-[11px] md:text-[12px]">
                   {facts.map((fact, i) => (
-                    <div key={i} className="flex items-center justify-between border-b border-gray-100 dark:border-white/[0.06] py-2 last:border-0">
+                    <div key={fact.label} className="flex items-center justify-between border-b border-gray-100 dark:border-white/[0.06] py-2 last:border-0">
                       <span className="flex items-center gap-1.5 text-gray-400 dark:text-gray-500 uppercase text-[9px] md:text-[10px] tracking-wider font-mono">
                         <span className="material-symbols-outlined text-[13px] md:text-[14px]">{fact.icon}</span>
                         {fact.label}
@@ -408,10 +405,10 @@ export default function StartupDetails({ company }: StartupDetailsProps) {
                   </div>
                 </div>
               </div>
-            </motion.div>
+            </m.div>
 
             {/* Verified badge card */}
-            <motion.div
+            <m.div
               variants={fadeUp} initial="hidden" animate="show" custom={2}
               className="relative bg-gray-900 dark:bg-[#0c0c0c] border border-gray-800 dark:border-white/10 rounded-xl overflow-hidden"
             >
@@ -438,7 +435,7 @@ export default function StartupDetails({ company }: StartupDetailsProps) {
                   </p>
                 </div>
               </div>
-            </motion.div>
+            </m.div>
           </div>
         </div>
       </div>

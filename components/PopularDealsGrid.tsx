@@ -4,8 +4,8 @@ import Link from 'next/link'
 import { useState, Fragment, useRef, UIEvent, useEffect } from 'react'
 import { popularDeals, PopularDeal } from '@/data/popular-deals'
 import { GlowingEffect } from '@/components/ui/GlowingEffect'
-import { CardHoverGlow, cardHoverClass, cardTitleHoverClass } from '@/components/ui/card-hover'
-import BrandLogo from '@/components/ui/BrandLogo'
+import { CardHoverGlowShell, cardHoverClass, cardTitleHoverClass } from '@/components/ui/card-hover'
+import { CardBrandHeader } from '@/components/ui/CardBrandHeader'
 import { Reveal, RevealStagger, RevealItem } from '@/components/ui/premium-motion'
 
 /* Highlights the monetary / numeric token inside a deal value (green, bold),
@@ -17,11 +17,11 @@ function highlightValue(value: string) {
   const parts = value.split(VALUE_TOKEN_SPLIT)
   return parts.map((part, i) =>
     VALUE_TOKEN_TEST.test(part) ? (
-      <span key={i} className="text-amber-700 dark:text-accent-yellow font-bold">
+      <span key={part} className="text-amber-700 dark:text-accent-yellow font-bold">
         {part}
       </span>
     ) : (
-      <Fragment key={i}>{part}</Fragment>
+      <Fragment key={part}>{part}</Fragment>
     )
   )
 }
@@ -53,44 +53,50 @@ function BurstMark({ flip = false }: { flip?: boolean }) {
 
 function DealCard({ deal }: { deal: PopularDeal }) {
   return (
-    <div className="relative h-full rounded-2xl group/card">
+    <article className="relative h-[216px] rounded-2xl group/card">
       <GlowingEffect spread={40} glow={false} disabled={false} proximity={64} inactiveZone={0.01} borderWidth={2} />
-      <div className={`flex flex-col bg-white dark:bg-[#0c0c0c] border border-black/10 dark:border-white/10 p-4 pt-5 shadow-sm h-full rounded-2xl transition-all duration-300 group-hover/card:-translate-y-1 group-hover/card:border-accent-yellow/40 group-hover/card:shadow-[0_12px_32px_rgba(0,0,0,0.12)] ${cardHoverClass}`}>
-        <CardHoverGlow />
+      <div
+        className={`relative flex h-full flex-col overflow-visible rounded-2xl border border-black/[0.08] dark:border-white/[0.1] bg-gradient-to-b from-white to-gray-50/80 dark:from-[#101010] dark:to-[#090909] p-3.5 md:p-4 shadow-[0_1px_0_rgba(255,255,255,0.8)_inset,0_8px_24px_rgba(0,0,0,0.06)] transition-all duration-300 group-hover/card:-translate-y-1 group-hover/card:border-accent-yellow/40 group-hover/card:shadow-[0_16px_36px_rgba(0,0,0,0.14)] ${cardHoverClass}`}
+      >
+        <CardHoverGlowShell className="rounded-2xl" />
+
         {/* Folded yellow corner with external-link icon */}
         <span
           aria-hidden="true"
-          className="absolute top-0 right-0 w-9 h-9 bg-accent-yellow z-[1] transition-transform duration-300 group-hover/card:scale-110"
+          className="absolute top-0 right-0 z-[1] h-9 w-9 bg-accent-yellow transition-transform duration-300 group-hover/card:scale-110"
           style={{ clipPath: 'polygon(100% 0, 0 0, 100% 100%)' }}
         />
-        <span className="material-symbols-outlined absolute top-1 right-1 !text-[14px] text-black z-10">
+        <span className="material-symbols-outlined absolute top-1 right-1 z-10 !text-[14px] text-black">
           open_in_new
         </span>
 
-        {/* Logo + brand name — fixed height row, icons always centered on same baseline */}
-        <div className="relative h-12 flex items-center justify-center gap-2.5 mb-4 mt-1">
-          <div className="w-10 h-10 flex-shrink-0 flex items-center justify-center">
-            <BrandLogo name={deal.name} domain={deal.domain} logo={deal.logo} size="md" plate eager className="!w-10 !h-10" />
-          </div>
-          <span className={`font-sans font-bold text-[15px] text-black dark:text-white leading-none truncate max-w-[70%] ${cardTitleHoverClass}`}>
-            {deal.name}
-          </span>
-        </div>
+        <CardBrandHeader
+          name={deal.name}
+          domain={deal.domain}
+          logo={deal.logo}
+          endClearance="corner"
+          textClassName={cardTitleHoverClass}
+        />
 
-        {/* Deal value + description */}
-        <div className="text-left mb-4 min-h-[2.75rem]">
-          <p className="font-sans text-[13px] font-semibold text-black dark:text-white leading-snug">
-            {highlightValue(deal.value)}
-          </p>
-          <p className="font-sans text-[12px] text-gray-500 dark:text-gray-400 leading-snug mt-0.5 line-clamp-1">
-            {deal.description}
-          </p>
-        </div>
+        {/* Dedicated offer track: two lines are reserved for every card. */}
+        <p
+          className="relative z-[1] mt-3 h-10 shrink-0 overflow-hidden font-sans text-[12px] font-semibold leading-[1.35] text-black dark:text-white line-clamp-2"
+          title={deal.value}
+        >
+          {highlightValue(deal.value)}
+        </p>
 
-        {/* CTA */}
+        {/* Dedicated description track keeps every CTA on the same baseline. */}
+        <p
+          className="relative z-[1] mt-1 h-8 shrink-0 overflow-hidden font-sans text-[11px] leading-[1.4] text-gray-500 dark:text-gray-400 line-clamp-2"
+          title={deal.description}
+        >
+          {deal.description}
+        </p>
+
         <Link
           href="/pricing"
-          className="group/cta mt-auto w-full inline-flex items-center justify-center gap-1.5 bg-[#000000] text-white border border-[#FFD500]/40 group-hover:bg-[#FFD500] group-hover:text-black group-hover:border-[#FFD500] hover:bg-[#FFD500] hover:text-black hover:border-[#FFD500] font-mono font-black text-[10px] uppercase tracking-[0.12em] py-2.5 rounded transition-all duration-200"
+          className="group/cta relative z-[1] mt-auto inline-flex h-9 w-full shrink-0 items-center justify-center gap-1.5 rounded-lg border border-[#FFD500]/35 bg-black px-3 font-mono text-[9px] font-black uppercase tracking-[0.14em] text-white shadow-[0_1px_0_rgba(255,255,255,0.08)_inset] transition-all duration-200 hover:border-[#FFD500] hover:bg-[#FFD500] hover:text-black group-hover/card:border-[#FFD500]/60"
           aria-label={`Get the ${deal.name} deal`}
         >
           Get this deal
@@ -99,7 +105,7 @@ function DealCard({ deal }: { deal: PopularDeal }) {
           </span>
         </Link>
       </div>
-    </div>
+    </article>
   )
 }
 
@@ -230,8 +236,8 @@ export default function PopularDealsGrid() {
 
         {/* ─── Deal Grid (Desktop) ─── */}
         <RevealStagger className="hidden lg:grid grid-cols-6 gap-4">
-          {popularDeals.map((deal, i) => (
-            <RevealItem key={`${deal.name}-${i}`}>
+          {popularDeals.map((deal) => (
+            <RevealItem key={deal.name}>
               <DealCard deal={deal} />
             </RevealItem>
           ))}
@@ -247,11 +253,11 @@ export default function PopularDealsGrid() {
           >
             {pages.map((pageDeals, pageIndex) => (
               <div 
-                key={pageIndex} 
+                key={`popular-page-${pageDeals[0]?.name || pageIndex}`}
                 className="min-w-full w-full flex-shrink-0 grid grid-cols-2 sm:grid-cols-3 gap-3 snap-center"
               >
-                {pageDeals.map((deal, i) => (
-                  <DealCard key={`${deal.name}-${i}`} deal={deal} />
+                {pageDeals.map((deal) => (
+                  <DealCard key={deal.name} deal={deal} />
                 ))}
               </div>
             ))}
@@ -260,8 +266,8 @@ export default function PopularDealsGrid() {
           {/* Pagination Dots */}
           <div className="flex justify-center items-center gap-2.5 mt-2">
             {pages.map((_, i) => (
-              <button
-                key={i}
+              <button type="button"
+                key={`page-dot-${i}`}
                 onClick={() => scrollToPage(i)}
                 aria-label={`Go to page ${i + 1}`}
                 className={`w-1.5 h-1.5 !min-h-0 !min-w-0 rounded-full transition-all ${

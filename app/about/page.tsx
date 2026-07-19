@@ -3,6 +3,7 @@ import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import Mandala from '@/components/ui/Mandala'
 import Link from 'next/link'
+import { safeJsonLd } from '@/lib/safe-json-ld'
 
 export const metadata: Metadata = {
   title: 'About FoundersPrime — Built by Founders, for Founders',
@@ -41,7 +42,7 @@ export default function AboutPage() {
     <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden bg-background-light dark:bg-[#000000] text-[#1a1a1a] dark:text-white transition-colors duration-300">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
+        dangerouslySetInnerHTML={{ __html: safeJsonLd(personJsonLd) }}
       />
       <Header />
       <main className="flex-1">
@@ -183,8 +184,8 @@ export default function AboutPage() {
                     ['Hidden Fees', '$0 — always', 'Upsells & paywalls', 'Ads / phishing'],
                     ['Plain-English Context', 'Every listing', 'Basic info only', 'None'],
                     ['Updated Frequency', 'Weekly', 'Monthly / never', 'Abandoned'],
-                  ].map(([feature, us, them, sheet], i) => (
-                    <tr key={i} className="border-b-2 border-black/10 dark:border-white/5 hover:bg-gray-50 dark:hover:bg-white/5 transition-colors">
+                  ].map(([feature, us, them, sheet]) => (
+                    <tr key={feature} className="border-b-2 border-black/10 dark:border-white/5 hover:bg-gray-50 dark:hover:bg-white/5 transition-colors">
                       <td className="p-4 border-r-2 border-black dark:border-white/10 font-bold text-gray-900 dark:text-white">{feature}</td>
                       <td className="p-4 border-r-2 border-black dark:border-white/10 bg-primary/10 font-bold text-gray-900 dark:text-white">{us}</td>
                       <td className="p-4 border-r-2 border-black dark:border-white/10 text-gray-500 dark:text-gray-400">{them}</td>
@@ -208,7 +209,7 @@ export default function AboutPage() {
                 { icon: 'visibility', color: 'bg-amber-100 dark:bg-accent-yellow/15 text-amber-800 dark:text-accent-yellow', label: '03', title: 'Radical Transparency', desc: "If we earn a commission on a tool, we say so. If a grant is hard to get, we say so. No surprises. Ever." },
                 { icon: 'block', color: 'bg-red-100 dark:bg-red-500/15 text-red-700 dark:text-red-400', label: '04', title: 'No Bullshit', desc: 'Zero hype. Zero growth-hacking buzzwords. Just verified tools and money to build your company.' },
               ].map(({ icon, color, label, title, desc }, i) => (
-                <div key={i} className={`p-5 md:p-8 hover:bg-background-light dark:hover:bg-white/5 transition-colors ${i < 2 ? 'border-b-2' : ''} ${i % 2 === 0 ? 'md:border-r-2' : ''} border-black dark:border-white/10`}>
+                <div key={label} className={`p-5 md:p-8 hover:bg-background-light dark:hover:bg-white/5 transition-colors ${i < 2 ? 'border-b-2' : ''} ${i % 2 === 0 ? 'md:border-r-2' : ''} border-black dark:border-white/10`}>
                   <div className={`inline-flex items-center gap-2 mb-3 md:mb-4 px-2 py-0.5 md:px-3 md:py-1 ${color} border border-current/30`}>
                     <span className="material-symbols-outlined text-xs md:text-sm">{icon}</span>
                     <span className="font-mono text-[10px] md:text-xs font-bold uppercase">Principle {label}</span>

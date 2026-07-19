@@ -22,7 +22,7 @@ export const merchantReturnPolicy = {
 /**
  * Convenience builder for the full Offer block with the policy attached.
  */
-export function buildOfferWithReturnPolicy(offer: Record<string, unknown>) {
+function buildOfferWithReturnPolicy(offer: Record<string, unknown>) {
   return {
     ...offer,
     hasMerchantReturnPolicy: merchantReturnPolicy,

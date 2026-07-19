@@ -31,7 +31,7 @@ export default function AnnouncementBar() {
         <span className="text-accent-yellow font-black flex-shrink-0">⚡</span>
         <span className="hidden sm:inline text-gray-400 text-[10px] uppercase tracking-widest flex-shrink-0">Live</span>
         <span className="hidden sm:inline text-gray-700 flex-shrink-0">·</span>
-        <span key={idx} className="inline-block animate-fadeIn font-semibold whitespace-nowrap overflow-hidden text-ellipsis">{MESSAGES[idx]}</span>
+        <span key={MESSAGES[idx]} className="inline-block animate-fadeIn font-semibold whitespace-nowrap overflow-hidden text-ellipsis">{MESSAGES[idx]}</span>
         <span className="text-accent-yellow font-black flex-shrink-0">⚡</span>
       </span>
 

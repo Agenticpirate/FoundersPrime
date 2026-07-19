@@ -22,10 +22,10 @@ export default function ProGateOverlay({
     return (
         <div className="relative mt-6" style={{ minHeight: 520 }}>
 
-            {/* ── Real cards blurred behind the gate ─────────────────────── */}
+            {/* ── Real cards dimmed behind the gate (no CSS filter — filter clips logo plates) ── */}
             <div
+                className="opacity-40 saturate-50 brightness-90"
                 style={{
-                    filter: 'blur(9px) brightness(0.88) saturate(0.4)',
                     pointerEvents: 'none',
                     userSelect: 'none',
                     WebkitUserSelect: 'none',
@@ -218,7 +218,7 @@ export default function ProGateOverlay({
                                     textDecoration: 'none',
                                     border: '2px solid #111111',
                                     boxShadow: '4px 4px 0px #ffd700',
-                                    transition: 'all 0.15s ease',
+                                    transition: 'transform 0.15s ease, box-shadow 0.15s ease',
                                     position: 'relative',
                                 }}
                                 onMouseEnter={(e) => {

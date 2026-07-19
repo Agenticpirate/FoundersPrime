@@ -58,3 +58,10 @@ logo-report.json
 
 # gstack local artifacts (security reports, checkpoints) — keep out of git
 .gstack/
+
+# local audit output and temporary asset/code backups
+/react-doctor-report.json
+/archive/components/
+*.broken-bak.*
+*.pre-fix-bak.*
+*.backup.*

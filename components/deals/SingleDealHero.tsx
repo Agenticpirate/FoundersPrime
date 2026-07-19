@@ -1,9 +1,9 @@
 'use client'
 
 import { type ReactNode } from 'react'
-import { motion, useReducedMotion } from 'framer-motion'
+import { m, useReducedMotion } from 'framer-motion'
 import DealLogo from './DealLogo'
-import { premiumEase } from '@/components/ui/premium-motion'
+import { premiumEase } from '@/lib/premium-motion-variants'
 
 export type BreadcrumbItem = { label: string; href?: string }
 
@@ -65,7 +65,7 @@ export default function SingleDealHero({
     <div className="relative w-full bg-white dark:bg-[#000000] border-b-3 border-b-black dark:border-b-white/10 overflow-hidden transition-colors duration-300">
       {/* Soft ambient glow */}
       {!reduce && (
-        <motion.div
+        <m.div
           aria-hidden
           className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 w-[min(720px,90vw)] h-40 bg-accent-yellow/[0.07] dark:bg-accent-yellow/[0.05] blur-3xl rounded-full"
           initial={{ opacity: 0, scale: 0.9 }}
@@ -111,13 +111,13 @@ export default function SingleDealHero({
         >
           <circle cx="100" cy="100" r="50" />
           <circle cx="100" cy="100" r="35" strokeDasharray="3 3" />
-          {[...Array(12)].map((_, i) => (
+          {Array.from({ length: 12 }, (_, i) => i * 30).map((deg) => (
             <line
-              key={i}
+              key={`hero-ray-${deg}`}
               x1="100"
               y1="100"
-              x2={100 + Math.cos((i * Math.PI) / 6) * 90}
-              y2={100 + Math.sin((i * Math.PI) / 6) * 90}
+              x2={100 + Math.cos((deg * Math.PI) / 180) * 90}
+              y2={100 + Math.sin((deg * Math.PI) / 180) * 90}
             />
           ))}
           <circle cx="100" cy="100" r="2" fill="currentColor" />
@@ -125,7 +125,7 @@ export default function SingleDealHero({
       </div>
 
       <div className="relative max-w-[1600px] mx-auto px-4 lg:px-6 py-4 lg:py-6">
-        <motion.nav
+        <m.nav
           aria-label="Breadcrumb"
           className="flex mb-5"
           {...enter(0, 8)}
@@ -134,7 +134,7 @@ export default function SingleDealHero({
             {breadcrumbs.map((crumb, i) => {
               const isLast = i === breadcrumbs.length - 1
               return (
-                <li key={`${crumb.label}-${i}`} className="inline-flex items-center gap-1.5">
+                <li key={`${crumb.href || crumb.label}`} className="inline-flex items-center gap-1.5">
                   {i > 0 && (
                     <span className="text-gray-300 dark:text-gray-600" aria-hidden>
                       /
@@ -159,10 +159,10 @@ export default function SingleDealHero({
               )
             })}
           </ol>
-        </motion.nav>
+        </m.nav>
 
         <div className="flex items-start gap-4 lg:gap-5">
-          <motion.div
+          <m.div
             className="flex-shrink-0"
             {...(reduce
               ? {}
@@ -174,7 +174,7 @@ export default function SingleDealHero({
           >
             <div className="relative">
               {!reduce && (
-                <motion.span
+                <m.span
                   aria-hidden
                   className="absolute -inset-1.5 rounded-2xl bg-accent-yellow/20 blur-md"
                   initial={{ opacity: 0 }}
@@ -192,10 +192,10 @@ export default function SingleDealHero({
                 />
               </div>
             </div>
-          </motion.div>
+          </m.div>
 
           <div className="flex-1 min-w-0">
-            <motion.div
+            <m.div
               className="mb-2.5 flex flex-wrap gap-1.5"
               {...(reduce
                 ? {}
@@ -211,7 +211,7 @@ export default function SingleDealHero({
                   })}
             >
               {badges.map((b) => (
-                <motion.span
+                <m.span
                   key={b.label}
                   variants={
                     reduce
@@ -233,19 +233,19 @@ export default function SingleDealHero({
                     <span className="w-1.5 h-1.5 rounded-full bg-accent-yellow animate-pulse" />
                   )}
                   {b.label}
-                </motion.span>
+                </m.span>
               ))}
               {badgeSlot}
-            </motion.div>
+            </m.div>
 
-            <motion.h1
+            <m.h1
               className="font-mono text-2xl sm:text-3xl lg:text-[36px] font-black tracking-tight text-black dark:text-white leading-[1.08] mb-2"
               {...enter(0.14, 14)}
             >
               {title}
-            </motion.h1>
+            </m.h1>
 
-            <motion.div
+            <m.div
               className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs lg:text-sm text-gray-600 dark:text-gray-300"
               {...enter(0.2, 10)}
             >
@@ -264,7 +264,7 @@ export default function SingleDealHero({
                 </span>
                 {verificationLabel}
               </span>
-            </motion.div>
+            </m.div>
           </div>
         </div>
       </div>

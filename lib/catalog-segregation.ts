@@ -34,7 +34,7 @@ export const DEAL_CATEGORIES = new Set([
 ])
 
 /** Display names (full — avoid sidebar truncation confusion) */
-export const DEAL_CATEGORY_LABELS: Record<string, string> = {
+const DEAL_CATEGORY_LABELS: Record<string, string> = {
   'cloud-credits': 'Cloud Credits',
   'ad-credits': 'Ad Credits',
   'saas-discounts': 'SaaS & Tools',
@@ -204,7 +204,7 @@ export function isStudentCatalogEligibility(eligibility?: string | null): boolea
 }
 
 /** @deprecated Prefer isStudentCatalogEligibility for directory listings */
-export function isStudentOnlyEligibility(eligibility?: string | null): boolean {
+function isStudentOnlyEligibility(eligibility?: string | null): boolean {
   return isStudentCatalogEligibility(eligibility)
 }
 
@@ -236,9 +236,10 @@ export function applyCatalogScope<T extends RowLike>(
     return rows.filter((r) => isProgramRow(r))
   }
 
-  return rows
-    .filter((r) => isCommercialDealRow(r))
-    .map((r) => ({
+  const out: T[] = []
+  for (const r of rows) {
+    if (!isCommercialDealRow(r)) continue
+    out.push({
       ...r,
       category: normalizeDealCategory(r.category, r.subcategory, {
         title: r.title,
@@ -246,7 +247,9 @@ export function applyCatalogScope<T extends RowLike>(
         description: r.description || r.shortDescription,
         tags: r.tags,
       }),
-    }))
+    })
+  }
+  return out
 }
 
 /** Build sidebar counts from a commercial deals list (already scoped). */

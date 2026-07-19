@@ -33,7 +33,7 @@ export const getFaviconUrl = (domain: string, size: number = 128): string => {
 }
 
 /** @deprecated Clearbit removed — use getLogoDevUrl */
-export const getLogoUrl = (domain: string): string => getLogoDevUrl(domain)
+const getLogoUrl = (domain: string): string => getLogoDevUrl(domain)
 
 export const getLogoDevUrl = (
   domain: string,
@@ -90,6 +90,10 @@ export function isUsableLogoUrl(url: string): boolean {
     return false
   }
   if (u.includes('faviconV2') && u.includes('gstatic.com')) return false
+  // Google s2 favicon API often returns a generic 16×16 globe for unknown brands
+  // (e.g. 100unicorns.com) — treat as unusable when used as the *primary* logo.
+  // Still allowed later in the chain via getFaviconUrl for real domains.
+  if (u.includes('google.com/s2/favicons')) return false
   if (u.includes('upload.wikimedia.org') || u.includes('redditstatic.com')) return false
   // Local paths are always usable
   if (u.startsWith('/brand-logos/') || u.startsWith('/logos/')) return true
@@ -122,12 +126,14 @@ export function isGarbageLogoDomain(domain: string): boolean {
 export type LogoChainOptions = {
   theme?: 'auto' | 'light' | 'dark'
   preferLocal?: boolean
+  /** Prefer the provider's current domain logo before generated catalog assets. */
+  preferRemote?: boolean
 }
 
 /**
  * Ordered list of logo URLs. Callers advance on error / tiny images.
- * Domain-based local marks ALWAYS win over parent-company name matches
- * (e.g. YouTube URL + company "Google" → YouTube icon, not Google Cloud).
+ * Domain-based local marks win by default so existing marquees remain stable.
+ * Card plates opt into preferRemote to avoid stale or incorrectly generated assets.
  */
 export function getLogoUrlChain(
   name: string,
@@ -135,15 +141,18 @@ export function getLogoUrlChain(
   explicitLogo?: string | null,
   opts?: LogoChainOptions
 ): string[] {
+  const hadExplicitDomain = Boolean(domain && cleanDomain(domain) && !isGarbageLogoDomain(domain))
   let resolved = domain ? cleanDomain(domain) : ''
   if (resolved && isGarbageLogoDomain(resolved)) resolved = ''
   if (!resolved && explicitLogo) {
     const fromLogo = extractDomainFromUrl(explicitLogo) || ''
     resolved = fromLogo && !isGarbageLogoDomain(fromLogo) ? cleanDomain(fromLogo) : ''
   }
+  let domainGuessed = false
   if (!resolved) {
     const slug = (name || 'brand').toLowerCase().replace(/[^a-z0-9]/g, '') || 'brand'
     resolved = `${slug}.com`
+    domainGuessed = true
   }
 
   const theme = opts?.theme ?? 'auto'
@@ -159,20 +168,32 @@ export function getLogoUrlChain(
   // If domain local exists, use ONLY that for local (ignore conflicting company name)
   const local = localDomain.length > 0 ? localDomain : localName
 
-  const chain = [
-    ...local,
-    ...(explicitLogo && isUsableLogoUrl(explicitLogo) ? [explicitLogo] : []),
-    getFaviconUrl(resolved, 128),
-    getLogoDevUrl(resolved, 128, theme),
-    getDuckDuckGoIconUrl(resolved),
-    getAvatarUrl(name, 128),
-  ]
+  const explicit =
+    explicitLogo && isUsableLogoUrl(explicitLogo) && !explicitLogo.includes('google.com/s2/favicons')
+      ? [explicitLogo]
+      : []
+
+  const logoDev = getLogoDevUrl(resolved, 128, theme)
+  const networkFallbacks = domainGuessed
+    ? []
+    : [
+        ...(hadExplicitDomain || !domainGuessed ? [getFaviconUrl(resolved, 128)] : []),
+        getDuckDuckGoIconUrl(resolved),
+      ]
+  const avatar = getAvatarUrl(name, 128)
+
+  // Explicit deal artwork always wins. For card grids, use the current provider-domain
+  // logo before generated local catalog files; local files remain an offline fallback.
+  const preferRemote = opts?.preferRemote === true && !domainGuessed
+  const chain = preferRemote
+    ? [...explicit, logoDev, ...local, ...networkFallbacks, avatar]
+    : [...local, ...explicit, logoDev, ...networkFallbacks, avatar]
 
   return [...new Set(chain.filter(Boolean))]
 }
 
 /** @deprecated use getLogoUrlChain */
-export const getBestLogoUrl = (
+const getBestLogoUrl = (
   logoUrl: string | undefined | null,
   providerName: string,
   providerDomain?: string

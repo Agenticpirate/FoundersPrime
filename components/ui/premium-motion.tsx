@@ -1,71 +1,8 @@
 'use client'
 
-import { motion, useReducedMotion, type HTMLMotionProps } from 'framer-motion'
+import { m, useReducedMotion, type HTMLMotionProps } from 'framer-motion'
 import { type CSSProperties, type ReactNode } from 'react'
-
-/** Shared premium easing — soft, not bouncy */
-export const premiumEase = [0.22, 1, 0.36, 1] as const
-
-export const fadeUp = {
-  hidden: { opacity: 0, y: 14 },
-  show: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.45, ease: premiumEase },
-  },
-}
-
-export const fadeIn = {
-  hidden: { opacity: 0 },
-  show: {
-    opacity: 1,
-    transition: { duration: 0.35, ease: premiumEase },
-  },
-}
-
-export const staggerContainer = {
-  hidden: { opacity: 0 },
-  show: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.055,
-      delayChildren: 0.04,
-    },
-  },
-}
-
-/** Soft opacity-only stagger — no scale/y so grids don't look like they shuffle */
-export const staggerItem = {
-  hidden: { opacity: 0 },
-  show: {
-    opacity: 1,
-    transition: { duration: 0.28, ease: premiumEase },
-  },
-}
-
-/** Slightly stronger entrance for marketing sections that want motion */
-export const staggerItemLift = {
-  hidden: { opacity: 0, y: 12 },
-  show: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.35, ease: premiumEase },
-  },
-}
-
-export const tabPanel = {
-  initial: { opacity: 0, y: 10 },
-  animate: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.35, ease: premiumEase },
-  },
-  exit: {
-    opacity: 0,
-    y: -6,
-    transition: { duration: 0.2, ease: premiumEase },
-  },
-}
+import { premiumEase, staggerContainer, staggerItem } from '@/lib/premium-motion-variants'
 
 type FadeProps = {
   children: ReactNode
@@ -81,7 +18,7 @@ export function FadeUp({ children, className, delay = 0, y = 14, ...rest }: Fade
     return <div className={className}>{children}</div>
   }
   return (
-    <motion.div
+    <m.div
       className={className}
       initial={{ opacity: 0, y }}
       animate={{ opacity: 1, y: 0 }}
@@ -89,7 +26,7 @@ export function FadeUp({ children, className, delay = 0, y = 14, ...rest }: Fade
       {...rest}
     >
       {children}
-    </motion.div>
+    </m.div>
   )
 }
 
@@ -108,7 +45,7 @@ export function Reveal({
     return <div className={className}>{children}</div>
   }
   return (
-    <motion.div
+    <m.div
       className={className}
       initial={{ opacity: 0, y: 18 }}
       whileInView={{ opacity: 1, y: 0 }}
@@ -116,32 +53,11 @@ export function Reveal({
       transition={{ duration: 0.5, delay, ease: premiumEase }}
     >
       {children}
-    </motion.div>
+    </m.div>
   )
 }
 
-export function Stagger({
-  children,
-  className,
-}: {
-  children: ReactNode
-  className?: string
-}) {
-  const reduce = useReducedMotion()
-  if (reduce) {
-    return <div className={className}>{children}</div>
-  }
-  return (
-    <motion.div
-      className={className}
-      variants={staggerContainer}
-      initial="hidden"
-      animate="show"
-    >
-      {children}
-    </motion.div>
-  )
-}
+
 
 /** Scroll-triggered stagger (homepage sections) */
 export function RevealStagger({
@@ -158,7 +74,7 @@ export function RevealStagger({
     return <div className={className}>{children}</div>
   }
   return (
-    <motion.div
+    <m.div
       className={className}
       variants={{
         hidden: { opacity: 0 },
@@ -175,7 +91,7 @@ export function RevealStagger({
       viewport={{ once: true, margin: '-60px 0px' }}
     >
       {children}
-    </motion.div>
+    </m.div>
   )
 }
 
@@ -191,7 +107,7 @@ export function RevealItem({
     return <div className={className}>{children}</div>
   }
   return (
-    <motion.div
+    <m.div
       className={className}
       variants={{
         hidden: { opacity: 0, y: 18, scale: 0.985 },
@@ -204,7 +120,7 @@ export function RevealItem({
       }}
     >
       {children}
-    </motion.div>
+    </m.div>
   )
 }
 
@@ -223,33 +139,17 @@ export function SoftFloat({
     return <div className={className}>{children}</div>
   }
   return (
-    <motion.div
+    <m.div
       className={className}
       animate={{ y: [0, -10, 0], opacity: [0.7, 1, 0.7] }}
       transition={{ duration, repeat: Infinity, ease: 'easeInOut' }}
     >
       {children}
-    </motion.div>
+    </m.div>
   )
 }
 
-export function StaggerItem({
-  children,
-  className,
-}: {
-  children: ReactNode
-  className?: string
-}) {
-  const reduce = useReducedMotion()
-  if (reduce) {
-    return <div className={className}>{children}</div>
-  }
-  return (
-    <motion.div className={className} variants={staggerItem}>
-      {children}
-    </motion.div>
-  )
-}
+
 
 /**
  * Animated card grid for category listings.
@@ -277,7 +177,7 @@ export function StaggerGrid({
     )
   }
   return (
-    <motion.div
+    <m.div
       key={animKey}
       className={className}
       style={style}
@@ -287,7 +187,7 @@ export function StaggerGrid({
       {...rest}
     >
       {children}
-    </motion.div>
+    </m.div>
   )
 }
 
@@ -307,8 +207,8 @@ export function StaggerGridItem({
     return <div className={className}>{children}</div>
   }
   return (
-    <motion.div className={className} variants={staggerItem} layout={layout || undefined}>
+    <m.div className={className} variants={staggerItem} layout={layout || undefined}>
       {children}
-    </motion.div>
+    </m.div>
   )
 }

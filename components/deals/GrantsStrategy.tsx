@@ -1,18 +1,21 @@
 'use client'
 
-export default function GrantsStrategy() {
-  const drivers = [
-    { icon: 'policy', title: 'Industrial Policy', desc: 'Governments de-risking deep tech — AI, biotech, clean energy.' },
-    { icon: 'analytics', title: 'Metric-Driven', desc: 'Show commercialization pathways and societal impact.' },
-    { icon: 'emoji_events', title: 'Megaprizes', desc: 'XPRIZE alone exceeds $236M in active competitions.' },
-  ]
+const drivers = [
+  { icon: 'policy', title: 'Industrial Policy', desc: 'Governments de-risking deep tech — AI, biotech, clean energy.' },
+  { icon: 'analytics', title: 'Metric-Driven', desc: 'Show commercialization pathways and societal impact.' },
+  { icon: 'emoji_events', title: 'Megaprizes', desc: 'XPRIZE alone exceeds $236M in active competitions.' },
+]
 
-  const trends = [
-    { title: 'Blended Finance', desc: 'EIC offers €2.5M grant + optional equity.' },
-    { title: 'Go-to-Market Focus', desc: 'Shift from pure R&D to commercialization.' },
-    { title: 'Hardware Renaissance', desc: 'Hard-tech prototyping grants growing fast.' },
-    { title: 'Relocation Incentives', desc: 'Gulf states offering $1M+ to relocate.' },
-  ]
+const trends = [
+  { title: 'Blended Finance', desc: 'EIC offers €2.5M grant + optional equity.' },
+  { title: 'Go-to-Market Focus', desc: 'Shift from pure R&D to commercialization.' },
+  { title: 'Hardware Renaissance', desc: 'Hard-tech prototyping grants growing fast.' },
+  { title: 'Relocation Incentives', desc: 'Gulf states offering $1M+ to relocate.' },
+]
+
+
+export default function GrantsStrategy() {
+
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 mb-5 md:mb-7">
@@ -22,14 +25,14 @@ export default function GrantsStrategy() {
           {/* Decorative mandala */}
           <div className="absolute -bottom-12 -right-12 w-44 h-44 pointer-events-none opacity-[0.06]" aria-hidden="true">
             <svg viewBox="0 0 200 200" className="w-full h-full text-amber-800 grants-strategy-mandala-spin" fill="none" stroke="currentColor" strokeWidth="0.6">
-              {[20, 35, 50, 65].map((r, i) => (
+              {[20, 35, 50, 65].map((r, orbitIdx) => (
                 <ellipse
-                  key={i}
+                  key={`orbit-${r}`}
                   cx="100"
                   cy="100"
                   rx={r}
                   ry={r / 1.8}
-                  transform={`rotate(${i * 30} 100 100)`}
+                  transform={`rotate(${orbitIdx * 30} 100 100)`}
                 />
               ))}
               <circle cx="100" cy="100" r="2" fill="currentColor" />

@@ -5,11 +5,12 @@ import { X, Shield, BarChart3, Target, Settings, Check } from 'lucide-react'
 import { useCookieConsent, CookiePreferences } from '@/context/CookieConsentContext'
 
 // ── Compact pill toggle ───────────────────────────────────────────────────────
-function Toggle({ checked, onChange, disabled }: { checked: boolean; onChange: () => void; disabled?: boolean }) {
+function Toggle({ checked, onChange, disabled, label }: { checked: boolean; onChange: () => void; disabled?: boolean; label?: string }) {
     return (
         <div
             role="switch"
             aria-checked={checked}
+            aria-label={label || 'Toggle preference'}
             tabIndex={disabled ? -1 : 0}
             onClick={disabled ? undefined : onChange}
             onKeyDown={disabled ? undefined : (e) => { if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); onChange() } }}
@@ -29,9 +30,16 @@ function Toggle({ checked, onChange, disabled }: { checked: boolean; onChange: (
                     : 'rgba(255,255,255,0.12)',
                 cursor: disabled ? 'not-allowed' : 'pointer',
                 transition: 'background-color 0.2s ease',
-                outline: 'none',
+                outline: '2px solid transparent',
+                outlineOffset: '2px',
                 border: checked && !disabled ? '1.5px solid rgba(245,216,0,0.5)' : '1.5px solid rgba(255,255,255,0.08)',
                 boxSizing: 'border-box',
+            }}
+            onFocus={(e) => {
+                if (!disabled) e.currentTarget.style.outlineColor = '#F5D800'
+            }}
+            onBlur={(e) => {
+                e.currentTarget.style.outlineColor = 'transparent'
             }}
         >
             <span
@@ -118,6 +126,7 @@ function CookieItem({ icon, title, desc, required, checked, onToggle }: CookieIt
                 checked={required ? true : !!checked}
                 onChange={required ? () => {} : onToggle!}
                 disabled={required}
+                label={title}
             />
         </div>
     )
@@ -153,7 +162,9 @@ export default function CookiePreferencesModal() {
     return (
         // Backdrop
         <div
+            role="presentation"
             onClick={(e) => { if (e.target === e.currentTarget) closeModal() }}
+            onKeyDown={(e) => { if (e.key === 'Escape') closeModal() }}
             style={{
                 position: 'fixed',
                 inset: 0,
@@ -211,7 +222,7 @@ export default function CookiePreferencesModal() {
                             Cookie Preferences
                         </span>
                     </div>
-                    <button
+                    <button type="button"
                         onClick={closeModal}
                         aria-label="Close"
                         style={{
@@ -291,7 +302,7 @@ export default function CookiePreferencesModal() {
                     gap: '8px',
                 }}>
                     {/* Accept All */}
-                    <button
+                    <button type="button"
                         onClick={handleAcceptAll}
                         style={{
                             background: 'rgba(255,255,255,0.06)',
@@ -321,7 +332,7 @@ export default function CookiePreferencesModal() {
                     </button>
 
                     {/* Save Preferences */}
-                    <button
+                    <button type="button"
                         onClick={handleSave}
                         style={{
                             background: '#F5D800',

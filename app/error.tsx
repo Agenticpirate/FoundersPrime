@@ -83,7 +83,7 @@ export default function Error({
 
           {/* Action Buttons */}
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <button
+            <button type="button"
               onClick={() => reset()}
               className="inline-flex items-center justify-center gap-2 border-2 border-black bg-accent-yellow px-8 py-3 font-mono text-xs font-black uppercase tracking-wider text-black shadow-[4px_4px_0px_#000] hover:bg-white hover:shadow-[2px_2px_0px_#000] hover:translate-x-[2px] hover:translate-y-[2px] transition-all rounded-md"
             >

@@ -49,7 +49,7 @@ export default function StartupsSidebar({
             {visibleCategories.map((category) => {
               const active = selectedCategory === category.name;
               return (
-                <button
+                <button type="button"
                   key={category.name}
                   onClick={() => onSelectCategory(category.name)}
                   className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-left transition-all text-[12px] font-mono ${
@@ -73,7 +73,7 @@ export default function StartupsSidebar({
             })}
           </div>
           {categories.length > 8 && (
-            <button
+            <button type="button"
               onClick={() => setShowAll((v) => !v)}
               className="w-full mt-3 py-2.5 text-[10px] font-mono font-bold uppercase tracking-wider bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg transition-all text-gray-400 hover:text-white flex items-center justify-center gap-1.5"
             >
@@ -105,7 +105,7 @@ export default function StartupsSidebar({
           </h3>
           <div className="space-y-3">
             {validationSteps.map((step, i) => (
-              <div key={i} className="flex items-start gap-2.5">
+              <div key={step} className="flex items-start gap-2.5">
                 <span className="material-symbols-outlined text-[16px] text-accent-yellow flex-shrink-0 mt-0.5">
                   check_circle
                 </span>
@@ -113,7 +113,7 @@ export default function StartupsSidebar({
               </div>
             ))}
           </div>
-          <button className="mt-4 flex items-center gap-1 text-[11px] font-mono font-bold text-accent-yellow hover:underline uppercase tracking-wide">
+          <button type="button" className="mt-4 flex items-center gap-1 text-[11px] font-mono font-bold text-accent-yellow hover:underline uppercase tracking-wide">
             Learn more
             <span className="material-symbols-outlined text-[12px]">arrow_forward</span>
           </button>

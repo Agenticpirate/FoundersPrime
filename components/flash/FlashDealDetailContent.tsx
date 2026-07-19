@@ -19,10 +19,6 @@ export default function FlashDealDetailContent({ deal }: { deal: FlashDeal }) {
   const badge = BADGE_STYLES[deal.badge]
   const { loading, isAuthenticated, signInWithGoogle, signInWithGithub } = useAuth()
 
-  const handleRegionClick = (url: string) => {
-    window.open(url, '_blank', 'noopener,noreferrer')
-  }
-
   if (loading) {
     return (
       <div className="max-w-[1100px] mx-auto px-4 sm:px-6 lg:px-8 py-8 animate-pulse">
@@ -123,7 +119,7 @@ export default function FlashDealDetailContent({ deal }: { deal: FlashDeal }) {
 
                 {/* OAuth Login buttons */}
                 <div className="flex flex-col w-full max-w-sm gap-2.5">
-                  <button
+                  <button type="button"
                     onClick={() => signInWithGoogle(`/flash-deals/${deal.id}`)}
                     className="flex items-center justify-center gap-2.5 w-full py-3 bg-white hover:bg-gray-150 text-black font-mono font-black text-xs uppercase tracking-wide rounded-lg transition-all shadow-md"
                   >
@@ -136,7 +132,7 @@ export default function FlashDealDetailContent({ deal }: { deal: FlashDeal }) {
                     Continue with Google
                   </button>
 
-                  <button
+                  <button type="button"
                     onClick={() => signInWithGithub(`/flash-deals/${deal.id}`)}
                     className="flex items-center justify-center gap-2.5 w-full py-3 bg-[#24292e] hover:bg-[#2c3238] text-white font-mono font-black text-xs uppercase tracking-wide rounded-lg transition-all shadow-md"
                   >
@@ -166,8 +162,8 @@ export default function FlashDealDetailContent({ deal }: { deal: FlashDeal }) {
             </div>
           )}
 
-          <div className={`space-y-6 ${!isAuthenticated ? 'blur-[5px] select-none pointer-events-none opacity-25' : ''}`}>
-            {/* Highlights */}
+          {/* Public teaser — safe to show without auth */}
+          <div className="space-y-6">
             {deal.highlights && deal.highlights.length > 0 && (
               <div className="bg-white dark:bg-[#0c0c0c] border border-gray-200 dark:border-white/10 rounded-xl p-6">
               <h2 className="font-mono font-black text-sm uppercase tracking-wider text-gray-900 dark:text-white flex items-center gap-2 mb-4">
@@ -178,7 +174,7 @@ export default function FlashDealDetailContent({ deal }: { deal: FlashDeal }) {
               </h2>
               <ul className="space-y-2.5">
                 {deal.highlights.map((item, i) => (
-                  <li key={i} className="flex items-start gap-3">
+                  <li key={item} className="flex items-start gap-3">
                     <span className="material-symbols-outlined text-accent-yellow text-[16px] mt-0.5 flex-shrink-0" style={{ fontVariationSettings: "'FILL' 1" }}>
                       check_circle
                     </span>
@@ -189,6 +185,31 @@ export default function FlashDealDetailContent({ deal }: { deal: FlashDeal }) {
             </div>
           )}
 
+          {deal.eligibility && deal.eligibility.length > 0 && (
+            <div className="bg-white dark:bg-[#0c0c0c] border border-gray-200 dark:border-white/10 rounded-xl p-6">
+              <h2 className="font-mono font-black text-sm uppercase tracking-wider text-gray-900 dark:text-white flex items-center gap-2 mb-4">
+                <span className="material-symbols-outlined text-blue-400 text-[18px]" style={{ fontVariationSettings: "'FILL' 1" }}>
+                  verified_user
+                </span>
+                Eligibility Requirements
+              </h2>
+              <ul className="space-y-2.5">
+                {deal.eligibility.map((item, i) => (
+                  <li key={item} className="flex items-start gap-3">
+                    <span className="material-symbols-outlined text-blue-400 text-[16px] mt-0.5 flex-shrink-0" style={{ fontVariationSettings: "'FILL' 1" }}>
+                      info
+                    </span>
+                    <span className="text-sm text-gray-700 dark:text-gray-300 leading-snug">{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+          </div>
+
+          {/* Claim instructions / URLs — only for signed-in users (never in DOM when logged out) */}
+          {isAuthenticated && (
+          <div className="space-y-6">
           {deal.id === 'adobe-express-linkedin-airtel' && (
             <div className="bg-white dark:bg-[#0c0c0c] border border-gray-200 dark:border-white/10 rounded-xl p-6">
               <h2 className="font-mono font-black text-sm uppercase tracking-wider text-[#0a66c2] flex items-center gap-2 mb-4">
@@ -228,28 +249,6 @@ export default function FlashDealDetailContent({ deal }: { deal: FlashDeal }) {
                   </div>
                 ))}
               </div>
-            </div>
-          )}
-
-          {/* Eligibility */}
-          {deal.eligibility && deal.eligibility.length > 0 && (
-            <div className="bg-white dark:bg-[#0c0c0c] border border-gray-200 dark:border-white/10 rounded-xl p-6">
-              <h2 className="font-mono font-black text-sm uppercase tracking-wider text-gray-900 dark:text-white flex items-center gap-2 mb-4">
-                <span className="material-symbols-outlined text-blue-400 text-[18px]" style={{ fontVariationSettings: "'FILL' 1" }}>
-                  verified_user
-                </span>
-                Eligibility Requirements
-              </h2>
-              <ul className="space-y-2.5">
-                {deal.eligibility.map((item, i) => (
-                  <li key={i} className="flex items-start gap-3">
-                    <span className="material-symbols-outlined text-blue-400 text-[16px] mt-0.5 flex-shrink-0" style={{ fontVariationSettings: "'FILL' 1" }}>
-                      info
-                    </span>
-                    <span className="text-sm text-gray-700 dark:text-gray-300 leading-snug">{item}</span>
-                  </li>
-                ))}
-              </ul>
             </div>
           )}
 
@@ -306,7 +305,7 @@ export default function FlashDealDetailContent({ deal }: { deal: FlashDeal }) {
 
           {/* Region options (for ChatGPT etc) */}
           {deal.options && deal.options.length > 0 && (
-            <div className="bg-white dark:bg-[#0c0c0c] border border-gray-200 dark:border-white/10 rounded-xl p-6">
+            <div id="region-select" className="bg-white dark:bg-[#0c0c0c] border border-gray-200 dark:border-white/10 rounded-xl p-6 scroll-mt-24">
               <h2 className="font-mono font-black text-sm uppercase tracking-wider text-gray-900 dark:text-white flex items-center gap-2 mb-4">
                 <span className="material-symbols-outlined text-blue-400 text-[18px]" style={{ fontVariationSettings: "'FILL' 1" }}>
                   public
@@ -346,7 +345,7 @@ export default function FlashDealDetailContent({ deal }: { deal: FlashDeal }) {
               </h2>
               <ul className="space-y-2">
                 {deal.tips.map((tip, i) => (
-                  <li key={i} className="flex items-start gap-2.5">
+                  <li key={tip} className="flex items-start gap-2.5">
                     <span className="text-amber-500 mt-0.5 text-xs">→</span>
                     <span className="text-sm text-amber-800 dark:text-amber-300/80 leading-snug">{tip}</span>
                   </li>
@@ -355,6 +354,7 @@ export default function FlashDealDetailContent({ deal }: { deal: FlashDeal }) {
             </div>
           )}
           </div>
+          )}
         </div>
 
         {/* ── RIGHT: Sidebar ── */}
@@ -369,24 +369,30 @@ export default function FlashDealDetailContent({ deal }: { deal: FlashDeal }) {
             <FlashCountdown endsAt={deal.endsAt} durationHours={deal.durationHours} variant="inline" />
           </div>
 
-          {/* Main CTA */}
+          {/* Main CTA — claim URLs only after signup */}
           <div className="bg-white dark:bg-[#0c0c0c] border border-gray-200 dark:border-white/10 rounded-xl p-5">
             <p className="font-mono font-black text-xs uppercase tracking-wider text-gray-900 dark:text-white mb-3">
               Ready to claim?
             </p>
             {!isAuthenticated ? (
-              <button
-                onClick={() => {
-                  const el = document.getElementById('unlock-gate-card')
-                  if (el) {
-                    el.scrollIntoView({ behavior: 'smooth', block: 'center' })
-                  }
-                }}
-                className="flex items-center justify-center gap-2 w-full py-3 bg-accent-yellow hover:bg-yellow-400 text-black font-mono font-black text-sm uppercase tracking-wide rounded-lg transition-colors shadow-[0_4px_16px_rgba(255,215,0,0.25)]"
-              >
-                Unlock to Claim
-                <span className="material-symbols-outlined text-[16px]">lock</span>
-              </button>
+              <div className="space-y-2">
+                <Link
+                  href={`/login?view=signup&redirect=${encodeURIComponent(`/flash-deals/${deal.id}`)}`}
+                  className="flex items-center justify-center gap-2 w-full py-3 bg-accent-yellow hover:bg-yellow-400 text-black font-mono font-black text-sm uppercase tracking-wide rounded-lg transition-colors shadow-[0_4px_16px_rgba(255,215,0,0.25)]"
+                >
+                  Sign up free to claim
+                  <span className="material-symbols-outlined text-[16px]">lock</span>
+                </Link>
+                <Link
+                  href={`/login?view=login&redirect=${encodeURIComponent(`/flash-deals/${deal.id}`)}`}
+                  className="flex items-center justify-center gap-2 w-full py-2.5 border border-black/10 dark:border-white/15 text-gray-700 dark:text-gray-300 font-mono font-bold text-[11px] uppercase tracking-wide rounded-lg hover:border-accent-yellow/40 transition-colors"
+                >
+                  Already have an account? Sign in
+                </Link>
+                <p className="text-[10px] text-gray-500 text-center pt-1">
+                  Free account required · no membership needed
+                </p>
+              </div>
             ) : deal.options && deal.options.length > 0 ? (
               <div>
                 <p className="text-[11px] text-gray-500 mb-3">Select your region above to get your promo link.</p>
@@ -397,21 +403,26 @@ export default function FlashDealDetailContent({ deal }: { deal: FlashDeal }) {
                   Select Region & Claim
                   <span className="material-symbols-outlined text-[16px]">arrow_downward</span>
                 </a>
+                <p className="text-[10px] text-gray-500 text-center mt-2.5">
+                  Limited time · Gone when timer hits zero
+                </p>
               </div>
             ) : (
-              <a
-                href={deal.dealUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 w-full py-3 bg-accent-yellow text-black font-mono font-black text-sm uppercase tracking-wide rounded-lg hover:bg-white transition-colors shadow-[0_4px_16px_rgba(255,215,0,0.25)]"
-              >
-                Claim Now — It&apos;s Free
-                <span className="material-symbols-outlined text-[16px]">arrow_forward</span>
-              </a>
+              <div>
+                <a
+                  href={deal.dealUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center gap-2 w-full py-3 bg-accent-yellow text-black font-mono font-black text-sm uppercase tracking-wide rounded-lg hover:bg-white transition-colors shadow-[0_4px_16px_rgba(255,215,0,0.25)]"
+                >
+                  Claim Now — It&apos;s Free
+                  <span className="material-symbols-outlined text-[16px]">arrow_forward</span>
+                </a>
+                <p className="text-[10px] text-gray-500 text-center mt-2.5">
+                  Limited time · Gone when timer hits zero
+                </p>
+              </div>
             )}
-            <p className="text-[10px] text-gray-500 text-center mt-2.5">
-              Limited time offer · Gone when timer hits zero
-            </p>
           </div>
 
           {/* Share */}
@@ -421,7 +432,9 @@ export default function FlashDealDetailContent({ deal }: { deal: FlashDeal }) {
             </p>
             <div className="flex gap-2">
               <a
-                href={`https://twitter.com/intent/tweet?text=Just found this deal on FoundersPrime: ${deal.name} — ${deal.discount}! ${typeof window !== 'undefined' ? window.location.href : ''}`}
+                href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(
+                  `Just found this deal on FoundersPrime: ${deal.name} — ${deal.discount}!`
+                )}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex-1 flex items-center justify-center gap-1.5 py-2 bg-gray-100 dark:bg-white/5 hover:bg-gray-200 dark:hover:bg-white/10 rounded-lg text-xs font-mono font-bold text-gray-700 dark:text-gray-300 transition-colors"
@@ -429,7 +442,7 @@ export default function FlashDealDetailContent({ deal }: { deal: FlashDeal }) {
                 <span className="material-symbols-outlined text-[14px]">share</span>
                 Share
               </a>
-              <button
+              <button type="button"
                 onClick={() => {
                   if (typeof window !== 'undefined') {
                     navigator.clipboard.writeText(window.location.href)

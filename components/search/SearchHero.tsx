@@ -3,29 +3,26 @@
 import { useState } from 'react'
 import Mandala from '@/components/ui/Mandala'
 
+const searchTypes = [
+  { value: 'all', label: 'All Content', count: '15,247' },
+  { value: 'deals', label: 'Deals', count: '1,247' },
+  { value: 'startups', label: 'Startups', count: '12,847' },
+  { value: 'ideas', label: 'Ideas', count: '2,847' },
+  { value: 'resources', label: 'Resources', count: '1,247' },
+  { value: 'blog', label: 'Blog Posts', count: '247' }
+]
+
+const popularSearches = [
+  'AWS credits', 'Y Combinator', 'SaaS tools', 'Stripe', 'Funding guide',
+  'Product validation', 'Marketing automation', 'Cloud hosting', 'Analytics tools'
+]
+
+
 export default function SearchHero() {
   const [searchQuery, setSearchQuery] = useState('')
   const [searchType, setSearchType] = useState('all')
 
-  const searchTypes = [
-    { value: 'all', label: 'All Content', count: '15,247' },
-    { value: 'deals', label: 'Deals', count: '1,247' },
-    { value: 'startups', label: 'Startups', count: '12,847' },
-    { value: 'ideas', label: 'Ideas', count: '2,847' },
-    { value: 'resources', label: 'Resources', count: '1,247' },
-    { value: 'blog', label: 'Blog Posts', count: '247' }
-  ]
 
-  const popularSearches = [
-    'AWS credits', 'Y Combinator', 'SaaS tools', 'Stripe', 'Funding guide',
-    'Product validation', 'Marketing automation', 'Cloud hosting', 'Analytics tools'
-  ]
-
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault()
-    // Handle search submission
-
-  }
 
   return (
     <div className="mb-4 md:mb-6">
@@ -38,7 +35,13 @@ export default function SearchHero() {
           speed={90}
           className="absolute -top-12 -right-12 w-40 h-40 hidden sm:block"
         />
-        <form onSubmit={handleSearch} className="relative space-y-4 md:space-y-6">
+        <form
+          onSubmit={(e) => {
+            e.preventDefault()
+            // Handle search submission
+          }}
+          className="relative space-y-4 md:space-y-6"
+        >
           {/* Search Input */}
           <div className="relative">
             <input
@@ -87,8 +90,8 @@ export default function SearchHero() {
         </h3>
         <div className="flex flex-wrap gap-2">
           {popularSearches.map((search, index) => (
-            <button
-              key={index}
+            <button type="button"
+              key={search}
               onClick={() => setSearchQuery(search)}
               className="px-2.5 md:px-3 py-1 bg-white hover:bg-primary/20 border-2 border-black rounded-sm font-mono text-xs md:text-sm transition-colors"
             >

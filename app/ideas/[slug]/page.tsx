@@ -4,12 +4,14 @@ import { notFound } from 'next/navigation'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import IdeaSaveButton from '@/components/ideas/IdeaSaveButton'
+import PageBreadcrumb from '@/components/ui/PageBreadcrumb'
 import {
   getAllIdeaSlugs,
   getAllIdeas,
   getIdeaBySlug,
   ideaSlugFromTitle,
 } from '@/lib/ideas'
+import { safeJsonLd } from '@/lib/safe-json-ld'
 
 export const dynamic = 'force-static'
 export const revalidate = 86400
@@ -110,26 +112,17 @@ export default function SingleIdeaPage({ params }: PageProps) {
         <div className="mx-auto max-w-[900px] px-4 sm:px-6 lg:px-8 py-8 md:py-12">
           <script
             type="application/ld+json"
-            dangerouslySetInnerHTML={{ __html: JSON.stringify([jsonLd, breadcrumbLd]) }}
+            dangerouslySetInnerHTML={{ __html: safeJsonLd([jsonLd, breadcrumbLd]) }}
           />
 
-          <nav aria-label="Breadcrumb" className="mb-6 font-mono text-xs">
-            <ol className="flex flex-wrap items-center gap-1 text-gray-500">
-              <li>
-                <Link href="/" className="hover:text-black dark:hover:text-white">
-                  Home
-                </Link>
-              </li>
-              <li aria-hidden="true">/</li>
-              <li>
-                <Link href="/ideas" className="hover:text-black dark:hover:text-white">
-                  Ideas
-                </Link>
-              </li>
-              <li aria-hidden="true">/</li>
-              <li className="text-black dark:text-white font-semibold line-clamp-1">{idea.title}</li>
-            </ol>
-          </nav>
+          <PageBreadcrumb
+            className="mb-6"
+            items={[
+              { label: 'Home', href: '/' },
+              { label: 'Ideas', href: '/ideas' },
+              { label: idea.title },
+            ]}
+          />
 
           <article className="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-[#0f0f0f] p-6 md:p-10 shadow-sm">
             <div className="flex flex-wrap items-center gap-2 mb-4">

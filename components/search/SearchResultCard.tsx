@@ -1,4 +1,4 @@
-import { CardHoverGlow, cardHoverClass, cardTitleHoverClass } from '@/components/ui/card-hover'
+import { CardHoverGlowShell, cardHoverClass, cardTitleHoverClass } from '@/components/ui/card-hover'
 
 interface SearchResult {
   type: 'deal' | 'startup' | 'idea' | 'resource' | 'blog'
@@ -18,40 +18,42 @@ interface SearchResultCardProps {
   result: SearchResult
 }
 
-export default function SearchResultCard({ result }: SearchResultCardProps) {
-  const getTypeIcon = (type: string) => {
-    switch (type) {
-      case 'deal':
-        return 'local_offer'
-      case 'startup':
-        return 'business'
-      case 'idea':
-        return 'lightbulb'
-      case 'resource':
-        return 'folder'
-      case 'blog':
-        return 'article'
-      default:
-        return 'search'
-    }
+const getTypeIcon = (type: string) => {
+  switch (type) {
+    case 'deal':
+      return 'local_offer'
+    case 'startup':
+      return 'business'
+    case 'idea':
+      return 'lightbulb'
+    case 'resource':
+      return 'folder'
+    case 'blog':
+      return 'article'
+    default:
+      return 'search'
   }
+}
 
-  const getTypeColor = (type: string) => {
-    switch (type) {
-      case 'deal':
-        return 'bg-accent-yellow'
-      case 'startup':
-        return 'bg-primary'
-      case 'idea':
-        return 'bg-yellow-400'
-      case 'resource':
-        return 'bg-purple-400'
-      case 'blog':
-        return 'bg-orange-400'
-      default:
-        return 'bg-gray-400'
-    }
+const getTypeColor = (type: string) => {
+  switch (type) {
+    case 'deal':
+      return 'bg-accent-yellow'
+    case 'startup':
+      return 'bg-primary'
+    case 'idea':
+      return 'bg-yellow-400'
+    case 'resource':
+      return 'bg-purple-400'
+    case 'blog':
+      return 'bg-orange-400'
+    default:
+      return 'bg-gray-400'
   }
+}
+
+export default function SearchResultCard({ result }: SearchResultCardProps) {
+
 
   const renderTypeSpecificInfo = () => {
     switch (result.type) {
@@ -146,8 +148,8 @@ export default function SearchResultCard({ result }: SearchResultCardProps) {
   }
 
   return (
-    <div className={`bg-white dark:bg-[#0c0c0c] border border-black/10 dark:border-white/10 shadow-sm rounded-2xl p-6 ${cardHoverClass}`}>
-      <CardHoverGlow />
+    <div className={`bg-white dark:bg-[#0c0c0c] border border-black/10 dark:border-white/10 shadow-sm rounded-2xl p-6 overflow-visible ${cardHoverClass}`}>
+      <CardHoverGlowShell className="rounded-2xl" />
       <div className="relative flex items-start gap-4">
         {/* Type Icon */}
         <div className={`size-12 ${getTypeColor(result.type)} border-2 border-black rounded-sm flex items-center justify-center flex-shrink-0`}>
@@ -176,10 +178,10 @@ export default function SearchResultCard({ result }: SearchResultCardProps) {
             </div>
             
             <div className="flex items-center gap-2">
-              <button className="p-2 border-2 border-black bg-white hover:bg-gray-100 rounded-sm transition-colors">
+              <button type="button" className="p-2 border-2 border-black bg-white hover:bg-gray-100 rounded-sm transition-colors">
                 <span className="material-symbols-outlined text-sm">bookmark</span>
               </button>
-              <button className="p-2 border-2 border-black bg-white hover:bg-gray-100 rounded-sm transition-colors">
+              <button type="button" className="p-2 border-2 border-black bg-white hover:bg-gray-100 rounded-sm transition-colors">
                 <span className="material-symbols-outlined text-sm">share</span>
               </button>
             </div>

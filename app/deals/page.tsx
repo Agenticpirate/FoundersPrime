@@ -46,8 +46,12 @@ async function getFeaturedDealsServer(): Promise<Deal[]> {
 
     if (error || !rawDeals) return []
 
-    return rawDeals
-      .map((d: any) => ({
+    const now = Date.now()
+    const featured: any[] = []
+    for (const d of rawDeals as any[]) {
+      const featuredUntil = d.featuredUntil || d.featured_until || ''
+      if (!(d.featured && featuredUntil && new Date(featuredUntil).getTime() > now)) continue
+      featured.push({
         id: d.id,
         slug: d.slug,
         title: d.title,
@@ -81,12 +85,10 @@ async function getFeaturedDealsServer(): Promise<Deal[]> {
         updatedAt: d.updatedAt || d.updated_at || '',
         sourceVerified: d.sourceVerified || d.source_verified || true,
         dataSource: d.dataSource || d.data_source || 'supabase',
-        featuredUntil: d.featuredUntil || d.featured_until || '',
-      }))
-      .filter(
-        (d) =>
-          !!(d.featured && d.featuredUntil && new Date(d.featuredUntil).getTime() > Date.now())
-      )
+        featuredUntil,
+      })
+    }
+    return featured
   } catch (e) {
     console.error('Error fetching featured deals server-side:', e)
     return []
@@ -129,7 +131,10 @@ export default async function DealsPage({
         <Header />
         <main className="relative flex-1">
           <div className="max-w-[1600px] mx-auto px-4 lg:px-6 pt-6 md:pt-8 pb-10 lg:pb-14">
-            <DealsHeader />
+            <DealsHeader
+              parentSection={{ name: 'Deals', href: '/deals' }}
+              currentSection={catLabel || 'All Deals'}
+            />
             <DealsHero />
             {catLabel && (
               <h1 className="sr-only">

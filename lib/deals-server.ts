@@ -3,6 +3,7 @@ import type { Deal } from '@/lib/deals-database'
 import { applyCatalogScope } from '@/lib/catalog-segregation'
 import { applyPopularityFlags } from '@/lib/deal-popularity'
 import { resolveDealApplicationUrl } from '@/lib/comprehensive-startup-urls'
+import { resolveDealDescription } from '@/lib/deal-description'
 
 // Server-side deal fetching from Supabase for statically-generated / ISR
 // pages (e.g. /deals/[slug]). Uses the public anon key over REST with NO
@@ -42,6 +43,14 @@ function cleanText(s: any): string {
 // Map a raw Supabase row (snake_case or camelCase) into the Deal shape the
 // detail page expects. Mirrors formatDealFromDB in app/api/deals/route.ts.
 function mapDealRow(d: any): Deal {
+  const descriptions = resolveDealDescription({
+    slug: d.slug,
+    provider: d.provider,
+    title: d.title,
+    description: cleanText(d.description),
+    shortDescription: cleanText(d.shortDescription || d.short_description || ''),
+  })
+
   return {
     id: d.id,
     slug: d.slug,
@@ -49,8 +58,8 @@ function mapDealRow(d: any): Deal {
     provider: cleanText(d.provider),
     category: d.category,
     subcategory: d.subcategory,
-    description: cleanText(d.description),
-    shortDescription: cleanText(d.shortDescription || d.short_description || ''),
+    description: descriptions.description,
+    shortDescription: descriptions.shortDescription,
     value: d.value,
     originalPrice: d.originalPrice || d.original_price || '',
     discountedPrice: d.discountedPrice || d.discounted_price || '',
@@ -122,7 +131,7 @@ export async function fetchAllDealSlugsFromDB(): Promise<string[]> {
     if (!res.ok) return []
     const rows = await res.json()
     if (!Array.isArray(rows)) return []
-    return rows.map((r: any) => r.slug).filter(Boolean)
+    return rows.flatMap((r: any) => (r.slug ? [r.slug as string] : []))
   } catch {
     return []
   }
@@ -187,7 +196,7 @@ export async function fetchDealsListForSSR(limit = 5000): Promise<Deal[]> {
 }
 
 /** Program rows from Supabase (for /programs merge). Empty when DB not configured. */
-export async function fetchProgramsListForSSR(limit = 2000): Promise<Deal[]> {
+async function fetchProgramsListForSSR(limit = 2000): Promise<Deal[]> {
   const cfg = getSupabaseRestConfig()
   if (!cfg) return []
   try {

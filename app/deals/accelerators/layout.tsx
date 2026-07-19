@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { safeJsonLd } from '@/lib/safe-json-ld'
 
 export const metadata: Metadata = {
   title: 'Startup Accelerators | Top Programs',
@@ -54,7 +55,7 @@ export default function AcceleratorsLayout({ children }: { children: React.React
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+        dangerouslySetInnerHTML={{ __html: safeJsonLd(structuredData) }}
       />
       {children}
     </>
