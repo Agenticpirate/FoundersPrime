@@ -693,6 +693,137 @@ export default function Footer() {
         </div>
       </div>
 
+      {/* ── Independent recognition ── */}
+      <section
+        aria-labelledby="footer-recognition-title"
+        className="relative mx-auto w-full max-w-[1280px] px-4 pb-6 sm:px-6 md:pb-8 lg:px-8"
+      >
+        <div className="relative overflow-hidden rounded-[1.75rem] border border-white/[0.09] bg-[#070707] shadow-[0_24px_80px_rgba(0,0,0,0.38)]">
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-x-12 top-0 h-px bg-gradient-to-r from-transparent via-accent-yellow/80 to-transparent"
+          />
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute -left-16 -top-24 h-52 w-52 rounded-full bg-accent-yellow/[0.07] blur-3xl"
+          />
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute -bottom-24 right-10 h-48 w-48 rounded-full bg-white/[0.035] blur-3xl"
+          />
+
+          <div className="relative grid gap-px bg-white/[0.06] lg:grid-cols-[minmax(0,1fr)_minmax(22rem,0.58fr)]">
+            <div className="bg-black/90 p-5 sm:p-6 lg:p-7">
+              <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
+                <span className="inline-flex items-center gap-2 rounded-full border border-accent-yellow/25 bg-accent-yellow/[0.08] px-3 py-1.5 font-mono text-[8px] font-black uppercase tracking-[0.2em] text-accent-yellow sm:text-[9px]">
+                  <span className="relative flex h-1.5 w-1.5" aria-hidden="true">
+                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent-yellow opacity-40" />
+                    <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-accent-yellow" />
+                  </span>
+                  Recognition network
+                </span>
+                <span className="font-mono text-[8px] font-bold uppercase tracking-[0.18em] text-zinc-600 sm:text-[9px]">
+                  Registry / 01
+                </span>
+              </div>
+
+              <div className="flex items-start gap-4 sm:gap-5">
+                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-accent-yellow/25 bg-accent-yellow/10 text-accent-yellow shadow-[0_0_32px_rgba(255,213,0,0.08)] sm:h-12 sm:w-12">
+                  <span
+                    className="material-symbols-outlined !text-[21px] sm:!text-[23px]"
+                    style={{ fontVariationSettings: "'FILL' 1" }}
+                    aria-hidden="true"
+                  >
+                    workspace_premium
+                  </span>
+                </span>
+                <div className="min-w-0">
+                  <p className="mb-1.5 font-mono text-[9px] font-black uppercase tracking-[0.18em] text-zinc-500">
+                    Independent recognition
+                  </p>
+                  <h2
+                    id="footer-recognition-title"
+                    className="max-w-2xl font-mono text-xl font-black uppercase leading-[1.08] tracking-[-0.025em] text-white sm:text-2xl lg:text-[1.7rem]"
+                  >
+                    Featured &amp; listed beyond our platform.
+                  </h2>
+                  <p className="mt-3 max-w-2xl text-[11.5px] leading-relaxed text-zinc-400 sm:text-[13px]">
+                    FoundrList has issued a live featured badge for FoundersPrime. Verify the recognition directly from the official badge source.
+                  </p>
+                </div>
+              </div>
+
+              <div className="mt-6 flex flex-wrap gap-2 border-t border-white/[0.06] pt-4" aria-label="Listing attributes">
+                {[
+                  ['verified', 'Live badge'],
+                  ['travel_explore', 'Independent directory'],
+                  ['open_in_new', 'Direct source'],
+                ].map(([icon, label]) => (
+                  <span
+                    key={label}
+                    className="inline-flex min-h-8 items-center gap-1.5 rounded-lg border border-white/[0.07] bg-white/[0.025] px-2.5 font-mono text-[8px] font-bold uppercase tracking-[0.1em] text-zinc-400"
+                  >
+                    <span className="material-symbols-outlined !text-[13px] text-accent-yellow/80" aria-hidden="true">
+                      {icon}
+                    </span>
+                    {label}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            <a
+              href="https://www.foundrlist.com/api/badge/foundersprime-2"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Verify the official FoundersPrime badge from FoundrList (opens in a new tab)"
+              className="group/listing relative flex min-h-[15rem] flex-col justify-between overflow-hidden bg-gradient-to-br from-zinc-950 via-[#0b0b0b] to-black p-4 no-underline transition-colors duration-300 hover:from-[#11100a] hover:to-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-3px] focus-visible:outline-accent-yellow sm:p-5 lg:min-h-0"
+            >
+              <div className="flex items-center justify-between gap-3">
+                <div>
+                  <p className="font-mono text-[8px] font-black uppercase tracking-[0.2em] text-zinc-600">
+                    Recognition source
+                  </p>
+                  <p className="mt-1 font-mono text-[10px] font-black uppercase tracking-[0.08em] text-white">
+                    FoundrList
+                  </p>
+                </div>
+                <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-400/20 bg-emerald-400/[0.07] px-2.5 py-1 font-mono text-[8px] font-black uppercase tracking-[0.12em] text-emerald-300">
+                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" aria-hidden="true" />
+                  Live
+                </span>
+              </div>
+
+              <div className="my-5 flex min-h-[6.5rem] items-center justify-center rounded-2xl border border-white/[0.09] bg-white p-4 shadow-[0_18px_50px_rgba(0,0,0,0.28)] transition-transform duration-300 group-hover/listing:-translate-y-0.5 sm:p-5">
+                <Image
+                  src="https://www.foundrlist.com/api/badge/foundersprime-2"
+                  alt="Featured on FoundrList"
+                  width={150}
+                  height={48}
+                  className="h-auto w-[170px] max-w-full object-contain sm:w-[190px]"
+                  unoptimized
+                />
+              </div>
+
+              <div className="flex items-center justify-between gap-4 border-t border-white/[0.07] pt-4">
+                <span className="min-w-0 truncate font-mono text-[8px] font-bold uppercase tracking-[0.1em] text-zinc-500 sm:text-[9px]">
+                  foundrlist.com / badge source
+                </span>
+                <span className="inline-flex shrink-0 items-center gap-1.5 font-mono text-[9px] font-black uppercase tracking-[0.12em] text-accent-yellow">
+                  Verify badge
+                  <span
+                    className="material-symbols-outlined !text-[15px] transition-transform duration-300 group-hover/listing:translate-x-0.5 group-hover/listing:-translate-y-0.5"
+                    aria-hidden="true"
+                  >
+                    north_east
+                  </span>
+                </span>
+              </div>
+            </a>
+          </div>
+        </div>
+      </section>
+
       {/* ── Giant brand wordmark — full-bleed, no boxed container ── */}
       <div className="relative w-full">
         <BrandWordmark />
