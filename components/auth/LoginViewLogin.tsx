@@ -109,7 +109,12 @@ export default function LoginViewLogin(props: LoginAuthFormsProps) {
                             onSuccess={(token) => setTurnstileToken(token)}
                             onExpire={() => setTurnstileToken(null)}
                             onError={() => setTurnstileToken(null)}
-                            options={{ theme: 'dark', size: 'flexible' }}
+                            options={{
+                              theme: 'dark',
+                              size: 'flexible',
+                              appearance: 'interaction-only',
+                              feedbackEnabled: false,
+                            }}
                           />
                         )}
                       </div>
