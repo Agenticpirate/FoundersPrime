@@ -25,10 +25,29 @@ export const metadata: Metadata = {
     canonical: 'https://www.foundersprime.com',
   },
   openGraph: {
-    title: 'FoundersPrime | Free Credits. Real Grants. Zero Dilution.',
+    title: 'FoundersPrime | Build More. Burn Less.',
     description:
-      'Access verified deals, non-dilutive grants, and startup credits worth $500K+. Built for modern founders.',
+      'Unlock up to $500K in verified startup credits, grants, and founder perks — zero dilution.',
     url: 'https://www.foundersprime.com',
+    type: 'website',
+    siteName: 'FoundersPrime',
+    images: [
+      {
+        url: 'https://www.foundersprime.com/og-image.png?v=build-more-20260722',
+        width: 1200,
+        height: 630,
+        alt: 'FoundersPrime — Build More. Burn Less. Unlock up to $500K in startup credits.',
+        type: 'image/png',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'FoundersPrime | Build More. Burn Less.',
+    description:
+      'Unlock up to $500K in verified startup credits, grants, and founder perks — zero dilution.',
+    creator: '@foundersprime',
+    images: ['https://www.foundersprime.com/og-image.png?v=build-more-20260722'],
   },
 }
 

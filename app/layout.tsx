@@ -71,7 +71,7 @@ export const metadata: Metadata = {
     siteName: 'FoundersPrime',
     images: [
       {
-        url: '/og-image.png',
+        url: 'https://www.foundersprime.com/og-image.png?v=build-more-20260722',
         width: 1200,
         height: 630,
         alt: 'FoundersPrime — Build More. Burn Less. Unlock up to $500K in startup credits.',
@@ -85,7 +85,7 @@ export const metadata: Metadata = {
     description:
       'Unlock up to $500K in startup credits, grants & founder perks — zero dilution.',
     creator: '@foundersprime',
-    images: ['/og-image.png'],
+    images: ['https://www.foundersprime.com/og-image.png?v=build-more-20260722'],
   },
   icons: {
     icon: [
