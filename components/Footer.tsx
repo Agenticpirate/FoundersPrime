@@ -772,6 +772,25 @@ export default function Footer() {
                     />
                   </a>
                 </li>
+                <li className="min-w-0 sm:col-span-2">
+                  <a
+                    href="https://www.scrolllaunch.com/products/foundersprime?utm_source=badge&utm_medium=embed&utm_campaign=foundersprime&ref=scrolllaunch"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Featured on ScrollLaunch (opens in a new tab)"
+                    className="group flex min-h-[80px] items-center justify-center overflow-hidden rounded-xl border border-black/10 bg-white p-3 no-underline shadow-[0_14px_40px_rgba(0,0,0,0.26)] transition-all duration-300 hover:-translate-y-0.5 hover:border-accent-yellow/30 hover:shadow-[0_18px_46px_rgba(0,0,0,0.34)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-yellow"
+                  >
+                    <Image
+                      src="https://www.scrolllaunch.com/api/badge/foundersprime"
+                      alt="Featured on ScrollLaunch"
+                      width={220}
+                      height={48}
+                      loading="lazy"
+                      className="h-12 w-auto max-w-full object-contain"
+                      unoptimized
+                    />
+                  </a>
+                </li>
               </ul>
             </div>
           </div>
