@@ -708,7 +708,7 @@ export default function Footer() {
             className="pointer-events-none absolute -left-20 -top-28 h-56 w-56 rounded-full bg-accent-yellow/[0.055] blur-3xl"
           />
 
-          <div className="relative grid items-stretch lg:grid-cols-[minmax(0,1fr)_18rem]">
+          <div className="relative grid items-stretch lg:grid-cols-[minmax(0,1fr)_minmax(24rem,0.72fr)]">
             <div className="flex min-h-[10.5rem] items-center p-5 sm:p-6 lg:px-8 lg:py-7">
               <div className="flex items-start gap-4 sm:gap-5">
                 <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-accent-yellow/20 bg-accent-yellow/[0.08] text-accent-yellow shadow-[0_0_28px_rgba(255,213,0,0.07)] sm:h-12 sm:w-12">
@@ -737,21 +737,42 @@ export default function Footer() {
               </div>
             </div>
 
-            <div className="relative flex min-h-[8.5rem] items-center justify-center border-t border-white/[0.07] bg-white/[0.015] p-5 sm:p-6 lg:min-h-full lg:border-l lg:border-t-0">
+            <div className="relative border-t border-white/[0.07] bg-white/[0.015] lg:border-l lg:border-t-0">
               <div
                 aria-hidden="true"
                 className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,213,0,0.045),transparent_68%)]"
               />
-              <div className="relative flex items-center justify-center rounded-xl border border-black/10 bg-white px-4 py-3.5 shadow-[0_14px_40px_rgba(0,0,0,0.26)]">
-                <Image
-                  src="https://www.foundrlist.com/api/badge/foundersprime-2"
-                  alt="Featured on FoundrList"
-                  width={150}
-                  height={48}
-                  className="h-auto w-[165px] max-w-full object-contain sm:w-[180px]"
-                  unoptimized
-                />
-              </div>
+              <ul
+                className="relative grid min-h-[8.5rem] grid-cols-1 items-center gap-3 p-4 sm:grid-cols-2 sm:p-5"
+                aria-label="Platforms featuring FoundersPrime"
+              >
+                <li className="flex min-h-[96px] min-w-0 items-center justify-center rounded-xl border border-black/10 bg-white p-3 shadow-[0_14px_40px_rgba(0,0,0,0.26)]">
+                  <Image
+                    src="https://www.foundrlist.com/api/badge/foundersprime-2"
+                    alt="Featured on FoundrList"
+                    width={150}
+                    height={48}
+                    className="h-auto w-[165px] max-w-full object-contain"
+                    unoptimized
+                  />
+                </li>
+                <li className="min-w-0">
+                  <a
+                    href="https://peerlist.io/ravitejapro/project/foundersprime"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="FoundersPrime on Peerlist (opens in a new tab)"
+                    className="group flex min-h-[96px] items-center justify-center overflow-hidden rounded-xl border border-white/[0.09] bg-[#111111] p-2.5 no-underline shadow-[0_14px_40px_rgba(0,0,0,0.26)] transition-all duration-300 hover:-translate-y-0.5 hover:border-accent-yellow/30 hover:shadow-[0_18px_46px_rgba(0,0,0,0.34)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-yellow"
+                  >
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src="https://peerlist.io/api/v1/projects/embed/PRJH9OBR8GERQEODL1A7BKNBBPKAPM?showUpvote=false&theme=dark"
+                      alt="FoundersPrime on Peerlist"
+                      className="h-[72px] w-auto max-w-full rounded-lg object-contain"
+                    />
+                  </a>
+                </li>
+              </ul>
             </div>
           </div>
         </div>
