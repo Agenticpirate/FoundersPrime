@@ -693,108 +693,128 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* ── Independent recognition ── */}
+      {/* ── Featured platforms ── */}
       <section
         aria-labelledby="footer-recognition-title"
         className="relative mx-auto w-full max-w-[1280px] px-4 pb-6 sm:px-6 md:pb-8 lg:px-8"
       >
-        <div className="relative overflow-hidden rounded-2xl border border-white/[0.08] bg-gradient-to-br from-[#0a0a0a] via-[#070707] to-black shadow-[0_20px_64px_rgba(0,0,0,0.32)]">
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-x-10 top-0 h-px bg-gradient-to-r from-transparent via-accent-yellow/60 to-transparent"
-          />
+        <m.div
+          initial={{ opacity: 0, y: 18 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.25 }}
+          transition={{ duration: 0.6, ease: premiumEase }}
+          className="footer-recognition-motion relative overflow-hidden rounded-2xl border border-white/[0.08] bg-gradient-to-br from-[#0a0a0a] via-[#070707] to-black shadow-[0_20px_64px_rgba(0,0,0,0.32)]"
+        >
           <div
             aria-hidden="true"
             className="pointer-events-none absolute -left-20 -top-28 h-56 w-56 rounded-full bg-accent-yellow/[0.055] blur-3xl"
           />
+          <m.div
+            aria-hidden="true"
+            initial={{ x: '-180%' }}
+            animate={{ x: '900%' }}
+            transition={{ duration: 5.8, repeat: Infinity, repeatDelay: 1.2, ease: 'easeInOut' }}
+            className="footer-recognition-sweep pointer-events-none absolute left-0 top-0 h-px w-40 bg-gradient-to-r from-transparent via-accent-yellow/80 to-transparent"
+          />
 
-          <div className="relative grid items-stretch lg:grid-cols-[minmax(0,1fr)_minmax(24rem,0.72fr)]">
-            <div className="flex min-h-[10.5rem] items-center p-5 sm:p-6 lg:px-8 lg:py-7">
-              <div className="flex items-start gap-4 sm:gap-5">
-                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-accent-yellow/20 bg-accent-yellow/[0.08] text-accent-yellow shadow-[0_0_28px_rgba(255,213,0,0.07)] sm:h-12 sm:w-12">
-                  <span
-                    className="material-symbols-outlined !text-[21px] sm:!text-[23px]"
-                    style={{ fontVariationSettings: "'FILL' 1" }}
-                    aria-hidden="true"
-                  >
-                    workspace_premium
-                  </span>
+          <div className="relative flex flex-col gap-4 p-4 sm:p-5 lg:flex-row lg:items-center lg:gap-6">
+            <m.div
+              initial={{ opacity: 0, x: -12 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, amount: 0.5 }}
+              transition={{ duration: 0.5, delay: 0.08, ease: premiumEase }}
+              className="footer-recognition-motion flex shrink-0 items-center gap-3 lg:w-[17rem]"
+            >
+              <span className="relative flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-accent-yellow/20 bg-accent-yellow/[0.08] text-accent-yellow shadow-[0_0_28px_rgba(255,213,0,0.07)] motion-safe:animate-pulse">
+                <span
+                  className="material-symbols-outlined !text-[21px]"
+                  style={{ fontVariationSettings: "'FILL' 1" }}
+                  aria-hidden="true"
+                >
+                  workspace_premium
                 </span>
-                <div className="min-w-0 pt-0.5">
-                  <p className="font-mono text-[9px] font-black uppercase tracking-[0.2em] text-accent-yellow/80">
-                    Independent recognition
-                  </p>
-                  <h2
-                    id="footer-recognition-title"
-                    className="mt-2 max-w-2xl font-mono text-lg font-black uppercase leading-tight tracking-[-0.02em] text-white sm:text-xl lg:text-2xl"
-                  >
-                    Featured &amp; listed beyond our platform.
-                  </h2>
-                  <p className="mt-2.5 max-w-xl text-[11.5px] leading-relaxed text-zinc-400 sm:text-[13px]">
-                    Recognized by independent founder communities helping builders discover products worth knowing.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="relative border-t border-white/[0.07] bg-white/[0.015] lg:border-l lg:border-t-0">
-              <div
-                aria-hidden="true"
-                className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,213,0,0.045),transparent_68%)]"
-              />
-              <ul
-                className="relative grid min-h-[8.5rem] grid-cols-1 items-center gap-3 p-4 sm:grid-cols-2 sm:p-5"
-                aria-label="Platforms featuring FoundersPrime"
+              </span>
+              <h2
+                id="footer-recognition-title"
+                className="max-w-[13rem] font-mono text-sm font-black uppercase leading-snug tracking-[0.08em] text-white sm:text-base"
               >
-                <li className="flex min-h-[96px] min-w-0 items-center justify-center rounded-xl border border-black/10 bg-white p-3 shadow-[0_14px_40px_rgba(0,0,0,0.26)]">
+                Featured across founder platforms
+              </h2>
+            </m.div>
+
+            <ul
+              className="grid flex-1 grid-cols-1 gap-3 sm:grid-cols-3"
+              aria-label="Platforms featuring FoundersPrime"
+            >
+              <m.li
+                initial={{ opacity: 0, y: 14, scale: 0.97 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                whileHover={{ y: -4, scale: 1.012, transition: { duration: 0.2 } }}
+                viewport={{ once: true, amount: 0.4 }}
+                transition={{ duration: 0.48, delay: 0.14, ease: premiumEase }}
+                className="footer-recognition-motion flex min-h-[96px] min-w-0 items-center justify-center rounded-xl border border-black/10 bg-white p-3 shadow-[0_14px_40px_rgba(0,0,0,0.26)]"
+              >
+                <Image
+                  src="https://www.foundrlist.com/api/badge/foundersprime-2"
+                  alt="Featured on FoundrList"
+                  width={150}
+                  height={48}
+                  className="h-auto w-[165px] max-w-full object-contain"
+                  unoptimized
+                />
+              </m.li>
+              <m.li
+                initial={{ opacity: 0, y: 14, scale: 0.97 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                whileHover={{ y: -4, scale: 1.012, transition: { duration: 0.2 } }}
+                viewport={{ once: true, amount: 0.4 }}
+                transition={{ duration: 0.48, delay: 0.23, ease: premiumEase }}
+                className="footer-recognition-motion min-w-0"
+              >
+                <a
+                  href="https://peerlist.io/ravitejapro/project/foundersprime"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="FoundersPrime on Peerlist (opens in a new tab)"
+                  className="group flex min-h-[96px] h-full items-center justify-center overflow-hidden rounded-xl border border-white/[0.09] bg-[#111111] p-2.5 no-underline shadow-[0_14px_40px_rgba(0,0,0,0.26)] transition-[border-color,box-shadow] duration-300 hover:border-accent-yellow/30 hover:shadow-[0_18px_46px_rgba(0,0,0,0.34)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-yellow"
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src="https://peerlist.io/api/v1/projects/embed/PRJH9OBR8GERQEODL1A7BKNBBPKAPM?showUpvote=false&theme=dark"
+                    alt="FoundersPrime on Peerlist"
+                    className="h-[72px] w-auto max-w-full rounded-lg object-contain"
+                  />
+                </a>
+              </m.li>
+              <m.li
+                initial={{ opacity: 0, y: 14, scale: 0.97 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                whileHover={{ y: -4, scale: 1.012, transition: { duration: 0.2 } }}
+                viewport={{ once: true, amount: 0.4 }}
+                transition={{ duration: 0.48, delay: 0.32, ease: premiumEase }}
+                className="footer-recognition-motion min-w-0"
+              >
+                <a
+                  href="https://www.scrolllaunch.com/products/foundersprime?utm_source=badge&utm_medium=embed&utm_campaign=foundersprime&ref=scrolllaunch"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Featured on ScrollLaunch (opens in a new tab)"
+                  className="group flex min-h-[96px] h-full items-center justify-center overflow-hidden rounded-xl border border-black/10 bg-white p-3 no-underline shadow-[0_14px_40px_rgba(0,0,0,0.26)] transition-[border-color,box-shadow] duration-300 hover:border-accent-yellow/30 hover:shadow-[0_18px_46px_rgba(0,0,0,0.34)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-yellow"
+                >
                   <Image
-                    src="https://www.foundrlist.com/api/badge/foundersprime-2"
-                    alt="Featured on FoundrList"
-                    width={150}
+                    src="https://www.scrolllaunch.com/api/badge/foundersprime"
+                    alt="Featured on ScrollLaunch"
+                    width={220}
                     height={48}
-                    className="h-auto w-[165px] max-w-full object-contain"
+                    loading="lazy"
+                    className="h-12 w-auto max-w-full object-contain"
                     unoptimized
                   />
-                </li>
-                <li className="min-w-0">
-                  <a
-                    href="https://peerlist.io/ravitejapro/project/foundersprime"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="FoundersPrime on Peerlist (opens in a new tab)"
-                    className="group flex min-h-[96px] items-center justify-center overflow-hidden rounded-xl border border-white/[0.09] bg-[#111111] p-2.5 no-underline shadow-[0_14px_40px_rgba(0,0,0,0.26)] transition-all duration-300 hover:-translate-y-0.5 hover:border-accent-yellow/30 hover:shadow-[0_18px_46px_rgba(0,0,0,0.34)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-yellow"
-                  >
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src="https://peerlist.io/api/v1/projects/embed/PRJH9OBR8GERQEODL1A7BKNBBPKAPM?showUpvote=false&theme=dark"
-                      alt="FoundersPrime on Peerlist"
-                      className="h-[72px] w-auto max-w-full rounded-lg object-contain"
-                    />
-                  </a>
-                </li>
-                <li className="min-w-0 sm:col-span-2">
-                  <a
-                    href="https://www.scrolllaunch.com/products/foundersprime?utm_source=badge&utm_medium=embed&utm_campaign=foundersprime&ref=scrolllaunch"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="Featured on ScrollLaunch (opens in a new tab)"
-                    className="group flex min-h-[80px] items-center justify-center overflow-hidden rounded-xl border border-black/10 bg-white p-3 no-underline shadow-[0_14px_40px_rgba(0,0,0,0.26)] transition-all duration-300 hover:-translate-y-0.5 hover:border-accent-yellow/30 hover:shadow-[0_18px_46px_rgba(0,0,0,0.34)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-yellow"
-                  >
-                    <Image
-                      src="https://www.scrolllaunch.com/api/badge/foundersprime"
-                      alt="Featured on ScrollLaunch"
-                      width={220}
-                      height={48}
-                      loading="lazy"
-                      className="h-12 w-auto max-w-full object-contain"
-                      unoptimized
-                    />
-                  </a>
-                </li>
-              </ul>
-            </div>
+                </a>
+              </m.li>
+            </ul>
           </div>
-        </div>
+        </m.div>
       </section>
 
       {/* ── Giant brand wordmark — full-bleed, no boxed container ── */}

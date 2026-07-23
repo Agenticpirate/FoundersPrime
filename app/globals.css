@@ -1728,3 +1728,16 @@ main {
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
 }
 
+
+/* Footer recognition rail — keep Framer reveals accessible for reduced-motion users. */
+@media (prefers-reduced-motion: reduce) {
+  .footer-recognition-motion {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .footer-recognition-sweep {
+    display: none !important;
+  }
+}
