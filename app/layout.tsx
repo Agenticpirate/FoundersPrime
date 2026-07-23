@@ -115,16 +115,6 @@ const jsonLd = {
     'https://twitter.com/foundersprime',
     'https://www.crunchbase.com/organization/foundersprime'
   ],
-  founder: {
-    '@type': 'Person',
-    name: 'Ravi Teja',
-    jobTitle: 'Founder & CEO',
-    url: 'https://www.foundersprime.com/about',
-    sameAs: [
-      'https://www.linkedin.com/in/raviteja',
-      'https://twitter.com/foundersprime'
-    ]
-  },
   areaServed: [
     {
       '@type': 'Country',
