@@ -717,13 +717,13 @@ export default function Footer() {
             className="footer-recognition-sweep pointer-events-none absolute left-0 top-0 h-px w-40 bg-gradient-to-r from-transparent via-accent-yellow/80 to-transparent"
           />
 
-          <div className="relative flex flex-col gap-4 p-4 sm:p-5 lg:flex-row lg:items-center lg:gap-6">
+          <div className="relative flex flex-col gap-4 p-4 sm:p-5">
             <m.div
               initial={{ opacity: 0, x: -12 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, amount: 0.5 }}
               transition={{ duration: 0.5, delay: 0.08, ease: premiumEase }}
-              className="footer-recognition-motion flex shrink-0 items-center gap-3 lg:w-[17rem]"
+              className="footer-recognition-motion flex shrink-0 items-center gap-3"
             >
               <span className="relative flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-accent-yellow/20 bg-accent-yellow/[0.08] text-accent-yellow shadow-[0_0_28px_rgba(255,213,0,0.07)] motion-safe:animate-pulse">
                 <span
@@ -736,14 +736,14 @@ export default function Footer() {
               </span>
               <h2
                 id="footer-recognition-title"
-                className="max-w-[13rem] font-mono text-sm font-black uppercase leading-snug tracking-[0.08em] text-white sm:text-base"
+                className="max-w-[13rem] font-mono text-sm font-black uppercase leading-snug tracking-[0.08em] text-white sm:max-w-none sm:text-base"
               >
                 Featured across founder platforms
               </h2>
             </m.div>
 
             <ul
-              className="grid flex-1 grid-cols-1 gap-3 sm:grid-cols-3"
+              className="grid flex-1 grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-5"
               aria-label="Platforms featuring FoundersPrime"
             >
               <m.li
@@ -808,6 +808,58 @@ export default function Footer() {
                     height={48}
                     loading="lazy"
                     className="h-12 w-auto max-w-full object-contain"
+                    unoptimized
+                  />
+                </a>
+              </m.li>
+              <m.li
+                initial={{ opacity: 0, y: 14, scale: 0.97 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                whileHover={{ y: -4, scale: 1.012, transition: { duration: 0.2 } }}
+                viewport={{ once: true, amount: 0.4 }}
+                transition={{ duration: 0.48, delay: 0.41, ease: premiumEase }}
+                className="footer-recognition-motion min-w-0"
+              >
+                <a
+                  href="https://index.dodopayments.com/foundersprime?utm_source=index&utm_medium=badge&utm_campaign=embed&utm_content=tool-foundersprime"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Featured on Index by Dodo Payments (opens in a new tab)"
+                  className="group flex min-h-[96px] h-full items-center justify-center overflow-hidden rounded-xl border border-white/[0.09] bg-[#090909] p-3 no-underline shadow-[0_14px_40px_rgba(0,0,0,0.26)] transition-[border-color,box-shadow] duration-300 hover:border-[#C6FE1E]/40 hover:shadow-[0_18px_46px_rgba(0,0,0,0.34)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C6FE1E]"
+                >
+                  <Image
+                    src="https://index.dodopayments.com/foundersprime/badge.svg?theme=dark&width=250&height=50"
+                    alt="Featured on Index by Dodo Payments"
+                    width={250}
+                    height={50}
+                    loading="lazy"
+                    className="h-[50px] w-auto max-w-full object-contain"
+                    unoptimized
+                  />
+                </a>
+              </m.li>
+              <m.li
+                initial={{ opacity: 0, y: 14, scale: 0.97 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                whileHover={{ y: -4, scale: 1.012, transition: { duration: 0.2 } }}
+                viewport={{ once: true, amount: 0.4 }}
+                transition={{ duration: 0.48, delay: 0.5, ease: premiumEase }}
+                className="footer-recognition-motion min-w-0"
+              >
+                <a
+                  href="https://nicklaunches.com/products/foundersprime/?utm_source=foundersprime.com&utm_medium=badge&utm_campaign=featured"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="FoundersPrime on Nick Launches (opens in a new tab)"
+                  className="group flex min-h-[96px] h-full items-center justify-center overflow-hidden rounded-xl border border-white/[0.09] bg-[#090909] p-3 no-underline shadow-[0_14px_40px_rgba(0,0,0,0.26)] transition-[border-color,box-shadow] duration-300 hover:border-accent-yellow/30 hover:shadow-[0_18px_46px_rgba(0,0,0,0.34)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-yellow"
+                >
+                  <Image
+                    src="https://nicklaunches.com/badges/featured-dark.png"
+                    alt="FoundersPrime on Nick Launches"
+                    width={244}
+                    height={56}
+                    loading="lazy"
+                    className="h-14 w-auto max-w-full object-contain"
                     unoptimized
                   />
                 </a>
