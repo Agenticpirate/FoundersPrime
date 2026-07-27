@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import DodoPayments from 'dodopayments';
 import { createClient as createServiceClient } from '@supabase/supabase-js';
 import { getPlanByProductId, getFeaturedPlanConfig } from '@/lib/featured-plans';
+import { sendWelcomeEmail, type MembershipPlan } from '@/lib/lifecycle-emails';
 
 const client = process.env.DODO_PAYMENTS_API_KEY
   ? new DodoPayments({
@@ -13,7 +14,7 @@ const client = process.env.DODO_PAYMENTS_API_KEY
 const WEBHOOK_SECRET = process.env.DODO_PAYMENTS_WEBHOOK_SECRET;
 
 // Map Dodo Product IDs → our plan names
-const PRODUCT_TO_PLAN: Record<string, 'nextfounder' | 'founder' | 'legend'> = {
+const PRODUCT_TO_PLAN: Record<string, MembershipPlan> = {
   [process.env.DODO_PRODUCT_NEXTFOUNDER_YEARLY || process.env.DODO_PRODUCT_CAMPUS_MONTHLY || process.env.DODO_PRODUCT_EXPLORER_MONTHLY || 'pdt_0NYGgiPYXbfSQSTu2YZVA']: 'nextfounder',
   [process.env.DODO_PRODUCT_FOUNDER_YEARLY     || 'pdt_0NYGhiHbaHo141y9EXBl7']: 'founder',
   [process.env.DODO_PRODUCT_LEGEND_LIFETIME    || 'pdt_0NYGi3cj7tCz581sqfnWw']: 'legend',
@@ -105,6 +106,13 @@ async function activateFeaturedListing(data: any, durationDays: number) {
   }
 }
 
+interface ResolvedAuthUser {
+  id: string
+  email?: string
+  userMetadata: Record<string, unknown>
+  appMetadata: Record<string, unknown>
+}
+
 /**
  * Resolve a Supabase auth user for webhook activation.
  * Prefer explicit user_id from checkout metadata; fall back to email (case-insensitive).
@@ -114,17 +122,29 @@ async function activateFeaturedListing(data: any, durationDays: number) {
 async function resolveAuthUser(opts: {
   userId?: string | null
   email?: string | null
-}): Promise<{ id: string; email?: string } | null> {
+}): Promise<ResolvedAuthUser | null> {
   const supabase = getServiceRoleClient()
   if (!supabase) {
     console.error('⚠️ activatePlan: SUPABASE_SERVICE_ROLE_KEY not configured')
     return null
   }
 
+  const resolvedUser = (user: {
+    id: string
+    email?: string
+    user_metadata?: Record<string, unknown>
+    app_metadata?: Record<string, unknown>
+  }): ResolvedAuthUser => ({
+    id: user.id,
+    email: user.email || undefined,
+    userMetadata: user.user_metadata || {},
+    appMetadata: user.app_metadata || {},
+  })
+
   if (opts.userId) {
     const { data, error } = await supabase.auth.admin.getUserById(opts.userId)
     if (!error && data?.user) {
-      return { id: data.user.id, email: data.user.email || undefined }
+      return resolvedUser(data.user)
     }
     console.warn(`⚠️ getUserById failed for ${opts.userId}:`, error?.message)
   }
@@ -143,7 +163,7 @@ async function resolveAuthUser(opts: {
     }
     const batch = data?.users || []
     const hit = batch.find((u) => String(u.email || '').toLowerCase().trim() === email)
-    if (hit) return { id: hit.id, email: hit.email || undefined }
+    if (hit) return resolvedUser(hit)
     if (batch.length < perPage) break
     page += 1
   }
@@ -162,11 +182,16 @@ async function resolveAuthUser(opts: {
       )
       if (res.ok) {
         const body = await res.json()
-        const users: any[] = Array.isArray(body?.users) ? body.users : []
+        const users: Array<{
+          id: string
+          email?: string
+          user_metadata?: Record<string, unknown>
+          app_metadata?: Record<string, unknown>
+        }> = Array.isArray(body?.users) ? body.users : []
         const hit = users.find(
           (u) => String(u.email || '').toLowerCase().trim() === email
         )
-        if (hit) return { id: hit.id, email: hit.email || undefined }
+        if (hit) return resolvedUser(hit)
       }
     }
   } catch (e) {
@@ -175,6 +200,97 @@ async function resolveAuthUser(opts: {
 
   console.warn(`⚠️ No Supabase user found for email: ${email}`)
   return null
+}
+
+const WELCOME_EMAIL_SENT_AT = 'foundersprime_welcome_email_sent_at'
+const WELCOME_EMAIL_PLAN = 'foundersprime_welcome_email_plan'
+const WELCOME_EMAIL_PENDING_AT = 'foundersprime_welcome_email_pending_at'
+const WELCOME_EMAIL_FAILED_AT = 'foundersprime_welcome_email_failed_at'
+
+class RetryableWebhookError extends Error {}
+
+function firstNameFromMetadata(metadata: Record<string, unknown>): string | null {
+  const value = metadata.full_name || metadata.name || metadata.display_name
+  return typeof value === 'string' && value.trim() ? value.trim() : null
+}
+
+async function deliverWelcomeEmail({
+  supabase,
+  user,
+  plan,
+}: {
+  supabase: NonNullable<ReturnType<typeof getServiceRoleClient>>
+  user: ResolvedAuthUser
+  plan: MembershipPlan
+}) {
+  if (user.appMetadata[WELCOME_EMAIL_SENT_AT]) {
+    console.log(`ℹ️ Welcome email already recorded for user ${user.id}`)
+    return
+  }
+  if (!user.email) {
+    console.warn(`⚠️ Welcome email skipped — user ${user.id} has no email address`)
+    return
+  }
+
+  const delivery = await sendWelcomeEmail({
+    userId: user.id,
+    toEmail: user.email,
+    firstName: firstNameFromMetadata(user.userMetadata),
+    plan,
+  })
+
+  if (delivery.status === 'not_configured') {
+    const { error } = await supabase.auth.admin.updateUserById(user.id, {
+      app_metadata: {
+        ...user.appMetadata,
+        [WELCOME_EMAIL_PENDING_AT]:
+          user.appMetadata[WELCOME_EMAIL_PENDING_AT] || new Date().toISOString(),
+        [WELCOME_EMAIL_PLAN]: plan,
+      },
+    })
+    if (error) {
+      console.error(`Welcome email pending marker failed for user ${user.id}:`, error.message)
+    }
+    console.warn(`⚠️ Welcome email pending for user ${user.id}: ${delivery.error}`)
+    return
+  }
+  if (delivery.status === 'failed') {
+    if (delivery.retryable) {
+      throw new RetryableWebhookError(
+        `Welcome email delivery failed for user ${user.id}: ${delivery.error}`
+      )
+    }
+
+    const { error } = await supabase.auth.admin.updateUserById(user.id, {
+      app_metadata: {
+        ...user.appMetadata,
+        [WELCOME_EMAIL_FAILED_AT]: new Date().toISOString(),
+        [WELCOME_EMAIL_PLAN]: plan,
+      },
+    })
+    if (error) {
+      console.error(`Welcome email failure marker failed for user ${user.id}:`, error.message)
+    }
+    console.error(`Welcome email permanently rejected for user ${user.id}: ${delivery.error}`)
+    return
+  }
+
+  const { error } = await supabase.auth.admin.updateUserById(user.id, {
+    app_metadata: {
+      ...user.appMetadata,
+      [WELCOME_EMAIL_SENT_AT]: new Date().toISOString(),
+      [WELCOME_EMAIL_PLAN]: plan,
+      [WELCOME_EMAIL_PENDING_AT]: null,
+      [WELCOME_EMAIL_FAILED_AT]: null,
+    },
+  })
+  if (error) {
+    throw new RetryableWebhookError(
+      `Welcome email sent but delivery marker failed for user ${user.id}: ${error.message}`
+    )
+  }
+
+  console.log(`✉️ Welcome email sent to ${user.email} (${delivery.id || 'no provider id'})`)
 }
 
 // Activate / update a user's subscription in Supabase using DELETE + INSERT
@@ -187,14 +303,16 @@ async function activatePlan({
   dodoSubscriptionId,
   dodoCustomerId,
   amountCents,
+  sendWelcome = false,
 }: {
   email?: string | null
   userId?: string | null
-  plan: 'nextfounder' | 'founder' | 'legend'
+  plan: MembershipPlan
   periodEnd?: string | null
   dodoSubscriptionId?: string | null
   dodoCustomerId?: string | null
   amountCents?: number | null
+  sendWelcome?: boolean
 }) {
   const supabase = getServiceRoleClient()
   if (!supabase) {
@@ -205,6 +323,61 @@ async function activatePlan({
   const user = await resolveAuthUser({ userId, email })
   if (!user) return
 
+  // Webhook retries and payment.succeeded + subscription.active may describe
+  // the same Dodo subscription. Refresh that active row instead of creating
+  // cancelled history entries on every delivery attempt.
+  const { data: existingActive, error: lookupError } = await supabase
+    .from('user_subscriptions')
+    .select('id, plan, stripe_subscription_id')
+    .eq('user_id', user.id)
+    .eq('status', 'active')
+    .order('created_at', { ascending: false })
+    .limit(1)
+    .maybeSingle()
+
+  if (lookupError) {
+    console.warn('Active subscription lookup failed; continuing activation:', lookupError.message)
+  }
+
+  const sameActivation =
+    existingActive?.plan === plan &&
+    (dodoSubscriptionId
+      ? existingActive.stripe_subscription_id === dodoSubscriptionId
+      : plan === 'legend' && !existingActive.stripe_subscription_id)
+
+  if (sameActivation) {
+    const refreshRow: Record<string, unknown> = {
+      period_end: periodEnd || null,
+      stripe_customer_id: dodoCustomerId || null,
+      updated_at: new Date().toISOString(),
+    }
+    if (typeof amountCents === 'number') refreshRow.amount_cents = amountCents
+
+    let { error: refreshError } = await supabase
+      .from('user_subscriptions')
+      .update(refreshRow)
+      .eq('id', existingActive.id)
+
+    if (refreshError && /amount_cents/i.test(refreshError.message || '')) {
+      delete refreshRow.amount_cents
+      ;({ error: refreshError } = await supabase
+        .from('user_subscriptions')
+        .update(refreshRow)
+        .eq('id', existingActive.id))
+    }
+
+    if (refreshError) {
+      console.warn('Active subscription refresh failed:', refreshError.message)
+    } else {
+      console.log(`✅ Existing plan "${plan}" refreshed for user: ${user.email || email || user.id}`)
+    }
+
+    if (sendWelcome) {
+      await deliverWelcomeEmail({ supabase, user, plan })
+    }
+    return
+  }
+
   // Soft-cancel any existing active rows (keep history), then insert the new active plan
   await supabase
     .from('user_subscriptions')
@@ -212,7 +385,7 @@ async function activatePlan({
     .eq('user_id', user.id)
     .eq('status', 'active')
 
-  const baseRow: Record<string, any> = {
+  const baseRow: Record<string, unknown> = {
     user_id: user.id,
     plan,
     status: 'active',
@@ -225,7 +398,7 @@ async function activatePlan({
   }
 
   // Store real charged amount when the column exists
-  let insertError = null as any
+  let insertError: { message?: string } | null = null
   if (typeof amountCents === 'number') {
     ;({ error: insertError } = await supabase
       .from('user_subscriptions')
@@ -239,10 +412,17 @@ async function activatePlan({
 
   if (insertError) {
     console.error('Error inserting subscription:', insertError)
-  } else {
-    console.log(
-      `✅ Plan "${plan}" activated for user: ${user.email || email || user.id}`
-    )
+    return
+  }
+
+  console.log(
+    `✅ Plan "${plan}" activated for user: ${user.email || email || user.id}`
+  )
+
+  // Transactional welcome is only requested by initial-purchase event handlers.
+  // It runs after activation and is deduplicated by Auth app metadata plus Resend.
+  if (sendWelcome) {
+    await deliverWelcomeEmail({ supabase, user, plan })
   }
 }
 
@@ -371,6 +551,7 @@ export async function POST(request: Request) {
             userId,
             plan,
             periodEnd: plan === 'legend' ? null : (data?.next_billing_date || null),
+            dodoSubscriptionId: data?.subscription_id || null,
             dodoCustomerId: data?.customer?.customer_id,
             amountCents:
               typeof data?.total_amount === 'number'
@@ -378,6 +559,7 @@ export async function POST(request: Request) {
                 : typeof data?.recurring_pre_tax_amount === 'number'
                   ? data.recurring_pre_tax_amount
                   : null,
+            sendWelcome: !data?.subscription_id,
           });
         }
         break;
@@ -392,7 +574,7 @@ export async function POST(request: Request) {
         const plan =
           (productId ? PRODUCT_TO_PLAN[productId] : undefined) ||
           (planFromMeta && ['nextfounder', 'founder', 'legend'].includes(planFromMeta)
-            ? (planFromMeta as 'nextfounder' | 'founder' | 'legend')
+            ? (planFromMeta as MembershipPlan)
             : undefined);
 
         if (!plan && productId) {
@@ -408,6 +590,7 @@ export async function POST(request: Request) {
             dodoSubscriptionId: data?.subscription_id,
             dodoCustomerId: data?.customer?.customer_id,
             amountCents: typeof data?.recurring_pre_tax_amount === 'number' ? data.recurring_pre_tax_amount : null,
+            sendWelcome: event.type === 'subscription.active',
           });
         }
         break;
@@ -463,6 +646,10 @@ export async function POST(request: Request) {
     return NextResponse.json({ received: true });
   } catch (error) {
     console.error('❌ Webhook error:', error);
-    return NextResponse.json({ error: 'Webhook processing failed' }, { status: 400 });
+    const retryable = error instanceof RetryableWebhookError;
+    return NextResponse.json(
+      { error: retryable ? 'Webhook side effect failed; retry required' : 'Webhook processing failed' },
+      { status: retryable ? 500 : 400 }
+    );
   }
 }
