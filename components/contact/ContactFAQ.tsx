@@ -3,12 +3,12 @@
 import Link from 'next/link'
 import { useMemo, useState, type ReactNode } from 'react'
 
-type FaqCategory = 'all' | 'deals' | 'membership' | 'billing' | 'support'
+type FaqCategory = 'deals' | 'membership' | 'billing' | 'support'
 
 type FaqItem = {
   q: string
   a: ReactNode
-  category: Exclude<FaqCategory, 'all'>
+  category: FaqCategory
   icon: string
 }
 
@@ -190,7 +190,6 @@ const FAQS: FaqItem[] = [
 ]
 
 const CATEGORIES: { id: FaqCategory; label: string; icon: string }[] = [
-  { id: 'all', label: 'All', icon: 'apps' },
   { id: 'deals', label: 'Deals', icon: 'local_offer' },
   { id: 'membership', label: 'Membership', icon: 'workspace_premium' },
   { id: 'billing', label: 'Billing', icon: 'credit_card' },
@@ -199,15 +198,13 @@ const CATEGORIES: { id: FaqCategory; label: string; icon: string }[] = [
 
 export default function ContactFAQ() {
   const [openKey, setOpenKey] = useState<string | null>(FAQS[0]?.q ?? null)
-  const [category, setCategory] = useState<FaqCategory>('all')
+  const [category, setCategory] = useState<FaqCategory>('deals')
   const [query, setQuery] = useState('')
-  const [showAllFaqs, setShowAllFaqs] = useState(false)
-  const MOBILE_FAQ_PREVIEW = 4
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase()
     return FAQS.filter((faq) => {
-      if (category !== 'all' && faq.category !== category) return false
+      if (faq.category !== category) return false
       if (!q) return true
       const text =
         faq.q.toLowerCase() +
@@ -271,13 +268,15 @@ export default function ContactFAQ() {
       <div className="relative mb-5 flex flex-wrap gap-1.5">
         {CATEGORIES.map((c) => {
           const active = category === c.id
-          const count =
-            c.id === 'all' ? FAQS.length : FAQS.filter((f) => f.category === c.id).length
+          const count = FAQS.filter((f) => f.category === c.id).length
           return (
             <button
               key={c.id}
               type="button"
-              onClick={() => setCategory(c.id)}
+              onClick={() => {
+                setCategory(c.id)
+                setOpenKey(FAQS.find((faq) => faq.category === c.id)?.q ?? null)
+              }}
               aria-pressed={active}
               className={`inline-flex h-8 items-center gap-1.5 rounded-full border px-3 font-mono text-[10px] font-bold uppercase tracking-wide transition-colors ${
                 active
@@ -295,8 +294,8 @@ export default function ContactFAQ() {
         })}
       </div>
 
-      {/* Static accordion — mobile previews first N then “more” */}
-      <div className="relative space-y-1.5 md:space-y-2.5 max-w-3xl mx-auto md:max-w-none">
+      {/* Fixed-height accordion viewport keeps the surrounding section stable. */}
+      <div className="relative h-[430px] space-y-1.5 overflow-y-auto overscroll-contain pr-1 md:h-[520px] md:space-y-2.5 md:pr-2 max-w-3xl mx-auto md:max-w-none">
         {filtered.length === 0 ? (
           <div className="rounded-xl border border-dashed border-black/10 dark:border-white/10 bg-gray-50/50 dark:bg-white/[0.02] p-6 md:p-8 text-center">
             <p className="font-mono text-[12px] font-bold text-gray-900 dark:text-white mb-1">
@@ -309,8 +308,8 @@ export default function ContactFAQ() {
               type="button"
               onClick={() => {
                 setQuery('')
-                setCategory('all')
-                setShowAllFaqs(false)
+                setCategory('deals')
+                setOpenKey(FAQS.find((faq) => faq.category === 'deals')?.q ?? null)
               }}
               className="inline-flex h-9 items-center gap-1.5 rounded-xl bg-accent-yellow text-black font-mono text-[10px] font-black uppercase tracking-wide px-4 hover:bg-amber-300 transition-colors"
             >
@@ -318,9 +317,8 @@ export default function ContactFAQ() {
             </button>
           </div>
         ) : (
-          filtered.map((faq, idx) => {
+          filtered.map((faq) => {
             const open = openKey === faq.q
-            const isMobileHidden = !showAllFaqs && !query.trim() && idx >= MOBILE_FAQ_PREVIEW
             return (
               <div
                 key={faq.q}
@@ -328,8 +326,6 @@ export default function ContactFAQ() {
                   if (openKey === faq.q) setOpenKey(null)
                 }}
                 className={`rounded-lg md:rounded-xl border transition-colors ${
-                  isMobileHidden ? 'hidden md:block' : ''
-                } ${
                   open
                     ? 'border-accent-yellow/40 bg-accent-yellow/[0.04] dark:bg-accent-yellow/[0.05]'
                     : 'border-black/[0.06] dark:border-white/[0.08] bg-gray-50/60 dark:bg-white/[0.02] hover:border-accent-yellow/25'
@@ -385,24 +381,6 @@ export default function ContactFAQ() {
           })
         )}
       </div>
-
-      {filtered.length > MOBILE_FAQ_PREVIEW && !query.trim() && (
-        <button
-          type="button"
-          onClick={() => {
-            setShowAllFaqs((v) => !v)
-            if (showAllFaqs) setOpenKey(null)
-          }}
-          className="md:hidden mt-2.5 w-full inline-flex items-center justify-center gap-1.5 h-9 rounded-lg border border-black/[0.08] dark:border-white/10 bg-gray-50 dark:bg-white/[0.03] font-mono text-[10px] font-black uppercase tracking-wide text-gray-700 dark:text-gray-200 active:border-accent-yellow/40"
-        >
-          <span className="material-symbols-outlined !text-[16px] text-accent-yellow">
-            {showAllFaqs ? 'expand_less' : 'expand_more'}
-          </span>
-          {showAllFaqs
-            ? 'Show fewer questions'
-            : `+${filtered.length - MOBILE_FAQ_PREVIEW} more questions`}
-        </button>
-      )}
 
       {/* Still stuck */}
       <div className="relative mt-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4 rounded-2xl border border-accent-yellow/20 bg-accent-yellow/[0.05] dark:bg-accent-yellow/[0.04] p-4 md:p-5">
