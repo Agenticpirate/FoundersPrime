@@ -293,7 +293,56 @@ async function deliverWelcomeEmail({
   console.log(`✉️ Welcome email sent to ${user.email} (${delivery.id || 'no provider id'})`)
 }
 
-// Activate / update a user's subscription in Supabase using DELETE + INSERT
+const CHECKOUT_REFERENCE_KEY = 'foundersprime_last_checkout_reference'
+const CHECKOUT_REFERENCE_PLAN = 'foundersprime_last_checkout_plan'
+const CHECKOUT_REFERENCE_ACTIVATED_AT = 'foundersprime_last_checkout_activated_at'
+
+async function recordCheckoutActivation({
+  supabase,
+  userId,
+  checkoutReference,
+  plan,
+}: {
+  supabase: NonNullable<ReturnType<typeof getServiceRoleClient>>
+  userId: string
+  checkoutReference?: string | null
+  plan: MembershipPlan
+}) {
+  if (!checkoutReference) return
+
+  // Fetch current metadata so welcome-email markers written earlier in the same
+  // delivery are preserved rather than overwritten by a stale user snapshot.
+  const { data, error: getUserError } = await supabase.auth.admin.getUserById(userId)
+  if (getUserError || !data?.user) {
+    throw new RetryableWebhookError(
+      `Checkout activation marker lookup failed for user ${userId}: ${getUserError?.message || 'user missing'}`
+    )
+  }
+
+  const appMetadata = data.user.app_metadata || {}
+  if (
+    appMetadata[CHECKOUT_REFERENCE_KEY] === checkoutReference &&
+    appMetadata[CHECKOUT_REFERENCE_PLAN] === plan
+  ) {
+    return
+  }
+
+  const { error: updateError } = await supabase.auth.admin.updateUserById(userId, {
+    app_metadata: {
+      ...appMetadata,
+      [CHECKOUT_REFERENCE_KEY]: checkoutReference,
+      [CHECKOUT_REFERENCE_PLAN]: plan,
+      [CHECKOUT_REFERENCE_ACTIVATED_AT]: new Date().toISOString(),
+    },
+  })
+  if (updateError) {
+    throw new RetryableWebhookError(
+      `Checkout activation marker failed for user ${userId}: ${updateError.message}`
+    )
+  }
+}
+
+// Activate / update a user's subscription in Supabase using soft-cancel + insert.
 // (required because ON CONFLICT doesn't work with partial unique indexes)
 async function activatePlan({
   email,
@@ -303,6 +352,7 @@ async function activatePlan({
   dodoSubscriptionId,
   dodoCustomerId,
   amountCents,
+  checkoutReference,
   sendWelcome = false,
 }: {
   email?: string | null
@@ -312,16 +362,22 @@ async function activatePlan({
   dodoSubscriptionId?: string | null
   dodoCustomerId?: string | null
   amountCents?: number | null
+  checkoutReference?: string | null
   sendWelcome?: boolean
 }) {
   const supabase = getServiceRoleClient()
   if (!supabase) {
-    console.error('⚠️ activatePlan aborted — service role not configured')
-    return
+    throw new RetryableWebhookError(
+      'Plan activation failed: SUPABASE_SERVICE_ROLE_KEY is not configured'
+    )
   }
 
   const user = await resolveAuthUser({ userId, email })
-  if (!user) return
+  if (!user) {
+    throw new RetryableWebhookError(
+      `Plan activation failed: no Supabase user matched ${userId || email || 'webhook identity'}`
+    )
+  }
 
   // Webhook retries and payment.succeeded + subscription.active may describe
   // the same Dodo subscription. Refresh that active row instead of creating
@@ -336,16 +392,22 @@ async function activatePlan({
     .maybeSingle()
 
   if (lookupError) {
-    console.warn('Active subscription lookup failed; continuing activation:', lookupError.message)
+    throw new RetryableWebhookError(
+      `Plan activation lookup failed for user ${user.id}: ${lookupError.message}`
+    )
   }
 
-  const sameActivation =
-    existingActive?.plan === plan &&
-    (dodoSubscriptionId
-      ? existingActive.stripe_subscription_id === dodoSubscriptionId
-      : plan === 'legend' && !existingActive.stripe_subscription_id)
+  const existingPlanMatches =
+    existingActive?.plan === plan ||
+    (plan === 'nextfounder' && ['explorer', 'campus'].includes(existingActive?.plan || ''))
 
-  if (sameActivation) {
+  const sameActivation =
+    existingPlanMatches &&
+    (dodoSubscriptionId
+      ? existingActive?.stripe_subscription_id === dodoSubscriptionId
+      : plan === 'legend' && !existingActive?.stripe_subscription_id)
+
+  if (sameActivation && existingActive) {
     const refreshRow: Record<string, unknown> = {
       period_end: periodEnd || null,
       stripe_customer_id: dodoCustomerId || null,
@@ -367,23 +429,37 @@ async function activatePlan({
     }
 
     if (refreshError) {
-      console.warn('Active subscription refresh failed:', refreshError.message)
-    } else {
-      console.log(`✅ Existing plan "${plan}" refreshed for user: ${user.email || email || user.id}`)
+      throw new RetryableWebhookError(
+        `Plan activation refresh failed for user ${user.id}: ${refreshError.message}`
+      )
     }
+
+    console.log(`✅ Existing plan "${plan}" refreshed for user: ${user.email || email || user.id}`)
 
     if (sendWelcome) {
       await deliverWelcomeEmail({ supabase, user, plan })
     }
+    await recordCheckoutActivation({
+      supabase,
+      userId: user.id,
+      checkoutReference,
+      plan,
+    })
     return
   }
 
-  // Soft-cancel any existing active rows (keep history), then insert the new active plan
-  await supabase
+  // Soft-cancel any existing active rows (keep history), then insert the new active plan.
+  const { error: cancelError } = await supabase
     .from('user_subscriptions')
     .update({ status: 'cancelled', updated_at: new Date().toISOString() })
     .eq('user_id', user.id)
     .eq('status', 'active')
+
+  if (cancelError) {
+    throw new RetryableWebhookError(
+      `Existing plan cancellation failed for user ${user.id}: ${cancelError.message}`
+    )
+  }
 
   const baseRow: Record<string, unknown> = {
     user_id: user.id,
@@ -397,7 +473,7 @@ async function activatePlan({
     updated_at: new Date().toISOString(),
   }
 
-  // Store real charged amount when the column exists
+  // Store real charged amount when the column exists.
   let insertError: { message?: string } | null = null
   if (typeof amountCents === 'number') {
     ;({ error: insertError } = await supabase
@@ -410,9 +486,28 @@ async function activatePlan({
     ;({ error: insertError } = await supabase.from('user_subscriptions').insert(baseRow))
   }
 
+  // Some existing deployments still constrain the former Next Founder ID to
+  // "explorer". Preserve activation until the canonical-plan migration is applied.
+  if (
+    insertError &&
+    plan === 'nextfounder' &&
+    /user_subscriptions_plan_check|violates check constraint/i.test(insertError.message || '')
+  ) {
+    const { error: legacyInsertError } = await supabase
+      .from('user_subscriptions')
+      .insert({ ...baseRow, plan: 'explorer' })
+    insertError = legacyInsertError
+    if (!legacyInsertError) {
+      console.warn(
+        `⚠️ Stored Next Founder as legacy "explorer" for user ${user.id}; apply the canonical plan migration`
+      )
+    }
+  }
+
   if (insertError) {
-    console.error('Error inserting subscription:', insertError)
-    return
+    throw new RetryableWebhookError(
+      `Plan activation insert failed for user ${user.id}: ${insertError.message || 'unknown database error'}`
+    )
   }
 
   console.log(
@@ -424,21 +519,41 @@ async function activatePlan({
   if (sendWelcome) {
     await deliverWelcomeEmail({ supabase, user, plan })
   }
+  await recordCheckoutActivation({
+    supabase,
+    userId: user.id,
+    checkoutReference,
+    plan,
+  })
 }
 
-// Cancel/deactivate a plan in Supabase
-async function deactivatePlan(email: string, userId?: string | null) {
+// Cancel/deactivate only the subscription named by the Dodo event. This keeps
+// stale cancellation events from revoking a newer replacement purchase.
+async function deactivatePlan({
+  email,
+  userId,
+  dodoSubscriptionId,
+}: {
+  email: string
+  userId?: string | null
+  dodoSubscriptionId: string
+}) {
   const supabase = getServiceRoleClient()
   if (!supabase) {
-    console.error('⚠️ deactivatePlan aborted — service role not configured')
-    return
+    throw new RetryableWebhookError(
+      'Plan deactivation failed: SUPABASE_SERVICE_ROLE_KEY is not configured'
+    )
   }
 
   const user = await resolveAuthUser({ userId, email })
-  if (!user) return
+  if (!user) {
+    throw new RetryableWebhookError(
+      `Plan deactivation failed: no Supabase user matched ${userId || email || 'webhook identity'}`
+    )
+  }
 
-  // Prefer cancel_at_period_end column; fall back if missing
-  let { error } = await supabase
+  // Prefer cancel_at_period_end column; fall back if missing.
+  let { data: deactivatedRows, error } = await supabase
     .from('user_subscriptions')
     .update({
       status: 'cancelled',
@@ -447,27 +562,47 @@ async function deactivatePlan(email: string, userId?: string | null) {
     })
     .eq('user_id', user.id)
     .eq('status', 'active')
+    .eq('stripe_subscription_id', dodoSubscriptionId)
+    .select('id')
 
   if (error && /cancel_at_period_end/i.test(error.message || '')) {
-    ;({ error } = await supabase
+    ;({ data: deactivatedRows, error } = await supabase
       .from('user_subscriptions')
       .update({ status: 'cancelled', updated_at: new Date().toISOString() })
       .eq('user_id', user.id)
-      .eq('status', 'active'))
+      .eq('status', 'active')
+      .eq('stripe_subscription_id', dodoSubscriptionId)
+      .select('id'))
   }
 
   if (error) {
-    console.error('deactivatePlan error:', error.message)
-  } else {
-    console.log(`🚫 Plan deactivated for user: ${user.email || email}`)
+    throw new RetryableWebhookError(
+      `Plan deactivation failed for user ${user.id}: ${error.message}`
+    )
   }
+
+  if (!deactivatedRows?.length) {
+    console.log(
+      `ℹ️ Ignored stale subscription deactivation ${dodoSubscriptionId} for user ${user.id}`
+    )
+    return
+  }
+
+  console.log(`🚫 Plan deactivated for user: ${user.email || email}`)
 }
 
-function extractMeta(data: any): { userId?: string | null; planFromMeta?: string | null } {
+function extractMeta(data: any): {
+  userId?: string | null
+  planFromMeta?: string | null
+  source?: string | null
+  checkoutReference?: string | null
+} {
   const meta = data?.metadata || data?.payload?.metadata || {}
   return {
     userId: meta.user_id || meta.userId || null,
     planFromMeta: meta.plan || null,
+    source: meta.source || null,
+    checkoutReference: meta.checkout_reference || meta.checkoutReference || null,
   }
 }
 
@@ -507,8 +642,55 @@ export async function POST(request: Request) {
     const event = verifyWebhookSignature(rawBody, request.headers);
 
     const data = event.data as any;
+    const eventType = event.type as string;
 
-    console.log(`📨 Dodo webhook received: ${event.type as string}`);
+    // A FoundersPrime membership webhook must never be acknowledged unless the
+    // entitlement can be resolved to both a supported plan and a user identity.
+    // Returning 500 lets Dodo retry after configuration/schema issues are fixed.
+    const activationEventTypes = [
+      'payment.succeeded',
+      'subscription.active',
+      'subscription.renewed',
+      'subscription.plan_changed',
+    ];
+    const deactivationEventTypes = [
+      'subscription.cancelled',
+      'subscription.expired',
+      'subscription.failed',
+    ];
+    const isActivationEvent = activationEventTypes.includes(eventType);
+    const isDeactivationEvent = deactivationEventTypes.includes(eventType);
+    let isFoundersPrimeMembershipEvent = false;
+
+    if (isActivationEvent || isDeactivationEvent) {
+      const productId = eventType === 'payment.succeeded'
+        ? data?.product_cart?.[0]?.product_id
+        : data?.product_id;
+      const { userId, planFromMeta, source } = extractMeta(data);
+      const metadataPlan = planFromMeta && ['nextfounder', 'founder', 'legend'].includes(planFromMeta)
+        ? planFromMeta
+        : undefined;
+      const resolvedPlan = (productId ? PRODUCT_TO_PLAN[productId] : undefined) || metadataPlan;
+      isFoundersPrimeMembershipEvent = Boolean(
+        (productId && PRODUCT_TO_PLAN[productId]) ||
+        source === 'foundersprime_checkout' ||
+        metadataPlan
+      );
+
+      if (isFoundersPrimeMembershipEvent && isActivationEvent && !resolvedPlan) {
+        throw new RetryableWebhookError(
+          `Membership plan could not be resolved for ${eventType}`
+        );
+      }
+
+      if (isFoundersPrimeMembershipEvent && !(userId || data?.customer?.email)) {
+        throw new RetryableWebhookError(
+          `Membership user identity could not be resolved for ${eventType}`
+        );
+      }
+    }
+
+    console.log(`📨 Dodo webhook received: ${eventType}`);
 
     switch (event.type as string) {
 
@@ -534,7 +716,7 @@ export async function POST(request: Request) {
 
         // Otherwise: subscription/lifetime plan activation
         const email = data?.customer?.email;
-        const { userId, planFromMeta } = extractMeta(data);
+        const { userId, planFromMeta, checkoutReference } = extractMeta(data);
         const plan =
           (productId ? PRODUCT_TO_PLAN[productId] : undefined) ||
           (planFromMeta && ['nextfounder', 'founder', 'legend'].includes(planFromMeta)
@@ -553,6 +735,7 @@ export async function POST(request: Request) {
             periodEnd: plan === 'legend' ? null : (data?.next_billing_date || null),
             dodoSubscriptionId: data?.subscription_id || null,
             dodoCustomerId: data?.customer?.customer_id,
+            checkoutReference,
             amountCents:
               typeof data?.total_amount === 'number'
                 ? data.total_amount
@@ -570,7 +753,7 @@ export async function POST(request: Request) {
       case 'subscription.renewed': {
         const email = data?.customer?.email;
         const productId = data?.product_id;
-        const { userId, planFromMeta } = extractMeta(data);
+        const { userId, planFromMeta, checkoutReference } = extractMeta(data);
         const plan =
           (productId ? PRODUCT_TO_PLAN[productId] : undefined) ||
           (planFromMeta && ['nextfounder', 'founder', 'legend'].includes(planFromMeta)
@@ -589,6 +772,7 @@ export async function POST(request: Request) {
             periodEnd: data?.next_billing_date || null,
             dodoSubscriptionId: data?.subscription_id,
             dodoCustomerId: data?.customer?.customer_id,
+            checkoutReference,
             amountCents: typeof data?.recurring_pre_tax_amount === 'number' ? data.recurring_pre_tax_amount : null,
             sendWelcome: event.type === 'subscription.active',
           });
@@ -599,7 +783,7 @@ export async function POST(request: Request) {
       case 'subscription.plan_changed': {
         const email = data?.customer?.email;
         const productId = data?.product_id;
-        const { userId, planFromMeta } = extractMeta(data);
+        const { userId, planFromMeta, checkoutReference } = extractMeta(data);
         const plan =
           (productId ? PRODUCT_TO_PLAN[productId] : undefined) ||
           (planFromMeta && ['nextfounder', 'founder', 'legend'].includes(planFromMeta)
@@ -618,6 +802,7 @@ export async function POST(request: Request) {
             periodEnd: data?.next_billing_date || null,
             dodoSubscriptionId: data?.subscription_id,
             dodoCustomerId: data?.customer?.customer_id,
+            checkoutReference,
             amountCents: typeof data?.recurring_pre_tax_amount === 'number' ? data.recurring_pre_tax_amount : null,
           });
         }
@@ -627,10 +812,25 @@ export async function POST(request: Request) {
       case 'subscription.cancelled':
       case 'subscription.expired':
       case 'subscription.failed': {
+        if (!isFoundersPrimeMembershipEvent) {
+          console.log(`ℹ️ Ignored non-membership ${eventType} event`);
+          break;
+        }
+
         const email = data?.customer?.email;
         const { userId } = extractMeta(data);
+        const dodoSubscriptionId = data?.subscription_id;
+        if (!dodoSubscriptionId) {
+          throw new RetryableWebhookError(
+            `Membership subscription ID could not be resolved for ${eventType}`
+          );
+        }
         if (email || userId) {
-          await deactivatePlan(email || '', userId);
+          await deactivatePlan({
+            email: email || '',
+            userId,
+            dodoSubscriptionId,
+          });
         }
         break;
       }

@@ -56,21 +56,23 @@ export async function POST(request: Request) {
     // Use the authenticated user's email automatically — never trust client-supplied email
     const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://www.foundersprime.com'
 
+    const checkoutReference = crypto.randomUUID();
     const sessionPayload: any = {
       product_cart: [{ product_id: productId, quantity: 1 }],
       // Route through /checkout (a client-rendered page) instead of directly to /dashboard.
       // Mobile browsers drop SameSite=Lax cookies on cross-site top-level navigations
       // from dodopayments.com back to foundersprime.com, causing session loss on /dashboard
       // which is a server-rendered page that immediately redirects to /login when no session.
-      return_url: `${appUrl}/checkout?status={status}`,
+      return_url: `${appUrl}/checkout?status={status}&plan=${encodeURIComponent(plan)}&checkout_ref=${encodeURIComponent(checkoutReference)}`,
       customer: { email: user.email },
       // Metadata is returned on Dodo webhooks so we can activate the plan even if
-      // email lookup fails (e.g. alias/casing) — admin dashboard reads user_subscriptions.
+      // email lookup fails and correlate the browser return to this exact checkout.
       metadata: {
         user_id: user.id,
         plan,
         email: user.email || '',
         source: 'foundersprime_checkout',
+        checkout_reference: checkoutReference,
       },
     };
 
