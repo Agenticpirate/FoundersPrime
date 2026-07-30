@@ -1,4 +1,5 @@
 import { sendEmail, type EmailDeliveryResult } from '@/lib/mail-service'
+import { createPreferenceToken } from '@/lib/email/preference-token'
 
 export type MembershipPlan = 'nextfounder' | 'founder' | 'legend'
 export type LifecycleUpdateKind = 'new_deal' | 'membership_offer' | 'resource'
@@ -79,6 +80,13 @@ export interface LifecycleUpdateEmailPayload {
   emailOptInAt: string
   /** Recipient-specific URL that immediately unsubscribes them from updates. */
   unsubscribeUrl: string
+  /** Recipient-specific URL for granular category control. */
+  preferencesUrl?: string
+  /**
+   * Endpoint for the List-Unsubscribe header, which mailbox providers POST to.
+   * Falls back to unsubscribeUrl when omitted.
+   */
+  oneClickUnsubscribeUrl?: string
   idempotencyKey?: string
 }
 
@@ -129,6 +137,74 @@ function greeting(firstName?: string | null): string {
   return normalized ? `Hi ${escapeHtml(normalized)},` : 'Hi Founder,'
 }
 
+/**
+ * Brand tokens, mirrored from tailwind.config.js. Email HTML cannot use utility
+ * classes, so these hex values must be kept in step with the Tailwind theme.
+ */
+const BRAND = {
+  ink: '#111111',
+  accent: '#ffd700',
+  paper: '#F4F3EF',
+  surface: '#ffffff',
+  text: '#1a1a1a',
+  muted: '#6b7280',
+  subtle: '#4b5563',
+  hairline: '#e5e7eb',
+} as const
+
+/** Absolute URL — email clients cannot resolve relative image paths. */
+function logoUrl(): string {
+  return `${appUrl()}/logo-icon.png`
+}
+
+/**
+ * Signed preference-centre link for a recipient. Returns null when no signing
+ * secret is available, in which case the email simply omits the link rather
+ * than shipping one that cannot be verified.
+ */
+export function preferencesUrlFor(userId: string): string | null {
+  const token = createPreferenceToken(userId)
+  return token ? `${appUrl()}/email-preferences?token=${encodeURIComponent(token)}` : null
+}
+
+/** Signed one-click unsubscribe link for a recipient. */
+export function unsubscribeUrlFor(userId: string): string | null {
+  const token = createPreferenceToken(userId)
+  return token
+    ? `${appUrl()}/email-preferences?token=${encodeURIComponent(token)}&action=unsubscribe`
+    : null
+}
+
+/**
+ * Endpoint used by the List-Unsubscribe header. Mailbox providers POST here
+ * directly, so it is the API route rather than the human-facing page.
+ */
+export function oneClickUnsubscribeUrlFor(userId: string): string | null {
+  const token = createPreferenceToken(userId)
+  return token
+    ? `${appUrl()}/api/email/unsubscribe?token=${encodeURIComponent(token)}`
+    : null
+}
+
+/**
+ * Header lockup matching the site: the icon tile beside the mono FOUNDERS[PRIME]
+ * wordmark with accent-yellow brackets. Built as a table so Outlook aligns it.
+ */
+function brandHeader(): string {
+  return `
+    <table role="presentation" cellspacing="0" cellpadding="0" border="0">
+      <tr>
+        <td style="padding-right:12px;vertical-align:middle;">
+          <img src="${logoUrl()}" width="36" height="36" alt="FoundersPrime"
+               style="display:block;width:36px;height:36px;border:0;outline:none;text-decoration:none;">
+        </td>
+        <td style="vertical-align:middle;">
+          <span style="font-family:'IBM Plex Mono',Consolas,Menlo,monospace;font-size:17px;font-weight:900;letter-spacing:1px;color:${BRAND.surface};text-transform:uppercase;">FOUNDERS<span style="color:${BRAND.accent};">[</span>PRIME<span style="color:${BRAND.accent};">]</span></span>
+        </td>
+      </tr>
+    </table>`
+}
+
 function emailShell({
   preheader,
   body,
@@ -143,22 +219,34 @@ function emailShell({
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light only">
     <title>${escapeHtml(preheader)}</title>
   </head>
-  <body style="margin:0;background:#f3f4f6;color:#111827;font-family:Arial,Helvetica,sans-serif;">
+  <body style="margin:0;padding:0;background:${BRAND.paper};color:${BRAND.text};font-family:'IBM Plex Sans',Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased;">
     <div style="display:none;max-height:0;overflow:hidden;opacity:0;">${escapeHtml(preheader)}</div>
-    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f3f4f6;padding:32px 12px;">
+    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background:${BRAND.paper};padding:32px 12px;">
       <tr>
         <td align="center">
-          <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:600px;background:#ffffff;border:1px solid #d1d5db;border-radius:16px;overflow:hidden;">
+          <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="max-width:600px;background:${BRAND.surface};border:2px solid ${BRAND.ink};">
             <tr>
-              <td style="background:#111827;color:#ffffff;padding:22px 28px;font-size:20px;font-weight:800;letter-spacing:-0.4px;">FoundersPrime</td>
+              <td style="background:${BRAND.ink};padding:20px 28px;">${brandHeader()}</td>
             </tr>
             <tr>
-              <td style="padding:32px 28px;line-height:1.65;font-size:16px;">${body}</td>
+              <td style="height:4px;background:${BRAND.accent};line-height:4px;font-size:0;">&nbsp;</td>
             </tr>
             <tr>
-              <td style="padding:20px 28px;background:#f9fafb;border-top:1px solid #e5e7eb;color:#6b7280;font-size:12px;line-height:1.55;">${footer}</td>
+              <td style="padding:32px 28px;line-height:1.65;font-size:16px;color:${BRAND.text};">${body}</td>
+            </tr>
+            <tr>
+              <td style="padding:20px 28px;background:${BRAND.paper};border-top:2px solid ${BRAND.ink};color:${BRAND.muted};font-size:12px;line-height:1.6;">${footer}</td>
+            </tr>
+          </table>
+          <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="max-width:600px;">
+            <tr>
+              <td style="padding:14px 4px 0;text-align:center;color:${BRAND.muted};font-size:11px;line-height:1.5;">
+                FoundersPrime &middot; Verified startup deals, credits and grants<br>
+                <a href="${appUrl()}" style="color:${BRAND.muted};text-decoration:underline;">www.foundersprime.com</a>
+              </td>
             </tr>
           </table>
         </td>
@@ -168,8 +256,35 @@ function emailShell({
 </html>`
 }
 
+/**
+ * Primary action button. Accent-yellow on ink with a hard offset shadow, which
+ * is the closest email-safe rendering of the site's neobrutalist buttons.
+ */
 function cta(label: string, url: string): string {
-  return `<p style="margin:28px 0 8px;"><a href="${escapeHtml(url)}" style="display:inline-block;background:#111827;color:#ffffff;text-decoration:none;font-weight:700;padding:13px 20px;border-radius:9px;">${escapeHtml(label)}</a></p>`
+  return `<table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin:28px 0 8px;">
+      <tr>
+        <td style="background:${BRAND.accent};border:2px solid ${BRAND.ink};box-shadow:3px 3px 0 0 ${BRAND.ink};">
+          <a href="${escapeHtml(url)}" style="display:inline-block;padding:13px 22px;font-family:'IBM Plex Mono',Consolas,Menlo,monospace;font-size:12px;font-weight:900;letter-spacing:1px;text-transform:uppercase;color:${BRAND.ink};text-decoration:none;">${escapeHtml(label)}</a>
+        </td>
+      </tr>
+    </table>`
+}
+
+/** Footer link styling shared by the preference and unsubscribe links. */
+function footerLink(label: string, url: string): string {
+  return `<a href="${escapeHtml(url)}" style="color:${BRAND.subtle};text-decoration:underline;font-weight:700;">${escapeHtml(label)}</a>`
+}
+
+/**
+ * Footer for transactional email. These confirm an action the recipient took,
+ * so they carry a preference link rather than an unsubscribe link: a customer
+ * cannot opt out of a payment receipt, but they can control everything optional.
+ */
+function transactionalFooter(note: string, preferencesUrl: string | null): string {
+  const manage = preferencesUrl
+    ? ` You can choose which optional emails you receive at any time: ${footerLink('manage email preferences', preferencesUrl)}.`
+    : ''
+  return `${escapeHtml(note)}${manage}`
 }
 
 function bulletList(items: string[]): string {
@@ -187,6 +302,7 @@ export async function sendWelcomeEmail(
   const dashboardUrl = `${appUrl()}/dashboard`
   const dealsUrl = `${appUrl()}/deals`
   const billingUrl = `${appUrl()}/dashboard?tab=billing`
+  const preferencesUrl = preferencesUrlFor(payload.userId)
   const planLabel = PLAN_LABELS[payload.plan]
   const benefits = PLAN_BENEFITS[payload.plan]
   const renewalNote = PLAN_RENEWAL_NOTE[payload.plan]
@@ -195,7 +311,8 @@ export async function sendWelcomeEmail(
     preheader: `Your ${planLabel} membership is active.`,
     body: `
       <p style="margin:0 0 18px;">${greeting(payload.firstName)}</p>
-      <h1 style="margin:0 0 16px;font-size:28px;line-height:1.2;letter-spacing:-0.7px;">Your ${escapeHtml(planLabel)} membership is active.</h1>
+      <p style="margin:0 0 10px;font-family:'IBM Plex Mono',Consolas,Menlo,monospace;font-size:11px;font-weight:900;letter-spacing:1.4px;text-transform:uppercase;color:${BRAND.muted};">Membership activated</p>
+      <h1 style="margin:0 0 16px;font-size:28px;line-height:1.2;letter-spacing:-0.7px;color:${BRAND.ink};">Your ${escapeHtml(planLabel)} membership is active.</h1>
       <p style="margin:0 0 18px;">Thanks for backing FoundersPrime. Here is what your membership includes:</p>
       ${bulletList(benefits)}
       <p style="margin:0 0 18px;">Every deal in the catalog is verified before it is listed, so the credits, discounts and programs you see are ones you can actually claim.</p>
@@ -204,13 +321,18 @@ export async function sendWelcomeEmail(
       <p style="margin:16px 0 0;font-size:13px;color:#6b7280;">${escapeHtml(renewalNote)}</p>
       <p style="margin:16px 0 0;font-size:13px;color:#6b7280;">Questions? Reply to this email or write to support@foundersprime.com and a human will answer.</p>
     `,
-    footer: 'This transactional email confirms activation of a FoundersPrime membership you purchased. It is not a marketing subscription.',
+    footer: transactionalFooter(
+      'This email confirms activation of a FoundersPrime membership you purchased. It is not a marketing subscription.',
+      preferencesUrl
+    ),
   })
   const text = `${payload.firstName?.trim() ? `Hi ${payload.firstName.trim().split(/\s+/)[0]},` : 'Hi Founder,'}\n\nYour ${planLabel} membership is active.\n\nYour membership includes:\n${benefits
     .map((b) => `- ${b}`)
     .join(
       '\n'
-    )}\n\nOpen your dashboard: ${dashboardUrl}\nBrowse the deal catalog: ${dealsUrl}\nPlan and renewal date: ${billingUrl}\n\n${renewalNote}\n\nQuestions? Reply to this email or write to support@foundersprime.com.\n\nThis transactional email confirms activation of a FoundersPrime membership you purchased.`
+    )}\n\nOpen your dashboard: ${dashboardUrl}\nBrowse the deal catalog: ${dealsUrl}\nPlan and renewal date: ${billingUrl}\n\n${renewalNote}\n\nQuestions? Reply to this email or write to support@foundersprime.com.\n\nThis email confirms activation of a FoundersPrime membership you purchased.${
+    preferencesUrl ? `\nManage which optional emails you receive: ${preferencesUrl}` : ''
+  }`
 
   return sendEmail({
     to: payload.toEmail,
@@ -241,6 +363,7 @@ export async function sendSignupWelcomeEmail(
   const dealsUrl = `${appUrl()}/deals`
   const dashboardUrl = `${appUrl()}/dashboard`
   const pricingUrl = `${appUrl()}/pricing`
+  const preferencesUrl = preferencesUrlFor(payload.userId)
   const subject = 'Welcome to FoundersPrime'
 
   const freeIncludes = [
@@ -259,7 +382,8 @@ export async function sendSignupWelcomeEmail(
     preheader: 'Your FoundersPrime account is ready.',
     body: `
       <p style="margin:0 0 18px;">${greeting(payload.firstName)}</p>
-      <h1 style="margin:0 0 16px;font-size:28px;line-height:1.2;letter-spacing:-0.7px;">Your account is ready.</h1>
+      <p style="margin:0 0 10px;font-family:'IBM Plex Mono',Consolas,Menlo,monospace;font-size:11px;font-weight:900;letter-spacing:1.4px;text-transform:uppercase;color:${BRAND.muted};">Account created</p>
+      <h1 style="margin:0 0 16px;font-size:28px;line-height:1.2;letter-spacing:-0.7px;color:${BRAND.ink};">Your account is ready.</h1>
       <p style="margin:0 0 18px;">FoundersPrime collects verified startup deals in one place: cloud credits, SaaS discounts, non-dilutive grants, accelerators and incubators. Every listing is checked before it goes live.</p>
       <p style="margin:0 0 10px;font-weight:700;">With your free account you can:</p>
       ${bulletList(freeIncludes)}
@@ -269,8 +393,10 @@ export async function sendSignupWelcomeEmail(
       <p style="margin:0 0 18px;font-size:14px;color:#4b5563;">See what each plan includes and current pricing on the <a href="${escapeHtml(pricingUrl)}" style="color:#111827;font-weight:700;">pricing page</a>.</p>
       <p style="margin:16px 0 0;font-size:13px;color:#6b7280;">Your <a href="${escapeHtml(dashboardUrl)}" style="color:#374151;font-weight:700;">dashboard</a> keeps your saved deals in one place. Questions? Reply to this email or write to support@foundersprime.com.</p>
     `,
-    footer:
-      'This transactional email confirms the FoundersPrime account you just created. It is not a marketing subscription, and you are not subscribed to any mailing list.',
+    footer: transactionalFooter(
+      'This email confirms the FoundersPrime account you just created. You are not subscribed to any marketing list — optional emails are off until you turn them on.',
+      preferencesUrl
+    ),
   })
 
   const text = `${payload.firstName?.trim() ? `Hi ${payload.firstName.trim().split(/\s+/)[0]},` : 'Hi Founder,'}\n\nYour FoundersPrime account is ready.\n\nFoundersPrime collects verified startup deals in one place: cloud credits, SaaS discounts, non-dilutive grants, accelerators and incubators.\n\nWith your free account you can:\n${freeIncludes
@@ -279,7 +405,9 @@ export async function sendSignupWelcomeEmail(
     .map((m) => `- ${m}`)
     .join(
       '\n'
-    )}\n\nPlans and current pricing: ${pricingUrl}\nYour dashboard: ${dashboardUrl}\n\nQuestions? Reply to this email or write to support@foundersprime.com.\n\nThis transactional email confirms the account you just created. You are not subscribed to any mailing list.`
+    )}\n\nPlans and current pricing: ${pricingUrl}\nYour dashboard: ${dashboardUrl}\n\nQuestions? Reply to this email or write to support@foundersprime.com.\n\nThis email confirms the account you just created. You are not subscribed to any marketing list — optional emails are off until you turn them on.${
+    preferencesUrl ? `\nChoose which emails you receive: ${preferencesUrl}` : ''
+  }`
 
   return sendEmail({
     to: payload.toEmail,
@@ -317,14 +445,26 @@ export async function sendLifecycleUpdateEmail(
     preheader: `${updateLabel}: ${payload.title}`,
     body: `
       <p style="margin:0 0 18px;">${greeting(payload.firstName)}</p>
-      <p style="margin:0 0 10px;text-transform:uppercase;letter-spacing:1.2px;font-size:12px;font-weight:800;color:#6b7280;">${escapeHtml(updateLabel)}</p>
-      <h1 style="margin:0 0 16px;font-size:28px;line-height:1.2;letter-spacing:-0.7px;">${safeTitle}</h1>
+      <p style="margin:0 0 10px;font-family:'IBM Plex Mono',Consolas,Menlo,monospace;font-size:11px;font-weight:900;letter-spacing:1.4px;text-transform:uppercase;color:${BRAND.muted};">${escapeHtml(updateLabel)}</p>
+      <h1 style="margin:0 0 16px;font-size:28px;line-height:1.2;letter-spacing:-0.7px;color:${BRAND.ink};">${safeTitle}</h1>
       <p style="margin:0;">${escapeHtml(payload.summary)}</p>
       ${cta(payload.ctaLabel, payload.ctaUrl)}
     `,
-    footer: `You received this email because you opted in to FoundersPrime updates. <a href="${escapeHtml(payload.unsubscribeUrl)}" style="color:#374151;">Unsubscribe</a>.`,
+    footer: `You are receiving this because you opted in to FoundersPrime updates on ${escapeHtml(
+      new Date(optedInAt).toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+      })
+    )}.<br><br>${footerLink('Unsubscribe from these emails', payload.unsubscribeUrl)}${
+      payload.preferencesUrl && validHttpUrl(payload.preferencesUrl)
+        ? ` &nbsp;&middot;&nbsp; ${footerLink('Choose which emails you receive', payload.preferencesUrl)}`
+        : ''
+    }`,
   })
-  const text = `${payload.firstName?.trim() ? `Hi ${payload.firstName.trim().split(/\s+/)[0]},` : 'Hi Founder,'}\n\n${updateLabel}: ${payload.title}\n\n${payload.summary}\n\n${payload.ctaLabel}: ${payload.ctaUrl}\n\nUnsubscribe: ${payload.unsubscribeUrl}`
+  const text = `${payload.firstName?.trim() ? `Hi ${payload.firstName.trim().split(/\s+/)[0]},` : 'Hi Founder,'}\n\n${updateLabel}: ${payload.title}\n\n${payload.summary}\n\n${payload.ctaLabel}: ${payload.ctaUrl}\n\nUnsubscribe: ${payload.unsubscribeUrl}${
+    payload.preferencesUrl ? `\nEmail preferences: ${payload.preferencesUrl}` : ''
+  }`
 
   return sendEmail({
     to: payload.toEmail,
@@ -332,5 +472,10 @@ export async function sendLifecycleUpdateEmail(
     html,
     text,
     idempotencyKey: payload.idempotencyKey,
+    // RFC 8058: lets Gmail and Yahoo render a native one-click unsubscribe.
+    listUnsubscribeUrl:
+      payload.oneClickUnsubscribeUrl && validHttpUrl(payload.oneClickUnsubscribeUrl)
+        ? payload.oneClickUnsubscribeUrl
+        : payload.unsubscribeUrl,
   })
 }

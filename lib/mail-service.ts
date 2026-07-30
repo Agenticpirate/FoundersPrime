@@ -15,6 +15,12 @@ export interface SendEmailPayload {
   text?: string
   replyTo?: string
   idempotencyKey?: string
+  /**
+   * Marketing sends only. Adds RFC 8058 List-Unsubscribe headers so mailbox
+   * providers show a native unsubscribe control. Must never be set on
+   * transactional mail, which a recipient cannot opt out of.
+   */
+  listUnsubscribeUrl?: string
 }
 
 export interface ProofEmailPayload {
@@ -58,6 +64,14 @@ export async function sendEmail(payload: SendEmailPayload): Promise<EmailDeliver
         html: payload.html,
         ...(payload.text ? { text: payload.text } : {}),
         ...(replyTo ? { reply_to: replyTo } : {}),
+        ...(payload.listUnsubscribeUrl
+          ? {
+              headers: {
+                'List-Unsubscribe': `<${payload.listUnsubscribeUrl}>`,
+                'List-Unsubscribe-Post': 'List-Unsubscribe=One-Click',
+              },
+            }
+          : {}),
       }),
     })
 

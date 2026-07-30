@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import ProfileManager from './ProfileManager'
+import EmailPreferencesForm from '@/components/email/EmailPreferencesForm'
 
 export default function AccountTab({
   userName,
@@ -30,6 +31,21 @@ export default function AccountTab({
             initialAvatar={avatarUrl}
             memberSince={memberSince}
           />
+
+          <div className="bg-white dark:bg-[#0d0d0d] border border-black/[0.08] dark:border-white/[0.1] md:border-2 md:border-black dark:md:border-white/10 shadow-sm md:shadow-[3px_3px_0px_#111] dark:md:shadow-[3px_3px_0px_rgba(255,255,255,0.06)] rounded-xl md:rounded-sm p-3.5 md:p-5">
+            <div className="flex items-center gap-1.5 mb-1">
+              <span className="material-symbols-outlined !text-[16px] text-black dark:text-white">
+                mail
+              </span>
+              <h3 className="font-mono text-[11px] md:text-[11.5px] font-black uppercase tracking-[0.06em] text-black dark:text-white">
+                Email preferences
+              </h3>
+            </div>
+            <p className="text-[11px] md:text-[12px] text-gray-600 dark:text-gray-400 mb-3">
+              Choose which optional emails you receive. Off by default.
+            </p>
+            <EmailPreferencesForm />
+          </div>
         </div>
 
         <div className="bg-white dark:bg-[#0d0d0d] border border-black/[0.08] dark:border-white/[0.1] md:border-2 md:border-black dark:md:border-white/10 shadow-sm md:shadow-[3px_3px_0px_#111] dark:md:shadow-[3px_3px_0px_rgba(255,255,255,0.06)] rounded-xl md:rounded-sm overflow-hidden divide-y divide-black/[0.06] dark:divide-white/10 md:divide-y-2 md:divide-dashed">
