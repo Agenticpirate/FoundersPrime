@@ -157,6 +157,45 @@ const nextConfig = {
           },
         ],
       },
+      // Brand marks and email art are content-addressed by filename and never
+      // mutate in place. These were served with a 4-hour TTL, which Lighthouse
+      // flagged as inefficient caching (~120 KiB re-downloaded per visit).
+      {
+        source: '/brand-logos/:path*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+      {
+        source: '/email/:path*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+      {
+        source: '/flash/:path*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+      {
+        source: '/:path*.(png|jpg|jpeg|webp|avif|svg|ico|woff2)',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
       {
         source: '/logo-icon.png',
         headers: [

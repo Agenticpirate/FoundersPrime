@@ -264,10 +264,34 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="https://ui-avatars.com" />
         <link rel="dns-prefetch" href="https://images.unsplash.com" />
         <link rel="dns-prefetch" href="https://lh3.googleusercontent.com" />
-        {/* Material Symbols — display=block so icons don't block render with raw text */}
+        {/* Font file host for the icon stylesheet below */}
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        {/*
+          Material Symbols — display=block is kept deliberately so icon ligatures
+          never flash as raw words like "arrow_forward".
+
+          Loaded with media="print" so it does not block first render, then
+          promoted to media="all" on load by the inline script below. Previously
+          this single third-party stylesheet was the largest render-blocking
+          resource on the page (~2.9s on mobile).
+        */}
         <link
           rel="stylesheet"
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0..1,0&display=block"
+          media="print"
+          data-material-symbols=""
+        />
+        <noscript>
+          <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0..1,0&display=block"
+          />
+        </noscript>
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "(function(){var l=document.querySelector('link[data-material-symbols]');if(!l)return;function a(){l.media='all'}if(l.sheet){a()}else{l.addEventListener('load',a)}})()",
+          }}
         />
         {/* Agent discovery — machine-readable entry points for LLMs / AI agents */}
         <link rel="describedby" href="/llms.txt" type="text/plain" title="llms.txt" />

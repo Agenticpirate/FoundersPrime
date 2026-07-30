@@ -3,14 +3,21 @@ import dynamic from 'next/dynamic'
 import AnnouncementBar from '@/components/AnnouncementBar'
 import Header from '@/components/Header'
 import HeroSection from '@/components/HeroSection'
-import PopularDealsGrid from '@/components/PopularDealsGrid'
-import ProblemSection from '@/components/ProblemSection'
-import SystemModules from '@/components/SystemModules'
 import Footer from '@/components/Footer'
 import HashScroll from '@/components/HashScroll'
 import { safeJsonLd } from '@/lib/safe-json-ld'
 
-/* ─── Below-fold: lazy-loaded to reduce initial JS parse cost ─── */
+/*
+ * ─── Below-fold: lazy-loaded to reduce initial JS parse cost ───
+ *
+ * Server rendering stays enabled (the default), so the HTML these produce is
+ * unchanged and there is no layout shift or content difference. Only their
+ * client bundles are split out of the initial payload, which is what Lighthouse
+ * reports as unused JavaScript on first load.
+ */
+const PopularDealsGrid = dynamic(() => import('@/components/PopularDealsGrid'))
+const ProblemSection = dynamic(() => import('@/components/ProblemSection'))
+const SystemModules = dynamic(() => import('@/components/SystemModules'))
 const FounderLogs = dynamic(() => import('@/components/FounderLogs'))
 const ProviderSection = dynamic(() => import('@/components/ProviderSection'))
 
