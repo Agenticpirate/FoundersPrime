@@ -45,7 +45,8 @@ function MarqueeLogo({ brand }: { brand: Brand }) {
         height={16}
         className="block w-full h-full max-w-full max-h-full object-contain"
         style={{ width: '100%', height: '100%', maxWidth: '100%', maxHeight: '100%' }}
-        loading="eager"
+        loading="lazy"
+        fetchPriority="low"
         decoding="async"
         draggable={false}
         onError={() => {

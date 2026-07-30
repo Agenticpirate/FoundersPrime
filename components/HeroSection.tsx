@@ -53,13 +53,21 @@ const TRUSTED_BRANDS: { name: string; domain: string; logo: string }[] = [
   { name: 'MongoDB', domain: 'mongodb.com', logo: `/brand-logos/mongodb.png?v=${LOGO_V}` },
 ]
 
-/** Same-origin logo pill — local file first, Google favicon only if PNG missing */
+/**
+ * Same-origin logo pill — local file first, Google favicon only if PNG missing.
+ *
+ * These are decorative and rendered in duplicated marquee passes (150 of them on
+ * the homepage), so they load lazily at low priority. Eager loading them all
+ * competed with the hero for bandwidth and dominated the performance score.
+ */
 function TrustedBrandLogo({
   brand,
   size = 24,
+  eager = false,
 }: {
   brand: (typeof TRUSTED_BRANDS)[number]
   size?: number
+  eager?: boolean
 }) {
   const [src, setSrc] = useState(brand.logo)
   const failedLocalRef = useRef(false)
@@ -76,7 +84,8 @@ function TrustedBrandLogo({
         width={size}
         height={size}
         className="w-full h-full object-contain"
-        loading="eager"
+        loading={eager ? 'eager' : 'lazy'}
+        fetchPriority={eager ? 'auto' : 'low'}
         decoding="async"
         draggable={false}
         onError={() => {

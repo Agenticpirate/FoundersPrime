@@ -82,7 +82,8 @@ function PartnerLogo({ brand, size = 28 }: { brand: Partner; size?: number }) {
         width={size}
         height={size}
         className="w-full h-full object-contain"
-        loading="eager"
+        loading="lazy"
+        fetchPriority="low"
         decoding="async"
         draggable={false}
         onError={() => {
