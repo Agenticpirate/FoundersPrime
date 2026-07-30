@@ -127,7 +127,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
         priority: number
     }[] = []
     for (const item of Array.isArray(studentBenefits2026) ? studentBenefits2026 : []) {
-        if (!item?.slug) continue
+        if (!item?.slug || item.active === false) continue
         studentRoutes.push({
             url: `${baseUrl}/student-benefits/${item.slug}`,
             lastModified: lastModifiedFor(item),

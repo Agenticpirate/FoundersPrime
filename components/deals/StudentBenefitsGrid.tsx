@@ -159,7 +159,9 @@ export default function StudentBenefitsGrid({ activeType, filters }: StudentBene
   const pageSize = 12
 
   const filteredList = useMemo(() => {
-    let list = studentBenefits2026.filter((b) => isStudentCatalogEligibility(b.eligibility))
+    let list = studentBenefits2026.filter(
+      (b) => b.active !== false && isStudentCatalogEligibility(b.eligibility)
+    )
 
     if (activeType !== 'all') {
       list = list.filter((b) => matchesStudentBenefitType(b, activeType))

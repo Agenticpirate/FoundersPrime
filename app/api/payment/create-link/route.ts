@@ -2,6 +2,7 @@ import DodoPayments from 'dodopayments';
 import { NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import { billingLimiter, rateLimitHeaders } from '@/lib/security/rate-limit';
+import { isMembershipPlan, MEMBERSHIP_PRODUCTS } from '@/lib/membership-plans';
 
 // Check if environment variables are set
 const DODO_API_KEY = process.env.DODO_PAYMENTS_API_KEY || '';
@@ -11,13 +12,6 @@ const client = DODO_API_KEY ? new DodoPayments({
   bearerToken: DODO_API_KEY,
   environment: DODO_ENV,
 }) : null;
-
-// Product IDs from Dodo Payments Dashboard (via env vars)
-const PRODUCTS: Record<string, string> = {
-  nextfounder: process.env.DODO_PRODUCT_NEXTFOUNDER_YEARLY || process.env.DODO_PRODUCT_CAMPUS_MONTHLY || process.env.DODO_PRODUCT_EXPLORER_MONTHLY || 'pdt_0NYGgiPYXbfSQSTu2YZVA',
-  founder:     process.env.DODO_PRODUCT_FOUNDER_YEARLY     || 'pdt_0NYGhiHbaHo141y9EXBl7',
-  legend:      process.env.DODO_PRODUCT_LEGEND_LIFETIME    || 'pdt_0NYGi3cj7tCz581sqfnWw',
-};
 
 export async function POST(request: Request) {
   // Check if DodoPayments client is initialized
@@ -47,11 +41,11 @@ export async function POST(request: Request) {
   try {
     const { plan } = await request.json();
 
-    if (!plan || !PRODUCTS[plan]) {
+    if (!isMembershipPlan(plan)) {
       return NextResponse.json({ error: 'Invalid plan selected' }, { status: 400 });
     }
 
-    const productId = PRODUCTS[plan];
+    const productId = MEMBERSHIP_PRODUCTS[plan];
 
     // Use the authenticated user's email automatically — never trust client-supplied email
     const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://www.foundersprime.com'

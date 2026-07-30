@@ -29,6 +29,8 @@ export interface StudentBenefit {
     successRate?: string;
   };
   tags?: string[];
+  /** False when the provider has ended or paused the program. */
+  active?: boolean;
 }
 
 export const studentBenefits2026: StudentBenefit[] = [
@@ -244,6 +246,7 @@ export const studentBenefits2026: StudentBenefit[] = [
     "title": "Cursor Pro",
     "company": "Cursor",
     "slug": "cursor-pro-student",
+    "active": false,
     "logo": "https://www.google.com/s2/favicons?domain=cursor.com&sz=128",
     "category": "AI Tools",
     "appCategory": "Software & Tools",
@@ -17104,6 +17107,7 @@ export const studentBenefits2026: StudentBenefit[] = [
     "title": "Cursor Pro - 1 year Pro free ($20/mo value)",
     "company": "Cursor Pro",
     "slug": "cursor-pro",
+    "active": false,
     "logo": "https://img.logo.dev/cursor.com?token=pk_WQ-XL0MlQ3-ODa_K0zgqEg",
     "category": "AI Code Editors",
     "appCategory": "Software & Tools",

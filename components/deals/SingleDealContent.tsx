@@ -215,6 +215,7 @@ export default function SingleDealContent({
   const displayValue = deal.enhancedValue || deal.value
   const isProgram = !!deal.isProgram ||
     /accelerator|incubator|grant/i.test(deal.category || '')
+  const isDealInactive = /not active|inactive|expired|closed|ended/i.test(deal.status || '')
 
   // Prefer real apply link; rewrite Google-search placeholders to official URLs
   const applicationUrl = resolveDealApplicationUrl(deal)
@@ -233,8 +234,10 @@ export default function SingleDealContent({
         { label: 'Signal', value: deal.stats.successRate, icon: 'trending_up', color: 'text-amber-600 dark:text-amber-400', bg: 'bg-amber-50 dark:bg-amber-500/10' },
       ]
 
-  const applyLabel = isClaiming
-    ? 'Claiming…'
+  const applyLabel = isDealInactive
+    ? 'Not Active'
+    : isClaiming
+      ? 'Claiming…'
     : freeAccess || isPro || isNextFounder
       ? (isProgram ? 'Apply to program' : 'Apply Now')
       : (isProgram ? 'Unlock to apply' : 'Apply Now (Premium)')
@@ -248,6 +251,11 @@ export default function SingleDealContent({
     }
 
     setClaimError(null)
+
+    if (isDealInactive) {
+      setClaimError('This deal is no longer active.')
+      return
+    }
 
     if (freeAccess) {
       const w = window.open(applicationUrl, '_blank')
@@ -407,7 +415,7 @@ export default function SingleDealContent({
               {/* Apply button — soft sheen + press */}
               <m.button
                 onClick={handleApplyClick}
-                disabled={isClaiming}
+                disabled={isClaiming || isDealInactive}
                 whileHover={reduceMotion ? undefined : { y: -2 }}
                 whileTap={reduceMotion ? undefined : { scale: 0.98 }}
                 transition={{ duration: 0.2, ease: premiumEase }}

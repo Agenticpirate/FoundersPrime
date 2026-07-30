@@ -68,6 +68,7 @@ export default function StudentBenefitsFilterBar({
   const categories = useMemo(() => {
     const subset = studentBenefits2026.filter(
       (b) =>
+        b.active !== false &&
         isStudentCatalogEligibility(b.eligibility) && matchesStudentBenefitType(b, activeType)
     )
     const unique = Array.from(new Set(subset.map((b) => b.category)))
@@ -80,7 +81,6 @@ export default function StudentBenefitsFilterBar({
     if (currentFilters && !isInitialMount.current) setFilters(currentFilters)
   }, [currentFilters])
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (isInitialMount.current) {
       isInitialMount.current = false
@@ -88,7 +88,7 @@ export default function StudentBenefitsFilterBar({
     }
     const t = setTimeout(() => onFilterChange?.(filters), 100)
     return () => clearTimeout(t)
-  }, [filters.search, filters.category, filters.subtype, filters.sort, filters.region])
+  }, [filters, onFilterChange])
 
   const lastActiveType = useRef(activeType)
   useEffect(() => {

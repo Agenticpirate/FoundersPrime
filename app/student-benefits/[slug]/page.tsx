@@ -18,7 +18,7 @@ export const dynamic = 'force-dynamic'
 export async function generateStaticParams() {
     const params: { slug: string }[] = []
     for (const benefit of studentBenefits2026) {
-        if (!benefit.slug) continue
+        if (!benefit.slug || benefit.active === false) continue
         params.push({ slug: benefit.slug })
     }
     return params
@@ -84,7 +84,7 @@ function convertBenefitToDeal(benefit: StudentBenefit, allBenefits: StudentBenef
         provider: benefit.company,
         category: benefit.category,
         value: benefit.value,
-        status: 'Open - Rolling Basis',
+        status: benefit.active === false ? 'Not Active' : 'Open - Rolling Basis',
         description: benefit.description || benefit.offerSummary,
         badges: (() => {
             const promo = getStudentBenefitBadge(benefit)
@@ -180,7 +180,9 @@ export default async function StudentBenefitDetailPage({ params }: PageProps) {
             '@type': 'Offer',
             price: '0',
             priceCurrency: 'USD',
-            availability: 'https://schema.org/InStock',
+            availability: benefitData.active === false
+                ? 'https://schema.org/Discontinued'
+                : 'https://schema.org/InStock',
             url: `https://www.foundersprime.com/student-benefits/${params.slug}`,
             hasMerchantReturnPolicy: merchantReturnPolicy
         }

@@ -130,9 +130,10 @@ export async function POST(req: NextRequest) {
     }
 
     // Reflect locally so the UI updates immediately. Try updating with reason & feedback fields,
-    // falling back to only cancel_at_period_end if the columns aren't migrated yet.
+    // falling back to only cancel_at_period_end if the optional feedback columns are absent.
+    let localUpdateError: { message?: string } | null = null
     try {
-      const { error: updateErr } = await supabase
+      const { data: updatedRow, error: updateErr } = await supabase
         .from('user_subscriptions')
         .update({
           cancel_at_period_end: true,
@@ -141,26 +142,42 @@ export async function POST(req: NextRequest) {
           updated_at: new Date().toISOString(),
         })
         .eq('id', sub.id)
+        .select('id')
+        .maybeSingle()
 
       if (updateErr) {
-        // Fallback update if columns do not exist
-        await supabase
+        const { data: fallbackRow, error: fallbackError } = await supabase
           .from('user_subscriptions')
           .update({
             cancel_at_period_end: true,
             updated_at: new Date().toISOString(),
           })
           .eq('id', sub.id)
+          .select('id')
+          .maybeSingle()
+        localUpdateError = fallbackError ||
+          (fallbackRow ? null : { message: 'Local cancellation marker updated zero rows' })
+      } else if (!updatedRow) {
+        localUpdateError = { message: 'Local cancellation marker updated zero rows' }
       }
     } catch (dbErr) {
-      console.error('Database update error, attempting fallback:', dbErr)
-      await supabase
-        .from('user_subscriptions')
-        .update({
-          cancel_at_period_end: true,
-          updated_at: new Date().toISOString(),
-        })
-        .eq('id', sub.id)
+      localUpdateError = {
+        message: dbErr instanceof Error ? dbErr.message : 'Unknown database update error',
+      }
+    }
+
+    if (localUpdateError) {
+      // Dodo already accepted the cancellation. Do not falsely report a fully
+      // synchronized state; retries are safe and support can reconcile the row.
+      console.error('Provider cancellation succeeded but local marker failed:', localUpdateError.message)
+      return NextResponse.json(
+        {
+          error:
+            'Auto-renewal was cancelled with the payment provider, but your account display has not updated yet. Please retry shortly or contact support@foundersprime.com.',
+          providerCancelled: true,
+        },
+        { status: 500 }
+      )
     }
 
     return NextResponse.json({
