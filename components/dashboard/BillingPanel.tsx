@@ -16,7 +16,10 @@ type Subscription = {
   period_start: string | null
   period_end: string | null
   cancel_at_period_end: boolean
-  stripe_subscription_id: string | null
+  /** Dodo Payments subscription identifier. */
+  dodo_subscription_id?: string | null
+  /** Deprecated alias of dodo_subscription_id, kept for rollback safety. */
+  stripe_subscription_id?: string | null
   created_at: string
 } | null
 

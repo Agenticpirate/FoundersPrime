@@ -1,6 +1,10 @@
 import { createClient as createServiceClient } from '@supabase/supabase-js'
 import { NextResponse } from 'next/server'
 import { verifyAdminServer as verifyAdmin } from '@/lib/admin/verify-admin-server'
+import {
+  isMissingDodoIdColumnError,
+  resolveDodoSubscriptionId,
+} from '@/lib/billing/provider-columns'
 
 // ─── Helper: service-role client (bypasses RLS, can list auth users) ──────────
 function getServiceRoleClient() {
@@ -93,10 +97,18 @@ export async function GET() {
     }
 
     // 2. Active subscriptions → plan + period
-    const { data: subs, error: subsErr } = await svc
-      .from('user_subscriptions')
-      .select('user_id, plan, status, created_at, period_end, period_start, stripe_subscription_id')
-      .eq('status', 'active')
+    const selectActiveSubs = (columns: string) =>
+      svc.from('user_subscriptions').select(columns).eq('status', 'active')
+
+    let { data: subs, error: subsErr } = await selectActiveSubs(
+      'user_id, plan, status, created_at, period_end, period_start, dodo_subscription_id, stripe_subscription_id'
+    ) as { data: any[] | null; error: { message?: string } | null }
+
+    if (subsErr && isMissingDodoIdColumnError(subsErr)) {
+      ;({ data: subs, error: subsErr } = await selectActiveSubs(
+        'user_id, plan, status, created_at, period_end, period_start, stripe_subscription_id'
+      ) as { data: any[] | null; error: { message?: string } | null })
+    }
 
     if (subsErr) console.error('user_subscriptions error:', subsErr)
 
@@ -113,7 +125,7 @@ export async function GET() {
         subMetaByUser.set(uid, {
           periodEnd: row.period_end ?? null,
           periodStart: row.period_start ?? null,
-          subId: row.stripe_subscription_id ?? null,
+          subId: resolveDodoSubscriptionId(row),
           createdAt: row.created_at ?? null,
         })
       }

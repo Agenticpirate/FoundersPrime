@@ -8,6 +8,13 @@ import {
   PRODUCT_TO_MEMBERSHIP_PLAN,
   resolveMembershipPlan,
 } from '@/lib/membership-plans';
+import {
+  DODO_ID_COLUMNS,
+  dodoIdWriteFields,
+  isMissingDodoIdColumnError,
+  resolveDodoSubscriptionId,
+  withoutDodoIdColumns,
+} from '@/lib/billing/provider-columns';
 
 const client = process.env.DODO_PAYMENTS_API_KEY
   ? new DodoPayments({
@@ -429,14 +436,26 @@ async function activatePlan({
   // Webhook retries and payment.succeeded + subscription.active may describe
   // the same Dodo subscription. Refresh that active row instead of creating
   // cancelled history entries on every delivery attempt.
-  const { data: existingActive, error: lookupError } = await supabase
-    .from('user_subscriptions')
-    .select('id, plan, period_end, stripe_subscription_id')
-    .eq('user_id', user.id)
-    .eq('status', 'active')
-    .order('created_at', { ascending: false })
-    .limit(1)
-    .maybeSingle()
+  const selectExistingActive = (columns: string) =>
+    supabase
+      .from('user_subscriptions')
+      .select(columns)
+      .eq('user_id', user.id)
+      .eq('status', 'active')
+      .order('created_at', { ascending: false })
+      .limit(1)
+      .maybeSingle()
+
+  let { data: existingActive, error: lookupError } = await selectExistingActive(
+    'id, plan, period_end, dodo_subscription_id, stripe_subscription_id'
+  ) as { data: any; error: { message?: string } | null }
+
+  // Tolerate a database where the provider column rename has not been applied.
+  if (lookupError && isMissingDodoIdColumnError(lookupError)) {
+    ;({ data: existingActive, error: lookupError } = await selectExistingActive(
+      'id, plan, period_end, stripe_subscription_id'
+    ) as { data: any; error: { message?: string } | null })
+  }
 
   if (lookupError) {
     throw new RetryableWebhookError(
@@ -451,9 +470,10 @@ async function activatePlan({
     user.appMetadata[CHECKOUT_REFERENCE_KEY] === checkoutReference &&
     user.appMetadata[CHECKOUT_REFERENCE_PLAN] === plan
   )
+  const existingDodoSubscriptionId = resolveDodoSubscriptionId(existingActive)
   const providerSubscriptionMatches = Boolean(
     dodoSubscriptionId &&
-    existingActive?.stripe_subscription_id === dodoSubscriptionId
+    existingDodoSubscriptionId === dodoSubscriptionId
   )
   const sameActivation =
     existingPlanMatches &&
@@ -461,7 +481,7 @@ async function activatePlan({
       providerSubscriptionMatches ||
       (plan === 'legend' &&
         !dodoSubscriptionId &&
-        !existingActive?.stripe_subscription_id))
+        !existingDodoSubscriptionId))
 
   const resolvedPeriodEnd = resolveMembershipPeriodEnd(
     plan,
@@ -475,8 +495,15 @@ async function activatePlan({
       period_end: resolvedPeriodEnd,
       updated_at: new Date().toISOString(),
     }
-    if (dodoCustomerId) refreshRow.stripe_customer_id = dodoCustomerId
-    if (dodoSubscriptionId) refreshRow.stripe_subscription_id = dodoSubscriptionId
+    // Write the canonical Dodo columns and their deprecated aliases together so
+    // a partially rolled-out deployment still reads a correct identifier.
+    Object.assign(
+      refreshRow,
+      dodoIdWriteFields({
+        customerId: dodoCustomerId || undefined,
+        subscriptionId: dodoSubscriptionId || undefined,
+      })
+    )
     if (typeof amountCents === 'number') refreshRow.amount_cents = amountCents
 
     const refreshExistingRow = async () => {
@@ -500,6 +527,11 @@ async function activatePlan({
 
     if (refreshError && /amount_cents/i.test(refreshError.message || '')) {
       delete refreshRow.amount_cents
+      ;({ data: refreshedRows, error: refreshError } = await refreshExistingRow())
+    }
+
+    if (refreshError && isMissingDodoIdColumnError(refreshError)) {
+      for (const column of DODO_ID_COLUMNS) delete refreshRow[column]
       ;({ data: refreshedRows, error: refreshError } = await refreshExistingRow())
     }
 
@@ -549,8 +581,10 @@ async function activatePlan({
     status: 'active',
     period_start: new Date().toISOString(),
     period_end: resolvedPeriodEnd,
-    stripe_customer_id: dodoCustomerId || null,
-    stripe_subscription_id: dodoSubscriptionId || null,
+    ...dodoIdWriteFields({
+      customerId: dodoCustomerId || null,
+      subscriptionId: dodoSubscriptionId || null,
+    }),
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
   }
@@ -566,6 +600,13 @@ async function activatePlan({
     }
   } else {
     ;({ error: insertError } = await supabase.from('user_subscriptions').insert(baseRow))
+  }
+
+  // Retry without the canonical columns if the rename migration is not applied.
+  if (insertError && isMissingDodoIdColumnError(insertError)) {
+    ;({ error: insertError } = await supabase
+      .from('user_subscriptions')
+      .insert(withoutDodoIdColumns(baseRow)))
   }
 
   if (insertError) {
@@ -618,25 +659,38 @@ async function deactivatePlan(dodoSubscriptionId: string) {
     )
   }
 
-  // Prefer cancel_at_period_end column; fall back if missing.
-  let { data: deactivatedRows, error } = await supabase
-    .from('user_subscriptions')
-    .update({
+  // Match on the canonical Dodo identifier column, and on the cancel flag when
+  // present. Both are degraded independently so an unmigrated database still
+  // deactivates the correct row. The sync trigger guarantees the canonical and
+  // legacy columns hold the same value, so either predicate selects the same row.
+  let idColumn: string = 'dodo_subscription_id'
+  let includeCancelFlag = true
+
+  const runDeactivation = () => {
+    const payload: Record<string, unknown> = {
       status: 'cancelled',
-      cancel_at_period_end: false,
       updated_at: new Date().toISOString(),
-    })
-    .eq('status', 'active')
-    .eq('stripe_subscription_id', dodoSubscriptionId)
-    .select('id, user_id')
+    }
+    if (includeCancelFlag) payload.cancel_at_period_end = false
+
+    return supabase
+      .from('user_subscriptions')
+      .update(payload)
+      .eq('status', 'active')
+      .eq(idColumn, dodoSubscriptionId)
+      .select('id, user_id')
+  }
+
+  let { data: deactivatedRows, error } = await runDeactivation()
+
+  if (error && isMissingDodoIdColumnError(error)) {
+    idColumn = 'stripe_subscription_id'
+    ;({ data: deactivatedRows, error } = await runDeactivation())
+  }
 
   if (error && /cancel_at_period_end/i.test(error.message || '')) {
-    ;({ data: deactivatedRows, error } = await supabase
-      .from('user_subscriptions')
-      .update({ status: 'cancelled', updated_at: new Date().toISOString() })
-      .eq('status', 'active')
-      .eq('stripe_subscription_id', dodoSubscriptionId)
-      .select('id, user_id'))
+    includeCancelFlag = false
+    ;({ data: deactivatedRows, error } = await runDeactivation())
   }
 
   if (error) {

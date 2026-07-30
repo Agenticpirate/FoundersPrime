@@ -45,25 +45,25 @@ export default async function DashboardPage({
   // Try with new cancel_at_period_end column first; fall back if column hasn't been migrated yet.
   let subscription: any = null
   if (user) {
-    const fullQuery = await supabase
-      .from('user_subscriptions')
-      .select('id, plan, status, period_start, period_end, cancel_at_period_end, stripe_subscription_id, created_at')
-      .eq('user_id', user.id)
-      .eq('status', 'active')
-      .order('created_at', { ascending: false })
-      .limit(1)
-      .single()
-
-    if (fullQuery.error && /cancel_at_period_end/i.test(fullQuery.error.message || '')) {
-      // Column not migrated yet — fall back to legacy schema
-      const { data } = await supabase
+    const selectSubscription = (columns: string) =>
+      supabase
         .from('user_subscriptions')
-        .select('id, plan, status, period_start, period_end, stripe_subscription_id, created_at')
+        .select(columns)
         .eq('user_id', user.id)
         .eq('status', 'active')
         .order('created_at', { ascending: false })
         .limit(1)
         .single()
+
+    const fullQuery = await selectSubscription(
+      'id, plan, status, period_start, period_end, cancel_at_period_end, dodo_subscription_id, stripe_subscription_id, created_at'
+    )
+
+    if (fullQuery.error && /cancel_at_period_end|dodo_subscription_id/i.test(fullQuery.error.message || '')) {
+      // Column not migrated yet — fall back to legacy schema
+      const { data } = (await selectSubscription(
+        'id, plan, status, period_start, period_end, stripe_subscription_id, created_at'
+      )) as { data: Record<string, unknown> | null }
       subscription = data ? { ...data, cancel_at_period_end: false } : null
     } else {
       subscription = fullQuery.data

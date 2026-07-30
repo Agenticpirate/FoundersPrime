@@ -3,6 +3,10 @@ import DodoPayments from 'dodopayments'
 import { createClient as createServiceClient } from '@supabase/supabase-js'
 import { createClient } from '@/lib/supabase/server'
 import { billingLimiter, rateLimitHeaders } from '@/lib/security/rate-limit'
+import {
+  isMissingDodoIdColumnError,
+  resolveDodoSubscriptionId,
+} from '@/lib/billing/provider-columns'
 
 function getServiceRoleClient() {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL
@@ -83,15 +87,28 @@ export async function POST(req: NextRequest) {
       )
     }
 
-    // Find the active subscription row
-    const { data: sub, error: subErr } = await serviceClient
-      .from('user_subscriptions')
-      .select('id, plan, stripe_subscription_id, status, period_end, cancel_at_period_end')
-      .eq('user_id', user.id)
-      .eq('status', 'active')
-      .order('created_at', { ascending: false })
-      .limit(1)
-      .single()
+    // Find the active subscription row. Prefer the canonical Dodo identifier
+    // column and fall back to the legacy name if the rename migration has not
+    // reached this database yet.
+    const selectActiveSubscription = (columns: string) =>
+      serviceClient
+        .from('user_subscriptions')
+        .select(columns)
+        .eq('user_id', user.id)
+        .eq('status', 'active')
+        .order('created_at', { ascending: false })
+        .limit(1)
+        .single()
+
+    let { data: sub, error: subErr } = await selectActiveSubscription(
+      'id, plan, dodo_subscription_id, stripe_subscription_id, status, period_end, cancel_at_period_end'
+    ) as { data: any; error: { message?: string } | null }
+
+    if (subErr && isMissingDodoIdColumnError(subErr)) {
+      ;({ data: sub, error: subErr } = await selectActiveSubscription(
+        'id, plan, stripe_subscription_id, status, period_end, cancel_at_period_end'
+      ) as { data: any; error: { message?: string } | null })
+    }
 
     if (subErr || !sub) {
       return NextResponse.json(
@@ -119,7 +136,9 @@ export async function POST(req: NextRequest) {
       })
     }
 
-    if (!sub.stripe_subscription_id) {
+    const dodoSubscriptionId = resolveDodoSubscriptionId(sub)
+
+    if (!dodoSubscriptionId) {
       return NextResponse.json(
         {
           error:
@@ -132,7 +151,7 @@ export async function POST(req: NextRequest) {
     // Tell Dodo to stop auto-renewal at the next billing date and attach feedback in metadata
     const dodo = new DodoPayments({ bearerToken: apiKey, environment: env })
     try {
-      await dodo.subscriptions.update(sub.stripe_subscription_id, {
+      await dodo.subscriptions.update(dodoSubscriptionId, {
         cancel_at_next_billing_date: true,
         metadata: {
           cancel_reason: reason,
