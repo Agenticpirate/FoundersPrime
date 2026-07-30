@@ -1,6 +1,7 @@
 import { createClient } from '@/lib/supabase/server'
 import { NextResponse } from 'next/server'
 import { sanitizeAuthRedirect } from '@/lib/auth/safe-redirect'
+import { deliverSignupWelcomeEmail } from '@/lib/auth/signup-email'
 
 /**
  * OAuth + email recovery callback.
@@ -31,9 +32,15 @@ export async function GET(request: Request) {
 
   // PKCE code exchange (sign-in, signup confirm, password recovery)
   if (code) {
-    const { error: exchangeError } = await supabase.auth.exchangeCodeForSession(code)
+    const { data: exchanged, error: exchangeError } =
+      await supabase.auth.exchangeCodeForSession(code)
 
     if (!exchangeError) {
+      // First-time accounts get the account-created email. Guarded to send once
+      // per user, and never allowed to block or fail the redirect.
+      if (exchanged?.user?.id && type !== 'recovery' && !next.includes('view=reset')) {
+        await deliverSignupWelcomeEmail(exchanged.user.id)
+      }
       return NextResponse.redirect(`${origin}${next}`)
     }
 
@@ -47,12 +54,15 @@ export async function GET(request: Request) {
 
   // token_hash + type (some email templates)
   if (tokenHash && type) {
-    const { error: otpError } = await supabase.auth.verifyOtp({
+    const { data: verified, error: otpError } = await supabase.auth.verifyOtp({
       token_hash: tokenHash,
       type: type as 'recovery' | 'signup' | 'invite' | 'magiclink' | 'email',
     })
 
     if (!otpError) {
+      if (verified?.user?.id && type !== 'recovery') {
+        await deliverSignupWelcomeEmail(verified.user.id)
+      }
       const dest =
         type === 'recovery' ? '/login?view=reset' : next
       return NextResponse.redirect(`${origin}${dest}`)

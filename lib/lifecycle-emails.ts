@@ -15,6 +15,51 @@ export const WELCOME_EMAIL_MARKERS = {
   failedAt: 'foundersprime_welcome_email_failed_at',
 } as const
 
+/**
+ * Auth app_metadata keys recording the account-created email. Separate from the
+ * membership welcome markers so a free signup and a later purchase each send
+ * exactly one email.
+ */
+export const SIGNUP_EMAIL_MARKERS = {
+  sentAt: 'foundersprime_signup_email_sent_at',
+  failedAt: 'foundersprime_signup_email_failed_at',
+} as const
+
+/**
+ * Membership benefits shown in emails. Prices are deliberately omitted and
+ * linked to /pricing instead, so email copy can never contradict the live
+ * checkout amount.
+ */
+const PLAN_BENEFITS: Record<MembershipPlan, string[]> = {
+  nextfounder: [
+    '1,000+ student and indie-builder discounts',
+    'AI and SaaS credits for builders',
+    'Hackathons and early-stage grants',
+    'Opportunity Hub access',
+  ],
+  founder: [
+    'Full cloud and SaaS deal catalog',
+    'Unlimited deal claims',
+    'Grants, accelerators and incubators',
+    'Founder Vault resources',
+  ],
+  legend: [
+    'Everything in Founder, permanently',
+    'No renewals, ever',
+    'All future catalog updates included',
+    'Launch-locked lifetime rate',
+  ],
+}
+
+const PLAN_RENEWAL_NOTE: Record<MembershipPlan, string> = {
+  nextfounder:
+    'Your membership renews yearly. You can switch off auto-renewal any time from your dashboard and keep access until the period ends.',
+  founder:
+    'Your membership renews yearly. You can switch off auto-renewal any time from your dashboard and keep access until the period ends.',
+  legend:
+    'Legend is a one-time purchase. There is nothing to renew and nothing to cancel.',
+}
+
 export interface WelcomeEmailPayload {
   userId: string
   toEmail: string
@@ -127,25 +172,45 @@ function cta(label: string, url: string): string {
   return `<p style="margin:28px 0 8px;"><a href="${escapeHtml(url)}" style="display:inline-block;background:#111827;color:#ffffff;text-decoration:none;font-weight:700;padding:13px 20px;border-radius:9px;">${escapeHtml(label)}</a></p>`
 }
 
+function bulletList(items: string[]): string {
+  return `<ul style="margin:0 0 18px;padding-left:20px;">${items
+    .map(
+      (item) =>
+        `<li style="margin:0 0 8px;color:#374151;">${escapeHtml(item)}</li>`
+    )
+    .join('')}</ul>`
+}
+
 export async function sendWelcomeEmail(
   payload: WelcomeEmailPayload
 ): Promise<EmailDeliveryResult> {
   const dashboardUrl = `${appUrl()}/dashboard`
   const dealsUrl = `${appUrl()}/deals`
+  const billingUrl = `${appUrl()}/dashboard?tab=billing`
   const planLabel = PLAN_LABELS[payload.plan]
+  const benefits = PLAN_BENEFITS[payload.plan]
+  const renewalNote = PLAN_RENEWAL_NOTE[payload.plan]
   const subject = `Welcome to FoundersPrime ${planLabel}`
   const html = emailShell({
     preheader: `Your ${planLabel} membership is active.`,
     body: `
       <p style="margin:0 0 18px;">${greeting(payload.firstName)}</p>
       <h1 style="margin:0 0 16px;font-size:28px;line-height:1.2;letter-spacing:-0.7px;">Your ${escapeHtml(planLabel)} membership is active.</h1>
-      <p style="margin:0 0 16px;">Welcome to FoundersPrime. You can now explore your membership dashboard, discover founder deals, and use the resources included with your plan.</p>
+      <p style="margin:0 0 18px;">Thanks for backing FoundersPrime. Here is what your membership includes:</p>
+      ${bulletList(benefits)}
+      <p style="margin:0 0 18px;">Every deal in the catalog is verified before it is listed, so the credits, discounts and programs you see are ones you can actually claim.</p>
       ${cta('Open your dashboard', dashboardUrl)}
-      <p style="margin:18px 0 0;font-size:14px;color:#4b5563;">Start exploring now: <a href="${escapeHtml(dealsUrl)}" style="color:#111827;font-weight:700;">browse founder deals</a>.</p>
+      <p style="margin:18px 0 0;font-size:14px;color:#4b5563;">Start with the <a href="${escapeHtml(dealsUrl)}" style="color:#111827;font-weight:700;">deal catalog</a>, or review your plan and renewal date in <a href="${escapeHtml(billingUrl)}" style="color:#111827;font-weight:700;">billing</a>.</p>
+      <p style="margin:16px 0 0;font-size:13px;color:#6b7280;">${escapeHtml(renewalNote)}</p>
+      <p style="margin:16px 0 0;font-size:13px;color:#6b7280;">Questions? Reply to this email or write to support@foundersprime.com and a human will answer.</p>
     `,
     footer: 'This transactional email confirms activation of a FoundersPrime membership you purchased. It is not a marketing subscription.',
   })
-  const text = `${payload.firstName?.trim() ? `Hi ${payload.firstName.trim().split(/\s+/)[0]},` : 'Hi Founder,'}\n\nYour ${planLabel} membership is active.\n\nOpen your dashboard: ${dashboardUrl}\nBrowse founder deals: ${dealsUrl}\n\nThis transactional email confirms activation of a FoundersPrime membership you purchased.`
+  const text = `${payload.firstName?.trim() ? `Hi ${payload.firstName.trim().split(/\s+/)[0]},` : 'Hi Founder,'}\n\nYour ${planLabel} membership is active.\n\nYour membership includes:\n${benefits
+    .map((b) => `- ${b}`)
+    .join(
+      '\n'
+    )}\n\nOpen your dashboard: ${dashboardUrl}\nBrowse the deal catalog: ${dealsUrl}\nPlan and renewal date: ${billingUrl}\n\n${renewalNote}\n\nQuestions? Reply to this email or write to support@foundersprime.com.\n\nThis transactional email confirms activation of a FoundersPrime membership you purchased.`
 
   return sendEmail({
     to: payload.toEmail,
@@ -153,6 +218,75 @@ export async function sendWelcomeEmail(
     html,
     text,
     idempotencyKey: `foundersprime-welcome-v1-${payload.userId}`,
+  })
+}
+
+export interface SignupEmailPayload {
+  userId: string
+  toEmail: string
+  firstName?: string | null
+}
+
+/**
+ * Account-created email for a new free signup.
+ *
+ * Transactional: it confirms an account the recipient just created and explains
+ * what that account gives them. It includes a short membership overview but no
+ * prices, so it can never contradict live checkout, and it is sent exactly once
+ * per user via the SIGNUP_EMAIL_MARKERS guard at the call site.
+ */
+export async function sendSignupWelcomeEmail(
+  payload: SignupEmailPayload
+): Promise<EmailDeliveryResult> {
+  const dealsUrl = `${appUrl()}/deals`
+  const dashboardUrl = `${appUrl()}/dashboard`
+  const pricingUrl = `${appUrl()}/pricing`
+  const subject = 'Welcome to FoundersPrime'
+
+  const freeIncludes = [
+    'Browse the verified deal catalog',
+    'Save deals to your dashboard',
+    'Preview grants, accelerators and incubators',
+  ]
+
+  const membershipSummary = [
+    "Next'Founder — student and indie-builder discounts, AI and SaaS credits, hackathons and early grants",
+    'Founder — the full cloud and SaaS catalog, unlimited claims, grants and accelerators, Founder Vault',
+    'Legend — everything in Founder permanently, one payment, no renewals',
+  ]
+
+  const html = emailShell({
+    preheader: 'Your FoundersPrime account is ready.',
+    body: `
+      <p style="margin:0 0 18px;">${greeting(payload.firstName)}</p>
+      <h1 style="margin:0 0 16px;font-size:28px;line-height:1.2;letter-spacing:-0.7px;">Your account is ready.</h1>
+      <p style="margin:0 0 18px;">FoundersPrime collects verified startup deals in one place: cloud credits, SaaS discounts, non-dilutive grants, accelerators and incubators. Every listing is checked before it goes live.</p>
+      <p style="margin:0 0 10px;font-weight:700;">With your free account you can:</p>
+      ${bulletList(freeIncludes)}
+      ${cta('Browse the deal catalog', dealsUrl)}
+      <p style="margin:24px 0 10px;font-weight:700;">Memberships unlock the full catalog:</p>
+      ${bulletList(membershipSummary)}
+      <p style="margin:0 0 18px;font-size:14px;color:#4b5563;">See what each plan includes and current pricing on the <a href="${escapeHtml(pricingUrl)}" style="color:#111827;font-weight:700;">pricing page</a>.</p>
+      <p style="margin:16px 0 0;font-size:13px;color:#6b7280;">Your <a href="${escapeHtml(dashboardUrl)}" style="color:#374151;font-weight:700;">dashboard</a> keeps your saved deals in one place. Questions? Reply to this email or write to support@foundersprime.com.</p>
+    `,
+    footer:
+      'This transactional email confirms the FoundersPrime account you just created. It is not a marketing subscription, and you are not subscribed to any mailing list.',
+  })
+
+  const text = `${payload.firstName?.trim() ? `Hi ${payload.firstName.trim().split(/\s+/)[0]},` : 'Hi Founder,'}\n\nYour FoundersPrime account is ready.\n\nFoundersPrime collects verified startup deals in one place: cloud credits, SaaS discounts, non-dilutive grants, accelerators and incubators.\n\nWith your free account you can:\n${freeIncludes
+    .map((f) => `- ${f}`)
+    .join('\n')}\n\nBrowse the deal catalog: ${dealsUrl}\n\nMemberships unlock the full catalog:\n${membershipSummary
+    .map((m) => `- ${m}`)
+    .join(
+      '\n'
+    )}\n\nPlans and current pricing: ${pricingUrl}\nYour dashboard: ${dashboardUrl}\n\nQuestions? Reply to this email or write to support@foundersprime.com.\n\nThis transactional email confirms the account you just created. You are not subscribed to any mailing list.`
+
+  return sendEmail({
+    to: payload.toEmail,
+    subject,
+    html,
+    text,
+    idempotencyKey: `foundersprime-signup-v1-${payload.userId}`,
   })
 }
 
