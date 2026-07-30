@@ -85,6 +85,10 @@ function PendingVerificationContent() {
                       <li>Check your spam or junk folder</li>
                       <li>Make sure you entered the correct email</li>
                       <li>Wait a few minutes for the email to arrive</li>
+                      <li>
+                        Add <strong>deals@foundersprime.com</strong> to your contacts so deal alerts
+                        and receipts reach your inbox
+                      </li>
                     </ul>
                   </div>
                 </div>

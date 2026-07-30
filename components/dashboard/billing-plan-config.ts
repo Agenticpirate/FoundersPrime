@@ -7,7 +7,7 @@ export const PLAN_LABELS: Record<string, string> = {
 }
 
 export const PLAN_PRICES: Record<string, string> = {
-  nextfounder: '$1/year',
+  nextfounder: '$14.99/year',
   founder: '$48/year',
   legend: '$99 one-time',
 }

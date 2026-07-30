@@ -91,7 +91,8 @@ const FAQS: FaqItem[] = [
     q: 'What is the difference between plans?',
     a: (
       <>
-        Next&apos;Founder is for students at $1/yr. Founder (early adopter) is the main founder plan.
+        Next&apos;Founder is for students, from $1 for the first month then $14.99/yr. Founder
+        (early adopter) is the main founder plan.
         Legend is lifetime access. Compare full details on our{' '}
         <Link
           href="/pricing"

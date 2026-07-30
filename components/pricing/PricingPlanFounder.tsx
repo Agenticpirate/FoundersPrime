@@ -57,19 +57,25 @@ export default function PricingPlanFounder({
           <div className="mb-2.5 md:mb-5">
             <div className="flex items-baseline gap-1.5 md:gap-2 flex-wrap">
               <span className="font-mono text-[32px] sm:text-[36px] md:text-[40px] lg:text-[44px] font-black text-gray-900 dark:text-white leading-none tracking-tight">
-                $48
-              </span>
-              <span className="font-mono text-sm md:text-base text-gray-400 dark:text-gray-500 line-through font-bold">
-                $149
+                $9.99
               </span>
               <span className="font-mono text-[10px] md:text-[11px] font-bold uppercase tracking-wider text-gray-500">
-                /yr
+                first month
               </span>
             </div>
             <div className="mt-1 md:mt-2 inline-flex items-center gap-1 px-1.5 md:px-2.5 py-0.5 md:py-1 rounded-md bg-accent-yellow text-black font-mono text-[9px] md:text-[10px] font-black tracking-wide">
               <span className="material-symbols-outlined !text-[11px] md:!text-[12px]">bolt</span>
               Save $3,000+ yr 1
             </div>
+            {/*
+              Auto-renewing paid trial: the renewal amount and timing must be
+              stated before checkout, not only in the receipt.
+            */}
+            <p className="mt-1.5 md:mt-2 text-[9px] md:text-[10px] leading-snug text-gray-500 dark:text-gray-400">
+              Then <span className="font-bold text-gray-700 dark:text-gray-300">$48/yr</span>{' '}
+              <span className="line-through">$149</span>, billed automatically after 30 days. Cancel
+              anytime before renewal.
+            </p>
           </div>
 
           <ul className="space-y-1 md:space-y-2.5 mb-3 md:mb-6 flex-1">
@@ -117,7 +123,7 @@ export default function PricingPlanFounder({
               disabled={loadingPlan === 'founder'}
               className="w-full inline-flex items-center justify-center gap-1.5 h-11 md:h-12 min-h-[44px] md:min-h-[48px] px-3 md:px-4 bg-accent-yellow active:bg-yellow-300 md:hover:bg-yellow-300 text-black font-mono font-black text-[10px] md:text-[11px] uppercase tracking-[0.1em] md:tracking-[0.12em] rounded-lg md:rounded-xl transition-all shadow-[0_4px_16px_rgba(255,213,0,0.25)] disabled:opacity-60"
             >
-              <span>{loadingPlan === 'founder' ? 'Redirecting…' : 'Build as a Founder'}</span>
+              <span>{loadingPlan === 'founder' ? 'Redirecting…' : 'Start for $9.99'}</span>
               <span className="material-symbols-outlined !text-[15px] md:!text-[16px]">arrow_forward</span>
             </button>
             <p className="mt-1.5 md:mt-2.5 text-center text-[9px] md:text-[10px] text-gray-500 font-mono">

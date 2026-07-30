@@ -111,7 +111,7 @@ const faqs: { q: string; a: string; icon: string }[] = [
     {
         icon: 'school',
         q: 'I am a student — which plan is for me?',
-        a: "Next'Founder is $1/yr for active students and student founders — no revenue required. Premium AI & SaaS credits, campus opportunities, early grants, and the Opportunity Hub.",
+        a: "Next'Founder starts at $1 for your first month, then renews at $14.99/yr — for active students and student founders, no revenue required. Premium AI & SaaS credits, campus opportunities, early grants, and the Opportunity Hub. Cancel anytime before renewal.",
     },
     {
         icon: 'bolt',
@@ -253,13 +253,16 @@ export default function PricingPageContent() {
 
                     {/* Mobile: one-line value prop · Desktop: full copy */}
                     <p className="md:hidden text-gray-600 dark:text-gray-400 text-[12px] leading-snug mt-1.5">
-                        Vetted deals &amp; credits — students from{' '}
-                        <span className="font-bold text-gray-900 dark:text-white">$1/yr</span>
+                        Vetted deals &amp; credits — start from{' '}
+                        <span className="font-bold text-gray-900 dark:text-white">$1</span>
                     </p>
                     <p className="hidden md:block text-gray-600 dark:text-gray-400 text-[15px] leading-relaxed mt-4 max-w-xl">
                         Vetted startup deals, credits, and programs in one place — stop hunting links and start
                         saving on every tool. Students start at{' '}
-                        <span className="font-semibold text-gray-900 dark:text-white">$1/year</span>.
+                        <span className="font-semibold text-gray-900 dark:text-white">
+                            $1 for the first month
+                        </span>
+                        .
                     </p>
 
                     {/* Mobile: ultra-dense trust row · Desktop: chip pills */}
@@ -280,7 +283,7 @@ export default function PricingPageContent() {
                             'Verified deals',
                             '$50K+ avg savings',
                             '4.9★ rated',
-                            'Students $1/yr',
+                            'Students from $1',
                         ].map((label) => (
                             <span
                                 key={label}
@@ -821,7 +824,7 @@ export default function PricingPageContent() {
                             Launch pricing
                         </span>
                         <h2 className="font-mono text-[15px] md:text-2xl font-black text-gray-900 dark:text-white leading-snug tracking-tight">
-                            Students start at $1/yr.
+                            Students start at $1 for a month.
                             <span className="hidden sm:inline"> Don&apos;t leave credits on the table.</span>
                         </h2>
                         <p className="text-gray-500 dark:text-gray-400 text-[11px] md:text-sm mt-1 md:mt-2 max-w-md">

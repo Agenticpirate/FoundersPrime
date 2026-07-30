@@ -682,7 +682,7 @@ export default function AdminUsersPage() {
               className="w-full mb-3 px-3 py-2.5 rounded-xl border border-white/10 bg-[#121318] text-white font-mono text-sm focus:outline-none focus:border-accent-yellow/40"
             >
               <option value="free">Free</option>
-              <option value="nextfounder">Next&apos;Founder ($1/yr)</option>
+              <option value="nextfounder">Next&apos;Founder ($14.99/yr)</option>
               <option value="founder">Founder ($48/yr)</option>
               <option value="legend">Legend ($99 once)</option>
             </select>
