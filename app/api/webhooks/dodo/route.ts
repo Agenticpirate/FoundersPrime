@@ -2,7 +2,11 @@ import { NextResponse } from 'next/server';
 import DodoPayments from 'dodopayments';
 import { createClient as createServiceClient } from '@supabase/supabase-js';
 import { getPlanByProductId, getFeaturedPlanConfig } from '@/lib/featured-plans';
-import { sendWelcomeEmail, type MembershipPlan } from '@/lib/lifecycle-emails';
+import {
+  sendWelcomeEmail,
+  WELCOME_EMAIL_MARKERS,
+  type MembershipPlan,
+} from '@/lib/lifecycle-emails';
 import {
   isMembershipPlan,
   PRODUCT_TO_MEMBERSHIP_PLAN,
@@ -254,10 +258,10 @@ async function resolveAuthUser(opts: {
   return null
 }
 
-const WELCOME_EMAIL_SENT_AT = 'foundersprime_welcome_email_sent_at'
-const WELCOME_EMAIL_PLAN = 'foundersprime_welcome_email_plan'
-const WELCOME_EMAIL_PENDING_AT = 'foundersprime_welcome_email_pending_at'
-const WELCOME_EMAIL_FAILED_AT = 'foundersprime_welcome_email_failed_at'
+const WELCOME_EMAIL_SENT_AT = WELCOME_EMAIL_MARKERS.sentAt
+const WELCOME_EMAIL_PLAN = WELCOME_EMAIL_MARKERS.plan
+const WELCOME_EMAIL_PENDING_AT = WELCOME_EMAIL_MARKERS.pendingAt
+const WELCOME_EMAIL_FAILED_AT = WELCOME_EMAIL_MARKERS.failedAt
 
 class RetryableWebhookError extends Error {}
 

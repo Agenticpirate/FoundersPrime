@@ -3,6 +3,18 @@ import { sendEmail, type EmailDeliveryResult } from '@/lib/mail-service'
 export type MembershipPlan = 'nextfounder' | 'founder' | 'legend'
 export type LifecycleUpdateKind = 'new_deal' | 'membership_offer' | 'resource'
 
+/**
+ * Auth app_metadata keys recording welcome-email delivery state. Shared so the
+ * Dodo webhook and the admin backfill route can never disagree about which
+ * subscriber has already been emailed.
+ */
+export const WELCOME_EMAIL_MARKERS = {
+  sentAt: 'foundersprime_welcome_email_sent_at',
+  plan: 'foundersprime_welcome_email_plan',
+  pendingAt: 'foundersprime_welcome_email_pending_at',
+  failedAt: 'foundersprime_welcome_email_failed_at',
+} as const
+
 export interface WelcomeEmailPayload {
   userId: string
   toEmail: string
