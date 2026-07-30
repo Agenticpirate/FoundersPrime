@@ -70,12 +70,6 @@ export default async function DashboardPage({
     }
   }
 
-  // Normalize legacy storage aliases before passing subscription data to dashboard UI.
-  // The production table historically stored Next Founder as "explorer"/"campus".
-  if (subscription && ['explorer', 'campus'].includes(subscription.plan)) {
-    subscription = { ...subscription, plan: 'nextfounder' }
-  }
-
   const isPaymentSuccess = searchParams?.status === 'succeeded' || searchParams?.status === 'completed'
   const PRO_USERS = ['raviteja.journal@gmail.com', 'hello@axionxlab.com', 'pulligellaraviteja@gmail.com']
   const userEmail = user?.email || ''

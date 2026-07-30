@@ -18,7 +18,6 @@ const PLAN_KEY_MAP: Record<string, string> = {
 }
 
 function normalizeStoredPlan(value: string | null | undefined): string {
-  if (value === 'explorer' || value === 'campus') return 'nextfounder'
   return value || 'free'
 }
 

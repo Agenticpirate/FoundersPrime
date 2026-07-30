@@ -26,9 +26,6 @@ function getServiceRoleClient() {
 }
 
 // ─── GET: real subscription + revenue stats (admin only) ──────────────────────
-const normalizePlan = (p: string) =>
-  p === 'explorer' || p === 'campus' ? 'nextfounder' : p
-
 const amountFor = (row: any, plan: string): number => {
   if (row?.amount_cents != null && !Number.isNaN(Number(row.amount_cents))) {
     return Number(row.amount_cents) / 100
@@ -89,7 +86,7 @@ export async function GET() {
     const revenueByPlan: Record<string, number> = { nextfounder: 0, founder: 0, legend: 0 }
 
     for (const row of rows) {
-      const plan = normalizePlan(String(row.plan))
+      const plan = String(row.plan)
       if (counts[plan] === undefined) continue
       counts[plan] += 1
       revenueByPlan[plan] += amountFor(row, plan)
@@ -127,7 +124,7 @@ export async function GET() {
     )
 
     result.recentSubscribers = recent.map((row) => {
-      const plan = normalizePlan(String(row.plan))
+      const plan = String(row.plan)
       const uid = String(row.user_id || '')
       return {
         plan,

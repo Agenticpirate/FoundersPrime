@@ -4,7 +4,7 @@ import { createClient } from '@/lib/supabase/client'
 export type UserPlan = 'free' | 'nextfounder' | 'founder' | 'legend'
 
 /**
- * Normalize canonical, legacy, and human-readable plan values from storage.
+ * Normalize canonical and human-readable plan values from storage.
  * Unknown values fail closed to free instead of leaking through as an invalid badge key.
  */
 export function normalizeUserPlan(plan?: string | null): UserPlan {
@@ -15,8 +15,6 @@ export function normalizeUserPlan(plan?: string | null): UserPlan {
 
   switch (normalized) {
     case 'nextfounder':
-    case 'explorer':
-    case 'campus':
     case 'student':
       return 'nextfounder'
     case 'founder':
@@ -40,7 +38,7 @@ export interface UserProfile {
   isAdmin: boolean
   plan: UserPlan
   subscription?: {
-    plan: 'free' | 'nextfounder' | 'founder' | 'legend' | 'campus' | 'explorer' | 'pro' | 'pro-plus'
+    plan: 'free' | 'nextfounder' | 'founder' | 'legend' | 'pro' | 'pro-plus'
     status: 'active' | 'cancelled' | 'expired'
     expiresAt?: string
   }

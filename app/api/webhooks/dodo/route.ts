@@ -444,9 +444,7 @@ async function activatePlan({
     )
   }
 
-  const existingPlanMatches =
-    existingActive?.plan === plan ||
-    (plan === 'nextfounder' && ['explorer', 'campus'].includes(existingActive?.plan || ''))
+  const existingPlanMatches = existingActive?.plan === plan
 
   const checkoutMatchesExisting = Boolean(
     checkoutReference &&
@@ -568,24 +566,6 @@ async function activatePlan({
     }
   } else {
     ;({ error: insertError } = await supabase.from('user_subscriptions').insert(baseRow))
-  }
-
-  // Some existing deployments still constrain the former Next Founder ID to
-  // "explorer". Preserve activation until the canonical-plan migration is applied.
-  if (
-    insertError &&
-    plan === 'nextfounder' &&
-    /user_subscriptions_plan_check|violates check constraint/i.test(insertError.message || '')
-  ) {
-    const { error: legacyInsertError } = await supabase
-      .from('user_subscriptions')
-      .insert({ ...baseRow, plan: 'explorer' })
-    insertError = legacyInsertError
-    if (!legacyInsertError) {
-      console.warn(
-        `⚠️ Stored Next Founder as legacy "explorer" for user ${user.id}; apply the canonical plan migration`
-      )
-    }
   }
 
   if (insertError) {

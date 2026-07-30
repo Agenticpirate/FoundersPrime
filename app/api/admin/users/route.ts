@@ -12,12 +12,6 @@ function getServiceRoleClient() {
   })
 }
 
-// Map a stored subscription plan to the canonical plan name used in the UI.
-function normalizePlan(p: string): 'nextfounder' | 'founder' | 'legend' | string {
-  if (p === 'explorer' || p === 'campus') return 'nextfounder'
-  return p
-}
-
 // ─── GET: list real, registered users (admin only) ────────────────────────────
 export async function GET() {
   try {
@@ -115,7 +109,7 @@ export async function GET() {
       const uid = String(row.user_id || '')
       if (!uid) continue
       if (!planByUser.has(uid)) {
-        planByUser.set(uid, normalizePlan(String(row.plan)))
+        planByUser.set(uid, String(row.plan))
         subMetaByUser.set(uid, {
           periodEnd: row.period_end ?? null,
           periodStart: row.period_start ?? null,
@@ -253,8 +247,7 @@ export async function PATCH(request: Request) {
     }
 
     // set_plan
-    const planRaw = String(body.plan || 'free')
-    const plan = normalizePlan(planRaw)
+    const plan = String(body.plan || 'free').trim().toLowerCase()
     if (!['free', 'nextfounder', 'founder', 'legend'].includes(plan)) {
       return NextResponse.json({ error: 'Invalid plan' }, { status: 400 })
     }
