@@ -85,11 +85,22 @@ export function isMissingPreferencesTable(error: { code?: string; message?: stri
   )
 }
 
-export async function readPreferences(userId: string): Promise<{
+/**
+ * Minimal shape of the Supabase clients this module accepts, so a request-scoped
+ * session client and the service-role client are interchangeable.
+ */
+type PreferenceClient = {
+  from: (table: string) => any
+}
+
+export async function readPreferences(
+  userId: string,
+  client?: PreferenceClient | null
+): Promise<{
   preferences: EmailPreferences
   available: boolean
 }> {
-  const supabase = getServiceRoleClient()
+  const supabase = client || getServiceRoleClient()
   if (!supabase) return { preferences: { ...DEFAULT_PREFERENCES }, available: false }
 
   const { data, error } = await supabase
@@ -124,12 +135,17 @@ export interface PreferenceUpdate {
  */
 export async function writePreferences(
   userId: string,
-  update: PreferenceUpdate
+  update: PreferenceUpdate,
+  client?: PreferenceClient | null
 ): Promise<EmailPreferences> {
-  const supabase = getServiceRoleClient()
-  if (!supabase) throw new Error('Email preferences are unavailable: service role not configured')
+  // A session-scoped client is preferred: the row is written as the user, so the
+  // RLS policies enforce ownership rather than the service role bypassing them.
+  // The service role is only needed for token-authenticated requests, which have
+  // no session by design.
+  const supabase = client || getServiceRoleClient()
+  if (!supabase) throw new Error('Email preferences are unavailable: no database client')
 
-  const { preferences: current } = await readPreferences(userId)
+  const { preferences: current } = await readPreferences(userId, supabase)
 
   const next = {
     deal_alerts: update.deal_alerts ?? current.dealAlerts,
@@ -155,16 +171,29 @@ export async function writePreferences(
     .select('deal_alerts, membership_offers, product_updates, opted_in_at, unsubscribed_all_at')
     .single()
 
-  if (error) throw new Error(`Email preference write failed: ${error.message}`)
+  if (error) {
+    // Include the Postgres code so a permissions problem is distinguishable
+    // from a missing table in production logs.
+    throw new Error(
+      `Email preference write failed [${error.code || 'unknown'}]: ${error.message}`
+    )
+  }
 
   return fromRow(data as PreferenceRow)
 }
 
 /** Switch every optional category off. Used by one-click unsubscribe. */
-export async function unsubscribeAll(userId: string): Promise<EmailPreferences> {
-  return writePreferences(userId, {
-    deal_alerts: false,
-    membership_offers: false,
-    product_updates: false,
-  })
+export async function unsubscribeAll(
+  userId: string,
+  client?: PreferenceClient | null
+): Promise<EmailPreferences> {
+  return writePreferences(
+    userId,
+    {
+      deal_alerts: false,
+      membership_offers: false,
+      product_updates: false,
+    },
+    client
+  )
 }

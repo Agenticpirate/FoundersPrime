@@ -28,6 +28,11 @@ import { getClientIp } from '@/lib/security/ip'
 interface ResolvedIdentity {
   userId: string
   via: 'token' | 'session'
+  /**
+   * Present for session requests. Reads and writes then run as the user, so the
+   * RLS policies enforce ownership instead of relying on the service role.
+   */
+  client?: ReturnType<typeof createClient> | null
 }
 
 async function resolveIdentity(
@@ -41,7 +46,8 @@ async function resolveIdentity(
     if (!result.valid) {
       return { identity: null, error: result.reason, status: 400 }
     }
-    return { identity: { userId: result.userId, via: 'token' } }
+    // Token requests have no session, so they must use the service role.
+    return { identity: { userId: result.userId, via: 'token', client: null } }
   }
 
   const supabase = createClient()
@@ -57,7 +63,7 @@ async function resolveIdentity(
     }
   }
 
-  return { identity: { userId: user.id, via: 'session' } }
+  return { identity: { userId: user.id, via: 'session', client: supabase } }
 }
 
 function categoryList() {
@@ -81,7 +87,7 @@ export async function GET(req: NextRequest) {
   if (!identity) return NextResponse.json({ error }, { status: status || 401 })
 
   try {
-    const { preferences, available } = await readPreferences(identity.userId)
+    const { preferences, available } = await readPreferences(identity.userId, identity.client)
     return NextResponse.json({
       preferences,
       categories: categoryList(),
@@ -120,7 +126,7 @@ export async function POST(req: NextRequest) {
     // Unsubscribe-from-all is an explicit action rather than three false values,
     // so the intent is unambiguous in logs and in the response.
     if (body.unsubscribeAll === true) {
-      const preferences = await unsubscribeAll(identity.userId)
+      const preferences = await unsubscribeAll(identity.userId, identity.client)
       return NextResponse.json({
         success: true,
         unsubscribedAll: true,
@@ -155,7 +161,7 @@ export async function POST(req: NextRequest) {
       )
     }
 
-    const preferences = await writePreferences(identity.userId, update)
+    const preferences = await writePreferences(identity.userId, update, identity.client)
     return NextResponse.json({
       success: true,
       preferences,
