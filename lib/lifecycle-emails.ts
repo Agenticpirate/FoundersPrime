@@ -143,6 +143,8 @@ function greeting(firstName?: string | null): string {
  */
 const BRAND = {
   ink: '#111111',
+  /** Matches the solid black background baked into the logo artwork. */
+  headerBar: '#000000',
   accent: '#ffd700',
   paper: '#F4F3EF',
   surface: '#ffffff',
@@ -152,9 +154,27 @@ const BRAND = {
   hairline: '#e5e7eb',
 } as const
 
-/** Absolute URL — email clients cannot resolve relative image paths. */
-function logoUrl(): string {
-  return `${appUrl()}/logo-icon.png`
+/**
+ * Base URL for images embedded in email.
+ *
+ * Deliberately separate from appUrl(): during local development
+ * NEXT_PUBLIC_APP_URL points at localhost, and a localhost image URL is
+ * unreachable from any real mail client, so the logo renders as a broken image.
+ * Email assets therefore always resolve against a publicly reachable host.
+ */
+function emailAssetBase(): string {
+  const configured = process.env.EMAIL_ASSET_BASE_URL?.trim()
+  if (configured) return configured.replace(/\/$/, '')
+
+  const app = appUrl()
+  if (/^https:\/\//i.test(app) && !/localhost|127\.0\.0\.1/i.test(app)) return app
+
+  return 'https://www.foundersprime.com'
+}
+
+/** Full FOUNDERS[PRIME] wordmark, pre-trimmed for email at 220px wide. */
+function wordmarkUrl(): string {
+  return `${emailAssetBase()}/email/foundersprime-wordmark.png`
 }
 
 /**
@@ -187,22 +207,15 @@ export function oneClickUnsubscribeUrlFor(userId: string): string | null {
 }
 
 /**
- * Header lockup matching the site: the icon tile beside the mono FOUNDERS[PRIME]
- * wordmark with accent-yellow brackets. Built as a table so Outlook aligns it.
+ * Header lockup: the real brand wordmark image. The source artwork already sits
+ * on solid black, so the header bar uses pure black to avoid a visible seam.
+ * The alt text carries the brand name for clients that block images.
  */
 function brandHeader(): string {
-  return `
-    <table role="presentation" cellspacing="0" cellpadding="0" border="0">
-      <tr>
-        <td style="padding-right:12px;vertical-align:middle;">
-          <img src="${logoUrl()}" width="36" height="36" alt="FoundersPrime"
-               style="display:block;width:36px;height:36px;border:0;outline:none;text-decoration:none;">
-        </td>
-        <td style="vertical-align:middle;">
-          <span style="font-family:'IBM Plex Mono',Consolas,Menlo,monospace;font-size:17px;font-weight:900;letter-spacing:1px;color:${BRAND.surface};text-transform:uppercase;">FOUNDERS<span style="color:${BRAND.accent};">[</span>PRIME<span style="color:${BRAND.accent};">]</span></span>
-        </td>
-      </tr>
-    </table>`
+  return `<a href="${appUrl()}" style="text-decoration:none;">
+      <img src="${wordmarkUrl()}" width="220" height="71" alt="FoundersPrime"
+           style="display:block;width:220px;height:71px;max-width:100%;border:0;outline:none;text-decoration:none;color:${BRAND.surface};font-family:'IBM Plex Mono',Consolas,Menlo,monospace;font-size:17px;font-weight:900;">
+    </a>`
 }
 
 function emailShell({
@@ -229,7 +242,7 @@ function emailShell({
         <td align="center">
           <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="max-width:600px;background:${BRAND.surface};border:2px solid ${BRAND.ink};">
             <tr>
-              <td style="background:${BRAND.ink};padding:20px 28px;">${brandHeader()}</td>
+              <td style="background:${BRAND.headerBar};padding:18px 24px;">${brandHeader()}</td>
             </tr>
             <tr>
               <td style="height:4px;background:${BRAND.accent};line-height:4px;font-size:0;">&nbsp;</td>
