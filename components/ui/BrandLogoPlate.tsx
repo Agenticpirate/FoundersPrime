@@ -23,6 +23,7 @@ export interface BrandLogoPlateProps {
   size?: BrandLogoPlateSize
   className?: string
   plateClassName?: string
+  /** Set only for plates above the fold; everything else should stay lazy. */
   eager?: boolean
 }
 
@@ -76,7 +77,10 @@ export function BrandLogoPlate({
   size = 'md',
   className = '',
   plateClassName = '',
-  eager = true,
+  // Lazy by default: a catalog page renders dozens of these, and eager loading
+  // them all competes with the largest contentful paint. Pass eager only for
+  // plates that are genuinely above the fold.
+  eager = false,
 }: BrandLogoPlateProps) {
   const chain = useMemo(
     () =>

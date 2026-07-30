@@ -11,6 +11,11 @@ interface DealLogoProps {
   /** Optional website for better logo domain resolution (e.g. 500.co) */
   website?: string
   size?: 'sm' | 'md' | 'lg'
+  /**
+   * Load immediately instead of lazily. Reserve this for a detail page's single
+   * hero logo; grids render many of these and should stay lazy.
+   */
+  eager?: boolean
 }
 
 function usable(url?: string): string | undefined {
@@ -39,6 +44,7 @@ export default function DealLogo({
   provider,
   website,
   size = 'md',
+  eager = false,
 }: DealLogoProps) {
   const brandSize = size === 'sm' ? 'md' : 'lg'
 
@@ -59,7 +65,7 @@ export default function DealLogo({
           domain={domain}
           logo={logo}
           size={brandSize}
-          eager
+          eager={eager}
           className="!w-full !h-full !min-w-0 !min-h-0 !max-w-full !max-h-full !rounded-none !border-0 !p-0 !bg-transparent !shadow-none !flex !overflow-hidden"
         />
       </div>

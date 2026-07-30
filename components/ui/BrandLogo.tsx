@@ -119,7 +119,10 @@ export default function BrandLogo({
       ? 'text-gray-100'
       : 'text-gray-800 dark:text-gray-100'
 
-  const paintNow = eager || plate || isLocalAsset(currentSrc) || isLocalAsset(logo)
+  // Only paint immediately when the caller explicitly asks. Previously `plate`
+  // and any local asset forced eager loading, which meant a page full of logo
+  // plates issued ~190 eager image requests and starved the LCP element.
+  const paintNow = eager
   const showImg = paintNow || imgOk
   const hideInitials = Boolean(imgOk && !exhausted)
 
