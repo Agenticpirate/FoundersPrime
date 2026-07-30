@@ -360,14 +360,16 @@ export default function FlashDealDetailContent({ deal }: { deal: FlashDeal }) {
         {/* ── RIGHT: Sidebar ── */}
         <div className="space-y-4">
 
-          {/* Countdown */}
-          <div className="bg-gradient-to-br from-[#1c1a0e] via-[#0d0d0d] to-[#000] border border-accent-yellow/30 rounded-xl p-5">
-            <p className="font-mono font-bold text-[10px] uppercase tracking-[0.2em] text-accent-yellow mb-3 flex items-center gap-1.5">
-              <span className="material-symbols-outlined text-[14px]" style={{ fontVariationSettings: "'FILL' 1" }}>bolt</span>
-              Deal Expires In
-            </p>
-            <FlashCountdown endsAt={deal.endsAt} durationHours={deal.durationHours} variant="inline" />
-          </div>
+          {/* Countdown — only when the deal has an explicit timing value */}
+          {(deal.endsAt || deal.durationHours) && (
+            <div className="bg-gradient-to-br from-[#1c1a0e] via-[#0d0d0d] to-[#000] border border-accent-yellow/30 rounded-xl p-5">
+              <p className="font-mono font-bold text-[10px] uppercase tracking-[0.2em] text-accent-yellow mb-3 flex items-center gap-1.5">
+                <span className="material-symbols-outlined text-[14px]" style={{ fontVariationSettings: "'FILL' 1" }}>bolt</span>
+                Deal Expires In
+              </p>
+              <FlashCountdown endsAt={deal.endsAt} durationHours={deal.durationHours} variant="inline" />
+            </div>
+          )}
 
           {/* Main CTA — claim URLs only after signup */}
           <div className="bg-white dark:bg-[#0c0c0c] border border-gray-200 dark:border-white/10 rounded-xl p-5">
@@ -400,7 +402,7 @@ export default function FlashDealDetailContent({ deal }: { deal: FlashDeal }) {
                   href="#region-select"
                   className="flex items-center justify-center gap-2 w-full py-3 bg-accent-yellow text-black font-mono font-black text-sm uppercase tracking-wide rounded-lg hover:bg-white transition-colors shadow-[0_4px_16px_rgba(255,215,0,0.25)]"
                 >
-                  Select Region & Claim
+                  Select Region &amp; Claim
                   <span className="material-symbols-outlined text-[16px]">arrow_downward</span>
                 </a>
                 <p className="text-[10px] text-gray-500 text-center mt-2.5">
@@ -415,11 +417,11 @@ export default function FlashDealDetailContent({ deal }: { deal: FlashDeal }) {
                   rel="noopener noreferrer"
                   className="flex items-center justify-center gap-2 w-full py-3 bg-accent-yellow text-black font-mono font-black text-sm uppercase tracking-wide rounded-lg hover:bg-white transition-colors shadow-[0_4px_16px_rgba(255,215,0,0.25)]"
                 >
-                  Claim Now — It&apos;s Free
+                  {deal.ctaLabel || "Claim Now — It's Free"}
                   <span className="material-symbols-outlined text-[16px]">arrow_forward</span>
                 </a>
                 <p className="text-[10px] text-gray-500 text-center mt-2.5">
-                  Limited time · Gone when timer hits zero
+                  {deal.claimNote || 'Limited time · Verify final terms with the provider'}
                 </p>
               </div>
             )}

@@ -1,11 +1,8 @@
-'use client'
-
 import Link from 'next/link'
 import type { FlashDeal, FlashBadge, FlashDiscountColor } from '@/data/flash-deals'
 import FlashCountdown from './FlashCountdown'
 import FlashLogo from './FlashLogo'
 import { GlowingEffect } from '@/components/ui/GlowingEffect'
-import { useAuth } from '@/lib/auth/hooks'
 import { CardHoverGlowShell, cardHoverClass, cardTitleHoverClass } from '@/components/ui/card-hover'
 
 const BADGE_STYLES: Record<FlashBadge, { label: string; short: string; className: string }> = {
@@ -42,14 +39,7 @@ export default function FlashDealCard({
 }) {
   const badge = BADGE_STYLES[deal.badge]
   const discountClass = DISCOUNT_STYLES[deal.discountColor] || DISCOUNT_STYLES.orange
-  const { isAuthenticated, loading } = useAuth()
-
   const detailPath = `/flash-deals/${deal.id}`
-  // Flash claims require a free account — unauthenticated users go to signup first
-  const cardHref =
-    loading || isAuthenticated
-      ? detailPath
-      : `/login?view=signup&redirect=${encodeURIComponent(detailPath)}`
 
   return (
     <div className={`relative h-full rounded-xl md:rounded-2xl ${featured ? 'sm:col-span-1' : ''}`}>
@@ -63,7 +53,8 @@ export default function FlashDealCard({
       />
 
       <Link
-        href={cardHref}
+        href={detailPath}
+        aria-label={`View ${deal.name} deal`}
         className={`flex flex-col bg-white dark:bg-[#0c0c0c] border border-black/10 dark:border-white/10 shadow-sm h-full rounded-xl md:rounded-2xl text-left ${cardHoverClass} focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-yellow/50`}
       >
         <CardHoverGlowShell className="rounded-xl md:rounded-2xl" />
@@ -107,21 +98,23 @@ export default function FlashDealCard({
           </p>
         </div>
 
-        {/* Countdown — compact */}
-        <div className="px-2 pb-1.5 sm:px-3 sm:pb-2.5">
-          <div className="flex items-center gap-1 rounded-md sm:rounded-lg border border-black/[0.06] dark:border-white/[0.08] bg-gray-50 dark:bg-white/[0.03] px-1.5 sm:px-2.5 py-1 sm:py-1.5">
-            <span className="material-symbols-outlined !text-[11px] sm:!text-[13px] text-red-500 animate-pulse">
-              timer
-            </span>
-            <span className="text-gray-600 dark:text-zinc-400 font-mono text-[8px] sm:text-[10px] truncate">
-              <FlashCountdown
-                endsAt={deal.endsAt}
-                durationHours={deal.durationHours}
-                variant="inline"
-              />
-            </span>
+        {/* Countdown — only when timing data exists */}
+        {(deal.endsAt || deal.durationHours) && (
+          <div className="px-2 pb-1.5 sm:px-3 sm:pb-2.5">
+            <div className="flex items-center gap-1 rounded-md sm:rounded-lg border border-black/[0.06] dark:border-white/[0.08] bg-gray-50 dark:bg-white/[0.03] px-1.5 sm:px-2.5 py-1 sm:py-1.5">
+              <span className="material-symbols-outlined !text-[11px] sm:!text-[13px] text-red-500 animate-pulse">
+                timer
+              </span>
+              <span className="text-gray-600 dark:text-zinc-400 font-mono text-[8px] sm:text-[10px] truncate">
+                <FlashCountdown
+                  endsAt={deal.endsAt}
+                  durationHours={deal.durationHours}
+                  variant="inline"
+                />
+              </span>
+            </div>
           </div>
-        </div>
+        )}
 
         {/* Value + CTA */}
         <div className="px-2 pb-2 sm:px-3 sm:pb-3 mt-auto border-t border-gray-100 dark:border-white/10 pt-1.5 sm:pt-2.5">
@@ -139,21 +132,10 @@ export default function FlashDealCard({
               </div>
             </div>
             <span className="relative shrink-0 inline-flex items-center gap-0.5 bg-[#000000] text-white border border-[#FFD500]/40 text-[8px] sm:text-[9px] font-bold uppercase px-1.5 sm:px-2.5 py-1 sm:py-1.5 rounded-md sm:rounded-lg group-hover:bg-[#FFD500] group-hover:text-black group-hover:border-[#FFD500] transition-all duration-200">
-              {loading ? (
-                <span>…</span>
-              ) : isAuthenticated ? (
-                <>
-                  Claim
-                  <span className="material-symbols-outlined !text-[10px] sm:!text-[11px] group-hover:translate-x-0.5 transition-transform">
-                    arrow_forward
-                  </span>
-                </>
-              ) : (
-                <>
-                  Sign up
-                  <span className="material-symbols-outlined !text-[10px] sm:!text-[11px]">lock</span>
-                </>
-              )}
+              View deal
+              <span className="material-symbols-outlined !text-[10px] sm:!text-[11px] group-hover:translate-x-0.5 transition-transform">
+                arrow_forward
+              </span>
             </span>
           </div>
         </div>

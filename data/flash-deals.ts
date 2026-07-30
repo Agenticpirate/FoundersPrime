@@ -63,6 +63,10 @@ export interface FlashDeal {
   durationHours?: number
   /** Where "View Deal" links (external claim URL). */
   dealUrl: string
+  /** Optional deal-specific claim button label. */
+  ctaLabel?: string
+  /** Optional note shown beneath the claim button. */
+  claimNote?: string
   /** Country/region specific promo options if available */
   options?: FlashDealOption[]
   /** Eligibility criteria shown on detail page */
@@ -86,56 +90,43 @@ export const FLASH_CATEGORIES: { key: string; label: string }[] = [
 export const flashDeals: FlashDeal[] = [
   {
     id: 'chatgpt-plus-flash',
-    name: 'ChatGPT Business Plan',
-    description: 'ChatGPT Business plan free one seat 1+1 offer (save up to $2,000).',
-    longDescription: 'OpenAI is offering a special ChatGPT Business plan deal: buy one seat, get one free (1+1 offer). The deal is applicable for up to 48 months, providing savings of up to $2,000. It includes access to OpenAI\'s latest models, advanced capabilities, and OpenAI Codex.',
+    name: 'ChatGPT Plus',
+    description: 'Get 50% off ChatGPT Plus for your first 2 months.',
+    longDescription: 'ChatGPT is offering eligible users 50% off ChatGPT Plus for two months through this limited-time official campaign. Open the offer link, sign in, and review the eligibility, price, and renewal terms shown by ChatGPT before subscribing.',
     badge: 'hot',
     category: 'ai-credits',
     logo: '/logos/chatgpt.png',
     domain: 'chatgpt.com',
-    price: '1+1 Offer',
-    priceUnit: '48 Months',
-    originalPrice: 'Save $2k',
-    discount: '1+1 OFFER',
+    price: '50% Off',
+    priceUnit: 'For 2 Months',
+    originalPrice: '',
+    discount: '50% OFF',
     discountColor: 'emerald',
-    durationHours: 72,
-    dealUrl: 'https://chatgpt.com',
-    options: [
-      { label: '🇺🇸 USA', url: 'https://chatgpt.com/?promoCode=f6sus' },
-      { label: '🇨🇦 Canada', url: 'https://chatgpt.com/?promoCode=factspanca' },
-      { label: '🇦🇺 Australia', url: 'https://chatgpt.com/?promoCode=27aiau' },
-      { label: '🇳🇿 New Zealand', url: 'https://chatgpt.com/?promoCode=27ainz' },
-      { label: '🇲🇽 Mexico', url: 'https://chatgpt.com/?promoCode=wedoaimx' },
-      { label: '🇵🇰 Pakistan', url: 'https://chatgpt.com/?promoCode=wedoaipk' },
-      { label: '🇩🇪 Germany', url: 'https://chatgpt.com/?promoCode=loptrde' },
-      { label: '🇩🇰 Denmark', url: 'https://chatgpt.com/?promoCode=factspandk' },
-      { label: '🇮🇳 India', url: 'https://chatgpt.com/?promoCode=27aiin' },
-      { label: '🇯🇵 Japan', url: 'https://chatgpt.com/?promoCode=archinesjp' },
-      { label: '🇸🇬 Singapore', url: 'https://chatgpt.com/?promoCode=synechronsg' },
-    ],
+    dealUrl: 'https://chatgpt.com/?promo_campaign=plus-2-months-50-pct-off#pricing',
+    ctaLabel: 'Claim 50% Off',
+    claimNote: 'Eligibility and final pricing are confirmed by ChatGPT.',
     eligibility: [
-      'Applicable for new and existing teams/workspaces',
-      'Requires buying one ChatGPT Business seat to get one seat free (1+1)',
-      'Valid for up to 48 months of active subscription',
-      'Promo link is region-specific — select the correct country',
+      'Offer availability is determined by ChatGPT for the signed-in account',
+      'The promotion applies to ChatGPT Plus for two months when shown at checkout',
+      'New or returning subscriber eligibility may vary by account and region',
+      'Final price, currency, taxes, and renewal terms are displayed before purchase',
     ],
     highlights: [
-      'Buy one seat, get one seat free (1+1 business offer)',
-      'Up to 48 months duration saving up to $2,000',
-      'Access to the latest models (GPT-4o, GPT-4, and specialized models)',
-      'OpenAI Codex included for code generation and analysis',
-      'Enterprise-grade security and admin management console',
+      '50% off ChatGPT Plus for two months',
+      'Official promotion hosted directly on ChatGPT',
+      'Access to the Plus features and limits displayed for your account',
+      'Subscription and billing managed securely through ChatGPT',
     ],
     steps: [
-      { step: 1, title: 'Select Your Region', description: 'Choose your country from the options on this page. Each region has its own unique promo code link.', icon: 'public' },
-      { step: 2, title: 'Open the Promo Link', description: "Click your region's link — it will open ChatGPT with the promo code pre-applied automatically.", icon: 'open_in_new' },
-      { step: 3, title: 'Set Up Your Workspace', description: "Log in or create a business team workspace to apply the 1+1 free seat promotion.", icon: 'account_circle' },
-      { step: 4, title: 'Add Seats & Save', description: 'Purchase your first seat — the second seat will be credited free on your billing cycle.', icon: 'shopping_cart' },
+      { step: 1, title: 'Open the Official Offer', description: 'Use the claim button to open the official ChatGPT campaign page with the promotion attached.', icon: 'open_in_new' },
+      { step: 2, title: 'Sign In to ChatGPT', description: 'Log in with the ChatGPT account you want to use for the Plus subscription.', icon: 'account_circle' },
+      { step: 3, title: 'Confirm Eligibility', description: 'Check that ChatGPT displays the 50% discount for two months on your account.', icon: 'verified_user' },
+      { step: 4, title: 'Review and Subscribe', description: 'Review the final price, renewal terms, and taxes shown by ChatGPT before completing checkout.', icon: 'shopping_cart' },
     ],
     tips: [
-      'Ensure you register with your company email matching your domain name',
-      'If the code does not apply, clear your browser cache or use an incognito window',
-      'Active savings last for up to 48 months if subscription remains active',
+      'Use the ChatGPT account you intend to keep for the subscription',
+      'Confirm the 50% discount and two-month duration before paying',
+      'Review the regular renewal price and cancellation terms shown at checkout',
     ],
   },
   {
