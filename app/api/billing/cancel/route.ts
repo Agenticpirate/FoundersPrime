@@ -1,7 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server'
 import DodoPayments from 'dodopayments'
+import { createClient as createServiceClient } from '@supabase/supabase-js'
 import { createClient } from '@/lib/supabase/server'
 import { billingLimiter, rateLimitHeaders } from '@/lib/security/rate-limit'
+
+function getServiceRoleClient() {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY
+  if (!url || !key) return null
+  return createServiceClient(url, key, {
+    auth: { autoRefreshToken: false, persistSession: false },
+  })
+}
 
 /**
  * Cancel auto-renewal for the signed-in user's active subscription.
@@ -19,6 +29,17 @@ export async function POST(req: NextRequest) {
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+    }
+
+    // Privileged subscription reads/writes happen only after cookie-auth
+    // verification and remain scoped to the authenticated user ID.
+    const serviceClient = getServiceRoleClient()
+    if (!serviceClient) {
+      console.error('Subscription cancellation failed: service role is not configured')
+      return NextResponse.json(
+        { error: 'Subscription management is temporarily unavailable. Please try again shortly.' },
+        { status: 500 }
+      )
     }
 
     // Rate-limit cancellation by user ID (10 attempts per 5 min)
@@ -63,7 +84,7 @@ export async function POST(req: NextRequest) {
     }
 
     // Find the active subscription row
-    const { data: sub, error: subErr } = await supabase
+    const { data: sub, error: subErr } = await serviceClient
       .from('user_subscriptions')
       .select('id, plan, stripe_subscription_id, status, period_end, cancel_at_period_end')
       .eq('user_id', user.id)
@@ -133,7 +154,7 @@ export async function POST(req: NextRequest) {
     // falling back to only cancel_at_period_end if the optional feedback columns are absent.
     let localUpdateError: { message?: string } | null = null
     try {
-      const { data: updatedRow, error: updateErr } = await supabase
+      const { data: updatedRow, error: updateErr } = await serviceClient
         .from('user_subscriptions')
         .update({
           cancel_at_period_end: true,
@@ -142,17 +163,21 @@ export async function POST(req: NextRequest) {
           updated_at: new Date().toISOString(),
         })
         .eq('id', sub.id)
+        .eq('user_id', user.id)
+        .eq('status', 'active')
         .select('id')
         .maybeSingle()
 
       if (updateErr) {
-        const { data: fallbackRow, error: fallbackError } = await supabase
+        const { data: fallbackRow, error: fallbackError } = await serviceClient
           .from('user_subscriptions')
           .update({
             cancel_at_period_end: true,
             updated_at: new Date().toISOString(),
           })
           .eq('id', sub.id)
+          .eq('user_id', user.id)
+          .eq('status', 'active')
           .select('id')
           .maybeSingle()
         localUpdateError = fallbackError ||

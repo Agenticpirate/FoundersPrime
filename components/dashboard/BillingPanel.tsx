@@ -150,7 +150,11 @@ export default function BillingPanel({
       const res = await fetch('/api/billing/cancel', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ reason: cancelReason, feedback: cancelComments }),
+        body: JSON.stringify({
+          reason: cancelReason,
+          feedback: cancelComments,
+          confirm: true,
+        }),
       })
       const data = await res.json()
       if (res.ok && data.success) {
