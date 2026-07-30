@@ -211,7 +211,7 @@ function RotatingFooterQuote({ reduce }: { reduce: boolean | null }) {
           reduce ? '' : 'footer-rotating-quote'
         }`}
       >
-        <span className="text-accent-yellow/80 mr-1.5">//</span>
+        <span className="text-accent-yellow/80 mr-1.5">{'//'}</span>
         {quote}
       </p>
     </div>
