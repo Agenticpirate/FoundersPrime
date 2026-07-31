@@ -488,6 +488,110 @@ const socials = [
   },
 ]
 
+/**
+ * One card treatment for every recognition badge, so the row reads as a single
+ * consistent set rather than a patchwork.
+ *
+ * Note: each provider's badge image bakes in its own background — FoundrList and
+ * ScrollLaunch ship light artwork, the rest ship dark. A uniform card cannot
+ * change the artwork itself, so those two still read lighter. Recolouring a
+ * third-party badge would alter their brand mark, which is not something to do
+ * silently.
+ */
+const BADGE_CARD_CLASS =
+  'group flex h-full w-full items-center justify-center overflow-hidden rounded-xl border border-white/[0.09] bg-[#0d0d0d] px-3 py-2.5 no-underline shadow-[0_14px_40px_rgba(0,0,0,0.26)] transition-[border-color,box-shadow] duration-300 hover:border-accent-yellow/30 hover:shadow-[0_18px_46px_rgba(0,0,0,0.34)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-yellow'
+
+/**
+ * Fixed render height with width free, so badges of differing aspect ratios all
+ * occupy the same visual band instead of one dominating the row.
+ */
+const BADGE_IMG_CLASS = 'h-8 w-auto max-w-full object-contain'
+
+/**
+ * Directories and launch platforms featuring FoundersPrime.
+ *
+ * Held as data so the footer can render the set twice for a seamless slide
+ * without duplicating markup.
+ */
+const RECOGNITION_BADGES: {
+  key: string
+  alt: string
+  linkLabel?: string
+  href?: string
+  src: string
+  width: number
+  height: number
+  cardClass: string
+  imgClass: string
+  nativeImg?: boolean
+}[] = [
+  {
+    key: 'foundrlist',
+    alt: 'Featured on FoundrList',
+    src: 'https://www.foundrlist.com/api/badge/foundersprime-2',
+    width: 150,
+    height: 48,
+    cardClass: BADGE_CARD_CLASS,
+    imgClass: BADGE_IMG_CLASS,
+  },
+  {
+    key: 'peerlist',
+    alt: 'FoundersPrime on Peerlist',
+    linkLabel: 'FoundersPrime on Peerlist (opens in a new tab)',
+    href: 'https://peerlist.io/ravitejapro/project/foundersprime',
+    src: 'https://peerlist.io/api/v1/projects/embed/PRJH9OBR8GERQEODL1A7BKNBBPKAPM?showUpvote=false&theme=dark',
+    width: 244,
+    height: 56,
+    cardClass: BADGE_CARD_CLASS,
+    imgClass: BADGE_IMG_CLASS,
+    nativeImg: true,
+  },
+  {
+    key: 'scrolllaunch',
+    alt: 'Featured on ScrollLaunch',
+    linkLabel: 'Featured on ScrollLaunch (opens in a new tab)',
+    href: 'https://www.scrolllaunch.com/products/foundersprime?utm_source=badge&utm_medium=embed&utm_campaign=foundersprime&ref=scrolllaunch',
+    src: 'https://www.scrolllaunch.com/api/badge/foundersprime',
+    width: 220,
+    height: 48,
+    cardClass: BADGE_CARD_CLASS,
+    imgClass: BADGE_IMG_CLASS,
+  },
+  {
+    key: 'dodo-index',
+    alt: 'Featured on Index by Dodo Payments',
+    linkLabel: 'Featured on Index by Dodo Payments (opens in a new tab)',
+    href: 'https://index.dodopayments.com/foundersprime?utm_source=index&utm_medium=badge&utm_campaign=embed&utm_content=tool-foundersprime',
+    src: 'https://index.dodopayments.com/foundersprime/badge.svg?theme=dark&width=250&height=50',
+    width: 250,
+    height: 50,
+    cardClass: BADGE_CARD_CLASS,
+    imgClass: BADGE_IMG_CLASS,
+  },
+  {
+    key: 'nicklaunches',
+    alt: 'FoundersPrime on Nick Launches',
+    linkLabel: 'FoundersPrime on Nick Launches (opens in a new tab)',
+    href: 'https://nicklaunches.com/products/foundersprime/?utm_source=foundersprime.com&utm_medium=badge&utm_campaign=featured',
+    src: 'https://nicklaunches.com/badges/featured-dark.png',
+    width: 244,
+    height: 56,
+    cardClass: BADGE_CARD_CLASS,
+    imgClass: BADGE_IMG_CLASS,
+  },
+  {
+    key: 'youraiproject',
+    alt: 'Listed on YourAIProject',
+    linkLabel: 'FoundersPrime listed on YourAIProject (opens in a new tab)',
+    href: 'https://youraiproject.com/explore/foundersprime',
+    src: 'https://youraiproject.com/listed-on-youraiproject.svg',
+    width: 244,
+    height: 56,
+    cardClass: BADGE_CARD_CLASS,
+    imgClass: BADGE_IMG_CLASS,
+  },
+]
+
 export default function Footer() {
   const pathname = usePathname() || '/'
   const [search, setSearch] = useState('')
@@ -742,129 +846,73 @@ export default function Footer() {
               </h2>
             </m.div>
 
-            <ul
-              className="grid flex-1 grid-cols-1 gap-2.5 sm:grid-cols-2 xl:grid-cols-5"
-              aria-label="Platforms featuring FoundersPrime"
-            >
-              <m.li
-                initial={{ opacity: 0, y: 14, scale: 0.97 }}
-                whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                whileHover={{ y: -4, scale: 1.012, transition: { duration: 0.2 } }}
-                viewport={{ once: true, amount: 0.4 }}
-                transition={{ duration: 0.48, delay: 0.14, ease: premiumEase }}
-                className="footer-recognition-motion flex h-[76px] min-w-0 items-center justify-center rounded-xl border border-black/10 bg-white p-3 shadow-[0_14px_40px_rgba(0,0,0,0.26)]"
+            {/*
+              Continuous, compact slide. The badge set renders twice so a -50%
+              translate loops seamlessly. The second pass is hidden from
+              assistive tech so badges are not announced twice.
+            */}
+            <div className="footer-badge-viewport relative flex-1 overflow-hidden">
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-y-0 left-0 z-10 w-8 bg-gradient-to-r from-[#070707] to-transparent sm:w-12"
+              />
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-y-0 right-0 z-10 w-8 bg-gradient-to-l from-[#070707] to-transparent sm:w-12"
+              />
+              <ul
+                className="footer-badge-track flex w-max items-center gap-2.5 list-none p-0 m-0"
+                aria-label="Platforms featuring FoundersPrime"
               >
-                <Image
-                  src="https://www.foundrlist.com/api/badge/foundersprime-2"
-                  alt="Featured on FoundrList"
-                  width={150}
-                  height={48}
-                  className="h-10 w-auto max-w-[92%] object-contain"
-                  unoptimized
-                />
-              </m.li>
-              <m.li
-                initial={{ opacity: 0, y: 14, scale: 0.97 }}
-                whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                whileHover={{ y: -4, scale: 1.012, transition: { duration: 0.2 } }}
-                viewport={{ once: true, amount: 0.4 }}
-                transition={{ duration: 0.48, delay: 0.23, ease: premiumEase }}
-                className="footer-recognition-motion h-[76px] min-w-0"
-              >
-                <a
-                  href="https://peerlist.io/ravitejapro/project/foundersprime"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="FoundersPrime on Peerlist (opens in a new tab)"
-                  className="group flex h-full items-center justify-center overflow-hidden rounded-xl border border-white/[0.09] bg-[#111111] p-2.5 no-underline shadow-[0_14px_40px_rgba(0,0,0,0.26)] transition-[border-color,box-shadow] duration-300 hover:border-accent-yellow/30 hover:shadow-[0_18px_46px_rgba(0,0,0,0.34)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-yellow"
-                >
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src="https://peerlist.io/api/v1/projects/embed/PRJH9OBR8GERQEODL1A7BKNBBPKAPM?showUpvote=false&theme=dark"
-                    alt="FoundersPrime on Peerlist"
-                    className="h-10 w-auto max-w-[92%] rounded-md object-contain"
-                  />
-                </a>
-              </m.li>
-              <m.li
-                initial={{ opacity: 0, y: 14, scale: 0.97 }}
-                whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                whileHover={{ y: -4, scale: 1.012, transition: { duration: 0.2 } }}
-                viewport={{ once: true, amount: 0.4 }}
-                transition={{ duration: 0.48, delay: 0.32, ease: premiumEase }}
-                className="footer-recognition-motion h-[76px] min-w-0"
-              >
-                <a
-                  href="https://www.scrolllaunch.com/products/foundersprime?utm_source=badge&utm_medium=embed&utm_campaign=foundersprime&ref=scrolllaunch"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="Featured on ScrollLaunch (opens in a new tab)"
-                  className="group flex h-full items-center justify-center overflow-hidden rounded-xl border border-black/10 bg-white p-3 no-underline shadow-[0_14px_40px_rgba(0,0,0,0.26)] transition-[border-color,box-shadow] duration-300 hover:border-accent-yellow/30 hover:shadow-[0_18px_46px_rgba(0,0,0,0.34)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-yellow"
-                >
-                  <Image
-                    src="https://www.scrolllaunch.com/api/badge/foundersprime"
-                    alt="Featured on ScrollLaunch"
-                    width={220}
-                    height={48}
-                    loading="lazy"
-                    className="h-10 w-auto max-w-[92%] object-contain"
-                    unoptimized
-                  />
-                </a>
-              </m.li>
-              <m.li
-                initial={{ opacity: 0, y: 14, scale: 0.97 }}
-                whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                whileHover={{ y: -4, scale: 1.012, transition: { duration: 0.2 } }}
-                viewport={{ once: true, amount: 0.4 }}
-                transition={{ duration: 0.48, delay: 0.41, ease: premiumEase }}
-                className="footer-recognition-motion h-[76px] min-w-0"
-              >
-                <a
-                  href="https://index.dodopayments.com/foundersprime?utm_source=index&utm_medium=badge&utm_campaign=embed&utm_content=tool-foundersprime"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="Featured on Index by Dodo Payments (opens in a new tab)"
-                  className="group flex h-full items-center justify-center overflow-hidden rounded-xl border border-white/[0.09] bg-[#090909] p-3 no-underline shadow-[0_14px_40px_rgba(0,0,0,0.26)] transition-[border-color,box-shadow] duration-300 hover:border-[#C6FE1E]/40 hover:shadow-[0_18px_46px_rgba(0,0,0,0.34)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C6FE1E]"
-                >
-                  <Image
-                    src="https://index.dodopayments.com/foundersprime/badge.svg?theme=dark&width=250&height=50"
-                    alt="Featured on Index by Dodo Payments"
-                    width={250}
-                    height={50}
-                    loading="lazy"
-                    className="h-10 w-auto max-w-[92%] object-contain"
-                    unoptimized
-                  />
-                </a>
-              </m.li>
-              <m.li
-                initial={{ opacity: 0, y: 14, scale: 0.97 }}
-                whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                whileHover={{ y: -4, scale: 1.012, transition: { duration: 0.2 } }}
-                viewport={{ once: true, amount: 0.4 }}
-                transition={{ duration: 0.48, delay: 0.5, ease: premiumEase }}
-                className="footer-recognition-motion h-[76px] min-w-0"
-              >
-                <a
-                  href="https://nicklaunches.com/products/foundersprime/?utm_source=foundersprime.com&utm_medium=badge&utm_campaign=featured"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="FoundersPrime on Nick Launches (opens in a new tab)"
-                  className="group flex h-full items-center justify-center overflow-hidden rounded-xl border border-white/[0.09] bg-[#090909] p-3 no-underline shadow-[0_14px_40px_rgba(0,0,0,0.26)] transition-[border-color,box-shadow] duration-300 hover:border-accent-yellow/30 hover:shadow-[0_18px_46px_rgba(0,0,0,0.34)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-yellow"
-                >
-                  <Image
-                    src="https://nicklaunches.com/badges/featured-dark.png"
-                    alt="FoundersPrime on Nick Launches"
-                    width={244}
-                    height={56}
-                    loading="lazy"
-                    className="h-10 w-auto max-w-[92%] object-contain"
-                    unoptimized
-                  />
-                </a>
-              </m.li>
-            </ul>
+                {(['a', 'b'] as const).flatMap((pass) =>
+                  RECOGNITION_BADGES.map((badge) => {
+                    const duplicate = pass === 'b'
+                    const media = badge.nativeImg ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        src={badge.src}
+                        alt={duplicate ? '' : badge.alt}
+                        loading="lazy"
+                        className={badge.imgClass}
+                      />
+                    ) : (
+                      <Image
+                        src={badge.src}
+                        alt={duplicate ? '' : badge.alt}
+                        width={badge.width}
+                        height={badge.height}
+                        loading="lazy"
+                        className={badge.imgClass}
+                        unoptimized
+                      />
+                    )
+
+                    return (
+                      <li
+                        key={`${pass}-${badge.key}`}
+                        aria-hidden={duplicate ? 'true' : undefined}
+                        className="h-[76px] w-[168px] shrink-0 sm:w-[192px]"
+                      >
+                        {badge.href ? (
+                          <a
+                            href={badge.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label={duplicate ? undefined : badge.linkLabel}
+                            tabIndex={duplicate ? -1 : undefined}
+                            className={badge.cardClass}
+                          >
+                            {media}
+                          </a>
+                        ) : (
+                          <span className={badge.cardClass}>{media}</span>
+                        )}
+                      </li>
+                    )
+                  })
+                )}
+              </ul>
+            </div>
           </div>
         </m.div>
       </section>

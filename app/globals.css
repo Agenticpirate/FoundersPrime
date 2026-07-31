@@ -1741,3 +1741,35 @@ main {
     display: none !important;
   }
 }
+
+/* ── Footer recognition badges — continuous slide ──────────────────────────
+   The track renders the badge set twice, so translating by exactly -50%
+   returns to a visually identical frame and the loop appears seamless. */
+@keyframes footerBadgeSlide {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.footer-badge-track {
+  animation: footerBadgeSlide 34s linear infinite;
+  will-change: transform;
+}
+
+/* Pause while inspecting a badge, and when a visitor hits a link with keyboard. */
+.footer-badge-viewport:hover .footer-badge-track,
+.footer-badge-track:focus-within {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .footer-badge-track {
+    animation: none;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+  }
+}
