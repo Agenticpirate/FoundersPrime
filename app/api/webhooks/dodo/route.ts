@@ -29,6 +29,13 @@ const client = process.env.DODO_PAYMENTS_API_KEY
 
 const WEBHOOK_SECRET = process.env.DODO_PAYMENTS_WEBHOOK_SECRET;
 
+/**
+ * Access granted when Dodo omits next_billing_date on an initial activation.
+ * Matches the paid-trial length configured on the subscription products, so a
+ * missing field can never hand a trial buyer a full year of access.
+ */
+const TRIAL_FALLBACK_DAYS = 31;
+
 function resolveMembershipPeriodEnd(
   plan: MembershipPlan,
   providedPeriodEnd?: string | null,
@@ -69,10 +76,13 @@ function resolveMembershipPeriodEnd(
     return renewalBase.toISOString();
   }
 
-  // Next Founder and Founder are annual products. Dodo may omit
-  // next_billing_date on initial activation, so fail safe to one calendar year.
+  // Next Founder and Founder are annual products sold with a 30-day paid trial.
+  // Dodo normally supplies next_billing_date; if it is missing we must NOT grant
+  // a full year, because a $1 trial would then unlock 12 months. Fail safe to the
+  // trial length instead — a genuine annual purchase is corrected by the first
+  // renewal webhook, which carries the real date.
   const fallback = new Date();
-  fallback.setUTCFullYear(fallback.getUTCFullYear() + 1);
+  fallback.setUTCDate(fallback.getUTCDate() + TRIAL_FALLBACK_DAYS);
   return fallback.toISOString();
 }
 
@@ -328,6 +338,22 @@ async function deliverWelcomeEmail({
       console.error(`Welcome email failure marker failed for user ${user.id}:`, error.message)
     }
     console.error(`Welcome email permanently rejected for user ${user.id}: ${delivery.error}`)
+    return
+  }
+  if (delivery.status === 'suppressed') {
+    // The address previously hard-bounced or complained. Mailing it again would
+    // damage sender reputation, so record the outcome and stop retrying.
+    const { error } = await supabase.auth.admin.updateUserById(user.id, {
+      app_metadata: {
+        ...user.appMetadata,
+        [WELCOME_EMAIL_FAILED_AT]: new Date().toISOString(),
+        [WELCOME_EMAIL_PLAN]: plan,
+      },
+    })
+    if (error) {
+      console.error(`Welcome email suppression marker failed for user ${user.id}:`, error.message)
+    }
+    console.warn(`Welcome email suppressed for user ${user.id}: ${delivery.error}`)
     return
   }
 

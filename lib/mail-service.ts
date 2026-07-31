@@ -2,10 +2,12 @@
  * Server-only email delivery through Resend.
  * Keep provider credentials and sender configuration out of client bundles.
  */
+import { removeSuppressed } from '@/lib/email/suppression'
 
 export type EmailDeliveryResult =
   | { status: 'sent'; id?: string }
   | { status: 'not_configured'; error: string }
+  | { status: 'suppressed'; error: string }
   | { status: 'failed'; error: string; retryable: boolean }
 
 export interface SendEmailPayload {
@@ -21,6 +23,22 @@ export interface SendEmailPayload {
    * transactional mail, which a recipient cannot opt out of.
    */
   listUnsubscribeUrl?: string
+  /**
+   * 'transactional' — triggered by the recipient's own action.
+   * 'marketing'     — bulk/promotional, requires consent and unsubscribe.
+   *
+   * Controls which advisory headers are applied. Defaults to transactional so a
+   * new caller cannot accidentally mark promotional mail as transactional.
+   */
+  stream?: 'transactional' | 'marketing'
+  /**
+   * Stable per-message reference. Gmail collapses messages that share a subject
+   * and sender into one thread; a unique reference keeps separate sends visible
+   * as separate messages.
+   */
+  entityRefId?: string
+  /** Additional headers, merged last. */
+  headers?: Record<string, string>
 }
 
 export interface ProofEmailPayload {
@@ -36,12 +54,50 @@ function emailSender(): string {
   return `${name} <${email}>`
 }
 
+/**
+ * Advisory headers recommended by mailbox providers.
+ *
+ * Marketing mail is marked bulk and carries a List-Id so filters can classify it
+ * correctly; transactional mail is marked auto-generated so it is not treated as
+ * a campaign or auto-replied to. Getting this wrong in either direction hurts
+ * placement, which is why the stream is explicit at every call site.
+ */
+function streamHeaders(payload: SendEmailPayload): Record<string, string> {
+  const headers: Record<string, string> = {}
+  const domain = (process.env.RESEND_FROM_EMAIL?.split('@')[1] || 'foundersprime.com').trim()
+
+  if (payload.stream === 'marketing') {
+    headers['Precedence'] = 'bulk'
+    headers['List-Id'] = `FoundersPrime updates <updates.${domain}>`
+  } else {
+    headers['Auto-Submitted'] = 'auto-generated'
+  }
+
+  if (payload.entityRefId) {
+    headers['X-Entity-Ref-ID'] = payload.entityRefId
+  }
+
+  return headers
+}
+
 export async function sendEmail(payload: SendEmailPayload): Promise<EmailDeliveryResult> {
   const apiKey = process.env.RESEND_API_KEY?.trim()
   if (!apiKey) {
     return {
       status: 'not_configured',
       error: 'RESEND_API_KEY is not configured',
+    }
+  }
+
+  // Never mail an address that hard-bounced or complained. Providers judge
+  // senders on these rates, so one ignored complaint is disproportionately
+  // expensive. Applies to transactional mail too: a dead mailbox stays dead.
+  const recipients = Array.isArray(payload.to) ? payload.to : [payload.to]
+  const allowed = await removeSuppressed(recipients)
+  if (allowed.length === 0) {
+    return {
+      status: 'suppressed',
+      error: 'All recipients are on the suppression list',
     }
   }
 
@@ -59,19 +115,21 @@ export async function sendEmail(payload: SendEmailPayload): Promise<EmailDeliver
       },
       body: JSON.stringify({
         from: emailSender(),
-        to: payload.to,
+        to: allowed,
         subject: payload.subject,
         html: payload.html,
         ...(payload.text ? { text: payload.text } : {}),
         ...(replyTo ? { reply_to: replyTo } : {}),
-        ...(payload.listUnsubscribeUrl
-          ? {
-              headers: {
+        headers: {
+          ...streamHeaders(payload),
+          ...(payload.listUnsubscribeUrl
+            ? {
                 'List-Unsubscribe': `<${payload.listUnsubscribeUrl}>`,
                 'List-Unsubscribe-Post': 'List-Unsubscribe=One-Click',
-              },
-            }
-          : {}),
+              }
+            : {}),
+          ...(payload.headers || {}),
+        },
       }),
     })
 
