@@ -15,6 +15,12 @@ interface PricingPlansProps {
 
 type PlanId = 'nextfounder' | 'founder' | 'legend'
 
+/**
+ * 'trial'  — paid trial first, then the annual price renews automatically.
+ * 'annual' — skip the trial and buy the full year immediately.
+ */
+type PurchaseMode = 'trial' | 'annual'
+
 export default function PricingPlans({ currency }: PricingPlansProps) {
   const router = useRouter()
   const { user, loading: authLoading } = useAuth()
@@ -29,7 +35,7 @@ export default function PricingPlans({ currency }: PricingPlansProps) {
     setExpanded((prev) => ({ ...prev, [plan]: !prev[plan] }))
   }
 
-  const handleCheckout = async (plan: PlanId) => {
+  const handleCheckout = async (plan: PlanId, mode: PurchaseMode = 'trial') => {
     if (authLoading) return
 
     const { createClient } = await import('@/lib/supabase/client')
@@ -44,7 +50,8 @@ export default function PricingPlans({ currency }: PricingPlansProps) {
       return
     }
 
-    setLoadingPlan(plan)
+    // Track the specific button pressed so only that one shows a spinner.
+    setLoadingPlan(`${plan}:${mode}`)
     try {
       const headers: Record<string, string> = {
         'Content-Type': 'application/json',
@@ -57,7 +64,7 @@ export default function PricingPlans({ currency }: PricingPlansProps) {
       const res = await fetch('/api/payment/create-link', {
         method: 'POST',
         headers,
-        body: JSON.stringify({ plan }),
+        body: JSON.stringify({ plan, mode }),
       })
 
       const contentType = res.headers.get('content-type') || ''
@@ -93,19 +100,19 @@ export default function PricingPlans({ currency }: PricingPlansProps) {
           expanded={expanded.nextfounder}
           loadingPlan={loadingPlan}
           onToggle={() => toggleExpand('nextfounder')}
-          onCheckout={() => handleCheckout('nextfounder')}
+          onCheckout={(mode) => handleCheckout('nextfounder', mode)}
         />
         <PricingPlanFounder
           expanded={expanded.founder}
           loadingPlan={loadingPlan}
           onToggle={() => toggleExpand('founder')}
-          onCheckout={() => handleCheckout('founder')}
+          onCheckout={(mode) => handleCheckout('founder', mode)}
         />
         <PricingPlanLegend
           expanded={expanded.legend}
           loadingPlan={loadingPlan}
           onToggle={() => toggleExpand('legend')}
-          onCheckout={() => handleCheckout('legend')}
+          onCheckout={() => handleCheckout('legend', 'annual')}
         />
       </div>
 

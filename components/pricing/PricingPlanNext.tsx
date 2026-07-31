@@ -17,7 +17,7 @@ export default function PricingPlanNext({
   expanded: boolean
   loadingPlan: string | null
   onToggle: () => void
-  onCheckout: () => void
+  onCheckout: (mode: 'trial' | 'annual') => void
 }) {
   return (
         <article className="group relative flex flex-col order-1 bg-white dark:bg-[#0a0a0a] border border-black/[0.06] dark:border-white/[0.08] hover:border-accent-yellow/40 rounded-xl md:rounded-2xl p-3.5 sm:p-5 md:p-7 transition-all duration-300 md:hover:-translate-y-1 shadow-[0_6px_20px_rgba(0,0,0,0.04)] md:shadow-[0_8px_30px_rgba(0,0,0,0.04)] dark:shadow-none overflow-hidden">
@@ -56,28 +56,45 @@ export default function PricingPlanNext({
             Built for students shipping their first startup.
           </h4>
           <p className="hidden md:block text-[13px] text-gray-500 dark:text-gray-400 leading-relaxed mb-5">
-            Active students and indie builders — no revenue or funding required.
+            Students and indie builders. No revenue required.
           </p>
 
           <div className="mb-2.5 md:mb-5">
             <div className="flex items-baseline gap-1.5 md:gap-2 flex-wrap">
+              {/* Annual price leads; the trial is the entry point, not the headline. */}
               <span className="font-mono text-[32px] sm:text-[36px] md:text-[40px] lg:text-[44px] font-black text-gray-900 dark:text-white leading-none tracking-tight">
-                $1
+                $14.99
+              </span>
+              <span className="font-mono text-sm md:text-base text-gray-400 dark:text-gray-500 line-through font-bold">
+                $59
               </span>
               <span className="font-mono text-[10px] md:text-[11px] font-bold uppercase tracking-wider text-gray-500">
-                first month
+                /yr
               </span>
             </div>
-            <div className="mt-1 md:mt-2 inline-flex items-center gap-1 px-1.5 md:px-2 py-0.5 rounded-md bg-accent-yellow/15 border border-accent-yellow/30 font-mono text-[9px] md:text-[10px] font-black text-amber-800 dark:text-accent-yellow uppercase tracking-wide">
-              Launch price · $59 later
-            </div>
             {/*
-              Auto-renewing paid trial: the renewal amount and timing must be
-              stated before checkout, not only in the receipt.
+              The $1 trial is the main hook for this plan, so it gets the loudest
+              treatment on the card — same visual weight as the savings badge on
+              the Founder plan.
             */}
-            <p className="mt-1.5 md:mt-2 text-[9px] md:text-[10px] leading-snug text-gray-500 dark:text-gray-400">
-              Then <span className="font-bold text-gray-700 dark:text-gray-300">$14.99/yr</span>,
-              billed automatically after 30 days. Cancel anytime before renewal.
+            <div className="mt-1.5 md:mt-2.5 flex flex-wrap items-center gap-1.5">
+              <span className="inline-flex items-center gap-1.5 px-2 md:px-3 py-1 md:py-1.5 rounded-md bg-accent-yellow text-black border border-black/10 shadow-[2px_2px_0_#000] font-mono text-[10px] md:text-[12px] font-black uppercase tracking-wide">
+                <span
+                  className="material-symbols-outlined !text-[13px] md:!text-[15px]"
+                  style={{ fontVariationSettings: "'FILL' 1" }}
+                >
+                  bolt
+                </span>
+                30-day trial · just $1
+              </span>
+              <span className="inline-flex items-center gap-1 px-1.5 md:px-2 py-0.5 rounded-md bg-accent-yellow/15 border border-accent-yellow/30 font-mono text-[9px] md:text-[10px] font-black text-amber-800 dark:text-accent-yellow uppercase tracking-wide">
+                75% off · launch
+              </span>
+            </div>
+            {/* Trial terms: amount, duration and renewal price stated up front. */}
+            <p className="mt-1.5 md:mt-2 text-[10px] md:text-[11px] leading-snug text-gray-600 dark:text-gray-300">
+              Pay <span className="font-black text-gray-900 dark:text-white">$1</span> for your first
+              month, then $14.99/yr. Cancel anytime.
             </p>
           </div>
 
@@ -116,15 +133,34 @@ export default function PricingPlanNext({
           </ul>
 
           <div className="mt-auto">
+            {/* Primary: paid trial. Secondary: buy the full year outright. */}
             <button
               type="button"
-              onClick={() => onCheckout()}
-              disabled={loadingPlan === 'nextfounder'}
-              className="w-full inline-flex items-center justify-center gap-1.5 h-11 md:h-12 min-h-[44px] md:min-h-[48px] px-3 md:px-4 font-mono font-black text-[10px] md:text-[11px] uppercase tracking-[0.1em] md:tracking-[0.12em] text-gray-900 dark:text-white border-2 border-gray-900 dark:border-white/80 active:bg-gray-900 active:text-white dark:active:bg-white dark:active:text-black md:hover:bg-gray-900 md:hover:text-white dark:md:hover:bg-white dark:md:hover:text-black rounded-lg md:rounded-xl transition-all disabled:opacity-60"
+              onClick={() => onCheckout('trial')}
+              disabled={loadingPlan !== null}
+              className="w-full inline-flex items-center justify-center gap-1.5 h-11 md:h-12 min-h-[44px] md:min-h-[48px] px-3 md:px-4 font-mono font-black text-[10px] md:text-[11px] uppercase tracking-[0.1em] md:tracking-[0.12em] text-black bg-accent-yellow/90 active:bg-accent-yellow md:hover:bg-accent-yellow border-2 border-accent-yellow rounded-lg md:rounded-xl transition-all disabled:opacity-60"
             >
-              <span>{loadingPlan === 'nextfounder' ? 'Redirecting…' : 'Start for $1'}</span>
+              <span>{loadingPlan === 'nextfounder:trial' ? 'Redirecting…' : 'Try 30 days · $1'}</span>
               <span className="material-symbols-outlined !text-[15px] md:!text-[16px]">arrow_forward</span>
             </button>
+            {/*
+              Annual purchase. The badge is inverted (dark fill, accent text) so it
+              reads as a separate label instead of blending into the yellow trial
+              button directly above it.
+            */}
+            <div className="relative mt-3.5 md:mt-4">
+              <span className="absolute -top-2 left-2.5 z-10 px-1.5 py-px rounded-sm bg-black dark:bg-white text-accent-yellow dark:text-black font-mono text-[8px] md:text-[8.5px] font-black uppercase tracking-[0.08em] border border-accent-yellow dark:border-black/20">
+                Save 75%
+              </span>
+              <button
+                type="button"
+                onClick={() => onCheckout('annual')}
+                disabled={loadingPlan !== null}
+                className="w-full inline-flex items-center justify-center gap-1.5 h-10 md:h-11 min-h-[40px] md:min-h-[44px] px-3 md:px-4 font-mono font-black text-[10px] md:text-[11px] uppercase tracking-[0.1em] text-gray-900 dark:text-white border-2 border-gray-900 dark:border-white/70 active:bg-gray-900 active:text-white md:hover:bg-gray-900 md:hover:text-white dark:md:hover:bg-white dark:md:hover:text-black rounded-lg md:rounded-xl transition-all disabled:opacity-60"
+              >
+                {loadingPlan === 'nextfounder:annual' ? 'Redirecting…' : 'Buy 1 year · $14.99'}
+              </button>
+            </div>
             <p className="mt-1.5 md:mt-2.5 text-center text-[9px] md:text-[10px] text-gray-500 font-mono">
               Students only · Cancel anytime
             </p>

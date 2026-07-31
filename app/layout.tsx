@@ -6,6 +6,7 @@ import CookieConsentProvider from '@/components/cookie/CookieConsentProvider'
 import CursorCompanion from '@/components/ui/CursorCompanion'
 import MotionProvider from '@/components/ui/MotionProvider'
 import NavigationProgress from '@/components/ui/NavigationProgress'
+import OfferPopup from '@/components/marketing/OfferPopup'
 import WebMcpProvider from '@/components/agent/WebMcpProvider'
 import { Archivo, IBM_Plex_Mono, IBM_Plex_Sans, Space_Grotesk } from 'next/font/google'
 import { safeJsonLd } from '@/lib/safe-json-ld'
@@ -320,6 +321,9 @@ export default function RootLayout({
               <NavigationProgress />
             </Suspense>
             {children}
+            <Suspense fallback={null}>
+              <OfferPopup />
+            </Suspense>
             <CursorCompanion />
             <WebMcpProvider />
           </MotionProvider>

@@ -48,7 +48,7 @@ export default function PricingPlanLegend({
             Pay once. Keep access for life.
           </h4>
           <p className="hidden md:block text-[13px] text-gray-500 dark:text-gray-400 leading-relaxed mb-5">
-            For founders building over the long haul — no renewals ever.
+            One payment. Never renew again.
           </p>
 
           <div className="mb-2.5 md:mb-5">
@@ -110,10 +110,10 @@ export default function PricingPlanLegend({
             <button
               type="button"
               onClick={() => onCheckout()}
-              disabled={loadingPlan === 'legend'}
+              disabled={loadingPlan !== null}
               className="w-full inline-flex items-center justify-center gap-1.5 h-11 md:h-12 min-h-[44px] md:min-h-[48px] px-3 md:px-4 bg-gray-900 dark:bg-white text-white dark:text-black active:opacity-90 md:hover:bg-black dark:md:hover:bg-gray-100 font-mono font-black text-[10px] md:text-[11px] uppercase tracking-[0.1em] md:tracking-[0.12em] rounded-lg md:rounded-xl transition-all disabled:opacity-60"
             >
-              <span>{loadingPlan === 'legend' ? 'Redirecting…' : 'Lock in Legend'}</span>
+              <span>{loadingPlan === 'legend:annual' ? 'Redirecting…' : 'Lock in Legend'}</span>
               <span className="material-symbols-outlined !text-[15px] md:!text-[16px]">arrow_forward</span>
             </button>
             <p className="mt-1.5 md:mt-2.5 text-center text-[9px] md:text-[10px] text-gray-500 font-mono">

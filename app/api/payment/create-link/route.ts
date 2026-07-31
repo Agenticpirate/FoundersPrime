@@ -39,11 +39,16 @@ export async function POST(request: Request) {
   }
 
   try {
-    const { plan } = await request.json();
+    const { plan, mode } = await request.json();
 
     if (!isMembershipPlan(plan)) {
       return NextResponse.json({ error: 'Invalid plan selected' }, { status: 400 });
     }
+
+    // 'trial' keeps the paid trial configured on the Dodo product.
+    // 'annual' skips it and charges the full year immediately.
+    // Anything unrecognised falls back to the product default (trial).
+    const purchaseMode = mode === 'annual' ? 'annual' : 'trial';
 
     const productId = MEMBERSHIP_PRODUCTS[plan];
 
@@ -67,8 +72,17 @@ export async function POST(request: Request) {
         email: user.email || '',
         source: 'foundersprime_checkout',
         checkout_reference: checkoutReference,
+        purchase_mode: purchaseMode,
       },
     };
+
+    // Legend is a one-time product, so trial configuration does not apply.
+    // For the annual plans, trial_period_days: 0 overrides the product's paid
+    // trial for this session only, which is how "buy the year now" is expressed
+    // without maintaining a second product per plan.
+    if (purchaseMode === 'annual' && plan !== 'legend') {
+      sessionPayload.subscription_data = { trial_period_days: 0 };
+    }
 
     const session = await client.checkoutSessions.create(sessionPayload);
 
