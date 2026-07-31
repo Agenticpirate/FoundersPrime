@@ -300,7 +300,10 @@ export default function OfferPopup() {
           </p>
 
           <p className="mt-2 sm:mt-3 font-mono text-[8.5px] sm:text-[10px] font-bold uppercase tracking-[0.1em] text-gray-500">
-            Pick a plan to start your 30-day trial
+            30-day trial:{' '}
+            <span className="text-gray-900 dark:text-white font-black">$1</span> or{' '}
+            <span className="text-gray-900 dark:text-white font-black">$9.99</span> — then the
+            discounted annual price
           </p>
 
           {/* Selectable plan rows — each starts that plan's paid trial. */}
@@ -341,12 +344,25 @@ export default function OfferPopup() {
                       </span>
                       <span className="text-[8.5px] sm:text-[9px] font-bold text-gray-500">/yr</span>
                     </span>
-                    <span className="mt-0.5 sm:mt-1 inline-flex items-center gap-0.5 font-mono text-[8.5px] sm:text-[10px] font-black uppercase text-amber-800 dark:text-accent-yellow">
-                      {busy ? 'Starting…' : `Try 30 days · ${offer.trial}`}
-                      {!busy && (
-                        <span className="material-symbols-outlined !text-[12px] sm:!text-[13px] group-hover:translate-x-0.5 transition-transform">
-                          arrow_forward
+                    {/* Trial price sits in an inverted chip so the entry price reads
+                        instantly without out-shouting the annual hero price. */}
+                    <span className="mt-1 sm:mt-1.5 inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md border border-black/10 bg-[#0d0d0d] dark:bg-accent-yellow leading-none">
+                      {busy ? (
+                        <span className="font-mono text-[8.5px] sm:text-[10px] font-black uppercase tracking-[0.08em] text-white dark:text-black">
+                          Starting…
                         </span>
+                      ) : (
+                        <>
+                          <span className="font-mono text-[7.5px] sm:text-[8.5px] font-black uppercase tracking-[0.08em] text-white/70 dark:text-black/70">
+                            30 days
+                          </span>
+                          <span className="font-mono text-[12px] sm:text-[14px] font-black leading-none text-accent-yellow dark:text-black">
+                            {offer.trial}
+                          </span>
+                          <span className="material-symbols-outlined !text-[12px] sm:!text-[13px] text-white dark:text-black group-hover:translate-x-0.5 transition-transform">
+                            arrow_forward
+                          </span>
+                        </>
                       )}
                     </span>
                   </span>
