@@ -678,6 +678,62 @@ async function activatePlan({
   })
 }
 
+/**
+ * Mirror Dodo's auto-renewal state onto the local row.
+ *
+ * Keeps the dashboard honest when a customer cancels (or resumes) outside our
+ * own cancellation flow — for example from Dodo's customer portal.
+ */
+async function syncCancellationFlag(dodoSubscriptionId: string, cancelAtPeriodEnd: boolean) {
+  const supabase = getServiceRoleClient();
+  if (!supabase) {
+    throw new RetryableWebhookError(
+      'Cancellation sync failed: SUPABASE_SERVICE_ROLE_KEY is not configured'
+    );
+  }
+
+  let idColumn: string = 'dodo_subscription_id';
+
+  const run = () =>
+    supabase
+      .from('user_subscriptions')
+      .update({
+        cancel_at_period_end: cancelAtPeriodEnd,
+        updated_at: new Date().toISOString(),
+      })
+      .eq('status', 'active')
+      .eq(idColumn, dodoSubscriptionId)
+      .select('id, user_id');
+
+  let { data: rows, error } = await run();
+
+  if (error && isMissingDodoIdColumnError(error)) {
+    idColumn = 'stripe_subscription_id';
+    ;({ data: rows, error } = await run());
+  }
+
+  if (error) {
+    // A missing cancel_at_period_end column means the schema predates the
+    // cancellation feature; there is nothing to mirror in that case.
+    if (/cancel_at_period_end/i.test(error.message || '')) {
+      console.warn(`Cancellation sync skipped, column absent: ${error.message}`);
+      return;
+    }
+    throw new RetryableWebhookError(
+      `Cancellation sync failed for subscription ${dodoSubscriptionId}: ${error.message}`
+    );
+  }
+
+  if (!rows?.length) {
+    console.log(`ℹ️ No active local subscription matched update ${dodoSubscriptionId}`);
+    return;
+  }
+
+  console.log(
+    `🔄 Auto-renewal ${cancelAtPeriodEnd ? 'cancelled' : 'resumed'} for user ${rows[0].user_id} (${dodoSubscriptionId})`
+  );
+}
+
 // Cancel/deactivate only the subscription named by the Dodo event. Looking up
 // by provider subscription ID also handles sparse terminal payloads that omit
 // product, metadata, or customer identity, while protecting newer purchases.
@@ -968,6 +1024,31 @@ export async function POST(request: Request) {
         break;
       }
 
+      case 'subscription.updated': {
+        // Fires when a subscription changes outside our own UI — most importantly
+        // when a customer cancels auto-renewal from Dodo's portal. Without this,
+        // our dashboard would keep showing "Auto-renew on" for someone who has
+        // already cancelled.
+        const dodoSubscriptionId = data?.subscription_id;
+        if (!dodoSubscriptionId) {
+          console.log('ℹ️ Ignored subscription.updated without a subscription ID');
+          break;
+        }
+        if (typeof data?.cancel_at_next_billing_date !== 'boolean') {
+          // Nothing we mirror locally changed (e.g. payment method update).
+          break;
+        }
+        await syncCancellationFlag(dodoSubscriptionId, data.cancel_at_next_billing_date);
+        break;
+      }
+      case 'subscription.on_hold':
+        // Dodo pauses the subscription while it retries payment. Access is left
+        // intact deliberately: dunning is a grace period, and a terminal
+        // subscription.cancelled / .expired event will deactivate if it fails.
+        console.log(
+          `⏸️ Subscription on hold (dunning), access retained: ${data?.subscription_id || 'unknown'}`
+        );
+        break;
       case 'payment.failed':
         console.log('❌ Payment failed for:', data?.customer?.email);
         break;
