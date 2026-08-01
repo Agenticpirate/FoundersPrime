@@ -1,6 +1,12 @@
 import { sendEmail, type EmailDeliveryResult } from '@/lib/mail-service'
 import { createPreferenceToken } from '@/lib/email/preference-token'
 import { readPreferences } from '@/lib/email/preference-store'
+import {
+  CATALOG,
+  CATALOG_COPY,
+  OFFERS_TOTAL,
+  PROGRAMS_TOTAL,
+} from '@/lib/catalog-stats'
 
 export type MembershipPlan = 'nextfounder' | 'founder' | 'legend'
 export type LifecycleUpdateKind = 'new_deal' | 'membership_offer' | 'resource'
@@ -34,16 +40,16 @@ export const SIGNUP_EMAIL_MARKERS = {
  */
 const PLAN_BENEFITS: Record<MembershipPlan, string[]> = {
   nextfounder: [
-    '1,000+ student and indie-builder discounts',
-    'AI and SaaS credits for builders',
+    `${CATALOG.studentPerks.toLocaleString('en-US')} student and campus-only perks`,
+    'AI and SaaS credits for indie builders',
     'Hackathons and early-stage grants',
     'Opportunity Hub access',
   ],
   founder: [
-    'Full cloud and SaaS deal catalog',
-    'Unlimited deal claims',
-    'Grants, accelerators and incubators',
-    'Founder Vault resources',
+    `All ${CATALOG.founderDeals} founder deals — cloud, SaaS and ad credits`,
+    'Unlimited claims, every category',
+    `${PROGRAMS_TOTAL} programs: ${CATALOG.accelerators} accelerators, ${CATALOG.incubators} incubators, ${CATALOG.grants} grants`,
+    `Founder Vault plus ${CATALOG.studentPerks.toLocaleString('en-US')} student perks`,
   ],
   legend: [
     'Everything in Founder, permanently',
@@ -76,13 +82,15 @@ const PLAN_UPGRADE: Record<
 > = {
   nextfounder: {
     label: 'Founder',
-    pitch: 'Ready for the full catalog? Founder adds everything below for $48/yr.',
+    pitch: `You have the student catalog. Founder unlocks the other ${(
+      CATALOG.founderDeals + PROGRAMS_TOTAL
+    ).toLocaleString('en-US')} offers for $48/yr.`,
     adds: [
-      'Cloud credits (AWS, GCP, Azure) and 100+ SaaS deals',
-      'Ad credits, unlimited claims in every category',
-      'Grants and funding matched to your stage',
-      'Accelerators, incubators and fellowships',
-      'Founder Vault and the ideas hub',
+      `${CATALOG.cloudDeals} cloud-credit programs (AWS, GCP, Azure) and ${CATALOG_COPY.saasTools} SaaS deals`,
+      `${CATALOG.adDeals} ad-credit offers, unlimited claims in every category`,
+      `${CATALOG.grants} non-dilutive grants matched to your stage`,
+      `${CATALOG.accelerators} accelerators and ${CATALOG.incubators} incubators`,
+      `Founder Vault and ${CATALOG.ideas} researched startup ideas`,
     ],
   },
   founder: {
@@ -448,12 +456,46 @@ function linkTiles(tiles: { title: string; meta: string; url: string }[]): strin
 
 /** Catalog sections, each linking to a real route. */
 const CATALOG_TILES = [
-  { title: 'Cloud credits', meta: 'AWS, GCP, Azure and more', path: '/deals?category=cloud-credits' },
-  { title: 'SaaS discounts', meta: '200+ tools at founder rates', path: '/deals?category=saas-discounts' },
-  { title: 'Ad credits', meta: 'Paid acquisition budget', path: '/deals?category=ad-credits' },
-  { title: 'Grants', meta: 'Non-dilutive funding', path: '/programs/grants' },
-  { title: 'Accelerators', meta: 'YC, Techstars, 500 Global', path: '/programs/accelerators' },
-  { title: 'Incubators', meta: 'Equity-free programs', path: '/programs/incubators' },
+  {
+    title: 'Student perks',
+    meta: `${CATALOG.studentPerks.toLocaleString('en-US')} campus-only offers`,
+    path: '/student-benefits',
+  },
+  {
+    title: 'SaaS discounts',
+    meta: `${CATALOG.saasDeals} tools at founder rates`,
+    path: '/deals?category=saas-discounts',
+  },
+  {
+    title: 'Cloud credits',
+    meta: `${CATALOG.cloudDeals} programs — AWS, GCP, Azure`,
+    path: '/deals?category=cloud-credits',
+  },
+  {
+    title: 'Ad credits',
+    meta: `${CATALOG.adDeals} paid-acquisition offers`,
+    path: '/deals?category=ad-credits',
+  },
+  {
+    title: 'Grants',
+    meta: `${CATALOG.grants} non-dilutive programs`,
+    path: '/programs/grants',
+  },
+  {
+    title: 'Accelerators',
+    meta: `${CATALOG.accelerators} incl. YC, Techstars, 500`,
+    path: '/programs/accelerators',
+  },
+  {
+    title: 'Incubators',
+    meta: `${CATALOG.incubators} equity-free programs`,
+    path: '/programs/incubators',
+  },
+  {
+    title: 'Flash deals',
+    meta: `${CATALOG.flashDeals} live now, expiring soon`,
+    path: '/flash-deals',
+  },
 ]
 
 function catalogTiles(): string {
@@ -468,14 +510,27 @@ function catalogTiles(): string {
  * reader can act on the plan they want rather than a generic pricing link.
  */
 function planOfferCards(pricingUrl: string): string {
-  const rows: { plan: MembershipPlan; name: string; audience: string; featured: boolean }[] = [
+  const rows: {
+    plan: MembershipPlan
+    name: string
+    audience: string
+    badge: string
+    featured: boolean
+  }[] = [
     {
       plan: 'nextfounder',
       name: "Next'Founder",
-      audience: 'Students & first builders',
+      audience: `${CATALOG.studentPerks.toLocaleString('en-US')} student perks + builder credits`,
+      badge: 'Save 75%',
       featured: false,
     },
-    { plan: 'founder', name: 'Founder', audience: 'Full catalog, unlimited claims', featured: true },
+    {
+      plan: 'founder',
+      name: 'Founder',
+      audience: `All ${OFFERS_TOTAL.toLocaleString('en-US')} offers, unlimited claims`,
+      badge: 'Most popular',
+      featured: true,
+    },
   ]
 
   return rows
@@ -484,19 +539,15 @@ function planOfferCards(pricingUrl: string): string {
       return `<table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="margin:0 0 10px;border:2px solid ${row.featured ? BRAND.accent : BRAND.ink};background:${BRAND.surface};">
           <tr>
             <td style="padding:12px 14px;">
-              ${
-                row.featured
-                  ? `<span style="display:inline-block;background:${BRAND.accent};color:${BRAND.ink};font-family:'IBM Plex Mono',Consolas,Menlo,monospace;font-size:8px;font-weight:900;letter-spacing:1px;text-transform:uppercase;padding:2px 6px;margin-bottom:6px;">Most popular</span><br>`
-                  : ''
-              }
+              <span style="display:inline-block;background:${row.featured ? BRAND.accent : BRAND.ink};color:${row.featured ? BRAND.ink : BRAND.surface};font-family:'IBM Plex Mono',Consolas,Menlo,monospace;font-size:8px;font-weight:900;letter-spacing:1px;text-transform:uppercase;padding:2px 6px;margin-bottom:6px;">${escapeHtml(row.badge)}</span><br>
               <span style="font-family:'IBM Plex Mono',Consolas,Menlo,monospace;font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:0.6px;color:${BRAND.ink};">${escapeHtml(row.name)}</span>
               <span style="font-size:11px;color:${BRAND.muted};"> &middot; ${escapeHtml(row.audience)}</span>
               <div style="margin-top:8px;">
-                <span style="font-family:'IBM Plex Mono',Consolas,Menlo,monospace;font-size:22px;font-weight:900;color:${BRAND.ink};">${escapeHtml(offer.trial)}</span>
-                <span style="font-size:11px;font-weight:700;color:${BRAND.muted};text-transform:uppercase;"> first month</span>
-                <div style="margin-top:3px;font-size:12px;color:${BRAND.subtle};">then ${escapeHtml(offer.annual)} <span style="color:${BRAND.muted};text-decoration:line-through;">${escapeHtml(offer.wasAnnual)}</span></div>
+                <span style="display:inline-block;background:${BRAND.ink};color:${BRAND.accent};font-family:'IBM Plex Mono',Consolas,Menlo,monospace;font-size:22px;font-weight:900;line-height:1;padding:6px 10px;">${escapeHtml(offer.trial)}</span>
+                <span style="font-family:'IBM Plex Mono',Consolas,Menlo,monospace;font-size:11px;font-weight:900;color:${BRAND.ink};text-transform:uppercase;letter-spacing:0.6px;"> &nbsp;30 days, full access</span>
+                <div style="margin-top:6px;font-size:12px;color:${BRAND.subtle};">then ${escapeHtml(offer.annual)} <span style="color:${BRAND.muted};text-decoration:line-through;">${escapeHtml(offer.wasAnnual)}</span> &middot; cancel anytime</div>
               </div>
-              ${buttonSmall(`Start ${row.name} for ${offer.trial}`, pricingUrl, row.featured)}
+              ${buttonSmall(`Start for ${offer.trial}`, pricingUrl, row.featured)}
             </td>
           </tr>
         </table>`
@@ -559,7 +610,13 @@ export async function sendWelcomeEmail(
       <h1 style="margin:0 0 16px;font-size:28px;line-height:1.2;letter-spacing:-0.7px;color:${BRAND.ink};">Your ${escapeHtml(planLabel)} membership is active.</h1>
       <p style="margin:0 0 18px;">Thanks for backing FoundersPrime. Here is what your membership includes:</p>
       ${bulletList(benefits)}
-      <p style="margin:0 0 18px;">Every deal is verified before it is listed, so the credits, discounts and programs you see are ones you can actually claim.</p>
+      <p style="margin:0 0 18px;">Every one of the ${OFFERS_TOTAL.toLocaleString('en-US')} listings is verified before it goes live, so the credits, discounts and programs you see are ones you can actually claim. Start with the biggest ticket — one cloud-credit approval usually covers your membership many times over.</p>
+      ${statStrip([
+        { value: CATALOG_COPY.offersTotal, label: 'Verified offers' },
+        { value: CATALOG_COPY.studentPerks, label: 'Student perks' },
+        { value: CATALOG_COPY.programs, label: 'Programs & grants' },
+        { value: CATALOG_COPY.valuePerFounder, label: 'Claimable per founder' },
+      ])}
 
       <p style="margin:22px 0 0;font-family:'IBM Plex Mono',Consolas,Menlo,monospace;font-size:11px;font-weight:900;letter-spacing:1.2px;text-transform:uppercase;color:${BRAND.muted};">Start claiming</p>
       ${catalogTiles()}
@@ -614,53 +671,58 @@ export async function sendSignupWelcomeEmail(
   const dashboardUrl = `${appUrl()}/dashboard`
   const pricingUrl = `${appUrl()}/pricing#plans`
   const preferencesUrl = preferencesUrlFor(payload.userId)
-  const subject = 'Thanks for signing up — your FoundersPrime account is ready'
+  const subject = `Your account is ready — ${OFFERS_TOTAL.toLocaleString('en-US')} verified deals inside`
 
   const freeIncludes = [
-    'Browse the verified deal catalog',
+    `Browse all ${OFFERS_TOTAL.toLocaleString('en-US')} verified offers`,
     'Save deals to your dashboard',
-    'Preview grants, accelerators and incubators',
+    `Preview ${PROGRAMS_TOTAL} grants, accelerators and incubators`,
   ]
 
   // Launch offer, priced explicitly. Trial terms are stated so the email cannot
   // imply a free trial or hide the renewal price.
   const membershipSummary = [
-    `Next'Founder — students and indie builders. ${PLAN_OFFER.nextfounder.trial} for the first month, then ${PLAN_OFFER.nextfounder.annual} (was ${PLAN_OFFER.nextfounder.wasAnnual})`,
-    `Founder — the full catalog, unlimited claims, grants and accelerators. ${PLAN_OFFER.founder.trial} for the first month, then ${PLAN_OFFER.founder.annual} (was ${PLAN_OFFER.founder.wasAnnual})`,
+    `Next'Founder — ${CATALOG.studentPerks.toLocaleString('en-US')} student perks plus builder credits. ${PLAN_OFFER.nextfounder.trial} for 30 days, then ${PLAN_OFFER.nextfounder.annual} (was ${PLAN_OFFER.nextfounder.wasAnnual}) — save 75%`,
+    `Founder — all ${OFFERS_TOTAL.toLocaleString('en-US')} offers, unlimited claims, every program. ${PLAN_OFFER.founder.trial} for 30 days, then ${PLAN_OFFER.founder.annual} (was ${PLAN_OFFER.founder.wasAnnual})`,
     `Legend — everything in Founder, permanently. ${PLAN_OFFER.legend.annual} (was ${PLAN_OFFER.legend.wasAnnual}), no renewals`,
   ]
 
   const html = emailShell({
-    preheader: 'Your FoundersPrime account is ready.',
+    preheader: `${OFFERS_TOTAL.toLocaleString('en-US')} verified offers are unlocked — and your first 30 days cost ${PLAN_OFFER.nextfounder.trial}.`,
     body: `
       <p style="margin:0 0 18px;">${greeting(payload.firstName)}</p>
       <p style="margin:0 0 10px;font-family:'IBM Plex Mono',Consolas,Menlo,monospace;font-size:11px;font-weight:900;letter-spacing:1.4px;text-transform:uppercase;color:${BRAND.muted};">Account created</p>
-      <h1 style="margin:0 0 16px;font-size:28px;line-height:1.2;letter-spacing:-0.7px;color:${BRAND.ink};">Thanks for signing up.</h1>
-      <p style="margin:0 0 18px;">FoundersPrime collects verified startup deals in one place: cloud credits, SaaS discounts, non-dilutive grants, accelerators and incubators. Every listing is checked before it goes live.</p>
-      <p style="margin:0 0 10px;font-weight:700;">With your free account you can:</p>
+      <h1 style="margin:0 0 16px;font-size:28px;line-height:1.2;letter-spacing:-0.7px;color:${BRAND.ink};">You're in. Now go claim your first ${escapeHtml(CATALOG_COPY.typicalSaving.replace('+', ''))}.</h1>
+      <p style="margin:0 0 18px;">Most founders pay full price for tools that were free the whole time. FoundersPrime tracks <strong>${OFFERS_TOTAL.toLocaleString('en-US')} verified offers</strong> in one place: ${CATALOG.founderDeals} founder deals (${CATALOG.cloudDeals} cloud-credit programs, ${CATALOG.saasDeals} SaaS discounts, ${CATALOG.adDeals} ad-credit offers), ${PROGRAMS_TOTAL} programs (${CATALOG.accelerators} accelerators, ${CATALOG.incubators} incubators, ${CATALOG.grants} grants) and ${CATALOG.studentPerks.toLocaleString('en-US')} student perks. Every listing is checked before it goes live.</p>
+      <p style="margin:0 0 10px;font-weight:700;">Your free account already lets you:</p>
       ${bulletList(freeIncludes)}
       ${statStrip([
-        { value: '242', label: 'Verified deals' },
-        { value: '$3M+', label: 'Claimed by founders' },
-        { value: '$500K+', label: 'Available per founder' },
+        { value: CATALOG_COPY.offersTotal, label: 'Verified offers' },
+        { value: CATALOG_COPY.studentPerks, label: 'Student perks' },
+        { value: CATALOG_COPY.programs, label: 'Programs & grants' },
+        { value: CATALOG_COPY.valuePerFounder, label: 'Claimable per founder' },
       ])}
 
-      <p style="margin:22px 0 0;font-family:'IBM Plex Mono',Consolas,Menlo,monospace;font-size:11px;font-weight:900;letter-spacing:1.2px;text-transform:uppercase;color:${BRAND.muted};">Jump straight in</p>
+      <p style="margin:22px 0 0;font-family:'IBM Plex Mono',Consolas,Menlo,monospace;font-size:11px;font-weight:900;letter-spacing:1.2px;text-transform:uppercase;color:${BRAND.muted};">Pick where to start</p>
       ${catalogTiles()}
-      ${cta('Browse all 242 deals', dealsUrl)}
+      ${cta(`Open all ${OFFERS_TOTAL.toLocaleString('en-US')} offers`, dealsUrl)}
 
       <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="margin:26px 0 0;border:2px solid ${BRAND.ink};background:${BRAND.paper};">
         <tr>
+          <td style="height:4px;background:${BRAND.accent};line-height:4px;font-size:0;">&nbsp;</td>
+        </tr>
+        <tr>
           <td style="padding:16px 18px;">
             <p style="margin:0 0 6px;font-family:'IBM Plex Mono',Consolas,Menlo,monospace;font-size:10px;font-weight:900;letter-spacing:1.3px;text-transform:uppercase;color:${BRAND.ink};">Launch offer &middot; limited time</p>
-            <p style="margin:0 0 14px;font-size:17px;font-weight:800;color:${BRAND.ink};line-height:1.3;">Unlock everything for 30 days from ${escapeHtml(PLAN_OFFER.nextfounder.trial)}.</p>
+            <p style="margin:0 0 6px;font-size:17px;font-weight:800;color:${BRAND.ink};line-height:1.3;">30 days of everything for ${escapeHtml(PLAN_OFFER.nextfounder.trial)} or ${escapeHtml(PLAN_OFFER.founder.trial)}.</p>
+            <p style="margin:0 0 14px;font-size:13px;color:${BRAND.subtle};">One claimed cloud credit usually covers the whole year. Founders who stack the catalog save ${escapeHtml(CATALOG_COPY.typicalSaving)} in year one.</p>
             ${planOfferCards(pricingUrl)}
-            <p style="margin:12px 0 0;font-size:11px;color:${BRAND.muted};">Trials renew automatically at the annual price shown. Cancel anytime before renewal.</p>
+            <p style="margin:12px 0 0;font-size:11px;color:${BRAND.muted};">Trials renew automatically at the annual price shown. Cancel anytime before renewal — and the launch rate stays yours for as long as you stay subscribed.</p>
           </td>
         </tr>
       </table>
 
-      <p style="margin:24px 0 0;font-size:13px;color:${BRAND.subtle};">Also worth a look: <a href="${escapeHtml(`${appUrl()}/flash-deals`)}" style="color:${BRAND.ink};font-weight:700;">flash deals</a>, <a href="${escapeHtml(`${appUrl()}/student-benefits`)}" style="color:${BRAND.ink};font-weight:700;">student benefits</a> and the <a href="${escapeHtml(`${appUrl()}/resources`)}" style="color:${BRAND.ink};font-weight:700;">founder resources</a>.</p>
+      <p style="margin:24px 0 0;font-size:13px;color:${BRAND.subtle};">Expiring soonest: <a href="${escapeHtml(`${appUrl()}/flash-deals`)}" style="color:${BRAND.ink};font-weight:700;">${CATALOG.flashDeals} flash deals</a>. Still studying? <a href="${escapeHtml(`${appUrl()}/student-benefits`)}" style="color:${BRAND.ink};font-weight:700;">${CATALOG.studentPerks.toLocaleString('en-US')} student perks</a>. Need a starting point? <a href="${escapeHtml(`${appUrl()}/resources`)}" style="color:${BRAND.ink};font-weight:700;">founder resources</a>.</p>
       <p style="margin:16px 0 0;font-size:13px;color:#6b7280;">Your <a href="${escapeHtml(dashboardUrl)}" style="color:#374151;font-weight:700;">dashboard</a> keeps your saved deals in one place. Questions? Reply to this email or write to support@foundersprime.com.</p>
     `,
     footer: transactionalFooter(
@@ -669,11 +731,21 @@ export async function sendSignupWelcomeEmail(
     ),
   })
 
-  const text = `${payload.firstName?.trim() ? `Hi ${payload.firstName.trim().split(/\s+/)[0]},` : 'Hi Founder,'}\n\nYour FoundersPrime account is ready.\n\nFoundersPrime collects verified startup deals in one place: cloud credits, SaaS discounts, non-dilutive grants, accelerators and incubators.\n\nWith your free account you can:\n${freeIncludes
+  const text = `${payload.firstName?.trim() ? `Hi ${payload.firstName.trim().split(/\s+/)[0]},` : 'Hi Founder,'}\n\nYour FoundersPrime account is ready — ${OFFERS_TOTAL.toLocaleString(
+    'en-US'
+  )} verified offers are unlocked.\n\nWhat is inside: ${CATALOG.founderDeals} founder deals (${
+    CATALOG.cloudDeals
+  } cloud-credit programs, ${CATALOG.saasDeals} SaaS discounts, ${
+    CATALOG.adDeals
+  } ad-credit offers), ${PROGRAMS_TOTAL} programs (${CATALOG.accelerators} accelerators, ${
+    CATALOG.incubators
+  } incubators, ${CATALOG.grants} grants) and ${CATALOG.studentPerks.toLocaleString(
+    'en-US'
+  )} student perks. Every listing is checked before it goes live.\n\nWith your free account you can:\n${freeIncludes
     .map((f) => `- ${f}`)
-    .join('\n')}\n\nBrowse the deal catalog: ${dealsUrl}\n\nLAUNCH OFFER — try a full membership for 30 days from ${
+    .join('\n')}\n\nBrowse the catalog: ${dealsUrl}\n\nLAUNCH OFFER — 30 days of everything for ${
     PLAN_OFFER.nextfounder.trial
-  }:\n${membershipSummary
+  } or ${PLAN_OFFER.founder.trial}:\n${membershipSummary
     .map((m) => `- ${m}`)
     .join(
       '\n'

@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import { useAuth } from '@/lib/auth/hooks'
+import { CATALOG, CATALOG_COPY, OFFERS_TOTAL, PROGRAMS_TOTAL } from '@/lib/catalog-stats'
 
 /**
  * Site-wide launch-offer popup.
@@ -60,6 +61,8 @@ interface PlanOffer {
   annual: string
   wasAnnual: string
   trial: string
+  /** Short hook shown above the row; distinct per plan so they never read alike. */
+  badge: string
   featured: boolean
 }
 
@@ -67,19 +70,21 @@ const OFFERS: PlanOffer[] = [
   {
     id: 'nextfounder',
     name: "Next'Founder",
-    audience: 'Students & first builders',
+    audience: `${CATALOG.studentPerks.toLocaleString('en-US')} student perks + credits`,
     annual: '$14.99',
     wasAnnual: '$59',
     trial: '$1',
+    badge: 'Save 75%',
     featured: false,
   },
   {
     id: 'founder',
     name: 'Founder',
-    audience: 'Full catalog · unlimited claims',
+    audience: `All ${OFFERS_TOTAL.toLocaleString('en-US')} offers · unlimited claims`,
     annual: '$48',
     wasAnnual: '$149',
     trial: '$9.99',
+    badge: 'Most popular',
     featured: true,
   },
 ]
@@ -292,11 +297,13 @@ export default function OfferPopup() {
             id="offer-popup-title"
             className="mt-2 font-mono text-[16px] sm:text-[23px] font-black leading-tight tracking-tight text-gray-900 dark:text-white"
           >
-            Start for $1. Save up to $10,000+.
+            {CATALOG_COPY.offersTotal} verified deals. Yours from $1.
           </h2>
           {/* Supporting detail is desktop-only to keep the mobile sheet compact. */}
           <p className="hidden sm:block mt-1.5 text-[13px] text-gray-600 dark:text-gray-400 leading-snug">
-            242 verified deals — cloud credits, SaaS discounts, grants, accelerators and programs.
+            {CATALOG.founderDeals} founder deals · {PROGRAMS_TOTAL} accelerators, incubators and
+            grants · {CATALOG.studentPerks.toLocaleString('en-US')} student perks. Founders save{' '}
+            {CATALOG_COPY.typicalSaving} in year one.
           </p>
 
           <p className="mt-2 sm:mt-3 font-mono text-[8.5px] sm:text-[10px] font-bold uppercase tracking-[0.1em] text-gray-500">
@@ -306,8 +313,9 @@ export default function OfferPopup() {
             discounted annual price
           </p>
 
-          {/* Selectable plan rows — each starts that plan's paid trial. */}
-          <div className="mt-1.5 sm:mt-2 space-y-1.5 sm:space-y-2.5">
+          {/* Selectable plan rows — each starts that plan's paid trial. The extra
+              top margin clears the badge that now overhangs the first row. */}
+          <div className="mt-3.5 sm:mt-4 space-y-2.5 sm:space-y-3">
             {OFFERS.map((offer) => {
               const busy = startingPlan === offer.id
               return (
@@ -323,11 +331,15 @@ export default function OfferPopup() {
                       : 'border-black/10 dark:border-white/10 hover:border-black/30 dark:hover:border-white/25'
                   }`}
                 >
-                  {offer.featured && (
-                    <span className="absolute -top-2 left-2.5 px-1.5 py-px rounded-full bg-accent-yellow text-black font-mono text-[7.5px] sm:text-[8px] font-black uppercase tracking-wider border border-black/10">
-                      Most popular
-                    </span>
-                  )}
+                  <span
+                    className={`absolute -top-2 left-2.5 px-1.5 py-px rounded-full font-mono text-[7.5px] sm:text-[8px] font-black uppercase tracking-wider border ${
+                      offer.featured
+                        ? 'bg-accent-yellow text-black border-black/10'
+                        : 'bg-[#0d0d0d] text-accent-yellow border-black/10 dark:border-white/15'
+                    }`}
+                  >
+                    {offer.badge}
+                  </span>
                   <span className="min-w-0">
                     <span className="block font-mono text-[10px] sm:text-[11px] font-black uppercase tracking-[0.08em] text-gray-900 dark:text-white">
                       {offer.name}
