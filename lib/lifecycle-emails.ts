@@ -505,54 +505,124 @@ function catalogTiles(): string {
 }
 
 /**
- * Plan cards for the launch offer: trial price leads the eye, annual price and
- * the struck-through list price follow, and each card carries its own link so a
- * reader can act on the plan they want rather than a generic pricing link.
+ * Legend's price is stored as "$99 once" so prose reads naturally. Where the
+ * layout already says "one payment", the trailing word is dropped so a card
+ * never reads "$99 once one payment".
  */
-function planOfferCards(pricingUrl: string): string {
-  const rows: {
-    plan: MembershipPlan
-    name: string
-    audience: string
-    badge: string
-    featured: boolean
-  }[] = [
-    {
-      plan: 'nextfounder',
-      name: "Next'Founder",
-      audience: `${CATALOG.studentPerks.toLocaleString('en-US')} student perks + builder credits`,
-      badge: 'Save 75%',
-      featured: false,
-    },
-    {
-      plan: 'founder',
-      name: 'Founder',
-      audience: `All ${OFFERS_TOTAL.toLocaleString('en-US')} offers, unlimited claims`,
-      badge: 'Most popular',
-      featured: true,
-    },
-  ]
+function oneTimePrice(price: string): string {
+  return price.replace(/\s+once$/i, '')
+}
 
-  return rows
-    .map((row) => {
-      const offer = PLAN_OFFER[row.plan]
-      return `<table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="margin:0 0 10px;border:2px solid ${row.featured ? BRAND.accent : BRAND.ink};background:${BRAND.surface};">
+/** Tier order, used to work out which plans a member already has. */
+const PLAN_RANK: Record<MembershipPlan, number> = {
+  nextfounder: 1,
+  founder: 2,
+  legend: 3,
+}
+
+/** Every plan, in ladder order, with its own hook so no two cards read alike. */
+const PLAN_LINEUP: {
+  plan: MembershipPlan
+  name: string
+  audience: string
+  badge: string
+  featured: boolean
+}[] = [
+  {
+    plan: 'nextfounder',
+    name: "Next'Founder",
+    audience: `${CATALOG.studentPerks.toLocaleString('en-US')} student perks + builder credits`,
+    badge: 'Save 75%',
+    featured: false,
+  },
+  {
+    plan: 'founder',
+    name: 'Founder',
+    audience: `All ${OFFERS_TOTAL.toLocaleString('en-US')} offers, unlimited claims`,
+    badge: 'Most popular',
+    featured: true,
+  },
+  {
+    plan: 'legend',
+    name: 'Legend',
+    audience: 'Everything in Founder, permanently',
+    badge: 'No renewals ever',
+    featured: false,
+  },
+]
+
+/**
+ * The full plan ladder as cards. Trial prices lead the eye on the two
+ * subscription plans, the annual price and struck-through list price follow, and
+ * every card carries its own link so a reader can act on the plan they want.
+ *
+ * Passing currentPlan marks what the reader already owns instead of inviting
+ * them to buy it again: their own tier reads "your plan", anything below it is
+ * flagged as already included, and only genuine upgrades keep a live button.
+ */
+function planLineup(pricingUrl: string, currentPlan?: MembershipPlan): string {
+  return PLAN_LINEUP.map((row) => {
+    const offer = PLAN_OFFER[row.plan]
+    const isCurrent = currentPlan === row.plan
+    const isIncluded = Boolean(currentPlan && PLAN_RANK[row.plan] < PLAN_RANK[currentPlan])
+    const badge = isCurrent ? 'Your plan' : isIncluded ? 'Included' : row.badge
+    // A current or already-covered tier is dimmed so the eye lands on the
+    // upgrade, while the reader can still see the whole ladder.
+    const highlight = row.featured && !isCurrent && !isIncluded
+    const border = isCurrent ? BRAND.ink : highlight ? BRAND.accent : BRAND.hairline
+
+    const priceBlock = offer.trial
+      ? `<div style="margin-top:8px;">
+                <span style="display:inline-block;background:${BRAND.ink};color:${BRAND.accent};font-family:'IBM Plex Mono',Consolas,Menlo,monospace;font-size:22px;font-weight:900;line-height:1;padding:6px 10px;">${escapeHtml(offer.trial)}</span>
+                <span style="font-family:'IBM Plex Mono',Consolas,Menlo,monospace;font-size:11px;font-weight:900;color:${BRAND.ink};text-transform:uppercase;letter-spacing:0.6px;"> &nbsp;30-day trial, full access</span>
+                <div style="margin-top:6px;font-size:12px;color:${BRAND.subtle};">then ${escapeHtml(offer.annual)} <span style="color:${BRAND.muted};text-decoration:line-through;">${escapeHtml(offer.wasAnnual)}</span> &middot; cancel anytime</div>
+              </div>`
+      : `<div style="margin-top:8px;">
+                <span style="display:inline-block;background:${BRAND.ink};color:${BRAND.accent};font-family:'IBM Plex Mono',Consolas,Menlo,monospace;font-size:22px;font-weight:900;line-height:1;padding:6px 10px;">${escapeHtml(oneTimePrice(offer.annual))}</span>
+                <span style="font-family:'IBM Plex Mono',Consolas,Menlo,monospace;font-size:11px;font-weight:900;color:${BRAND.ink};text-transform:uppercase;letter-spacing:0.6px;"> &nbsp;one payment, lifetime</span>
+                <div style="margin-top:6px;font-size:12px;color:${BRAND.subtle};">was <span style="color:${BRAND.muted};text-decoration:line-through;">${escapeHtml(offer.wasAnnual)}</span> &middot; nothing to renew</div>
+              </div>`
+
+    const action = isCurrent
+      ? `<p style="margin:10px 0 0;font-family:'IBM Plex Mono',Consolas,Menlo,monospace;font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:0.8px;color:${BRAND.muted};">Active on your account</p>`
+      : isIncluded
+        ? `<p style="margin:10px 0 0;font-family:'IBM Plex Mono',Consolas,Menlo,monospace;font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:0.8px;color:${BRAND.muted};">Already covered by your plan</p>`
+        : buttonSmall(
+            offer.trial
+              ? `Start for ${offer.trial}`
+              : `Get ${row.name} for ${oneTimePrice(offer.annual)}`,
+            pricingUrl,
+            highlight
+          )
+
+    return `<table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="margin:0 0 10px;border:2px solid ${border};background:${BRAND.surface};">
           <tr>
             <td style="padding:12px 14px;">
-              <span style="display:inline-block;background:${row.featured ? BRAND.accent : BRAND.ink};color:${row.featured ? BRAND.ink : BRAND.surface};font-family:'IBM Plex Mono',Consolas,Menlo,monospace;font-size:8px;font-weight:900;letter-spacing:1px;text-transform:uppercase;padding:2px 6px;margin-bottom:6px;">${escapeHtml(row.badge)}</span><br>
+              <span style="display:inline-block;background:${highlight ? BRAND.accent : BRAND.ink};color:${highlight ? BRAND.ink : BRAND.surface};font-family:'IBM Plex Mono',Consolas,Menlo,monospace;font-size:8px;font-weight:900;letter-spacing:1px;text-transform:uppercase;padding:2px 6px;margin-bottom:6px;">${escapeHtml(badge)}</span><br>
               <span style="font-family:'IBM Plex Mono',Consolas,Menlo,monospace;font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:0.6px;color:${BRAND.ink};">${escapeHtml(row.name)}</span>
               <span style="font-size:11px;color:${BRAND.muted};"> &middot; ${escapeHtml(row.audience)}</span>
-              <div style="margin-top:8px;">
-                <span style="display:inline-block;background:${BRAND.ink};color:${BRAND.accent};font-family:'IBM Plex Mono',Consolas,Menlo,monospace;font-size:22px;font-weight:900;line-height:1;padding:6px 10px;">${escapeHtml(offer.trial)}</span>
-                <span style="font-family:'IBM Plex Mono',Consolas,Menlo,monospace;font-size:11px;font-weight:900;color:${BRAND.ink};text-transform:uppercase;letter-spacing:0.6px;"> &nbsp;30 days, full access</span>
-                <div style="margin-top:6px;font-size:12px;color:${BRAND.subtle};">then ${escapeHtml(offer.annual)} <span style="color:${BRAND.muted};text-decoration:line-through;">${escapeHtml(offer.wasAnnual)}</span> &middot; cancel anytime</div>
-              </div>
-              ${buttonSmall(`Start for ${offer.trial}`, pricingUrl, row.featured)}
+              ${priceBlock}
+              ${action}
             </td>
           </tr>
         </table>`
-    })
-    .join('')
+  }).join('')
+}
+
+/** Plain-text mirror of the plan ladder, used in the text/plain alternative. */
+function planLineupText(currentPlan?: MembershipPlan): string[] {
+  return PLAN_LINEUP.map((row) => {
+    const offer = PLAN_OFFER[row.plan]
+    const state = currentPlan === row.plan
+      ? ' (your plan)'
+      : currentPlan && PLAN_RANK[row.plan] < PLAN_RANK[currentPlan]
+        ? ' (already covered by your plan)'
+        : ''
+    const price = offer.trial
+      ? `${offer.trial} for a 30-day trial, then ${offer.annual} (was ${offer.wasAnnual}), cancel anytime`
+      : `${oneTimePrice(offer.annual)} one payment (was ${offer.wasAnnual}), nothing to renew`
+    return `${row.name}${state} — ${row.audience}. ${price}`
+  })
 }
 
 function bulletList(items: string[]): string {
@@ -577,29 +647,41 @@ export async function sendWelcomeEmail(
   const renewalNote = PLAN_RENEWAL_NOTE[payload.plan]
   const upgrade = PLAN_UPGRADE[payload.plan]
 
-  // Seed the next tier inside the activation email, where intent is highest.
-  const upgradeBlock = upgrade
-    ? `
-      <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="margin:26px 0 0;border:2px solid ${BRAND.accent};background:${BRAND.paper};">
+  // Show the whole ladder inside the activation email, where intent is highest:
+  // the reader sees every plan, what they already have, and the launch trial
+  // prices on the two subscription tiers rather than a single upsell.
+  const upgradeBlock = `
+      <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="margin:26px 0 0;border:2px solid ${BRAND.ink};background:${BRAND.paper};">
         <tr>
           <td style="height:4px;background:${BRAND.accent};line-height:4px;font-size:0;">&nbsp;</td>
         </tr>
         <tr>
           <td style="padding:16px 18px;">
-            <p style="margin:0 0 6px;font-family:'IBM Plex Mono',Consolas,Menlo,monospace;font-size:10px;font-weight:900;letter-spacing:1.3px;text-transform:uppercase;color:${BRAND.ink};">Next step &middot; ${escapeHtml(upgrade.label)}</p>
-            <p style="margin:0 0 12px;font-size:16px;font-weight:800;color:${BRAND.ink};line-height:1.35;">${escapeHtml(upgrade.pitch)}</p>
-            ${bulletList(upgrade.adds)}
-            ${buttonSmall(`Upgrade to ${upgrade.label}`, pricingUrl, true)}
+            <p style="margin:0 0 6px;font-family:'IBM Plex Mono',Consolas,Menlo,monospace;font-size:10px;font-weight:900;letter-spacing:1.3px;text-transform:uppercase;color:${BRAND.ink};">All plans &middot; launch pricing</p>
+            <p style="margin:0 0 6px;font-size:17px;font-weight:800;color:${BRAND.ink};line-height:1.3;">${
+              upgrade
+                ? escapeHtml(upgrade.pitch)
+                : 'You already hold the top tier — here is the full ladder for reference.'
+            }</p>
+            <p style="margin:0 0 14px;font-size:13px;color:${BRAND.subtle};">Every plan starts with a 30-day trial: ${escapeHtml(PLAN_OFFER.nextfounder.trial)} for Next&#39;Founder, ${escapeHtml(PLAN_OFFER.founder.trial)} for Founder. Legend is a single payment with nothing to renew.</p>
+            ${planLineup(pricingUrl, payload.plan)}
+            ${
+              upgrade
+                ? `<p style="margin:14px 0 6px;font-family:'IBM Plex Mono',Consolas,Menlo,monospace;font-size:10px;font-weight:900;letter-spacing:1.1px;text-transform:uppercase;color:${BRAND.ink};">${escapeHtml(upgrade.label)} adds</p>${bulletList(upgrade.adds)}`
+                : ''
+            }
+            <p style="margin:4px 0 0;font-size:11px;color:${BRAND.muted};">Trial plans renew automatically at the annual price shown. Cancel anytime before renewal.</p>
           </td>
         </tr>
       </table>`
-    : ''
 
-  const upgradeText = upgrade
-    ? `\n\nNext step — ${upgrade.label}\n${upgrade.pitch}\n${upgrade.adds
-        .map((a) => `- ${a}`)
-        .join('\n')}\nSee ${upgrade.label}: ${pricingUrl}`
-    : ''
+  const upgradeText = `\n\nALL PLANS — launch pricing\n${
+    upgrade ? `${upgrade.pitch}\n` : ''
+  }${planLineupText(payload.plan)
+    .map((line) => `- ${line}`)
+    .join('\n')}${
+    upgrade ? `\n\n${upgrade.label} adds:\n${upgrade.adds.map((a) => `- ${a}`).join('\n')}` : ''
+  }\nCompare plans: ${pricingUrl}`
 
   const subject = `Welcome to FoundersPrime ${planLabel}`
   const html = emailShell({
@@ -681,11 +763,7 @@ export async function sendSignupWelcomeEmail(
 
   // Launch offer, priced explicitly. Trial terms are stated so the email cannot
   // imply a free trial or hide the renewal price.
-  const membershipSummary = [
-    `Next'Founder — ${CATALOG.studentPerks.toLocaleString('en-US')} student perks plus builder credits. ${PLAN_OFFER.nextfounder.trial} for 30 days, then ${PLAN_OFFER.nextfounder.annual} (was ${PLAN_OFFER.nextfounder.wasAnnual}) — save 75%`,
-    `Founder — all ${OFFERS_TOTAL.toLocaleString('en-US')} offers, unlimited claims, every program. ${PLAN_OFFER.founder.trial} for 30 days, then ${PLAN_OFFER.founder.annual} (was ${PLAN_OFFER.founder.wasAnnual})`,
-    `Legend — everything in Founder, permanently. ${PLAN_OFFER.legend.annual} (was ${PLAN_OFFER.legend.wasAnnual}), no renewals`,
-  ]
+  const membershipSummary = planLineupText()
 
   const html = emailShell({
     preheader: `${OFFERS_TOTAL.toLocaleString('en-US')} verified offers are unlocked — and your first 30 days cost ${PLAN_OFFER.nextfounder.trial}.`,
@@ -715,8 +793,8 @@ export async function sendSignupWelcomeEmail(
           <td style="padding:16px 18px;">
             <p style="margin:0 0 6px;font-family:'IBM Plex Mono',Consolas,Menlo,monospace;font-size:10px;font-weight:900;letter-spacing:1.3px;text-transform:uppercase;color:${BRAND.ink};">Launch offer &middot; limited time</p>
             <p style="margin:0 0 6px;font-size:17px;font-weight:800;color:${BRAND.ink};line-height:1.3;">30 days of everything for ${escapeHtml(PLAN_OFFER.nextfounder.trial)} or ${escapeHtml(PLAN_OFFER.founder.trial)}.</p>
-            <p style="margin:0 0 14px;font-size:13px;color:${BRAND.subtle};">One claimed cloud credit usually covers the whole year. Founders who stack the catalog save ${escapeHtml(CATALOG_COPY.typicalSaving)} in year one.</p>
-            ${planOfferCards(pricingUrl)}
+            <p style="margin:0 0 14px;font-size:13px;color:${BRAND.subtle};">One claimed cloud credit usually covers the whole year. Founders who stack the catalog save ${escapeHtml(CATALOG_COPY.typicalSaving)} in year one. All three plans below — pick the one that fits.</p>
+            ${planLineup(pricingUrl)}
             <p style="margin:12px 0 0;font-size:11px;color:${BRAND.muted};">Trials renew automatically at the annual price shown. Cancel anytime before renewal — and the launch rate stays yours for as long as you stay subscribed.</p>
           </td>
         </tr>
