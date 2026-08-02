@@ -106,6 +106,20 @@ const PLAN_UPGRADE: Record<
   legend: null,
 }
 
+/**
+ * Where to start claiming, per plan. Plan-specific because Next'Founder does not
+ * include the cloud-credit catalog, so generic "start with cloud credits" advice
+ * would point that member at something they cannot claim.
+ */
+const PLAN_FIRST_MOVE: Record<MembershipPlan, string> = {
+  nextfounder:
+    'A practical order of attack: start with the campus and student offers, since several are free for a full year, then move to the AI and SaaS credits for indie builders. Hackathons and early-stage grants run on their own deadlines, so scan those early.',
+  founder:
+    'A practical order of attack: start with cloud credits, because one approval usually covers your membership several times over, then work down to the tools you are already paying for. Grants and accelerator deadlines move on their own calendar, so those are worth a look early.',
+  legend:
+    'A practical order of attack: start with cloud credits, because one approval usually covers what you paid several times over, then work down to the tools you are already paying for. Grants and accelerator deadlines move on their own calendar, so those are worth a look early.',
+}
+
 const PLAN_RENEWAL_NOTE: Record<MembershipPlan, string> = {
   nextfounder:
     'Your membership renews yearly. You can switch off auto-renewal any time from your dashboard and keep access until the period ends.',
@@ -745,7 +759,7 @@ export async function sendWelcomeEmail(
       <h1 style="margin:0 0 16px;font-size:28px;line-height:1.2;letter-spacing:-0.7px;color:${BRAND.ink};">Your ${escapeHtml(planLabel)} membership is active.</h1>
       <p style="margin:0 0 18px;">Thanks for backing FoundersPrime — that genuinely matters at this stage. Here is what the membership covers:</p>
       ${bulletList(benefits)}
-      <p style="margin:0 0 18px;">A practical order of attack: start with cloud credits, because one approval usually covers your membership several times over, then work down to the tools you are already paying for. Grants and accelerator deadlines are worth a look early, since those move on their own calendar.</p>
+      <p style="margin:0 0 18px;">${escapeHtml(PLAN_FIRST_MOVE[payload.plan])}</p>
       ${statStrip([
         { value: CATALOG_COPY.offersTotal, label: 'Verified offers' },
         { value: CATALOG_COPY.studentPerks, label: 'Student perks' },
@@ -770,7 +784,9 @@ export async function sendWelcomeEmail(
     .map((b) => `- ${b}`)
     .join(
       '\n'
-    )}\n\nOpen your dashboard: ${dashboardUrl}\nBrowse the deal catalog: ${dealsUrl}\nPlan and renewal date: ${billingUrl}${upgradeText}\n\n${renewalNote}\n\nQuestions? Reply to this email or write to support@foundersprime.com.\n\nThis email confirms activation of a FoundersPrime membership you purchased.${
+    )}\n\n${
+    PLAN_FIRST_MOVE[payload.plan]
+  }\n\nOpen your dashboard: ${dashboardUrl}\nBrowse the deal catalog: ${dealsUrl}\nPlan and renewal date: ${billingUrl}${upgradeText}\n\n${renewalNote}\n\nQuestions? Reply to this email or write to support@foundersprime.com.\n\nThis email confirms activation of a FoundersPrime membership you purchased.${
     preferencesUrl ? `\nManage which optional emails you receive: ${preferencesUrl}` : ''
   }`
 
@@ -824,7 +840,7 @@ export async function sendSignupWelcomeEmail(
       <p style="margin:0 0 18px;">${greeting(payload.firstName)}</p>
       <p style="margin:0 0 10px;font-family:'IBM Plex Mono',Consolas,Menlo,monospace;font-size:11px;font-weight:900;letter-spacing:1.4px;text-transform:uppercase;color:${BRAND.muted};">Account created</p>
       <h1 style="margin:0 0 16px;font-size:28px;line-height:1.2;letter-spacing:-0.7px;color:${BRAND.ink};">You're in. Here's what you can claim.</h1>
-      <p style="margin:0 0 18px;">Almost every tool a startup runs on has a founder or student rate — the problem is that the offers sit on ${OFFERS_TOTAL.toLocaleString('en-US')} different pages, half of them expired. FoundersPrime keeps them in one searchable place and re-checks each one before it goes live.</p>
+      <p style="margin:0 0 18px;">Almost every tool a startup runs on has a founder or student rate. The problem is that those offers are scattered across hundreds of separate pages, and a good share of the ones you find have already expired. FoundersPrime keeps ${OFFERS_TOTAL.toLocaleString('en-US')} of them in one searchable place and re-checks each listing before it goes live.</p>
       <p style="margin:0 0 18px;">Inside right now: <strong>${CATALOG.founderDeals} founder deals</strong> (${CATALOG.cloudDeals} cloud-credit programs, ${CATALOG.saasDeals} SaaS discounts, ${CATALOG.adDeals} ad-credit offers), <strong>${PROGRAMS_TOTAL} funding programs</strong> (${CATALOG.accelerators} accelerators, ${CATALOG.incubators} incubators, ${CATALOG.grants} grants) and <strong>${CATALOG.studentPerks.toLocaleString('en-US')} student perks</strong>.</p>
       <p style="margin:0 0 12px;font-weight:700;">Your free account already lets you:</p>
       ${bulletList(freeIncludes)}
